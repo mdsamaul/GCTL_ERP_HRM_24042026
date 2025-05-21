@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6u323A3Qzmc=",
+  "dgSpecHash": "NKwU4MgD1x4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\DELL\\Downloads\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj",
+  "projectFilePath": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DELL\\.nuget\\packages\\aspnetcore.reporting\\2.1.0\\aspnetcore.reporting.2.1.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\aspnetcore.reportingservices\\2.1.0\\aspnetcore.reportingservices.2.1.0.nupkg.sha512",

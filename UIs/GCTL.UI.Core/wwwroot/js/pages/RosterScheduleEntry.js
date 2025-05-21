@@ -3,7 +3,7 @@
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 3000,
+        timer: 5000,
         timerProgressBar: true,
         showClass: {
             popup: 'swal2-show swal2-fade-in'
@@ -445,6 +445,58 @@ $(document).ready(function () {
         }
     });
 
+   
+
+    //$("#FromDatePicker").on('change', function () {
+    //    var dateFromVal = $("#FromDatePicker").val();
+    //    var dateToVal = $("#toDateRosterFrom").val();
+
+    //    if (dateFromVal && dateToVal) {
+    //        var dateFrom = new Date(dateFromVal);
+    //        var dateTo = new Date(dateToVal);
+
+    //        if (dateFrom > dateTo) {
+    //            showToast("warning", "From Date cannot be greater than To Date.");
+    //            $(".js-roster-schedule-entry-save").prop("disabled", true);
+    //        } else {
+    //            $(".js-roster-schedule-entry-save").prop("disabled", false);
+    //        }
+    //    }
+    //});
+    //$("#toDateRosterFrom").on('change', function () {
+    //    var dateFromVal = $("#FromDatePicker").val();
+    //    var dateToVal = $("#toDateRosterFrom").val();
+
+    //    if (dateFromVal && dateToVal) {
+    //        var dateFrom = new Date(dateFromVal);
+    //        var dateTo = new Date(dateToVal);
+
+    //        if (dateFrom > dateTo) {
+    //            showToast("warning", "From Date cannot be greater than To Date.");
+    //            $(".js-roster-schedule-entry-save").prop("disabled", true);
+    //        } else {
+    //            $(".js-roster-schedule-entry-save").prop("disabled", false);
+    //        }
+    //    }
+    //});
+
+    $("#FromDatePicker, #toDateRosterFrom").on('change', function () {
+        var dateFromVal = $("#FromDatePicker").val();
+        var dateToVal = $("#toDateRosterFrom").val();
+
+        if (dateFromVal && dateToVal) {
+            var dateFrom = new Date(dateFromVal);
+            var dateTo = new Date(dateToVal);
+
+            if (dateFrom > dateTo) {
+                showToast("warning", "From Date cannot be greater than To Date.");
+                $(".js-roster-schedule-entry-save").prop("disabled", true);
+            } else {
+                $(".js-roster-schedule-entry-save").prop("disabled", false);
+            }
+        }
+    });
+
     $(".js-roster-schedule-entry-save").click(function () {
         var rosterId = $("#hiddenRosterId").val();
         //console.log({rosterId});
@@ -502,6 +554,7 @@ $(document).ready(function () {
                 }
 
             }
+           
 
             $.ajax({
                 url: '/RosterScheduleEntry/CreateAndUpdateRosterSchedule',
@@ -1050,7 +1103,7 @@ $(document).ready(function () {
                             //console.log(res);
                             loadTableData(res);
                             $('#RosterScheduleEntry-grid-body input[type="checkbox"]').prop('checked', true);
-                            showToast('success', res.message);
+                            //showToast('success', res.message);
                         },
                         error: function (err) {
                             //console.log(err);

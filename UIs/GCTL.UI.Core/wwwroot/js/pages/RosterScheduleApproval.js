@@ -151,7 +151,7 @@ function loadFilterEmp() {
                 showToast('error', res.message);
                 return;
             }
-            showToast('success', res.message);
+            //showToast('success', res.message);
             ////console.log(res.data);
             $("#companySelect, #branchSelect, #divisionSelect, #departmentSelect, #designationSelect, #employeeSelect, #employeeStatus, #activityStatusSelect, #ToDateFilter, #FromDateFilter")
                 .off("change");

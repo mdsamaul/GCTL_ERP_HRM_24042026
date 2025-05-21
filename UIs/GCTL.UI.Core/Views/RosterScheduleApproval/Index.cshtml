@@ -38,6 +38,13 @@
         margin-right: 8px;
         margin-bottom: 8px;
     }
+
+    .page-item.active .page-link{
+        z-index: 3 !important;
+        color: #000000 !important;
+        background-color: #ffffff !important;
+        border-color: #007bff !important;
+    }
    
 </style>
 
@@ -60,7 +67,7 @@
                             <div>
                                 <h5>Filter By:</h5>
                             </div>
-                            <div class="d-flex flex-wrap gap-2">
+                            <div class="d-flex flex-wrap gap-2 text-center">
                                 <div style="width: 150px; min-width: 100px;">
                                     <label for="companySelect">Company</label>
                                     <select id="companySelect" class="form-control form-control-sm"></select>
@@ -86,7 +93,7 @@
                                     <select id="employeeSelect" class="form-control form-control-sm" multiple="multiple"></select>
                                 </div>
                                 <div style="width: 150px; min-width: 100px;">
-                                    <label for="FromDateFilter">From Date</label>
+                                    <label for="FromDateFilter">Date From</label>
                                     <input type="text" id="FromDateFilter" placeholder="Select From Date" class="form-control form-control-sm flatpickr" />
                                 </div>
                                 <div style="width: 150px; min-width: 100px;">
