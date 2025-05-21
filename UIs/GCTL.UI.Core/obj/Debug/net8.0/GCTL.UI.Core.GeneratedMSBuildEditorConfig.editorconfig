@@ -1,0 +1,1515 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = GCTL.UI.Core
+build_property.RootNamespace = GCTL.UI.Core
+build_property.ProjectDir = E:\230824\Datapath\NewSolution&Database\250123\New folder (2)\GCTL_ERP_HRM_250213\UIs\GCTL.UI.Core\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = E:\230824\Datapath\NewSolution&Database\250123\New folder (2)\GCTL_ERP_HRM_250213\UIs\GCTL.UI.Core
+build_property._RazorSourceGeneratorDebug = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/AccessCodes/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjZXNzQ29kZXNcRGVsZXRlTW9kYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/AccessCodes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjZXNzQ29kZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/AccessCodes/Permissions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjZXNzQ29kZXNcUGVybWlzc2lvbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/AccessCodes/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjZXNzQ29kZXNcX0dyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/AccessCodes/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjZXNzQ29kZXNcX1NldHVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/AccessCodes/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjZXNzQ29kZXNcX1Rvb2xiYXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Accounts/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudHNcTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BankAccountInfo/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFua0FjY291bnRJbmZvXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BankAccountInfo/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFua0FjY291bnRJbmZvXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BankAccountInfo/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFua0FjY291bnRJbmZvXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BankAccountInfo/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFua0FjY291bnRJbmZvXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BankAccountInfo/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFua0FjY291bnRJbmZvXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BankBranchInformations/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFua0JyYW5jaEluZm9ybWF0aW9uc1xEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BankBranchInformations/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFua0JyYW5jaEluZm9ybWF0aW9uc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BankBranchInformations/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFua0JyYW5jaEluZm9ybWF0aW9uc1xfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BankBranchInformations/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFua0JyYW5jaEluZm9ybWF0aW9uc1xfU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BankBranchInformations/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFua0JyYW5jaEluZm9ybWF0aW9uc1xfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BankInformations/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFua0luZm9ybWF0aW9uc1xEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BankInformations/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFua0luZm9ybWF0aW9uc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BankInformations/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFua0luZm9ybWF0aW9uc1xfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BankInformations/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFua0luZm9ybWF0aW9uc1xfU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BankInformations/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFua0luZm9ybWF0aW9uc1xfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BloodGroups/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvb2RHcm91cHNcRGVsZXRlTW9kYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BloodGroups/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvb2RHcm91cHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BloodGroups/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvb2RHcm91cHNcX0dyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BloodGroups/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvb2RHcm91cHNcX1NldHVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BloodGroups/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvb2RHcm91cHNcX1Rvb2xiYXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BranchesTypeInfo/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnJhbmNoZXNUeXBlSW5mb1xEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BranchesTypeInfo/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnJhbmNoZXNUeXBlSW5mb1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BranchesTypeInfo/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnJhbmNoZXNUeXBlSW5mb1xfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BranchesTypeInfo/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnJhbmNoZXNUeXBlSW5mb1xfU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/BranchesTypeInfo/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnJhbmNoZXNUeXBlSW5mb1xfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Companies/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcGFuaWVzXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Companies/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcGFuaWVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Companies/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcGFuaWVzXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Companies/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcGFuaWVzXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Companies/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcGFuaWVzXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/CompanyInfos/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcGFueUluZm9zXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/CompanyInfos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcGFueUluZm9zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/CompanyInfos/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcGFueUluZm9zXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/CompanyInfos/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcGFueUluZm9zXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/CompanyInfos/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcGFueUluZm9zXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Currencies/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VycmVuY2llc1xEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Currencies/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VycmVuY2llc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Currencies/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VycmVuY2llc1xfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Currencies/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VycmVuY2llc1xfU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Currencies/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VycmVuY2llc1xfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Departments/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0bWVudHNcRGVsZXRlTW9kYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Departments/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0bWVudHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Departments/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0bWVudHNcX0dyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Departments/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0bWVudHNcX1NldHVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Departments/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0bWVudHNcX1Rvb2xiYXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Designations/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzaWduYXRpb25zXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Designations/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzaWduYXRpb25zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Designations/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzaWduYXRpb25zXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Designations/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzaWduYXRpb25zXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Designations/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzaWduYXRpb25zXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Districts/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGlzdHJpY3RzXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Districts/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGlzdHJpY3RzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Districts/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGlzdHJpY3RzXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Districts/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGlzdHJpY3RzXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Districts/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGlzdHJpY3RzXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/DoctorReports/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yUmVwb3J0c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/DoctorReports/_Filter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yUmVwb3J0c1xfRmlsdGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/DoctorReports/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yUmVwb3J0c1xfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Doctors/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yc1xEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Doctors/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Doctors/Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yc1xTZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Doctors/_Appointment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yc1xfQXBwb2ludG1lbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Doctors/_Filter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yc1xfRmlsdGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Doctors/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yc1xfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/DoctorTypes/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yVHlwZXNcRGVsZXRlTW9kYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/DoctorTypes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yVHlwZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/DoctorTypes/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yVHlwZXNcX0dyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/DoctorTypes/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yVHlwZXNcX1NldHVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/DoctorTypes/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yVHlwZXNcX1Rvb2xiYXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/DoctorWorkingPlace/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yV29ya2luZ1BsYWNlXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/DoctorWorkingPlace/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yV29ya2luZ1BsYWNlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/DoctorWorkingPlace/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yV29ya2luZ1BsYWNlXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/DoctorWorkingPlace/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yV29ya2luZ1BsYWNlXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/DoctorWorkingPlace/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yV29ya2luZ1BsYWNlXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/EmployeeContactInfos/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVDb250YWN0SW5mb3NcRGVsZXRlTW9kYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/EmployeeContactInfos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVDb250YWN0SW5mb3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/EmployeeContactInfos/Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVDb250YWN0SW5mb3NcU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/EmployeeContactInfos/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVDb250YWN0SW5mb3NcX0dyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/EmployeeContactInfos/_TabButton.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVDb250YWN0SW5mb3NcX1RhYkJ1dHRvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/EmployeeContactInfos/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVDb250YWN0SW5mb3NcX1Rvb2xiYXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/EmployeeReferenceInfos/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVSZWZlcmVuY2VJbmZvc1xEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/EmployeeReferenceInfos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVSZWZlcmVuY2VJbmZvc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/EmployeeReferenceInfos/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVSZWZlcmVuY2VJbmZvc1xfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/EmployeeReferenceInfos/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVSZWZlcmVuY2VJbmZvc1xfU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/EmployeeReferenceInfos/_TabButton.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVSZWZlcmVuY2VJbmZvc1xfVGFiQnV0dG9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/EmployeeReferenceInfos/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVSZWZlcmVuY2VJbmZvc1xfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Employees/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Employees/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Employees/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Employees/Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXFNldHVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Employees/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Employees/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ExperianceInfos/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhwZXJpYW5jZUluZm9zXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ExperianceInfos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhwZXJpYW5jZUluZm9zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ExperianceInfos/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhwZXJpYW5jZUluZm9zXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ExperianceInfos/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhwZXJpYW5jZUluZm9zXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ExperianceInfos/_TabButton.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhwZXJpYW5jZUluZm9zXF9UYWJCdXR0b24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ExperianceInfos/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhwZXJpYW5jZUluZm9zXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Grades/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR3JhZGVzXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Grades/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR3JhZGVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Grades/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR3JhZGVzXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Grades/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR3JhZGVzXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Grades/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR3JhZGVzXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HolidayTypes/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9saWRheVR5cGVzXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HolidayTypes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9saWRheVR5cGVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HolidayTypes/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9saWRheVR5cGVzXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HolidayTypes/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9saWRheVR5cGVzXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HolidayTypes/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9saWRheVR5cGVzXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMATDAttendanceType/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNQVREQXR0ZW5kYW5jZVR5cGVcRGVsZXRlTW9kYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMATDAttendanceType/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNQVREQXR0ZW5kYW5jZVR5cGVcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMATDAttendanceType/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNQVREQXR0ZW5kYW5jZVR5cGVcX0dyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMATDAttendanceType/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNQVREQXR0ZW5kYW5jZVR5cGVcX1NldHVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMATDAttendanceType/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNQVREQXR0ZW5kYW5jZVR5cGVcX1Rvb2xiYXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmAtdHolidayInformation/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtQXRkSG9saWRheUluZm9ybWF0aW9uXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmAtdHolidayInformation/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtQXRkSG9saWRheUluZm9ybWF0aW9uXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmAtdHolidayInformation/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtQXRkSG9saWRheUluZm9ybWF0aW9uXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmAtdHolidayInformation/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtQXRkSG9saWRheUluZm9ybWF0aW9uXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmAtdHolidayInformation/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtQXRkSG9saWRheUluZm9ybWF0aW9uXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMATDShifts/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNQVREU2hpZnRzXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMATDShifts/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNQVREU2hpZnRzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMATDShifts/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNQVREU2hpZnRzXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMATDShifts/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNQVREU2hpZnRzXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMATDShifts/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNQVREU2hpZnRzXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMAttWorkingDayDeclaration/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNQXR0V29ya2luZ0RheURlY2xhcmF0aW9uXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMAttWorkingDayDeclaration/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNQXR0V29ya2luZ0RheURlY2xhcmF0aW9uXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMAttWorkingDayDeclaration/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNQXR0V29ya2luZ0RheURlY2xhcmF0aW9uXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMAttWorkingDayDeclaration/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNQXR0V29ya2luZ0RheURlY2xhcmF0aW9uXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMAttWorkingDayDeclaration/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNQXR0V29ya2luZ0RheURlY2xhcmF0aW9uXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMCompanyWeekEnds/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNQ29tcGFueVdlZWtFbmRzXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMCompanyWeekEnds/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNQ29tcGFueVdlZWtFbmRzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMCompanyWeekEnds/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNQ29tcGFueVdlZWtFbmRzXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMCompanyWeekEnds/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNQ29tcGFueVdlZWtFbmRzXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMCompanyWeekEnds/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNQ29tcGFueVdlZWtFbmRzXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefBankAndNomineeInfos/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmQmFua0FuZE5vbWluZWVJbmZvc1xEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefBankAndNomineeInfos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmQmFua0FuZE5vbWluZWVJbmZvc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefBankAndNomineeInfos/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmQmFua0FuZE5vbWluZWVJbmZvc1xfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefBankAndNomineeInfos/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmQmFua0FuZE5vbWluZWVJbmZvc1xfU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefBankAndNomineeInfos/_TabButton.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmQmFua0FuZE5vbWluZWVJbmZvc1xfVGFiQnV0dG9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefBankAndNomineeInfos/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmQmFua0FuZE5vbWluZWVJbmZvc1xfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMDefBoardCountryNames/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNRGVmQm9hcmRDb3VudHJ5TmFtZXNcRGVsZXRlTW9kYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMDefBoardCountryNames/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNRGVmQm9hcmRDb3VudHJ5TmFtZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMDefBoardCountryNames/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNRGVmQm9hcmRDb3VudHJ5TmFtZXNcX0dyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMDefBoardCountryNames/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNRGVmQm9hcmRDb3VudHJ5TmFtZXNcX1NldHVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMDefBoardCountryNames/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNRGVmQm9hcmRDb3VudHJ5TmFtZXNcX1Rvb2xiYXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefDegrees/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmRGVncmVlc1xEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefDegrees/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmRGVncmVlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefDegrees/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmRGVncmVlc1xfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefDegrees/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmRGVncmVlc1xfU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefDegrees/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmRGVncmVlc1xfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefEmpType/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmRW1wVHlwZVxEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefEmpType/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmRW1wVHlwZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefEmpType/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmRW1wVHlwZVxfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefEmpType/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmRW1wVHlwZVxfU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefEmpType/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmRW1wVHlwZVxfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefExamGroupInfos/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmRXhhbUdyb3VwSW5mb3NcRGVsZXRlTW9kYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefExamGroupInfos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmRXhhbUdyb3VwSW5mb3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefExamGroupInfos/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmRXhhbUdyb3VwSW5mb3NcX0dyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefExamGroupInfos/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmRXhhbUdyb3VwSW5mb3NcX1NldHVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefExamGroupInfos/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmRXhhbUdyb3VwSW5mb3NcX1Rvb2xiYXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMDefExamTitles/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNRGVmRXhhbVRpdGxlc1xEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMDefExamTitles/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNRGVmRXhhbVRpdGxlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMDefExamTitles/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNRGVmRXhhbVRpdGxlc1xfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMDefExamTitles/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNRGVmRXhhbVRpdGxlc1xfU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HRMDefExamTitles/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNRGVmRXhhbVRpdGxlc1xfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefGradeTypes/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmR3JhZGVUeXBlc1xEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefGradeTypes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmR3JhZGVUeXBlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefGradeTypes/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmR3JhZGVUeXBlc1xfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefGradeTypes/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmR3JhZGVUeXBlc1xfU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefGradeTypes/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmR3JhZGVUeXBlc1xfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefInstitutes/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmSW5zdGl0dXRlc1xEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefInstitutes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmSW5zdGl0dXRlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefInstitutes/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmSW5zdGl0dXRlc1xfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefInstitutes/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmSW5zdGl0dXRlc1xfU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefInstitutes/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmSW5zdGl0dXRlc1xfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefOccupations/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmT2NjdXBhdGlvbnNcRGVsZXRlTW9kYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefOccupations/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmT2NjdXBhdGlvbnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefOccupations/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmT2NjdXBhdGlvbnNcX0dyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefOccupations/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmT2NjdXBhdGlvbnNcX1NldHVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmDefOccupations/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRGVmT2NjdXBhdGlvbnNcX1Rvb2xiYXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployee2/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWUyXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployee2/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWUyXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployee2/Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWUyXFNldHVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployee2/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWUyXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployee2/_TabButton.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWUyXF9UYWJCdXR0b24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployee2/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWUyXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeAdditionalInfos/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVBZGRpdGlvbmFsSW5mb3NcRGVsZXRlTW9kYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeAdditionalInfos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVBZGRpdGlvbmFsSW5mb3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeAdditionalInfos/Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVBZGRpdGlvbmFsSW5mb3NcU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeAdditionalInfos/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVBZGRpdGlvbmFsSW5mb3NcX0dyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeAdditionalInfos/_TabButton.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVBZGRpdGlvbmFsSW5mb3NcX1RhYkJ1dHRvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeAdditionalInfos/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVBZGRpdGlvbmFsSW5mb3NcX1Rvb2xiYXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeDocumentInfos/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVEb2N1bWVudEluZm9zXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeDocumentInfos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVEb2N1bWVudEluZm9zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeDocumentInfos/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVEb2N1bWVudEluZm9zXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeDocumentInfos/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVEb2N1bWVudEluZm9zXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeDocumentInfos/_TabButton.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVEb2N1bWVudEluZm9zXF9UYWJCdXR0b24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeDocumentInfos/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVEb2N1bWVudEluZm9zXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeEducations/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVFZHVjYXRpb25zXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeEducations/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVFZHVjYXRpb25zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeEducations/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVFZHVjYXRpb25zXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeEducations/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVFZHVjYXRpb25zXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeEducations/_TabButton.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVFZHVjYXRpb25zXF9UYWJCdXR0b24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeEducations/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVFZHVjYXRpb25zXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeFamilys/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVGYW1pbHlzXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeFamilys/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVGYW1pbHlzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeFamilys/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVGYW1pbHlzXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeFamilys/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVGYW1pbHlzXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeFamilys/_TabButton.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVGYW1pbHlzXF9UYWJCdXR0b24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeFamilys/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVGYW1pbHlzXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeQualifications/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVRdWFsaWZpY2F0aW9uc1xEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeQualifications/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVRdWFsaWZpY2F0aW9uc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeQualifications/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVRdWFsaWZpY2F0aW9uc1xfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeQualifications/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVRdWFsaWZpY2F0aW9uc1xfU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeQualifications/_TabButton.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVRdWFsaWZpY2F0aW9uc1xfVGFiQnV0dG9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/HrmEmployeeQualifications/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVRdWFsaWZpY2F0aW9uc1xfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Increment/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5jcmVtZW50XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Increment/Report.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5jcmVtZW50XFJlcG9ydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Increment/Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5jcmVtZW50XFNldHVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/JobTitles/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSm9iVGl0bGVzXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/JobTitles/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSm9iVGl0bGVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/JobTitles/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSm9iVGl0bGVzXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/JobTitles/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSm9iVGl0bGVzXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/JobTitles/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSm9iVGl0bGVzXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/LeaveApplicationEntry/Approval.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVhdmVBcHBsaWNhdGlvbkVudHJ5XEFwcHJvdmFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/LeaveApplicationEntry/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVhdmVBcHBsaWNhdGlvbkVudHJ5XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/LeaveApplicationEntry/HrApproval.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVhdmVBcHBsaWNhdGlvbkVudHJ5XEhyQXBwcm92YWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/LeaveApplicationEntry/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVhdmVBcHBsaWNhdGlvbkVudHJ5XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/LeaveApplicationEntry/LeaveApply.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVhdmVBcHBsaWNhdGlvbkVudHJ5XExlYXZlQXBwbHkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/LeaveApplicationEntry/NewApproval.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVhdmVBcHBsaWNhdGlvbkVudHJ5XE5ld0FwcHJvdmFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/LeaveApplicationEntry/Report.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVhdmVBcHBsaWNhdGlvbkVudHJ5XFJlcG9ydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/LeaveTypes/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVhdmVUeXBlc1xEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/LeaveTypes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVhdmVUeXBlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/LeaveTypes/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVhdmVUeXBlc1xfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/LeaveTypes/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVhdmVUeXBlc1xfU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/LeaveTypes/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVhdmVUeXBlc1xfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Logs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9nc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Logs/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9nc1xfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/MachineData/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFjaGluZURhdGFcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/MachineData/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFjaGluZURhdGFcX0dyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ManualAttendanceBulk/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFudWFsQXR0ZW5kYW5jZUJ1bGtcRGVsZXRlTW9kYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ManualAttendanceBulk/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFudWFsQXR0ZW5kYW5jZUJ1bGtcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ManualAttendanceBulk/Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFudWFsQXR0ZW5kYW5jZUJ1bGtcU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ManualAttendanceBulk/_EmployeeList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFudWFsQXR0ZW5kYW5jZUJ1bGtcX0VtcGxveWVlTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ManualAttendanceBulk/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFudWFsQXR0ZW5kYW5jZUJ1bGtcX0dyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ManualAttendanceBulk/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFudWFsQXR0ZW5kYW5jZUJ1bGtcX1Rvb2xiYXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ManualAttendance/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFudWFsQXR0ZW5kYW5jZVxEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ManualAttendance/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFudWFsQXR0ZW5kYW5jZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ManualAttendance/Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFudWFsQXR0ZW5kYW5jZVxTZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ManualAttendance/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFudWFsQXR0ZW5kYW5jZVxfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ManualAttendance/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFudWFsQXR0ZW5kYW5jZVxfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/MeasurementUnits/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVhc3VyZW1lbnRVbml0c1xEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/MeasurementUnits/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVhc3VyZW1lbnRVbml0c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/MeasurementUnits/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVhc3VyZW1lbnRVbml0c1xfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/MeasurementUnits/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVhc3VyZW1lbnRVbml0c1xfU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/MeasurementUnits/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVhc3VyZW1lbnRVbml0c1xfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Nationalitys/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmF0aW9uYWxpdHlzXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Nationalitys/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmF0aW9uYWxpdHlzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Nationalitys/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmF0aW9uYWxpdHlzXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Nationalitys/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmF0aW9uYWxpdHlzXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Nationalitys/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmF0aW9uYWxpdHlzXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/OfficialInfo/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2ZmaWNpYWxJbmZvXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/OfficialInfo/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2ZmaWNpYWxJbmZvXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/OfficialInfo/Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2ZmaWNpYWxJbmZvXFNldHVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/OfficialInfo/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2ZmaWNpYWxJbmZvXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/OfficialInfo/_TabButton.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2ZmaWNpYWxJbmZvXF9UYWJCdXR0b24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/OfficialInfo/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2ZmaWNpYWxJbmZvXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/PaymentModes/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudE1vZGVzXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/PaymentModes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudE1vZGVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/PaymentModes/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudE1vZGVzXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/PaymentModes/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudE1vZGVzXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/PaymentModes/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudE1vZGVzXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/PerformancesType/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZm9ybWFuY2VzVHlwZVxEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/PerformancesType/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZm9ybWFuY2VzVHlwZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/PerformancesType/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZm9ybWFuY2VzVHlwZVxfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/PerformancesType/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZm9ybWFuY2VzVHlwZVxfU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/PerformancesType/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZm9ybWFuY2VzVHlwZVxfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Performances/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZm9ybWFuY2VzXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Performances/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZm9ybWFuY2VzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Performances/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZm9ybWFuY2VzXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Performances/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZm9ybWFuY2VzXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Performances/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZm9ybWFuY2VzXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Preview/Viewer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJldmlld1xWaWV3ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Qualifications/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVhbGlmaWNhdGlvbnNcRGVsZXRlTW9kYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Qualifications/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVhbGlmaWNhdGlvbnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Qualifications/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVhbGlmaWNhdGlvbnNcX0dyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Qualifications/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVhbGlmaWNhdGlvbnNcX1NldHVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Qualifications/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVhbGlmaWNhdGlvbnNcX1Rvb2xiYXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ReferencePersons/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVmZXJlbmNlUGVyc29uc1xEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ReferencePersons/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVmZXJlbmNlUGVyc29uc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ReferencePersons/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVmZXJlbmNlUGVyc29uc1xfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ReferencePersons/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVmZXJlbmNlUGVyc29uc1xfU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/ReferencePersons/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVmZXJlbmNlUGVyc29uc1xfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Relationships/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVsYXRpb25zaGlwc1xEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Relationships/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVsYXRpb25zaGlwc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Relationships/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVsYXRpb25zaGlwc1xfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Relationships/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVsYXRpb25zaGlwc1xfU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Relationships/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVsYXRpb25zaGlwc1xfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Relation/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVsYXRpb25cRGVsZXRlTW9kYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Relation/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVsYXRpb25cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Relation/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVsYXRpb25cX0dyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Relation/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVsYXRpb25cX1NldHVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Relation/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVsYXRpb25cX1Rvb2xiYXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Religions/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVsaWdpb25zXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Religions/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVsaWdpb25zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Religions/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVsaWdpb25zXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Religions/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVsaWdpb25zXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Religions/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVsaWdpb25zXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/SeparationInfos/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VwYXJhdGlvbkluZm9zXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/SeparationInfos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VwYXJhdGlvbkluZm9zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/SeparationInfos/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VwYXJhdGlvbkluZm9zXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/SeparationInfos/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VwYXJhdGlvbkluZm9zXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/SeparationInfos/_TabButton.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VwYXJhdGlvbkluZm9zXF9UYWJCdXR0b24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/SeparationInfos/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VwYXJhdGlvbkluZm9zXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/SeparationTypes/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VwYXJhdGlvblR5cGVzXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/SeparationTypes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VwYXJhdGlvblR5cGVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/SeparationTypes/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VwYXJhdGlvblR5cGVzXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/SeparationTypes/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VwYXJhdGlvblR5cGVzXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/SeparationTypes/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VwYXJhdGlvblR5cGVzXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Shared/Components/Menu/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcTWVudVxEZWZhdWx0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Shared/_Sidebar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9TaWRlYmFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Shifts/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hpZnRzXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Shifts/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hpZnRzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Shifts/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hpZnRzXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Shifts/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hpZnRzXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Shifts/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hpZnRzXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Specialities/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BlY2lhbGl0aWVzXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Specialities/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BlY2lhbGl0aWVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Specialities/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BlY2lhbGl0aWVzXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Specialities/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BlY2lhbGl0aWVzXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Specialities/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BlY2lhbGl0aWVzXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Surnames/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VybmFtZXNcRGVsZXRlTW9kYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Surnames/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VybmFtZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Surnames/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VybmFtZXNcX0dyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Surnames/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VybmFtZXNcX1NldHVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Surnames/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VybmFtZXNcX1Rvb2xiYXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Units/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVW5pdHNcRGVsZXRlTW9kYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Units/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVW5pdHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Units/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVW5pdHNcX0dyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Units/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVW5pdHNcX1NldHVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Units/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVW5pdHNcX1Rvb2xiYXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/UnitTypes/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVW5pdFR5cGVzXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/UnitTypes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVW5pdFR5cGVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/UnitTypes/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVW5pdFR5cGVzXF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/UnitTypes/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVW5pdFR5cGVzXF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/UnitTypes/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVW5pdFR5cGVzXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/UserAccess/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckFjY2Vzc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/UserAccess/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckFjY2Vzc1xfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/UserAccess/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckFjY2Vzc1xfU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Shared/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXERlbGV0ZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = b-j70c7yl0oi
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Shared/QuickAddModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXFF1aWNrQWRkTW9kYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-l8iep0vwg4
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Shared/_Auditing.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BdWRpdGluZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = b-hxgbih3sqf
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Shared/_BottomNavigation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Cb3R0b21OYXZpZ2F0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = b-5n6wu4u0cd
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Shared/_Header.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9IZWFkZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-af9pwc4zsx
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-ccw39u10ya
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Shared/_PageHeader.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9QYWdlSGVhZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = b-8xhq0uvf9r
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Shared/_Sidebar-working.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9TaWRlYmFyLXdvcmtpbmcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-pr21kktgm0
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/Shared/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = b-himydvh1zw
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/UserAccess/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckFjY2Vzc1xEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = b-n6d0973fk7
+
+[E:/230824/Datapath/NewSolution&Database/250123/New folder (2)/GCTL_ERP_HRM_250213/UIs/GCTL.UI.Core/Views/UserAccess/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckFjY2Vzc1xfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-a42ty0vvdi

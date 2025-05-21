@@ -1,0 +1,53 @@
+﻿@using GCTL.Core.Configurations
+@model IEnumerable<GCTL.Core.ViewModels.AccessCodes.AccessCodeModel>
+@inject ApplicationSettings applicationSettings
+
+@{
+    var controller = "Companies";
+}
+
+<!-- Main Sidebar Container -->
+<div id="left_menu" class="sidenav">
+    <section class="">
+        <ul class="sidebar-menu">
+            <li class="sidebar-header">
+                <img src="~/images/CoIcon.ico" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                     style="opacity: .8">
+                <span class="brand-text font-weight-light">GCTL Software</span>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class="fa fa-tachometer-alt"></i> <span>Dashboard</span></i>
+                </a>
+            </li>
+
+            @if (Model.Any())
+            {
+                var urlPath = string.IsNullOrWhiteSpace(applicationSettings.VirtualPath) ? "" : string.Concat("/", @applicationSettings.VirtualPath);
+                foreach (var parent in Model)
+                {
+                    <li>
+                        <a href="#">
+                            <i class="@parent.Icon"></i>
+                            <span>@parent.Title</span>
+                            <i class="fa fa-angle-left float-right"></i>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            @foreach (var child in parent.Children)
+                            {
+                                <li id="@child.ControllerName.ToLower()">
+                                    <a href="@urlPath/@child.ControllerName/@child.ViewName" data-selected="@child.ControllerName.ToLower()">
+                                        @*<i class="fas fa-circle-o"></i>*@
+                                        <span>-</span>
+                                        @child.Title
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+            }
+        </ul>
+    </section>
+</div>

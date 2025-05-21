@@ -1,0 +1,86 @@
+﻿@model GCTL.UI.Core.ViewModels.HrmAtdMachineData.HrmAtdMachineDataPageViewModel
+
+@{
+    ViewData["Title"] = "Machine Data";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @* <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- DataTables CSS (Bootstrap 5 version) -->
+    <link href="https://cdn.jsdelivr.net/npm/datatables.net-bs5@1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet" /> *@
+    <!-- jQuery (required for DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables JS -->
+    @* <script src="https://cdn.jsdelivr.net/npm/datatables.net@1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/datatables.net-bs5@1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script> *@
+
+</head>
+<body>
+    <div class="container my-5 js-machineData-grid-container">
+        <h2>Machine Data</h2>
+        <table id="machineDataTable" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>FingerPrint ID</th>
+                    <th>Machine ID</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#machineDataTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '/MachineData/GetDataTableData',
+                    type: 'POST',
+                    dataType: 'json'
+                },
+                columns: [
+                    { data: 'fingerPrintId', title: 'FingerPrint ID' },
+                    { data: 'machineId', title: 'Machine ID' },
+                    {
+                        data: 'date',
+                        title: 'Date',
+                        render: function (data) {
+                            if (data) {
+                                const date = new Date(data);
+                                return date.toLocaleDateString('en-GB');
+                            }
+                            return '';
+                        }
+                    },
+                    {
+                        data: 'time',
+                        title: 'Time',
+                        render: function (data) {
+                            if (data) {
+                                const timePart = new Date(data).toTimeString().split(' ')[0];
+                                return timePart;
+                            }
+                            return '';
+                        }
+                    }
+                ],
+                order: [[2, 'desc']],
+                language: {
+                    processing: "Loading..."
+                },
+                pageLength: 25,
+                lengthMenu: [25, 50, 75, 100]
+            });
+        });
+    </script>
+</body>
+</html>

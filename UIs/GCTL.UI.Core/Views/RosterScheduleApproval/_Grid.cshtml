@@ -1,0 +1,255 @@
+﻿@*  <style>
+    /* ✅ Base table styling */
+    #RosterScheduleApprove-grid {
+        table-layout: fixed;
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        /* ✅ Fixed header scroll */
+        #RosterScheduleApprove-grid thead {
+            display: table;
+            width: calc(100% - 17px); /* scrollbar width adjust */
+            table-layout: fixed;
+        }
+
+        #RosterScheduleApprove-grid tbody {
+            display: block;
+            max-height: 251px;
+            overflow-y: auto;
+            width: 100%;
+        }
+
+            #RosterScheduleApprove-grid tbody tr {
+                display: table;
+                width: 100%;
+                table-layout: fixed;
+            }
+
+        /* ✅ Common column style */
+        #RosterScheduleApprove-grid th,
+        #RosterScheduleApprove-grid td {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+         
+    /* প্রথম কলাম header এবং body দুই জায়গায় ৫০px */
+    .dataTables_scrollHeadInner table thead th:nth-child(1),
+    .dataTables_scrollBody table tbody td:nth-child(1) {
+        width: 80px !important;
+        min-width: 80px !important;
+        max-width: 80px !important;
+        text-align: center;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+   
+    /* বাকি কলামগুলোর width সমান ভাগে */
+    .dataTables_scrollHeadInner table thead th:not(:first-child),
+    .dataTables_scrollBody table tbody td:not(:first-child) {
+        width: calc((100% - 50px) / 9) !important;
+        min-width: calc((100% - 50px) / 9) !important;
+        max-width: calc((100% - 50px) / 9) !important;
+        text-align: center;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+
+    /* ✅ Filter/Search box styling */
+    .dataTables_filter input {
+        width: 350px !important;
+        max-width: 100%;
+        padding: 6px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .dataTables_filter {
+        margin-bottom: 10px;
+    }
+
+    /* ✅ Responsive wrapper if needed */
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    /* ✅ Center all text */
+    .text-center {
+        text-align: center;
+    }
+
+</style>  *@
+
+@* 
+<h5>Emp. List:</h5>
+<div class="table-responsive">
+    
+    <table id="RosterScheduleApprove-grid" class="table table-striped table-bordered table-sm table-common">
+        <thead>
+            <tr>
+                <th class="text-center text-middle">
+                    Is Approved <br /> <input type="checkbox" id="rosterScheduleApprove-check-all" />
+                </th>
+                <th class="text-center text-middle">Roster ID</th>
+                <th class="text-center text-middle">Employee ID</th>
+                <th class="text-center text-middle">Name</th>
+                <th class="text-center text-middle">Designation</th>
+              
+                <th class="text-center text-middle">Department</th>
+                <th class="text-center text-middle">Date</th>
+                <th class="text-center text-middle">Day</th>
+                <th class="text-center text-middle">Shift</th>
+                <th class="text-center text-middle">Remarks</th>              
+            </tr>
+        </thead>
+        <tbody id="RosterScheduleApprove-grid-body">
+            <!-- Data will be injected here -->
+        </tbody>
+    </table>
+</div>
+ *@
+<style>
+    #RosterScheduleApprove-grid {
+        table-layout: fixed;
+        width: 100%;
+        border-collapse: collapse;
+        /* border: 1px solid #ccc; /* 🔶 Full table border */ */
+    }
+
+        #RosterScheduleApprove-grid thead {
+            display: table;
+            width: calc(100% - 17px);
+            table-layout: fixed;
+        }
+
+        #RosterScheduleApprove-grid tbody {
+            display: block;
+            max-height: 251px;
+            overflow-y: auto;
+            width: 100%;
+        }
+
+            #RosterScheduleApprove-grid tbody tr {
+                display: table;
+                width: 100%;
+                table-layout: fixed;
+            }
+
+        #RosterScheduleApprove-grid th,
+        #RosterScheduleApprove-grid td {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: center;
+            /* border: 1px solid #ccc; /* 🔶 Border for each cell */ */
+        }
+
+            #RosterScheduleApprove-grid th:nth-child(1),
+            #RosterScheduleApprove-grid td:nth-child(1) {
+                width: 80px !important;
+                min-width: 80px !important;
+                max-width: 80px !important;
+            }
+
+           /*  #RosterScheduleApprove-grid th:not(:first-child),
+            #RosterScheduleApprove-grid td:not(:first-child) {
+                width: calc((100% - 80px) / 9) !important;
+                min-width: calc((100% - 80px) / 9) !important;
+                max-width: calc((100% - 80px) / 9) !important;
+            } */
+
+            #RosterScheduleApprove-grid td:nth-child(4),
+            #RosterScheduleApprove-grid td:nth-child(5) {
+            text-align:left !important;
+            }
+
+
+            #RosterScheduleApprove-grid th:nth-child(2),
+            #RosterScheduleApprove-grid td:nth-child(2) {
+                width: 100px !important;
+            }
+
+            #RosterScheduleApprove-grid th:nth-child(3),
+            #RosterScheduleApprove-grid td:nth-child(3) {
+                width: 100px !important;
+            }
+            #RosterScheduleApprove-grid th:nth-child(4),
+            #RosterScheduleApprove-grid td:nth-child(4) {
+                width: 220px !important;
+            }
+
+            #RosterScheduleApprove-grid th:nth-child(5),
+            #RosterScheduleApprove-grid td:nth-child(5) {
+                width: 210px !important;
+            }
+
+            #RosterScheduleApprove-grid th:nth-child(6),
+            #RosterScheduleApprove-grid td:nth-child(6) {
+                width: 180px !important;
+            }
+            #RosterScheduleApprove-grid th:nth-child(7),
+            #RosterScheduleApprove-grid td:nth-child(7) {
+              width:100px !important;
+            }
+            #RosterScheduleApprove-grid th:nth-child(8),
+            #RosterScheduleApprove-grid td:nth-child(8) {
+              width:100px !important;
+            }
+            #RosterScheduleApprove-grid th:nth-child(9),
+            #RosterScheduleApprove-grid td:nth-child(9) {
+              width:220px !important;
+            }
+            /* #RosterScheduleApprove-grid th:nth-child(10), */
+            /* #RosterScheduleApprove-grid td:nth-child(10) { */
+            /*   width:200px !important; */
+            /* } */
+    .dataTables_filter input {
+        width: 250px !important;
+        padding: 6px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .dataTables_filter {
+        margin-bottom: 10px;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+</style>
+
+
+<h5>Emp. List:</h5>
+<div class="table-responsive">
+    <table id="RosterScheduleApprove-grid" class="display table-bordered">
+        <thead>
+            <tr>
+                <th>Is Approved <br /><input type="checkbox" id="rosterScheduleApprove-check-all" /></th>
+                <th>Roster ID</th>
+                <th>Employee ID</th>
+                <th>Name</th>
+                <th>Designation</th>
+                <th>Department</th>
+                <th>Date</th>
+                <th>Day</th>
+                <th>Shift</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody id="RosterScheduleApprove-grid-body">
+            <!-- Data will be inserted dynamically -->
+        </tbody>
+    </table>
+</div>

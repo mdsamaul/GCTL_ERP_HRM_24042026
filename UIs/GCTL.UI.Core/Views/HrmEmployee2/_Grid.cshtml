@@ -1,0 +1,91 @@
+﻿@model List<GCTL.Core.ViewModels.HrmEmployees2.HrmEmployee2SetUpViewModel>
+
+<table id="HrmEmployee2-grid" class="table table-striped  table-bordered table-sm table-hover table-common">
+        <thead class="row-border">
+            <tr class="table row-border">
+
+                <th class="text-center text-middle">
+                    Select <br /> <input type="checkbox" id="HrmEmployee2-check-all" />
+                </th>
+                <th class="text-center text-middle">Employee Id</th>
+                <th class="text-center text-middle"> Name</th>
+                <th class="text-center text-middle">Name(বাংলা)</th>
+                <th class="text-center text-middle">Gender</th>
+                <th class="text-center text-middle">Nationality</th>
+                <th class="text-center text-middle">National ID</th>
+                <th class="text-center text-middle">Phone</th>
+                <th class=" text-center text-middle">Picture</th>
+                <th class="text-center text-middle">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (Model == null || !Model.Any())
+            {
+                <tr class="text-center text-middle">
+                    <td colspan="8">No  Employee Information Available.</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var item in Model.OrderByDescending(a=>a.EmployeeId))
+                {
+                    <tr>
+                        <td class="text-center text-middle">
+                            <input type="checkbox" class="text-center text-middle checkBox" data-id="@item.EmployeeId" value="@item.EmployeeId" />
+                        </td>
+                        <td class="text-center text-middle">
+                            <a title="Edit @($"{item.FirstName} {item.LastName}")" style="text-decoration: underline;"
+                              
+                               href="@Url.Action("Setup", "HrmEmployee2", new { id = item.EmployeeId })">
+                               @item.EmployeeId
+                            </a>
+                           @*  <a title="Edit @($"{item.FirstName} {item.LastName}")" style="text-decoration: underline;" class="btn js-HrmEmployee2-edit" data-id="@item.EmployeeId" href="/HrmEmployee2/Setup/@(item.EmployeeId)">@item.EmployeeId</a> *@
+                        </td>
+
+                        <td class="text-center text-middle">@($"{item.FirstName} {item.LastName}")</td>
+
+                        <td class="text-center text-middle">@($"{item.FirstNameBangla} {item.FirstNameBangla}")</td>
+                        <td class="text-center text-middle">@item.SexCode</td>
+                        <td class="text-center text-middle">@item.NationalityCode</td>
+                        <td class="text-center text-middle">@item.NationalIdno</td>
+                        <td class="text-center text-middle">@item.Telephone</td>
+                      
+                        <td class="text-center text-middle">
+                            @if (!string.IsNullOrEmpty(item.PhotoUrl))
+                            {
+                                <img src="@item.PhotoUrl" class="rounded-circle" height="50" width="50" asp-append-version="true" />
+                            }
+                            else
+                            {
+                                <div style="height: 90px; width: 90px;"></div>
+                            }
+                           
+                        </td>
+
+                        <td class="text-center text-middle">
+
+                            <a title="Edit @($"{item.FirstName} {item.LastName}")"
+                               class="btn   btn-sm"
+                               href="@Url.Action("Setup", "HrmEmployee2", new { id = item.EmployeeId })">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                            <button type="button" title="Delete @($"{item.FirstName} {item.LastName}")" class="btn  btn-sm js-HrmEmployee2-delete-confirm">
+                                <i class="fas fa-trash fa-sm">&nbsp;</i>
+                            </button>
+
+                            @*    <button type="button" class="btn btn-default danger-btn js-HrmEmployee2-delete-confirm">
+                                <i class="fa fa-trash">&nbsp;</i>
+                                Delete
+                            </button> *@
+                        </td>
+                    </tr>
+                }
+            }
+
+
+        </tbody>
+    </table>
+
+
+
