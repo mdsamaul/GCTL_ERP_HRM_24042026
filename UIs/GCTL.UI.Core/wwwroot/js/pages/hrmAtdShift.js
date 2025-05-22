@@ -60,21 +60,7 @@
                 e.preventDefault();
                 var form = $(this)[0];
                 var formData = new FormData(form);              
-                var actionUrl = $(this).attr('action');
-                //console.log("In Time:", formData.get("ShiftStartTime"));
-                //console.log("Description:", formData.get("Description"));
-                //console.log("In Time:", formData.get("InDateTime"));
-                //console.log("Out Time:", formData.get("OutDateTime"));
-                //console.log("Late Time:", formData.get("LateDateTime"));
-                //console.log("Absent Time:", formData.get("AbsentDateTime"));
-                console.log("Wef Date:", formData.get("Wef"));
-                //console.log("Wef Lunch In:", formData.get("LunchInDateTime"));
-                //console.log("Wef Lunch Out:", formData.get("LunchOutDateTime"));
-                //console.log("Wef Lunch Break:", formData.get("LunchBreakHour"));
-                //var Wef = formData.get("Wef");
-                //console.log(formData);
-                //console.log("Lunch Break Hour:", formData.get("LunchBreakHour"));
-                //formData.append(Wef);
+                var actionUrl = $(this).attr('action');               
                 $.ajax({
                     type: 'POST',
                     url: actionUrl,
@@ -615,7 +601,9 @@
                 dateFormat: "h:i:s K",
                 inline: true,
                 defaultDate: defaultValue || new Date(),
-
+                hourIncrement: 1,     
+                minuteIncrement: 1,   
+                secondIncrement: 1, 
                 onChange: function (selectedDates, dateStr, instance) {
                     const today = new Date();
                     const fullDate = today.toISOString().slice(0, 10);

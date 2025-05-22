@@ -18,7 +18,7 @@
         title: message
     });
 }
-
+var rosterId=null;
 $(document).on('input blur', "#YearRosterFrom", function () {
     validateYearInput();
 })
@@ -444,10 +444,12 @@ $(document).ready(function () {
             $("#rosterSchedule-check-all").prop('checked', false);
         }
     });
-
    
-
-    //$("#FromDatePicker").on('change', function () {
+  
+   
+  
+    ////todo
+    //$("#FromDatePicker, #toDateRosterFrom").on('change', function () {
     //    var dateFromVal = $("#FromDatePicker").val();
     //    var dateToVal = $("#toDateRosterFrom").val();
 
@@ -463,39 +465,6 @@ $(document).ready(function () {
     //        }
     //    }
     //});
-    //$("#toDateRosterFrom").on('change', function () {
-    //    var dateFromVal = $("#FromDatePicker").val();
-    //    var dateToVal = $("#toDateRosterFrom").val();
-
-    //    if (dateFromVal && dateToVal) {
-    //        var dateFrom = new Date(dateFromVal);
-    //        var dateTo = new Date(dateToVal);
-
-    //        if (dateFrom > dateTo) {
-    //            showToast("warning", "From Date cannot be greater than To Date.");
-    //            $(".js-roster-schedule-entry-save").prop("disabled", true);
-    //        } else {
-    //            $(".js-roster-schedule-entry-save").prop("disabled", false);
-    //        }
-    //    }
-    //});
-
-    $("#FromDatePicker, #toDateRosterFrom").on('change', function () {
-        var dateFromVal = $("#FromDatePicker").val();
-        var dateToVal = $("#toDateRosterFrom").val();
-
-        if (dateFromVal && dateToVal) {
-            var dateFrom = new Date(dateFromVal);
-            var dateTo = new Date(dateToVal);
-
-            if (dateFrom > dateTo) {
-                showToast("warning", "From Date cannot be greater than To Date.");
-                $(".js-roster-schedule-entry-save").prop("disabled", true);
-            } else {
-                $(".js-roster-schedule-entry-save").prop("disabled", false);
-            }
-        }
-    });
 
     $(".js-roster-schedule-entry-save").click(function () {
         var rosterId = $("#hiddenRosterId").val();
@@ -503,6 +472,20 @@ $(document).ready(function () {
         var formData = getValueRosterSchedule();
 
         if (rosterId == '') {
+
+            var dateFromVal = $("#FromDatePicker").val();
+            var dateToVal = $("#toDateRosterFrom").val();
+
+            if (dateFromVal && dateToVal) {
+                var dateFrom = new Date(dateFromVal);
+                var dateTo = new Date(dateToVal);
+
+                if (dateFrom > dateTo) {
+                    showToast("warning", "From Date cannot be greater than To Date.");
+                    return;
+                }
+            }
+
             var isByDateCheck = $("#byDate").is(':checked');
             var isByMonthCheck = $("#byMonth").is(':checked');
 
@@ -605,6 +588,8 @@ $(document).ready(function () {
                         getRosterScheduleGrid();
                         loadFilterEmp();
                         showToast("success", res.isMessage);
+                    } else {
+                        showToast("warning", res.isMessage);                       
                     }
 
                 },
@@ -1035,8 +1020,15 @@ function ClearFrom() {
 }
 
 $(document).ready(function () {
+
+
+    
+
+    
     $(document).on('click', 'a[data-id]', function (e) {
         e.preventDefault();
+
+       
         var isByDateCheck = $("#byDate").is(':checked');
         var isByMonthCheck = $("#byMonth").is(':checked');
         if (isByMonthCheck) {
@@ -1067,8 +1059,10 @@ $(document).ready(function () {
         `);
 
         $(".editHideRosterSchedule").hide();
-        $("#monthFields").hide();
+        $("#monthFields").hide();  
        
+       
+
         //$(".empRostSelect")
         //console.log({id});
         $.ajax({
@@ -1087,6 +1081,11 @@ $(document).ready(function () {
                     var filterData = getAllFilterVal();
                     filterData.EmployeeIDs.push(res.data.employeeID);
                     //console.log(filterData);
+
+                    
+
+                   
+
                     $.ajax({
                         url: `/RosterScheduleEntry/getAllFilterEmp`,
                         type: "POST",

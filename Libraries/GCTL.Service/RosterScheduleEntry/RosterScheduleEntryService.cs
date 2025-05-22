@@ -18,6 +18,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using OfficeOpenXml;
+using Org.BouncyCastle.Ocsp;
 using SixLabors.ImageSharp;
 namespace GCTL.Service.RosterScheduleEntry 
 {
@@ -256,204 +257,6 @@ namespace GCTL.Service.RosterScheduleEntry
             }).ToList();
         }
 
-
-
-        //public async Task<(bool isSuccess, string isMessage, object data)> CreateAndUpdateService(RosterScheduleEntrySetupViewModel FromModel)
-        //{
-        //    //edit
-        //    if (FromModel.RosterScheduleId != null)
-        //    {
-        //        if (FromModel.FromDate == null || FromModel.ShiftCode == null)
-        //        {
-        //            return (false, "Update Failed", null);
-        //        }
-        //        var test = rosterScheduleRepo.GetAll().Where(x => x.RosterScheduleId == FromModel.RosterScheduleId).FirstOrDefault();
-
-        //        var roster = await rosterScheduleRepo.All().FirstOrDefaultAsync(e => e.Tc == test.Tc);
-
-        //        if (roster == null)
-        //        {
-        //            return (false, "Update Failed", null);
-        //        }
-
-        //        try
-        //        {
-        //            roster.Date = DateTime.Parse(FromModel.FromDate);
-        //            roster.ShiftCode = FromModel.ShiftCode;
-        //            roster.Remark = FromModel.Remark ?? "";
-        //            roster.ModifyDate = FromModel.ModifyDate;
-        //            roster.Weekend = "";
-        //            await rosterScheduleRepo.UpdateAsync(roster);
-        //            return (isSuccess: true, isMessage: "Update Successfully", data: roster);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            return (false, "Update Failed: " + ex.Message, null);
-        //        }
-        //    }
-
-        //    if (FromModel == null || FromModel.FromDate == null || FromModel.ToDate == null ||
-        //        FromModel.EmployeeListID == null || FromModel.year == null || FromModel.ShiftCode == null)
-        //    {
-        //        return (false, "Save Failed: Missing required fields", null);
-        //    }
-
-        //    if (!DateTime.TryParse(FromModel.FromDate, out DateTime startDate) ||
-        //        !DateTime.TryParse(FromModel.ToDate, out DateTime endDate) ||
-        //        !int.TryParse(FromModel.year, out int year) ||
-        //        year < 1900 || year > 2100 ||
-        //        startDate.Year < 1900 || startDate.Year > 2100 ||
-        //        endDate.Year < 1900 || endDate.Year > 2100)
-        //    {
-        //        return (false, "Save Failed: Invalid date or year", null);
-        //    }
-
-        //    var allEmployees = employeeRepo.GetAll().Select(e => e.EmployeeId).ToHashSet();
-
-        //    foreach (var empId in FromModel.EmployeeListID)
-        //    {
-        //        if (!allEmployees.Contains(empId))
-        //            return (false, $"Employee Not found: {empId}", null);
-        //    }
-
-        //    var oldSchedules = rosterScheduleRepo.GetAll()
-        //        .Where(x => FromModel.EmployeeListID.Contains(x.EmployeeId) && x.Date >= startDate && x.Date <= endDate)
-        //        .ToList();
-
-        //    foreach (var old in oldSchedules)
-        //    {
-        //        rosterScheduleRepo.Delete(old);
-        //    }
-
-        //    DataTable rosterTable = new DataTable();
-        //    rosterTable.Columns.Add("RosterScheduleId", typeof(string));
-        //    rosterTable.Columns.Add("EmployeeId", typeof(string));
-        //    rosterTable.Columns.Add("Date", typeof(DateTime));
-        //    rosterTable.Columns.Add("ShiftCode", typeof(string));
-        //    rosterTable.Columns.Add("Remark", typeof(string));
-        //    rosterTable.Columns.Add("CompanyCode", typeof(string));
-        //    rosterTable.Columns.Add("Ldate", typeof(DateTime));
-        //    rosterTable.Columns.Add("Luser", typeof(string));
-        //    rosterTable.Columns.Add("Lip", typeof(string));
-        //    rosterTable.Columns.Add("Lmac", typeof(string));
-        //    rosterTable.Columns.Add("EmployeeIdSao", typeof(string));
-        //    rosterTable.Columns.Add("Weekend", typeof(string));
-        //    rosterTable.Columns.Add("ApprovalStatus", typeof(string));
-        //    rosterTable.Columns.Add("ApprovedBy", typeof(string));
-        //    // Make ApprovalDatetime column allow NULL values
-        //    rosterTable.Columns.Add("ApprovalDatetime", typeof(DateTime)).AllowDBNull = true;
-
-        //    var lastRoster = rosterScheduleRepo.GetAll()
-        //        .OrderByDescending(x => x.RosterScheduleId)
-        //        .FirstOrDefault();
-
-        //    int nextIdNumber = 1;
-        //    if (lastRoster != null && int.TryParse(lastRoster.RosterScheduleId, out int lastNumber))
-        //    {
-        //        nextIdNumber = lastNumber + 1;
-        //    }
-
-        //    foreach (var empId in FromModel.EmployeeListID)
-        //    {
-        //        DateTime currentDate = startDate;
-        //        while (currentDate <= endDate)
-        //        {
-        //            string newId = $"{nextIdNumber:D8}";
-        //            nextIdNumber++;
-
-        //            // Fix the issue with ApprovalDatetime - properly handle null values
-        //            object approvalDatetimeValue = DBNull.Value;
-        //            if (FromModel.ApprovalDatetime.HasValue)
-        //            {
-        //                approvalDatetimeValue = FromModel.ApprovalDatetime.Value;
-        //            }
-
-        //            rosterTable.Rows.Add(
-        //                newId,
-        //                empId,
-        //                currentDate,
-        //                FromModel.ShiftCode,
-        //                FromModel.Remark ?? "",
-        //                FromModel.CompanyCode ?? "",
-        //                FromModel.Ldate == default ? DBNull.Value : (object)FromModel.Ldate,
-        //                FromModel.Luser ?? "",
-        //                FromModel.Lip ?? "",
-        //                FromModel.Lmac ?? "",
-        //                "", 
-        //                "",
-        //                FromModel.ModifyDate="",
-        //                FromModel.ApprovalStatus ?? "",
-        //                FromModel.ApprovedBy ?? "",
-        //                approvalDatetimeValue // Properly handle null DateTime
-        //            );
-
-        //            currentDate = currentDate.AddDays(1);
-        //        }
-        //    }
-
-        //    try
-        //    {
-        //        using (SqlConnection conn = new SqlConnection(_connectionString))
-        //        {
-        //            conn.Open();
-        //            using (SqlBulkCopy bulkCopy = new SqlBulkCopy(conn))
-        //            {
-        //                bulkCopy.DestinationTableName = "HRM_RosterScheduleEntry";
-
-        //                bulkCopy.BatchSize = 10000;
-        //                bulkCopy.BulkCopyTimeout = 600;
-
-        //                bulkCopy.ColumnMappings.Add("RosterScheduleId", "RosterScheduleId");
-        //                bulkCopy.ColumnMappings.Add("EmployeeId", "EmployeeID");
-        //                bulkCopy.ColumnMappings.Add("Date", "Date");
-        //                bulkCopy.ColumnMappings.Add("ShiftCode", "ShiftCode");
-        //                bulkCopy.ColumnMappings.Add("Remark", "Remark");
-        //                bulkCopy.ColumnMappings.Add("CompanyCode", "CompanyCode");
-        //                bulkCopy.ColumnMappings.Add("Ldate", "LDate");
-        //                bulkCopy.ColumnMappings.Add("Luser", "LUser");
-        //                bulkCopy.ColumnMappings.Add("Lip", "LIP");
-        //                bulkCopy.ColumnMappings.Add("Lmac", "LMAC");
-        //                bulkCopy.ColumnMappings.Add("EmployeeIdSao", "EmployeeID_SAO");
-        //                bulkCopy.ColumnMappings.Add("Weekend", "Weekend");
-        //                bulkCopy.ColumnMappings.Add("ApprovalStatus", "ApprovalStatus");
-        //                bulkCopy.ColumnMappings.Add("ApprovalDatetime", "ApprovalDatetime");
-        //                bulkCopy.ColumnMappings.Add("ApprovedBy", "ApprovedBy");
-
-        //                int batchSize = 10000;
-        //                int totalRows = rosterTable.Rows.Count;
-
-        //                for (int i = 0; i < totalRows; i += batchSize)
-        //                {
-        //                    DataTable batchTable;
-        //                    if (i + batchSize > totalRows)
-        //                        batchTable = rosterTable.AsEnumerable().Skip(i).Take(totalRows - i).CopyToDataTable();
-        //                    else
-        //                        batchTable = rosterTable.AsEnumerable().Skip(i).Take(batchSize).CopyToDataTable();
-
-        //                    bulkCopy.WriteToServer(batchTable);
-        //                }
-        //            }
-        //        }
-
-        //        var resultList = new List<Dictionary<string, object>>();
-        //        foreach (DataRow row in rosterTable.Rows)
-        //        {
-        //            var dict = new Dictionary<string, object>();
-        //            foreach (DataColumn col in rosterTable.Columns)
-        //            {
-        //                dict[col.ColumnName] = row[col];
-        //            }
-        //            resultList.Add(dict);
-        //        }
-
-        //        return (isSuccess: true, isMessage: "Save Success", data: resultList);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return (false, "Save Failed: " + ex.Message, null);
-        //    }
-        //}
-
         public async Task<(bool isSuccess, string isMessage, object data)> CreateAndUpdateService(RosterScheduleEntrySetupViewModel FromModel)
         {
             //edit
@@ -474,6 +277,12 @@ namespace GCTL.Service.RosterScheduleEntry
 
                 try
                 {
+                    bool isDuplicate = rosterScheduleRepo.GetAll()
+                        .Any(x => x.EmployeeId == roster.EmployeeId && x.Date == DateTime.Parse(FromModel.FromDate) && x.RosterScheduleId == FromModel.RosterScheduleId && x.ApprovalStatus == "Approved");
+                    if (isDuplicate)
+                    {
+                        return (false, "Approved schedule can't be updated.", null);
+                    }
                     roster.Date = DateTime.Parse(FromModel.FromDate);
                     roster.ShiftCode = FromModel.ShiftCode;
                     roster.Remark = FromModel.Remark ?? "";
@@ -493,186 +302,189 @@ namespace GCTL.Service.RosterScheduleEntry
                     return (false, "Update Failed: " + ex.Message, null);
                 }
             }
-
-            if (FromModel == null || FromModel.FromDate == null || FromModel.ToDate == null ||
-                FromModel.EmployeeListID == null || FromModel.year == null || FromModel.ShiftCode == null)
+            else
             {
-                return (false, "Save Failed: Missing required fields", null);
-            }
-
-            if (!DateTime.TryParse(FromModel.FromDate, out DateTime startDate) ||
-                !DateTime.TryParse(FromModel.ToDate, out DateTime endDate) ||
-                !int.TryParse(FromModel.year, out int year) ||
-                year < 1900 || year > 2100 ||
-                startDate.Year < 1900 || startDate.Year > 2100 ||
-                endDate.Year < 1900 || endDate.Year > 2100)
-            {
-                return (false, "Save Failed: Invalid date or year", null);
-            }
-
-            var allEmployees = employeeRepo.GetAll().Select(e => e.EmployeeId).ToHashSet();
-
-            foreach (var empId in FromModel.EmployeeListID)
-            {
-                if (!allEmployees.Contains(empId))
-                    return (false, $"Employee Not found: {empId}", null);
-            }
-
-            var oldSchedules = rosterScheduleRepo.GetAll()
-                .Where(x => FromModel.EmployeeListID.Contains(x.EmployeeId) && x.Date >= startDate && x.Date <= endDate)
-                .ToList();
-
-            foreach (var old in oldSchedules)
-            {
-                rosterScheduleRepo.Delete(old);
-            }
-
-            DataTable rosterTable = new DataTable();
-            rosterTable.Columns.Add("RosterScheduleId", typeof(string));
-            rosterTable.Columns.Add("EmployeeId", typeof(string));
-            rosterTable.Columns.Add("Date", typeof(DateTime));
-            rosterTable.Columns.Add("ShiftCode", typeof(string));
-            rosterTable.Columns.Add("Remark", typeof(string));
-            rosterTable.Columns.Add("CompanyCode", typeof(string));
-            rosterTable.Columns.Add("Ldate", typeof(DateTime));
-            rosterTable.Columns.Add("Luser", typeof(string));
-            rosterTable.Columns.Add("Lip", typeof(string));
-            rosterTable.Columns.Add("Lmac", typeof(string));
-            rosterTable.Columns.Add("EmployeeIdSao", typeof(string));
-            rosterTable.Columns.Add("Weekend", typeof(string));
-            rosterTable.Columns.Add("ApprovalStatus", typeof(string));
-            rosterTable.Columns.Add("ApprovedBy", typeof(string));
-            rosterTable.Columns.Add("ModifyBy", typeof(string));
-            // Make ApprovalDatetime column allow NULL values
-            rosterTable.Columns.Add("ApprovalDatetime", typeof(DateTime)).AllowDBNull = true;
-
-            var lastRoster = rosterScheduleRepo.GetAll()
-                .OrderByDescending(x => x.RosterScheduleId)
-                .FirstOrDefault();
-
-            int nextIdNumber = 1;
-            if (lastRoster != null && int.TryParse(lastRoster.RosterScheduleId, out int lastNumber))
-            {
-                nextIdNumber = lastNumber + 1;
-            }
-
-            foreach (var empId in FromModel.EmployeeListID)
-            {
-                DateTime currentDate = startDate;
-                while (currentDate <= endDate)
+                //save
+                if (FromModel == null || FromModel.FromDate == null || FromModel.ToDate == null ||
+     FromModel.EmployeeListID == null || FromModel.year == null || FromModel.ShiftCode == null)
                 {
-                    string newId = $"{nextIdNumber:D8}";
-                    nextIdNumber++;
+                    return (false, "Save Failed: Missing required fields", null);
+                }
 
-                    // Handle ApprovalDatetime - convert empty strings to NULL values
-                    object approvalDatetimeValue = DBNull.Value;
+                if (!DateTime.TryParse(FromModel.FromDate, out DateTime startDate) ||
+                    !DateTime.TryParse(FromModel.ToDate, out DateTime endDate) ||
+                    !int.TryParse(FromModel.year, out int year) ||
+                    year < 1900 || year > 2100 ||
+                    startDate.Year < 1900 || startDate.Year > 2100 ||
+                    endDate.Year < 1900 || endDate.Year > 2100)
+                {
+                    return (false, "Save Failed: Invalid date or year", null);
+                }
 
-                    // Check if DateTime value exists
-                    if (FromModel.ApprovalDatetime.HasValue)
+                var allEmployees = employeeRepo.GetAll().Select(e => e.EmployeeId).ToHashSet();
+
+                foreach (var empId in FromModel.EmployeeListID)
+                {
+                    if (!allEmployees.Contains(empId))
+                        return (false, $"Employee Not found: {empId}", null);
+                }
+
+                var oldSchedules = rosterScheduleRepo.GetAll()
+                    .Where(x => FromModel.EmployeeListID.Contains(x.EmployeeId) &&
+                                x.Date >= startDate && x.Date <= endDate &&
+                                x.ApprovalStatus != "Approved")
+                    .ToList();
+
+                foreach (var old in oldSchedules)
+                {
+                    rosterScheduleRepo.Delete(old);
+                }
+
+                DataTable rosterTable = new DataTable();
+                rosterTable.Columns.Add("RosterScheduleId", typeof(string));
+                rosterTable.Columns.Add("EmployeeId", typeof(string));
+                rosterTable.Columns.Add("Date", typeof(DateTime));
+                rosterTable.Columns.Add("ShiftCode", typeof(string));
+                rosterTable.Columns.Add("Remark", typeof(string));
+                rosterTable.Columns.Add("CompanyCode", typeof(string));
+                rosterTable.Columns.Add("Ldate", typeof(DateTime)).AllowDBNull = true;
+                rosterTable.Columns.Add("Luser", typeof(string));
+                rosterTable.Columns.Add("Lip", typeof(string));
+                rosterTable.Columns.Add("Lmac", typeof(string));
+                rosterTable.Columns.Add("EmployeeIdSao", typeof(string));
+                rosterTable.Columns.Add("Weekend", typeof(string));
+                rosterTable.Columns.Add("ApprovalStatus", typeof(string));
+                rosterTable.Columns.Add("ApprovedBy", typeof(string));
+                rosterTable.Columns.Add("ModifyBy", typeof(string));
+                rosterTable.Columns.Add("ApprovalDatetime", typeof(DateTime)).AllowDBNull = true;
+
+                var lastRoster = rosterScheduleRepo.GetAll()
+                    .OrderByDescending(x => x.RosterScheduleId)
+                    .FirstOrDefault();
+
+                int nextIdNumber = 1;
+                if (lastRoster != null && int.TryParse(lastRoster.RosterScheduleId, out int lastNumber))
+                {
+                    nextIdNumber = lastNumber + 1;
+                }
+                //string newId = $"{nextIdNumber:D8}";
+                //newId = newId + 1;
+                var existingShifts = rosterScheduleRepo.GetAll()
+                    .Where(x => FromModel.EmployeeListID.Contains(x.EmployeeId) &&
+                                x.Date >= startDate && x.Date <= endDate)
+                    .ToList();
+
+                foreach (var empId in FromModel.EmployeeListID)
+                {
+                    DateTime currentDate = startDate;
+                    while (currentDate <= endDate)
                     {
-                        approvalDatetimeValue = FromModel.ApprovalDatetime.Value;
-                    }
-                    // If you want to handle string representation of date
-                    else if (!string.IsNullOrEmpty(FromModel.ApprovalDatetimeShow))
-                    {
-                        if (DateTime.TryParse(FromModel.ApprovalDatetimeShow, out DateTime parsedDate))
+                        if (existingShifts.Any(x => x.EmployeeId == empId && x.Date == currentDate && x.ApprovalStatus == "Approved"))
+                        {
+                            currentDate = currentDate.AddDays(1);
+                            continue;
+                        }
+
+                        object approvalDatetimeValue = DBNull.Value;
+
+                        if (FromModel.ApprovalDatetime.HasValue)
+                        {
+                            approvalDatetimeValue = FromModel.ApprovalDatetime.Value;
+                        }
+                        else if (!string.IsNullOrEmpty(FromModel.ApprovalDatetimeShow) &&
+                                 DateTime.TryParse(FromModel.ApprovalDatetimeShow, out DateTime parsedDate))
                         {
                             approvalDatetimeValue = parsedDate;
                         }
+                        string newId = $"{nextIdNumber:D8}";
+                        nextIdNumber++;
+                        rosterTable.Rows.Add(
+                            newId,
+                            empId,
+                            currentDate,
+                            FromModel.ShiftCode,
+                            FromModel.Remark ?? "",
+                            FromModel.CompanyCode ?? "",
+                            FromModel.Ldate == default ? DBNull.Value : (object)FromModel.Ldate,
+                            FromModel.Luser ?? "",
+                            FromModel.Lip ?? "",
+                            FromModel.Lmac ?? "",
+                            "", // EmployeeIdSao
+                            "", // Weekend
+                            FromModel.ApprovalStatus ?? "",
+                            FromModel.ApprovedBy ?? "",
+                            FromModel.ModifyBy ?? "",
+                            approvalDatetimeValue
+                        );
+                        currentDate = currentDate.AddDays(1);                    
                     }
-
-                    rosterTable.Rows.Add(
-                    newId,
-                    empId,
-                    currentDate,
-                    FromModel.ShiftCode,
-                    FromModel.Remark ?? "",
-                    FromModel.CompanyCode ?? "",
-                    FromModel.Ldate == default ? DBNull.Value : (object)FromModel.Ldate,
-                    FromModel.Luser ?? "",
-                    FromModel.Lip ?? "",
-                    FromModel.Lmac ?? "",
-                    "", // EmployeeIdSao
-                    "", // Weekend
-                    FromModel.ApprovalStatus ?? "",
-                    FromModel.ApprovedBy ?? "",
-                    FromModel.ModifyBy ?? "",           
-                    approvalDatetimeValue             
-                );
-
-
-                    currentDate = currentDate.AddDays(1);
+                   
                 }
-            }
 
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(_connectionString))
+                try
                 {
-                    conn.Open();
-                    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(conn))
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
                     {
-                        bulkCopy.DestinationTableName = "HRM_RosterScheduleEntry";
-
-                        bulkCopy.BatchSize = 10000;
-                        bulkCopy.BulkCopyTimeout = 600;
-
-                        bulkCopy.ColumnMappings.Add("RosterScheduleId", "RosterScheduleId");
-                        bulkCopy.ColumnMappings.Add("EmployeeId", "EmployeeID");
-                        bulkCopy.ColumnMappings.Add("Date", "Date");
-                        bulkCopy.ColumnMappings.Add("ShiftCode", "ShiftCode");
-                        bulkCopy.ColumnMappings.Add("Remark", "Remark");
-                        bulkCopy.ColumnMappings.Add("CompanyCode", "CompanyCode");
-                        bulkCopy.ColumnMappings.Add("Ldate", "LDate");
-                        bulkCopy.ColumnMappings.Add("Luser", "LUser");
-                        bulkCopy.ColumnMappings.Add("Lip", "LIP");
-                        bulkCopy.ColumnMappings.Add("Lmac", "LMAC");
-                        bulkCopy.ColumnMappings.Add("EmployeeIdSao", "EmployeeID_SAO");
-                        bulkCopy.ColumnMappings.Add("Weekend", "Weekend");
-                        bulkCopy.ColumnMappings.Add("ApprovalStatus", "ApprovalStatus");
-                        bulkCopy.ColumnMappings.Add("ApprovalDatetime", "ApprovalDatetime");
-                        bulkCopy.ColumnMappings.Add("ApprovedBy", "ApprovedBy");
-                        bulkCopy.ColumnMappings.Add("ModifyBy", "ModifyBy");
-
-
-                        int batchSize = 10000;
-                        int totalRows = rosterTable.Rows.Count;
-
-                        for (int i = 0; i < totalRows; i += batchSize)
+                        conn.Open();
+                        using (SqlBulkCopy bulkCopy = new SqlBulkCopy(conn))
                         {
-                            DataTable batchTable;
-                            if (i + batchSize > totalRows)
-                                batchTable = rosterTable.AsEnumerable().Skip(i).Take(totalRows - i).CopyToDataTable();
-                            else
-                                batchTable = rosterTable.AsEnumerable().Skip(i).Take(batchSize).CopyToDataTable();
+                            bulkCopy.DestinationTableName = "HRM_RosterScheduleEntry";
+                            bulkCopy.BatchSize = 10000;
+                            bulkCopy.BulkCopyTimeout = 600;
 
-                            bulkCopy.WriteToServer(batchTable);
+                            bulkCopy.ColumnMappings.Add("RosterScheduleId", "RosterScheduleId");
+                            bulkCopy.ColumnMappings.Add("EmployeeId", "EmployeeID");
+                            bulkCopy.ColumnMappings.Add("Date", "Date");
+                            bulkCopy.ColumnMappings.Add("ShiftCode", "ShiftCode");
+                            bulkCopy.ColumnMappings.Add("Remark", "Remark");
+                            bulkCopy.ColumnMappings.Add("CompanyCode", "CompanyCode");
+                            bulkCopy.ColumnMappings.Add("Ldate", "LDate");
+                            bulkCopy.ColumnMappings.Add("Luser", "LUser");
+                            bulkCopy.ColumnMappings.Add("Lip", "LIP");
+                            bulkCopy.ColumnMappings.Add("Lmac", "LMAC");
+                            bulkCopy.ColumnMappings.Add("EmployeeIdSao", "EmployeeID_SAO");
+                            bulkCopy.ColumnMappings.Add("Weekend", "Weekend");
+                            bulkCopy.ColumnMappings.Add("ApprovalStatus", "ApprovalStatus");
+                            bulkCopy.ColumnMappings.Add("ApprovalDatetime", "ApprovalDatetime");
+                            bulkCopy.ColumnMappings.Add("ApprovedBy", "ApprovedBy");
+                            bulkCopy.ColumnMappings.Add("ModifyBy", "ModifyBy");
+
+                            int totalRows = rosterTable.Rows.Count;
+                            int batchSize = 10000;
+
+                            for (int i = 0; i < totalRows; i += batchSize)
+                            {
+                                DataTable batchTable = rosterTable.AsEnumerable()
+                                    .Skip(i).Take(Math.Min(batchSize, totalRows - i))
+                                    .CopyToDataTable();
+
+                                bulkCopy.WriteToServer(batchTable);
+                            }
                         }
                     }
-                }
 
-                var resultList = new List<Dictionary<string, object>>();
-                foreach (DataRow row in rosterTable.Rows)
-                {
-                    var dict = new Dictionary<string, object>();
-                    foreach (DataColumn col in rosterTable.Columns)
+                    var resultList = new List<Dictionary<string, object>>();
+                    foreach (DataRow row in rosterTable.Rows)
                     {
-                        dict[col.ColumnName] = row[col];
+                        var dict = new Dictionary<string, object>();
+                        foreach (DataColumn col in rosterTable.Columns)
+                        {
+                            dict[col.ColumnName] = row[col];
+                        }
+                        resultList.Add(dict);
                     }
-                    resultList.Add(dict);
+
+                    return (true, "Save Success", resultList);
                 }
-
-                return (isSuccess: true, isMessage: "Save Success", data: resultList);
+                catch (Exception ex)
+                {
+                    return (false, "Save Failed: " + ex.Message, null);
+                }
             }
-            catch (Exception ex)
-            {
-                return (false, "Save Failed: " + ex.Message, null);
+
             }
-        }
 
-
-
-        //get roster sechudel 
+            //get roster sechudel 
         public async Task<List<RosterScheduleEntrySetupViewModel>> GetRosterScheduleGridService()
         {
             var query = from rs in rosterScheduleRepo.All()
@@ -726,99 +538,7 @@ namespace GCTL.Service.RosterScheduleEntry
                 ShiftName = shift.ShiftName
             });
         }
-
-        //bulk delete service
-
-        //public async Task<bool> BulkDeleteAsync(List<decimal> ids)
-        //{
-        //    await rosterScheduleRepo.BeginTransactionAsync();
-
-        //    try
-        //    {
-        //        var employees = await rosterScheduleRepo.All().Where(c => ids.Contains(c.Tc)).ToListAsync();
-
-        //        if (employees == null || employees.Count == 0)
-        //        {
-        //            await rosterScheduleRepo.RollbackTransactionAsync();
-        //            return false;
-        //        }
-
-        //        await rosterScheduleRepo.DeleteRangeAsync(employees);
-
-        //        await rosterScheduleRepo.CommitTransactionAsync();
-
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        await rosterScheduleRepo.RollbackTransactionAsync();
-        //        Console.WriteLine($"Bulk delete error: {ex}");
-        //        return (false);
-        //    }
-        //}
-
-        //public async Task<bool> BulkDeleteAsync(List<decimal> ids)
-        //{
-        //    const int batchSize = 1000;
-
-        //    await rosterScheduleRepo.BeginTransactionAsync();
-
-        //    try
-        //    {
-        //        for (int i = 0; i < ids.Count; i += batchSize)
-        //        {
-        //            var batchIds = ids.Skip(i).Take(batchSize).ToList();
-
-        //            var employees = await rosterScheduleRepo.All()
-        //                .Where(c => batchIds.Contains(c.Tc))
-        //                .ToListAsync();
-
-        //            if (employees.Any())
-        //            {
-        //                await rosterScheduleRepo.DeleteRangeAsync(employees);
-        //            }
-        //        }
-
-        //        await rosterScheduleRepo.CommitTransactionAsync();
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        await rosterScheduleRepo.RollbackTransactionAsync();
-        //        Console.WriteLine($"Bulk delete error: {ex}");
-        //        return false;
-        //    }
-        //}
-
-        //public async Task<bool> BulkDeleteRosterSchedulesBySPAsync(List<decimal> ids)
-        //{
-        //    if (ids == null || !ids.Any())
-        //        return false;
-
-        //    var idsString = string.Join(",", ids);
-        //    var param = new SqlParameter("@Ids", idsString);
-
-        //    try
-        //    {
-        //        using (var connection = new SqlConnection(_connectionString))
-        //        {
-        //            await connection.OpenAsync();
-        //            using (var command = new SqlCommand("sp_BulkDeleteRosterSchedules", connection))
-        //            {
-        //                command.CommandType = CommandType.StoredProcedure;
-        //                command.Parameters.Add(param);
-        //                await command.ExecuteNonQueryAsync();
-        //            }
-        //        }
-
-        //        return true;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        // Optional: Log exception
-        //        return false;
-        //    }
-        //}
+        
 
         //download excel
         public async Task<byte[]> GenerateEmpRosterExcelDownload()
@@ -910,7 +630,7 @@ namespace GCTL.Service.RosterScheduleEntry
                         bool existsEmployee = rosterScheduleRepo.GetAll().Any(x => x.EmployeeId == empId && x.Date == date);
                         if (existsEmployee)
                         {
-                            var employeesToDelete = rosterScheduleRepo.GetAll().Where(x => x.EmployeeId == empId && x.Date == date).ToList();
+                            var employeesToDelete = rosterScheduleRepo.GetAll().Where(x => x.EmployeeId == empId && x.Date == date&& x.ApprovalStatus != "Approved").ToList();
                             await rosterScheduleRepo.DeleteRangeAsync(employeesToDelete);
                         }
 

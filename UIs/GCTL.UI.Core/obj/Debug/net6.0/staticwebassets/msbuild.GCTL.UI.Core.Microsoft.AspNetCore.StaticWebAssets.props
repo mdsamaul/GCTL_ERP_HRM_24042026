@@ -37758,8 +37758,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>bm9zcga6io</Fingerprint>
-      <Integrity>jfhq2SvNQf6+cRy3RcY5UoAR+dju+RcT89z59Tdti/0=</Integrity>
+      <Fingerprint>r3lh4g3z72</Fingerprint>
+      <Integrity>FzlMMfu43xd6AyqMEUVhYYcTcy2tvfzOR814nZDJuTY=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\hrmAtdShift.js'))</OriginalItemSpec>
@@ -38802,8 +38802,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>0upsk2usej</Fingerprint>
-      <Integrity>yC0Xh1I9MnU9YvXSP+Axvss6saqEAb3KR1REZsXdd6U=</Integrity>
+      <Fingerprint>huql7ijkj1</Fingerprint>
+      <Integrity>12V7CU3i/dH08S+Yw+DlfEDu2/VwQzdMG+gDn+VtSa0=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\RosterScheduleEntry.js'))</OriginalItemSpec>
