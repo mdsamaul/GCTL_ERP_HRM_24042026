@@ -106,6 +106,7 @@ using GCTL.Service.ManualEarnLeaveEntry;
 using GCTL.Service.PFAssignEntry;
 using GCTL.Service.RosterScheduleEntry;
 using GCTL.Service.RosterScheduleApproval;
+using GCTL.Service.RosterScheduleReport;
 
 
 //using GCTL.Service.AccountReport;
@@ -154,7 +155,8 @@ namespace GCTL.UI.Core.Extensions
             services.AddScoped<IManualEarnLeaveEntryService, ManualEarnLeaveEntryService>();
             services.AddScoped<IPFAssignEntryService, PFAssignEntryService>(); 
             services.AddScoped<IRosterScheduleEntryService, RosterScheduleEntryService>(); 
-            services.AddScoped<IRosterScheduleApprovalService, RosterScheduleApprovalService>(); 
+            services.AddScoped<IRosterScheduleApprovalService, RosterScheduleApprovalService>();
+            services.AddScoped<IRosterScheduleReportServices, RosterScheduleReportServices>();
 
 
 

@@ -1,0 +1,208 @@
+﻿@{
+	Model.Breadcrumb = "RosterScheduleReport";
+	Model.PageTitle = "Roster Schedule Report";
+}
+<style>
+	.headerToobar{
+		background: linear-gradient(to right, rgba(34, 211, 238, .1), #fff);
+		box-shadow: 3px 0 6px rgba(0, 0, 0, 0.2);
+		border-radius:0px 11px 11px 0px;
+	}
+</style>
+
+<!-- Content Header (Page header) -->
+<div class="container-fluid">
+	<partial name="_PageHeader" model="Model"></partial>
+</div>
+
+<section class="content consistent-look">
+	<div class="container-fluid">	
+	<div class="row px-2 pr-3">
+		<div class="col-md-12 pr-0">
+				<div class="w-100 headerToobar ">
+					<partial name="_Toolbars" model="new ToobarModel() { Title = Model.Breadcrumb, Code = Model.Code, Name = Model.Setup.RosterScheduleId }"></partial>
+				</div>
+		</div>
+	</div>
+		<div class="col-md-8 col-12 mx-auto">
+			<div class="border bg-white rounded-lg mt-3 px-2 ">
+				<div class="col-12 col-md-5" style="padding-right: 0px;">
+					<h6 class="pt-3 px-3 pb-0 font-weight-bold fs-6 mb-0">Search By :</h6>
+
+					<div class="d-flex" style="padding-right: 0px; ">
+						<hr class="m-0 p-0 w-100">
+					</div>
+				</div>
+				<div class="col-12 col-md-11 mx-auto">
+					<div class="row pb-4  ">
+						<div class="col-12 col-md-6 py-1">
+							<div class="row align-items-center">
+								<label class="col-3 text-right mb-0">Company</label>
+								<div class="col-9 col-md-7">
+									<select id="companySelect" class="form-control form-control-sm">
+										@* <option value="1">value 1</option> *@
+									</select>
+								</div>
+								<div class="col-md-2 col-0"></div>
+							</div>
+						</div>
+						<div class="col-12 col-md-6 py-1">
+							<div class="row align-items-center">
+								<label class="col-3 text-right mb-0">Branch</label>
+								<div class="col-9 col-md-7">
+									<select id="branchSelect" class="form-control form-control-sm">
+											@* <option>value 1</option> *@
+									</select>
+								</div>
+								<div class="col-md-2 col-0"></div>
+							</div>
+						</div>
+						<div class="col-12 col-md-6 py-1">
+							<div class="row align-items-center">
+								<label class="col-3 text-right mb-0">Department</label>
+								<div class="col-9 col-md-7">
+									<select id="departmentSelect" class="form-control form-control-sm">
+										@* <option>value 1</option> *@
+									</select>
+								</div>
+								<div class="col-md-2 col-0"></div>
+							</div>
+						</div>
+						<div class="col-12 col-md-6 py-1">
+							<div class="row align-items-center">
+								<label class="col-3 text-right mb-0">Designation</label>
+								<div class="col-9 col-md-7">
+									<select id="designationSelect" class="form-control form-control-sm">
+											@* <option>value 1</option> *@
+									</select>
+								</div>
+								<div class="col-md-2  d-none d-md-block"></div>
+							</div>
+						</div>
+						<div class="col-12 col-md-6 py-1">
+							<div class="row align-items-center">
+								<label class="col-3 text-right mb-0">Employee</label>
+								<div class="col-9 col-md-7">
+									<select id="employeeSelect" class="form-control form-control-sm">
+											@* <option>value 1</option> *@
+									</select>
+								</div>
+								<div class="col-md-2 col-0"></div>
+							</div>
+						</div>
+						<div class="col-12 col-md-6 py-1">
+						</div>
+						<div class="col-12 col-md-6 py-1">
+							<div class="row align-items-center">
+								<label class="col-3 text-right mb-0">From Date</label>
+								<div class="col-9 col-md-7">
+									<input type="text" id="FromDateSelect" class="form-control form-control-sm flatDate" placeholder="--Select From Date--" />
+										
+								</div>
+								<div class="col-md-2 col-0"></div>
+							</div>
+						</div>
+						<div class="col-12 col-md-6 py-1">
+							<div class="row align-items-center">
+								<label class="col-3 text-right mb-0">To Date</label>
+								<div class="col-9 col-md-7">
+									<input type="text" id="ToDateSelect" class="form-control form-control-sm flatDate" placeholder="--Select To Date--" />
+								</div>
+								<div class="col-md-2 col-0"></div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+				<div class="col-12 col-md-5">
+					<h6 class="pt-3 px-3 pb-0 font-weight-bold fs-6 mb-0">Report Option:</h6>
+
+					<div class="d-flex" style="padding-right: 0px; ">
+						<hr class="m-0 p-0 w-100">
+					</div>
+				</div>
+				<div class="col-12 col-md-6 py-1">
+				</div>
+				<div class="col-12 col-md-12 mx-auto">
+					<div class="row pb-4 ">
+					<div class="col-12 col-md-6 py-1">
+						<div class="row align-items-center">
+								<label class="col-4 text-right mb-0">Export Report Format</label>
+							<div class="col-9 col-md-6">
+								<select class="form-control form-control-sm">
+										@* <option>value 1</option> *@
+								</select>
+							</div>
+							<div class="col-md-2 col-0"></div>
+						</div>
+					</div>					
+					<div class="col-12 col-md-6 py-1">
+					</div>
+					<div class="col-12 col-md-6 py-1">
+					</div>
+					<div class="col-12 col-md-6 py-1">
+						<div class="col-md-8 mx-auto">
+							<div class="row align-items-center">
+								<div class="col-12 col-md-6 d-grid pe-1">
+									<button class="btn btn-sm btn-secondary w-100">
+										<i class="fas fa-file-export me-1"></i> Export Report
+									</button>
+								</div>
+								<div class="col-12 col-md-6 d-grid ps-md-1 pt-1 mt-md-0">
+										<button id="checkCompanyBtn" class="btn btn-sm btn-secondary w-100">
+										<i class="fas fa-eye me-1"></i> Preview
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<!-- Flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<!-- Optional: Theme -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+
+<!-- Bootstrap (Optional, for layout) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+	<!-- Bootstrap JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+	<!-- Bootstrap Multiselect CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/css/bootstrap-multiselect.min.css">
+	<!-- Bootstrap Multiselect JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/js/bootstrap-multiselect.min.js"></script>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<!-- Load the plugin -->
+	<script src="~/js/pages/RosterScheduleReport.js"></script>
+
+	<!-- Initialize the plugin -->
+	<script type="text/javascript">
+		$(function () {
+			$.patientTypes({
+				baseUrl: '@Url.Action("Index", "RosterScheduleReport")',
+				load: function () {
+					console.log("Custom load logic called from Razor view");
+				}
+			});
+		});
+	</script>
+}

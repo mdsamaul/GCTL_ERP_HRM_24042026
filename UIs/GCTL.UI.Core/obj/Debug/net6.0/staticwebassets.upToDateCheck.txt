@@ -2153,6 +2153,7 @@ wwwroot\js\pages\rooms.js
 wwwroot\js\pages\roomTypes.js
 wwwroot\js\pages\RosterScheduleApproval.js
 wwwroot\js\pages\RosterScheduleEntry.js
+wwwroot\js\pages\RosterScheduleReport.js
 wwwroot\js\pages\salesAllReports.js
 wwwroot\js\pages\salesReports.js
 wwwroot\js\pages\separationInfos.js

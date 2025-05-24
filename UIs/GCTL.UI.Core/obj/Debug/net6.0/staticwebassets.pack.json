@@ -9653,6 +9653,10 @@
       "PackagePath": "staticwebassets\\js\\pages\\RosterScheduleEntry.js"
     },
     {
+      "Id": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\RosterScheduleReport.js",
+      "PackagePath": "staticwebassets\\js\\pages\\RosterScheduleReport.js"
+    },
+    {
       "Id": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\accessCodes.js",
       "PackagePath": "staticwebassets\\js\\pages\\accessCodes.js"
     },

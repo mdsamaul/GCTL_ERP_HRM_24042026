@@ -502,7 +502,7 @@ namespace GCTL.Service.RosterScheduleEntry
                             EmployeeID = eoi.EmployeeId,
                             Name = (e != null ? e.FirstName + " " + e.LastName : ""),
                             DesignationName = d != null ? d.DesignationName : "",
-                            ShiftName = s != null ? s.ShiftName : "",
+                            ShiftName = s != null ? s.ShiftName +" ("+ s.ShiftStartTime.ToString("hh:MM:tt") +" - "+ s.ShiftEndTime.ToString("hh:MM:tt") + ")": "",
                             DateShow = rs.Date.ToString("dd/MM/yyyy"),
                             DayName = rs.Date.ToString("dddd"),
                             Remark = rs.Remark,
