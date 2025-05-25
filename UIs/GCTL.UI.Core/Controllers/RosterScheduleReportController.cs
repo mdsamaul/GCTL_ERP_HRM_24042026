@@ -33,5 +33,17 @@ namespace GCTL.UI.Core.Controllers
             }
             return Json(new { isSuccess = false, message = "Data load Failed" });
         }
+        [HttpPost]
+        public async Task<IActionResult> getAllPdfFilterEmp([FromBody] RosterReportFilterDto filterDto)
+        {
+            var result = await rosterScheduleReportServices.GetRosterDataPdfAsync(filterDto);
+            if (result != null)
+            {
+                return Json(new { isSuccess = true, message = "successed data load", data = result });
+            }
+            return Json(new { isSuccess = false, message = "Data load Failed" });
+        }
+
+
     }
 }

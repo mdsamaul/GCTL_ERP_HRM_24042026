@@ -1036,6 +1036,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9zdGVyU2NoZWR1bGVSZXBvcnRcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/git clone/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/RosterScheduleReport/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9zdGVyU2NoZWR1bGVSZXBvcnRcX0dyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/git clone/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/RosterScheduleReport/_Toolbars.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9zdGVyU2NoZWR1bGVSZXBvcnRcX1Rvb2xiYXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

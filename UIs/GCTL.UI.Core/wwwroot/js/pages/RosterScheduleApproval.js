@@ -173,7 +173,6 @@ function loadFilterEmp() {
             if (data.branches && data.branches.length > 0 && data.branches.some(b => b.code != null && b.name != null)) {
                 var dataBranch = data.branches;
                 var optBranch = $("#branchSelect");
-
                 $.each(dataBranch, function (index, item) {
                     if (item.code != null && item.name != null && optBranch.find(`option[value="${item.code}"]`).length === 0) {
                         optBranch.append(`<option value="${item.code}">${item.name}</option>`);

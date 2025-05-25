@@ -17,5 +17,8 @@ namespace GCTL.Core.ViewModels.RosterScheduleReport
         public List<RosterReportFilterResultDto> ActivityStatuses { get; set; }
         public DateTime Date { get; set; }
         public string ShiftName { get; set; }
+        public int TotalCount { get; set; } // total data count
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
     }
 }

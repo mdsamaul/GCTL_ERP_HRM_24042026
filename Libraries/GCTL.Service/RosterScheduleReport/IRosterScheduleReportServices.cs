@@ -12,5 +12,6 @@ namespace GCTL.Service.RosterScheduleReport
     public interface IRosterScheduleReportServices
     {
         Task<RosterReportFilterListDto> GetRosterDataAsync(RosterReportFilterDto filter);
+        Task<RosterReportFilterListDto> GetRosterDataPdfAsync(RosterReportFilterDto filter);
     }
 }
