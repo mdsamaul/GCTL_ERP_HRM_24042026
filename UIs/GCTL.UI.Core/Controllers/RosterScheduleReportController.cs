@@ -4,7 +4,7 @@ using GCTL.Service.RosterScheduleEntry;
 using GCTL.Service.RosterScheduleReport;
 using GCTL.UI.Core.ViewModels.RosterScheduleEntry;
 using Microsoft.AspNetCore.Mvc;
-
+using GCTL.Core.Helpers;
 namespace GCTL.UI.Core.Controllers
 {
     public class RosterScheduleReportController : BaseController
@@ -36,6 +36,8 @@ namespace GCTL.UI.Core.Controllers
         [HttpPost]
         public async Task<IActionResult> getAllPdfFilterEmp([FromBody] RosterReportFilterDto filterDto)
         {
+            //filterDto.ToAudit(LoginInfo);
+            filterDto.ToAudit(LoginInfo);
             var result = await rosterScheduleReportServices.GetRosterDataPdfAsync(filterDto);
             if (result != null)
             {

@@ -38820,8 +38820,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>8jjy8utq5z</Fingerprint>
-      <Integrity>nNjCfQlaH8DJWROZKw1gDwPTDb5xt+6wZGoJuU6OoAE=</Integrity>
+      <Fingerprint>h67lm5knmb</Fingerprint>
+      <Integrity>Z95gZnFbVjHilQqx5L355pL/GzKYZZqj5Y1cIuU33uo=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\RosterScheduleReport.js'))</OriginalItemSpec>

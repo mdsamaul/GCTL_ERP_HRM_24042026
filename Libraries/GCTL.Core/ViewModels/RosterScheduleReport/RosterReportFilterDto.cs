@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GCTL.Core.ViewModels.RosterScheduleReport
 {
-    public class RosterReportFilterDto
+    public class RosterReportFilterDto : BaseViewModel
     {
         public List<string> CompanyCodes { get; set; }
         public List<string> BranchCodes { get; set; }

@@ -61,6 +61,136 @@ namespace GCTL.Service.RosterScheduleReport
             _connectionString = configuration.GetConnectionString("ApplicationDbConnection");
         }
 
+       
+        public async Task<RosterReportFilterListDto> GetRosterDataAsync(RosterReportFilterDto filter)
+        {
+            var query = from rse in rosterEntryRepo.All()
+                        join eoi in empOffRepo.All() on rse.EmployeeId equals eoi.EmployeeId
+                        join e in employeeRepo.All() on rse.EmployeeId equals e.EmployeeId into empJoin
+                        from e in empJoin.DefaultIfEmpty()
+                        join dg in desiRepo.All() on eoi.DesignationCode equals dg.DesignationCode into dgJoin
+                        from dg in dgJoin.DefaultIfEmpty()
+                        join cb in branchRepo.All() on eoi.BranchCode equals cb.BranchCode into cbJoin
+                        from cb in cbJoin.DefaultIfEmpty()
+                        join dp in depRepo.All() on eoi.DepartmentCode equals dp.DepartmentCode into dpJoin
+                        from dp in dpJoin.DefaultIfEmpty()
+                        join cp in companyRepo.All() on eoi.CompanyCode equals cp.CompanyCode into cpJoin
+                        from cp in cpJoin.DefaultIfEmpty()
+                        join st in shiftRepo.All() on rse.ShiftCode equals st.ShiftCode into stJoin
+                        from st in stJoin.DefaultIfEmpty()
+                        join status in empStRepo.All() on eoi.EmployeeStatus equals status.EmployeeStatusId into statusJoin
+                        from status in statusJoin.DefaultIfEmpty()
+                        join rSAP in rosterApprovalRepo.All() on rse.RosterScheduleId equals rSAP.RosterScheduleId into rSAPJoin
+                        from rSAP in rSAPJoin.DefaultIfEmpty()
+                        where
+                            (filter.FromDate == null || rse.Date >= filter.FromDate) &&
+                            (filter.ToDate == null || rse.Date <= filter.ToDate) &&
+                            (status.EmployeeStatusId == "01")
+                        select new
+                        {
+                            EmpId = e.EmployeeId,
+                            EmpName = (e.FirstName ?? "") + " " + (e.LastName ?? ""),
+                            CompanyCode = eoi.CompanyCode ?? "",
+                            BranchCode = cb.BranchCode ?? "",
+                            DesignationCode = dg.DesignationCode ?? "",
+                            DesignationName = dg.DesignationName ?? "",
+                            DepartmentCode = dp.DepartmentCode ?? "",
+                            DepartmentName = dp.DepartmentName ?? "",
+                            BranchName = cb.BranchName ?? "",
+                            CompanyName = cp.CompanyName ?? "",
+                            EmployeeStatusCode = eoi.EmployeeStatus ?? "",
+                            Date = rse.Date,
+                            rosterId = rse.RosterScheduleId ?? "",
+                            shiftCode = st.ShiftCode ?? "",
+                            shiftName = (st.ShiftName ?? "") + " ( " + st.ShiftStartTime.ToString("hh:mm:ss tt") + " - " + st.ShiftEndTime.ToString("hh:mm:ss tt") + " )",
+                            remark = rse.Remark ?? "",
+                            ApprovalStatus = rse.ApprovalStatus ?? "",
+                            ApprovedBy = rse.ApprovedBy ?? "",
+                            ApprovalDatetime = rse.ApprovalDatetime
+                        };
+
+            // Filters
+            if (filter.CompanyCodes?.Any() == true)
+                query = query.Where(x => x.CompanyCode != null && filter.CompanyCodes.Contains(x.CompanyCode));
+
+            if (filter.BranchCodes?.Any() == true)
+                query = query.Where(x => x.BranchCode != null && filter.BranchCodes.Contains(x.BranchCode));
+
+            if (filter.DepartmentCodes?.Any() == true)
+                query = query.Where(x => x.DepartmentCode != null && filter.DepartmentCodes.Contains(x.DepartmentCode));
+
+            if (filter.DesignationCodes?.Any() == true)
+                query = query.Where(x => x.DesignationCode != null && filter.DesignationCodes.Contains(x.DesignationCode));
+
+            if (filter.EmployeeStatuses?.Any() == true)
+                query = query.Where(x => x.EmployeeStatusCode != null && filter.EmployeeStatuses.Contains(x.EmployeeStatusCode));
+
+            if (filter.EmployeeIDs?.Any() == true)
+                query = query.Where(x => x.EmpId != null && filter.EmployeeIDs.Contains(x.EmpId));
+
+            // Pagination
+            int skip = (filter.PageNumber - 1) * filter.PageSize;
+            var paginatedData = query
+                .OrderByDescending(x => x.Date)
+                .Skip(skip)
+                .Take(filter.PageSize);
+
+            int totalCount = await query.CountAsync();
+
+            var result = new RosterReportFilterListDto
+            {
+                // Filters
+                //Companies = await query.Where(x => x.CompanyCode != null && x.CompanyName != null)
+                //    .Select(x => new RosterReportFilterResultDto { Code = x.CompanyCode, Name = x.CompanyName })
+                //    .Distinct()
+                //    .ToListAsyncSafe(),
+                Companies = await query.Where(x => x.CompanyCode != null && x.CompanyName != null)
+                .Select(x => new RosterReportFilterResultDto { Code = x.CompanyCode, Name = x.CompanyName })
+                .Distinct().ToListAsyncSafe(),
+
+                Branches = await query.Where(x => x.BranchCode != null && x.BranchName != null)
+                    .Select(x => new RosterReportFilterResultDto { Code = x.BranchCode, Name = x.BranchName })
+                    .Distinct()
+                    .ToListAsyncSafe(),
+
+                Departments = await query.Where(x => x.DepartmentCode != null && x.DepartmentName != null)
+                    .Select(x => new RosterReportFilterResultDto { Code = x.DepartmentCode, Name = x.DepartmentName })
+                    .Distinct()
+                    .ToListAsyncSafe(),
+
+                Designations = await query.Where(x => x.DesignationCode != null && x.DesignationName != null)
+                    .Select(x => new RosterReportFilterResultDto { Code = x.DesignationCode, Name = x.DesignationName })
+                    .Distinct()
+                    .ToListAsyncSafe(),
+
+                Employees = await query.Where(x => x.EmpId != null && x.EmpName != null)
+                .Select(x => new RosterReportFilterResultDto
+                {
+                    Code = x.EmpId,
+                    Name = x.EmpName,
+                    DesignationName = x.DesignationName ?? "",
+                    DepartmentName = x.DepartmentName ?? "",
+                    BranchName = x.BranchName ?? "",
+                    CompanyName = x.CompanyName ?? "",
+                    RosterScheduleId = x.rosterId ?? "",
+                    Date = x.Date,
+                    DayName = x.Date.ToString("dddd"),
+                    ShiftName = x.shiftName ?? "",
+                    Remark = x.remark ?? "",
+                    ShowDate = x.Date.ToString("dd/MM/yyyy"),
+                    ApprovalStatus = x.ApprovalStatus,
+                    ApprovedBy = x.ApprovedBy,
+                    ShowApprovalDatetime = x.ApprovalDatetime.HasValue ? x.ApprovalDatetime.Value.ToString("dd/MM/yyyy") : ""
+                }).Distinct().ToListAsyncSafe(),
+
+                TotalCount = totalCount,
+                PageNumber = filter.PageNumber,
+                PageSize = filter.PageSize
+            };
+
+            return result;
+        }
+
         public async Task<RosterReportFilterListDto> GetRosterDataPdfAsync(RosterReportFilterDto filter)
         {
             var query = from rse in rosterEntryRepo.All()
@@ -83,7 +213,7 @@ namespace GCTL.Service.RosterScheduleReport
                         from rSAP in rSAPJoin.DefaultIfEmpty()
                         where
                             (filter.FromDate == null || rse.Date >= filter.FromDate) &&
-                                (filter.ToDate == null || rse.Date <= filter.ToDate) && (status.EmployeeStatusId == "01")
+                                (filter.ToDate == null || rse.Date <= filter.ToDate) 
                         select new
                         {
                             EmpId = e.EmployeeId,
@@ -100,7 +230,7 @@ namespace GCTL.Service.RosterScheduleReport
                             Date = rse.Date,
                             rosterId = rse.RosterScheduleId ?? "",
                             shiftCode = st.ShiftCode ?? "",
-                            shiftName = st.ShiftName + "( " + st.ShiftStartTime.ToString("hh:mm:tt") + " - " + st.ShiftEndTime.ToString("hh:mm:tt") + " )" ?? "",
+                            shiftName = st.ShiftName + "( " + st.ShiftStartTime.ToString("hh:mm:ss tt") + " - " + st.ShiftEndTime.ToString("hh:mm:ss tt") + " )" ?? "",
                             remark = rse.Remark ?? "",
                             ApprovalStatus = rse.ApprovalStatus ?? "",
                             ApprovedBy = rse.ApprovedBy ?? "",
@@ -163,138 +293,12 @@ namespace GCTL.Service.RosterScheduleReport
                     ShowDate = x.Date.ToString("dd/MM/yyyy"),
                     ApprovalStatus = x.ApprovalStatus,
                     ApprovedBy = x.ApprovedBy,
-                    ShowApprovalDatetime = x.ApprovalDatetime.HasValue ? x.ApprovalDatetime.Value.ToString("dd/MM/yyyy") : ""
+                    ShowApprovalDatetime = x.ApprovalDatetime.HasValue ? x.ApprovalDatetime.Value.ToString("dd/MM/yyyy") : "",
+                    Luser =filter.Luser
                 }).Distinct().ToListAsyncSafe(),
             };
 
             return result;
         }
-        public async Task<RosterReportFilterListDto> GetRosterDataAsync(RosterReportFilterDto filter)
-        {
-            var query = from rse in rosterEntryRepo.All()
-                        join eoi in empOffRepo.All() on rse.EmployeeId equals eoi.EmployeeId
-                        join e in employeeRepo.All() on rse.EmployeeId equals e.EmployeeId into empJoin
-                        from e in empJoin.DefaultIfEmpty()
-                        join dg in desiRepo.All() on eoi.DesignationCode equals dg.DesignationCode into dgJoin
-                        from dg in dgJoin.DefaultIfEmpty()
-                        join cb in branchRepo.All() on eoi.BranchCode equals cb.BranchCode into cbJoin
-                        from cb in cbJoin.DefaultIfEmpty()
-                        join dp in depRepo.All() on eoi.DepartmentCode equals dp.DepartmentCode into dpJoin
-                        from dp in dpJoin.DefaultIfEmpty()
-                        join cp in companyRepo.All() on eoi.CompanyCode equals cp.CompanyCode into cpJoin
-                        from cp in cpJoin.DefaultIfEmpty()
-                        join st in shiftRepo.All() on rse.ShiftCode equals st.ShiftCode into stJoin
-                        from st in stJoin.DefaultIfEmpty()
-                        join status in empStRepo.All() on eoi.EmployeeStatus equals status.EmployeeStatusId into statusJoin
-                        from status in statusJoin.DefaultIfEmpty()
-                        join rSAP in rosterApprovalRepo.All() on rse.RosterScheduleId equals rSAP.RosterScheduleId into rSAPJoin
-                        from rSAP in rSAPJoin.DefaultIfEmpty()
-                        where
-                            (filter.FromDate == null || rse.Date >= filter.FromDate) &&
-                            (filter.ToDate == null || rse.Date <= filter.ToDate) &&
-                            (status.EmployeeStatusId == "01")
-                        select new
-                        {
-                            EmpId = e.EmployeeId,
-                            EmpName = (e.FirstName ?? "") + " " + (e.LastName ?? ""),
-                            CompanyCode = eoi.CompanyCode ?? "",
-                            BranchCode = cb.BranchCode ?? "",
-                            DesignationCode = dg.DesignationCode ?? "",
-                            DesignationName = dg.DesignationName ?? "",
-                            DepartmentCode = dp.DepartmentCode ?? "",
-                            DepartmentName = dp.DepartmentName ?? "",
-                            BranchName = cb.BranchName ?? "",
-                            CompanyName = cp.CompanyName ?? "",
-                            EmployeeStatusCode = eoi.EmployeeStatus ?? "",
-                            Date = rse.Date,
-                            rosterId = rse.RosterScheduleId ?? "",
-                            shiftCode = st.ShiftCode ?? "",
-                            shiftName = (st.ShiftName ?? "") + " ( " + st.ShiftStartTime.ToString("hh:mm tt") + " - " + st.ShiftEndTime.ToString("hh:mm tt") + " )",
-                            remark = rse.Remark ?? "",
-                            ApprovalStatus = rse.ApprovalStatus ?? "",
-                            ApprovedBy = rse.ApprovedBy ?? "",
-                            ApprovalDatetime = rse.ApprovalDatetime
-                        };
-
-            // Filters
-            if (filter.CompanyCodes?.Any() == true)
-                query = query.Where(x => x.CompanyCode != null && filter.CompanyCodes.Contains(x.CompanyCode));
-
-            if (filter.BranchCodes?.Any() == true)
-                query = query.Where(x => x.BranchCode != null && filter.BranchCodes.Contains(x.BranchCode));
-
-            if (filter.DepartmentCodes?.Any() == true)
-                query = query.Where(x => x.DepartmentCode != null && filter.DepartmentCodes.Contains(x.DepartmentCode));
-
-            if (filter.DesignationCodes?.Any() == true)
-                query = query.Where(x => x.DesignationCode != null && filter.DesignationCodes.Contains(x.DesignationCode));
-
-            if (filter.EmployeeStatuses?.Any() == true)
-                query = query.Where(x => x.EmployeeStatusCode != null && filter.EmployeeStatuses.Contains(x.EmployeeStatusCode));
-
-            if (filter.EmployeeIDs?.Any() == true)
-                query = query.Where(x => x.EmpId != null && filter.EmployeeIDs.Contains(x.EmpId));
-
-            // Pagination
-            int skip = (filter.PageNumber - 1) * filter.PageSize;
-            var paginatedData = query
-                .OrderByDescending(x => x.Date)
-                .Skip(skip)
-                .Take(filter.PageSize);
-
-            int totalCount = await query.CountAsync();
-
-            var result = new RosterReportFilterListDto
-            {
-                // Filters
-                Companies = await query.Where(x => x.CompanyCode != null && x.CompanyName != null)
-                    .Select(x => new RosterReportFilterResultDto { Code = x.CompanyCode, Name = x.CompanyName })
-                    .Distinct()
-                    .ToListAsyncSafe(),
-
-                Branches = await query.Where(x => x.BranchCode != null && x.BranchName != null)
-                    .Select(x => new RosterReportFilterResultDto { Code = x.BranchCode, Name = x.BranchName })
-                    .Distinct()
-                    .ToListAsyncSafe(),
-
-                Departments = await query.Where(x => x.DepartmentCode != null && x.DepartmentName != null)
-                    .Select(x => new RosterReportFilterResultDto { Code = x.DepartmentCode, Name = x.DepartmentName })
-                    .Distinct()
-                    .ToListAsyncSafe(),
-
-                Designations = await query.Where(x => x.DesignationCode != null && x.DesignationName != null)
-                    .Select(x => new RosterReportFilterResultDto { Code = x.DesignationCode, Name = x.DesignationName })
-                    .Distinct()
-                    .ToListAsyncSafe(),
-
-                Employees = await query.Where(x => x.EmpId != null && x.EmpName != null)
-                .Select(x => new RosterReportFilterResultDto
-                {
-                    Code = x.EmpId,
-                    Name = x.EmpName,
-                    DesignationName = x.DesignationName ?? "",
-                    DepartmentName = x.DepartmentName ?? "",
-                    BranchName = x.BranchName ?? "",
-                    CompanyName = x.CompanyName ?? "",
-                    RosterScheduleId = x.rosterId ?? "",
-                    Date = x.Date,
-                    DayName = x.Date.ToString("dddd"),
-                    ShiftName = x.shiftName ?? "",
-                    Remark = x.remark ?? "",
-                    ShowDate = x.Date.ToString("dd/MM/yyyy"),
-                    ApprovalStatus = x.ApprovalStatus,
-                    ApprovedBy = x.ApprovedBy,
-                    ShowApprovalDatetime = x.ApprovalDatetime.HasValue ? x.ApprovalDatetime.Value.ToString("dd/MM/yyyy") : ""
-                }).Distinct().ToListAsyncSafe(),
-
-                TotalCount = totalCount,
-                PageNumber = filter.PageNumber,
-                PageSize = filter.PageSize
-            };
-
-            return result;
-        }
-
-
     }
 }
