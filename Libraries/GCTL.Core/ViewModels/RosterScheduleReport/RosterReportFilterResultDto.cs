@@ -30,5 +30,7 @@ namespace GCTL.Core.ViewModels.RosterScheduleReport
         public DateTime? ApprovalDatetime { get; set; }
         public string? ShowApprovalDatetime { get; set; }
         public string? Luser { get; set; }
+        public string? FromDate { get; set; }
+        public string? ToDate { get; set; }
     }
 }

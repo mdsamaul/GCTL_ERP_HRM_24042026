@@ -7,51 +7,44 @@
       "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\wwwroot\\js\\pages\\rosterschedulereport.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.service\\rosterschedulereport\\rosterschedulereportservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|solutionrelative:libraries\\gctl.service\\rosterschedulereport\\rosterschedulereportservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\controllers\\rosterschedulereportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\controllers\\rosterschedulereportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\rosterschedulereport\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\rosterschedulereport\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\wwwroot\\js\\pages\\rosterscheduleapproval.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\wwwroot\\js\\pages\\rosterscheduleapproval.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\rosterschedulereport\\rosterreportfilterresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\rosterschedulereport\\rosterreportfilterresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\rosterschedulereport\\rosterreportfilterlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\rosterschedulereport\\rosterreportfilterlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\rosterschedulereport\\_grid.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\rosterschedulereport\\_grid.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\rosterschedulereport\\rosterreportfilterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\rosterschedulereport\\rosterreportfilterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\controllers\\rosterscheduleapprovalcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\controllers\\rosterscheduleapprovalcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.service\\pfassignentry\\pfassignentryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|solutionrelative:libraries\\gctl.service\\pfassignentry\\pfassignentryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.service\\rosterschedulereport\\rosterschedulereportservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|solutionrelative:libraries\\gctl.service\\rosterschedulereport\\rosterschedulereportservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.service\\rosterschedulereport\\irosterschedulereportservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|solutionrelative:libraries\\gctl.service\\rosterschedulereport\\irosterschedulereportservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\DELL\\AppData\\Local\\SourceServer\\55bd126fe278f2527bc6024c9a6e05145cc5b616b3f63d918f76daa4126b5988\\UIs\\GCTL.UI.Core\\Controllers\\RosterScheduleReportController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\controllers\\rosterschedulereportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\controllers\\rosterschedulereportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\rosterschedulereport\\_grid.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\rosterschedulereport\\_grid.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\rosterschedulereport\\rosterreportfilterlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\rosterschedulereport\\rosterreportfilterlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\rosterschedulereport\\rosterreportfilterresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\rosterschedulereport\\rosterreportfilterresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\rosterschedulereport\\rosterreportfilterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\rosterschedulereport\\rosterreportfilterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\wwwroot\\js\\pages\\rosterscheduleapproval.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\wwwroot\\js\\pages\\rosterscheduleapproval.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.service\\pfassignentry\\pfassignentryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|solutionrelative:libraries\\gctl.service\\pfassignentry\\pfassignentryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\rosterscheduleapproval\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -64,33 +57,24 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 343,
-          "SelectedChildIndex": 11,
+          "DockedWidth": 387,
+          "SelectedChildIndex": 10,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{26341fe2-71dd-46fd-bb1b-2e51a92a0d64}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "RosterReportFilterResultDto.cs",
               "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\RosterScheduleReport\\RosterReportFilterResultDto.cs",
               "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\RosterScheduleReport\\RosterReportFilterResultDto.cs",
               "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\RosterScheduleReport\\RosterReportFilterResultDto.cs",
               "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\RosterScheduleReport\\RosterReportFilterResultDto.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAuwBoAAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAABcAAAAAAAAAAADwvyEAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-26T06:41:37.403Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "RosterScheduleApprovalController.cs",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Controllers\\RosterScheduleApprovalController.cs",
-              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Controllers\\RosterScheduleApprovalController.cs",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Controllers\\RosterScheduleApprovalController.cs",
-              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Controllers\\RosterScheduleApprovalController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-26T04:27:43.304Z",
               "EditorCaption": ""
             },
             {
@@ -107,26 +91,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 3,
               "Title": "IRosterScheduleReportServices.cs",
               "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\RosterScheduleReport\\IRosterScheduleReportServices.cs",
               "RelativeDocumentMoniker": "Libraries\\GCTL.Service\\RosterScheduleReport\\IRosterScheduleReportServices.cs",
               "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\RosterScheduleReport\\IRosterScheduleReportServices.cs",
               "RelativeToolTip": "Libraries\\GCTL.Service\\RosterScheduleReport\\IRosterScheduleReportServices.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA0AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA4AAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-25T11:14:42.978Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "RosterScheduleReportController.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\AppData\\Local\\SourceServer\\55bd126fe278f2527bc6024c9a6e05145cc5b616b3f63d918f76daa4126b5988\\UIs\\GCTL.UI.Core\\Controllers\\RosterScheduleReportController.cs",
-              "ToolTip": "C:\\Users\\DELL\\AppData\\Local\\SourceServer\\55bd126fe278f2527bc6024c9a6e05145cc5b616b3f63d918f76daa4126b5988\\UIs\\GCTL.UI.Core\\Controllers\\RosterScheduleReportController.cs [Read Only]",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAmwBsAAAAIAAAAAQAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-25T10:51:40.362Z",
-              "EditorCaption": " [Read Only]"
+              "WhenOpened": "2025-05-25T11:14:42.978Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -136,7 +110,7 @@
               "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\RosterScheduleReport\\RosterReportFilterDto.cs",
               "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\RosterScheduleReport\\RosterReportFilterDto.cs",
               "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\RosterScheduleReport\\RosterReportFilterDto.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAA1wAgAAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAqwBEAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-25T10:34:56.737Z",
               "EditorCaption": ""
@@ -156,52 +130,52 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "RosterScheduleReportServices.cs",
               "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\RosterScheduleReport\\RosterScheduleReportServices.cs",
               "RelativeDocumentMoniker": "Libraries\\GCTL.Service\\RosterScheduleReport\\RosterScheduleReportServices.cs",
               "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\RosterScheduleReport\\RosterScheduleReportServices.cs",
               "RelativeToolTip": "Libraries\\GCTL.Service\\RosterScheduleReport\\RosterScheduleReportServices.cs",
-              "ViewState": "AgIAABEBAAAAAAAAAAAuwCUBAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAAPUAAAAAAAAAAAAwwC4BAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-25T10:30:10.586Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 5,
               "Title": "_Grid.cshtml",
               "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\RosterScheduleReport\\_Grid.cshtml",
               "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\RosterScheduleReport\\_Grid.cshtml",
               "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\RosterScheduleReport\\_Grid.cshtml",
               "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\RosterScheduleReport\\_Grid.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-05-25T05:44:54.063Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\RosterScheduleReport\\Index.cshtml",
               "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\RosterScheduleReport\\Index.cshtml",
               "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\RosterScheduleReport\\Index.cshtml",
               "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\RosterScheduleReport\\Index.cshtml",
-              "ViewState": "AgIAAGsAAAAAAAAAAAAAAG0AAAA+AAAAAAAAAA==",
+              "ViewState": "AgIAAKUAAAAAAAAAAAAAALYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-05-25T04:08:14.53Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "RosterScheduleReportController.cs",
               "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Controllers\\RosterScheduleReportController.cs",
               "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Controllers\\RosterScheduleReportController.cs",
               "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Controllers\\RosterScheduleReportController.cs",
               "RelativeToolTip": "UIs\\GCTL.UI.Core\\Controllers\\RosterScheduleReportController.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAApwBwAAABBAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGIAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-25T04:06:38.225Z",
               "EditorCaption": ""
@@ -214,7 +188,7 @@
               "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\RosterScheduleReport.js",
               "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\RosterScheduleReport.js",
               "RelativeToolTip": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\RosterScheduleReport.js",
-              "ViewState": "AgIAAG0BAAAAAAAAAAAAAHsBAAA1AAAAAAAAAA==",
+              "ViewState": "AgIAACQBAAAAAAAAAAAowDwBAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-05-25T03:24:32.888Z",
               "EditorCaption": ""
@@ -222,12 +196,12 @@
           ]
         },
         {
-          "DockedWidth": 57,
+          "DockedWidth": 13,
           "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 11,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\RosterScheduleApproval\\Index.cshtml",
               "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\RosterScheduleApproval\\Index.cshtml",
@@ -235,12 +209,11 @@
               "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\RosterScheduleApproval\\Index.cshtml",
               "ViewState": "AgIAAEsAAAAAAAAAAAAIwHIAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-25T04:08:22.656Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-25T04:08:22.656Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "RosterScheduleApproval.js",
               "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\RosterScheduleApproval.js",
               "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\RosterScheduleApproval.js",

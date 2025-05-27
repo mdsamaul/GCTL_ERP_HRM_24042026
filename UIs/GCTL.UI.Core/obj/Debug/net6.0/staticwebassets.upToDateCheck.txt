@@ -2005,6 +2005,7 @@ wwwroot\images\CoIcon.ico
 wwwroot\images\default-150x150.png
 wwwroot\images\delete.png
 wwwroot\images\delete2.png
+wwwroot\images\DP_logo.png
 wwwroot\images\edit.png
 wwwroot\images\eurolablogo.jpeg
 wwwroot\images\favicon.ico

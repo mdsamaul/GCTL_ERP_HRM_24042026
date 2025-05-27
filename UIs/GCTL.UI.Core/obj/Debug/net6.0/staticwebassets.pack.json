@@ -9373,6 +9373,10 @@
       "PackagePath": "staticwebassets\\images\\CoIcon.ico"
     },
     {
+      "Id": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\images\\DP_logo.png",
+      "PackagePath": "staticwebassets\\images\\DP_logo.png"
+    },
+    {
       "Id": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\images\\Preloader_2.gif",
       "PackagePath": "staticwebassets\\images\\Preloader_2.gif"
     },

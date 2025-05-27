@@ -9,10 +9,7 @@
             employeeIds: "#employeeSelect",
             FromDate: "#FromDateSelect",
             FlatPicker: ".flatDate",
-            ToDate: "#ToDateSelect",
-            load: function () {
-                //console.log("Loading...");
-            }
+            ToDate: "#ToDateSelect",         
         }, options);
 
         var filterUrl = settings.baseUrl + "/getAllFilterEmp";
@@ -109,8 +106,6 @@
             };
             return filterData;
         };
-
-        // Array Helper
         var toArray = function (value) {
             if (!value) return [];
             if (Array.isArray(value)) return value;
@@ -247,6 +242,7 @@
         function LoadFullRosterTable(callback) {
             showLoading();
             var filterData = getFilterValue();
+            //console.log(filterData);
             $.ajax({
                 url: DownloadUrl,
                 type: 'POST',
@@ -274,44 +270,66 @@
 
 
         var PdfDownload = function () {
-                LoadFullRosterTable(function (employees) {
+            LoadFullRosterTable(function (employees) {              
+
+                getImageBase64FromUrl('/images/DP_logo.png', function (base64Logo) {
                     const { jsPDF } = window.jspdf;
                     const doc = new jsPDF({
                         orientation: 'landscape',
-                        unit: 'mm',
-                        format: 'a4'
+                        unit: 'pt',
+                        format: [842, 595]
                     });
 
-                    if (!employees || employees.length === 0) {
-                        alert("No data found.");
-                        return;
-                    }
-
                     const pageWidth = doc.internal.pageSize.getWidth();
-                    const companyName = employees[0].companyName || "Metro Tech Ltd.";
-                    const currentDate = new Date().toLocaleDateString();
+                    const companyName = employees[0].companyName || "";
+                    const fromDate = employees[0].fromDate || "";
+                    const toDate = employees[0].toDate || "";
+                    const now = new Date();
 
-                    function addHeader() {
+                    const day = String(now.getDate()).padStart(2, '0');
+                    const month = String(now.getMonth() + 1).padStart(2, '0');
+                    const year = now.getFullYear();
+
+                    let hours = now.getHours();
+                    const minutes = String(now.getMinutes()).padStart(2, '0');
+                    const seconds = String(now.getSeconds()).padStart(2, '0');
+                    const ampm = hours >= 12 ? 'PM' : 'AM';
+                    hours = hours % 12 || 12;
+                    hours = String(hours).padStart(2, '0');
+                    const currentDate = `${day}/${month}/${year} ${hours}:${minutes}:${seconds} ${ampm}`;
+
+                    let TotalEmpCount = 0;
+
+                    function drawHeader(doc) {
+                        if (base64Logo) {
+                            doc.addImage(base64Logo, 'PNG', 25, 10, 80, 50); 
+                        }
+
+                        // Company Name
                         doc.setFontSize(18);
                         doc.setFont("times", "bold");
-                        doc.text(companyName, pageWidth / 2, 10, { align: 'center' });
+                        doc.text(companyName, pageWidth / 2, 40, { align: 'center' });
 
-                        doc.setFontSize(12);
-                        doc.setFont("times", "normal");
-                        doc.text("Roster Schedule Report", pageWidth / 2, 16, { align: 'center' });
+                        doc.setFontSize(13);
+                        doc.setFont("times", "semibold");
+                        doc.text("Roster Schedule Report", pageWidth / 2, 58, { align: 'center' });
 
-                        const lineLength = pageWidth / 5;
+                        const lineLength = pageWidth / 6.8;
                         const startX = (pageWidth - lineLength) / 2;
                         const endX = startX + lineLength;
-
                         doc.setDrawColor(0);
                         doc.setLineWidth(0.5);
-                        doc.line(startX, 18, endX, 18);
+                        doc.line(startX, 63, endX, 63);
 
+                        doc.setFontSize(10);
+                        doc.setFont("times", "normal");
+                        const fromToText = "Date: " + fromDate + "-" + toDate;
+                        doc.text(fromToText, pageWidth / 2, 78, { align: 'center' });
                     }
-                    addHeader();
 
-                    let startY = 25;
+                    drawHeader(doc);
+
+                    let startY = 95;
 
                     let departmentGroups = {};
                     employees.forEach(function (emp) {
@@ -323,11 +341,11 @@
                     });
 
                     for (const dept in departmentGroups) {
-                        if (startY !== 25) startY += 10;
+                        if (startY !== 95) startY += 20;
 
                         doc.setFontSize(14);
                         doc.setFont("times", "bold");
-                        doc.text("Department: " + dept, 10, startY);
+                        doc.text("Department: " + dept, 20, startY);
                         startY += 6;
 
                         let tempTable = $('<table>');
@@ -335,6 +353,7 @@
                         let tbody = $('<tbody>');
 
                         departmentGroups[dept].forEach(function (emp, index) {
+                            TotalEmpCount++;
                             let row = $('<tr>');
                             row.append('<td>' + (index + 1) + '</td>');
                             row.append('<td>' + emp.code + '</td>');
@@ -357,6 +376,7 @@
                             html: tempTable[0],
                             startY: startY,
                             theme: 'grid',
+                            margin: { top: 100, left: 15, right: 15 },
                             styles: {
                                 fontSize: 8,
                                 cellPadding: 2,
@@ -366,21 +386,20 @@
                             },
                             headStyles: {
                                 fillColor: [230, 230, 230],
-                                textColor: [50, 50, 50],
+                                textColor: [0, 0, 0],
                                 fontStyle: 'bold',
                                 lineColor: [180, 180, 180],
                                 lineWidth: 0.1,
                                 halign: 'center',
                                 valign: 'middle'
                             },
-                            margin: { top: 25, left: 10, right: 10 },
                             columnStyles: {
                                 1: { minCellWidth: 22, maxCellWidth: 35, overflow: 'linebreak' },
                                 2: { minCellWidth: 28, maxCellWidth: 55, overflow: 'linebreak' },
                                 3: { minCellWidth: 28, maxCellWidth: 40, overflow: 'linebreak' },
                                 4: { minCellWidth: 20, maxCellWidth: 35, overflow: 'linebreak' },
                                 7: { minCellWidth: 55, maxCellWidth: 70, overflow: 'linebreak' },
-                                8: { minCellWidth: 30, maxCellWidth: 50, overflow: 'linebreak' },
+                                8: { minCellWidth: 100, maxCellWidth: 110, overflow: 'linebreak' },
                                 0: { halign: 'center', valign: 'middle' },
                                 5: { halign: 'center', valign: 'middle' },
                                 6: { halign: 'center', valign: 'middle' },
@@ -389,23 +408,22 @@
                                 11: { halign: 'center', valign: 'middle' },
                             },
                             pageBreak: 'auto',
-
                             didDrawPage: function (data) {
+                                drawHeader(doc);
+                                const pageNumber = doc.internal.getCurrentPageInfo().pageNumber;
+                                const totalPages = '{total_pages_count_string}';
                                 const pageSize = doc.internal.pageSize;
                                 const pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight();
-                                const pageWidth = pageSize.width ? pageSize.width : pageSize.getWidth();
 
-                                let pageNumber = doc.internal.getCurrentPageInfo().pageNumber;
-                                let totalPages = '{total_pages_count_string}';
+                                let leftText = 'Print Datetime: ' + currentDate;
+                                let rightText = 'Page ' + pageNumber + ' of ' + totalPages;
 
-                                let leftText = 'Page ' + pageNumber + ' of ' + totalPages;
-                                let userActionText = 'Created by: ' + employees[0].luser + ' - ' + currentDate;
+                                doc.setFontSize(10);
+                                doc.setTextColor(50, 50, 50);
+                                doc.setFont("times", "normal");
 
-                                doc.setFontSize(9);
-                                doc.setTextColor(100);
-
-                                doc.text(leftText, 10, pageHeight - 10);
-                                doc.text(userActionText, pageWidth - 10, pageHeight - 10, { align: 'right' });
+                                doc.text(leftText, 15, pageHeight - 10);
+                                doc.text(rightText, pageWidth + 83, pageHeight - 10, { align: 'right' });
                             }
                         });
 
@@ -415,182 +433,247 @@
                     if (typeof doc.putTotalPages === 'function') {
                         doc.putTotalPages('{total_pages_count_string}');
                     }
-                doc.save('Roster_Report_By_Department.pdf');
+
+                    let finalY = doc.lastAutoTable.finalY || 270;
+                    let pageHeight = doc.internal.pageSize.getHeight();
+
+                    if (finalY + 20 > pageHeight - 20) {
+                        doc.addPage();
+                        drawHeader(doc);
+                        finalY = 100;
+                    }
+
+                    doc.setFontSize(10);
+                    doc.setTextColor(0, 0, 0);
+                    doc.text('Total Employee : ' + TotalEmpCount, 10, finalY + 20);
+
+                    doc.save('Roster_Report_By_Department.pdf');
                 });
-
+            })
         };
-
 
         $('#btnPreviewPdf').on('click', function () {
             PdfPreview();
         });
+             
+
+
+        function getImageBase64FromUrl(url, callback) {
+            var img = new Image();
+            img.crossOrigin = 'Anonymous';
+            img.onload = function () {
+                var canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                var ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                var dataURL = canvas.toDataURL('image/png');
+                callback(dataURL);
+            };
+            img.onerror = function () {
+                //console.error("Image not found or CORS issue.");
+                callback(null);
+            };
+            img.src = url;
+        }
 
         var PdfPreview = function () {
             LoadFullRosterTable(function (employees) {
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF({
-                    orientation: 'landscape',
-                    unit: 'mm',
-                    format: 'a4'
-                });
-                //const doc = new jsPDF({
-                //    orientation: 'landscape',
-                //    unit: 'pt', 
-                //    format: [842, 595]
-                //});
-
                 if (!employees || employees.length === 0) {
                     alert("No data found.");
                     return;
                 }
 
-                const pageWidth = doc.internal.pageSize.getWidth();
-                const companyName = employees[0].companyName || "Metro Tech Ltd.";
-                const currentDate = new Date().toLocaleDateString();
-
-                function addHeader() {
-                    doc.setFontSize(18);
-                    doc.setFont("times", "bold");
-                    doc.text(companyName, pageWidth / 2, 10, { align: 'center' });
-
-                    doc.setFontSize(12);
-                    doc.setFont("times", "normal");
-                    doc.text("Roster Schedule Report", pageWidth / 2, 16, { align: 'center' });
-
-                    const lineLength = pageWidth / 5; 
-                    const startX = (pageWidth - lineLength) / 2;  
-                    const endX = startX + lineLength;  
-
-                    doc.setDrawColor(0);
-                    doc.setLineWidth(0.5);
-                    doc.line(startX, 18, endX, 18);
-
-                }
-                addHeader();
-
-                let startY = 25;
-
-                let departmentGroups = {};
-                employees.forEach(function (emp) {
-                    let dept = emp.departmentName || "Unknown";
-                    if (!departmentGroups[dept]) {
-                        departmentGroups[dept] = [];
-                    }
-                    departmentGroups[dept].push(emp);
-                });
-
-                for (const dept in departmentGroups) {
-                    if (startY !== 25) startY += 10;
-
-                    doc.setFontSize(14);
-                    doc.setFont("times", "bold");
-                    doc.text("Department: " + dept, 10, startY);
-                    startY += 6;
-
-                    let tempTable = $('<table>');
-                    tempTable.append($('#RosterScheduleReport-grid thead').clone());
-                    let tbody = $('<tbody>');
-
-                    departmentGroups[dept].forEach(function (emp, index) {
-                        let row = $('<tr>');
-                        row.append('<td>' + (index + 1) + '</td>');
-                        row.append('<td>' + emp.code + '</td>');
-                        row.append('<td>' + emp.name + '</td>');
-                        row.append('<td>' + emp.designationName + '</td>');
-                        row.append('<td>' + emp.branchName + '</td>');
-                        row.append('<td>' + emp.showDate + '</td>');
-                        row.append('<td>' + emp.dayName + '</td>');
-                        row.append('<td>' + emp.shiftName + '</td>');
-                        row.append('<td>' + emp.remark + '</td>');
-                        row.append('<td>' + emp.approvalStatus + '</td>');
-                        row.append('<td>' + emp.approvedBy + '</td>');
-                        row.append('<td>' + emp.showApprovalDatetime + '</td>');
-                        tbody.append(row);
+                getImageBase64FromUrl('/images/DP_logo.png', function (base64Logo) {
+                    const { jsPDF } = window.jspdf;
+                    const doc = new jsPDF({
+                        orientation: 'landscape',
+                        unit: 'pt',
+                        format: [842, 595]
                     });
 
-                    tempTable.append(tbody);
+                    const pageWidth = doc.internal.pageSize.getWidth();
+                    const companyName = employees[0].companyName || "";
+                    const fromDate = employees[0].fromDate || "";
+                    const toDate = employees[0].toDate || "";
+                    const now = new Date();
 
-                    doc.autoTable({
-                        html: tempTable[0],
-                        startY: startY,
-                        theme: 'grid',
-                        styles: {
-                            fontSize: 8,
-                            cellPadding: 2,
-                            lineColor: [200, 200, 200],
-                            lineWidth: 0.1,
-                            textColor: [0, 0, 0],
-                        },
-                        headStyles: {
-                            fillColor: [230, 230, 230],
-                            textColor: [50, 50, 50],
-                            fontStyle: 'bold',
-                            lineColor: [180, 180, 180],
-                            lineWidth: 0.1,
-                            halign: 'center',
-                            valign: 'middle'
-                        },
-                        margin: { top: 25, left: 10, right: 10 },
-                        columnStyles: {
-                            1: { minCellWidth: 22, maxCellWidth: 35, overflow: 'linebreak' },
-                            2: { minCellWidth: 28, maxCellWidth: 55, overflow: 'linebreak' },
-                            3: { minCellWidth: 28, maxCellWidth: 40, overflow: 'linebreak' },
-                            4: { minCellWidth: 20, maxCellWidth: 35, overflow: 'linebreak' },
-                            7: { minCellWidth: 55, maxCellWidth: 70, overflow: 'linebreak' },
-                            8: { minCellWidth: 30, maxCellWidth: 50, overflow: 'linebreak' },
-                            0: { halign: 'center', valign: 'middle' },
-                            5: { halign: 'center', valign: 'middle' },
-                            6: { halign: 'center', valign: 'middle' },
-                            9: { halign: 'center', valign: 'middle' },
-                            10: { halign: 'center', valign: 'middle' },
-                            11: { halign: 'center', valign: 'middle' },
-                        },
-                        pageBreak: 'auto',
+                    const day = String(now.getDate()).padStart(2, '0');
+                    const month = String(now.getMonth() + 1).padStart(2, '0');
+                    const year = now.getFullYear();
 
-                        didDrawPage: function (data) {
-                            const pageSize = doc.internal.pageSize;
-                            const pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight();
-                            const pageWidth = pageSize.width ? pageSize.width : pageSize.getWidth();
+                    let hours = now.getHours();
+                    const minutes = String(now.getMinutes()).padStart(2, '0');
+                    const seconds = String(now.getSeconds()).padStart(2, '0');
+                    const ampm = hours >= 12 ? 'PM' : 'AM';
+                    hours = hours % 12 || 12;
+                    hours = String(hours).padStart(2, '0');
+                    const currentDate = `${day}/${month}/${year} ${hours}:${minutes}:${seconds} ${ampm}`;
 
-                            let pageNumber = doc.internal.getCurrentPageInfo().pageNumber;
-                            let totalPages = '{total_pages_count_string}';
+                    let TotalEmpCount = 0;
 
-                            let leftText = 'Page ' + pageNumber + ' of ' + totalPages;
-                            let userActionText = 'Created by: ' + employees[0].luser + ' - ' + currentDate;
-
-                            doc.setFontSize(9);
-                            doc.setTextColor(100);
-
-                            doc.text(leftText, 10, pageHeight - 10);
-                            doc.text(userActionText, pageWidth - 10, pageHeight - 10, { align: 'right' });
+                    function drawHeader(doc) {
+                        // Logo (if available)
+                        if (base64Logo) {
+                            doc.addImage(base64Logo, 'PNG', 25, 10, 80, 50); 
                         }
+
+                        // Company Name
+                        doc.setFontSize(18);
+                        doc.setFont("times", "bold");
+                        doc.text(companyName, pageWidth / 2, 40, { align: 'center' });
+
+                        doc.setFontSize(13);
+                        doc.setFont("times", "normal");
+                        doc.text("Roster Schedule Report", pageWidth / 2, 58, { align: 'center' });
+
+                        const lineLength = pageWidth / 6.8;
+                        const startX = (pageWidth - lineLength) / 2;
+                        const endX = startX + lineLength;
+                        doc.setDrawColor(0);
+                        doc.setLineWidth(0.5);
+                        doc.line(startX, 63, endX, 63);
+
+                        doc.setFontSize(10);
+                        doc.setFont("times", "normal");
+                        const fromToText = "Date: " + fromDate + "-" + toDate;
+                        doc.text(fromToText, pageWidth / 2, 78, { align: 'center' });
+                    }
+
+                    drawHeader(doc);
+
+                    let startY = 95;
+
+                    let departmentGroups = {};
+                    employees.forEach(function (emp) {
+                        let dept = emp.departmentName || "Unknown";
+                        if (!departmentGroups[dept]) {
+                            departmentGroups[dept] = [];
+                        }
+                        departmentGroups[dept].push(emp);
                     });
 
-                    startY = doc.lastAutoTable.finalY;
-                }
+                    for (const dept in departmentGroups) {
+                        if (startY !== 95) startY += 20;
 
-                if (typeof doc.putTotalPages === 'function') {
-                    doc.putTotalPages('{total_pages_count_string}');
-                }
+                        doc.setFontSize(14);
+                        doc.setFont("times", "bold");
+                        doc.text("Department: " + dept, 20, startY);
+                        startY += 6;
 
-                const blob = doc.output('blob');
-                const url = URL.createObjectURL(blob);
+                        let tempTable = $('<table>');
+                        tempTable.append($('#RosterScheduleReport-grid thead').clone());
+                        let tbody = $('<tbody>');
 
-                $('#pdf-preview-container').html(`<iframe src="${url}" width="100%" height="600px" style="border:1px solid #ccc;"></iframe>`);
-                $('#pdf-preview-container').show();
+                        departmentGroups[dept].forEach(function (emp, index) {
+                            TotalEmpCount++;
+                            let row = $('<tr>');
+                            row.append('<td>' + (index + 1) + '</td>');
+                            row.append('<td>' + emp.code + '</td>');
+                            row.append('<td>' + emp.name + '</td>');
+                            row.append('<td>' + emp.designationName + '</td>');
+                            row.append('<td>' + emp.branchName + '</td>');
+                            row.append('<td>' + emp.showDate + '</td>');
+                            row.append('<td>' + emp.dayName + '</td>');
+                            row.append('<td>' + emp.shiftName + '</td>');
+                            row.append('<td>' + emp.remark + '</td>');
+                            row.append('<td>' + emp.approvalStatus + '</td>');
+                            row.append('<td>' + emp.approvedBy + '</td>');
+                            row.append('<td>' + emp.showApprovalDatetime + '</td>');
+                            tbody.append(row);
+                        });
+
+                        tempTable.append(tbody);
+
+                        doc.autoTable({
+                            html: tempTable[0],
+                            startY: startY,
+                            theme: 'grid',
+                            margin: { top: 100, left: 15, right: 15 },
+                            styles: {
+                                fontSize: 8,
+                                cellPadding: 2,
+                                lineColor: [200, 200, 200],
+                                lineWidth: 0.1,
+                                textColor: [0, 0, 0],
+                            },
+                            headStyles: {
+                                fillColor: [230, 230, 230],
+                                textColor: [0, 0, 0],
+                                fontStyle: 'bold',
+                                lineColor: [180, 180, 180],
+                                lineWidth: 0.1,
+                                halign: 'center',
+                                valign: 'middle'
+                            },
+                            columnStyles: {
+                                1: { minCellWidth: 22, maxCellWidth: 35, overflow: 'linebreak' },
+                                2: { minCellWidth: 28, maxCellWidth: 55, overflow: 'linebreak' },
+                                3: { minCellWidth: 28, maxCellWidth: 40, overflow: 'linebreak' },
+                                4: { minCellWidth: 20, maxCellWidth: 35, overflow: 'linebreak' },
+                                7: { minCellWidth: 55, maxCellWidth: 70, overflow: 'linebreak' },
+                                8: { minCellWidth: 100, maxCellWidth: 110, overflow: 'linebreak' },
+                                0: { halign: 'center', valign: 'middle' },
+                                5: { halign: 'center', valign: 'middle' },
+                                6: { halign: 'center', valign: 'middle' },
+                                9: { halign: 'center', valign: 'middle' },
+                                10: { halign: 'center', valign: 'middle' },
+                                11: { halign: 'center', valign: 'middle' },
+                            },
+                            pageBreak: 'auto',
+                            didDrawPage: function (data) {
+                                drawHeader(doc);
+                                const pageNumber = doc.internal.getCurrentPageInfo().pageNumber;
+                                const totalPages = '{total_pages_count_string}';
+                                const pageSize = doc.internal.pageSize;
+                                const pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight();
+
+                                let leftText = 'Print Datetime: ' + currentDate;
+                                let rightText = 'Page ' + pageNumber + ' of ' + totalPages;
+
+                                doc.setFontSize(10);
+                                doc.setTextColor(50, 50, 50);
+                                doc.setFont("times", "normal");
+
+                                doc.text(leftText, 15, pageHeight - 10);
+                                doc.text(rightText, pageWidth + 83, pageHeight - 10, { align: 'right' });
+                            }
+                        });
+
+                        startY = doc.lastAutoTable.finalY;
+                    }
+
+                    if (typeof doc.putTotalPages === 'function') {
+                        doc.putTotalPages('{total_pages_count_string}');
+                    }
+
+                    let finalY = doc.lastAutoTable.finalY || 270;
+                    let pageHeight = doc.internal.pageSize.getHeight();
+
+                    if (finalY + 20 > pageHeight - 20) {
+                        doc.addPage();
+                        drawHeader(doc);
+                        finalY = 100;
+                    }
+
+                    doc.setFontSize(10);
+                    doc.setTextColor(0, 0, 0);
+                    doc.text('Total Employee : ' + TotalEmpCount, 10, finalY + 20);
+
+                    const blob = doc.output('blob');
+                    const url = URL.createObjectURL(blob);
+
+                    $('#pdf-preview-container').html(`<iframe src="${url}" width="100%" height="600px" style="border:1px solid #ccc;"></iframe>`);
+                    $('#pdf-preview-container').show();
+                });
             });
         };
-
-
-
         var downloadTableAsWord = function () {
             LoadFullRosterTable(function (employees) {
                 if (!employees || employees.length === 0) {
                     alert("No data found!");
                     return;
                 }
-
-                // Group by department
                 let departmentGroups = {};
                 employees.forEach(function (emp) {
                     let dept = emp.departmentName || "Unknown";
@@ -602,6 +685,8 @@
 
                 var companyName = employees[0].companyName || "";
                 var reportTitle = "Employee Roster Report";
+                var fromDate = employees[0].fromDate || "";
+                var toDate = employees[0].toDate || "";
                 var currentDate = new Date().toLocaleDateString();
                 var userName = employees[0].luser || ""; 
 
@@ -623,7 +708,7 @@
                     "body { font-family: 'Times New Roman', serif; margin: 0; padding: 0; } " +
                     ".header { text-align: center; margin-top: 10px; font-size: 20px; font-weight: bold; } " +
                     ".sub-header { text-align: center; font-size: 14px; margin-top: 5px; } " +
-                    "h2 { font-size: 16px; font-weight: bold; margin: 20px 0 10px; color: #333; border-bottom: 2px solid #ccc; padding-bottom: 5px; } " +
+                    "h2 { font-size: 16px; font-weight: bold; margin: 20px 0 10px; color: #333; padding-bottom: 5px; display: inline-block; } " +
                     "table { border-collapse: collapse; width: 100%; margin: 0; } " +
                     "table, th, td { border: 1px solid black; padding: 0; margin: 0; font-size: 10px; vertical-align: top; line-height: 1; } " +
                     "th { background-color: #f0f0f0; font-weight: bold; text-align: center; } " +
@@ -643,7 +728,9 @@
                     "</head>" +
                     "<body><div class='Section1'>" +
                     "<div class='header'>" + companyName + "</div>" +
-                    "<div class='sub-header'>" + reportTitle + "</div>";
+                    "<div class='sub-header'>" + reportTitle + "</div>" +
+                    "<div class='sub-header' style='font-size: 10px;'>"+"Date: " + fromDate + "-" + toDate + "</div>";
+
 
                 // Table header
                 var originalTable = document.getElementById("RosterScheduleReport-grid");
@@ -678,7 +765,7 @@
                         content += '<td style="text-align: center; padding: 0; margin: 0;">' + (emp.showDate || '') + '</td>';
                         content += '<td style="text-align: center; padding: 0; margin: 0;">' + (emp.dayName || '') + '</td>';
                         content += '<td style="padding: 0 0 0 5px; margin: 0;">' + (emp.shiftName || '') + '</td>';
-                        content += '<td style="width: 100px; max-width: 100px; word-wrap: break-word; padding: 0 0 0 5px; margin: 0;">' + (emp.remark || '') + '</td>';
+                        content += '<td style="width: 150px; max-width: 170px; word-wrap: break-word; padding: 0 0 0 5px; margin: 0;">' + (emp.remark || '') + '</td>';
                         content += '<td style="text-align: center; padding: 0; margin: 0;">' + (emp.approvalStatus || '') + '</td>';
                         content += '<td style="text-align: center; padding: 0; margin: 0;">' + (emp.approvedBy || '') + '</td>';
                         content += '<td style="text-align: center; padding: 0; margin: 0;">' + (emp.showApprovalDatetime || '') + '</td>';
@@ -705,224 +792,34 @@
             });
         };
 
-
-
         var downloadTableAsExcel = function () {
             LoadFullRosterTable(function (employees) {
                 if (!employees || employees.length === 0) {
                     alert("No data found!");
                     return;
                 }
-
-                try {
-                    if (typeof XLSX === 'undefined') {
-                        alert("Excel library not loaded. Please refresh the page and try again.");
-                        return;
+                $.ajax({
+                    url: "/RosterScheduleReport/DownloadExcel",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(employees),
+                    xhrFields: { responseType: "blob" },
+                    success: function (res) {
+                        var link = document.createElement("a");
+                        link.href = URL.createObjectURL(res);
+                        link.download = "RosterReport.xlsx";
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    },
+                    error: function (e) {
+                        //console.log(e.message);
+                        //showToast("error", "Excel download failed!");
                     }
-
-                    var formatDateForExcel = function (dateString) {
-                        if (!dateString || dateString.trim() === '') {
-                            return dateString;
-                        }
-                        try {
-                            if (dateString.includes('/')) {
-                                var parts = dateString.split('/');
-                                if (parts.length === 3) {
-                                    var first = parseInt(parts[0]);
-                                    var second = parseInt(parts[1]);
-                                    var year = parseInt(parts[2]);
-                                    if (first > 12) {
-                                        return dateString;
-                                    } else if (second > 12) {
-                                        return parts[1] + '/' + parts[0] + '/' + parts[2];
-                                    } else {
-                                        return dateString;
-                                    }
-                                }
-                            } else if (dateString.includes('-')) {
-                                var parts = dateString.split('-');
-                                if (parts.length === 3) {
-                                    var year = parts[0];
-                                    var month = parts[1];
-                                    var day = parts[2];
-                                    return day.padStart(2, '0') + '/' + month.padStart(2, '0') + '/' + year;
-                                }
-                            } else {
-                                var date = new Date(dateString);
-                                if (!isNaN(date.getTime())) {
-                                    var day = date.getDate().toString().padStart(2, '0');
-                                    var month = (date.getMonth() + 1).toString().padStart(2, '0');
-                                    var year = date.getFullYear();
-                                    return day + '/' + month + '/' + year;
-                                }
-                            }
-                            return dateString;
-                        } catch (error) {
-                            //console.log('Date parsing error for:', dateString);
-                            return dateString;
-                        }
-                    };
-
-                    var departmentGroups = {};
-                    employees.forEach(function (emp) {
-                        var dept = emp.departmentName || "Unknown";
-                        if (!departmentGroups[dept]) {
-                            departmentGroups[dept] = [];
-                        }
-                        departmentGroups[dept].push(emp);
-                    });
-
-                    var wb = XLSX.utils.book_new();
-                    var headers = ['SN', 'Code', 'Name', 'Designation', 'Branch', 'Date', 'Day', 'Shift', 'Remark', 'Approval Status', 'Approved By', 'Approval DateTime'];
-                    var allData = [];
-
-                    var companyName = employees[0].companyName || "";
-                    var companyRow = [];
-                    companyRow[0] = companyName;
-                    allData.push(companyRow);
-
-                    var reportTitleRow = [];
-                    reportTitleRow[0] = "Roster Schedule Report";
-                    allData.push(reportTitleRow);
-
-                    allData.push([]);
-
-                    
-
-                    for (var dept in departmentGroups) {
-                        if (departmentGroups.hasOwnProperty(dept)) {
-                          
-                            var deptHeaderRow = [];
-                            deptHeaderRow[0] = 'Department: ' + dept;
-                            allData.push(deptHeaderRow);
-
-                            allData.push(headers);
-
-                            for (var empIndex = 0; empIndex < departmentGroups[dept].length; empIndex++) {
-                                var emp = departmentGroups[dept][empIndex];
-                                var rowData = [
-                                    empIndex + 1,
-                                    emp.code || '',
-                                    emp.name || '',
-                                    emp.designationName || '',
-                                    emp.branchName || '',
-                                    formatDateForExcel(emp.showDate || ''),
-                                    emp.dayName || '',
-                                    emp.shiftName || '',
-                                    emp.remark || '',
-                                    emp.approvalStatus || '',
-                                    emp.approvedBy || '',
-                                    emp.showApprovalDatetime || ''
-                                ];
-                                allData.push(rowData);
-                            }
-
-                            allData.push([]);
-                        }
-                    }
-
-                    var ws = XLSX.utils.aoa_to_sheet(allData);
-                    ws['!merges'] = ws['!merges'] || [];
-                    ws['!merges'].push({ s: { r: 0, c: 0 }, e: { r: 0, c: 4 } }); 
-                    ws['!merges'].push({ s: { r: 1, c: 0 }, e: { r: 1, c: 4 } });
-
-                    try {
-                        var companyCellRef = XLSX.utils.encode_cell({ r: 0, c: 0 });
-                        if (ws[companyCellRef]) {
-                            ws[companyCellRef].s = {
-                                font: { bold: true, sz: 16 },
-                                alignment: { horizontal: 'center' }
-                            };
-                        }
-
-                        var reportTitleCellRef = XLSX.utils.encode_cell({ r: 1, c: 0 });
-                        if (ws[reportTitleCellRef]) {
-                            ws[reportTitleCellRef].s = {
-                                font: { bold: true, sz: 12 },
-                                alignment: { horizontal: 'center' }
-                            };
-                        }
-
-                        for (var rowIndex = 0; rowIndex < allData.length; rowIndex++) {
-                            if (allData[rowIndex][0] && allData[rowIndex][0].toString().startsWith("Department:")) {
-                                ws['!merges'].push({ s: { r: rowIndex, c: 0 }, e: { r: rowIndex, c: 11 } });
-                                var cellRef = XLSX.utils.encode_cell({ r: rowIndex, c: 0 });
-                                if (ws[cellRef]) {
-                                    ws[cellRef].s = {
-                                        font: { bold: true },
-                                        alignment: { horizontal: 'center' }
-                                    };
-                                }
-                            }
-                        }
-                    } catch (styleError) {
-                        //console.log("Styling error (non-critical):", styleError);
-                    }
-
-                    for (var rowIndex = 0; rowIndex < allData.length; rowIndex++) {
-                        if (allData[rowIndex][0] && allData[rowIndex][0].toString().startsWith("Department:")) {
-                            ws['!merges'].push({ s: { r: rowIndex, c: 0 }, e: { r: rowIndex, c: 10 } });
-                        }
-                    }
-
-                    var cols = [];
-                    var maxCols = 0;
-                    for (var i = 0; i < allData.length; i++) {
-                        if (allData[i].length > maxCols) {
-                            maxCols = allData[i].length;
-                        }
-                    }
-
-                    for (var col = 0; col < maxCols; col++) {
-                        var maxWidth = 0;
-                        for (var row = 0; row < allData.length; row++) {
-                            if (allData[row] && allData[row][col]) {
-                                var cellText = allData[row][col].toString();
-                                var cellWidth = cellText.length;
-                                if (cellWidth > maxWidth) {
-                                    maxWidth = cellWidth;
-                                }
-                            }
-                        }
-                        maxWidth = col === 0 ? 5 : Math.max(8, Math.min(50, maxWidth + 2));
-                        cols.push({ wch: maxWidth });
-                    }
-                    ws['!cols'] = cols;
-
-                    try {
-                        for (var rowIndex = 0; rowIndex < allData.length; rowIndex++) {
-                            if (allData[rowIndex][0] && allData[rowIndex][0].toString().startsWith("Department:")) {
-                                var cellRef = XLSX.utils.encode_cell({ r: rowIndex, c: 0 });
-                                if (ws[cellRef]) {
-                                    ws[cellRef].s = {
-                                        font: { bold: true },
-                                        alignment: { horizontal: 'center' }
-                                    };
-                                }
-                            }
-                            if (rowIndex === 0) {
-                                var cellRef = XLSX.utils.encode_cell({ r: rowIndex, c: 0 });
-                                if (ws[cellRef]) {
-                                    ws[cellRef].s = {
-                                        font: { bold: true, sz: 14 },
-                                        alignment: { horizontal: 'center' }
-                                    };
-                                }
-                            }
-                        }
-                    } catch (styleError) {
-                        //console.log("Styling error (non-critical):", styleError);
-                    }
-
-                    XLSX.utils.book_append_sheet(wb, ws, "Roster by Department");
-                    XLSX.writeFile(wb, "EmployeeRosterReport_ByDepartment.xlsx");
-
-                } catch (error) {
-                    console.error("Excel export error:", error);
-                    alert("Excel export failed: " + error.message + ". Please try again.");
-                }
+                });
             });
         }
+
 
         var init = function () {
             GetFlatDate();

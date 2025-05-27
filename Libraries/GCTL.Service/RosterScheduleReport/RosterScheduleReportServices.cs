@@ -11,6 +11,8 @@ using GCTL.Data.Models;
 using GCTL.Service.EmployeeWeekendDeclaration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using OfficeOpenXml.Style;
+using OfficeOpenXml;
 
 namespace GCTL.Service.RosterScheduleReport
 {
@@ -139,11 +141,7 @@ namespace GCTL.Service.RosterScheduleReport
 
             var result = new RosterReportFilterListDto
             {
-                // Filters
-                //Companies = await query.Where(x => x.CompanyCode != null && x.CompanyName != null)
-                //    .Select(x => new RosterReportFilterResultDto { Code = x.CompanyCode, Name = x.CompanyName })
-                //    .Distinct()
-                //    .ToListAsyncSafe(),
+              
                 Companies = await query.Where(x => x.CompanyCode != null && x.CompanyName != null)
                 .Select(x => new RosterReportFilterResultDto { Code = x.CompanyCode, Name = x.CompanyName })
                 .Distinct().ToListAsyncSafe(),
@@ -234,7 +232,7 @@ namespace GCTL.Service.RosterScheduleReport
                             remark = rse.Remark ?? "",
                             ApprovalStatus = rse.ApprovalStatus ?? "",
                             ApprovedBy = rse.ApprovedBy ?? "",
-                            ApprovalDatetime = rse.ApprovalDatetime
+                            ApprovalDatetime = rse.ApprovalDatetime,
                         };
             if (filter.CompanyCodes?.Any() == true)
             {
@@ -260,6 +258,8 @@ namespace GCTL.Service.RosterScheduleReport
             {
                 query = query.Where(x => x.EmpId != null && filter.EmployeeIDs.Contains(x.EmpId));
             }
+            var earliestDate = await query.OrderBy(x => x.Date).Select(x => x.Date).FirstOrDefaultAsync();
+            var latestDate = await query.OrderByDescending(x => x.Date).Select(x => x.Date).FirstOrDefaultAsync();
             var result = new RosterReportFilterListDto
             {
                 Companies = await query.Where(x => x.CompanyCode != null && x.CompanyName != null)
@@ -294,7 +294,10 @@ namespace GCTL.Service.RosterScheduleReport
                     ApprovalStatus = x.ApprovalStatus,
                     ApprovedBy = x.ApprovedBy,
                     ShowApprovalDatetime = x.ApprovalDatetime.HasValue ? x.ApprovalDatetime.Value.ToString("dd/MM/yyyy") : "",
-                    Luser =filter.Luser
+                    Luser = filter.Luser,
+                    FromDate = filter.FromDate.HasValue? filter.FromDate.Value.ToString("dd/MM/yyyy"): earliestDate.ToString("dd/MM/yyyy"),
+                    ToDate = filter.ToDate.HasValue? filter.ToDate.Value.ToString("dd/MM/yyyy"): latestDate.ToString("dd/MM/yyyy"),
+
                 }).Distinct().ToListAsyncSafe(),
             };
 
