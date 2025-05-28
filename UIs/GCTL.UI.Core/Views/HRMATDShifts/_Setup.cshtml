@@ -432,13 +432,13 @@
                                 <input type="hidden" value="@(isEditing ? Model.LateTime.ToString("hh:mm:ss tt") : null)" id="lateDateTimeInput" name="LateTime" class="form-control form-control-sm" />
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-xl-4">
+                        @* <div class="col-12 col-md-6 col-xl-4">
                             <div class="form-group">
                                 <label for="AbsentTimeInput" class="form-label">Absent Time</label>
                                 <div id="AbsentTimeInput" class="time-picker-container w-100 p-0 m-0"></div>
                                 <input type="hidden" value="@(isEditing ? Model.AbsentTime.ToString("hh:mm:ss tt") : null)" id="AbsentDateTimeInput" name="AbsentTime" />
                             </div>
-                        </div>
+                        </div> *@
                         <div class="col-12 col-md-6 col-xl-4">
                             <div class="form-group">
                                 <label for="LunchOutTime" class="form-label">Lunch Out Time</label>
@@ -457,6 +457,13 @@
                             <div class="form-group">
                                 <label for="LunchBreakHour" class="form-label">Lunch Break (Hr)</label>
                                 <input type="number" asp-for="LunchBreakHour" id="LunchBreakHour" class="form-control form-control-sm" name="LunchBreakHour" />
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <div class="form-group">
+                                <label for="AbsentTimeInput" class="form-label">Absent Time</label>
+                                <div id="AbsentTimeInput" class="time-picker-container w-100 p-0 m-0"></div>
+                                <input type="hidden" value="@(isEditing ? Model.AbsentTime.ToString("hh:mm:ss tt") : null)" id="AbsentDateTimeInput" name="AbsentTime" />
                             </div>
                         </div>
                     </div>

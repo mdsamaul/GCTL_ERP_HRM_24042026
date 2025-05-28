@@ -17,7 +17,7 @@ namespace GCTL.Core.ViewModels.RosterScheduleReport
         public List<string> EmployeeStatuses { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
-        public int PageNumber { get; set; }  // Default page 1
-        public int PageSize { get; set; }   // Default 10 records per page
+        public int PageNumber { get; set; } 
+        public int PageSize { get; set; }  
     }
 }

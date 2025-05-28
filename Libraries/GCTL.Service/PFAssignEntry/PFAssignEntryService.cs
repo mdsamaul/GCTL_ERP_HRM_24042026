@@ -225,12 +225,7 @@ namespace GCTL.Service.PFAssignEntry
                     {
                         bool isEmpInclude = employeeRepo.GetAll().Any(x => x.EmployeeId == empId);
                         bool existsEmployee = payrollPfAssignEntryRepo.GetAll().Any(x => x.EmployeeId == empId && x.PfapprovedStatus == fromData.PFApprovedStatus);
-                        //if (existsEmployee)
-                        //{
-                        //    var employee = payrollPfAssignEntryRepo.GetAll().Where(x => x.EmployeeId == empId && x.EFDate == fromData.EFDate).ToList();
-                        //    await payrollPfAssignEntryRepo.DeleteRangeAsync(employee);
-                        //}
-
+                      
                         if (isEmpInclude && !existsEmployee)
                         {
                             string newPFAssignID = $"{nextIdNumber:D8}";
@@ -259,22 +254,7 @@ namespace GCTL.Service.PFAssignEntry
                 }
                 else
                 {
-                    //var emp = payrollPfAssignEntryRepo.GetAll().Where(x => x.PfassignId == fromData.PFAssignID).FirstOrDefault();
-                    //bool existsEmployee = payrollPfAssignEntryRepo.GetAll().Any(x => x.EmployeeId == fromData.EmployeeId && x.PfapprovedStatus == fromData.PFApprovedStatus);
-                    //if (emp != null && !existsEmployee)
-                    //{
-                    //    emp.ApprovalRemark = fromData.ApprovalRemark;
-                    //    emp.Efdate = fromData.EFDate;
-                    //    emp.PfapprovedStatus = fromData.PFApprovedStatus;
-                    //    emp.ModifyDate = fromData.ModifyDate;
-                    //    payrollPfAssignEntryRepo.Update(emp);
-
-                    //    return (isSuccess: true, message: "Update Successfully.", data: emp);
-                    //}
-                    //else
-                    //{
-                    //    return (isSuccess: false, message: "Already exists.", data: emp);
-                    //}
+                   
                     var emp = payrollPfAssignEntryRepo.GetAll()
     .Where(x => x.PfassignId == fromData.PFAssignID)
     .FirstOrDefault();
@@ -381,12 +361,7 @@ namespace GCTL.Service.PFAssignEntry
                      bool existsEmployee = payrollPfAssignEntryRepo.GetAll().Any(x => x.EmployeeId == empId && x.PfapprovedStatus == PFApprovedStatus);
                     if (existingEmployeeIds.Contains(empId) && !existsEmployee)
                     {
-                        // check if employee record already exists for same year
-                        //if (existsEmployee)
-                        //{
-                        //    var employeesToDelete = payrollPfAssignEntryRepo.GetAll().Where(x => x.EmployeeId == empId && x.EFDate == fromData.EFDate).ToList();
-                        //    await payrollPfAssignEntryRepo.DeleteRangeAsync(employeesToDelete);
-                        //}
+                      
                       
                             string newPFAssignID = $"{nextIdNumber:D8}";
                             nextIdNumber++;

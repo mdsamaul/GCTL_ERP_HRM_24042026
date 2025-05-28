@@ -65,11 +65,10 @@ namespace GCTL.UI.Core.Controllers
 
                 var headers = new string[]
                 {
-                    "SN", "Code", "Name", "Designation", "Branch", "Date", "Day", "Shift",
-                    "Remark", "Approval Status", "Approved By", "App. Datetime"
+            "SN", "Code", "Name", "Designation", "Branch", "Date", "Day", "Shift",
+            "Remark", "Approval Status", "Approved By", "App. Datetime"
                 };
 
-               
                 var company = rosterData.FirstOrDefault()?.CompanyName ?? "Company Name";
                 var title = "Roster Schedule Report";
                 var from = rosterData.FirstOrDefault()?.FromDate?.ToString() ?? "";
@@ -87,16 +86,13 @@ namespace GCTL.UI.Core.Controllers
                 worksheet.Cells[2, 1].Value = title;
                 worksheet.Cells[2, 1, 2, headers.Length].Merge = true;
                 worksheet.Cells[2, 1].Style.Font.Bold = true;
-                worksheet.Cells[2, 1].Style.Font.Size = 15;
+                worksheet.Cells[2, 1].Style.Font.Size = 12;
                 worksheet.Cells[2, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
                 worksheet.Cells[3, 1].Value = fromDate;
                 worksheet.Cells[3, 1, 3, headers.Length].Merge = true;
                 worksheet.Cells[3, 1].Style.Font.Size = 14;
                 worksheet.Cells[3, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-
-
-                worksheet.Cells[3, 1, 3, headers.Length].Merge = true;
 
                 int rowIndex = 4;
 
@@ -107,19 +103,22 @@ namespace GCTL.UI.Core.Controllers
                     worksheet.Cells[rowIndex, 1].Value = "Department: " + deptGroup.Key;
                     worksheet.Cells[rowIndex, 1, rowIndex, headers.Length].Merge = true;
                     worksheet.Cells[rowIndex, 1].Style.Font.Bold = true;
-                    worksheet.Cells[rowIndex, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[rowIndex, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
                     worksheet.Cells[rowIndex, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    worksheet.Cells[rowIndex, 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+                    worksheet.Cells[rowIndex, 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.White);
 
                     rowIndex++;
 
                     for (int i = 0; i < headers.Length; i++)
                     {
-                        worksheet.Cells[rowIndex, i + 1].Value = headers[i];
-                        worksheet.Cells[rowIndex, i + 1].Style.Font.Bold = true;
-                        worksheet.Cells[rowIndex, i + 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                        worksheet.Cells[rowIndex, i + 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                        worksheet.Cells[rowIndex, i + 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
+                        var cell = worksheet.Cells[rowIndex, i + 1];
+                        cell.Value = headers[i];
+                        cell.Style.Font.Bold = true;
+                        cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        cell.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        cell.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.White);
+                        // Add border
+                        cell.Style.Border.BorderAround(ExcelBorderStyle.Thin);
                     }
 
                     rowIndex++;
@@ -142,7 +141,10 @@ namespace GCTL.UI.Core.Controllers
 
                         for (int i = 1; i <= headers.Length; i++)
                         {
-                            worksheet.Cells[rowIndex, i].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            var cell = worksheet.Cells[rowIndex, i];
+                            cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            // Add border
+                            cell.Style.Border.BorderAround(ExcelBorderStyle.Thin);
                         }
 
                         rowIndex++;
@@ -152,15 +154,29 @@ namespace GCTL.UI.Core.Controllers
                     rowIndex++;
                 }
 
+                // Apply border to header, titles, and merged cells
+                for (int r = 1; r < rowIndex; r++)
+                {
+                    for (int c = 1; c <= headers.Length; c++)
+                    {
+                        var cell = worksheet.Cells[r, c];
+                        cell.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        cell.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        cell.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        cell.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                    }
+                }
+
                 worksheet.Cells.AutoFitColumns();
 
                 var stream = new MemoryStream();
                 package.SaveAs(stream);
                 stream.Position = 0;
 
-                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "RosterReport.xlsx");
+                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "RosterScheduleReport.xlsx");
             }
         }
+
 
     }
 }

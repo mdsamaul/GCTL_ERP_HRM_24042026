@@ -124,7 +124,8 @@
                 success: function (res) {
                     hideLoading();
                     if (!res.isSuccess) {
-                        showToast('error', res.message);
+                        //showToast('error', res.message);
+                        alert(res.message);
                         return;
                     }
                     //console.log(res.data);
@@ -302,7 +303,7 @@
 
                     function drawHeader(doc) {
                         if (base64Logo) {
-                            doc.addImage(base64Logo, 'PNG', 25, 10, 80, 50); 
+                            doc.addImage(base64Logo, 'PNG', 15, 10, 80, 50); 
                         }
 
                         // Company Name
@@ -324,7 +325,7 @@
                         doc.setFontSize(10);
                         doc.setFont("times", "normal");
                         const fromToText = "Date: " + fromDate + "-" + toDate;
-                        doc.text(fromToText, pageWidth / 2, 78, { align: 'center' });
+                        doc.text(fromToText, pageWidth / 2, 75, { align: 'center' });
                     }
 
                     drawHeader(doc);
@@ -385,7 +386,7 @@
                                 textColor: [0, 0, 0],
                             },
                             headStyles: {
-                                fillColor: [230, 230, 230],
+                                fillColor: [255, 255, 255],
                                 textColor: [0, 0, 0],
                                 fontStyle: 'bold',
                                 lineColor: [180, 180, 180],
@@ -423,7 +424,7 @@
                                 doc.setFont("times", "normal");
 
                                 doc.text(leftText, 15, pageHeight - 10);
-                                doc.text(rightText, pageWidth + 83, pageHeight - 10, { align: 'right' });
+                                doc.text(rightText, pageWidth + 85, pageHeight - 10, { align: 'right' });
                             }
                         });
 
@@ -445,9 +446,9 @@
 
                     doc.setFontSize(10);
                     doc.setTextColor(0, 0, 0);
-                    doc.text('Total Employee : ' + TotalEmpCount, 10, finalY + 20);
+                    doc.text('Total Employee : ' + TotalEmpCount, 15, finalY + 20);
 
-                    doc.save('Roster_Report_By_Department.pdf');
+                    doc.save('RosterScheduleReport.pdf');
                 });
             })
         };
@@ -515,7 +516,7 @@
                     function drawHeader(doc) {
                         // Logo (if available)
                         if (base64Logo) {
-                            doc.addImage(base64Logo, 'PNG', 25, 10, 80, 50); 
+                            doc.addImage(base64Logo, 'PNG', 15, 10, 80, 50); 
                         }
 
                         // Company Name
@@ -537,7 +538,7 @@
                         doc.setFontSize(10);
                         doc.setFont("times", "normal");
                         const fromToText = "Date: " + fromDate + "-" + toDate;
-                        doc.text(fromToText, pageWidth / 2, 78, { align: 'center' });
+                        doc.text(fromToText, pageWidth / 2, 75, { align: 'center' });
                     }
 
                     drawHeader(doc);
@@ -598,7 +599,7 @@
                                 textColor: [0, 0, 0],
                             },
                             headStyles: {
-                                fillColor: [230, 230, 230],
+                                fillColor: [255, 255, 255],
                                 textColor: [0, 0, 0],
                                 fontStyle: 'bold',
                                 lineColor: [180, 180, 180],
@@ -636,7 +637,7 @@
                                 doc.setFont("times", "normal");
 
                                 doc.text(leftText, 15, pageHeight - 10);
-                                doc.text(rightText, pageWidth + 83, pageHeight - 10, { align: 'right' });
+                                doc.text(rightText, pageWidth + 85, pageHeight - 10, { align: 'right' });
                             }
                         });
 
@@ -658,7 +659,7 @@
 
                     doc.setFontSize(10);
                     doc.setTextColor(0, 0, 0);
-                    doc.text('Total Employee : ' + TotalEmpCount, 10, finalY + 20);
+                    doc.text('Total Employee : ' + TotalEmpCount, 15, finalY + 20);
 
                     const blob = doc.output('blob');
                     const url = URL.createObjectURL(blob);
@@ -711,7 +712,7 @@
                     "h2 { font-size: 16px; font-weight: bold; margin: 20px 0 10px; color: #333; padding-bottom: 5px; display: inline-block; } " +
                     "table { border-collapse: collapse; width: 100%; margin: 0; } " +
                     "table, th, td { border: 1px solid black; padding: 0; margin: 0; font-size: 10px; vertical-align: top; line-height: 1; } " +
-                    "th { background-color: #f0f0f0; font-weight: bold; text-align: center; } " +
+                    "th { background-color: #ffffff; font-weight: bold; text-align: center; } " +
                     "tr { height: auto; } " +
                     "td { height: auto; } " +
                     "table td:nth-child(9), table th:nth-child(9) { " +
@@ -786,7 +787,7 @@
                 var fileDownload = document.createElement("a");
                 document.body.appendChild(fileDownload);
                 fileDownload.href = source;
-                fileDownload.download = 'EmployeeRosterReport_ByDepartment.doc';
+                fileDownload.download = 'RosterScheduleReport.doc';
                 fileDownload.click();
                 document.body.removeChild(fileDownload);
             });
@@ -807,7 +808,7 @@
                     success: function (res) {
                         var link = document.createElement("a");
                         link.href = URL.createObjectURL(res);
-                        link.download = "RosterReport.xlsx";
+                        link.download = "RosterScheduleReport.xlsx";
                         document.body.appendChild(link);
                         link.click();
                         document.body.removeChild(link);
