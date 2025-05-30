@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj": {}
+    "D:\\gctl infosys\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj": {}
   },
   "projects": {
-    "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj": {
+    "D:\\gctl infosys\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj",
+        "projectUniqueName": "D:\\gctl infosys\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj",
         "projectName": "GCTL.Core",
-        "projectPath": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj",
-        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\obj\\",
+        "projectPath": "D:\\gctl infosys\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj",
+        "packagesPath": "C:\\Users\\mdsam\\.nuget\\packages\\",
+        "outputPath": "D:\\gctl infosys\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\mdsam\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -108,24 +108,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj": {
+    "D:\\gctl infosys\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj",
+        "projectUniqueName": "D:\\gctl infosys\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj",
         "projectName": "GCTL.Data",
-        "projectPath": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj",
-        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\obj\\",
+        "projectPath": "D:\\gctl infosys\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj",
+        "packagesPath": "C:\\Users\\mdsam\\.nuget\\packages\\",
+        "outputPath": "D:\\gctl infosys\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\mdsam\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -141,8 +141,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj": {
-                "projectPath": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj"
+              "D:\\gctl infosys\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj": {
+                "projectPath": "D:\\gctl infosys\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj"
               }
             }
           }
@@ -216,7 +216,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

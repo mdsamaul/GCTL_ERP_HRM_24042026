@@ -217,15 +217,39 @@
                 });
             }
 
+            function getImageBase64FromUrl(url, callback) {
+                var img = new Image();
+                img.crossOrigin = 'Anonymous';
+                img.onload = function () {
+                    var canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    var ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    var dataURL = canvas.toDataURL('image/png');
+                    callback(dataURL);
+                };
+                img.onerror = function () {
+                    //console.error("Image not found or CORS issue.");
+                    callback(null);
+                };
+                img.src = url;
+            }
+
+
             function downloadShiftPdf() {
                 LoadFullShiftTable(function (data) {
+                    getImageBase64FromUrl('/images/DP_logo.png', function (base64Logo) {
                     const { jsPDF } = window.jspdf;
                     const doc = new jsPDF({ orientation: 'landscape' });
                     const pageWidth = doc.internal.pageSize.getWidth();
                     const pageHeight = doc.internal.pageSize.getHeight();
 
                     // Common header/footer hook
-                    const drawHeaderFooter = function (dataTable) {
+                        const drawHeaderFooter = function (dataTable) {
+                            if (base64Logo) {
+                                doc.addImage(base64Logo, 'PNG', 15, 1, 25, 13);
+                            }
                         // HEADER
                         doc.setFontSize(16);
                         doc.text("Data Path", pageWidth / 2, 10, { align: 'center' });
@@ -315,6 +339,7 @@
                     });
 
                     doc.save("HRM_Shift_Report.pdf");
+                    });
                 });
             }
 

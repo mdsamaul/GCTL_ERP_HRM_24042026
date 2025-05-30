@@ -2089,6 +2089,7 @@ wwwroot\js\pages\dueCollectionReports.js
 wwwroot\js\pages\dueCollections.js
 wwwroot\js\pages\employeeGeneralInfoReport.js
 wwwroot\js\pages\employees.js
+wwwroot\js\pages\EmployeeWeekendDeclarationReport.js
 wwwroot\js\pages\experianceInfos.js
 wwwroot\js\pages\grades.js
 wwwroot\js\pages\holidayTypes.js

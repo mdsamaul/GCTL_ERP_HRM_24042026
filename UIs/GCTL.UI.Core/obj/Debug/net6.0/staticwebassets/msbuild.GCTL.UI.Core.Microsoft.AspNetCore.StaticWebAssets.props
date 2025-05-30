@@ -37656,6 +37656,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\employees.js'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\EmployeeWeekendDeclarationReport.js'))">
+      <SourceType>Package</SourceType>
+      <SourceId>GCTL.UI.Core</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/GCTL.UI.Core</BasePath>
+      <RelativePath>js/pages/EmployeeWeekendDeclarationReport.js</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>n8fkb6inui</Fingerprint>
+      <Integrity>2dKakbNvGXrSx3cQdOmhLlV7fQQ7vwXGURKCg/9QZkA=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\EmployeeWeekendDeclarationReport.js'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\experianceInfos.js'))">
       <SourceType>Package</SourceType>
       <SourceId>GCTL.UI.Core</SourceId>
@@ -37776,8 +37794,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>z8r8u8q5x9</Fingerprint>
-      <Integrity>Deb/TbdThCHxJahnwby+qosev5BvtunI42kvHwgYwKI=</Integrity>
+      <Fingerprint>oxiuoycv6y</Fingerprint>
+      <Integrity>pOR8tPmL20Xn4PUTQs00Es+JNYc7gUEWdM0ouKwiD64=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\hrmAtdShift.js'))</OriginalItemSpec>
