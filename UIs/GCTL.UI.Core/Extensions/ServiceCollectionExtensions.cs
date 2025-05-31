@@ -108,6 +108,7 @@ using GCTL.Service.RosterScheduleEntry;
 using GCTL.Service.RosterScheduleApproval;
 using GCTL.Service.RosterScheduleReport;
 using GCTL.Service.EmployeeWeekendDeclarationReport;
+using GCTL.Service.PFAssignEntryReport;
 
 
 //using GCTL.Service.AccountReport;
@@ -159,7 +160,7 @@ namespace GCTL.UI.Core.Extensions
             services.AddScoped<IRosterScheduleApprovalService, RosterScheduleApprovalService>();
             services.AddScoped<IRosterScheduleReportServices, RosterScheduleReportServices>();
             services.AddScoped<IEmployeeWeekendDeclarationReportServices, EmployeeWeekendDeclarationReportServices>();
-
+            services.AddScoped<IPFAssignEntryReportServices, PFAssignEntryReportServices>();
 
 
             //samaul end
@@ -169,6 +170,7 @@ namespace GCTL.UI.Core.Extensions
             services.AddScoped<IQualificationService, QualificationService>();
             services.AddScoped<IShiftService, ShiftService>();
             services.AddScoped<IDoctorService, DoctorService>();
+            
             
 
             //services.AddScoped<IReferencePersonService, ReferencePersonService>();

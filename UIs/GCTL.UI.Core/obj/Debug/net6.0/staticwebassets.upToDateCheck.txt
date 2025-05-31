@@ -2143,6 +2143,7 @@ wwwroot\js\pages\paymentTypes.js
 wwwroot\js\pages\performances.js
 wwwroot\js\pages\performancesType.js
 wwwroot\js\pages\PFAssignEntry.js
+wwwroot\js\pages\PFAssignEntryReport.js
 wwwroot\js\pages\pharmacies.js
 wwwroot\js\pages\qualifications.js
 wwwroot\js\pages\referencePersons.js

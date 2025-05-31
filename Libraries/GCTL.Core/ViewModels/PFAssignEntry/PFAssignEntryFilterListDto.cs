@@ -16,5 +16,6 @@ namespace GCTL.Core.ViewModels.PFAssignEntry
         public List<PFAssignEntryFilterResultDto> Designations { get; set; }
         public List<PFAssignEntryFilterResultDto> Employees { get; set; }
         public List<PFAssignEntryFilterResultDto> ActivityStatuses { get; set; }
+       
     }
 }

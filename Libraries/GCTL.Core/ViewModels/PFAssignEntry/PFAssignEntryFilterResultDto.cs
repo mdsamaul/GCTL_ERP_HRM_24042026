@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GCTL.Core.ViewModels.PFAssignEntry
 {
-    public class PFAssignEntryFilterResultDto
+    public class PFAssignEntryFilterResultDto :BaseViewModel
     {
         public string? Code { get; set; }
         public string? Name { get; set; }
@@ -23,5 +23,9 @@ namespace GCTL.Core.ViewModels.PFAssignEntry
         public double? ServiceDuration { get; set; }
         public DateTime? SeparationDate { get; set; }
         public string? ServiceDuration2 { get; set; }
+        public string ShowDate { get; set; }
+        public string dayName { get; set; }
+        public string Remarks { get; set; }
+        public string PFApprove { get; set; }
     }
 }

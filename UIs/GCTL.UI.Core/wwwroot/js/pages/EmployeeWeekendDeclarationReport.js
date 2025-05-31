@@ -113,7 +113,7 @@
         };
 
         var loadFilterEmp = function () {
-            showLoading();
+            //showLoading();
             var filterData = getFilterValue();
             //console.log(filterData);
             //console.log("samaul");
@@ -218,7 +218,7 @@
                     hideLoading();
                 },
                 error: function (e) {
-                    hideLoading();
+                    //hideLoading();
                     //console.log(e);
                 }
             });
@@ -394,6 +394,7 @@
                                 cellWidth: 'wrap',
                                 lineColor: [0, 0, 0],
                                 lineWidth: 0.1,
+                                textColor: [0, 0, 0],
                             },
                             headStyles: {
                                 fillColor: [255, 255, 255],
@@ -610,6 +611,7 @@
                                 cellWidth: 'wrap',
                                 lineColor: [0, 0, 0],
                                 lineWidth: 0.1,
+                                textColor: [0, 0, 0],
                             },
                             headStyles: {
                                 fillColor: [255, 255, 255],
@@ -712,7 +714,7 @@
             <style>
                 @page {
                     size: A4 portrait;
-                    margin: 0.5cm; /* কম margin */
+                    margin: 0.5cm; 
                 }
                 body {
                     font-family: 'Times New Roman', serif;
@@ -722,7 +724,7 @@
                 }
                 h4, h5, h6 {
                     text-align: center;
-                    margin: 2px 0; /* কম margin */
+                    margin: 2px 0; 
                 }
                 .dept-title {
                     margin-top: 10px;
@@ -806,8 +808,7 @@
                 htmlContent += `
             <div class="footer">
                 <p>Total Employees: ${totalEmp}</p>
-                <p>Printed By: ${userName}</p>
-                <p>Printed At: ${formattedDate}</p>
+                <p>Printed At: ${formattedDate} | ${userName}</p>
             </div>
         </body></html>
         `;
@@ -857,6 +858,7 @@
 
 
         var init = function () {
+            showLoading();
             GetFlatDate();
             settings.load();
             initializeMultiselects();
