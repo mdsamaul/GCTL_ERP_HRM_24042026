@@ -712,6 +712,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWUyXF9Ub29sYmFycy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/git clone/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HRMPayrollLoan/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNUGF5cm9sbExvYW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/git clone/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HRMPayrollLoan/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNUGF5cm9sbExvYW5cX1Rvb2xiYXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/git clone/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/JobTitles/DeleteModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSm9iVGl0bGVzXERlbGV0ZU1vZGFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

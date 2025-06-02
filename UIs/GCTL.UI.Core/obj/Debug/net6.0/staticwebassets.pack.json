@@ -9629,6 +9629,10 @@
       "PackagePath": "staticwebassets\\js\\pages\\EmployeeWeekendDeclarationReport.js"
     },
     {
+      "Id": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\HRMPayrollLoan.js",
+      "PackagePath": "staticwebassets\\js\\pages\\HRMPayrollLoan.js"
+    },
+    {
       "Id": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\HRM_EmployeeWeekendDeclaration.js",
       "PackagePath": "staticwebassets\\js\\pages\\HRM_EmployeeWeekendDeclaration.js"
     },

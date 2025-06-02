@@ -8,16 +8,20 @@ using OfficeOpenXml;
 using GCTL.Service.PFAssignEntryReport;
 using GCTL.Core.ViewModels.PFAssignEntry;
 using GCTL.Core.Helpers;
+using Microsoft.AspNetCore.Hosting;
 
 namespace GCTL.UI.Core.Controllers
 {
     public class PFAssignEntryReportController : BaseController
     {
         private readonly IPFAssignEntryReportServices pFAssignEntryReportServices;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public PFAssignEntryReportController(IPFAssignEntryReportServices pFAssignEntryReportServices)
+        public PFAssignEntryReportController(IPFAssignEntryReportServices pFAssignEntryReportServices,
+            IWebHostEnvironment webHostEnvironment)
         {
             this.pFAssignEntryReportServices = pFAssignEntryReportServices;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
@@ -67,14 +71,11 @@ namespace GCTL.UI.Core.Controllers
             {
                 var worksheet = package.Workbook.Worksheets.Add("PF Assign Report");
 
-                var headers = new[] { "SN", "Employee ID", "Name", "Designation", "Branch", "PF Approval", "Effective Date", "Day", "Remarks" };
+                var headers = new[] { "SN", "Employee ID", "Name", "Designation", "Branch", "PF Approval", "Effective Date", "Remarks" };
 
                 string companyName = employees.FirstOrDefault()?.Company ?? "Company Name";
                 string reportTitle = "PF Assign Report";
-                //string fromDate = employees.FirstOrDefault()?.FromDate ?? "";
-                //string toDate = employees.FirstOrDefault()?.ToDate ?? "";
                 string userName = employees.FirstOrDefault()?.Luser ?? "";
-                string Address = "Address: Corner Glaze, Block#L, Road#8, Plot#2490/B, Bashundhara Residential Area, Dhaka-1229";
 
                 // Title Rows
                 worksheet.Cells[1, 1].Value = companyName;
@@ -82,6 +83,7 @@ namespace GCTL.UI.Core.Controllers
                 worksheet.Cells[1, 1].Style.Font.Size = 14;
                 worksheet.Cells[1, 1].Style.Font.Bold = true;
                 worksheet.Cells[1, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[1, 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
                 worksheet.Cells[2, 1].Value = reportTitle;
                 worksheet.Cells[2, 1, 2, headers.Length].Merge = true;
@@ -89,9 +91,35 @@ namespace GCTL.UI.Core.Controllers
                 worksheet.Cells[2, 1].Style.Font.Bold = true;
                 worksheet.Cells[2, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
-                worksheet.Cells[3, 1].Value = Address;
-                worksheet.Cells[3, 1, 3, headers.Length].Merge = true;
-                worksheet.Cells[3, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                // Company name row  height 
+                worksheet.Row(1).Height = 35;
+                //worksheet.Row(2).Height = 25;
+
+                // Add Company Logo in the same row as company name
+                try
+                {
+                    // wwwroot folder to image path
+                    string imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "DP_logo.png");
+
+                    // Check if image exists
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        // Image add in company name on row 
+                        var image = worksheet.Drawings.AddPicture("CompanyLogo", new FileInfo(imagePath));
+
+                        // Image position - Row 1 on left side
+                        image.SetPosition(0, 2, 0, 2); 
+                        image.SetSize(150, 50); 
+
+                        // Alternative: Right side Images
+                        // image.SetPosition(0, 2, headers.Length - 1, 20);
+                    }
+                }
+                catch (Exception ex)
+                {
+                  
+                    Console.WriteLine($"Image loading error: {ex.Message}");
+                }
 
                 int rowIndex = 4;
 
@@ -100,7 +128,6 @@ namespace GCTL.UI.Core.Controllers
 
                 foreach (var dept in departmentGroups)
                 {
-                    // Department title
                     // Department header row
                     worksheet.Cells[rowIndex, 1, rowIndex, headers.Length].Merge = true;
                     worksheet.Cells[rowIndex, 1].Value = $"Department: {dept.Key}";
@@ -118,7 +145,6 @@ namespace GCTL.UI.Core.Controllers
                     deptRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
 
                     rowIndex++;
-
 
                     // Header row
                     for (int i = 0; i < headers.Length; i++)
@@ -144,13 +170,32 @@ namespace GCTL.UI.Core.Controllers
                         worksheet.Cells[rowIndex, 5].Value = emp.Branch ?? "";
                         worksheet.Cells[rowIndex, 6].Value = emp.PFApprove ?? "";
                         worksheet.Cells[rowIndex, 7].Value = emp.ShowDate ?? "";
-                        worksheet.Cells[rowIndex, 8].Value = emp.dayName ?? "";
-                        worksheet.Cells[rowIndex, 9].Value = emp.Remarks ?? "";
+                        //worksheet.Cells[rowIndex, 8].Value = emp.dayName ?? "";
+                        worksheet.Cells[rowIndex, 8].Value = emp.Remarks ?? "";
 
                         for (int i = 1; i <= headers.Length; i++)
                         {
-                            worksheet.Cells[rowIndex, i].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                            worksheet.Cells[rowIndex, i].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                            var cell = worksheet.Cells[rowIndex, i];
+
+                         
+                            if (i == 3 || i == 4 || i == 5 || i == 9) 
+                            {
+                                cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                                cell.Style.Indent = (int).5; 
+                            }
+                            else
+                            {
+                                cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            }
+
+                            cell.Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+                            // Alternate row coloring
+                            if (sn % 2 == 0)
+                            {
+                                cell.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                cell.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.White);
+                            }
                         }
 
                         rowIndex++;
@@ -160,32 +205,33 @@ namespace GCTL.UI.Core.Controllers
                 }
 
                 // Footer
-                int totalColumns = headers.Length;
-                int midColumn = totalColumns / 2;
-                worksheet.Cells[rowIndex, 1, rowIndex, midColumn].Merge = true;
-                worksheet.Cells[rowIndex, 1].Value = $"Downloaded At: {DateTime.Now.ToString("dd/MM/yyyy | hh:mm:ss tt")}";
+                //int totalColumns = headers.Length;
+                //int midColumn = totalColumns / 2;
+                //worksheet.Cells[rowIndex, 1, rowIndex, midColumn].Merge = true;
+                //worksheet.Cells[rowIndex, 1].Value = $"Downloaded At: {DateTime.Now.ToString("dd/MM/yyyy | hh:mm:ss tt")}";
 
-                worksheet.Cells[rowIndex, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
-                worksheet.Cells[rowIndex, 1].Style.Font.Italic = true;
+                //worksheet.Cells[rowIndex, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                //worksheet.Cells[rowIndex, 1].Style.Font.Italic = true;
 
-                worksheet.Cells[rowIndex, midColumn + 1, rowIndex, totalColumns].Merge = true;
-                worksheet.Cells[rowIndex, midColumn + 1].Value = $"Downloaded By: {userName}";
-                worksheet.Cells[rowIndex, midColumn + 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                worksheet.Cells[rowIndex, midColumn + 1].Style.Font.Italic = true;
+                //worksheet.Cells[rowIndex, midColumn + 1, rowIndex, totalColumns].Merge = true;
+                //worksheet.Cells[rowIndex, midColumn + 1].Value = $"Downloaded By: {userName}";
+                //worksheet.Cells[rowIndex, midColumn + 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //worksheet.Cells[rowIndex, midColumn + 1].Style.Font.Italic = true;
 
                 rowIndex++;
 
-
+                // Auto fit columns
                 worksheet.Cells.AutoFitColumns();
 
+                // Stream create করুন
                 var stream = new MemoryStream();
                 package.SaveAs(stream);
                 stream.Position = 0;
 
                 return File(stream,
                     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    "EmployeeWeekendDeclaration.xlsx");
+                    "PF_Assign_Report.xlsx");
             }
-        }
+        }       
     }
 }

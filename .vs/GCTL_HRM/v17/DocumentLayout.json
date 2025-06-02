@@ -3,24 +3,44 @@
   "WorkspaceRootPath": "D:\\git clone\\GCTL_ERP_HRM_24042026\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\wwwroot\\js\\pages\\pfassignentryreport.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\wwwroot\\js\\pages\\pfassignentryreport.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\wwwroot\\js\\pages\\hrmpayrollloan.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\wwwroot\\js\\pages\\hrmpayrollloan.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\pfassignentryreport\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\pfassignentryreport\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\hrmpayrollloan\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\hrmpayrollloan\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.service\\pfassignentryreport\\ipfassignentryreportservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|solutionrelative:libraries\\gctl.service\\pfassignentryreport\\ipfassignentryreportservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\controllers\\hrmpayrollloancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\controllers\\hrmpayrollloancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\controllers\\pfassignentryreportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\controllers\\pfassignentryreportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\viewmodels\\hrmpayrollloan\\hrmpayrollloanviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\viewmodels\\hrmpayrollloan\\hrmpayrollloanviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\controllers\\pfassignentrycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\controllers\\pfassignentrycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.service\\hrmpayrollloan\\hrmpayrollloanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|solutionrelative:libraries\\gctl.service\\hrmpayrollloan\\hrmpayrollloanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.service\\hrmpayrollloan\\ihrmpayrollloanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|solutionrelative:libraries\\gctl.service\\hrmpayrollloan\\ihrmpayrollloanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\payheadnamedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\payheadnamedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\loantypedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\loantypedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5F74230-9C16-46D1-8E42-078F76071143}|Libraries\\GCTL.Data\\GCTL.Data.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.data\\models\\hrmpaypayheadname.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D5F74230-9C16-46D1-8E42-078F76071143}|Libraries\\GCTL.Data\\GCTL.Data.csproj|solutionrelative:libraries\\gctl.data\\models\\hrmpaypayheadname.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\paymentmodedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\paymentmodedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\viewmodels\\pfassignentry\\pfassignentryviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -31,96 +51,44 @@
       "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\extensions\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\controllers\\pfassignentryreportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\controllers\\pfassignentryreportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\pfassignentry\\pfassignentryfilterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\pfassignentry\\pfassignentryfilterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D5F74230-9C16-46D1-8E42-078F76071143}|Libraries\\GCTL.Data\\GCTL.Data.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.data\\models\\hrmpayrollloan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D5F74230-9C16-46D1-8E42-078F76071143}|Libraries\\GCTL.Data\\GCTL.Data.csproj|solutionrelative:libraries\\gctl.data\\models\\hrmpayrollloan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\pfassignentry\\pfassignentryfilterlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\pfassignentry\\pfassignentryfilterlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\hrmpayrollloan\\_toolbars.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\hrmpayrollloan\\_toolbars.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\pfassignentry\\pfassignentryfilterresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\pfassignentry\\pfassignentryfilterresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\hrmpayrollloansetupviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\hrmpayrollloansetupviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\pfassignentryreport\\_toolbars.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\pfassignentryreport\\_toolbars.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\payrollloanfilterresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\payrollloanfilterresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\pfassignentryreport\\_grid.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\pfassignentryreport\\_grid.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\payrollloanfilterentrydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\payrollloanfilterentrydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.service\\pfassignentryreport\\pfassignentryreportservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|solutionrelative:libraries\\gctl.service\\pfassignentryreport\\pfassignentryreportservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\payrollloanfilterresultlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\payrollloanfilterresultlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\controllers\\employeeweekenddeclarationreportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\controllers\\employeeweekenddeclarationreportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\pfassignentryreport\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\pfassignentryreport\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\pfassignentry\\_pfassignentrygrid.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\pfassignentry\\_pfassignentrygrid.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\employeeweekenddeclarationreport\\_grid.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\employeeweekenddeclarationreport\\_grid.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\wwwroot\\js\\pages\\employeeweekenddeclarationreport.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\wwwroot\\js\\pages\\employeeweekenddeclarationreport.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\employeeweekenddeclarationreport\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\employeeweekenddeclarationreport\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.service\\employeeweekenddeclarationreport\\employeeweekenddeclarationreportservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|solutionrelative:libraries\\gctl.service\\employeeweekenddeclarationreport\\employeeweekenddeclarationreportservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\hrm_employeeweekenddeclaration\\codenamedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\hrm_employeeweekenddeclaration\\codenamedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\hrm_employeeweekenddeclaration\\employeefilterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\hrm_employeeweekenddeclaration\\employeefilterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\hrm_employeeweekenddeclaration\\employeefilterresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\hrm_employeeweekenddeclaration\\employeefilterresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.service\\pfassignentry\\ipfassignentryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|solutionrelative:libraries\\gctl.service\\pfassignentry\\ipfassignentryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.service\\pfassignentry\\pfassignentryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|solutionrelative:libraries\\gctl.service\\pfassignentry\\pfassignentryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.service\\employeeweekenddeclarationreport\\iemployeeweekenddeclarationreportservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|solutionrelative:libraries\\gctl.service\\employeeweekenddeclarationreport\\iemployeeweekenddeclarationreportservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\hrm_employeeweekenddeclaration\\employeeweekenddeclarationviewmodelshow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\hrm_employeeweekenddeclaration\\employeeweekenddeclarationviewmodelshow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\hrm_employeeweekenddeclaration\\hrm_employeeweekenddeclarationexceldownloaddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\hrm_employeeweekenddeclaration\\hrm_employeeweekenddeclarationexceldownloaddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\employeeweekenddeclarationreport\\_toolbars.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\employeeweekenddeclarationreport\\_toolbars.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\hrm_employeeweekenddeclaration\\hrm_employeeweekenddeclarationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\hrm_employeeweekenddeclaration\\hrm_employeeweekenddeclarationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -129,402 +97,297 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 7,
-          "SelectedChildIndex": 0,
+          "DockedWidth": 21,
+          "SelectedChildIndex": 17,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "PFAssignEntryViewModel.cs",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\ViewModels\\PFAssignEntry\\PFAssignEntryViewModel.cs",
-              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\ViewModels\\PFAssignEntry\\PFAssignEntryViewModel.cs",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\ViewModels\\PFAssignEntry\\PFAssignEntryViewModel.cs",
-              "RelativeToolTip": "UIs\\GCTL.UI.Core\\ViewModels\\PFAssignEntry\\PFAssignEntryViewModel.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "PayHeadNameDto.cs",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayHeadNameDto.cs",
+              "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayHeadNameDto.cs",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayHeadNameDto.cs",
+              "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayHeadNameDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAgAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T11:40:12.74Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "PFAssignEntryFilterResultDto.cs",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\PFAssignEntry\\PFAssignEntryFilterResultDto.cs",
-              "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\PFAssignEntry\\PFAssignEntryFilterResultDto.cs",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\PFAssignEntry\\PFAssignEntryFilterResultDto.cs",
-              "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\PFAssignEntry\\PFAssignEntryFilterResultDto.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAA4wAgAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T09:27:44.602Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "PFAssignEntryFilterListDto.cs",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\PFAssignEntry\\PFAssignEntryFilterListDto.cs",
-              "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\PFAssignEntry\\PFAssignEntryFilterListDto.cs",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\PFAssignEntry\\PFAssignEntryFilterListDto.cs",
-              "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\PFAssignEntry\\PFAssignEntryFilterListDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAsAAAAwAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T09:27:40.232Z",
+              "WhenOpened": "2025-06-02T11:37:04.159Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "PFAssignEntryFilterDto.cs",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\PFAssignEntry\\PFAssignEntryFilterDto.cs",
-              "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\PFAssignEntry\\PFAssignEntryFilterDto.cs",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\PFAssignEntry\\PFAssignEntryFilterDto.cs",
-              "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\PFAssignEntry\\PFAssignEntryFilterDto.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAA9wAkAAAAFAAAAAAAAAA==",
+              "Title": "HrmPayPayHeadName.cs",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\Models\\HrmPayPayHeadName.cs",
+              "RelativeDocumentMoniker": "Libraries\\GCTL.Data\\Models\\HrmPayPayHeadName.cs",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\Models\\HrmPayPayHeadName.cs",
+              "RelativeToolTip": "Libraries\\GCTL.Data\\Models\\HrmPayPayHeadName.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T09:27:17.943Z",
+              "WhenOpened": "2025-06-02T11:36:20.048Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PaymentModeDto.cs",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PaymentModeDto.cs",
+              "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PaymentModeDto.cs",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PaymentModeDto.cs",
+              "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PaymentModeDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-02T10:48:16.911Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "appsettings.Development.json",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\appsettings.Development.json",
-              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\appsettings.Development.json",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\appsettings.Development.json",
-              "RelativeToolTip": "UIs\\GCTL.UI.Core\\appsettings.Development.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-05-31T04:02:09.133Z",
+              "Title": "LoanTypeDto.cs",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\LoanTypeDto.cs",
+              "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\LoanTypeDto.cs",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\LoanTypeDto.cs",
+              "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\LoanTypeDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-02T09:11:11.925Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\appsettings.json",
-              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\appsettings.json",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\appsettings.json",
-              "RelativeToolTip": "UIs\\GCTL.UI.Core\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-05-31T04:01:57.363Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "_Grid.cshtml",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\EmployeeWeekendDeclarationReport\\_Grid.cshtml",
-              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\EmployeeWeekendDeclarationReport\\_Grid.cshtml",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\EmployeeWeekendDeclarationReport\\_Grid.cshtml",
-              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\EmployeeWeekendDeclarationReport\\_Grid.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-29T08:21:10.134Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 11,
               "Title": "ServiceCollectionExtensions.cs",
               "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Extensions\\ServiceCollectionExtensions.cs",
               "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Extensions\\ServiceCollectionExtensions.cs",
               "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Extensions\\ServiceCollectionExtensions.cs",
               "RelativeToolTip": "UIs\\GCTL.UI.Core\\Extensions\\ServiceCollectionExtensions.cs",
-              "ViewState": "AgIAAJkAAAAAAAAAAAApwKAAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAHUAAAAAAAAAAAAEwIQAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T06:29:52.471Z",
+              "WhenOpened": "2025-06-02T04:31:34.5Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "EmployeeWeekendDeclarationReportServices.cs",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\EmployeeWeekendDeclarationReport\\EmployeeWeekendDeclarationReportServices.cs",
-              "RelativeDocumentMoniker": "Libraries\\GCTL.Service\\EmployeeWeekendDeclarationReport\\EmployeeWeekendDeclarationReportServices.cs",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\EmployeeWeekendDeclarationReport\\EmployeeWeekendDeclarationReportServices.cs",
-              "RelativeToolTip": "Libraries\\GCTL.Service\\EmployeeWeekendDeclarationReport\\EmployeeWeekendDeclarationReportServices.cs",
-              "ViewState": "AgIAAIgAAAAAAAAAAAArwJEAAABaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T06:20:48.843Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "CodeNameDto.cs",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\CodeNameDto.cs",
-              "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\CodeNameDto.cs",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\CodeNameDto.cs",
-              "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\CodeNameDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T06:14:52.831Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "EmployeeFilterDto.cs",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\EmployeeFilterDto.cs",
-              "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\EmployeeFilterDto.cs",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\EmployeeFilterDto.cs",
-              "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\EmployeeFilterDto.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAowBMAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T06:14:47.918Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "EmployeeFilterResultDto.cs",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\EmployeeFilterResultDto.cs",
-              "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\EmployeeFilterResultDto.cs",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\EmployeeFilterResultDto.cs",
-              "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\EmployeeFilterResultDto.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAqwAgAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T06:14:44.527Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "EmployeeWeekendDeclarationViewModelShow.cs",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\EmployeeWeekendDeclarationViewModelShow.cs",
-              "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\EmployeeWeekendDeclarationViewModelShow.cs",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\EmployeeWeekendDeclarationViewModelShow.cs",
-              "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\EmployeeWeekendDeclarationViewModelShow.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T06:14:41.846Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "HRM_EmployeeWeekendDeclarationDto.cs",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\HRM_EmployeeWeekendDeclarationDto.cs",
-              "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\HRM_EmployeeWeekendDeclarationDto.cs",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\HRM_EmployeeWeekendDeclarationDto.cs",
-              "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\HRM_EmployeeWeekendDeclarationDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T06:14:39.256Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "HRM_EmployeeWeekendDeclarationExcelDownloadDto.cs",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\HRM_EmployeeWeekendDeclarationExcelDownloadDto.cs",
-              "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\HRM_EmployeeWeekendDeclarationExcelDownloadDto.cs",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\HRM_EmployeeWeekendDeclarationExcelDownloadDto.cs",
-              "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HRM_EmployeeWeekendDeclaration\\HRM_EmployeeWeekendDeclarationExcelDownloadDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T06:14:37.751Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "IEmployeeWeekendDeclarationReportServices.cs",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\EmployeeWeekendDeclarationReport\\IEmployeeWeekendDeclarationReportServices.cs",
-              "RelativeDocumentMoniker": "Libraries\\GCTL.Service\\EmployeeWeekendDeclarationReport\\IEmployeeWeekendDeclarationReportServices.cs",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\EmployeeWeekendDeclarationReport\\IEmployeeWeekendDeclarationReportServices.cs",
-              "RelativeToolTip": "Libraries\\GCTL.Service\\EmployeeWeekendDeclarationReport\\IEmployeeWeekendDeclarationReportServices.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAsAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T06:19:31.541Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "_Toolbars.cshtml",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\EmployeeWeekendDeclarationReport\\_Toolbars.cshtml",
-              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\EmployeeWeekendDeclarationReport\\_Toolbars.cshtml",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\EmployeeWeekendDeclarationReport\\_Toolbars.cshtml",
-              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\EmployeeWeekendDeclarationReport\\_Toolbars.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-29T06:12:39.621Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 17,
-              "Title": "EmployeeWeekendDeclarationReport.js",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\EmployeeWeekendDeclarationReport.js",
-              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\EmployeeWeekendDeclarationReport.js",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\EmployeeWeekendDeclarationReport.js",
-              "RelativeToolTip": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\EmployeeWeekendDeclarationReport.js",
-              "ViewState": "AgIAADUDAAAAAAAAAAAYwEEDAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-05-29T06:05:21.536Z",
+              "Title": "PayrollLoanFilterEntryDto.cs",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayrollLoanFilterEntryDto.cs",
+              "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayrollLoanFilterEntryDto.cs",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayrollLoanFilterEntryDto.cs",
+              "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayrollLoanFilterEntryDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-01T12:11:15.942Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 18,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\EmployeeWeekendDeclarationReport\\Index.cshtml",
-              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\EmployeeWeekendDeclarationReport\\Index.cshtml",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\EmployeeWeekendDeclarationReport\\Index.cshtml",
-              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\EmployeeWeekendDeclarationReport\\Index.cshtml",
-              "ViewState": "AgIAANwAAAAAAAAAAAAYwPUAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-29T06:01:02.191Z",
+              "Title": "PayrollLoanFilterResultListDto.cs",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayrollLoanFilterResultListDto.cs",
+              "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayrollLoanFilterResultListDto.cs",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayrollLoanFilterResultListDto.cs",
+              "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayrollLoanFilterResultListDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-01T12:03:52.351Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "PayrollLoanFilterResultDto.cs",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayrollLoanFilterResultDto.cs",
+              "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayrollLoanFilterResultDto.cs",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayrollLoanFilterResultDto.cs",
+              "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayrollLoanFilterResultDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA4AAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-01T12:01:30.59Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "HRMPayrollLoanService.cs",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\HRMPayrollLoan\\HRMPayrollLoanService.cs",
+              "RelativeDocumentMoniker": "Libraries\\GCTL.Service\\HRMPayrollLoan\\HRMPayrollLoanService.cs",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\HRMPayrollLoan\\HRMPayrollLoanService.cs",
+              "RelativeToolTip": "Libraries\\GCTL.Service\\HRMPayrollLoan\\HRMPayrollLoanService.cs",
+              "ViewState": "AgIAAJ8AAAAAAAAAAAAqwLAAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-01T11:53:21.637Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IHRMPayrollLoanService.cs",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\HRMPayrollLoan\\IHRMPayrollLoanService.cs",
+              "RelativeDocumentMoniker": "Libraries\\GCTL.Service\\HRMPayrollLoan\\IHRMPayrollLoanService.cs",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\HRMPayrollLoan\\IHRMPayrollLoanService.cs",
+              "RelativeToolTip": "Libraries\\GCTL.Service\\HRMPayrollLoan\\IHRMPayrollLoanService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-01T11:53:07.406Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 14,
-              "Title": "EmployeeWeekendDeclarationReportController.cs",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Controllers\\EmployeeWeekendDeclarationReportController.cs",
-              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Controllers\\EmployeeWeekendDeclarationReportController.cs",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Controllers\\EmployeeWeekendDeclarationReportController.cs",
-              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Controllers\\EmployeeWeekendDeclarationReportController.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAIwDQAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T05:59:53.763Z",
-              "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 13,
-          "SelectedChildIndex": 5,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
               "Title": "_Toolbars.cshtml",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\PFAssignEntryReport\\_Toolbars.cshtml",
-              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\PFAssignEntryReport\\_Toolbars.cshtml",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\PFAssignEntryReport\\_Toolbars.cshtml",
-              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\PFAssignEntryReport\\_Toolbars.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAABDAAAAAAAAAA==",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\_Toolbars.cshtml",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\_Toolbars.cshtml",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\_Toolbars.cshtml",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\_Toolbars.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-31T11:13:27.993Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "_Grid.cshtml",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\PFAssignEntryReport\\_Grid.cshtml",
-              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\PFAssignEntryReport\\_Grid.cshtml",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\PFAssignEntryReport\\_Grid.cshtml",
-              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\PFAssignEntryReport\\_Grid.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-31T10:10:44.861Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "PFAssignEntryService.cs",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\PFAssignEntry\\PFAssignEntryService.cs",
-              "RelativeDocumentMoniker": "Libraries\\GCTL.Service\\PFAssignEntry\\PFAssignEntryService.cs",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\PFAssignEntry\\PFAssignEntryService.cs",
-              "RelativeToolTip": "Libraries\\GCTL.Service\\PFAssignEntry\\PFAssignEntryService.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAACAAAABGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T09:31:09.487Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "PFAssignEntryReportServices.cs",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\PFAssignEntryReport\\PFAssignEntryReportServices.cs",
-              "RelativeDocumentMoniker": "Libraries\\GCTL.Service\\PFAssignEntryReport\\PFAssignEntryReportServices.cs",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\PFAssignEntryReport\\PFAssignEntryReportServices.cs",
-              "RelativeToolTip": "Libraries\\GCTL.Service\\PFAssignEntryReport\\PFAssignEntryReportServices.cs",
-              "ViewState": "AgIAAMMAAAAAAAAAAAAAwMUAAACYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T09:26:08.963Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "IPFAssignEntryReportServices.cs",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\PFAssignEntryReport\\IPFAssignEntryReportServices.cs",
-              "RelativeDocumentMoniker": "Libraries\\GCTL.Service\\PFAssignEntryReport\\IPFAssignEntryReportServices.cs",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\PFAssignEntryReport\\IPFAssignEntryReportServices.cs",
-              "RelativeToolTip": "Libraries\\GCTL.Service\\PFAssignEntryReport\\IPFAssignEntryReportServices.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABSAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T09:25:51.151Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PFAssignEntryReport.js",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\PFAssignEntryReport.js",
-              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\PFAssignEntryReport.js",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\PFAssignEntryReport.js",
-              "RelativeToolTip": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\PFAssignEntryReport.js",
-              "ViewState": "AgIAADYBAAAAAAAAAAAtwE0BAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-05-31T09:23:18.249Z",
+              "WhenOpened": "2025-06-01T09:26:40.79Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\PFAssignEntryReport\\Index.cshtml",
-              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\PFAssignEntryReport\\Index.cshtml",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\PFAssignEntryReport\\Index.cshtml",
-              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\PFAssignEntryReport\\Index.cshtml",
-              "ViewState": "AgIAAGcAAAAAAAAAAAAAANUAAAAKAAAAAAAAAA==",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\Index.cshtml",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\Index.cshtml",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\Index.cshtml",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\Index.cshtml",
+              "ViewState": "AgIAAIsAAAAAAAAAAAAlwJ4AAABrAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-31T09:13:34.344Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "PFAssignEntryReportController.cs",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Controllers\\PFAssignEntryReportController.cs",
-              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Controllers\\PFAssignEntryReportController.cs",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Controllers\\PFAssignEntryReportController.cs",
-              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Controllers\\PFAssignEntryReportController.cs",
-              "ViewState": "AgIAAEMAAAAAAAAAAAAmwEwAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T09:11:52.319Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "PFAssignEntryController.cs",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Controllers\\PFAssignEntryController.cs",
-              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Controllers\\PFAssignEntryController.cs",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Controllers\\PFAssignEntryController.cs",
-              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Controllers\\PFAssignEntryController.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAB4AAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T09:11:05.371Z",
+              "WhenOpened": "2025-06-01T09:19:40.341Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 15,
-              "Title": "_PFAssignEntryGrid.cshtml",
-              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\PFAssignEntry\\_PFAssignEntryGrid.cshtml",
-              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\PFAssignEntry\\_PFAssignEntryGrid.cshtml",
-              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\PFAssignEntry\\_PFAssignEntryGrid.cshtml",
-              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\PFAssignEntry\\_PFAssignEntryGrid.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-31T09:10:05.847Z",
+              "Title": "HRMPayrollLoanSetupViewModel.cs",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\HRMPayrollLoanSetupViewModel.cs",
+              "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\HRMPayrollLoanSetupViewModel.cs",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\HRMPayrollLoanSetupViewModel.cs",
+              "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\HRMPayrollLoanSetupViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAsAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-01T09:15:43.921Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "HrmPayrollLoan.cs",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\Models\\HrmPayrollLoan.cs",
+              "RelativeDocumentMoniker": "Libraries\\GCTL.Data\\Models\\HrmPayrollLoan.cs",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\Models\\HrmPayrollLoan.cs",
+              "RelativeToolTip": "Libraries\\GCTL.Data\\Models\\HrmPayrollLoan.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAA2wCEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-01T09:13:39.529Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "HRMPayrollLoanViewModel.cs",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\ViewModels\\HRMPayrollLoan\\HRMPayrollLoanViewModel.cs",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\ViewModels\\HRMPayrollLoan\\HRMPayrollLoanViewModel.cs",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\ViewModels\\HRMPayrollLoan\\HRMPayrollLoanViewModel.cs",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\ViewModels\\HRMPayrollLoan\\HRMPayrollLoanViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAcAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-01T09:13:18.59Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "PFAssignEntryViewModel.cs",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\ViewModels\\PFAssignEntry\\PFAssignEntryViewModel.cs",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\ViewModels\\PFAssignEntry\\PFAssignEntryViewModel.cs",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\ViewModels\\PFAssignEntry\\PFAssignEntryViewModel.cs",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\ViewModels\\PFAssignEntry\\PFAssignEntryViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAABjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-01T09:12:30.43Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HRMPayrollLoanController.cs",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Controllers\\HRMPayrollLoanController.cs",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Controllers\\HRMPayrollLoanController.cs",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Controllers\\HRMPayrollLoanController.cs",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Controllers\\HRMPayrollLoanController.cs",
+              "ViewState": "AgIAADwAAAAAAAAAAAAiwFAAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-01T09:11:59.76Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HRMPayrollLoan.js",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\HRMPayrollLoan.js",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\HRMPayrollLoan.js",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\HRMPayrollLoan.js",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\HRMPayrollLoan.js",
+              "ViewState": "AgIAANoAAAAAAAAAAAAlwOgAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-06-02T04:03:40.204Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 1,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "PFAssignEntryReportController.cs",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Controllers\\PFAssignEntryReportController.cs",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Controllers\\PFAssignEntryReportController.cs",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Controllers\\PFAssignEntryReportController.cs",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Controllers\\PFAssignEntryReportController.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAQwBoAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-01T09:18:10.733Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "IPFAssignEntryService.cs",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\PFAssignEntry\\IPFAssignEntryService.cs",
+              "RelativeDocumentMoniker": "Libraries\\GCTL.Service\\PFAssignEntry\\IPFAssignEntryService.cs",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\PFAssignEntry\\IPFAssignEntryService.cs",
+              "RelativeToolTip": "Libraries\\GCTL.Service\\PFAssignEntry\\IPFAssignEntryService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABSAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-01T11:56:18.666Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\PFAssignEntryReport\\Index.cshtml",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\PFAssignEntryReport\\Index.cshtml",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\PFAssignEntryReport\\Index.cshtml",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\PFAssignEntryReport\\Index.cshtml",
+              "ViewState": "AgIAAMwAAAAARHishBEdwM4AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-01T09:20:56.243Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "PFAssignEntryService.cs",
+              "DocumentMoniker": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\PFAssignEntry\\PFAssignEntryService.cs",
+              "RelativeDocumentMoniker": "Libraries\\GCTL.Service\\PFAssignEntry\\PFAssignEntryService.cs",
+              "ToolTip": "D:\\git clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\PFAssignEntry\\PFAssignEntryService.cs",
+              "RelativeToolTip": "Libraries\\GCTL.Service\\PFAssignEntry\\PFAssignEntryService.cs",
+              "ViewState": "AgIAAI8AAAAAAAAAAAAowJMAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-01T11:53:50.948Z"
             }
           ]
         }

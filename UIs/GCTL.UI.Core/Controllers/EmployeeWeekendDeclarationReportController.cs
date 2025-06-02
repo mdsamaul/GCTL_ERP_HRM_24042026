@@ -13,10 +13,14 @@ namespace GCTL.UI.Core.Controllers
     public class EmployeeWeekendDeclarationReportController : BaseController
     {
         private readonly IEmployeeWeekendDeclarationReportServices employeeWeekendDeclarationReportServices;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public EmployeeWeekendDeclarationReportController( IEmployeeWeekendDeclarationReportServices employeeWeekendDeclarationReportServices)
+        public EmployeeWeekendDeclarationReportController( IEmployeeWeekendDeclarationReportServices employeeWeekendDeclarationReportServices,
+            IWebHostEnvironment webHostEnvironment
+            )
         {
             this.employeeWeekendDeclarationReportServices = employeeWeekendDeclarationReportServices;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
@@ -77,6 +81,7 @@ namespace GCTL.UI.Core.Controllers
                 worksheet.Cells[1, 1].Style.Font.Size = 14;
                 worksheet.Cells[1, 1].Style.Font.Bold = true;
                 worksheet.Cells[1, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[1, 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
                 worksheet.Cells[2, 1].Value = reportTitle;
                 worksheet.Cells[2, 1, 2, headers.Length].Merge = true;
@@ -87,6 +92,23 @@ namespace GCTL.UI.Core.Controllers
                 worksheet.Cells[3, 1].Value = dateRange;
                 worksheet.Cells[3, 1, 3, headers.Length].Merge = true;
                 worksheet.Cells[3, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                worksheet.Row(1).Height = 35;
+                try
+                {
+                    string imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "DP_logo.png");
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        var image = worksheet.Drawings.AddPicture("CompanyLogo", new FileInfo(imagePath));
+                        image.SetPosition(0, 2, 0, 2);
+                        image.SetSize(150, 50);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Image loading error: {ex.Message}");
+                }
+
 
                 int rowIndex = 4;
 
@@ -123,7 +145,7 @@ namespace GCTL.UI.Core.Controllers
                         cell.Style.Font.Bold = true;
                         cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                         cell.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                        cell.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.WhiteSmoke);
+                        cell.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.White);
                         cell.Style.Border.BorderAround(ExcelBorderStyle.Thin);
                     }
                     rowIndex++;
@@ -153,18 +175,18 @@ namespace GCTL.UI.Core.Controllers
                     rowIndex++;
                 }
 
-                // Footer
-                int totalColumns = headers.Length;
-                int midColumn = totalColumns / 2;
-                worksheet.Cells[rowIndex, 1, rowIndex, midColumn].Merge = true;
-                worksheet.Cells[rowIndex, 1].Value = $"Printed At: {DateTime.Now}";
-                worksheet.Cells[rowIndex, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
-                worksheet.Cells[rowIndex, 1].Style.Font.Italic = true;
+                //// Footer
+                //int totalColumns = headers.Length;
+                //int midColumn = totalColumns / 2;
+                //worksheet.Cells[rowIndex, 1, rowIndex, midColumn].Merge = true;
+                //worksheet.Cells[rowIndex, 1].Value = $"Printed At: {DateTime.Now}";
+                //worksheet.Cells[rowIndex, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                //worksheet.Cells[rowIndex, 1].Style.Font.Italic = true;
 
-                worksheet.Cells[rowIndex, midColumn + 1, rowIndex, totalColumns].Merge = true;
-                worksheet.Cells[rowIndex, midColumn + 1].Value = $"Printed By: {userName}";
-                worksheet.Cells[rowIndex, midColumn + 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                worksheet.Cells[rowIndex, midColumn + 1].Style.Font.Italic = true;
+                //worksheet.Cells[rowIndex, midColumn + 1, rowIndex, totalColumns].Merge = true;
+                //worksheet.Cells[rowIndex, midColumn + 1].Value = $"Printed By: {userName}";
+                //worksheet.Cells[rowIndex, midColumn + 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //worksheet.Cells[rowIndex, midColumn + 1].Style.Font.Italic = true;
 
                 rowIndex++;
 

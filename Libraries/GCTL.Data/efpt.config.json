@@ -599,11 +599,23 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[HRM_PAY_LoanTypeEntry]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[HRM_PAY_Month]",
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[HRM_PAY_PayHeadName]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[HRM_PAY_TaxAdjustmentEntry]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HRM_Payroll_Loan]",
          "ObjectType": 0
       },
       {

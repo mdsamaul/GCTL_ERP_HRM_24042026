@@ -2108,6 +2108,7 @@ wwwroot\js\pages\hRMDefGradeTypes.js
 wwwroot\js\pages\hrmDefInstitutes.js
 wwwroot\js\pages\hrmDefOccupations.js
 wwwroot\js\pages\hrmEmployee2.js
+wwwroot\js\pages\HRMPayrollLoan.js
 wwwroot\js\pages\inPatientBills.js
 wwwroot\js\pages\jobTitles.js
 wwwroot\js\pages\labTestListForAccount.js

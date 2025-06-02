@@ -109,6 +109,7 @@ using GCTL.Service.RosterScheduleApproval;
 using GCTL.Service.RosterScheduleReport;
 using GCTL.Service.EmployeeWeekendDeclarationReport;
 using GCTL.Service.PFAssignEntryReport;
+using GCTL.Service.HRMPayrollLoan;
 
 
 //using GCTL.Service.AccountReport;
@@ -161,6 +162,7 @@ namespace GCTL.UI.Core.Extensions
             services.AddScoped<IRosterScheduleReportServices, RosterScheduleReportServices>();
             services.AddScoped<IEmployeeWeekendDeclarationReportServices, EmployeeWeekendDeclarationReportServices>();
             services.AddScoped<IPFAssignEntryReportServices, PFAssignEntryReportServices>();
+            services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
 
 
             //samaul end

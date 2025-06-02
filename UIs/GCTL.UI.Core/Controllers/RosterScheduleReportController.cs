@@ -13,10 +13,14 @@ namespace GCTL.UI.Core.Controllers
     public class RosterScheduleReportController : BaseController
     {
         private readonly IRosterScheduleReportServices rosterScheduleReportServices;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public RosterScheduleReportController(IRosterScheduleReportServices rosterScheduleReportServices)
+        public RosterScheduleReportController(IRosterScheduleReportServices rosterScheduleReportServices,
+            IWebHostEnvironment webHostEnvironment
+            )
         {
             this.rosterScheduleReportServices = rosterScheduleReportServices;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
@@ -82,6 +86,7 @@ namespace GCTL.UI.Core.Controllers
                 worksheet.Cells[1, 1].Style.Font.Bold = true;
                 worksheet.Cells[1, 1].Style.Font.Size = 16;
                 worksheet.Cells[1, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[1, 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
                 worksheet.Cells[2, 1].Value = title;
                 worksheet.Cells[2, 1, 2, headers.Length].Merge = true;
@@ -91,9 +96,26 @@ namespace GCTL.UI.Core.Controllers
 
                 worksheet.Cells[3, 1].Value = fromDate;
                 worksheet.Cells[3, 1, 3, headers.Length].Merge = true;
-                worksheet.Cells[3, 1].Style.Font.Size = 14;
+                worksheet.Cells[3, 1].Style.Font.Size = 11;
                 worksheet.Cells[3, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                // Company name row  height 
+                worksheet.Row(1).Height = 35;
+                //worksheet.Row(2).Height = 25;
 
+                try
+                {
+                    string imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "DP_logo.png");
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        var image = worksheet.Drawings.AddPicture("CompanyLogo", new FileInfo(imagePath));
+
+                        image.SetPosition(0, 2, 0, 2);
+                        image.SetSize(150, 50);
+                    }
+                }catch(Exception ex)
+                {
+                    Console.WriteLine($"Image loading error: {ex.Message}");
+                }
                 int rowIndex = 4;
 
                 var departmentGroups = rosterData.GroupBy(emp => emp.DepartmentName ?? "Unknown");

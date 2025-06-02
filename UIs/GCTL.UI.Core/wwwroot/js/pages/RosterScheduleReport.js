@@ -395,18 +395,18 @@
                                 valign: 'middle'
                             },
                             columnStyles: {
-                                1: { minCellWidth: 22, maxCellWidth: 35, overflow: 'linebreak' },
-                                2: { minCellWidth: 28, maxCellWidth: 55, overflow: 'linebreak' },
-                                3: { minCellWidth: 28, maxCellWidth: 40, overflow: 'linebreak' },
-                                4: { minCellWidth: 20, maxCellWidth: 35, overflow: 'linebreak' },
-                                7: { minCellWidth: 55, maxCellWidth: 70, overflow: 'linebreak' },
-                                8: { minCellWidth: 100, maxCellWidth: 110, overflow: 'linebreak' },
-                                0: { halign: 'center', valign: 'middle' },
-                                5: { halign: 'center', valign: 'middle' },
-                                6: { halign: 'center', valign: 'middle' },
-                                9: { halign: 'center', valign: 'middle' },
-                                10: { halign: 'center', valign: 'middle' },
-                                11: { halign: 'center', valign: 'middle' },
+                                0: { cellWidth: 20, halign: 'center', valign: 'middle' },
+                                1: { cellWidth: 60, halign: 'center', valign: 'middle' },
+                                2: { cellWidth: 80, halign: 'left', valign: 'middle' },
+                                3: { cellWidth: 70, halign: 'left', valign: 'middle' },
+                                4: { cellWidth: 70, halign: 'left', valign: 'middle' },
+                                5: { cellWidth: 50, halign: 'center', valign: 'middle' },
+                                6: { cellWidth: 50, halign: 'center', valign: 'middle' },
+                                7: { cellWidth: 150, halign: 'left', valign: 'middle' },
+                                8: { cellWidth: 50, halign: 'center', valign: 'middle' },
+                                9: { cellWidth: 50, halign: 'center', valign: 'middle' },
+                                10: { cellWidth: 80, halign: 'center', valign: 'middle' },
+                                11: { cellWidth: 80, halign: 'center', valign: 'middle' },
                             },
                             pageBreak: 'auto',
                             didDrawPage: function (data) {
@@ -478,6 +478,7 @@
             img.src = url;
         }
 
+
         var PdfPreview = function () {
             LoadFullRosterTable(function (employees) {
                 if (!employees || employees.length === 0) {
@@ -516,7 +517,7 @@
                     function drawHeader(doc) {
                         // Logo (if available)
                         if (base64Logo) {
-                            doc.addImage(base64Logo, 'PNG', 15, 10, 80, 50); 
+                            doc.addImage(base64Logo, 'PNG', 15, 10, 80, 50);
                         }
 
                         // Company Name
@@ -608,18 +609,18 @@
                                 valign: 'middle'
                             },
                             columnStyles: {
-                                1: { minCellWidth: 22, maxCellWidth: 35, overflow: 'linebreak' },
-                                2: { minCellWidth: 28, maxCellWidth: 55, overflow: 'linebreak' },
-                                3: { minCellWidth: 28, maxCellWidth: 40, overflow: 'linebreak' },
-                                4: { minCellWidth: 20, maxCellWidth: 35, overflow: 'linebreak' },
-                                7: { minCellWidth: 55, maxCellWidth: 70, overflow: 'linebreak' },
-                                8: { minCellWidth: 100, maxCellWidth: 110, overflow: 'linebreak' },
-                                0: { halign: 'center', valign: 'middle' },
-                                5: { halign: 'center', valign: 'middle' },
-                                6: { halign: 'center', valign: 'middle' },
-                                9: { halign: 'center', valign: 'middle' },
-                                10: { halign: 'center', valign: 'middle' },
-                                11: { halign: 'center', valign: 'middle' },
+                                0: { cellWidth: 20, halign: 'center', valign: 'middle' }, 
+                                1: { cellWidth: 60, halign: 'center', valign: 'middle' }, 
+                                2: { cellWidth: 80, halign: 'left', valign: 'middle' },    
+                                3: { cellWidth: 70, halign: 'left', valign: 'middle' },  
+                                4: { cellWidth: 70, halign: 'left', valign: 'middle' },    
+                                5: { cellWidth: 50, halign: 'center', valign: 'middle' },  
+                                6: { cellWidth: 50, halign: 'center', valign: 'middle' }, 
+                                7: { cellWidth: 150, halign: 'left', valign: 'middle' },    
+                                8: { cellWidth: 50, halign: 'center', valign: 'middle' },  
+                                9: { cellWidth: 50, halign: 'center', valign: 'middle' }, 
+                                10: { cellWidth: 80, halign: 'center', valign: 'middle' },
+                                11: { cellWidth: 80, halign: 'center', valign: 'middle' }, 
                             },
                             pageBreak: 'auto',
                             didDrawPage: function (data) {
@@ -640,6 +641,7 @@
                                 doc.text(rightText, pageWidth + 85, pageHeight - 10, { align: 'right' });
                             }
                         });
+
 
                         startY = doc.lastAutoTable.finalY;
                     }
@@ -669,6 +671,7 @@
                 });
             });
         };
+
         var downloadTableAsWord = function () {
             LoadFullRosterTable(function (employees) {
                 if (!employees || employees.length === 0) {
@@ -687,9 +690,17 @@
                 var companyName = employees[0].companyName || "";
                 var reportTitle = "Employee Roster Report";
                 var fromDate = employees[0].fromDate || "";
-                var toDate = employees[0].toDate || "";
-                var currentDate = new Date().toLocaleDateString();
-                var userName = employees[0].luser || ""; 
+                var toDate = employees[0].toDate || "";               
+
+                // With this:
+                var currentDate = new Date().toLocaleString('en-US', {
+                    year: 'numeric', month: 'short', day: 'numeric',
+                    hour: 'numeric', minute: 'numeric', hour12: true
+                });
+
+                var userName = employees[0].luser || "";
+
+                const columnWidths = ["50px", "100px", "200px", "150px", "100px", "80px", "100px", "150px", "100px", "100px", "100px", "100px"];
 
                 var header = "<!DOCTYPE html>" +
                     "<html xmlns:v='urn:schemas-microsoft-com:vml' " +
@@ -715,13 +726,6 @@
                     "th { background-color: #ffffff; font-weight: bold; text-align: center; } " +
                     "tr { height: auto; } " +
                     "td { height: auto; } " +
-                    "table td:nth-child(9), table th:nth-child(9) { " +
-                    "    width: 100px; " +
-                    "    max-width: 100px; " +
-                    "    word-wrap: break-word; " +
-                    "    font-weight: bold; " +
-                    "    font-size: 11px; " +
-                    "} " +
                     ".footer { margin-top: 20px; font-size: 12px; } " +
                     ".page-info { text-align: left; display: inline-block; width: 50%; } " +
                     ".date-user { text-align: right; display: inline-block; width: 49%; } " +
@@ -730,26 +734,24 @@
                     "<body><div class='Section1'>" +
                     "<div class='header'>" + companyName + "</div>" +
                     "<div class='sub-header'>" + reportTitle + "</div>" +
-                    "<div class='sub-header' style='font-size: 10px;'>"+"Date: " + fromDate + "-" + toDate + "</div>";
+                    "<div class='sub-header' style='font-size: 10px;'>Date: " + fromDate + " - " + toDate + "</div>";
 
-
-                // Table header
                 var originalTable = document.getElementById("RosterScheduleReport-grid");
-                var headerRow = '';
-                if (originalTable) {
-                    var headers = originalTable.querySelectorAll('thead th');
-                    headerRow = '<tr>';
+                var headerRow = '<tr>';
+                var headers = originalTable ? originalTable.querySelectorAll('thead th') : [];
+                if (headers.length > 0) {
                     headers.forEach(function (header, index) {
-                        if (index === 8) { 
-                            headerRow += '<th style="width: 100px;  font-weight: bold; padding: 0; margin: 0;">' + (header.innerText || header.textContent || '') + '</th>';
-                        } else {
-                            headerRow += '<th style="padding: 0; margin: 0;">' + (header.innerText || header.textContent || '') + '</th>';
-                        }
+                        var width = columnWidths[index] || "100px";
+                        headerRow += '<th style="width:' + width + '; padding: 0; margin: 0;">' + (header.innerText || header.textContent || '') + '</th>';
                     });
-                    headerRow += '</tr>';
                 } else {
-                    headerRow = '<tr><th style="padding: 0; margin: 0;">SN</th><th style="padding: 0; margin: 0;">Code</th><th style="padding: 0; margin: 0;">Name</th><th style="padding: 0; margin: 0;">Designation</th><th style="padding: 0; margin: 0;">Branch</th><th style="padding: 0; margin: 0;">Date</th><th style="padding: 0; margin: 0;">Day</th><th style="padding: 0; margin: 0;">Shift</th><th style="width: 100px; font-weight: bold; padding: 0; margin: 0;">Remark</th><th style="padding: 0; margin: 0;">Approval Status</th><th style="padding: 0; margin: 0;">Approved By</th><th style="padding: 0; margin: 0;">Approval DateTime</th></tr>';
+                    const defaultHeaders = ["SN", "Code", "Name", "Designation", "Branch", "Date", "Day", "Shift", "Remark", "Approval Status", "Approved By", "Approval DateTime"];
+                    defaultHeaders.forEach(function (header, index) {
+                        var width = columnWidths[index] || "100px";
+                        headerRow += '<th style="width:' + width + '; padding: 0; margin: 0;">' + header + '</th>';
+                    });
                 }
+                headerRow += '</tr>';
 
                 var content = '';
                 for (const dept in departmentGroups) {
@@ -758,18 +760,18 @@
 
                     departmentGroups[dept].forEach(function (emp, index) {
                         content += '<tr>';
-                        content += '<td style="text-align: center; padding: 0; margin: 0;">' + (index + 1) + '</td>';
-                        content += '<td style="padding: 0; margin: 0; text-align: center;">' + (emp.code || '') + '</td>';
-                        content += '<td style="padding: 0 0 0 5px; margin: 0;">' + (emp.name || '') + '</td>';
-                        content += '<td style="padding: 0 0 0 5px; margin: 0;">' + (emp.designationName || '') + '</td>';
-                        content += '<td style="padding: 0; margin: 0; text-align: center;">' + (emp.branchName || '') + '</td>';
-                        content += '<td style="text-align: center; padding: 0; margin: 0;">' + (emp.showDate || '') + '</td>';
-                        content += '<td style="text-align: center; padding: 0; margin: 0;">' + (emp.dayName || '') + '</td>';
-                        content += '<td style="padding: 0 0 0 5px; margin: 0;">' + (emp.shiftName || '') + '</td>';
-                        content += '<td style="width: 150px; max-width: 170px; word-wrap: break-word; padding: 0 0 0 5px; margin: 0;">' + (emp.remark || '') + '</td>';
-                        content += '<td style="text-align: center; padding: 0; margin: 0;">' + (emp.approvalStatus || '') + '</td>';
-                        content += '<td style="text-align: center; padding: 0; margin: 0;">' + (emp.approvedBy || '') + '</td>';
-                        content += '<td style="text-align: center; padding: 0; margin: 0;">' + (emp.showApprovalDatetime || '') + '</td>';
+                        content += '<td style="text-align: center;">' + (index + 1) + '</td>';
+                        content += '<td style="text-align: center;">' + (emp.code || '') + '</td>';
+                        content += '<td style="padding-left: 5px;">' + (emp.name || '') + '</td>';
+                        content += '<td style="padding-left: 5px;">' + (emp.designationName || '') + '</td>';
+                        content += '<td style="text-align: center;">' + (emp.branchName || '') + '</td>';
+                        content += '<td style="text-align: center;">' + (emp.showDate || '') + '</td>';
+                        content += '<td style="text-align: center;">' + (emp.dayName || '') + '</td>';
+                        content += '<td style="padding-left: 5px;">' + (emp.shiftName || '') + '</td>';
+                        content += '<td style="word-wrap: break-word; padding-left: 5px;">' + (emp.remark || '') + '</td>';
+                        content += '<td style="text-align: center;">' + (emp.approvalStatus || '') + '</td>';
+                        content += '<td style="text-align: center;">' + (emp.approvedBy || '') + '</td>';
+                        content += '<td style="text-align: center;">' + (emp.showApprovalDatetime || '') + '</td>';
                         content += '</tr>';
                     });
 
@@ -792,6 +794,7 @@
                 document.body.removeChild(fileDownload);
             });
         };
+
 
         var downloadTableAsExcel = function () {
             LoadFullRosterTable(function (employees) {
