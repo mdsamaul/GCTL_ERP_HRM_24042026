@@ -14,7 +14,8 @@
 
 	#loanDate,
 	#endDate,
-	#instStartDate {
+	#instStartDate, 
+	#chequeDate {
 		background-color: white !important;
 		color: black;
 	}
@@ -213,7 +214,7 @@
 						<b>No.of Installment(s):</b>
 					</div>
 					<div class="col-12 col-md-6" style="padding-left: 0px; padding-right: 25px;">
-						<input type="text" class="form-control form-control-sm"  placeholder="No.of Installment(s)"/>
+						<input type="text" id="noOfInstallment" class="form-control form-control-sm" readonly  placeholder="No.of Installment(s)"/>
 					</div>
 				</div>
 			</div>	
@@ -223,7 +224,7 @@
 						<b>Monthly Deduction: </b>
 					</div>
 					<div class="col-12 col-md-6" style="padding-left: 0px;">
-						<input type="text" class="form-control form-control-sm"   value="" placeholder="Enter Monthly Deduction" />
+						<input id="monthlyDeduction" type="text" class="form-control form-control-sm" readonly  value="" placeholder="Enter Monthly Deduction" />
 					</div>
 				</div>
 			</div>
@@ -253,14 +254,65 @@
 					</div>
 				</div>
 			</div>
-			@* <div class="col-12 col-md-10 pb-1"></div> *@
+			<div class="col-12 col-md-10 pb-1"></div>
+			@* if cheque *@
+			<div class="row col-12" id="if_cheque" style="display:none;">
+				<div class="col-12 col-md-6 pb-1">
+					<div class="row">
+						<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
+							<b>Bank Account: </b>
+						</div>
+						<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
+							<input id="bankAccount" type="text" class="form-control form-control-sm" value="" placeholder="Enter Bank Account" />
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-md-6 pb-1" style="padding-left: 25px;padding-right: 5px;">
+					<div class="row">
+						<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
+							<b>Bank: </b>
+						</div>
+						<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
+							@* <input type="date" class="form-control form-control-sm"   /> *@
+							<select id="Bank" class="form-control form-control-sm">
+								<option value="">--Select Bank--</option>
+
+							</select>
+						</div>
+					</div>
+				</div>
+				@* if wair transfer *@
+				<div class="col-12 row" style="padding:0; display:none;" id="if_wair-transfer-then-hide">
+					<div class="col-12 col-md-6 pb-1" style="padding-right: 0px;padding-left: 30px;">
+						<div class="row">
+							<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
+								<b>Cheque No: </b>
+							</div>
+							<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
+								<input id="chequeNo" type="text" class="form-control form-control-sm" value="" placeholder="Enter Cheque No" />
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-md-6 pb-1" style="padding-left: 45px; padding-right: 0px;">
+						<div class="row">
+							<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
+								<b>Cheque Date: </b>
+							</div>
+							<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
+								<input type="date" id="chequeDate" class="form-control form-control-sm" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<div class="col-12 col-md-12 pb-1">
 				<div class="row">
 					<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
 						<b>Remarks: </b>
 					</div>
 					<div class="col-12 col-md-8" style="padding-left: 0px;">
-						<textarea type="text" class="form-control form-control-sm" rows="2" placeholder="Enter Remarks"></textarea>
+						<textarea id="remarks" type="text" class="form-control form-control-sm" rows="2" placeholder="Enter Remarks"></textarea>
 					</div>
 					<div class="col-2"></div>
 				</div>
@@ -289,7 +341,9 @@
 			</div>
 		</div>
 	</div>
-
+	<div>
+		<partial name="_Grid"></partial>
+	</div>
 </section>
 
 

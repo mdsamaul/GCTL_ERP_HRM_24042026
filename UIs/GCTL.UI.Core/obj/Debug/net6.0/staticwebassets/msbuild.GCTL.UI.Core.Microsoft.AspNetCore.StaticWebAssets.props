@@ -37992,8 +37992,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>6q7r5rya0g</Fingerprint>
-      <Integrity>3nCRl66sBbkuq6jXOEBug79Z1FjT8PBkwZMSPvzVf+Y=</Integrity>
+      <Fingerprint>x3ueu5wo2y</Fingerprint>
+      <Integrity>E169vVQexGqHpCPWFaqGipytzJ5XG0Dcms6UlTRL0G8=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\HRMPayrollLoan.js'))</OriginalItemSpec>

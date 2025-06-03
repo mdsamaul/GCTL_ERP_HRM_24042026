@@ -1,4 +1,5 @@
-﻿using GCTL.Core.ViewModels.HRMPayrollLoan;
+﻿using GCTL.Core.Helpers;
+using GCTL.Core.ViewModels.HRMPayrollLoan;
 using GCTL.Service.HRMPayrollLoan;
 using GCTL.UI.Core.ViewModels.HRMPayrollLoan;
 using Microsoft.AspNetCore.Mvc;
@@ -83,6 +84,36 @@ namespace GCTL.UI.Core.Controllers
         {
             var LoanId = await hRMPayrollLoanService.createLoanIdAsync();
             return Json(new {LoanId});
+        }
+        //get bank
+        [HttpGet]
+        public async Task<IActionResult> GetBank()
+        {
+            var banks = await hRMPayrollLoanService.GetBankAsync();
+            return Json(new { data=banks});
+        }
+
+        //create loan 
+        [HttpPost]
+        public async Task<IActionResult> CreateEditLoan([FromBody] HRMPayrollLoanSetupViewModel modelData)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid data.");
+            }
+            modelData.ToAudit(LoginInfo);
+            var result = await hRMPayrollLoanService.CreateEditLoanAsycn(modelData);
+            //if(result.I)
+            // await _loanService.SaveLoanAsync(modelData);
+
+            return Ok(new {isSuccess = result.isSuccess, message = result.message, data= result});
+        }
+        //get loan data
+        [HttpGet]
+        public async Task<IActionResult> GetLoanData()
+        {
+            var result =await hRMPayrollLoanService.GetLoanDataAsync();
+            return Json(new { data= result});
         }
     }
 }

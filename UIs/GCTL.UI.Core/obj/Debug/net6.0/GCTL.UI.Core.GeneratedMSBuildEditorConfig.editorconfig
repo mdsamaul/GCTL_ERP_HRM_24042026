@@ -716,6 +716,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNUGF5cm9sbExvYW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/git clone/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HRMPayrollLoan/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNUGF5cm9sbExvYW5cX0dyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/git clone/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HRMPayrollLoan/_Toolbars.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNUGF5cm9sbExvYW5cX1Rvb2xiYXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

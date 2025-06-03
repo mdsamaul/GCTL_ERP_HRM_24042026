@@ -16,7 +16,18 @@
             PaymentMode: "#paymentMode",
             AmountWorningMessage: "#amountWorningMessage",
             DeductionHead: "#DeductionHead",
-            LoanIdAutoGenerate:"#LoanIdAutoGenerate",
+            LoanIdAutoGenerate: "#LoanIdAutoGenerate",
+            LoanEntryBtn: ".js-loan-entry-report-save",
+            NoOfInstallment: "#noOfInstallment",
+            MonthlyDeduction: "#monthlyDeduction",
+            Remarks: "#remarks",
+            ChequeDate: "#chequeDate",
+            BankAccount: "#bankAccount",
+            Bank: "#Bank",
+            ChequeNo: "#chequeNo",
+            IfCheque: "#if_cheque",
+            IfWairTransferThenHide: "#if_wair-transfer-then-hide",
+            ClearAll: "#js-loan-entry-report-clear",
         }, options);
         var filterUrl = settings.baseUrl + "/GetFilterData";
         var employeeByIdUrl = settings.baseUrl + "/GetEmpById";
@@ -24,6 +35,9 @@
         var paymentModeUrl = settings.baseUrl + "/GetPaymentMode";
         var payHeadDeductionUrl = settings.baseUrl + "/getPayHeadDeduction";
         var createLoanId = settings.baseUrl + "/CreateLoanId";
+        var bankUrl = settings.baseUrl + "/GetBank";
+        var createLoanUrl = settings.baseUrl + "/CreateEditLoan";
+        var getLoanDataUrl = settings.baseUrl + "/GetLoanData";
         var setupLoadingOverlay = function () {
             if ($("#customLoadingOverlay").length === 0) {
                 $("body").append(`
@@ -68,7 +82,8 @@
                 settings.EmployeeIds,
                 settings.PaymentType,
                 settings.PaymentMode,
-                settings.DeductionHead
+                settings.DeductionHead,
+                settings.Bank
             ].join(", ");
             $(selectors).multiselect({
                 enableFiltering: true,
@@ -98,6 +113,68 @@
             };
             return filterData;
         }
+        function formatDate(inputDate) {
+            if (!inputDate) return null;
+            const parts = inputDate.split('/');
+            return `${parts[2]}-${parts[1]}-${parts[0]}`; // yyyy-MM-dd
+        }
+        function submitLoanData() {
+            var data = {
+                LoanId: $(settings.LoanIdAutoGenerate).val() || '',
+                EmployeeId: $(settings.EmployeeIds).val() || '',                
+                LoanTypeId: $(settings.PaymentType).val() || '', 
+                LoanAmount: $(settings.LoanAmount).val() || 0,
+                NoOfInstallment: $(settings.NoOfInstallment).val() || '',
+                MonthlyDeduction: $(settings.MonthlyDeduction).val() || 0,
+                PayHeadNameId: $(settings.DeductionHead).val() || '',
+                PaymentModeId: $(settings.PaymentMode).val() || '',
+                ChequeNo: $(settings.ChequeNo).val() || '',              
+                BankId: $(settings.Bank).val() || '',
+                BankAccount: $(settings.BankAccount).val() || '',
+                Remarks: $(settings.Remarks).val() || '',
+                CompanyCode: $(settings.companyIds).val() || '',
+                LoanDate: formatDate($(settings.LoanDate).val())||null,
+                StartDate: formatDate($(settings.InstStartDate).val()) || null,
+                EndDate: formatDate($(settings.EndDate).val()) || null,
+                ChequeDate: formatDate($(settings.ChequeDate).val()) || null,
+            };
+            return data;
+        }
+
+        var clearLoanForm=function () {
+            $(settings.EmployeeIds).val('0');
+            $(settings.LoanAmount).val('');
+            $(settings.NoOfInstallment).val('');
+            $(settings.MonthlyDeduction).val('');
+            $(settings.DeductionHead).val('0');
+            $(settings.PaymentMode).val('0');
+            $(settings.ChequeNo).val('');
+            $(settings.Bank).val('0');
+            $(settings.BankAccount).val('');
+            $(settings.Remarks).val('');
+            $(settings.companyIds).val('0');
+            $(settings.LoanDate).val(getTodayDate());
+            $(settings.InstStartDate).val(getTodayDate());
+            $(settings.EndDate).val(getTodayDate());
+            $(settings.ChequeDate).val(getTodayDate());
+            $(settings.PaymentType).val('');
+            //loanDatePicker;
+            //instStartDatePicker;
+            //endDatePicker;
+            //chequeDatePicker;
+        }
+        function getTodayDate() {
+            var d = new Date();
+            var day = ('0' + d.getDate()).slice(-2);
+            var month = ('0' + (d.getMonth() + 1)).slice(-2);
+            var year = d.getFullYear();
+            return day + '/' + month + '/' + year;
+        }
+        $(document).on('click', settings.ClearAll, function () {
+            clearLoanForm();
+        })
+
+
         var loadFilterData = function () {
             var filterData = getFilterValue();
             $.ajax({
@@ -142,7 +219,7 @@
                 //url: employeeByIdUrl,
                 url: employeeByIdUrl + "?empId=" + encodeURIComponent(empId),
                 type: "GET",              
-                success: function (res) {
+                success: function (res) {                    
                     $(settings.LoanName).text(res.data.name);
                     $(settings.LoanDesignation).text(res.data.designationName);
                     $(settings.LoanDepartment).text(res.data.departmentName);
@@ -202,7 +279,7 @@
                 url: payHeadDeductionUrl,
                 type: "GET",
                 success: function (res) {
-                    console.log(res);
+                    //console.log(res);
                     var deductions = res.data;
                     var optDeductionHead = $(settings.DeductionHead);
                     if (deductions && deductions.length > 0 && deductions.some(x => x.payHeadNameId != null && x.name != null)) {
@@ -218,45 +295,210 @@
                 }
             });
         }
+        bankSection = function () {
+            $.ajax({
+                url: bankUrl,
+                type: "GET",
+                success: function (res) {
+                    //console.log(res);
+                    var banks = res.data;
+                    var optBank = $(settings.Bank);
+                    //console.log(optBank);
+                    if (banks && banks.length > 0 && banks.some(x => x.bankId != null && x.bankName != null)) {
+                        $.each(banks, function (index, bank) {
+                            if (bank.bankId != null && bank.bankName != null && optBank.find(`option[value="${bank.bankId}"]`).length === 0) {
+                                optBank.append(`<option value="${bank.bankId}">${bank.bankName}</option>`);
+                            }
+                        });
+                        optBank.multiselect('rebuild');
+                    }
+                }, error(e) {
+                    console.log(e);
+                }
+            });
+        }
 
         createLoanIdAutoGenareted = function() {
             $.ajax({
                 url: createLoanId,
                 type: "GET",
                 success: function (res) {
-                    console.log(res.loanId);
+                    //console.log(res.loanId);
                     $(settings.LoanIdAutoGenerate).val(res.loanId);
                 }, error: function (e) {
                     console.log(e);
                 }
             });
         };
-
-
-
-        var loanDatePicker = flatpickr("#loanDate", {
-            dateFormat: "d/m/Y",
-            defaultDate: new Date(),
-            onChange: function (selectedDates, dateStr, instance) {
-                console.log("Loan Date:", dateStr); // formatted string
+        
+        $(document).on('change', settings.PaymentMode, function () {
+            var selectedPaymentType = $(this).val();
+            if (selectedPaymentType === '002') {
+                //console.log("Payment Type Selected (via settings 002):", selectedPaymentType);
+                $(settings.IfCheque).fadeIn(500);
+                $(settings.IfWairTransferThenHide).fadeIn(500);
+            } else if (selectedPaymentType === '003') {
+                $(settings.IfWairTransferThenHide).fadeOut(500);
+                $(settings.IfCheque).fadeIn(500);
+            } else {
+                $(settings.IfCheque).fadeOut(500);
             }
         });
+        $(document).on('change', settings.EndDate, function () {
+            var startDateStr = $(settings.InstStartDate).val(); // dd/mm/yyyy
+            var endDateStr = $(settings.EndDate).val();         // dd/mm/yyyy
+
+            if (!startDateStr || !endDateStr) {
+                console.log("Start date and End date input both");
+                return;
+            }
+
+            var startParts = startDateStr.split('/');
+            var endParts = endDateStr.split('/');
+
+            var startYear = parseInt(startParts[2], 10);
+            var startMonth = parseInt(startParts[1], 10);
+            var startDate = new Date(startYear, startMonth - 1, 1); 
+
+            var endYear = parseInt(endParts[2], 10);
+            var endMonth = parseInt(endParts[1], 10);
+            var endDay = parseInt(endParts[0], 10);
+            var endDate = new Date(endYear, endMonth - 1, endDay);
+
+            var yearDiff = endDate.getFullYear() - startDate.getFullYear();
+            var monthDiff = endDate.getMonth() - startDate.getMonth();
+
+            var totalMonths = yearDiff * 12 + monthDiff;   
+            if (totalMonths < 0) {
+                //console.log("End date cannot be before the start date.");
+                return;
+            }
+
+            //console.log("Total Month:", totalMonths);
+            if (totalMonths === 0) {
+                $(settings.MonthlyDeduction).val($(settings.LoanAmount).val());
+                $(settings.NoOfInstallment).val(totalMonths);
+            } else {
+                $(settings.NoOfInstallment).val(totalMonths);
+                var LoanAmount = $(settings.LoanAmount).val();
+                var MonthlyDeductionAmount = LoanAmount / totalMonths;
+                $(settings.MonthlyDeduction).val(Math.ceil(MonthlyDeductionAmount));
+            }
+           
+        });
+
+        $(document).on('input', settings.InstStartDate, function () {
+            var startDateStr = $(settings.InstStartDate).val(); // dd/mm/yyyy
+            var endDateStr = $(settings.EndDate).val();         // dd/mm/yyyy
+
+            if (!startDateStr || !endDateStr) {
+                console.log("Start date and End date input both");
+                return;
+            }
+
+            var startParts = startDateStr.split('/');
+            var endParts = endDateStr.split('/');
+
+            var startYear = parseInt(startParts[2], 10);
+            var startMonth = parseInt(startParts[1], 10);
+            var startDate = new Date(startYear, startMonth - 1, 1);
+
+            var endYear = parseInt(endParts[2], 10);
+            var endMonth = parseInt(endParts[1], 10);
+            var endDay = parseInt(endParts[0], 10);
+            var endDate = new Date(endYear, endMonth - 1, endDay);
+
+            var yearDiff = endDate.getFullYear() - startDate.getFullYear();
+            var monthDiff = endDate.getMonth() - startDate.getMonth();
+
+            var totalMonths = yearDiff * 12 + monthDiff;
+
+
+
+            if (totalMonths < 0) {
+                //console.log("End date cannot be before the start date.");
+                return;
+            }
+
+            //console.log("Total Month:", totalMonths);
+            if (totalMonths === 0) {
+                $(settings.MonthlyDeduction).val($(settings.LoanAmount).val());
+                $(settings.NoOfInstallment).val(totalMonths);
+            } else {
+                $(settings.NoOfInstallment).val(totalMonths);
+                var LoanAmount = $(settings.LoanAmount).val();
+                var MonthlyDeductionAmount = LoanAmount / totalMonths;
+                $(settings.MonthlyDeduction).val(Math.ceil(MonthlyDeductionAmount));
+            }   
+        })
+
+
+        $(document).on('input', settings.LoanAmount, function () {
+            var totalMonth = $(settings.NoOfInstallment).val();
+            if (totalMonth == 0) {
+                $(settings.MonthlyDeduction).val($(settings.LoanAmount).val());
+                $(settings.NoOfInstallment).val(totalMonth);
+            } else {
+                var LoanAmount = $(settings.LoanAmount).val();
+                var MonthlyDeductionAmount = LoanAmount / totalMonth;
+                $(settings.MonthlyDeduction).val(Math.ceil(MonthlyDeductionAmount));
+            }
+        })
+
+        var today = new Date();
+        var loanDatePicker = flatpickr("#loanDate", {
+            dateFormat: "d/m/Y",
+            defaultDate: today,
+            minDate: today,
+            allowInput: true,
+            onChange: function (selectedDates, dateStr, instance) {
+                console.log("Loan Date:", dateStr);
+            },
+            onClose: function (selectedDates, dateStr, instance) {
+                if (!dateStr) {
+                    instance.setDate(today);
+                }
+            }
+        });
+
+        
 
         var endDatePicker = flatpickr("#endDate", {
             dateFormat: "d/m/Y",
-            defaultDate: new Date(),
-            onChange: function (selectedDates, dateStr, instance) {
-                console.log("End Date:", dateStr);
+            defaultDate: today,    
+            minDate: today,    
+            allowInput: true,
+            onClose: function (selectedDates, dateStr, instance) {
+                if (!dateStr) {
+                    instance.setDate(today);
+                }
             }
         });
 
+        // Start Date Picker
         var instStartDatePicker = flatpickr("#instStartDate", {
             dateFormat: "d/m/Y",
-            defaultDate: new Date(),
+            defaultDate: today,
+            minDate: today,
+            allowInput:true,
             onChange: function (selectedDates, dateStr, instance) {
-                console.log("Installment Start Date:", dateStr);
+                console.log("Start Date:", dateStr);
+
+                if (selectedDates.length > 0) {                  
+                    endDatePicker.set('minDate', selectedDates[0]);
+                    endDatePicker.setDate(selectedDates[0]); 
+                }
+            },
+            onClose: function (selectedDates, dateStr, instance) {              
+                if (!dateStr) {
+                    instance.setDate(today);
+                }
             }
         });
+        var chequeDatePicker = flatpickr($(settings.ChequeDate), {
+            dateFormat: "d/m/Y",
+            defaultDate: new Date()
+        })
         $(document).on('input', settings.LoanAmount, function () {           
             var val = $(this).val().trim();
             var amount = parseFloat(val);
@@ -273,7 +515,95 @@
             }
         });
 
-       
+
+        //create 
+        $(document).on('click', settings.LoanEntryBtn, function () {
+            var filterData = submitLoanData()
+            $.ajax({
+                url: createLoanUrl,
+                type: "POST",
+                contentType: 'application/json',
+                data: JSON.stringify(filterData),
+                success: function (res) {
+                    console.log(res);
+                    createLoanIdAutoGenareted();
+                    displayLoanDataTable();
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        })
+
+        //get loan data
+        //var loadLoanData = function () {
+        //    $.ajax({
+        //        url: getLoanDataUrl,
+        //        type: "GET",
+        //        success: function (res) {
+        //            console.log(res);
+        //        }, error: function (e) {
+        //            console.log(e);
+        //        }
+        //    });
+        //}
+
+
+        function displayLoanDataTable() {
+            if ($.fn.DataTable.isDataTable("#loan-data-grid")) {
+                $("#loan-data-grid").DataTable().clear().destroy();
+            }
+
+            $('#loan-data-grid').DataTable({
+                processing: true,
+                serverSide: false,
+                ajax: {
+                    url: getLoanDataUrl, 
+                    type: 'GET',
+                    dataSrc: 'data'
+                },
+                columns: [
+                    {
+                        data: null,
+                        orderable: false,
+                        className: 'text-center',
+                        render: function (data, type, row) {
+                            return `<input class="payrollLoan" type="checkbox" data-id="${row.loanId}" />`;
+                        }
+                    },
+                    { data: 'loanId', className: 'text-center' },
+                    { data: 'showLoanDate', className: 'text-center' },
+                    { data: 'loanTypeName', className: 'text-left' , width:'100px'},
+                    { data: 'employeeId', className: 'text-center' },
+                    { data: 'empName', className: 'text-left', width: '150px' },
+                    { data: 'designationName', className: 'text-left', width:'140px' },
+                    { data: 'loanAmount', className: 'text-center' },
+                    { data: 'startShowDate', className: 'text-center' },
+                    { data: 'endShowDate', className: 'text-center' },
+                    { data: 'noOfInstallment', className: 'text-center', width:'100px' },
+                    { data: 'monthlyDeduction', className: 'text-center' },
+                    { data: 'paymentModeName', className: 'text-left' }
+                ],
+                responsive: true,
+                paging: true,
+                scrollX: true,
+                searching: true,
+                language: {
+                    search: "🔍 Search:",
+                    lengthMenu: "Show _MENU_ entries",
+                    info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                    paginate: {
+                        first: "First",
+                        previous: "Prev",
+                        next: "Next",
+                        last: "Last"
+                    },
+                    emptyTable: "No data available"
+                }
+            });
+        }
+
+
 
         var init = function () {
             loadFilterData();
@@ -282,10 +612,13 @@
             paymentMode();
             payHeadDeduction();
             createLoanIdAutoGenareted();
-
+            bankSection();
+            displayLoanDataTable();
+            //loadLoanData();
             loanDatePicker;
             instStartDatePicker;
             endDatePicker;
+            chequeDatePicker;
         };
         init();
     };

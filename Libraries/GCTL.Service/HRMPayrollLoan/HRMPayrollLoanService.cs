@@ -21,6 +21,7 @@ namespace GCTL.Service.HRMPayrollLoan
         private readonly IRepository<HrmDefDepartment> dpRepo;
         private readonly IRepository<HrmPayLoanTypeEntry> payTypeRepo;
         private readonly IRepository<HrmPayPayHeadName> payHeadRepo;
+        private readonly IRepository<SalesDefBankInfo> bankRepo;
 
         public IRepository<SalesDefPaymentMode> PayModeRepo { get; }
 
@@ -33,7 +34,8 @@ namespace GCTL.Service.HRMPayrollLoan
             IRepository<HrmDefDepartment> dpRepo,
             IRepository<HrmPayLoanTypeEntry> payTypeRepo,
             IRepository<SalesDefPaymentMode> PayModeRepo,
-            IRepository<HrmPayPayHeadName> payHeadRepo
+            IRepository<HrmPayPayHeadName> payHeadRepo,
+            IRepository<SalesDefBankInfo> bankRepo
             ):base(payrollLoanRepo)
         {
             this.payrollLoanRepo = payrollLoanRepo;
@@ -45,6 +47,7 @@ namespace GCTL.Service.HRMPayrollLoan
             this.payTypeRepo = payTypeRepo;
             this.PayModeRepo = PayModeRepo;
             this.payHeadRepo = payHeadRepo;
+            this.bankRepo = bankRepo;
         }
         public async Task<PayrollLoanFilterResultListDto> GetFilaterDataAsync(PayrollLoanFilterEntryDto filterEntryDto)
         {
@@ -164,7 +167,23 @@ namespace GCTL.Service.HRMPayrollLoan
             }).ToList();
             return PayHeadList;
         }
-
+        public async Task<List<SalesDefBankInfoDto>> GetBankAsync()
+        {
+            var banks = await bankRepo.GetAllAsync();
+            var bankList = banks.Select(x => new SalesDefBankInfoDto
+            {
+                BankId = x.BankId,
+                BankName = x.BankName,
+                AutoId = x.AutoId,
+                Ldate = x.Ldate,
+                Lip = x.Lip,
+                Lmac = x.Lmac,
+                Luser = x.Luser,
+                ModifyDate = x.ModifyDate,
+                ShortName = x.ShortName,
+            }).ToList();
+            return bankList;
+        }
         public async Task<string> createLoanIdAsync()
         {
             var lastLoanId = await payrollLoanRepo.All().OrderByDescending(x=>x.LoanId).Select(x=>x.LoanId).FirstOrDefaultAsync();
@@ -180,5 +199,211 @@ namespace GCTL.Service.HRMPayrollLoan
             }
             return newLoanId;
         }
+       
+        //create and edit
+        public async Task<(bool isSuccess, string message, object data)> CreateEditLoanAsycn(HRMPayrollLoanSetupViewModel modelData)
+        {
+            if (string.IsNullOrWhiteSpace(modelData.CompanyCode) || string.IsNullOrWhiteSpace(modelData.EmployeeId) || modelData.LoanAmount == null)
+            {
+                return (false, "Data Invalid", null);
+            }
+
+            if (modelData.StartDate == null || modelData.EndDate == null)
+            {
+                return (false, "Start Date or End Date is missing", null);
+            }
+
+            DateTime startDate = modelData.StartDate.Value;
+            DateTime endDate = modelData.EndDate.Value;
+
+            if (endDate < startDate)
+            {
+                return (false, "End Date cannot be before Start Date", null);
+            }
+
+            // Calculate total months like JavaScript logic
+            int yearDiff = endDate.Year - startDate.Year;
+            int monthDiff = endDate.Month - startDate.Month;
+            int totalMonths = (yearDiff * 12) + monthDiff;
+
+            if (totalMonths < 0)
+            {
+                return (false, "Invalid date range", null);
+            }
+
+            modelData.NoOfInstallment = totalMonths.ToString();
+
+            if (totalMonths == 0)
+            {
+                modelData.MonthlyDeduction = modelData.LoanAmount;
+            }
+            else
+            {
+                decimal loanAmount = modelData.LoanAmount ?? 0;
+                decimal monthlyDeduction = Math.Ceiling(loanAmount / totalMonths);
+                modelData.MonthlyDeduction = monthlyDeduction;
+            }            
+            var entity = new HrmPayrollLoan
+            {
+                LoanId = modelData.LoanId,
+                EmployeeId = modelData.EmployeeId,
+                LoanDate = modelData.LoanDate,
+                LoanTypeId = modelData.LoanTypeId,
+                StartDate = modelData.StartDate,
+                EndDate = modelData.EndDate,
+                LoanAmount = modelData.LoanAmount,
+                NoOfInstallment = modelData.NoOfInstallment,
+                MonthlyDeduction = modelData.MonthlyDeduction,
+                PayHeadNameId = modelData.PayHeadNameId,
+                PaymentModeId = modelData.PaymentModeId,
+                ChequeNo = modelData.ChequeNo,
+                ChequeDate = modelData.ChequeDate,
+                BankId = modelData.BankId,
+                BankAccount = modelData.BankAccount,
+                Remarks = modelData.Remarks,
+                CompanyCode = modelData.CompanyCode,
+                Luser=modelData.Luser,
+                Lip=modelData.Lip,
+                Lmac=modelData.Lmac,
+                Ldate=modelData.Ldate
+            };
+
+            await payrollLoanRepo.AddAsync(entity);
+
+            return (true, "Loan Saved Successfully", modelData);
+        }
+
+        //public async Task<List<HRMPayrollLoanSetupViewModel>> GetLoanDataAsync()
+        // {
+        //     var queary = from lon in payrollLoanRepo.All()
+        //                  join eoi in empOffRepo.All() on lon.EmployeeId equals eoi.EmployeeId
+        //                  join e in empRepo.All() on lon.EmployeeId equals e.EmployeeId into eJoin
+        //                  from e in eJoin.DefaultIfEmpty()
+        //                  join dg in desiRepo.All() on eoi.DesignationCode equals dg.DesignationCode into dgJoin
+        //                  from dg in dgJoin.DefaultIfEmpty()
+        //                  join lType in payTypeRepo.All() on lon.LoanTypeId equals lType.LoanTypeId into lTypeJoin
+        //                  from lType in lTypeJoin.DefaultIfEmpty()
+        //                  join pType in PayModeRepo.All() on lon.PaymentModeId equals pType.PaymentModeId into pTypeJoin
+        //                  from pType in pTypeJoin.DefaultIfEmpty()
+        //                  join dp in dpRepo.All() on eoi.EmployeeId equals dp.EmployeeId into dpJoin
+        //                  from dp in dpJoin.DefaultIfEmpty()
+        //                  select new
+        //                  {
+        //                      empId = e.EmployeeId??"",
+        //                      loanId = lon.LoanId ?? "",
+        //                      loanDate = lon.LoanDate.HasValue? lon.LoanDate.Value.ToString("dd.MM/yyyy"):"",
+        //                      loanTypeName= lType.LoanType ?? "",
+        //                      loanTypeId = lType.LoanTypeId ?? "",
+        //                      EmpName = e.FirstName +" "+ e.LastName ?? "",
+        //                      desiName = dg.DesignationName ?? "",
+        //                      loanAmount = lon.LoanAmount.HasValue? lon.LoanAmount.Value.ToString():"" ,
+        //                      startDate = lon.StartDate.HasValue? lon.StartDate.Value.ToString("dd/MM/yyyy"):"" ,
+        //                      endDate = lon.EndDate.HasValue? lon.EndDate.Value.ToString("dd/MM/yyyy"): "",
+        //                      noOfInstallments = lon.NoOfInstallment ?? "",
+        //                      monthlyDeduction = lon.MonthlyDeduction.HasValue ? lon.MonthlyDeduction.Value.ToString() : "",
+        //                      paymentMode = pType.PaymentModeName ?? "",  
+        //                      dpName = dp.DepartmentName??"",
+        //                      joinDate = eoi.JoiningDate.HasValue ? eoi.JoiningDate.Value.ToString("dd/MM/yyyy"):""
+        //                  };
+
+
+
+
+        //     var loanDataList = queary.Select(x => new HRMPayrollLoanSetupViewModel
+        //     {
+        //         LoanId= x.loanId,
+        //         ShowLoanDate = x.loanDate,
+        //     LoanTypeName = x.loanTypeName,
+        //     EmployeeId=x.empId,
+        //     EmpName=x.EmpName,
+        //     DesignationName=x.desiName,
+        //     LoanAmount=decimal.Parse(x.loanAmount),
+        //     StartShowDate= x.startDate,
+        //     EndShowDate= x.endDate,
+        //     NoOfInstallment=x.noOfInstallments,
+        //     MonthlyDeduction=decimal.Parse(x.monthlyDeduction),
+        //         PaymentModeName=x.paymentMode,
+        //         DepartmentName = x.dpName,
+
+
+        //     }).ToList();
+        //     return (loanDataList);
+        // }
+
+        public async Task<List<HRMPayrollLoanSetupViewModel>> GetLoanDataAsync()
+        {
+            var queary = from lon in payrollLoanRepo.All()
+                         join eoi in empOffRepo.All() on lon.EmployeeId equals eoi.EmployeeId
+                         join e in empRepo.All() on lon.EmployeeId equals e.EmployeeId into eJoin
+                         from e in eJoin.DefaultIfEmpty()
+                         join dg in desiRepo.All() on eoi.DesignationCode equals dg.DesignationCode into dgJoin
+                         from dg in dgJoin.DefaultIfEmpty()
+                         join lType in payTypeRepo.All() on lon.LoanTypeId equals lType.LoanTypeId into lTypeJoin
+                         from lType in lTypeJoin.DefaultIfEmpty()
+                         join pType in PayModeRepo.All() on lon.PaymentModeId equals pType.PaymentModeId into pTypeJoin
+                         from pType in pTypeJoin.DefaultIfEmpty()
+                         join dp in dpRepo.All() on eoi.DepartmentCode equals dp.DepartmentCode into dpJoin
+                         from dp in dpJoin.DefaultIfEmpty()
+                         select new
+                         {
+                             lon.AutoId,
+                             empId = e.EmployeeId ?? "",
+                             loanId = lon.LoanId ?? "",
+                             loanDate = lon.LoanDate,
+                             showLoanDate = lon.LoanDate.HasValue ? lon.LoanDate.Value.ToString("dd/MM/yyyy") : "",
+                             loanTypeName = lType.LoanType ?? "",
+                             loanTypeId = lType.LoanTypeId ?? "",
+                             empName = (e != null ? e.FirstName + " " + e.LastName : ""),
+                             desiName = dg.DesignationName ?? "",
+                             loanAmount = lon.LoanAmount,
+                             startDate = lon.StartDate,
+                             startShowDate = lon.StartDate.HasValue ? lon.StartDate.Value.ToString("dd/MM/yyyy") : "",
+                             endDate = lon.EndDate,
+                             endShowDate = lon.EndDate.HasValue ? lon.EndDate.Value.ToString("dd/MM/yyyy") : "",
+                             noOfInstallments = lon.NoOfInstallment ?? "",
+                             monthlyDeduction = lon.MonthlyDeduction,
+                             paymentModeId = lon.PaymentModeId ?? "",
+                             paymentMode = pType.PaymentModeName ?? "",
+                             chequeNo = lon.ChequeNo ?? "",
+                             chequeDate = lon.ChequeDate,
+                             bankId = lon.BankId ?? "",
+                             bankAccount = lon.BankAccount ?? "",
+                             remarks = lon.Remarks ?? "",
+                             companyCode = lon.CompanyCode ?? "",
+                             dpName = dp.DepartmentName ?? ""
+                         };
+
+            var loanDataList = queary.Select(x => new HRMPayrollLoanSetupViewModel
+            {
+                AutoId = x.AutoId,
+                EmployeeId = x.empId,
+                LoanId = x.loanId,
+                LoanDate = x.loanDate,
+                ShowLoanDate = x.showLoanDate,
+                LoanTypeId = x.loanTypeId,
+                LoanTypeName = x.loanTypeName,
+                EmpName = x.empName,
+                DesignationName = x.desiName,
+                LoanAmount = x.loanAmount,
+                StartDate = x.startDate,
+                StartShowDate = x.startShowDate,
+                EndDate = x.endDate,
+                EndShowDate = x.endShowDate,
+                NoOfInstallment = x.noOfInstallments,
+                MonthlyDeduction = x.monthlyDeduction,
+                PaymentModeId = x.paymentModeId,
+                PaymentModeName = x.paymentMode,
+                ChequeNo = x.chequeNo,
+                ChequeDate = x.chequeDate,
+                BankId = x.bankId,
+                BankAccount = x.bankAccount,
+                Remarks = x.remarks,
+                CompanyCode = x.companyCode,
+                DepartmentName = x.dpName
+            }).ToList();
+
+            return loanDataList;
+        }
+
     }
 }
