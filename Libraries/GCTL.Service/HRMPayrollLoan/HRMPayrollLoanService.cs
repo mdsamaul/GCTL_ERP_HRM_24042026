@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DocumentFormat.OpenXml.Drawing;
+using DocumentFormat.OpenXml.Wordprocessing;
 using GCTL.Core.Data;
+using GCTL.Core.ViewModels.Companies;
 using GCTL.Core.ViewModels.HRMPayrollLoan;
 using GCTL.Data.Models;
 using GCTL.Service.EmployeeWeekendDeclaration;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace GCTL.Service.HRMPayrollLoan
 {
@@ -191,11 +194,11 @@ namespace GCTL.Service.HRMPayrollLoan
             if (!string.IsNullOrEmpty(lastLoanId))
             {
                 int lastNumber = int.Parse(lastLoanId.Substring(1));
-                newLoanId = "L" + (lastNumber + 1).ToString("D6");
+                newLoanId = "L" + (lastNumber + 1).ToString("D8");
             }
             else
             {
-                newLoanId = "L000001";
+                newLoanId = "L00000001";
             }
             return newLoanId;
         }
@@ -204,6 +207,10 @@ namespace GCTL.Service.HRMPayrollLoan
         public async Task<(bool isSuccess, string message, object data)> CreateEditLoanAsycn(HRMPayrollLoanSetupViewModel modelData)
         {
             if (string.IsNullOrWhiteSpace(modelData.CompanyCode) || string.IsNullOrWhiteSpace(modelData.EmployeeId) || modelData.LoanAmount == null)
+            {
+                return (false, "Data Invalid", null);
+            }
+            if(modelData.LoanAmount <= 0)
             {
                 return (false, "Data Invalid", null);
             }
@@ -242,94 +249,73 @@ namespace GCTL.Service.HRMPayrollLoan
                 decimal loanAmount = modelData.LoanAmount ?? 0;
                 decimal monthlyDeduction = Math.Ceiling(loanAmount / totalMonths);
                 modelData.MonthlyDeduction = monthlyDeduction;
-            }            
-            var entity = new HrmPayrollLoan
+            }
+            if (modelData.AutoId == 0)
             {
-                LoanId = modelData.LoanId,
-                EmployeeId = modelData.EmployeeId,
-                LoanDate = modelData.LoanDate,
-                LoanTypeId = modelData.LoanTypeId,
-                StartDate = modelData.StartDate,
-                EndDate = modelData.EndDate,
-                LoanAmount = modelData.LoanAmount,
-                NoOfInstallment = modelData.NoOfInstallment,
-                MonthlyDeduction = modelData.MonthlyDeduction,
-                PayHeadNameId = modelData.PayHeadNameId,
-                PaymentModeId = modelData.PaymentModeId,
-                ChequeNo = modelData.ChequeNo,
-                ChequeDate = modelData.ChequeDate,
-                BankId = modelData.BankId,
-                BankAccount = modelData.BankAccount,
-                Remarks = modelData.Remarks,
-                CompanyCode = modelData.CompanyCode,
-                Luser=modelData.Luser,
-                Lip=modelData.Lip,
-                Lmac=modelData.Lmac,
-                Ldate=modelData.Ldate
-            };
+                var entity = new HrmPayrollLoan
+                {
+                    LoanId = modelData.LoanId,
+                    EmployeeId = modelData.EmployeeId,
+                    LoanDate = modelData.LoanDate,
+                    LoanTypeId = modelData.LoanTypeId,
+                    StartDate = modelData.StartDate,
+                    EndDate = modelData.EndDate,
+                    LoanAmount = modelData.LoanAmount,
+                    NoOfInstallment = modelData.NoOfInstallment,
+                    MonthlyDeduction = modelData.MonthlyDeduction,
+                    PayHeadNameId = modelData.PayHeadNameId,
+                    PaymentModeId = modelData.PaymentModeId,
+                    ChequeNo = modelData.ChequeNo,
+                    ChequeDate = modelData.ChequeDate,
+                    BankId = modelData.BankId,
+                    BankAccount = modelData.BankAccount,
+                    Remarks = modelData.Remarks,
+                    CompanyCode = modelData.CompanyCode,
+                    Luser = modelData.Luser,
+                    Lip = modelData.Lip,
+                    Lmac = modelData.Lmac,
+                    Ldate = modelData.Ldate
+                };
 
-            await payrollLoanRepo.AddAsync(entity);
+                await payrollLoanRepo.AddAsync(entity);
 
-            return (true, "Loan Saved Successfully", modelData);
+                return (true, "Loan Saved Successfully", modelData);
+            }
+            else
+            {
+                var loanData = await payrollLoanRepo.GetByIdAsync(modelData.AutoId);
+                if (loanData == null)
+                {
+                    return (false, "Update Faild", modelData);
+                }
+                    loanData.LoanId = modelData.LoanId;
+                    loanData.EmployeeId = modelData.EmployeeId;
+                    loanData.LoanDate = modelData.LoanDate;
+                    loanData.LoanTypeId = modelData.LoanTypeId;
+                    loanData.StartDate = modelData.StartDate;
+                    loanData.EndDate = modelData.EndDate;
+                    loanData.LoanAmount = modelData.LoanAmount;
+                    loanData.NoOfInstallment = modelData.NoOfInstallment;
+                    loanData.MonthlyDeduction = modelData.MonthlyDeduction;
+                    loanData.PayHeadNameId = modelData.PayHeadNameId;
+                    loanData.PaymentModeId = modelData.PaymentModeId;
+                    loanData.ChequeNo = modelData.ChequeNo;
+                    loanData.ChequeDate = modelData.ChequeDate;
+                    loanData.BankId = modelData.BankId;
+                    loanData.BankAccount = modelData.BankAccount;
+                    loanData.Remarks = modelData.Remarks;
+                    loanData.CompanyCode = modelData.CompanyCode;
+                //    loanData.Luser = modelData.Luser;
+                //    loanData.Lip = modelData.Lip;
+                //    loanData.Lmac = modelData.Lmac;
+                //loanData.Ldate = modelData.Ldate;
+                loanData.ModifyDate = modelData.Ldate;
+                await payrollLoanRepo.UpdateAsync(loanData);
+                return (true, "Update Successfully", modelData);
+            }
+           
         }
-
-        //public async Task<List<HRMPayrollLoanSetupViewModel>> GetLoanDataAsync()
-        // {
-        //     var queary = from lon in payrollLoanRepo.All()
-        //                  join eoi in empOffRepo.All() on lon.EmployeeId equals eoi.EmployeeId
-        //                  join e in empRepo.All() on lon.EmployeeId equals e.EmployeeId into eJoin
-        //                  from e in eJoin.DefaultIfEmpty()
-        //                  join dg in desiRepo.All() on eoi.DesignationCode equals dg.DesignationCode into dgJoin
-        //                  from dg in dgJoin.DefaultIfEmpty()
-        //                  join lType in payTypeRepo.All() on lon.LoanTypeId equals lType.LoanTypeId into lTypeJoin
-        //                  from lType in lTypeJoin.DefaultIfEmpty()
-        //                  join pType in PayModeRepo.All() on lon.PaymentModeId equals pType.PaymentModeId into pTypeJoin
-        //                  from pType in pTypeJoin.DefaultIfEmpty()
-        //                  join dp in dpRepo.All() on eoi.EmployeeId equals dp.EmployeeId into dpJoin
-        //                  from dp in dpJoin.DefaultIfEmpty()
-        //                  select new
-        //                  {
-        //                      empId = e.EmployeeId??"",
-        //                      loanId = lon.LoanId ?? "",
-        //                      loanDate = lon.LoanDate.HasValue? lon.LoanDate.Value.ToString("dd.MM/yyyy"):"",
-        //                      loanTypeName= lType.LoanType ?? "",
-        //                      loanTypeId = lType.LoanTypeId ?? "",
-        //                      EmpName = e.FirstName +" "+ e.LastName ?? "",
-        //                      desiName = dg.DesignationName ?? "",
-        //                      loanAmount = lon.LoanAmount.HasValue? lon.LoanAmount.Value.ToString():"" ,
-        //                      startDate = lon.StartDate.HasValue? lon.StartDate.Value.ToString("dd/MM/yyyy"):"" ,
-        //                      endDate = lon.EndDate.HasValue? lon.EndDate.Value.ToString("dd/MM/yyyy"): "",
-        //                      noOfInstallments = lon.NoOfInstallment ?? "",
-        //                      monthlyDeduction = lon.MonthlyDeduction.HasValue ? lon.MonthlyDeduction.Value.ToString() : "",
-        //                      paymentMode = pType.PaymentModeName ?? "",  
-        //                      dpName = dp.DepartmentName??"",
-        //                      joinDate = eoi.JoiningDate.HasValue ? eoi.JoiningDate.Value.ToString("dd/MM/yyyy"):""
-        //                  };
-
-
-
-
-        //     var loanDataList = queary.Select(x => new HRMPayrollLoanSetupViewModel
-        //     {
-        //         LoanId= x.loanId,
-        //         ShowLoanDate = x.loanDate,
-        //     LoanTypeName = x.loanTypeName,
-        //     EmployeeId=x.empId,
-        //     EmpName=x.EmpName,
-        //     DesignationName=x.desiName,
-        //     LoanAmount=decimal.Parse(x.loanAmount),
-        //     StartShowDate= x.startDate,
-        //     EndShowDate= x.endDate,
-        //     NoOfInstallment=x.noOfInstallments,
-        //     MonthlyDeduction=decimal.Parse(x.monthlyDeduction),
-        //         PaymentModeName=x.paymentMode,
-        //         DepartmentName = x.dpName,
-
-
-        //     }).ToList();
-        //     return (loanDataList);
-        // }
-
+        
         public async Task<List<HRMPayrollLoanSetupViewModel>> GetLoanDataAsync()
         {
             var queary = from lon in payrollLoanRepo.All()
@@ -370,7 +356,11 @@ namespace GCTL.Service.HRMPayrollLoan
                              bankAccount = lon.BankAccount ?? "",
                              remarks = lon.Remarks ?? "",
                              companyCode = lon.CompanyCode ?? "",
-                             dpName = dp.DepartmentName ?? ""
+                             dpName = dp.DepartmentName ?? "",
+                             joiningDate = eoi.JoiningDate.HasValue? eoi.JoiningDate.Value.ToString("dd/MM/yyyy"):"",
+                             payHeadId = lon.PayHeadNameId ??"",
+                             createDate= lon.Ldate.HasValue ? lon.Ldate.Value.ToString("dd/MM/yyyy"):"",
+                             updateDate= lon.ModifyDate.HasValue ? lon.ModifyDate.Value.ToString("dd/MM/yyyy"):"",
                          };
 
             var loanDataList = queary.Select(x => new HRMPayrollLoanSetupViewModel
@@ -399,11 +389,32 @@ namespace GCTL.Service.HRMPayrollLoan
                 BankAccount = x.bankAccount,
                 Remarks = x.remarks,
                 CompanyCode = x.companyCode,
-                DepartmentName = x.dpName
+                DepartmentName = x.dpName,
+                ShowJoiningDate = x.joiningDate,
+                PayHeadNameId = x.payHeadId,
+                showCreateDate = x.createDate,
+                showModifyDate = x.updateDate,
             }).ToList();
 
             return loanDataList;
         }
+        public async Task<(bool isSuccess, string message)> deleteLoanAsync(List<decimal> autoIds)
+        {
+            foreach (var autoId in autoIds)
+            {
+                 var loanToDelete = await payrollLoanRepo.GetByIdAsync(autoId);
+                    if (loanToDelete == null)
+                    {
+                        return (false, "Delete Failed");
+                    }
+                    await payrollLoanRepo.DeleteAsync(loanToDelete);
+                }
+           
+            //var loanToDelete = await payrollLoanRepo.GetByIdAsync(loanId);
+            return (true, "Delete Successfully");
+        }
+
+
 
     }
 }

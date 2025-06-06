@@ -13,8 +13,12 @@
             <table id="loan-data-grid" class="table table-bordered table-striped table-hover align-middle mb-0">
                 <thead>
                     <tr>
-                        <th class="text-center no-sort" style="width: 4%; padding-left: 0; padding-right: 0;">                           
+                        @* <th class="text-center no-sort" style="width: 4%; padding-left: 0; padding-right: 0;">                           
                             <label class="ms-1">Select</label>
+                        </th> *@
+                        <th class="text-center no-sort" style="width: 4%; padding-left: 0; padding-right: 0;">
+                            <label class="ms-1">Select All</label>
+                            <input type="checkbox" id="checkAll" />
                         </th>
 
                         <th class="text-center">Loan ID</th>
@@ -31,7 +35,7 @@
                         <th class="text-center">Payment Mode</th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody id="payrollLoanChcekboxBody"></tbody>
             </table>
 
         </div>

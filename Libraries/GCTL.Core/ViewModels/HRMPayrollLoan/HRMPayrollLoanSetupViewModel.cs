@@ -39,5 +39,8 @@ namespace GCTL.Core.ViewModels.HRMPayrollLoan
         public string EmpName { get; set; }
         public string DesignationName { get; set; }
         public string DepartmentName { get; set; }
+        public string ShowJoiningDate { get; set; }
+        public string showCreateDate { get; set; }
+        public string showModifyDate { get; set; }
     }
 }

@@ -19,5 +19,6 @@ namespace GCTL.Service.HRMPayrollLoan
         Task<List<SalesDefBankInfoDto>> GetBankAsync();
         Task<(bool isSuccess, string message, object data)> CreateEditLoanAsycn(HRMPayrollLoanSetupViewModel modelData);
         Task<List<HRMPayrollLoanSetupViewModel>> GetLoanDataAsync();
+        Task<(bool isSuccess, string message)> deleteLoanAsync(List<decimal> autoIds);
     }
 }

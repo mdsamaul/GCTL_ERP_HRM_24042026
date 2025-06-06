@@ -541,3 +541,35 @@ D:\gctl infosys\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\obj\Debug\net6.0\GCTL.
 D:\gctl infosys\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\obj\Debug\net6.0\refint\GCTL.Core.dll
 D:\gctl infosys\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\obj\Debug\net6.0\GCTL.Core.pdb
 D:\gctl infosys\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\obj\Debug\net6.0\ref\GCTL.Core.dll
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\LatoFont\Lato-Black.ttf
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\LatoFont\Lato-BlackItalic.ttf
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\LatoFont\Lato-Bold.ttf
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\LatoFont\Lato-BoldItalic.ttf
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\LatoFont\Lato-ExtraBold.ttf
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\LatoFont\Lato-ExtraBoldItalic.ttf
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\LatoFont\Lato-ExtraLight.ttf
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\LatoFont\Lato-ExtraLightItalic.ttf
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\LatoFont\Lato-Italic.ttf
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\LatoFont\Lato-Light.ttf
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\LatoFont\Lato-LightItalic.ttf
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\LatoFont\Lato-Medium.ttf
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\LatoFont\Lato-MediumItalic.ttf
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\LatoFont\Lato-Regular.ttf
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\LatoFont\Lato-SemiBold.ttf
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\LatoFont\Lato-SemiBoldItalic.ttf
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\LatoFont\Lato-Thin.ttf
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\LatoFont\Lato-ThinItalic.ttf
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\LatoFont\OFL.txt
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\GCTL.Core.deps.json
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\GCTL.Core.dll
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\bin\Debug\net6.0\GCTL.Core.pdb
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\obj\Debug\net6.0\GCTL.Core.csproj.AssemblyReference.cache
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\obj\Debug\net6.0\GCTL.Core.GeneratedMSBuildEditorConfig.editorconfig
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\obj\Debug\net6.0\GCTL.Core.AssemblyInfoInputs.cache
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\obj\Debug\net6.0\GCTL.Core.AssemblyInfo.cs
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\obj\Debug\net6.0\GCTL.Core.csproj.CoreCompileInputs.cache
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\obj\Debug\net6.0\GCTL.Core.sourcelink.json
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\obj\Debug\net6.0\GCTL.Core.dll
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\obj\Debug\net6.0\refint\GCTL.Core.dll
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\obj\Debug\net6.0\GCTL.Core.pdb
+F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Core\obj\Debug\net6.0\ref\GCTL.Core.dll

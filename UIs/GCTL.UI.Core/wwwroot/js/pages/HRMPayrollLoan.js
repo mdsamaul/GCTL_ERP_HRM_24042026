@@ -3,6 +3,7 @@
         var settings = $.extend({
             baseUrl: "/",
             companyIds: "#companySelect",
+            LoanAutoId:"#loanAutoId",
             EmployeeIds: "#employeeSelect",
             LoanName:"#LoanName",
             LoanDesignation:"#LoanDesignation",
@@ -28,6 +29,11 @@
             IfCheque: "#if_cheque",
             IfWairTransferThenHide: "#if_wair-transfer-then-hide",
             ClearAll: "#js-loan-entry-report-clear",
+            CreateDate: "#createDate",
+            UpdateDate: "#updateDate",
+            CheckAll: "#checkAll",
+            BodyCheckBox: "#payrollLoanChcekboxBody",
+            deleteLoanBtn:"#js-loan-entry-delete-confirm",
         }, options);
         var filterUrl = settings.baseUrl + "/GetFilterData";
         var employeeByIdUrl = settings.baseUrl + "/GetEmpById";
@@ -36,8 +42,9 @@
         var payHeadDeductionUrl = settings.baseUrl + "/getPayHeadDeduction";
         var createLoanId = settings.baseUrl + "/CreateLoanId";
         var bankUrl = settings.baseUrl + "/GetBank";
-        var createLoanUrl = settings.baseUrl + "/CreateEditLoan";
+        var createEditLoanUrl = settings.baseUrl + "/CreateEditLoan";
         var getLoanDataUrl = settings.baseUrl + "/GetLoanData";
+        var deleteLoanUrl = settings.baseUrl + "/DeleteLoans";
         var setupLoadingOverlay = function () {
             if ($("#customLoadingOverlay").length === 0) {
                 $("body").append(`
@@ -75,6 +82,26 @@
         function hideLoading() {
             $("#customLoadingOverlay").hide();
         }
+        function showToast(iconType, message) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                showClass: {
+                    popup: 'swal2-show swal2-fade-in'
+                },
+                hideClass: {
+                    popup: 'swal2-hide swal2-fade-out'
+                }
+            });
+
+            Toast.fire({
+                icon: iconType,
+                title: message
+            });
+        }
 
         var initializeMultiselects = function () {
             var selectors = [
@@ -89,7 +116,7 @@
                 enableFiltering: true,
                 includeSelectAllOption: true,
                 selectAllText: 'Select All',
-                nonSelectedText: '--select items--',
+                //nonSelectedText: '--Select items--',
                 nSelectedText: 'Selected',
                 allSelectedText: 'All Selected',
                 filterPlaceholder: 'Search.........',
@@ -98,7 +125,7 @@
                 enableClickableOptGroups: true,
                 dropUp: false,
                 numberDisplayed: 1,
-                enableCaseInsensitiveFiltering: true,               
+                enableCaseInsensitiveFiltering: true,                  
             });
         };
         var toArray = function (value) {
@@ -120,6 +147,7 @@
         }
         function submitLoanData() {
             var data = {
+                AutoId: $(settings.LoanAutoId).val() || 0,
                 LoanId: $(settings.LoanIdAutoGenerate).val() || '',
                 EmployeeId: $(settings.EmployeeIds).val() || '',                
                 LoanTypeId: $(settings.PaymentType).val() || '', 
@@ -141,8 +169,8 @@
             return data;
         }
 
-        var clearLoanForm=function () {
-            $(settings.EmployeeIds).val('0');
+       /* var clearLoanForm = function () {
+            $(settings.EmployeeIds).val().multiselect('rebuild');
             $(settings.LoanAmount).val('');
             $(settings.NoOfInstallment).val('');
             $(settings.MonthlyDeduction).val('');
@@ -157,12 +185,39 @@
             $(settings.InstStartDate).val(getTodayDate());
             $(settings.EndDate).val(getTodayDate());
             $(settings.ChequeDate).val(getTodayDate());
-            $(settings.PaymentType).val('');
+            $(settings.PaymentType).val('');         
             //loanDatePicker;
             //instStartDatePicker;
             //endDatePicker;
             //chequeDatePicker;
-        }
+        }*/
+        var clearLoanForm = function () {
+            //$(settings.companyIds).val('0').multiselect('rebuild');
+            $(settings.LoanAutoId).val(0);
+            $(settings.DeductionHead).val('0').multiselect('rebuild');
+            $(settings.PaymentMode).val('0').multiselect('rebuild');
+            $(settings.Bank).val('0').multiselect('rebuild');
+
+            $(settings.PaymentType).val('0').multiselect('rebuild'); 
+
+            $(settings.EmployeeIds).val('').multiselect('rebuild');
+            $(settings.LoanAmount).val('');
+            $(settings.NoOfInstallment).val('');
+            $(settings.MonthlyDeduction).val('');
+            $(settings.ChequeNo).val('');
+            $(settings.BankAccount).val('');
+            $(settings.Remarks).val('');
+            $(settings.LoanName).text('');
+            $(settings.LoanDesignation).text('');
+            $(settings.LoanDepartment).text('');
+            $(settings.LoanJoindate).text('');
+            $(settings.LoanDate).val(getTodayDate());
+            $(settings.InstStartDate).val(getTodayDate());
+            $(settings.EndDate).val(getTodayDate());
+            $(settings.ChequeDate).val(getTodayDate());
+            //createLoanIdAutoGenareted();
+        };
+
         function getTodayDate() {
             var d = new Date();
             var day = ('0' + d.getDate()).slice(-2);
@@ -202,7 +257,7 @@
                         $.each(Employees, function (index, employee) {
                             //console.log(employee);
                             if (employee.code != null && employee.name != null && employee.name != "" && optEmployee.find(`option[value="${employee.code}"]`).length === 0) {
-                                optEmployee.append(`<option value="${employee.code}">${employee.name}</option>`)
+                                optEmployee.append(`<option value="${employee.code}">${employee.name} (${employee.code})</option>`)
                             }
                         });
                         optEmployee.multiselect('rebuild');
@@ -230,29 +285,30 @@
                 }
             });
         });
-        paymentType = function () {
+        paymentType = function (callback) {
             $.ajax({
                 url: paymentTypeUrl,
                 type: "GET",
                 success: function (res) {
                     var paymentTypes = res.data;
-                    //console.log(paymentTypes);                  
                     var paymentTypeOpt = $(settings.PaymentType);
                     if (paymentTypes && paymentTypes.length > 0 && paymentTypes.some(x => x.loanType != null && x.loanTypeId != null)) {
-                        
-                        $.each(paymentTypes, function (index, paymentType) {
-                            //console.log(paymentType);
+                        paymentTypes.forEach(function (paymentType) {
                             if (paymentType.loanTypeId != null && paymentType.loanType != null && paymentTypeOpt.find(`option[value="${paymentType.loanTypeId}"]`).length === 0) {
                                 paymentTypeOpt.append(`<option value="${paymentType.loanTypeId}">${paymentType.loanType}</option>`)
                             }
                         });
                         paymentTypeOpt.multiselect('rebuild');
                     }
-                }, error: function (e) {
-                    //console.log(e);
+                    if (callback) callback(paymentTypes);
+                },
+                error: function (e) {
+                    console.log(e);
+                    if (callback) callback([]);
                 }
             });
         }
+
         paymentMode = function () {
             $.ajax({
                 url: paymentModeUrl,
@@ -323,7 +379,8 @@
                 url: createLoanId,
                 type: "GET",
                 success: function (res) {
-                    //console.log(res.loanId);
+                    console.log(res.loanId);
+                    clearLoanForm();
                     $(settings.LoanIdAutoGenerate).val(res.loanId);
                 }, error: function (e) {
                     console.log(e);
@@ -514,20 +571,61 @@
                 $(settings.AmountWorningMessage).stop(true, true).fadeOut(500);
             }
         });
-
+       
 
         //create 
         $(document).on('click', settings.LoanEntryBtn, function () {
             var filterData = submitLoanData()
+           
+            console.log(filterData);            
+
+            if (!filterData.CompanyCode || filterData.CompanyCode === "") {
+                showToast('warning', 'Please select an company first!');
+
+                const $select = $(settings.companyIds);
+
+                // Multiselect-এর dropdown button
+                const $button = $select.siblings('.btn-group').find('button.multiselect');
+
+                $button.focus();
+
+                setTimeout(() => {
+                    $button.click();
+                }, 100);
+                return;
+            }
+
+            if (!filterData.EmployeeId || filterData.EmployeeId === "") {
+                showToast('warning', 'Please select an employee first!');
+
+                const $select = $(settings.EmployeeIds);                            
+                const $button = $select.siblings('.btn-group').find('button.multiselect');
+                $button.focus();
+
+                setTimeout(() => {
+                    $button.click();
+                }, 100); 
+
+                return;
+            }
+
+            if (filterData.LoanAmount <= 0 || filterData.LoanAmount == '') {
+                $(settings.LoanAmount).focus().css('border','1px solid red');
+                return;
+            }
+            //console.log(filterData);
             $.ajax({
-                url: createLoanUrl,
+                url: createEditLoanUrl,
                 type: "POST",
                 contentType: 'application/json',
                 data: JSON.stringify(filterData),
                 success: function (res) {
-                    console.log(res);
-                    createLoanIdAutoGenareted();
-                    displayLoanDataTable();
+                    if (res.isSuccess) {
+                        showToast('success', res.message);
+                        console.log(res);
+                        createLoanIdAutoGenareted();
+                        displayLoanDataTable();
+                    }                   
                 },
                 error: function (e) {
                     console.log(e);
@@ -547,46 +645,45 @@
         //        }
         //    });
         //}
-
-
+        var LoanTable;
         function displayLoanDataTable() {
             if ($.fn.DataTable.isDataTable("#loan-data-grid")) {
                 $("#loan-data-grid").DataTable().clear().destroy();
             }
 
-            $('#loan-data-grid').DataTable({
+          LoanTable =  $('#loan-data-grid').DataTable({
                 processing: true,
                 serverSide: false,
                 ajax: {
-                    url: getLoanDataUrl, 
+                    url: getLoanDataUrl,
                     type: 'GET',
-                    dataSrc: 'data'
-                },
+                    dataSrc: 'data'                    
+              },
                 columns: [
                     {
                         data: null,
-                        orderable: false,
+                        orderable: false,  // Disable sorting for this column
                         className: 'text-center',
                         render: function (data, type, row) {
-                            return `<input class="payrollLoan" type="checkbox" data-id="${row.loanId}" />`;
+                            return `<input class="payrollLoan" type="checkbox" data-id="${row.autoId}" />`;
                         }
                     },
                     { data: 'loanId', className: 'text-center' },
                     { data: 'showLoanDate', className: 'text-center' },
-                    { data: 'loanTypeName', className: 'text-left' , width:'100px'},
+                    { data: 'loanTypeName', className: 'text-left' },
                     { data: 'employeeId', className: 'text-center' },
-                    { data: 'empName', className: 'text-left', width: '150px' },
-                    { data: 'designationName', className: 'text-left', width:'140px' },
+                    { data: 'empName', className: 'text-left' },
+                    { data: 'designationName', className: 'text-left' },
                     { data: 'loanAmount', className: 'text-center' },
                     { data: 'startShowDate', className: 'text-center' },
                     { data: 'endShowDate', className: 'text-center' },
-                    { data: 'noOfInstallment', className: 'text-center', width:'100px' },
+                    { data: 'noOfInstallment', className: 'text-center' },
                     { data: 'monthlyDeduction', className: 'text-center' },
                     { data: 'paymentModeName', className: 'text-left' }
                 ],
-                responsive: true,
+                responsive: true, // Enable responsive features
                 paging: true,
-                scrollX: true,
+                scrollX: true, // Enable horizontal scrolling
                 searching: true,
                 language: {
                     search: "🔍 Search:",
@@ -599,11 +696,254 @@
                         last: "Last"
                     },
                     emptyTable: "No data available"
-                }
-            });
+                },
+                // Disable fixed column widths and allow the table to auto-scale
+                columnDefs: [
+                    {
+                        targets: 0,
+                        width: "6%", // Set percentage width for checkbox column
+                    },
+                    {
+                        targets: 1,
+                        width: "8%", // Set percentage width for Loan ID
+                    },
+                    {
+                        targets: 2,
+                        width: "10%", // Set percentage width for Loan Date
+                    },
+                    {
+                        targets: 3,
+                        width: "15%", // Set percentage width for Loan Type
+                    },
+                    {
+                        targets: 4,
+                        width: "10%", // Set percentage width for Employee ID
+                    },
+                    {
+                        targets: 5,
+                        width: "15%", // Set percentage width for Employee Name
+                    },
+                    {
+                        targets: 6,
+                        width: "15%", // Set percentage width for Designation
+                    },
+                    {
+                        targets: 7,
+                        width: "7%", // Set percentage width for Loan Amount
+                    },
+                    {
+                        targets: 8,
+                        width: "8%", // Set percentage width for Start Date
+                    },
+                    {
+                        targets: 9,
+                        width: "9%", // Set percentage width for End Date
+                    },
+                    {
+                        targets: 10,
+                        width: "9%", // Set percentage width for Installments
+                    },
+                    {
+                        targets: 11,
+                        width: "9%", // Set percentage width for Monthly Deduction
+                    },
+                    {
+                        targets: 12,
+                        width: "9%", // Set percentage width for Payment Mode
+                    }
+              ]                 
+          });
+           
+        }
+       
+        function formatEditDate(dateStr) {
+            if (!dateStr) return ''; 
+            const date = new Date(dateStr);
+            const day = String(date.getDate()).padStart(2, '0'); 
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`; 
         }
 
+        $("#loan-data-grid tbody").on('click', 'td:nth-child(2)', function () {
+            var loanRow = LoanTable.row(this).data();
+            var loanId = loanRow.loanId;
+            console.log(loanRow);
+            if (loanRow.paymentModeName === "Cheque") {
+                //console.log(loanRow.paymentModeName);
+                $(settings.IfCheque).fadeIn(500);
+                $(settings.IfWairTransferThenHide).fadeIn(500);
+            } else if (loanRow.paymentModeName === "Electronics Transfer") {
+                $(settings.IfWairTransferThenHide).fadeOut(500);
+                   $(settings.IfCheque).fadeIn(500);
+            } else {
+                $(settings.IfCheque).fadeOut(500);
+            }           
 
+            
+            $(settings.CreateDate).text(loanRow.showCreateDate);
+            $(settings.UpdateDate).text(loanRow.showModifyDate);
+          
+
+            //$(settings.EmployeeIds).multiselect('rebuild');
+            $(settings.PaymentType).multiselect('select', loanRow.loanTypeId);
+            $(settings.EmployeeIds).multiselect('select', loanRow.employeeId);
+            $(settings.DeductionHead).multiselect('select', loanRow.payHeadNameId);
+            $(settings.Bank).multiselect('select', loanRow.bankId);
+            //if ($(settings.PaymentMode + ` option[value="${loanRow.paymentModeId}"]`).length === 0) {
+            //    $(settings.PaymentMode).append(`<option value="${loanRow.paymentModeId}" selected>${loanRow.paymentModeName}</option>`);
+            //}
+            //$(settings.PaymentMode).multiselect('rebuild');
+            $(settings.PaymentMode).multiselect('select', loanRow.paymentModeId);
+            
+            $(settings.LoanAutoId).val(loanRow.autoId || 0);
+            $(settings.LoanIdAutoGenerate).val(loanRow.loanId || '');
+            $(settings.EmployeeIds).val(loanRow.employeeId || '');
+            $(settings.PaymentType).val(loanRow.loanTypeId || '');
+            $(settings.LoanAmount).val(loanRow.loanAmount || 0);
+            $(settings.NoOfInstallment).val(loanRow.noOfInstallment || '');
+            $(settings.MonthlyDeduction).val(loanRow.monthlyDeduction || 0);
+            //$(settings.DeductionHead).val(loanRow.payHeadNameId || '');
+            $(settings.PaymentMode).val(loanRow.paymentModeId || '');
+            $(settings.ChequeNo).val(loanRow.chequeNo || '');
+            //$(settings.Bank).val(loanRow.bankId || '');
+            $(settings.BankAccount).val(loanRow.bankAccount || '');
+            $(settings.Remarks).val(loanRow.remarks || '');
+            $(settings.companyIds).val(loanRow.companyCode || '');
+            $(settings.LoanDate).val(formatEditDate(loanRow.loanDate) || null);
+            $(settings.InstStartDate).val(formatEditDate(loanRow.startDate) || null);
+            $(settings.EndDate).val(formatEditDate(loanRow.endDate) || null);
+            $(settings.ChequeDate).val(formatEditDate(loanRow.chequeDate) || null);
+            $(settings.LoanName).text(loanRow.empName || null);
+            $(settings.LoanDesignation).text(loanRow.designationName || null);
+            $(settings.LoanDepartment).text(loanRow.departmentName || null);
+            $(settings.LoanJoindate).text(loanRow.showJoiningDate || null);
+            $(settings.remarks).text(loanRow.remarks || "");
+        });
+
+
+
+        var selectedLoanId = [];
+
+        checkOption = function () {
+            // Check All click
+            $(settings.CheckAll).on('change', function () {
+                console.log("click checkAll");
+                var isChecked = $(this).is(":checked");
+
+                $('#payrollLoanChcekboxBody input[type="checkbox"]').each(function () {
+                    $(this).prop('checked', isChecked);
+
+                    var row = $(this).closest('tr');
+                    var loanId = row.find('td:nth-child(2)').text().trim();
+                    var autoId = $(this).data('id');
+                    console.log(autoId);
+
+                    if (isChecked) {
+                       
+                        if (!selectedLoanId.includes(autoId)) {
+                            selectedLoanId.push(autoId);
+                        }
+                    } else {
+                        // Remove from array
+                        selectedLoanId = selectedLoanId.filter(id => id !== autoId);
+                    }
+                });
+
+                console.log("Selected Loan IDs after CheckAll:", selectedLoanId);
+            });
+
+            // Individual checkbox click
+            $(document).on('change', '#payrollLoanChcekboxBody input[type="checkbox"]', function () {
+                var totalCheck = $('#payrollLoanChcekboxBody input[type="checkbox"]').length;
+                var singleCheck = $('#payrollLoanChcekboxBody input[type="checkbox"]:checked').length;
+
+                var row = $(this).closest('tr');
+                var loanId = row.find('td:nth-child(2)').text().trim();
+                var autoId = $(this).data('id');
+                if ($(this).is(':checked')) {
+                   if (!selectedLoanId.includes(autoId)) {
+                        selectedLoanId.push(autoId);
+                    }
+                } else {
+                    selectedLoanId = selectedLoanId.filter(id => id !== autoId);
+                }
+
+                // Optional: Uncheck "Check All" if not all selected
+                $(settings.CheckAll).prop('checked', singleCheck === totalCheck);
+
+                console.log("Selected Loan IDs:", selectedLoanId);
+            });
+        };
+
+
+        $(document).on('click', settings.deleteLoanBtn, function () {
+            Swal.fire({
+                title: "Are you sure?",
+                html: `
+            <div style="display: flex; justify-content: center;">
+                <div class="icon-wrapper animate__animated animate__tada" 
+                     style="background-color: #f8d7da; border-radius: 50%; padding: 20px;">
+                    <i class="fas fa-trash-alt fa-3x text-danger"></i>
+                </div>
+            </div>
+            <div class="mt-3">You won't be able to revert this!</div>
+        `,
+                icon: null,
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+                showClass: {
+                    popup: 'animate__animated animate__zoomIn'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__zoomOut'
+                }
+            }).then((result) => {               
+                if (result.value) {
+                     deleteLoan();
+                    Swal.fire({
+                        title: "Deleted!",
+                        html: `
+                    <div style="display: flex; justify-content: center;">
+                        <div class="icon-wrapper animate__animated animate__bounceIn" 
+                             style="background-color: #d1e7dd; border-radius: 50%; padding: 20px;">
+                            <i class="fas fa-check-circle fa-3x text-success"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3">Your file has been deleted.</div>
+                `,
+                        icon: null,
+                        showClass: {
+                            popup: 'animate__animated animate__zoomIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__zoomOut animate__faster'
+                        }
+                    });
+                }
+            });
+        });
+      
+        function deleteLoan() {
+           
+            $.ajax({
+                url: deleteLoanUrl,
+                type: 'POST',
+                data: JSON.stringify( selectedLoanId ),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    console.log('Deleted successfully', response);
+                    displayLoanDataTable();
+                },
+                error: function (err) {
+                    console.error('Error deleting loans', err);
+                }
+            });
+
+
+        }
 
         var init = function () {
             loadFilterData();
@@ -615,6 +955,8 @@
             bankSection();
             displayLoanDataTable();
             //loadLoanData();
+            checkOption();
+
             loanDatePicker;
             instStartDatePicker;
             endDatePicker;
