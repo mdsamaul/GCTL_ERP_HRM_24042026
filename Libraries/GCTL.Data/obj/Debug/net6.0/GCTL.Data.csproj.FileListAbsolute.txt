@@ -645,3 +645,39 @@ F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\obj\Debug\net6.0\GCTL.Data
 F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\obj\Debug\net6.0\refint\GCTL.Data.dll
 F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\obj\Debug\net6.0\GCTL.Data.pdb
 F:\DataPath\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\obj\Debug\net6.0\ref\GCTL.Data.dll
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\LatoFont\Lato-Black.ttf
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\LatoFont\Lato-BlackItalic.ttf
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\LatoFont\Lato-Bold.ttf
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\LatoFont\Lato-BoldItalic.ttf
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\LatoFont\Lato-ExtraBold.ttf
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\LatoFont\Lato-ExtraBoldItalic.ttf
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\LatoFont\Lato-ExtraLight.ttf
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\LatoFont\Lato-ExtraLightItalic.ttf
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\LatoFont\Lato-Italic.ttf
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\LatoFont\Lato-Light.ttf
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\LatoFont\Lato-LightItalic.ttf
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\LatoFont\Lato-Medium.ttf
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\LatoFont\Lato-MediumItalic.ttf
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\LatoFont\Lato-Regular.ttf
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\LatoFont\Lato-SemiBold.ttf
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\LatoFont\Lato-SemiBoldItalic.ttf
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\LatoFont\Lato-Thin.ttf
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\LatoFont\Lato-ThinItalic.ttf
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\LatoFont\OFL.txt
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\GCTL.Data.deps.json
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\GCTL.Data.dll
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\GCTL.Data.pdb
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\GCTL.Core.dll
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\bin\Debug\net6.0\GCTL.Core.pdb
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\obj\Debug\net6.0\GCTL.Data.csproj.AssemblyReference.cache
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\obj\Debug\net6.0\GCTL.Data.GeneratedMSBuildEditorConfig.editorconfig
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\obj\Debug\net6.0\GCTL.Data.AssemblyInfoInputs.cache
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\obj\Debug\net6.0\GCTL.Data.AssemblyInfo.cs
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\obj\Debug\net6.0\GCTL.Data.csproj.CoreCompileInputs.cache
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\obj\Debug\net6.0\EFCoreSqlServerDateOnlyTimeOnly.cs
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\obj\Debug\net6.0\GCTL.Data.sourcelink.json
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\obj\Debug\net6.0\GCTL.Data.csproj.Up2Date
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\obj\Debug\net6.0\GCTL.Data.dll
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\obj\Debug\net6.0\refint\GCTL.Data.dll
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\obj\Debug\net6.0\GCTL.Data.pdb
+D:\git clone\new clone\GCTL_ERP_HRM_24042026\Libraries\GCTL.Data\obj\Debug\net6.0\ref\GCTL.Data.dll

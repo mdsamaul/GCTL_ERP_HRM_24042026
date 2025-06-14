@@ -30,6 +30,13 @@ namespace GCTL.UI.Core.Controllers
             var result = await hRMPayrollLoanService.GetFilaterDataAsync(entryDto);
             return Json(new {isSuccess =true, messate="Successed data load", data=result});
         }
+        //get payment receive 
+        [HttpPost]
+        public async Task<IActionResult> GetFilterPaymentReceive([FromBody] PayrollLoanFilterEntryDto entryDto)
+        {
+            var result = await hRMPayrollLoanService.GetFilterPaymentReceiveAsync(entryDto);
+            return Json(new { isSuccess = true, messate = "Successed data load", data = result });
+        }
         //get employee id 
         [HttpGet]
         public async Task<IActionResult> GetEmpById(string empId)
@@ -86,6 +93,13 @@ namespace GCTL.UI.Core.Controllers
             var LoanId = await hRMPayrollLoanService.createLoanIdAsync();
             return Json(new {LoanId});
         }
+        //payment receive id
+        [HttpGet]
+        public async Task<IActionResult> GetPaymentAutoId()
+        {
+            var LoanId = await hRMPayrollLoanService.createPaymentReceiveIdAsync();
+            return Json(new {LoanId});
+        }
         //get bank
         [HttpGet]
         public async Task<IActionResult> GetBank()
@@ -111,8 +125,12 @@ namespace GCTL.UI.Core.Controllers
         }
 
         //loan get by id
-        //[HttpGet]
-        //public async Task<IActionResult> GetLoanId(string)
+        [HttpGet]
+        public async Task<IActionResult> GetLoanId(string loanId)
+        {
+            var result = await hRMPayrollLoanService.getLoanIdAsync(loanId);
+            return Json(new {data=result});
+        }
         //get loan data
         [HttpGet]
         public async Task<IActionResult> GetLoanData()
@@ -128,10 +146,11 @@ namespace GCTL.UI.Core.Controllers
             {
                 return BadRequest("No loan IDs provided.");
             }
-            var result =await hRMPayrollLoanService.deleteLoanAsync(autoIds);
-           
-
+            var result =await hRMPayrollLoanService.deleteLoanAsync(autoIds); 
             return Json(new { isSuccess= result});
         }
+
+
+       
     }
 }

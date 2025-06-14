@@ -619,6 +619,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[HRM_Payroll_PaymentReceive]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[HRM_Payroll_PFAssignEntry]",
          "ObjectType": 0
       },

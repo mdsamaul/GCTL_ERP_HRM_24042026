@@ -169,6 +169,7 @@ namespace GCTL.Data.Models
         public virtual DbSet<HrmPayPayHeadName> HrmPayPayHeadName { get; set; }
         public virtual DbSet<HrmPayTaxAdjustmentEntry> HrmPayTaxAdjustmentEntry { get; set; }
         public virtual DbSet<HrmPayrollLoan> HrmPayrollLoan { get; set; }
+        public virtual DbSet<HrmPayrollPaymentReceive> HrmPayrollPaymentReceive { get; set; }
         public virtual DbSet<HrmPayrollPfassignEntry> HrmPayrollPfassignEntry { get; set; }
         public virtual DbSet<HrmRosterScheduleEntry> HrmRosterScheduleEntry { get; set; }
         public virtual DbSet<HrmSeparation> HrmSeparation { get; set; }
@@ -8087,6 +8088,73 @@ namespace GCTL.Data.Models
                 entity.Property(e => e.Remarks).HasMaxLength(500);
 
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<HrmPayrollPaymentReceive>(entity =>
+            {
+                entity.HasKey(e => e.AutoId)
+                    .HasName("PK__HRM_Payr__6B232965282B432A");
+
+                entity.ToTable("HRM_Payroll_PaymentReceive");
+
+                entity.Property(e => e.AutoId)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("AutoID");
+
+                entity.Property(e => e.BankAccount).HasMaxLength(100);
+
+                entity.Property(e => e.BankId).HasMaxLength(15);
+
+                entity.Property(e => e.ChequeDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ChequeNo).HasMaxLength(50);
+
+                entity.Property(e => e.CompanyCode).HasMaxLength(10);
+
+                entity.Property(e => e.EmployeeId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.EntryUserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("EntryUserID");
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.LoanId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("LoanID");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.PaymentAmount).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PaymentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PaymentId).HasMaxLength(50);
+
+                entity.Property(e => e.PaymentModeId)
+                    .HasMaxLength(15)
+                    .HasColumnName("PaymentModeID");
+
+                entity.Property(e => e.Remarks).HasMaxLength(500);
             });
 
             modelBuilder.Entity<HrmPayrollPfassignEntry>(entity =>
