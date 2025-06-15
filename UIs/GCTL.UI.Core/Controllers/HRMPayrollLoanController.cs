@@ -37,6 +37,14 @@ namespace GCTL.UI.Core.Controllers
             var result = await hRMPayrollLoanService.GetFilterPaymentReceiveAsync(entryDto);
             return Json(new { isSuccess = true, messate = "Successed data load", data = result });
         }
+
+        //get payment receive data all
+        [HttpGet]       
+        public async Task<IActionResult> GetPaymentReceive()
+        {
+            var result = await hRMPayrollLoanService.GetPaymentReceiveAsync();
+            return Json(new { isSuccess = true, messate = "Successed data load", data = result });
+        }
         //get employee id 
         [HttpGet]
         public async Task<IActionResult> GetEmpById(string empId)
@@ -47,6 +55,26 @@ namespace GCTL.UI.Core.Controllers
             }
 
             var result = await hRMPayrollLoanService.EmployeeGetById(empId);
+
+            if (result.isSuccess)
+            {
+                return Json(new { result.isSuccess, result.message, data = result.Item3 });
+            }
+            else
+            {
+                return Json(new { result.isSuccess, result.message });
+            }
+        }
+        //get payment receive employee id 
+        [HttpGet]
+        public async Task<IActionResult> PaymentReceiveGetEmpById(string empId)
+        {
+            if (string.IsNullOrWhiteSpace(empId))
+            {
+                return Json(new { isSuccess = false, message = "Employee not found" });
+            }
+
+            var result = await hRMPayrollLoanService.PaymentReciveEmployeeGetById(empId);
 
             if (result.isSuccess)
             {
@@ -122,6 +150,14 @@ namespace GCTL.UI.Core.Controllers
             // await _loanService.SaveLoanAsync(modelData);
 
             return Ok(new {isSuccess = result.isSuccess, message = result.message, data= result});
+        }
+
+        //create and edit payment receive
+        [HttpPost]
+        public async Task<IActionResult> CreateEditPaymentReceive([FromBody] PaymentReceiveSetupViewModel modelData)
+        {
+            var result = modelData;
+            return Json(new { modelData});
         }
 
         //loan get by id

@@ -127,6 +127,11 @@ namespace GCTL.Service.HRMPayrollLoan
                          join dp in dpRepo.All() on eoi.DepartmentCode equals dp.DepartmentCode into dp_join
                          from dp in dp_join.DefaultIfEmpty()
 
+                         join pm in PayModeRepo.All() on le.PaymentModeId equals pm.PaymentModeId into pm_join
+                         from pm in pm_join.DefaultIfEmpty()
+
+                         join py in paymentRepo.All() on le.LoanId equals py.LoanId into py_join
+                         from py in py_join.DefaultIfEmpty()
 
                          select new
                          {
@@ -136,7 +141,13 @@ namespace GCTL.Service.HRMPayrollLoan
                              CompaneName = c.CompanyName,
                              DesignationName = dg.DesignationName,
                              DepartmentName = dp.DepartmentName,
-                             JoinDate = eoi.JoiningDate.HasValue ? eoi.JoiningDate.Value.ToString("dd/MM/yyyy") : ""
+                             JoinDate = eoi.JoiningDate.HasValue ? eoi.JoiningDate.Value.ToString("dd/MM/yyyy") : "",
+                             loanId = le.LoanId,
+                             PaymentModeName = pm.PaymentModeName,
+                             PaymentDate = py.PaymentDate.HasValue ? py.PaymentDate.Value.ToString("dd/MM/yyyy") : "",
+                             PaymentAmount= py.PaymentAmount,
+                             paymentId = py.PaymentId,
+                             remark= py.Remarks
                          };
             if (filterEntryDto.CompanyCodes?.Any() == true)
             {
@@ -161,9 +172,147 @@ namespace GCTL.Service.HRMPayrollLoan
                     DepartmentName = x.DepartmentName,
                     joinDate = x.JoinDate,
                 }).Distinct().ToListAsyncSafe(),
+                PaymentReceiveEmployee = await queary.Where(x => x.loanId != null).Select(x => new HrmPayrollPaymentReceiveDto
+                {
+                    LoanId = x.loanId,
+                    PaymentId = x.paymentId,
+                    ShowPaymentDate = x.PaymentDate,
+                    PaymentAmount = x.PaymentAmount,
+                    PaymentMode = x.PaymentModeName,
+                    Remarks = x.remark,
+                    EmpId = x.EmpId,
+                    EmpName = x.EmpName,
+                    Designation = x.DesignationName,
+
+                }).Distinct().ToListAsyncSafe(),
             };
             return result;
         }
+        public async Task<List<HrmPayrollPaymentReceiveDto>> GetPaymentReceiveAsync()
+        {            
+
+            try
+            {
+                var result = await (from py in paymentRepo.All()
+
+                                    join le in payrollLoanRepo.All() on py.LoanId equals le.LoanId into le_join
+                                    from le in le_join.DefaultIfEmpty()
+
+                                    join eoi in empOffRepo.All() on le.EmployeeId equals eoi.EmployeeId into eoi_join
+                                    from eoi in eoi_join.DefaultIfEmpty()
+
+                                    join e in empRepo.All() on eoi.EmployeeId equals e.EmployeeId into e_join
+                                    from e in e_join.DefaultIfEmpty()
+
+                                    join c in comRepo.All() on eoi.CompanyCode equals c.CompanyCode into c_join
+                                    from c in c_join.DefaultIfEmpty()
+
+                                    join dg in desiRepo.All() on eoi.DesignationCode equals dg.DesignationCode into dg_join
+                                    from dg in dg_join.DefaultIfEmpty()
+
+                                    join dp in dpRepo.All() on eoi.DepartmentCode equals dp.DepartmentCode into dp_join
+                                    from dp in dp_join.DefaultIfEmpty()
+
+                                    join pm in PayModeRepo.All() on le.PaymentModeId equals pm.PaymentModeId into pm_join
+                                    from pm in pm_join.DefaultIfEmpty()
+
+                                    select new HrmPayrollPaymentReceiveDto
+                                    {
+
+                                        LoanId = le.LoanId,
+                                        PaymentId = py.PaymentId,
+                                        ShowPaymentDate = py.PaymentDate.HasValue ? py.PaymentDate.Value.ToString("dd/MM/yyyy") : "",
+                                        PaymentAmount = py.PaymentAmount,
+                                        PaymentMode = pm.PaymentModeName,
+                                        Remarks = py.Remarks,
+                                        EmpId = e.EmployeeId,
+                                        EmpName = e.FirstName + " " + e.LastName,
+                                        Designation = dg.DesignationName,
+                                    }).ToListAsync();
+
+                return (result);
+            }
+            catch (Exception ex)
+            {
+                return (null);
+            }
+        }
+        //public async Task<PayrollLoanFilterResultListDto> GetPaymentReceiveAsync(PayrollLoanFilterEntryDto filterEntryDto)
+        //{           
+        //    var queary = from le in payrollLoanRepo.All()
+        //                 join eoi in empOffRepo.All() on le.EmployeeId equals eoi.EmployeeId into eoi_join
+        //                 from eoi in eoi_join.DefaultIfEmpty()
+        //                 join e in empRepo.All() on eoi.EmployeeId equals e.EmployeeId into e_join
+        //                 from e in e_join.DefaultIfEmpty()
+        //                 join c in comRepo.All() on eoi.CompanyCode equals c.CompanyCode into c_join
+        //                 from c in c_join.DefaultIfEmpty()
+        //                 join dg in desiRepo.All() on eoi.DesignationCode equals dg.DesignationCode into dg_join
+        //                 from dg in dg_join.DefaultIfEmpty()
+        //                 join dp in dpRepo.All() on eoi.DepartmentCode equals dp.DepartmentCode into dp_join
+        //                 from dp in dp_join.DefaultIfEmpty()
+
+        //                 join pm in PayModeRepo.All() on le.PaymentModeId equals pm.PaymentModeId into pm_join
+        //                 from pm in pm_join.DefaultIfEmpty()
+
+        //                 join py in paymentRepo.All() on le.LoanId equals py.LoanId into py_join
+        //                 from py in py_join.DefaultIfEmpty()
+
+        //                 select new
+        //                 {
+        //                     EmpId = e.EmployeeId,
+        //                     CompanyCode = c.CompanyCode,
+        //                     EmpName = e.FirstName + " " + e.LastName,
+        //                     CompaneName = c.CompanyName,
+        //                     DesignationName = dg.DesignationName,
+        //                     DepartmentName = dp.DepartmentName,
+        //                     JoinDate = eoi.JoiningDate.HasValue ? eoi.JoiningDate.Value.ToString("dd/MM/yyyy") : "",
+        //                     loanId = le.LoanId,
+        //                     PaymentModeName = pm.PaymentModeName,
+        //                     PaymentDate = py.PaymentDate.HasValue ? py.PaymentDate.Value.ToString("dd/MM/yyyy") : "",
+        //                     PaymentAmount = py.PaymentAmount,
+        //                     paymentId = py.PaymentId,
+        //                     remark = py.Remarks
+        //                 };
+        //    if (filterEntryDto.CompanyCodes?.Any() == true)
+        //    {
+        //        queary = queary.Where(x => x.CompanyCode != null && filterEntryDto.CompanyCodes.Contains(x.CompanyCode));
+        //    }
+        //    if (filterEntryDto.EmployeeIds?.Any() == true)
+        //    {
+        //        queary = queary.Where(x => x.EmpId != null && x.EmpName != null && filterEntryDto.EmployeeIds.Contains(x.EmpId));
+        //    }
+        //    var result = new PayrollLoanFilterResultListDto
+        //    {
+        //        Company = await queary.Where(x => x.CompanyCode != null && x.CompaneName != null).Select(x => new PayrollLoanFilterResultDto
+        //        {
+        //            Code = x.CompanyCode,
+        //            Name = x.CompaneName
+        //        }).Distinct().ToListAsyncSafe(),
+        //        Employees = await queary.Where(x => x.EmpId != null && x.EmpName != null).Select(x => new PayrollLoanFilterResultDto
+        //        {
+        //            Code = x.EmpId,
+        //            Name = x.EmpName,
+        //            DesignationName = x.DesignationName,
+        //            DepartmentName = x.DepartmentName,
+        //            joinDate = x.JoinDate,
+        //        }).Distinct().ToListAsyncSafe(),
+        //        PaymentReceiveEmployee = await queary.Where(x => x.loanId != null).Select(x => new HrmPayrollPaymentReceiveDto
+        //        {
+        //            LoanId = x.loanId,
+        //            PaymentId = x.paymentId,
+        //            ShowPaymentDate = x.PaymentDate,
+        //            PaymentAmount = x.PaymentAmount,
+        //            PaymentMode = x.PaymentModeName,
+        //            Remarks = x.remark,
+        //            EmpId = x.EmpId,
+        //            EmpName = x.EmpName,
+        //            Designation = x.DesignationName,
+
+        //        }).Distinct().ToListAsyncSafe(),
+        //    };
+        //    return result;
+        //}
+
 
         public async Task<(bool isSuccess, string message, PayrollLoanFilterResultDto)> EmployeeGetById(string empId)
         {
@@ -195,11 +344,158 @@ namespace GCTL.Service.HRMPayrollLoan
                 return (true, "Employee found", employee);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return (true, ex.Message, null);
             }
         }
+
+        //public async Task<(bool isSuccess, string message, HrmPayrollPaymentReceiveListDto)> PaymentReciveEmployeeGetById(string empId)
+        //{
+        //    if (string.IsNullOrWhiteSpace(empId))
+        //    {
+        //        return (false, "Employee not found", null);
+        //    }
+
+        //    try
+        //    {
+        //        var result = await (from le in payrollLoanRepo.All()
+        //                            where le.EmployeeId == empId
+
+        //                            join eoi in empOffRepo.All() on le.EmployeeId equals eoi.EmployeeId into eoi_join
+        //                            from eoi in eoi_join.DefaultIfEmpty()
+
+        //                            join e in empRepo.All() on eoi.EmployeeId equals e.EmployeeId into e_join
+        //                            from e in e_join.DefaultIfEmpty()
+
+        //                            join c in comRepo.All() on eoi.CompanyCode equals c.CompanyCode into c_join
+        //                            from c in c_join.DefaultIfEmpty()
+
+        //                            join dg in desiRepo.All() on eoi.DesignationCode equals dg.DesignationCode into dg_join
+        //                            from dg in dg_join.DefaultIfEmpty()
+
+        //                            join dp in dpRepo.All() on eoi.DepartmentCode equals dp.DepartmentCode into dp_join
+        //                            from dp in dp_join.DefaultIfEmpty()
+
+        //                            join pm in PayModeRepo.All() on le.PaymentModeId equals pm.PaymentModeId into pm_join
+        //                            from pm in pm_join.DefaultIfEmpty()
+
+        //                            select new PayrollLoanFilterResultDto
+        //                            {
+        //                                Code = le.LoanId,
+        //                                Name = (e.FirstName + " " + e.LastName).Trim(),
+        //                                EmpId = e.EmployeeId,
+        //                                EmpName = (e.FirstName + " " + e.LastName).Trim(),
+        //                                DesignationName = dg.DesignationName,
+        //                                DepartmentName = dp.DepartmentName,
+        //                               joinDate = eoi.JoiningDate.HasValue? eoi.JoiningDate.Value.ToString("dd/MM/yyyy") : "",
+
+        //                                // Loan Info as PaymentReceiveDto
+        //                                hrmPayrollPaymentReceiveDtos = paymentRepo.All()
+        //                                    .Where(p => p.LoanId == le.LoanId)
+        //                                    .Select(p => new HrmPayrollPaymentReceiveDto
+        //                                    {
+        //                                        LoanId = p.LoanId,
+        //                                        PaymentId = p.PaymentId,
+        //                                        ShowPaymentDate = p.PaymentDate.HasValue?p.PaymentDate.Value.ToString("dd/MM/yyyy"):"",
+        //                                        PaymentAmount = p.PaymentAmount,
+        //                                        PaymentMode = pm.PaymentModeName,
+        //                                        Remarks = p.Remarks,
+        //                                        EmpId = e.EmployeeId,
+        //                                        EmpName = e.FirstName+" "+e.LastName,
+        //                                        Designation = dg.DesignationName,
+        //                                    }).ToList()
+        //                            }).FirstOrDefaultAsync();
+
+        //        return (true, "Employee found", result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return (false, ex.Message, null);
+        //    }
+        //}
+
+        public async Task<(bool isSuccess, string message, HrmPayrollPaymentReceiveListDto)> PaymentReciveEmployeeGetById(string empId)
+        {
+            if (string.IsNullOrWhiteSpace(empId))
+            {
+                return (false, "Employee not found", null);
+            }
+
+            try
+            {
+                var loanList = await (from le in payrollLoanRepo.All()
+                                      where le.EmployeeId == empId
+
+                                      join eoi in empOffRepo.All() on le.EmployeeId equals eoi.EmployeeId into eoi_join
+                                      from eoi in eoi_join.DefaultIfEmpty()
+
+                                      join e in empRepo.All() on eoi.EmployeeId equals e.EmployeeId into e_join
+                                      from e in e_join.DefaultIfEmpty()
+
+                                      join c in comRepo.All() on eoi.CompanyCode equals c.CompanyCode into c_join
+                                      from c in c_join.DefaultIfEmpty()
+
+                                      join dg in desiRepo.All() on eoi.DesignationCode equals dg.DesignationCode into dg_join
+                                      from dg in dg_join.DefaultIfEmpty()
+
+                                      join dp in dpRepo.All() on eoi.DepartmentCode equals dp.DepartmentCode into dp_join
+                                      from dp in dp_join.DefaultIfEmpty()
+
+                                      select new PayrollLoanFilterResultDto
+                                      {
+                                          Code = le.LoanId,
+                                          Name = (e.FirstName + " " + e.LastName).Trim(),
+                                          EmpId = e.EmployeeId,
+                                          EmpName = (e.FirstName + " " + e.LastName).Trim(),
+                                          DesignationName = dg.DesignationName,
+                                          DepartmentName = dp.DepartmentName,
+                                          joinDate = eoi.JoiningDate.HasValue ? eoi.JoiningDate.Value.ToString("dd/MM/yyyy") : ""
+                                      }).ToListAsync();
+
+                var loanIds = loanList.Select(l => l.Code).ToList();
+
+                var paymentList = await (from p in paymentRepo.All()
+                                         where loanIds.Contains(p.LoanId)
+                                         join le in payrollLoanRepo.All() on p.LoanId equals le.LoanId
+                                         join eoi in empOffRepo.All() on le.EmployeeId equals eoi.EmployeeId into eoi_join
+                                         from eoi in eoi_join.DefaultIfEmpty()
+                                         join e in empRepo.All() on eoi.EmployeeId equals e.EmployeeId into e_join
+                                         from e in e_join.DefaultIfEmpty()
+                                         join dg in desiRepo.All() on eoi.DesignationCode equals dg.DesignationCode into dg_join
+                                         from dg in dg_join.DefaultIfEmpty()
+                                         join pm in PayModeRepo.All() on le.PaymentModeId equals pm.PaymentModeId into pm_join
+                                         from pm in pm_join.DefaultIfEmpty()
+
+                                         select new HrmPayrollPaymentReceiveDto
+                                         {
+                                             LoanId = p.LoanId,
+                                             PaymentId = p.PaymentId,
+                                             ShowPaymentDate = p.PaymentDate.HasValue ? p.PaymentDate.Value.ToString("dd/MM/yyyy") : "",
+                                             PaymentAmount = p.PaymentAmount,
+                                             PaymentMode = pm.PaymentModeName,
+                                             Remarks = p.Remarks,
+                                             EmpId = e.EmployeeId,
+                                             EmpName = e.FirstName + " " + e.LastName,
+                                             Designation = dg.DesignationName
+                                         }).ToListAsync();
+
+                var result = new HrmPayrollPaymentReceiveListDto
+                {
+                    PayrollLoanFilterResultDto = loanList,
+                    hrmPayrollPaymentReceiveDtos = paymentList
+                };
+
+                return (true, "Employee found", result);
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message, null);
+            }
+        }
+
+
+
         public async Task<(bool isSuccess, string message, List<LoanTypeDto> data)> GetLoanTypeAsync()
         {
             var result = await payTypeRepo.GetAllAsync();

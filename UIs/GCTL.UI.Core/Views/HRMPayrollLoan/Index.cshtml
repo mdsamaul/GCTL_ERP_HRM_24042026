@@ -28,6 +28,16 @@
 		display: none !important;
 	}
 
+	table.dataTable th,
+	table.dataTable td {
+		white-space: nowrap;
+	}
+
+	#employeeLoanTable thead th {
+		text-align: center !important;
+		vertical-align: middle;
+	}
+
 </style>
 
 <div class="container-fluid">
@@ -51,7 +61,7 @@
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="PaymentReceiveInfo-tab" data-toggle="tab" href="#PaymentReceiveInfo" role="tab"
-					   aria-controls="PaymentReceiveInfo" aria-selected="false">Payment Receive Info</a>
+					   aria-controls="PaymentReceiveInfo" aria-selected="false">Payment Receive</a>
 				</li>
 			</ul>
 
@@ -591,7 +601,7 @@
 										<b>Payment Amount: <span class="text-danger" style="font-size: 18px;">*</span></b>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
-										<input type="number" class="loanAmount form-control form-control-sm" value="" placeholder="Enter Loan Amount" />
+										<input type="number" class="paymentLoanAmount form-control form-control-sm" value="" placeholder="Enter Loan Amount" />
 									</div>
 								</div>
 								<div  style="display:none;" class="row amountWorningMessage">
@@ -654,9 +664,9 @@
 									<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
 										<b>Payment Method: </b>
 									</div>
-									<div class="col-12 col-md-6" style="padding-left: 0px;">
-										<select class="paymentMode form-control form-control-sm">
-											<option value="0">--Select Deduction Head--</option>
+									<div class="col-12 col-md-6" style="padding-left: 0px;">										
+										<select class="paymentMode paymentReceivePaymentMode form-control form-control-sm">
+											@* <option class="text-left" value="">--Select Payment Mode--</option> *@
 										</select>
 									</div>
 								</div>
@@ -682,7 +692,7 @@
 											<b>Bank Account: </b>
 										</div>
 										<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
-											<input type="text" class="bankAccount form-control form-control-sm" value="" placeholder="Enter Bank Account" />
+											<input type="text" class="bankAccount paymentBankAccount form-control form-control-sm" value="" placeholder="Enter Bank Account" />
 										</div>
 									</div>
 								</div>
@@ -693,7 +703,7 @@
 										</div>
 										<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
 											@* <input type="date" class="form-control form-control-sm"   /> *@
-											<select class="Bank form-control form-control-sm">
+											<select class="Bank paymentBank form-control form-control-sm">
 												<option value="0">--Select Bank--</option>
 
 											</select>
@@ -708,7 +718,7 @@
 												<b>Cheque No: </b>
 											</div>
 											<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
-												<input type="text" class="chequeNo form-control form-control-sm" value="" placeholder="Enter Cheque No" />
+												<input type="text" class="chequeNo paymentCheckNo form-control form-control-sm" value="" placeholder="Enter Cheque No" />
 											</div>
 										</div>
 									</div>
@@ -718,7 +728,7 @@
 												<b>Cheque Date: </b>
 											</div>
 											<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
-												<input type="date" class="chequeDate form-control form-control-sm" />
+												<input type="date" class="chequeDate paymentCheckDate form-control form-control-sm" />
 											</div>
 										</div>
 									</div>
@@ -731,7 +741,7 @@
 										<b>Remarks: </b>
 									</div>
 									<div class="col-12 col-md-8" style="padding-left: 0px;">
-										<textarea id="remarks" type="text" class="form-control form-control-sm" rows="2" placeholder="Enter Remarks"></textarea>
+										<textarea type="text" class="paymentRemarks form-control form-control-sm" rows="2" placeholder="Enter Remarks"></textarea>
 									</div>
 									<div class="col-2"></div>
 								</div>
@@ -758,9 +768,13 @@
 									</div>
 								</div>
 							</div>
+							
 						</div>
+					
 					</div>
-
+					<div class="mt-2">
+						<partial name="_PaymentReceiveEmployeeGrid"></partial>
+					</div>					
 
 				</div>
 			</div>
@@ -1099,6 +1113,10 @@
 
 <!-- Animate.css -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<!-- DataTable CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+
 
 
 @section Scripts {
@@ -1113,6 +1131,12 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/js/bootstrap-multiselect.min.js"></script>
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	
+
+	<!-- DataTable JS -->
+	<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+
 
 	@* pdf *@
 

@@ -12,7 +12,9 @@ namespace GCTL.Service.HRMPayrollLoan
     {
         Task<PayrollLoanFilterResultListDto> GetFilaterDataAsync(PayrollLoanFilterEntryDto filterEntryDto);
         Task<PayrollLoanFilterResultListDto> GetFilterPaymentReceiveAsync(PayrollLoanFilterEntryDto filterReceiveEntryDto);
+        Task<List<HrmPayrollPaymentReceiveDto>> GetPaymentReceiveAsync();
         Task<(bool isSuccess, string message , PayrollLoanFilterResultDto)> EmployeeGetById(string empId);
+        Task<(bool isSuccess, string message, HrmPayrollPaymentReceiveListDto)> PaymentReciveEmployeeGetById(string empId);
         Task<(bool isSuccess, string message, List<LoanTypeDto> data)> GetLoanTypeAsync();
         Task<List<PaymentModeDto>> getPaymentModeAsync();
         Task<List<PayHeadNameDto>> GetPayHeadDeductionAsync();

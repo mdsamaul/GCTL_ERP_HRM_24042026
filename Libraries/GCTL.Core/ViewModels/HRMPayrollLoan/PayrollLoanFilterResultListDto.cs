@@ -10,6 +10,6 @@ namespace GCTL.Core.ViewModels.HRMPayrollLoan
     {
         public List<PayrollLoanFilterResultDto> Company { get; set; }
         public List<PayrollLoanFilterResultDto> Employees { get; set; }
-
+        public List<HrmPayrollPaymentReceiveDto> PaymentReceiveEmployee { get; set; } = new List<HrmPayrollPaymentReceiveDto>();
     }
 }
