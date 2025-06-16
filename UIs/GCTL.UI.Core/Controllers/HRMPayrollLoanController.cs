@@ -1,4 +1,5 @@
-﻿using GCTL.Core.Helpers;
+﻿using DocumentFormat.OpenXml.Office2016.Drawing.Command;
+using GCTL.Core.Helpers;
 using GCTL.Core.ViewModels.HRMPayrollLoan;
 using GCTL.Service.HRMPayrollLoan;
 using GCTL.UI.Core.ViewModels.HRMPayrollLoan;
@@ -156,10 +157,17 @@ namespace GCTL.UI.Core.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateEditPaymentReceive([FromBody] PaymentReceiveSetupViewModel modelData)
         {
-            var result = modelData;
-            return Json(new { modelData});
+            modelData.ToAudit(LoginInfo);
+            var result = await hRMPayrollLoanService.CreateEditPaymentReceiveAsync(modelData);
+            return Json(new { result.isSuccess, result.message, result.data});
         }
-
+        //get payment receive by id
+        [HttpGet]
+        public async Task<IActionResult> GetPaymentReceiveById(string paymentId)
+        {
+            var result = await hRMPayrollLoanService.getPaymentReceiveByIdAsync(paymentId);
+            return Json(new { data=result});
+        }
         //loan get by id
         [HttpGet]
         public async Task<IActionResult> GetLoanId(string loanId)
@@ -186,6 +194,16 @@ namespace GCTL.UI.Core.Controllers
             return Json(new { isSuccess= result});
         }
 
+        [HttpPost]
+        public async Task<IActionResult> DeletePaymentReceive([FromBody] List<decimal> autoIds)
+        {
+            if (autoIds == null || autoIds.Count == 0)
+            {
+                return BadRequest("No loan IDs provided.");
+            }
+            var result = await hRMPayrollLoanService.deletePaymentReceiveAsync(autoIds);
+            return Json(new {result.isSuccess,result.message });
+        }
 
        
     }

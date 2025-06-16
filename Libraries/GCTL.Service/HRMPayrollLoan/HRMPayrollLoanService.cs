@@ -8,6 +8,7 @@ using GCTL.Service.EmployeeWeekendDeclaration;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,11 +24,12 @@ namespace GCTL.Service.HRMPayrollLoan
         private readonly IRepository<HrmDefDesignation> desiRepo;
         private readonly IRepository<HrmDefDepartment> dpRepo;
         private readonly IRepository<HrmPayLoanTypeEntry> payTypeRepo;
+        private readonly IRepository<SalesDefPaymentMode> payModeRepo;
         private readonly IRepository<HrmPayPayHeadName> payHeadRepo;
         private readonly IRepository<SalesDefBankInfo> bankRepo;
         private readonly IRepository<HrmPayrollPaymentReceive> paymentRepo;
 
-        public IRepository<SalesDefPaymentMode> PayModeRepo { get; }
+
 
         public HRMPayrollLoanService(
             IRepository<HrmPayrollLoan> payrollLoanRepo,
@@ -50,11 +52,19 @@ namespace GCTL.Service.HRMPayrollLoan
             this.desiRepo = desiRepo;
             this.dpRepo = dpRepo;
             this.payTypeRepo = payTypeRepo;
-            this.PayModeRepo = PayModeRepo;
+            payModeRepo = PayModeRepo;
             this.payHeadRepo = payHeadRepo;
             this.bankRepo = bankRepo;
             this.paymentRepo = paymentRepo;
         }
+        private readonly string CreateSuccess = "Data saved successfully.";
+        private readonly string CreateFailed = "Data insertion failed.";
+        private readonly string UpdateSuccess = "Data updated successfully.";
+        private readonly string UpdateFailed = "Data update failed.";
+        private readonly string DeleteSuccess = "Data deleted successfully.";
+        private readonly string DeleteFailed = "Data deletion failed.";
+        private readonly string DataExists = "Data already exists.";
+
         public async Task<PayrollLoanFilterResultListDto> GetFilaterDataAsync(PayrollLoanFilterEntryDto filterEntryDto)
         {
             var queary = from eoi in empOffRepo.All()
@@ -104,17 +114,7 @@ namespace GCTL.Service.HRMPayrollLoan
         }
         public async Task<PayrollLoanFilterResultListDto> GetFilterPaymentReceiveAsync(PayrollLoanFilterEntryDto filterEntryDto)
         {
-            //var queary = from eoi in empOffRepo.All()
-            //             join le in payrollLoanRepo.All() on eoi.EmployeeId equals le.EmployeeId into le_join
-            //             from le in le_join.DefaultIfEmpty()
-            //             join e in empRepo.All() on eoi.EmployeeId equals e.EmployeeId into e_join
-            //             from e in e_join.DefaultIfEmpty()
-            //             join c in comRepo.All() on eoi.CompanyCode equals c.CompanyCode into c_join
-            //             from c in c_join.DefaultIfEmpty()
-            //             join dg in desiRepo.All() on eoi.DesignationCode equals dg.DesignationCode into dg_join
-            //             from dg in dg_join.DefaultIfEmpty()
-            //             join dp in dpRepo.All() on eoi.DepartmentCode equals dp.DepartmentCode into dp_join
-            //             from dp in dp_join.DefaultIfEmpty()
+           
             var queary = from le in payrollLoanRepo.All()
                          join eoi in empOffRepo.All() on le.EmployeeId equals eoi.EmployeeId into eoi_join
                          from eoi in eoi_join.DefaultIfEmpty()
@@ -127,7 +127,7 @@ namespace GCTL.Service.HRMPayrollLoan
                          join dp in dpRepo.All() on eoi.DepartmentCode equals dp.DepartmentCode into dp_join
                          from dp in dp_join.DefaultIfEmpty()
 
-                         join pm in PayModeRepo.All() on le.PaymentModeId equals pm.PaymentModeId into pm_join
+                         join pm in payModeRepo.All() on le.PaymentModeId equals pm.PaymentModeId into pm_join
                          from pm in pm_join.DefaultIfEmpty()
 
                          join py in paymentRepo.All() on le.LoanId equals py.LoanId into py_join
@@ -188,9 +188,60 @@ namespace GCTL.Service.HRMPayrollLoan
             };
             return result;
         }
-        public async Task<List<HrmPayrollPaymentReceiveDto>> GetPaymentReceiveAsync()
-        {            
+        //public async Task<List<HrmPayrollPaymentReceiveDto>> GetPaymentReceiveAsync()
+        //{            
 
+        //    try
+        //    {
+        //        var result = await (from py in paymentRepo.All()
+
+        //                            join le in payrollLoanRepo.All() on py.LoanId equals le.LoanId into le_join
+        //                            from le in le_join.DefaultIfEmpty()
+
+        //                            join eoi in empOffRepo.All() on le.EmployeeId equals eoi.EmployeeId into eoi_join
+        //                            from eoi in eoi_join.DefaultIfEmpty()
+
+        //                            join e in empRepo.All() on eoi.EmployeeId equals e.EmployeeId into e_join
+        //                            from e in e_join.DefaultIfEmpty()
+
+        //                            join c in comRepo.All() on eoi.CompanyCode equals c.CompanyCode into c_join
+        //                            from c in c_join.DefaultIfEmpty()
+
+        //                            join dg in desiRepo.All() on eoi.DesignationCode equals dg.DesignationCode into dg_join
+        //                            from dg in dg_join.DefaultIfEmpty()
+
+        //                            join dp in dpRepo.All() on eoi.DepartmentCode equals dp.DepartmentCode into dp_join
+        //                            from dp in dp_join.DefaultIfEmpty()
+
+        //                            join pm in payModeRepo.All() on le.PaymentModeId equals pm.PaymentModeId into pm_join
+        //                            from pm in pm_join.DefaultIfEmpty()
+
+        //                            select new HrmPayrollPaymentReceiveDto
+        //                            {
+        //                                AutoId= py.AutoId,
+        //                                LoanId = le.LoanId,
+        //                                PaymentId = py.PaymentId,
+        //                                ShowPaymentDate = py.PaymentDate.HasValue ? py.PaymentDate.Value.ToString("dd/MM/yyyy") : "",
+        //                                PaymentAmount = py.PaymentAmount,
+        //                                PaymentMode = pm.PaymentModeName,
+        //                                Remarks = py.Remarks,
+        //                                EmpId = e.EmployeeId,
+        //                                EmpName = e.FirstName + " " + e.LastName,
+        //                                Designation = dg.DesignationName,
+        //                            }).OrderBy(x => x.PaymentId).ToListAsync();
+
+        //        return (result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return (null);
+        //    }
+        //}
+
+
+
+        public async Task<List<HrmPayrollPaymentReceiveDto>> GetPaymentReceiveAsync()
+        {
             try
             {
                 var result = await (from py in paymentRepo.All()
@@ -213,105 +264,34 @@ namespace GCTL.Service.HRMPayrollLoan
                                     join dp in dpRepo.All() on eoi.DepartmentCode equals dp.DepartmentCode into dp_join
                                     from dp in dp_join.DefaultIfEmpty()
 
-                                    join pm in PayModeRepo.All() on le.PaymentModeId equals pm.PaymentModeId into pm_join
+                                    join pm in payModeRepo.All() on py.PaymentModeId equals pm.PaymentModeId into pm_join
                                     from pm in pm_join.DefaultIfEmpty()
 
                                     select new HrmPayrollPaymentReceiveDto
                                     {
-
-                                        LoanId = le.LoanId,
+                                        AutoId = py.AutoId,
+                                        LoanId = le != null ? le.LoanId : "",
                                         PaymentId = py.PaymentId,
-                                        ShowPaymentDate = py.PaymentDate.HasValue ? py.PaymentDate.Value.ToString("dd/MM/yyyy") : "",
+                                        ShowPaymentDate = py.PaymentDate.HasValue
+                                                          ? py.PaymentDate.Value.ToString("dd/MM/yyyy")
+                                                          : "",
                                         PaymentAmount = py.PaymentAmount,
-                                        PaymentMode = pm.PaymentModeName,
+                                        PaymentMode = pm != null ? pm.PaymentModeName : "",
                                         Remarks = py.Remarks,
-                                        EmpId = e.EmployeeId,
-                                        EmpName = e.FirstName + " " + e.LastName,
-                                        Designation = dg.DesignationName,
-                                    }).ToListAsync();
+                                        EmpId = e != null ? e.EmployeeId : "",
+                                        EmpName = e != null ? e.FirstName + " " + e.LastName : "",
+                                        Designation = dg != null ? dg.DesignationName : ""
+                                    }).OrderBy(x => x.PaymentId).ToListAsync();
 
-                return (result);
+                return result;
             }
             catch (Exception ex)
             {
-                return (null);
+                // Logging করা উচিত ex.Message, ex.StackTrace ইত্যাদি
+                return null;
             }
         }
-        //public async Task<PayrollLoanFilterResultListDto> GetPaymentReceiveAsync(PayrollLoanFilterEntryDto filterEntryDto)
-        //{           
-        //    var queary = from le in payrollLoanRepo.All()
-        //                 join eoi in empOffRepo.All() on le.EmployeeId equals eoi.EmployeeId into eoi_join
-        //                 from eoi in eoi_join.DefaultIfEmpty()
-        //                 join e in empRepo.All() on eoi.EmployeeId equals e.EmployeeId into e_join
-        //                 from e in e_join.DefaultIfEmpty()
-        //                 join c in comRepo.All() on eoi.CompanyCode equals c.CompanyCode into c_join
-        //                 from c in c_join.DefaultIfEmpty()
-        //                 join dg in desiRepo.All() on eoi.DesignationCode equals dg.DesignationCode into dg_join
-        //                 from dg in dg_join.DefaultIfEmpty()
-        //                 join dp in dpRepo.All() on eoi.DepartmentCode equals dp.DepartmentCode into dp_join
-        //                 from dp in dp_join.DefaultIfEmpty()
 
-        //                 join pm in PayModeRepo.All() on le.PaymentModeId equals pm.PaymentModeId into pm_join
-        //                 from pm in pm_join.DefaultIfEmpty()
-
-        //                 join py in paymentRepo.All() on le.LoanId equals py.LoanId into py_join
-        //                 from py in py_join.DefaultIfEmpty()
-
-        //                 select new
-        //                 {
-        //                     EmpId = e.EmployeeId,
-        //                     CompanyCode = c.CompanyCode,
-        //                     EmpName = e.FirstName + " " + e.LastName,
-        //                     CompaneName = c.CompanyName,
-        //                     DesignationName = dg.DesignationName,
-        //                     DepartmentName = dp.DepartmentName,
-        //                     JoinDate = eoi.JoiningDate.HasValue ? eoi.JoiningDate.Value.ToString("dd/MM/yyyy") : "",
-        //                     loanId = le.LoanId,
-        //                     PaymentModeName = pm.PaymentModeName,
-        //                     PaymentDate = py.PaymentDate.HasValue ? py.PaymentDate.Value.ToString("dd/MM/yyyy") : "",
-        //                     PaymentAmount = py.PaymentAmount,
-        //                     paymentId = py.PaymentId,
-        //                     remark = py.Remarks
-        //                 };
-        //    if (filterEntryDto.CompanyCodes?.Any() == true)
-        //    {
-        //        queary = queary.Where(x => x.CompanyCode != null && filterEntryDto.CompanyCodes.Contains(x.CompanyCode));
-        //    }
-        //    if (filterEntryDto.EmployeeIds?.Any() == true)
-        //    {
-        //        queary = queary.Where(x => x.EmpId != null && x.EmpName != null && filterEntryDto.EmployeeIds.Contains(x.EmpId));
-        //    }
-        //    var result = new PayrollLoanFilterResultListDto
-        //    {
-        //        Company = await queary.Where(x => x.CompanyCode != null && x.CompaneName != null).Select(x => new PayrollLoanFilterResultDto
-        //        {
-        //            Code = x.CompanyCode,
-        //            Name = x.CompaneName
-        //        }).Distinct().ToListAsyncSafe(),
-        //        Employees = await queary.Where(x => x.EmpId != null && x.EmpName != null).Select(x => new PayrollLoanFilterResultDto
-        //        {
-        //            Code = x.EmpId,
-        //            Name = x.EmpName,
-        //            DesignationName = x.DesignationName,
-        //            DepartmentName = x.DepartmentName,
-        //            joinDate = x.JoinDate,
-        //        }).Distinct().ToListAsyncSafe(),
-        //        PaymentReceiveEmployee = await queary.Where(x => x.loanId != null).Select(x => new HrmPayrollPaymentReceiveDto
-        //        {
-        //            LoanId = x.loanId,
-        //            PaymentId = x.paymentId,
-        //            ShowPaymentDate = x.PaymentDate,
-        //            PaymentAmount = x.PaymentAmount,
-        //            PaymentMode = x.PaymentModeName,
-        //            Remarks = x.remark,
-        //            EmpId = x.EmpId,
-        //            EmpName = x.EmpName,
-        //            Designation = x.DesignationName,
-
-        //        }).Distinct().ToListAsyncSafe(),
-        //    };
-        //    return result;
-        //}
 
 
         public async Task<(bool isSuccess, string message, PayrollLoanFilterResultDto)> EmployeeGetById(string empId)
@@ -350,70 +330,7 @@ namespace GCTL.Service.HRMPayrollLoan
             }
         }
 
-        //public async Task<(bool isSuccess, string message, HrmPayrollPaymentReceiveListDto)> PaymentReciveEmployeeGetById(string empId)
-        //{
-        //    if (string.IsNullOrWhiteSpace(empId))
-        //    {
-        //        return (false, "Employee not found", null);
-        //    }
-
-        //    try
-        //    {
-        //        var result = await (from le in payrollLoanRepo.All()
-        //                            where le.EmployeeId == empId
-
-        //                            join eoi in empOffRepo.All() on le.EmployeeId equals eoi.EmployeeId into eoi_join
-        //                            from eoi in eoi_join.DefaultIfEmpty()
-
-        //                            join e in empRepo.All() on eoi.EmployeeId equals e.EmployeeId into e_join
-        //                            from e in e_join.DefaultIfEmpty()
-
-        //                            join c in comRepo.All() on eoi.CompanyCode equals c.CompanyCode into c_join
-        //                            from c in c_join.DefaultIfEmpty()
-
-        //                            join dg in desiRepo.All() on eoi.DesignationCode equals dg.DesignationCode into dg_join
-        //                            from dg in dg_join.DefaultIfEmpty()
-
-        //                            join dp in dpRepo.All() on eoi.DepartmentCode equals dp.DepartmentCode into dp_join
-        //                            from dp in dp_join.DefaultIfEmpty()
-
-        //                            join pm in PayModeRepo.All() on le.PaymentModeId equals pm.PaymentModeId into pm_join
-        //                            from pm in pm_join.DefaultIfEmpty()
-
-        //                            select new PayrollLoanFilterResultDto
-        //                            {
-        //                                Code = le.LoanId,
-        //                                Name = (e.FirstName + " " + e.LastName).Trim(),
-        //                                EmpId = e.EmployeeId,
-        //                                EmpName = (e.FirstName + " " + e.LastName).Trim(),
-        //                                DesignationName = dg.DesignationName,
-        //                                DepartmentName = dp.DepartmentName,
-        //                               joinDate = eoi.JoiningDate.HasValue? eoi.JoiningDate.Value.ToString("dd/MM/yyyy") : "",
-
-        //                                // Loan Info as PaymentReceiveDto
-        //                                hrmPayrollPaymentReceiveDtos = paymentRepo.All()
-        //                                    .Where(p => p.LoanId == le.LoanId)
-        //                                    .Select(p => new HrmPayrollPaymentReceiveDto
-        //                                    {
-        //                                        LoanId = p.LoanId,
-        //                                        PaymentId = p.PaymentId,
-        //                                        ShowPaymentDate = p.PaymentDate.HasValue?p.PaymentDate.Value.ToString("dd/MM/yyyy"):"",
-        //                                        PaymentAmount = p.PaymentAmount,
-        //                                        PaymentMode = pm.PaymentModeName,
-        //                                        Remarks = p.Remarks,
-        //                                        EmpId = e.EmployeeId,
-        //                                        EmpName = e.FirstName+" "+e.LastName,
-        //                                        Designation = dg.DesignationName,
-        //                                    }).ToList()
-        //                            }).FirstOrDefaultAsync();
-
-        //        return (true, "Employee found", result);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return (false, ex.Message, null);
-        //    }
-        //}
+       
 
         public async Task<(bool isSuccess, string message, HrmPayrollPaymentReceiveListDto)> PaymentReciveEmployeeGetById(string empId)
         {
@@ -464,7 +381,7 @@ namespace GCTL.Service.HRMPayrollLoan
                                          from e in e_join.DefaultIfEmpty()
                                          join dg in desiRepo.All() on eoi.DesignationCode equals dg.DesignationCode into dg_join
                                          from dg in dg_join.DefaultIfEmpty()
-                                         join pm in PayModeRepo.All() on le.PaymentModeId equals pm.PaymentModeId into pm_join
+                                         join pm in payModeRepo.All() on p.PaymentModeId equals pm.PaymentModeId into pm_join
                                          from pm in pm_join.DefaultIfEmpty()
 
                                          select new HrmPayrollPaymentReceiveDto
@@ -478,7 +395,7 @@ namespace GCTL.Service.HRMPayrollLoan
                                              EmpId = e.EmployeeId,
                                              EmpName = e.FirstName + " " + e.LastName,
                                              Designation = dg.DesignationName
-                                         }).ToListAsync();
+                                         }).OrderBy(x => x.PaymentId).ToListAsync();
 
                 var result = new HrmPayrollPaymentReceiveListDto
                 {
@@ -494,6 +411,40 @@ namespace GCTL.Service.HRMPayrollLoan
             }
         }
 
+        public async Task<HrmPayrollPaymentReceiveDto> getPaymentReceiveByIdAsync(string paymentId)
+        {
+            try
+            {
+                var result =  paymentRepo.All().Where(x=> x.PaymentId == paymentId).FirstOrDefault();
+                if (result == null)
+                    return null;
+
+                // Manual mapping
+                var dto = new HrmPayrollPaymentReceiveDto
+                {
+                    AutoId = result.AutoId,
+                    PaymentId = result.PaymentId,
+                    LoanId = result.LoanId,
+                    PaymentAmount = result.PaymentAmount,
+                    PaymentDate = result.PaymentDate,                    
+                    Remarks = result.Remarks,
+                    BankAccount = result.BankAccount,
+                    BankName = await bankRepo.All().Where(x => x.BankId == result.BankId).Select(x => x.BankName).FirstOrDefaultAsync(),
+                    BankId = result.BankId,
+                    ChequeNo = result.ChequeNo,
+                    ShowChequeDate = result.ChequeDate.HasValue ? result.ChequeDate.Value.ToString("dd/MM/yyyy") : "",
+                    PaymentMode= result.PaymentModeId,
+                    ShowCreateDate= result.Ldate.HasValue? result.Ldate.Value.ToString("dd/MM/yyyy"):"",
+                    ShowModifyDate= result.ModifyDate.HasValue? result.ModifyDate.Value.ToString("dd/MM/yyyy") : "",
+                };
+
+                return dto;
+            }catch(Exception e)
+            {
+                throw;
+            }
+
+        }
 
 
         public async Task<(bool isSuccess, string message, List<LoanTypeDto> data)> GetLoanTypeAsync()
@@ -511,7 +462,7 @@ namespace GCTL.Service.HRMPayrollLoan
         }
         public async Task<List<PaymentModeDto>> getPaymentModeAsync()
         {
-            var result = await PayModeRepo.GetAllAsync();
+            var result = await payModeRepo.GetAllAsync();
             var ModeList = result.Select(x => new PaymentModeDto
             {
                 PaymentModeId = x.PaymentModeId,
@@ -657,7 +608,7 @@ namespace GCTL.Service.HRMPayrollLoan
 
                 await payrollLoanRepo.AddAsync(entity);
 
-                return (true, "Loan Saved Successfully", modelData);
+                return (true, CreateSuccess, modelData);
             }
             else
             {
@@ -683,17 +634,90 @@ namespace GCTL.Service.HRMPayrollLoan
                     loanData.BankAccount = modelData.BankAccount;
                     loanData.Remarks = modelData.Remarks;
                     loanData.CompanyCode = modelData.CompanyCode;
-                //    loanData.Luser = modelData.Luser;
-                //    loanData.Lip = modelData.Lip;
-                //    loanData.Lmac = modelData.Lmac;
-                //loanData.Ldate = modelData.Ldate;
                 loanData.ModifyDate = modelData.Ldate;
                 await payrollLoanRepo.UpdateAsync(loanData);
-                return (true, "Update Successfully", modelData);
+                return (true, UpdateSuccess, modelData);
             }
            
         }
-        
+
+        //create & edit payment receive 
+        public async Task<(bool isSuccess, string message, object data)> CreateEditPaymentReceiveAsync(PaymentReceiveSetupViewModel modelData)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(modelData.CompanyCode) ||
+                    string.IsNullOrWhiteSpace(modelData.EmployeeId) ||
+                    string.IsNullOrWhiteSpace(modelData.LoanId) ||
+                    modelData.LoanAmount == null || modelData.LoanAmount <= 0)
+                {
+                    return (false, CreateFailed, null);
+                }
+
+                if (modelData.AutoId == 0)
+                {
+                    var entity = new HrmPayrollPaymentReceive
+                    {
+                        PaymentId = modelData.PaymentId,
+                        PaymentDate = modelData.LoanDate,
+                        EmployeeId = modelData.EmployeeId,
+                        LoanId = modelData.LoanId,
+                        PaymentAmount = modelData.LoanAmount,
+                        PaymentModeId = modelData.PaymentModeId,
+                        ChequeNo = modelData.ChequeNo,
+                        ChequeDate = string.IsNullOrWhiteSpace(modelData.ChequeDate)? (DateTime?)null: DateTime.ParseExact(modelData.ChequeDate, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                        BankId = modelData.BankId,
+                        BankAccount = modelData.BankAccount,
+                        Remarks = modelData.Remarks,
+                        Luser = modelData.Luser,
+                        Ldate = modelData.Ldate,
+                        Lip = modelData.Lip,
+                        Lmac = modelData.Lmac,
+                        CompanyCode = modelData.CompanyCode,
+                        EntryUserId = modelData.UserInfoEmployeeId,
+                    };
+
+                    await paymentRepo.AddAsync(entity);
+                    return (true, CreateSuccess, entity);
+                }
+                else
+                {
+                    try
+                    {
+                        var ExistsData = await paymentRepo.GetByIdAsync(modelData.AutoId);
+                        if (ExistsData != null)
+                        {
+                            ExistsData.PaymentId = modelData.PaymentId;
+                            ExistsData.PaymentDate = modelData.LoanDate;
+                            ExistsData.EmployeeId = modelData.EmployeeId;
+                            ExistsData.LoanId = modelData.LoanId;
+                            ExistsData.PaymentAmount = modelData.LoanAmount;
+                            ExistsData.PaymentModeId = modelData.PaymentModeId;
+                            ExistsData.ChequeNo = modelData.ChequeNo;
+                            ExistsData.ChequeDate = string.IsNullOrWhiteSpace(modelData.ChequeDate) ? (DateTime?)null : DateTime.ParseExact(modelData.ChequeDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                            ExistsData.BankId = modelData.BankId;
+                            ExistsData.BankAccount = modelData.BankAccount;
+                            ExistsData.Remarks = modelData.Remarks;
+                            ExistsData.ModifyDate = modelData.ModifyDate;
+                        }
+                        await paymentRepo.UpdateAsync(ExistsData);
+                        return (true, UpdateSuccess, ExistsData);
+                    }catch(Exception ex)
+                    {
+                        return (false, UpdateFailed, null);
+                    }
+                   
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                return (false, $"Exception: {ex.Message}", null);
+            }
+        }
+
+
         public async Task<List<HRMPayrollLoanSetupViewModel>> GetLoanDataAsync()
         {
             var queary = from lon in payrollLoanRepo.All()
@@ -704,7 +728,7 @@ namespace GCTL.Service.HRMPayrollLoan
                          from dg in dgJoin.DefaultIfEmpty()
                          join lType in payTypeRepo.All() on lon.LoanTypeId equals lType.LoanTypeId into lTypeJoin
                          from lType in lTypeJoin.DefaultIfEmpty()
-                         join pType in PayModeRepo.All() on lon.PaymentModeId equals pType.PaymentModeId into pTypeJoin
+                         join pType in payModeRepo.All() on lon.PaymentModeId equals pType.PaymentModeId into pTypeJoin
                          from pType in pTypeJoin.DefaultIfEmpty()
                          join dp in dpRepo.All() on eoi.DepartmentCode equals dp.DepartmentCode into dpJoin
                          from dp in dpJoin.DefaultIfEmpty()
@@ -783,14 +807,28 @@ namespace GCTL.Service.HRMPayrollLoan
                  var loanToDelete = await payrollLoanRepo.GetByIdAsync(autoId);
                     if (loanToDelete == null)
                     {
-                        return (false, "Delete Failed");
+                        return (false, DeleteFailed);
                     }
                     await payrollLoanRepo.DeleteAsync(loanToDelete);
                 }
            
             //var loanToDelete = await payrollLoanRepo.GetByIdAsync(loanId);
-            return (true, "Delete Successfully");
+            return (true, DeleteSuccess);
         }
+        public async Task<(bool isSuccess, string message)> deletePaymentReceiveAsync(List<decimal> autoIds)
+        {            
+            foreach (var autoId in autoIds)
+            {
+                var paymentToDelete = await paymentRepo.GetByIdAsync(autoId);
+                if (paymentToDelete == null)
+                {
+                    return (false, DeleteFailed);
+                }
+                await paymentRepo.DeleteAsync(paymentToDelete);
+            }
+            return (true, DeleteSuccess);
+        }
+
         public async Task<HRMPayrollLoanSetupViewModel> getLoanIdAsync(string loanId)
         {
             var LoanData= payrollLoanRepo.All().Where(x => x.LoanId == loanId).FirstOrDefault();

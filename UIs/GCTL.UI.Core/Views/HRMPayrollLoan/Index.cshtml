@@ -33,10 +33,23 @@
 		white-space: nowrap;
 	}
 
-	#employeeLoanTable thead th {
-		text-align: center !important;
-		vertical-align: middle;
+	#stickyHeader {
+		position: sticky;
+		top: 0;
+		z-index: 1020;
+		background-color: #fff;
+		padding: 10px 15px; /* Optional padding */
+		transition: background-color 0.3s ease-in-out;
 	}
+
+	/* Scroll হলে background পরিবর্তন */
+	.sticky-scrolled {
+		background-color: #fff !important;
+		opacity: 0.95;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow effect */
+	}
+
+
 
 </style>
 
@@ -47,12 +60,20 @@
 	<div class="row px-2">
 		<div class="col-auto col-md-12">
 			<div class="w-100 headerToobar">
-				<partial name="_Toolbars" model="new ToobarModel(){Title=Model.Breadcrumb, Code=Model.Code , Name=Model.Setup.LoanId}"></partial>
+					@* <partial name="_Toolbars" model="new ToobarModel(){Title=Model.Breadcrumb, Code=Model.Code , Name=Model.Setup.LoanId}"></partial> *@
+
+				<div class="row">
+					<div id="stickyHeader" class="col-12 px-2">
+						<partial name="_Toolbars" model="new ToobarModel(){Title=Model.Breadcrumb, Code=Model.Code , Name=Model.Setup.LoanId}" />
+					</div>
+				</div>
+
+
+
+				
+				
 			</div>
-		</div>
-		@* <div class="row w-100 mx-2 mt-3 px-3"> *@
-		@* 	samaul *@
-		@* </div> *@
+		</div>		
 		<div class="row w-100 mx-2 mt-3 px-3">
 			<ul class="nav nav-tabs" id="statusTabs" role="tablist">
 				<li class="nav-item">
@@ -356,7 +377,7 @@
 											<div class="col-4"></div>
 											<div class="col-8">
 												<hr class="w-100 text-right mb-1" />
-												<p class="w-100 text-center">Creation Date: <span id="createDate"></span> </p>
+												<p class="w-100 text-center">Creation Date: <span class="createDate"></span> </p>
 											</div>
 										</div>
 									</div>
@@ -364,7 +385,7 @@
 										<div class="row">
 											<div class="col-8">
 												<hr class="w-100 text-right mb-1" />
-												<p class="w-100 text-center">Last Update Date: <span id="updateDate"></span></p>
+												<p class="w-100 text-center">Last Update Date: <span class="updateDate"></span></p>
 											</div>
 											<div class="col-4"></div>
 										</div>
@@ -544,7 +565,7 @@
 
 
 
-					<input type="hidden" id="loanAutoId" name="name" value="" />
+					<input type="hidden" id="paymentReceiveAutoId" name="name" value="" />
 					<div class="row">
 						<div class="row border bg-white rounded-lg shadow-lg my-2 py-3 px-0 mx-0">
 							@* <div class="col-12 col-md-6 pb-1">
@@ -581,7 +602,7 @@
 										<b>Payment Date: </b>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
-										<input type="date" class="loanDate form-control form-control-sm" />
+										<input type="date" class="PaymentLoanDate form-control form-control-sm" />
 									</div>
 								</div>
 							</div>
@@ -753,7 +774,7 @@
 											<div class="col-4"></div>
 											<div class="col-8">
 												<hr class="w-100 text-right mb-1" />
-												<p class="w-100 text-center">Creation Date: <span id="createDate"></span> </p>
+												<p class="w-100 text-center">Creation Date: <span class="createDate"></span> </p>
 											</div>
 										</div>
 									</div>
@@ -761,7 +782,7 @@
 										<div class="row">
 											<div class="col-8">
 												<hr class="w-100 text-right mb-1" />
-												<p class="w-100 text-center">Last Update Date: <span id="updateDate"></span></p>
+												<p class="w-100 text-center">Last Update Date: <span class="updateDate"></span></p>
 											</div>
 											<div class="col-4"></div>
 										</div>
@@ -1070,7 +1091,7 @@
 							<div class="col-4"></div>
 							<div class="col-8">
 								<hr class="w-100 text-right mb-1" />
-								<p class="w-100 text-center">Creation Date: <span id="createDate"></span> </p>
+								<p class="w-100 text-center">Creation Date: <span class="createDate"></span> </p>
 							</div>
 						</div>
 					</div>
@@ -1078,7 +1099,7 @@
 						<div class="row">							
 							<div class="col-8">
 								<hr class="w-100 text-right mb-1" />
-								<p class="w-100 text-center">Last Update Date: <span id="updateDate"></span></p>
+								<p class="w-100 text-center">Last Update Date: <span class="updateDate"></span></p>
 							</div>
 							<div class="col-4"></div>
 						</div>

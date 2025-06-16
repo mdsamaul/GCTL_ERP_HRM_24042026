@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GCTL.Core.ViewModels.HRMPayrollLoan
 {
-    public class PaymentReceiveSetupViewModel
+    public class PaymentReceiveSetupViewModel :BaseViewModel
     {
         public decimal AutoId { get; set; }
         public string LoanId { get; set; }
@@ -25,7 +25,7 @@ namespace GCTL.Core.ViewModels.HRMPayrollLoan
         public DateTime LoanDate { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string ChequeDate { get; set; }  // string to avoid parse error
+        public string ChequeDate { get; set; } 
         public string PaymentId { get; set; }
     }
 }
