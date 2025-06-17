@@ -1,99 +1,4 @@
-﻿
-<style>
-    #RosterScheduleApprove-grid {
-        table-layout: fixed;
-        width: 100%;
-        border-collapse: collapse;
-        /* border: 1px solid #ccc; /* 🔶 Full table border */ */
-    }
-
-        #RosterScheduleApprove-grid thead {
-            display: table;
-            width: calc(100% - 17px);
-            table-layout: fixed;
-        }
-
-        #RosterScheduleApprove-grid tbody {
-            display: block;
-            max-height: 251px;
-            overflow-y: auto;
-            width: 100%;
-        }
-
-            #RosterScheduleApprove-grid tbody tr {
-                display: table;
-                width: 100%;
-                table-layout: fixed;
-            }
-
-        #RosterScheduleApprove-grid th,
-        #RosterScheduleApprove-grid td {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            text-align: center;
-            /* border: 1px solid #ccc; /* 🔶 Border for each cell */ */
-        }
-
-            #RosterScheduleApprove-grid th:nth-child(1),
-            #RosterScheduleApprove-grid td:nth-child(1) {
-                width: 80px !important;
-                min-width: 80px !important;
-                max-width: 80px !important;
-            }
-
-           /*  #RosterScheduleApprove-grid th:not(:first-child),
-            #RosterScheduleApprove-grid td:not(:first-child) {
-                width: calc((100% - 80px) / 9) !important;
-                min-width: calc((100% - 80px) / 9) !important;
-                max-width: calc((100% - 80px) / 9) !important;
-            } */
-
-            #RosterScheduleApprove-grid td:nth-child(4),
-            #RosterScheduleApprove-grid td:nth-child(5) {
-            text-align:left !important;
-            }
-
-
-            #RosterScheduleApprove-grid th:nth-child(2),
-            #RosterScheduleApprove-grid td:nth-child(2) {
-                width: 100px !important;
-            }
-
-            #RosterScheduleApprove-grid th:nth-child(3),
-            #RosterScheduleApprove-grid td:nth-child(3) {
-                width: 130px !important;
-            }
-            #RosterScheduleApprove-grid th:nth-child(4),
-            #RosterScheduleApprove-grid td:nth-child(4) {
-                width: 220px !important;
-            }
-
-            #RosterScheduleApprove-grid th:nth-child(5),
-            #RosterScheduleApprove-grid td:nth-child(5) {
-                width: 210px !important;
-            }
-
-            #RosterScheduleApprove-grid th:nth-child(6),
-            #RosterScheduleApprove-grid td:nth-child(6) {
-                width: 180px !important;
-            }
-            #RosterScheduleApprove-grid th:nth-child(7),
-            #RosterScheduleApprove-grid td:nth-child(7) {
-              width:100px !important;
-            }
-            #RosterScheduleApprove-grid th:nth-child(8),
-            #RosterScheduleApprove-grid td:nth-child(8) {
-              width:100px !important;
-            }
-            #RosterScheduleApprove-grid th:nth-child(9),
-            #RosterScheduleApprove-grid td:nth-child(9) {
-              width:220px !important;
-            }
-            /* #RosterScheduleApprove-grid th:nth-child(10), */
-            /* #RosterScheduleApprove-grid td:nth-child(10) { */
-            /*   width:200px !important; */
-            /* } */
+﻿<style>
     .dataTables_filter input {
         width: 250px !important;
         padding: 6px 12px;
@@ -107,17 +12,21 @@
 
     .table-responsive {
         overflow-x: auto;
+        width: 100%;
     }
 
     .text-center {
         text-align: center;
     }
-</style>
 
+    #RosterScheduleApprove-grid {
+        width: 100% !important;
+    }
+</style>
 
 <h5>Emp. List:</h5>
 <div class="table-responsive">
-    <table id="RosterScheduleApprove-grid" class="display table-bordered">
+    <table id="RosterScheduleApprove-grid" class="display table-bordered" style="width:100%;">
         <thead>
             <tr>
                 <th>Is Approved <br /><input type="checkbox" id="rosterScheduleApprove-check-all" /></th>

@@ -21,6 +21,225 @@
         background-color: #ffffff !important;
         border-color: #007bff !important;
     }
+
+        .dropdown-wrapper .col-auto {
+            padding: 0 !important;
+            margin: 0 !important;
+            flex: 0 0 auto;
+            min-width: 10vw;
+        }
+          
+
+        .dropdown-wrapper .form-group {
+            margin: 0;
+            width: 10vw;
+            border-right: 1px solid #e9ecef;
+            display: inline-block;
+            vertical-align: top;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-right: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.2s ease-in-out;
+        }
+
+             .dropdown-wrapper .form-group:hover {
+                background: #e9ecef;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            } 
+
+            .dropdown-wrapper .form-group:last-child {
+                border-right: none;
+                margin-right: 0;
+            }
+
+        .dropdown-wrapper label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            padding: 0;
+            color: #495057;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            /* text-transform: uppercase; */
+            letter-spacing: 0.5px;
+        }
+
+        /* Fix for single click - এই অংশ গুরুত্বপূর্ণ */
+        .dropdown-wrapper .btn-group {
+            width: 100% !important;
+            display: block !important;
+            position: relative !important;
+        }
+
+        .dropdown-wrapper .multiselect {
+            width: 100% !important;
+            border-radius: 4px !important;
+            border: 1px solid #ced4da !important;
+            background: #fff !important;
+            text-align: left !important;
+            padding: 10px 12px !important;
+            font-size: 13px !important;
+            height: 30px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            cursor: pointer !important;
+            user-select: none !important;
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            transition: all 0.2s ease-in-out !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+            position: relative !important;
+        }
+
+             .dropdown-wrapper .multiselect:hover {
+                border-color: #007bff !important;
+                box-shadow: 0 2px 6px rgba(0,123,255,0.15) !important;
+                transform: translateY(-1px) !important;
+            } 
+
+            .dropdown-wrapper .multiselect:focus,
+            .dropdown-wrapper .multiselect:active,
+            .dropdown-wrapper .multiselect.active {
+                box-shadow: 0 0 0 3px rgba(0,123,255,0.1) !important;
+                border-color: #007bff !important;
+                outline: none !important;
+                transform: translateY(-1px) !important;
+            }
+
+            .dropdown-wrapper .multiselect .caret {
+                margin-left: auto;
+                pointer-events: none !important;
+                border-top: 6px solid #6c757d;
+                border-right: 4px solid transparent;
+                border-left: 4px solid transparent;
+                transition: transform 0.2s ease-in-out !important;
+            }
+
+            .dropdown-wrapper .multiselect.active .caret {
+                transform: rotate(180deg) !important;
+                border-top-color: #007bff !important;
+            }
+
+            /* Add dropdown icon if caret is not visible */
+            .dropdown-wrapper .multiselect::after {
+                content: "▼";
+                font-size: 12px;
+                color: #6c757d;
+                margin-left: auto;
+                transition: all 0.2s ease-in-out;
+                transform: translateY(0);
+            }
+
+            .dropdown-wrapper .multiselect.active::after {
+                transform: rotate(180deg);
+                color: #007bff;
+            }
+
+            .dropdown-wrapper .multiselect:hover::after {
+                color: #007bff;
+            }
+
+        /* Dropdown menu positioning */
+        .dropdown-wrapper .multiselect-container {
+            width: auto !important;
+            position: absolute !important;
+            z-index: 1000 !important;
+        }
+
+            .dropdown-wrapper .multiselect-container .dropdown-menu {
+                width: auto !important;
+                min-width: 150px !important;
+                border: 1px solid #dee2e6 !important;
+                border-radius: 4px !important;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+                margin-top: 0 !important;
+            }
+
+        /* Regular select styling */
+        .dropdown-wrapper .regular-select {
+            width: 100% !important;
+            border-radius: 4px !important;
+            border: 1px solid #ced4da !important;
+            background: #fff !important;
+            padding: 10px 12px !important;
+            font-size: 13px !important;
+            height: 30px !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease-in-out !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'><path fill='%23666' d='m2 0-2 2h4zm0 5 2-2h-4z'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 12px;
+            padding-right: 40px !important;
+        }
+
+            .dropdown-wrapper .regular-select:hover { 
+                border-color: #007bff !important;
+                box-shadow: 0 2px 6px rgba(0,123,255,0.15) !important;
+                transform: translateY(-1px) !important;
+            }
+
+            .dropdown-wrapper .regular-select:focus {
+                box-shadow: 0 0 0 3px rgba(0,123,255,0.1) !important;
+                border-color: #007bff !important;
+                outline: none !important;
+                transform: translateY(-1px) !important;
+            }
+
+    /* Responsive adjustments */
+    @@media (max-width: 768px) {
+        .dropdown-wrapper .form-group
+
+    {
+        width: 120px;
+    }
+
+    .dropdown-wrapper label {
+        font-size: 11px;
+    }
+
+    .dropdown-wrapper .multiselect,
+    .dropdown-wrapper .regular-select {
+        font-size: 12px !important;
+        padding: 6px 8px !important;
+        height: 25px !important;
+    }
+
+    }
+
+    /* Custom dropdown menu styling */
+    .multiselect-container .dropdown-menu li a {
+        padding: 5px 15px !important;
+        font-size: 13px !important;
+        cursor: pointer !important;
+    }
+
+    .multiselect-container .dropdown-menu .multiselect-filter {
+        padding: 5px !important;
+    }
+
+        .multiselect-container .dropdown-menu .multiselect-filter input {
+            font-size: 12px !important;
+        }
+
+    /* Prevent text selection on buttons */
+    .dropdown-wrapper .multiselect * {
+        user-select: none !important;
+        -webkit-user-select: none !important;
+        -moz-user-select: none !important;
+        -ms-user-select: none !important;
+    }
+
 </style>
 <!-- Content Header (Page header) -->
 <partial name="_PageHeader" model="Model"></partial>
@@ -47,40 +266,67 @@
                         <div class="container-fluid py-2">
                             <div>
                                 <h5>Filter By:</h5>
-                            </div>
-                            <div class="row d-flex flex-wrap justify-content-start text-center align-items-end pb-4">
-                                <div class="col-auto">
-                                    <label for="companySelect">Company</label>
-                                    <select id="companySelect" class="form-control form-control-sm"></select>
+                            </div>   
+                                <div class="main-container">
+                                    @* <div class="row dropdown-wrapper d-flex justify-content-start align-items-end"> *@
+                                    <div class="dropdown-wrapper d-flex justify-content-start align-items-end">
+                                        <div class="col-auto">
+                                            <div class="form-group">
+                                                <label for="companySelect">Company</label>
+                                                <select id="companySelect" multiple="multiple">   
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="form-group">
+                                                <label for="branchSelect">Branch</label>
+                                                <select id="branchSelect" multiple="multiple">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="form-group">
+                                                <label for="divisionSelect">Division</label>
+                                                <select id="divisionSelect" multiple="multiple">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="form-group">
+                                                <label for="departmentSelect">Department</label>
+                                                <select id="departmentSelect" multiple="multiple">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="form-group">
+                                                <label for="designationSelect">Designation</label>
+                                                <select id="designationSelect" multiple="multiple">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="form-group">
+                                                <label for="employeeSelect">Employee</label>
+                                                <select id="employeeSelect" multiple="multiple">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="form-group">
+                                                <label for="activityStatusSelect">Activity Status</label>
+                                                <select id="activityStatusSelect" class="regular-select">
+                                                    <option value="Inactive">Inactive</option>
+                                                    <option value="Active">Active</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-auto">
-                                    <label for="branchSelect">Branch</label>
-                                    <select id="branchSelect" class="form-control form-control-sm" multiple="multiple"></select>
-                                </div>
-                                <div class="col-auto">
-                                    <label for="divisionSelect">Division</label>
-                                    <select id="divisionSelect" class="form-control form-control-sm" multiple="multiple"></select>
-                                </div>
-                                <div class="col-auto">
-                                    <label for="departmentSelect">Department</label>
-                                    <select id="departmentSelect" class="form-control form-control-sm" multiple="multiple"></select>
-                                </div>
-                                <div class="col-auto">
-                                    <label for="designationSelect">Designation</label>
-                                    <select id="designationSelect" class="form-control form-control-sm" multiple="multiple"></select>
-                                </div>
-                                <div class="col-auto">
-                                    <label for="employeeSelect">Employee</label>
-                                    <select id="employeeSelect" class="form-control form-control-sm" multiple="multiple"></select>
-                                </div>
-                                <div class="col-auto">
-                                    <label for="activityStatusSelect">Activity Status</label><br />
-                                    <select id="activityStatusSelect" class="form-control form-control-sm">
-                                        <option value="Inactive" >Inactive</option>
-                                        <option value="Active">Active</option>
-                                    </select>
-                                </div>
-                            </div>
+                                
+
+
+
                             <!-- table: Grid -->
                             <div class="col-md-12 mt-2">
                                 <partial name="_Grid" />
@@ -114,7 +360,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
 @section Scripts {
-    <script src="~/js/pages/hrm_employeeweekenddeclaration.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
     <!-- Bootstrap Multiselect CSS -->
@@ -122,7 +367,8 @@
     <!-- Bootstrap Multiselect JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/js/bootstrap-multiselect.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
- 
+    <script src="~/js/pages/hrm_employeeweekenddeclaration.js"></script>
+   
 }
 
 

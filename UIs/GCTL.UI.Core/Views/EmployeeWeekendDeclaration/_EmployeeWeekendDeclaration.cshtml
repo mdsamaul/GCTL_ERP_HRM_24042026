@@ -1,5 +1,5 @@
 ﻿<style>    
-    #employee-weekend-grid-body {
+    /* #employee-weekend-grid-body {
         display: block;
         max-height: 351px;
         overflow-y: auto;
@@ -40,7 +40,26 @@
         color: blue;
         text-decoration: underline;
         cursor: pointer;
+    } */
+
+    #employee-weekend-grid thead {
+        display: table;
+        width: calc(100% - 17px);
+        table-layout: fixed;
     }
+
+    #employee-weekend-grid tbody {
+        display: block;
+        overflow-y: auto;
+        width: 100%;
+    }
+
+        #employee-weekend-grid tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
 
 </style>
 @* <div id="loadingOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(255,255,255,0.7); z-index:9999; text-align:center; padding-top:200px; font-size:24px;">

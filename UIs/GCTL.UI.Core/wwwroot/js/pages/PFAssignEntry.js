@@ -125,7 +125,7 @@ function toArray(value) {
 }
 
 function loadFilterEmp() {
-    showLoading();
+    //showLoading();
     var filterData = getAllFilterVal();
     //console.log(filterData);
     $.ajax({

@@ -93,7 +93,7 @@
 						<div class="col-12 col-md-6">
 							<div class="row">
 								<div class="col-12 col-md-4 text-right" style="padding-right: 5px;">
-									<b>Company <span class="text-danger" style="font-size: 18px;">*</span></b>
+									<p class="mb-0">Company <span class="text-danger" style="font-size: 18px;">*</span></p>
 								</div>
 								<div class="col-12 col-md-6" style="padding-left: 0px;">
 									<select class="companySelect form-control form-control-sm">
@@ -120,7 +120,7 @@
 						<div class="col-12 col-md-6">
 							<div class="row">
 								<div class="col-12 col-md-4 text-right" style="padding-right: 5px;">
-									<b>Employee ID<span class="text-danger" style="font-size: 18px;">*</span></b>
+									<p class="mb-0">Employee ID<span class="text-danger" style="font-size: 18px;">*</span></p>
 								</div>
 								<div class="col-12 col-md-6" style="padding-left: 0px;">
 									<select class="employeeSelect form-control form-control-sm">
@@ -132,7 +132,7 @@
 						<div class="col-12 col-md-6 py-1">
 							<div class="row">
 								<div class="col-md-2 text-right" style="padding-right: 5px;">
-									<b>Name: </b>
+									<p class="mb-0">Name: </p>
 								</div>
 								<div class="col-md-6" style="padding-left: 0px;">
 									<span class="EmployeeName"></span>
@@ -143,7 +143,7 @@
 						<div class="col-12 col-md-6 py-1">
 							<div class="row">
 								<div class="col-md-4 text-right" style="padding-right: 5px;">
-									<b>Designation: </b>
+									<p class="mb-0">Designation: </p>
 								</div>
 								<div class="col-md-6" style="padding-left: 0px;">
 									<span class="EmployeeDesignation"></span>
@@ -154,7 +154,7 @@
 						<div class="col-12 col-md-6 py-1">
 							<div class="row">
 								<div class="col-md-2 text-right" style="padding-right: 5px;">
-									<b>Department: </b>
+									<p class="mb-0">Department: </p>
 								</div>
 								<div class="col-md-6" style="padding-left: 0px;">
 									<span class="EmployeeDepartment"></span>
@@ -165,7 +165,7 @@
 						<div class="col-12 col-md-6 py-1">
 							<div class="row">
 								<div class="col-md-4 text-right" style="padding-right: 5px;">
-									<b>Joining Date: </b>
+									<p class="mb-0">Joining Date: </p>
 								</div>
 								<div class="col-md-6" style="padding-left: 0px;">
 									<span class="EmployeeJoinDate"></span>
@@ -180,34 +180,42 @@
 						<div class="row border bg-white rounded-lg shadow-lg my-2 py-3 px-0 mx-0">
 							<div class="col-12 col-md-6 pb-1">
 								<div class="row">
-									<div class="col-12 col-md-4 text-right" style="padding-right: 5px;">
-										<b>Loan Type: </b>
+									@* <div class="col-12 col-md-4 text-right" style="padding-right: 5px;">
+										<p class="mb-0">Loan Type: </p>
+									</div> *@
+									<div class="col-12 col-md-4 d-flex justify-content-end align-items-center" style="padding-right: 5px;">
+										<p class="mb-0">Loan Type:</p>
 									</div>
+
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										<select id="paymentLoanSelect" class="form-control form-control-sm">
 											<option value="0">--Select Loan Type--</option>
 										</select>
 
 									</div>
-									<div class="col-0 col-md-2"></div>
-									@* <div class="col-10 ">
-						<div class="row">
-							<div class="col-2"></div>
-							<div class="col-10">
-								<hr class="w-100 text-right mb-1" />
-							</div>
-						</div>
-					</div> *@
-
+									<div class="col-0 col-md-2"></div>	
 								</div>
 							</div>
+						@* 	<div class="col-12 col-md-6 pb-1">
+								<div class="d-flex justify-content-center align-items-center">
+									<div class="text-right pr-2">
+										<p class="mb-0">Loan Type:</p>
+									</div>
+									<div>
+										<select id="paymentLoanSelect" class="form-control form-control-sm ml-2">
+											<option value="0">--Select Loan Type--</option>
+										</select>
+									</div>
+								</div>
+							</div> *@
+
 							<div class="col-12 col-md-6 pb-1"></div>
 
 
 							<div class="col-12 col-md-6 pb-1">
 								<div class="row">
-									<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<b>Loan Id: </b>
+									<div class="col-12 col-md-4 d-flex justify-content-end align-items-center" style="padding-right: 5px;">
+										<p class="mb-0">Loan Id: </p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										<input type="text" id="LoanIdAutoGenerate" class="form-control form-control-sm" readonly value="" />
@@ -216,8 +224,8 @@
 							</div>
 							<div class="col-12 col-md-6 pb-1">
 								<div class="row">
-									<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<b>Loan Date: </b>
+									<div class="col-12 col-md-2 d-flex justify-content-end align-items-center" style="padding-right: 5px;">
+										<p class="mb-0">Loan Date: </p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										<input type="date"  class="loanDate form-control form-control-sm" />
@@ -227,7 +235,7 @@
 							<div class="col-12 col-md-6 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<b>Inst. Start Date: </b>
+										<p class="mb-0">Inst. Start Date: </p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										<input type="date"  class="instStartDate form-control form-control-sm" />
@@ -237,7 +245,7 @@
 							<div class="col-12 col-md-6 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<b>End Date: </b>
+										<p class="mb-0">End Date: </p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										<input type="date" id="endDate" class="form-control form-control-sm" />
@@ -247,7 +255,7 @@
 							<div class="col-12 col-md-6 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<b>Loan Amount: <span class="text-danger" style="font-size: 18px;">*</span></b>
+										<p class="mb-0">Loan Amount: <span class="text-danger" style="font-size: 18px;">*</span></p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										<input type="number" class="loanAmount form-control form-control-sm" value="" placeholder="Enter Loan Amount" />
@@ -264,7 +272,7 @@
 							<div class="col-12 col-md-6 pb-1" style="padding-right: 0px;">
 								<div class="row">
 									<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px; padding-left: 0px;">
-										<b>No.of Installment(s):</b>
+										<p class="mb-0">No.of Installment(s):</p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px; padding-right: 25px;">
 										<input type="text" id="noOfInstallment" class="form-control form-control-sm" readonly placeholder="No.of Installment(s)" />
@@ -274,7 +282,7 @@
 							<div class="col-12 col-md-6 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<b>Monthly Deduction: </b>
+										<p class="mb-0">Monthly Deduction: </p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										<input id="monthlyDeduction" type="text" class="form-control form-control-sm" readonly value="" placeholder="Enter Monthly Deduction" />
@@ -284,7 +292,7 @@
 							<div class="col-12 col-md-6 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<b>Deduction Head: </b>
+										<p class="mb-0">Deduction Head: </p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										@* <input type="date" class="form-control form-control-sm"   /> *@
@@ -298,7 +306,7 @@
 							<div class="col-12 col-md-6 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<b>Payment Mode: </b>
+										<p class="mb-0">Payment Mode: </p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										<select class="paymentMode form-control form-control-sm">
@@ -313,7 +321,7 @@
 								<div class="col-12 col-md-6 pb-1">
 									<div class="row">
 										<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
-											<b>Bank Account: </b>
+											<p class="mb-0">Bank Account: </p>
 										</div>
 										<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
 											<input  type="text" class="bankAccount form-control form-control-sm" value="" placeholder="Enter Bank Account" />
@@ -323,7 +331,7 @@
 								<div class="col-12 col-md-6 pb-1" style="padding-left: 25px;padding-right: 5px;">
 									<div class="row">
 										<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
-											<b>Bank: </b>
+											<p class="mb-0">Bank: </p>
 										</div>
 										<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
 											@* <input type="date" class="form-control form-control-sm"   /> *@
@@ -339,7 +347,7 @@
 									<div class="col-12 col-md-6 pb-1" style="padding-right: 0px;padding-left: 30px;">
 										<div class="row">
 											<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
-												<b>Cheque No: </b>
+												<p class="mb-0">Cheque No: </p>
 											</div>
 											<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
 												<input type="text" class="chequeNo form-control form-control-sm" value="" placeholder="Enter Cheque No" />
@@ -349,7 +357,7 @@
 									<div class="col-12 col-md-6 pb-1" style="padding-left: 45px; padding-right: 0px;">
 										<div class="row">
 											<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
-												<b>Cheque Date: </b>
+												<p class="mb-0">Cheque Date: </p>
 											</div>
 											<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
 												<input type="date"  class="chequeDate form-control form-control-sm" />
@@ -362,7 +370,7 @@
 							<div class="col-12 col-md-12 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<b>Remarks: </b>
+										<p class="mb-0">Remarks: </p>
 									</div>
 									<div class="col-12 col-md-8" style="padding-left: 0px;">
 										<textarea id="remarks" type="text" class="form-control form-control-sm" rows="2" placeholder="Enter Remarks"></textarea>
@@ -411,7 +419,7 @@
 						<div class="col-12 col-md-6">
 							<div class="row">
 								<div class="col-12 col-md-4 text-right" style="padding-right: 5px;">
-									<b>Company <span class="text-danger" style="font-size: 18px;">*</span></b>
+									<p class="mb-0">Company <span class="text-danger" style="font-size: 18px;">*</span></p>
 								</div>
 								<div class="col-12 col-md-6" style="padding-left: 0px;">
 									<select class="PaymentReceiveCompanySelect form-control form-control-sm">
@@ -435,7 +443,7 @@
 						<div class="col-12 col-md-6">
 							<div class="row">
 								<div class="col-12 col-md-4 text-right" style="padding-right: 5px;">
-									<b>Employee ID<span class="text-danger" style="font-size: 18px;">*</span></b>
+									<p class="mb-0">Employee ID<span class="text-danger" style="font-size: 18px;">*</span></p>
 								</div>
 								<div class="col-12 col-md-6" style="padding-left: 0px;">
 									<select class="PaymentReceiveEmployeeSelect form-control form-control-sm">
@@ -447,7 +455,7 @@
 						<div class="col-12 col-md-6 py-1">
 							<div class="row">
 								<div class="col-md-2 text-right" style="padding-right: 5px;">
-									<b>Name: </b>
+									<p class="mb-0">Name: </p>
 								</div>
 								<div class="col-md-6" style="padding-left: 0px;">
 									<span class="EmployeeName"></span>
@@ -458,7 +466,7 @@
 						<div class="col-12 col-md-6 py-1">
 							<div class="row">
 								<div class="col-md-4 text-right" style="padding-right: 5px;">
-									<b>Designation: </b>
+									<p class="mb-0">Designation: </p>
 								</div>
 								<div class="col-md-6" style="padding-left: 0px;">
 									<span class="EmployeeDesignation"></span>
@@ -469,7 +477,7 @@
 						<div class="col-12 col-md-6 py-1">
 							<div class="row">
 								<div class="col-md-2 text-right" style="padding-right: 5px;">
-									<b>Department: </b>
+									<p class="mb-0">Department: </p>
 								</div>
 								<div class="col-md-6" style="padding-left: 0px;">
 									<span class="EmployeeDepartment"></span>
@@ -480,7 +488,7 @@
 						<div class="col-12 col-md-6 py-1">
 							<div class="row">
 								<div class="col-md-4 text-right" style="padding-right: 5px;">
-									<b>Joining Date: </b>
+									<p class="mb-0">Joining Date: </p>
 								</div>
 								<div class="col-md-6" style="padding-left: 0px;">
 									<span class="EmployeeJoinDate"></span>
@@ -494,7 +502,7 @@
 						<div class="col-12 col-md-6">
 							<div class="row">
 								<div class="col-12 col-md-4 text-right" style="padding-right: 5px;">
-									<b>Loan ID: <span class="text-danger" style="font-size: 18px;">*</span></b>
+									<p class="mb-0">Loan ID: <span class="text-danger" style="font-size: 18px;">*</span></p>
 								</div>
 								<div class="col-12 col-md-6" style="padding-left: 0px;">
 									<select class="employeeSelectLoanId form-control form-control-sm">
@@ -506,7 +514,7 @@
 						<div class="col-12 col-md-6 py-1">
 							<div class="row">
 								<div class="col-md-2 text-right" style="padding-right: 5px;">
-									<b>Loan Date: </b>
+									<p class="mb-0">Loan Date: </p>
 								</div>
 								<div class="col-md-6" style="padding-left: 0px;">
 									<span class="LoanDate"></span>
@@ -517,7 +525,7 @@
 						<div class="col-12 col-md-6 py-1">
 							<div class="row">
 								<div class="col-md-4 text-right" style="padding-right: 5px;">
-									<b>Loan Type: </b>
+									<p class="mb-0">Loan Type: </p>
 								</div>
 								<div class="col-md-6" style="padding-left: 0px;">
 									<span class="LoanType"></span>
@@ -527,8 +535,8 @@
 						</div>
 						<div class="col-12 col-md-6 py-1">
 							<div class="row">
-								<div class="col-md-2 text-right" style="padding-right: 5px;">
-									<b>Loan Amount: </b>
+								<div class="col-md-2 text-right" style="padding-right: 5px; padding-left:0px;">
+									<p class="mb-0">Loan Amount: </p>
 								</div>
 								<div class="col-md-6" style="padding-left: 0px;">
 									<span class="LoanAmount"></span>
@@ -539,7 +547,7 @@
 						<div class="col-12 col-md-6 py-1">
 							<div class="row">
 								<div class="col-md-4 text-right" style="padding-right: 5px;">
-									<b>Inst. Start-End Date: </b>
+									<p class="mb-0">Inst. Start-End Date: </p>
 								</div>
 								<div class="col-md-6" style="padding-left: 0px;">
 									<span class="LoanStartEndDate"></span>
@@ -550,7 +558,7 @@
 						<div class="col-12 col-md-6 py-1">
 							<div class="row">
 								<div class="col-md-2 text-right" style="padding-right: 5px;padding-left: 0px;">
-									<b>No.of Installment(s): </b>
+									<p class="mb-0">No.of Installment(s): </p>
 								</div>
 								<div class="col-md-6" style="padding-left: 0px;">
 									<span class="LoanNoOfInstallment"></span>
@@ -571,7 +579,7 @@
 							@* <div class="col-12 col-md-6 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-4 text-right" style="padding-right: 5px;">
-										<b>Payment ID: </b>
+										<p class="mb-0">Payment ID: </p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										<select id="paymentLoanSelect" class="form-control form-control-sm">
@@ -589,7 +597,7 @@
 							<div class="col-12 col-md-6 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<b>Payment Id: </b>
+										<p class="mb-0">Payment Id: </p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										<input type="text" id="PaymentReceiveIdAutoGenerate" class="form-control form-control-sm" readonly value="" />
@@ -599,7 +607,7 @@
 							<div class="col-12 col-md-6 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<b>Payment Date: </b>
+										<p class="mb-0">Payment Date: </p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										<input type="date" class="PaymentLoanDate form-control form-control-sm" />
@@ -609,7 +617,7 @@
 						@* 	<div class="col-12 col-md-6 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<b>Payment Amount: </b>
+										<p class="mb-0">Payment Amount: </p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										<input type="date"  class="instStartDate form-control form-control-sm" />
@@ -619,7 +627,7 @@
 							<div class="col-12 col-md-6 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<b>Payment Amount: <span class="text-danger" style="font-size: 18px;">*</span></b>
+										<p class="mb-0">Payment Amount: <span class="text-danger" style="font-size: 18px;">*</span></p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										<input type="number" class="paymentLoanAmount form-control form-control-sm" value="" placeholder="Enter Loan Amount" />
@@ -636,7 +644,7 @@
 							@* <div class="col-12 col-md-6 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<b>Payment Method: </b>
+										<p class="mb-0">Payment Method: </p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										<input type="date" id="endDate" class="form-control form-control-sm" />
@@ -646,7 +654,7 @@
 							@* <div class="col-12 col-md-6 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<b>Loan Amount: <span class="text-danger" style="font-size: 18px;">*</span></b>
+										<p class="mb-0">Loan Amount: <span class="text-danger" style="font-size: 18px;">*</span></p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										<input type="number" id="loanAmount" class="form-control form-control-sm" value="" placeholder="Enter Loan Amount" />
@@ -663,7 +671,7 @@
 							@* <div class="col-12 col-md-6 pb-1" style="padding-right: 0px;">
 								<div class="row">
 									<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px; padding-left: 0px;">
-										<b>No.of Installment(s):</b>
+										<p class="mb-0">No.of Installment(s):</p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px; padding-right: 25px;">
 										<input type="text" id="noOfInstallment" class="form-control form-control-sm" readonly placeholder="No.of Installment(s)" />
@@ -673,7 +681,7 @@
 							<div class="col-12 col-md-6 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<b>Monthly Deduction: </b>
+										<p class="mb-0">Monthly Deduction: </p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										<input id="monthlyDeduction" type="text" class="form-control form-control-sm" readonly value="" placeholder="Enter Monthly Deduction" />
@@ -683,7 +691,7 @@
 							<div class="col-12 col-md-6 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<b>Payment Method: </b>
+										<p class="mb-0">Payment Method: </p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">										
 										<select class="paymentMode paymentReceivePaymentMode form-control form-control-sm">
@@ -695,7 +703,7 @@
 							@* <div class="col-12 col-md-6 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<b>Payment Mode: </b>
+										<p class="mb-0">Payment Mode: </p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										<select id="paymentMode" class="form-control form-control-sm">
@@ -710,7 +718,7 @@
 								<div class="col-12 col-md-6 pb-1">
 									<div class="row">
 										<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
-											<b>Bank Account: </b>
+											<p class="mb-0">Bank Account: </p>
 										</div>
 										<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
 											<input type="text" class="bankAccount paymentBankAccount form-control form-control-sm" value="" placeholder="Enter Bank Account" />
@@ -720,7 +728,7 @@
 								<div class="col-12 col-md-6 pb-1" style="padding-left: 25px;padding-right: 5px;">
 									<div class="row">
 										<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
-											<b>Bank: </b>
+											<p class="mb-0">Bank: </p>
 										</div>
 										<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
 											@* <input type="date" class="form-control form-control-sm"   /> *@
@@ -736,7 +744,7 @@
 									<div class=" col-12 col-md-6 pb-1" style="padding-right: 0px;padding-left: 30px;">
 										<div class="row">
 											<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
-												<b>Cheque No: </b>
+												<p class="mb-0">Cheque No: </p>
 											</div>
 											<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
 												<input type="text" class="chequeNo paymentCheckNo form-control form-control-sm" value="" placeholder="Enter Cheque No" />
@@ -746,7 +754,7 @@
 									<div class="col-12 col-md-6 pb-1" style="padding-left: 45px; padding-right: 0px;">
 										<div class="row">
 											<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
-												<b>Cheque Date: </b>
+												<p class="mb-0">Cheque Date: </p>
 											</div>
 											<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
 												<input type="date" class="chequeDate paymentCheckDate form-control form-control-sm" />
@@ -759,7 +767,7 @@
 							<div class="col-12 col-md-12 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<b>Remarks: </b>
+										<p class="mb-0">Remarks: </p>
 									</div>
 									<div class="col-12 col-md-8" style="padding-left: 0px;">
 										<textarea type="text" class="paymentRemarks form-control form-control-sm" rows="2" placeholder="Enter Remarks"></textarea>
@@ -808,7 +816,7 @@
 			<div class="col-12 col-md-6">
 				<div class="row">
 					<div class="col-12 col-md-4 text-right" style="padding-right: 5px;">
-						<b>Company <span class="text-danger" style="font-size: 18px;">*</span></b>
+						<p class="mb-0">Company <span class="text-danger" style="font-size: 18px;">*</span></p>
 					</div>
 					<div class="col-12 col-md-6" style="padding-left: 0px;">
 						<select class="companySelect" class="form-control form-control-sm">							
@@ -833,7 +841,7 @@
 			<div class="col-12 col-md-6">
 				<div class="row">
 					<div class="col-12 col-md-4 text-right" style="padding-right: 5px;">
-						<b>Employee <span class="text-danger" style="font-size: 18px;">*</span></b>
+						<p class="mb-0">Employee <span class="text-danger" style="font-size: 18px;">*</span></p>
 					</div>
 					<div class="col-12 col-md-6" style="padding-left: 0px;">
 						<select id="employeeSelect" class="form-control form-control-sm">
@@ -845,7 +853,7 @@
 			<div class="col-12 col-md-6 py-1">
 				<div class="row">
 					<div class="col-md-2 text-right" style="padding-right: 5px;">
-						<b>Name: </b>
+						<p class="mb-0">Name: </p>
 					</div>
 					<div class="col-md-6" style="padding-left: 0px;">
 						<span class="EmployeeName"></span>
@@ -856,7 +864,7 @@
 			<div class="col-12 col-md-6 py-1">
 				<div class="row">
 					<div class="col-md-4 text-right" style="padding-right: 5px;">
-						<b>Designation: </b>
+						<p class="mb-0">Designation: </p>
 					</div>
 					<div class="col-md-6" style="padding-left: 0px;">
 						<span class="EmployeeDesignation"></span>
@@ -867,7 +875,7 @@
 			<div class="col-12 col-md-6 py-1">
 				<div class="row">
 					<div class="col-md-2 text-right" style="padding-right: 5px;">						
-						<b>Department: </b>
+						<p class="mb-0">Department: </p>
 					</div>
 					<div class="col-md-6" style="padding-left: 0px;">
 						<span class="EmployeeDepartment"></span>
@@ -878,7 +886,7 @@
 			<div class="col-12 col-md-6 py-1">
 				<div class="row">
 					<div class="col-md-4 text-right" style="padding-right: 5px;">
-						<b>Joining Date: </b>
+						<p class="mb-0">Joining Date: </p>
 					</div>
 					<div class="col-md-6" style="padding-left: 0px;">
 						<span class="EmployeeJoinDate"></span>
@@ -895,7 +903,7 @@
 			<div class="col-12 col-md-6 pb-1">
 				<div class="row">
 					<div class="col-12 col-md-4 text-right" style="padding-right: 5px;">
-						<b>Loan Type: </b>
+						<p class="mb-0">Loan Type: </p>
 					</div>
 					<div class="col-12 col-md-6" style="padding-left: 0px;">
 						<select id="paymentLoanSelect" class="form-control form-control-sm">
@@ -921,7 +929,7 @@
 			<div class="col-12 col-md-6 pb-1">
 				<div class="row">
 					<div class="col-12 col-md-4 d-flex align-items-center justify-content-end"  style="padding-right: 5px;">
-						<b>Loan Id: </b>
+						<p class="mb-0">Loan Id: </p>
 					</div>
 					<div class="col-12 col-md-6" style="padding-left: 0px;">
 						<input type="text" id="LoanIdAutoGenerate" class="form-control form-control-sm" readonly  value="" />
@@ -931,7 +939,7 @@
 			<div class="col-12 col-md-6 pb-1" >
 				<div class="row">
 					<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-						<b>Loan Date: </b>
+						<p class="mb-0">Loan Date: </p>
 					</div>
 					<div class="col-12 col-md-6" style="padding-left: 0px;">
 						<input type="date" id="loanDate" class="form-control form-control-sm" />
@@ -941,7 +949,7 @@
 			<div class="col-12 col-md-6 pb-1">
 				<div class="row">
 					<div class="col-12 col-md-4 d-flex align-items-center justify-content-end"  style="padding-right: 5px;">
-						<b>Inst. Start Date: </b>
+						<p class="mb-0">Inst. Start Date: </p>
 					</div>
 					<div class="col-12 col-md-6" style="padding-left: 0px;">
 						<input type="date" id="instStartDate" class="form-control form-control-sm"  />
@@ -951,7 +959,7 @@
 			<div class="col-12 col-md-6 pb-1">
 				<div class="row">
 					<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-						<b>End Date: </b>
+						<p class="mb-0">End Date: </p>
 					</div>
 					<div class="col-12 col-md-6" style="padding-left: 0px;">
 						<input type="date" id="endDate" class="form-control form-control-sm"   />
@@ -961,7 +969,7 @@
 			<div class="col-12 col-md-6 pb-1">
 				<div class="row">
 					<div class="col-12 col-md-4 d-flex align-items-center justify-content-end"  style="padding-right: 5px;">
-						<b>Loan Amount: <span class="text-danger" style="font-size: 18px;">*</span></b>
+						<p class="mb-0">Loan Amount: <span class="text-danger" style="font-size: 18px;">*</span></p>
 					</div>
 					<div class="col-12 col-md-6" style="padding-left: 0px;">
 						<input type="number" id="loanAmount" class="form-control form-control-sm"   value="" placeholder="Enter Loan Amount" />
@@ -978,7 +986,7 @@
 			<div class="col-12 col-md-6 pb-1" style="padding-right: 0px;">
 				<div class="row">
 					<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px; padding-left: 0px;">
-						<b>No.of Installment(s):</b>
+						<p class="mb-0">No.of Installment(s):</p>
 					</div>
 					<div class="col-12 col-md-6" style="padding-left: 0px; padding-right: 25px;">
 						<input type="text" id="noOfInstallment" class="form-control form-control-sm" readonly  placeholder="No.of Installment(s)"/>
@@ -988,7 +996,7 @@
 			<div class="col-12 col-md-6 pb-1">
 				<div class="row">
 					<div class="col-12 col-md-4 d-flex align-items-center justify-content-end"  style="padding-right: 5px;">
-						<b>Monthly Deduction: </b>
+						<p class="mb-0">Monthly Deduction: </p>
 					</div>
 					<div class="col-12 col-md-6" style="padding-left: 0px;">
 						<input id="monthlyDeduction" type="text" class="form-control form-control-sm" readonly  value="" placeholder="Enter Monthly Deduction" />
@@ -998,7 +1006,7 @@
 			<div class="col-12 col-md-6 pb-1">
 				<div class="row">
 					<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-						<b>Deduction Head: </b>
+						<p class="mb-0">Deduction Head: </p>
 					</div>
 					<div class="col-12 col-md-6" style="padding-left: 0px;">
 						@* <input type="date" class="form-control form-control-sm"   /> *@
@@ -1012,7 +1020,7 @@
 			<div class="col-12 col-md-6 pb-1">
 				<div class="row">
 					<div class="col-12 col-md-4 d-flex align-items-center justify-content-end"  style="padding-right: 5px;">
-						<b>Payment Mode: </b>
+						<p class="mb-0">Payment Mode: </p>
 					</div>
 					<div class="col-12 col-md-6" style="padding-left: 0px;">
 						<select id="paymentMode" class="form-control form-control-sm">
@@ -1027,7 +1035,7 @@
 				<div class="col-12 col-md-6 pb-1">
 					<div class="row">
 						<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
-							<b>Bank Account: </b>
+							<p class="mb-0">Bank Account: </p>
 						</div>
 						<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
 							<input id="bankAccount" type="text" class="form-control form-control-sm" value="" placeholder="Enter Bank Account" />
@@ -1037,7 +1045,7 @@
 				<div class="col-12 col-md-6 pb-1" style="padding-left: 25px;padding-right: 5px;">
 					<div class="row">
 						<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
-							<b>Bank: </b>
+							<p class="mb-0">Bank: </p>
 						</div>
 						<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
 							@* <input type="date" class="form-control form-control-sm"   /> *@
@@ -1053,7 +1061,7 @@
 					<div class="col-12 col-md-6 pb-1" style="padding-right: 0px;padding-left: 30px;">
 						<div class="row">
 							<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
-								<b>Cheque No: </b>
+								<p class="mb-0">Cheque No: </p>
 							</div>
 							<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
 								<input id="chequeNo" type="text" class="form-control form-control-sm" value="" placeholder="Enter Cheque No" />
@@ -1063,7 +1071,7 @@
 					<div class="col-12 col-md-6 pb-1" style="padding-left: 45px; padding-right: 0px;">
 						<div class="row">
 							<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
-								<b>Cheque Date: </b>
+								<p class="mb-0">Cheque Date: </p>
 							</div>
 							<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
 								<input type="date" id="chequeDate" class="form-control form-control-sm" />
@@ -1076,7 +1084,7 @@
 			<div class="col-12 col-md-12 pb-1">
 				<div class="row">
 					<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-						<b>Remarks: </b>
+						<p class="mb-0">Remarks: </p>
 					</div>
 					<div class="col-12 col-md-8" style="padding-left: 0px;">
 						<textarea id="remarks" type="text" class="form-control form-control-sm" rows="2" placeholder="Enter Remarks"></textarea>

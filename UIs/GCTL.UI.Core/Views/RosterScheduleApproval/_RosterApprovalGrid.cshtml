@@ -1,18 +1,27 @@
 ﻿<style>
-    #RosterScheduleApproveShowData-grid{
-        text-align:center;
+    #RosterScheduleApproveShowData-grid {
+        text-align: center;
+        width: 100% !important;
     }
-       
         #RosterScheduleApproveShowData-grid tbody td:nth-child(3),
         #RosterScheduleApproveShowData-grid tbody td:nth-child(4) {
             text-align: left;
         }
-
         #RosterScheduleApproveShowData-grid th:nth-child(2),
         #RosterScheduleApproveShowData-grid td:nth-child(2) {
-        width: 110px !important;
+            width: 110px !important;
+        }
+
+    .dataTables_filter input {
+        width: 250px !important;
+        padding: 6px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
     }
-    
+
+    .table-responsive {
+        overflow-x: auto;
+    }
 </style>
 
 <div class="table-responsive border rounded-lg p-2 my-4">
@@ -20,10 +29,9 @@
         <h5>Roster Schedule Approval Data:</h5>
     </div>
     <div class="table-responsive">
-        <table id="RosterScheduleApproveShowData-grid" class="display nowrap table-bordered" style="width:100%">
+        <table id="RosterScheduleApproveShowData-grid" class="display nowrap table-bordered" style="width:100%;">
             <thead>
                 <tr class="text-center">
-                    <!-- Removed "Is Approved" checkbox column -->
                     <th>Roster ID</th>
                     <th>Employee ID</th>
                     <th>Name</th>
@@ -38,5 +46,5 @@
                 </tr>
             </thead>
         </table>
-    </div> 
     </div>
+</div>

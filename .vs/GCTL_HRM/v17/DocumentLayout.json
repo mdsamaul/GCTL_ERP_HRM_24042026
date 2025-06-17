@@ -3,40 +3,92 @@
   "WorkspaceRootPath": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\libraries\\gctl.service\\hrmpayrollloan\\hrmpayrollloanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|solutionrelative:libraries\\gctl.service\\hrmpayrollloan\\hrmpayrollloanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\wwwroot\\js\\pages\\hrmpayrollloan.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\wwwroot\\js\\pages\\hrmpayrollloan.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\hrmpayrollloan\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\hrmpayrollloan\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\manualearnleaveentry\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\manualearnleaveentry\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\wwwroot\\js\\pages\\employeeweekenddeclarationreport.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\wwwroot\\js\\pages\\employeeweekenddeclarationreport.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\manualearnleaveentry\\_toolbars.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\manualearnleaveentry\\_toolbars.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\hrmpayrollloan\\_paymentreceiveemployeegrid.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\hrmpayrollloan\\_paymentreceiveemployeegrid.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\hrmpayrollpaymentreceivedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\hrmpayrollpaymentreceivedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\hrmpayrollloan\\_grid.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\hrmpayrollloan\\_grid.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\wwwroot\\js\\pages\\hrmpayrollloan.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\wwwroot\\js\\pages\\hrmpayrollloan.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\controllers\\hrmpayrollloancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\controllers\\hrmpayrollloancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\rosterscheduleentry\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\rosterscheduleentry\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\rosterscheduleapproval\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\rosterscheduleapproval\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\rosterscheduleapproval\\_grid.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\rosterscheduleapproval\\_grid.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\rosterscheduleapproval\\_rosterapprovalgrid.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\rosterscheduleapproval\\_rosterapprovalgrid.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\wwwroot\\js\\pages\\rosterscheduleapproval.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\wwwroot\\js\\pages\\rosterscheduleapproval.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\wwwroot\\js\\pages\\rosterscheduleentry.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\wwwroot\\js\\pages\\rosterscheduleentry.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\wwwroot\\js\\pages\\hrm_employeeweekenddeclaration.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\wwwroot\\js\\pages\\hrm_employeeweekenddeclaration.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\wwwroot\\js\\pages\\employeeweekenddeclarationreport.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\wwwroot\\js\\pages\\employeeweekenddeclarationreport.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\pfassignentry\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\pfassignentry\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\manualearnleaveentry\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\manualearnleaveentry\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\employeeweekenddeclaration\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\employeeweekenddeclaration\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\wwwroot\\js\\pages\\pfassignentry.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\wwwroot\\js\\pages\\pfassignentry.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\wwwroot\\js\\pages\\manualearnleaveentry.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\wwwroot\\js\\pages\\manualearnleaveentry.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\manualearnleaveentry\\_toolbars.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\manualearnleaveentry\\_toolbars.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\employeeweekenddeclaration\\_employeeweekenddeclaration.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\employeeweekenddeclaration\\_employeeweekenddeclaration.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\libraries\\gctl.service\\hrmpayrollloan\\hrmpayrollloanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|solutionrelative:libraries\\gctl.service\\hrmpayrollloan\\hrmpayrollloanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\hrmpayrollpaymentreceivedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\hrmpayrollpaymentreceivedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\libraries\\gctl.service\\hrmpayrollloan\\ihrmpayrollloanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -45,10 +97,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\payrollloanfilterresultlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\payrollloanfilterresultlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\views\\hrmpayrollloan\\_grid.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\views\\hrmpayrollloan\\_grid.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\hrmpayrollloan\\hrmpayrollloansetupviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -81,10 +129,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\libraries\\gctl.service\\hrmemployees2\\hrmemployee2service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1647B4C4-DA71-47C1-A067-183D90462D6D}|Libraries\\GCTL.Service\\GCTL.Service.csproj|solutionrelative:libraries\\gctl.service\\hrmemployees2\\hrmemployee2service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|d:\\git clone\\new clone\\gctl_erp_hrm_24042026\\uis\\gctl.ui.core\\wwwroot\\js\\pages\\rosterscheduleapproval.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A9267D08-D6D5-4AF9-BEB3-7E5A8635E380}|UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj|solutionrelative:uis\\gctl.ui.core\\wwwroot\\js\\pages\\rosterscheduleapproval.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
   ],
   "DocumentGroupContainers": [
@@ -93,12 +137,194 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 573,
-          "SelectedChildIndex": 15,
+          "DockedWidth": 404,
+          "SelectedChildIndex": 26,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "_PaymentReceiveEmployeeGrid.cshtml",
+              "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\_PaymentReceiveEmployeeGrid.cshtml",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\_PaymentReceiveEmployeeGrid.cshtml",
+              "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\_PaymentReceiveEmployeeGrid.cshtml",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\_PaymentReceiveEmployeeGrid.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-17T09:02:24.636Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "_RosterApprovalGrid.cshtml",
+              "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\RosterScheduleApproval\\_RosterApprovalGrid.cshtml",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\RosterScheduleApproval\\_RosterApprovalGrid.cshtml",
+              "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\RosterScheduleApproval\\_RosterApprovalGrid.cshtml",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\RosterScheduleApproval\\_RosterApprovalGrid.cshtml",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-17T06:57:21.402Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "RosterScheduleApproval.js",
+              "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\RosterScheduleApproval.js",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\RosterScheduleApproval.js",
+              "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\RosterScheduleApproval.js",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\RosterScheduleApproval.js",
+              "ViewState": "AgIAAHIAAAAAAAAAAAAuwJwBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-06-17T06:47:52.444Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "_Grid.cshtml",
+              "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\RosterScheduleApproval\\_Grid.cshtml",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\RosterScheduleApproval\\_Grid.cshtml",
+              "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\RosterScheduleApproval\\_Grid.cshtml",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\RosterScheduleApproval\\_Grid.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-17T06:46:08.883Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\RosterScheduleApproval\\Index.cshtml",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\RosterScheduleApproval\\Index.cshtml",
+              "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\RosterScheduleApproval\\Index.cshtml",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\RosterScheduleApproval\\Index.cshtml",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAAAEYAAABSAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-17T06:38:59.115Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "RosterScheduleEntry.js",
+              "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\RosterScheduleEntry.js",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\RosterScheduleEntry.js",
+              "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\RosterScheduleEntry.js",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\RosterScheduleEntry.js",
+              "ViewState": "AgIAAHQAAAAAAAAAAAAAwJQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-06-17T06:23:07.451Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 5,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\RosterScheduleEntry\\Index.cshtml",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\RosterScheduleEntry\\Index.cshtml",
+              "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\RosterScheduleEntry\\Index.cshtml",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\RosterScheduleEntry\\Index.cshtml",
+              "ViewState": "AgIAABoBAAAAAAAAAAAAACMBAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-17T06:17:34.427Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "PFAssignEntry.js",
+              "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\PFAssignEntry.js",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\PFAssignEntry.js",
+              "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\PFAssignEntry.js",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\PFAssignEntry.js",
+              "ViewState": "AgIAAHIAAAAAAAAAAAAMwIAAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-06-17T06:08:38.824Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\PFAssignEntry\\Index.cshtml",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\PFAssignEntry\\Index.cshtml",
+              "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\PFAssignEntry\\Index.cshtml",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\PFAssignEntry\\Index.cshtml",
+              "ViewState": "AgIAACAAAAAAAAAAAAAnwCsAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-17T06:01:19.65Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ManualEarnLeaveEntry.js",
+              "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\ManualEarnLeaveEntry.js",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\ManualEarnLeaveEntry.js",
+              "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\ManualEarnLeaveEntry.js",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\ManualEarnLeaveEntry.js",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAhwGYAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-06-17T05:39:50.208Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\ManualEarnLeaveEntry\\Index.cshtml",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\ManualEarnLeaveEntry\\Index.cshtml",
+              "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\ManualEarnLeaveEntry\\Index.cshtml",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\ManualEarnLeaveEntry\\Index.cshtml",
+              "ViewState": "AgIAAPQAAAAAAAAAAAAAAPoAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-16T12:00:59.772Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "_EmployeeWeekendDeclaration.cshtml",
+              "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\EmployeeWeekendDeclaration\\_EmployeeWeekendDeclaration.cshtml",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\EmployeeWeekendDeclaration\\_EmployeeWeekendDeclaration.cshtml",
+              "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\EmployeeWeekendDeclaration\\_EmployeeWeekendDeclaration.cshtml",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\EmployeeWeekendDeclaration\\_EmployeeWeekendDeclaration.cshtml",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAUwDEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-17T05:19:21.671Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "HRM_EmployeeWeekendDeclaration.js",
+              "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\HRM_EmployeeWeekendDeclaration.js",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\HRM_EmployeeWeekendDeclaration.js",
+              "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\HRM_EmployeeWeekendDeclaration.js",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\HRM_EmployeeWeekendDeclaration.js",
+              "ViewState": "AgIAADsAAAAAAAAAAIAwwD8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-06-17T03:53:37.904Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\EmployeeWeekendDeclaration\\Index.cshtml",
+              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\EmployeeWeekendDeclaration\\Index.cshtml",
+              "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\EmployeeWeekendDeclaration\\Index.cshtml",
+              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\EmployeeWeekendDeclaration\\Index.cshtml",
+              "ViewState": "AgIAAIUAAAAAAAAAAAAnwJAAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-17T03:36:35.146Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
               "Title": "_Toolbars.cshtml",
               "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\ManualEarnLeaveEntry\\_Toolbars.cshtml",
               "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\ManualEarnLeaveEntry\\_Toolbars.cshtml",
@@ -111,33 +337,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 12,
               "Title": "EmployeeWeekendDeclarationReport.js",
               "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\EmployeeWeekendDeclarationReport.js",
               "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\EmployeeWeekendDeclarationReport.js",
               "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\EmployeeWeekendDeclarationReport.js",
               "RelativeToolTip": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\EmployeeWeekendDeclarationReport.js",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAAAkAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAgwAkAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-06-16T12:02:33.816Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\ManualEarnLeaveEntry\\Index.cshtml",
-              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\ManualEarnLeaveEntry\\Index.cshtml",
-              "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\ManualEarnLeaveEntry\\Index.cshtml",
-              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\ManualEarnLeaveEntry\\Index.cshtml",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAAB8AAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-16T12:00:59.772Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 27,
               "Title": "CompanyService.cs",
               "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\Companies\\CompanyService.cs",
               "RelativeDocumentMoniker": "Libraries\\GCTL.Service\\Companies\\CompanyService.cs",
@@ -145,12 +358,11 @@
               "RelativeToolTip": "Libraries\\GCTL.Service\\Companies\\CompanyService.cs",
               "ViewState": "AgIAAB0AAAAAAAAAAAAwwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-16T03:41:18.793Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-16T03:41:18.793Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 31,
               "Title": "HrmEmployee2Service.cs",
               "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\HrmEmployees2\\HrmEmployee2Service.cs",
               "RelativeDocumentMoniker": "Libraries\\GCTL.Service\\HrmEmployees2\\HrmEmployee2Service.cs",
@@ -158,12 +370,11 @@
               "RelativeToolTip": "Libraries\\GCTL.Service\\HrmEmployees2\\HrmEmployee2Service.cs",
               "ViewState": "AgIAALgBAAAAAAAAAAAIwPUAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-16T03:40:07.924Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-16T03:40:07.924Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 30,
               "Title": "PaymentReceiveSetupViewModel.cs",
               "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PaymentReceiveSetupViewModel.cs",
               "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PaymentReceiveSetupViewModel.cs",
@@ -171,12 +382,11 @@
               "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PaymentReceiveSetupViewModel.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAwwBsAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T12:31:16.925Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T12:31:16.925Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 26,
               "Title": "HrmPayrollPaymentReceiveListDto.cs",
               "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\HrmPayrollPaymentReceiveListDto.cs",
               "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\HrmPayrollPaymentReceiveListDto.cs",
@@ -184,12 +394,11 @@
               "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\HrmPayrollPaymentReceiveListDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwA0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T11:19:02.397Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T11:19:02.397Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 23,
               "Title": "PayrollLoanFilterResultListDto.cs",
               "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayrollLoanFilterResultListDto.cs",
               "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayrollLoanFilterResultListDto.cs",
@@ -197,12 +406,11 @@
               "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayrollLoanFilterResultListDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwAgAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T09:24:56.606Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T09:24:56.606Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 25,
               "Title": "PayrollLoanFilterResultDto.cs",
               "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayrollLoanFilterResultDto.cs",
               "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayrollLoanFilterResultDto.cs",
@@ -210,12 +418,11 @@
               "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\PayrollLoanFilterResultDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwAgAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T03:57:26.063Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T03:57:26.063Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 21,
               "Title": "HrmPayrollPaymentReceiveDto.cs",
               "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\HrmPayrollPaymentReceiveDto.cs",
               "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\HrmPayrollPaymentReceiveDto.cs",
@@ -223,12 +430,11 @@
               "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\HrmPayrollPaymentReceiveDto.cs",
               "ViewState": "AgIAABIAAAAAAAAAAAAewBwAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T04:21:55.599Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T04:21:55.599Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 29,
               "Title": "HrmPayrollPaymentReceive.cs",
               "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\Models\\HrmPayrollPaymentReceive.cs",
               "RelativeDocumentMoniker": "Libraries\\GCTL.Data\\Models\\HrmPayrollPaymentReceive.cs",
@@ -236,12 +442,11 @@
               "RelativeToolTip": "Libraries\\GCTL.Data\\Models\\HrmPayrollPaymentReceive.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-14T09:53:16.516Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-14T09:53:16.516Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 22,
               "Title": "IHRMPayrollLoanService.cs",
               "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\HRMPayrollLoan\\IHRMPayrollLoanService.cs",
               "RelativeDocumentMoniker": "Libraries\\GCTL.Service\\HRMPayrollLoan\\IHRMPayrollLoanService.cs",
@@ -249,12 +454,11 @@
               "RelativeToolTip": "Libraries\\GCTL.Service\\HRMPayrollLoan\\IHRMPayrollLoanService.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAewA4AAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T12:40:27.831Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T12:40:27.831Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 28,
               "Title": "_Toolbars.cshtml",
               "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\_Toolbars.cshtml",
               "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\_Toolbars.cshtml",
@@ -262,77 +466,76 @@
               "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\_Toolbars.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-05T12:00:47.704Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T12:00:47.704Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\Index.cshtml",
               "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\Index.cshtml",
               "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\Index.cshtml",
               "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\Index.cshtml",
-              "ViewState": "AgIAACEAAAAAAAAAAAAAADIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACUBAAAAAAAAAAAAADMBAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-06-04T09:35:21.525Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "HRMPayrollLoan.js",
               "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\HRMPayrollLoan.js",
               "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\HRMPayrollLoan.js",
               "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\HRMPayrollLoan.js",
               "RelativeToolTip": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\HRMPayrollLoan.js",
-              "ViewState": "AgIAAJoGAAAAAAAAAAAUwKEGAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAADUFAAAAAAAAAAAUwEcFAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-06-04T09:30:41.698Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 20,
               "Title": "HRMPayrollLoanService.cs",
               "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\HRMPayrollLoan\\HRMPayrollLoanService.cs",
               "RelativeDocumentMoniker": "Libraries\\GCTL.Service\\HRMPayrollLoan\\HRMPayrollLoanService.cs",
               "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\HRMPayrollLoan\\HRMPayrollLoanService.cs",
               "RelativeToolTip": "Libraries\\GCTL.Service\\HRMPayrollLoan\\HRMPayrollLoanService.cs",
-              "ViewState": "AgIAABoBAAAAAAAAAIAwwCkBAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAABoBAAAAAAAAAIAwwCEBAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-04T09:29:32.261Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 2,
               "Title": "_Grid.cshtml",
               "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\_Grid.cshtml",
               "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\_Grid.cshtml",
               "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\_Grid.cshtml",
               "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\_Grid.cshtml",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABIAAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-06-04T09:35:27.991Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 4,
               "Title": "HRMPayrollLoanController.cs",
               "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Controllers\\HRMPayrollLoanController.cs",
               "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Controllers\\HRMPayrollLoanController.cs",
               "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Controllers\\HRMPayrollLoanController.cs",
               "RelativeToolTip": "UIs\\GCTL.UI.Core\\Controllers\\HRMPayrollLoanController.cs",
-              "ViewState": "AgIAAJYAAAAAAAAAAAAcwKcAAABPAAAAAAAAAA==",
+              "ViewState": "AgIAAH4AAAAAAAAAAIA9wI4AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-04T09:26:25.629Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 24,
               "Title": "HRMPayrollLoanSetupViewModel.cs",
               "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\HRMPayrollLoanSetupViewModel.cs",
               "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\HRMPayrollLoanSetupViewModel.cs",
@@ -340,46 +543,7 @@
               "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HRMPayrollLoan\\HRMPayrollLoanSetupViewModel.cs",
               "ViewState": "AgIAACcAAAAAAAAAAAA0wAgAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-04T11:15:05.591Z",
-              "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 199,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "_PaymentReceiveEmployeeGrid.cshtml",
-              "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\_PaymentReceiveEmployeeGrid.cshtml",
-              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\_PaymentReceiveEmployeeGrid.cshtml",
-              "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\_PaymentReceiveEmployeeGrid.cshtml",
-              "RelativeToolTip": "UIs\\GCTL.UI.Core\\Views\\HRMPayrollLoan\\_PaymentReceiveEmployeeGrid.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAwwAcAAABBAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-15T04:46:56.065Z",
-              "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 28,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "RosterScheduleApproval.js",
-              "DocumentMoniker": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\RosterScheduleApproval.js",
-              "RelativeDocumentMoniker": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\RosterScheduleApproval.js",
-              "ToolTip": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\RosterScheduleApproval.js",
-              "RelativeToolTip": "UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\RosterScheduleApproval.js",
-              "ViewState": "AgIAAGgBAAAAAAAAAAAWwHABAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-06-05T08:28:42.319Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-04T11:15:05.591Z"
             }
           ]
         }

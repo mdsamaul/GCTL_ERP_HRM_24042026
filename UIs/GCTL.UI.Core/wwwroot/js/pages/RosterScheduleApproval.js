@@ -281,12 +281,15 @@ function loadFilterEmp() {
 function loadTableData(res) {
     console.log(res);
     var tableData = res.data.employees;
-    if (RosterApprovalDataTable !== null) {
+
+    if ($.fn.DataTable.isDataTable("#RosterScheduleApprove-grid")) {
         RosterApprovalDataTable.destroy();
     }
+
     var tableBody = $("#RosterScheduleApprove-grid-body");
     tableBody.empty();
 
+    // Row build
     $.each(tableData, function (index, employee) {
         var row = $('<tr>');
         row.append('<td class="text-center"><input type="checkbox" /></td>');
@@ -305,8 +308,10 @@ function loadTableData(res) {
     initializeDataTable();
 }
 
+
 function initializeDataTable() {
     RosterApprovalDataTable = $("#RosterScheduleApprove-grid").DataTable({
+        destroy: true,
         paging: true,
         pageLength: 10,
         lengthMenu: [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
@@ -314,8 +319,8 @@ function initializeDataTable() {
         searching: true,
         info: true,
         autoWidth: false,
-        scrollX: false,
-        ordering: false,
+        scrollX: true,
+        ordering: true, // ✅ sorting enabled
         responsive: false,
         language: {
             search: "🔍 Search:",
@@ -331,10 +336,9 @@ function initializeDataTable() {
             emptyTable: "No data available"
         },
         columnDefs: [
-            { orderable: false, targets: 0 },
+            { orderable: false, targets: 0 }, // checkbox column no sort
             { className: "text-center", targets: "_all" },
-            { targets: 0, width: "80px" },
-            { targets: "_all", width: "auto" }
+            { targets: 0, width: "80px" }
         ],
         initComplete: function () {
             $('.dataTables_filter input').css({
@@ -347,9 +351,10 @@ function initializeDataTable() {
     });
 
     setTimeout(function () {
-        RosterApprovalDataTable.columns.adjust().draw();
-    }, 100);
+        RosterApprovalDataTable.columns.adjust().draw(false);
+    }, 300);
 }
+
 
 
 $(document).ready(function () {
@@ -406,7 +411,6 @@ $(document).ready(function () {
 
 })
 
-// Initialize DataTable
 function GetRosterScheduleApproveGride() {
     showLoading();
 
@@ -435,7 +439,6 @@ function GetRosterScheduleApproveGride() {
             }
         },
         columns: [
-            // Column mapping must match exactly with the properties returned from the server
             { data: "rosterScheduleId", orderable: false },
             { data: "employeeID", orderable: false },
             { data: "name", orderable: false },
@@ -463,7 +466,7 @@ function GetRosterScheduleApproveGride() {
                 },
                 orderable: false
             },
-            { data: "approvedBy", orderable: false },            
+            { data: "approvedBy", orderable: false },
             {
                 data: "approvalDatetime",
                 render: function (data) {
@@ -501,6 +504,7 @@ function GetRosterScheduleApproveGride() {
         },
         initComplete: function () {
             hideLoading();
+
             $('.dataTables_filter input').css({
                 width: '250px',
                 padding: '6px 12px',
@@ -508,22 +512,24 @@ function GetRosterScheduleApproveGride() {
                 borderRadius: '4px'
             });
 
-            // Adjust columns on window resize
-            $(window).resize(function () {
+            // Column adjust with timeout
+            setTimeout(function () {
+                $('#RosterScheduleApproveShowData-grid').DataTable().columns.adjust().draw(false);
+            }, 300); // 300ms delay for better layout stabilization
+
+            // Resize handler
+            $(window).off('resize.rosterGridResize').on('resize.rosterGridResize', function () {
                 $('#RosterScheduleApproveShowData-grid').DataTable().columns.adjust();
             });
         },
         drawCallback: function () {
-            $('#RosterScheduleApproveShowData-grid').DataTable().columns.adjust();
+            setTimeout(function () {
+                $('#RosterScheduleApproveShowData-grid').DataTable().columns.adjust();
+            }, 300); // ensure adjustment on redraw
         }
     });
 }
-// Resize handler
-$(window).resize(function () {
-    if ($.fn.DataTable.isDataTable('#RosterScheduleApproveShowData-grid')) {
-        $('#RosterScheduleApproveShowData-grid').DataTable().columns.adjust();
-    }
-});
+
 
 $(document).ready(function () {
     $(document).on('click', "#js-roster-approval-clear", function () {

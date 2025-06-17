@@ -37992,8 +37992,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>gax4aa1nvl</Fingerprint>
-      <Integrity>iAMIqC/j1XVdvMJXQ2PLPdc7G4OvFqZtKCBbynvlgu4=</Integrity>
+      <Fingerprint>zwfg7wbtqv</Fingerprint>
+      <Integrity>bXRT9gRL/CXlBHCdKyizJYY1/AH8ZPVW7wrYKMfZZds=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\HRMPayrollLoan.js'))</OriginalItemSpec>
@@ -38010,8 +38010,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>ixrltbcgkd</Fingerprint>
-      <Integrity>ponclCCcXt9s2TlSOm1pkRY+G0/YX7RoHmdvUGfyxBI=</Integrity>
+      <Fingerprint>2q4d3o1isz</Fingerprint>
+      <Integrity>Kiwdu3svy51DoLiLE3pvHj2Ba4io25465cImbE5ZxtI=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\HRM_EmployeeWeekendDeclaration.js'))</OriginalItemSpec>
@@ -38190,8 +38190,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>jmaxagclqw</Fingerprint>
-      <Integrity>Cz48VJ/LEwJk66o3gmZeX/h00Fed3TvaJ1HzxYmcex0=</Integrity>
+      <Fingerprint>wasywwuboq</Fingerprint>
+      <Integrity>yANy9C/+HtIEmvbhPB1LGIZXvS5UavbA3U1EZM0zghw=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\ManualEarnLeaveEntry.js'))</OriginalItemSpec>
@@ -38640,8 +38640,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>9mmjyzkr22</Fingerprint>
-      <Integrity>QceBZOwsyJ0TEXJrML0ccGDnPaTDjWaBqgsLfAYI9dQ=</Integrity>
+      <Fingerprint>wq88atbgfk</Fingerprint>
+      <Integrity>SGyzi2a1sqMvMfdDPVGgJRVck03NHwFrVVSLtc3/FQI=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\PFAssignEntry.js'))</OriginalItemSpec>
@@ -38856,8 +38856,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>axtq00nnzp</Fingerprint>
-      <Integrity>ArbDSrzjlhitcldscqLSUqr76AXPLIX07AC82W592t0=</Integrity>
+      <Fingerprint>ibvvtop8cn</Fingerprint>
+      <Integrity>siKQv+N1jJ3QLMS1TeKd6oNdkXr7oCCCQBLkavvqZvE=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\RosterScheduleApproval.js'))</OriginalItemSpec>
@@ -38874,8 +38874,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>huql7ijkj1</Fingerprint>
-      <Integrity>12V7CU3i/dH08S+Yw+DlfEDu2/VwQzdMG+gDn+VtSa0=</Integrity>
+      <Fingerprint>8geup7bxpz</Fingerprint>
+      <Integrity>WDYezbQW4aibDt7VT8JN0vkF5yrtJ9/mviU9L50iei8=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\RosterScheduleEntry.js'))</OriginalItemSpec>

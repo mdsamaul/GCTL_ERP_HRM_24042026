@@ -42,6 +42,187 @@
         border-color: #007bff !important;
     }
 
+
+    /* Dropdown layout container */
+    .dropdown-wrapper .col-auto {
+        padding: 0 6px !important;
+        margin-bottom: 10px;
+        flex: 0 0 auto;
+        min-width: 10vw;
+    }
+
+    /* Dropdown box styling */
+    .dropdown-wrapper .form-group {
+        margin: 0;
+        width: 10vw;
+        background: #f8f9fa;
+        padding: 10px;
+        border-radius: 6px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        border: 1px solid #dee2e6;
+        transition: all 0.2s ease-in-out;
+    }
+
+        .dropdown-wrapper .form-group:hover {
+            background: #e9ecef;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+
+    /* Label */
+    .dropdown-wrapper label {
+        font-size: 12px;
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    /* Multiselect button */
+    .dropdown-wrapper .btn-group {
+        width: 100% !important;
+        display: block !important;
+    }
+
+    /* Multiselect input */
+    .dropdown-wrapper .multiselect {
+        width: 100% !important;
+        border: 1px solid #ced4da !important;
+        border-radius: 4px !important;
+        background-color: #fff !important;
+        padding: 4px 8px !important;
+        font-size: 13px !important;
+        height: auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        box-shadow: none !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease-in-out !important;
+    }
+
+        .dropdown-wrapper .multiselect:hover {
+            border-color: #007bff !important;
+            box-shadow: 0 2px 6px rgba(0,123,255,0.15) !important;
+            transform: translateY(-1px) !important;
+        }
+
+        .dropdown-wrapper .multiselect:focus,
+        .dropdown-wrapper .multiselect.active {
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.1) !important;
+            border-color: #007bff !important;
+            outline: none !important;
+            transform: translateY(-1px) !important;
+        }
+
+        /* Caret icon */
+        .dropdown-wrapper .multiselect::after {
+            content: "▼";
+            font-size: 12px;
+            color: #6c757d;
+            margin-left: auto;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .dropdown-wrapper .multiselect.active::after,
+        .dropdown-wrapper .multiselect:hover::after {
+            color: #007bff;
+            transform: rotate(180deg);
+        }
+
+    /* Dropdown container */
+    .dropdown-wrapper .multiselect-container {
+        width: auto !important;
+        position: absolute !important;
+        z-index: 1000 !important;
+    }
+
+    /* Dropdown menu */
+    .multiselect-container.dropdown-menu {
+        width: auto !important;
+        border-radius: 4px !important;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        font-size: 13px;
+        margin-top: 0 !important;
+    }
+
+    /* Filter section fix */
+    .multiselect-container .multiselect-filter {
+        display: flex !important;
+        align-items: center !important;
+        padding: 4px 8px !important;
+        gap: 6px;
+    }
+
+        .multiselect-container .multiselect-filter i {
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .multiselect-container .multiselect-filter input {
+            width: 100% !important;
+            padding: 4px 8px !important;
+            font-size: 12px !important;
+            border-radius: 4px;
+            border: 1px solid #ced4da;
+            height: 32px !important;
+            line-height: 1.5 !important;
+        }
+
+    /* Regular select dropdown */
+    .dropdown-wrapper .regular-select {
+        width: 100% !important;
+        border-radius: 4px !important;
+        border: 1px solid #ced4da !important;
+        background: #fff !important;
+        padding: 6px 8px !important;
+        font-size: 13px !important;
+        height: 30px !important;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'><path fill='%23666' d='m2 0-2 2h4zm0 5 2-2h-4z'/></svg>");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        background-size: 12px;
+        padding-right: 36px !important;
+    }
+
+        .dropdown-wrapper .regular-select:hover {
+            border-color: #007bff !important;
+            box-shadow: 0 2px 6px rgba(0,123,255,0.15) !important;
+            transform: translateY(-1px) !important;
+        }
+
+        .dropdown-wrapper .regular-select:focus {
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.1) !important;
+            border-color: #007bff !important;
+            outline: none !important;
+            transform: translateY(-1px) !important;
+        }
+
+    /* Prevent selection */
+    .dropdown-wrapper .multiselect * {
+        user-select: none !important;
+    }
+
+    .multiselect-search {
+        text-align: center !important;
+    }
+    /* Responsive */
+    @@media (max-width: 768px) {
+        .dropdown-wrapper .form-group {
+            width: 100% !important;
+        }
+
+        .dropdown-wrapper label {
+            font-size: 11px;
+        }
+
+        .dropdown-wrapper .multiselect,
+        .dropdown-wrapper .regular-select {
+            font-size: 12px !important;
+            padding: 6px 8px !important;
+            height: 25px !important;
+        }
+    }
 </style>
 
 <!-- Content Header (Page header) -->
@@ -61,12 +242,12 @@
                     </div>
 
 
-                    <div class="card-body px-2">
-                        <div class="container-fluid py-2">
+                    <div class="card-body px-2" style="padding-top:0px">
+                        <div class="container-fluid py-2" style="padding-top:0px">
                             <div>
                                 <h5>Filter By:</h5>
                             </div>
-                            <div class="row d-flex flex-wrap justify-content-start text-center align-items-end pb-4">
+                           @*  <div class="row d-flex flex-wrap justify-content-start text-center align-items-end pb-4">
                                 <div class="col-auto">
                                     <label for="companySelect">Company</label>
                                     <select id="companySelect" class="form-control form-control-sm"></select>
@@ -98,6 +279,54 @@
                                         <option value="02">Inactive</option>
                                         <option value="02,01">All</option>
                                     </select>
+                                </div>
+                            </div> *@
+                            <div class="row d-flex flex-wrap justify-content-start align-items-end dropdown-wrapper pb-4">
+                                <div class="col-auto">
+                                    <div class="form-group">
+                                        <label for="companySelect">Company</label>
+                                        <select id="companySelect"></select>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-group">
+                                        <label for="branchSelect">Branch</label>
+                                        <select id="branchSelect" multiple="multiple"></select>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-group">
+                                        <label for="divisionSelect">Division</label>
+                                        <select id="divisionSelect" multiple="multiple"></select>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-group">
+                                        <label for="departmentSelect">Department</label>
+                                        <select id="departmentSelect" multiple="multiple"></select>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-group">
+                                        <label for="designationSelect">Designation</label>
+                                        <select id="designationSelect" multiple="multiple"></select>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-group">
+                                        <label for="employeeSelect">Employee</label>
+                                        <select id="employeeSelect" multiple="multiple"></select>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-group">
+                                        <label for="activityStatusSelect">Activity Status</label>
+                                        <select id="activityStatusSelect" class="regular-select">
+                                            <option value="01">Active</option>
+                                            <option value="02">Inactive</option>
+                                            <option value="02,01">All</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <!-- table: Grid -->
@@ -168,52 +397,6 @@
     <!-- Flatpickr Month Select Plugin JS -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
 
-
-
-
-
-
-
-
-
-
-
-    <!-- Your custom JS -->
+    <!-- custom JS -->
     <script src="~/js/pages/RosterScheduleEntry.js"></script>
 }
-
-@* 
-<!-- Properly organized CSS links -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/style.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/css/bootstrap-multiselect.min.css">
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-
-    <!-- jQuery first (if not already included in _ValidationScriptsPartial) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Bootstrap Bundle JS (already includes Popper) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Bootstrap Multiselect JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/js/bootstrap-multiselect.min.js"></script>
-
-    <!-- Flatpickr JS and plugins -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
-
-    <!-- Your custom JS -->
-    <script src="~/js/pages/RosterScheduleEntry.js"></script>
-
-  
-} *@

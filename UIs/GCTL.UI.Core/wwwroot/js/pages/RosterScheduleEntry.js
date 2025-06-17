@@ -118,6 +118,59 @@ function showLoading() {
 function hideLoading() {
     $("#customLoadingOverlay").hide();
 }
+
+
+
+$(document).on('mousedown', '.dropdown-wrapper .multiselect', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var $dropdown = $(this).next('.multiselect-container');
+    var isVisible = $dropdown.is(':visible');
+
+    $('.multiselect-container').hide();
+
+    if (!isVisible) {
+        $dropdown.show();
+        $(this).addClass('active');
+    }
+
+    return false;
+});
+
+// Close dropdown when clicking outside
+$(document).on('click', function (e) {
+    if (!$(e.target).closest('.dropdown-wrapper').length) {
+        $('.multiselect-container').hide();
+        $('.multiselect').removeClass('active');
+    }
+});
+
+
+
+
+
+//$(document).on('click', '.dropdown-wrapper .multiselect', function (e) {
+//    e.preventDefault();
+//    e.stopPropagation();
+
+//    var $dropdown = $(this).next('.multiselect-container');
+//    var isVisible = $dropdown.is(':visible');
+
+//    // Hide all dropdowns and remove active classes
+//    $('.multiselect-container').hide();
+//    $('.multiselect').removeClass('active');
+
+//    // If not visible before, then show current
+//    if (!isVisible) {
+//        $dropdown.show();
+//        $(this).addClass('active');
+//    }
+//});
+
+
+
+
 function initializeMultiselects() {
     $('#companySelect, #branchSelect, #divisionSelect, #departmentSelect, #designationSelect, #employeeSelect').multiselect({
         enableFiltering: true,
@@ -136,13 +189,6 @@ function initializeMultiselects() {
     });
 }
 
-//$(document).ready(function () {
-//    $("#companySelect, #branchSelect, #divisionSelect, #departmentSelect, #designationSelect, #employeeSelect, #employeeStatus, #activityStatusSelect")
-//        .one("change", function () {
-//            //console.log("change loading");
-//            //loadFilterEmp(); // শুধুমাত্র প্রথমবার যেকোনো একটি element এ change হলে একবার চলবে
-//        });
-//});
 
 
 $("#companySelect, #branchSelect, #divisionSelect, #departmentSelect, #designationSelect, #employeeSelect, #employeeStatus, #activityStatusSelect")

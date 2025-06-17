@@ -1098,13 +1098,13 @@
 
         //create 
         $(document).on('click', settings.LoanEntryBtn, function () {
-            console.log($(settings.paym));
+            //console.log($(settings.paym));
             var filterData = submitLoanData()
            
-            console.log(filterData);
+            //console.log(filterData);
             //filterData.data
             if (!paymentTab) {
-                console.log(filterData);
+                //console.log(filterData);
                 if (!filterData.CompanyCode || filterData.CompanyCode === "") {
                     showToast('warning', 'Please select an company first!');
 
@@ -1162,6 +1162,26 @@
                     $(settings.LoanAmount).focus().css('border', '1px solid red');
                     return;
                 }
+
+                console.log(filterData);
+
+                if (filterData.PaymentModeId == '001') {
+                    filterData.BankAccount = '';
+                    filterData.BankId = '';
+                    filterData.ChequeNo = '';
+                    filterData.ChequeDate = null;
+                } else if (filterData.PaymentModeId == '002') {
+                    filterData.BankAccount = $(settings.BankAccount).val();
+                    filterData.BankId = $(settings.Bank).val();
+                    filterData.ChequeNo = $(settings.ChequeNo).val();
+                    filterData.ChequeDate = formatDate($(settings.ChequeDate).val()) || null;
+                } else {
+                    filterData.BankAccount = $(settings.BankAccount).val();
+                    filterData.BankId = $(settings.Bank).val();
+                    filterData.ChequeNo = '';
+                    filterData.ChequeDate = null;
+                }
+                console.log(filterData);
                 $.ajax({
                     url: createEditLoanUrl,
                     type: "POST",
@@ -1267,29 +1287,35 @@
         //    });
         //}
         var LoanTable;
+
         function displayLoanDataTable() {
             if ($.fn.DataTable.isDataTable("#loan-data-grid")) {
                 $("#loan-data-grid").DataTable().clear().destroy();
             }
 
-          LoanTable =  $('#loan-data-grid').DataTable({
+            LoanTable = $('#loan-data-grid').DataTable({
                 processing: true,
                 serverSide: false,
+                scrollX: true,           // Enable horizontal scroll
+                scrollY: "400px",        // Enable vertical scroll
+                scrollCollapse: true,
+                paging: true,
+                searching: true,
+                responsive: false, // responsive false রাখলে scroll ঠিকঠাক কাজ করে
                 ajax: {
                     url: getLoanDataUrl,
                     type: 'GET',
-                    dataSrc: 'data'                    
-              },
+                    dataSrc: 'data'
+                },
                 columns: [
                     {
                         data: null,
-                        orderable: false,  // Disable sorting for this column
+                        orderable: false,
                         className: 'text-center',
                         render: function (data, type, row) {
                             return `<input class="payrollLoan" type="checkbox" data-id="${row.autoId}" />`;
                         }
                     },
-                    //{ data: 'loanId', className: 'text-center' },
                     {
                         data: 'loanId',
                         className: 'text-center',
@@ -1309,10 +1335,6 @@
                     { data: 'monthlyDeduction', className: 'text-center' },
                     { data: 'paymentModeName', className: 'text-left' }
                 ],
-                responsive: true, // Enable responsive features
-                paging: true,
-                scrollX: true, // Enable horizontal scrolling
-                searching: true,
                 language: {
                     search: "🔍 Search:",
                     lengthMenu: "Show _MENU_ entries",
@@ -1324,66 +1346,10 @@
                         last: "Last"
                     },
                     emptyTable: "No data available"
-                },
-                // Disable fixed column widths and allow the table to auto-scale
-                columnDefs: [
-                    {
-                        targets: 0,
-                        width: "6%", // Set percentage width for checkbox column
-                    },
-                    {
-                        targets: 1,
-                        width: "8%", // Set percentage width for Loan ID
-                    },
-                    {
-                        targets: 2,
-                        width: "10%", // Set percentage width for Loan Date
-                    },
-                    {
-                        targets: 3,
-                        width: "15%", // Set percentage width for Loan Type
-                    },
-                    {
-                        targets: 4,
-                        width: "10%", // Set percentage width for Employee ID
-                    },
-                    {
-                        targets: 5,
-                        width: "15%", // Set percentage width for Employee Name
-                    },
-                    {
-                        targets: 6,
-                        width: "15%", // Set percentage width for Designation
-                    },
-                    {
-                        targets: 7,
-                        width: "7%", // Set percentage width for Loan Amount
-                    },
-                    {
-                        targets: 8,
-                        width: "8%", // Set percentage width for Start Date
-                    },
-                    {
-                        targets: 9,
-                        width: "9%", // Set percentage width for End Date
-                    },
-                    {
-                        targets: 10,
-                        width: "9%", // Set percentage width for Installments
-                    },
-                    {
-                        targets: 11,
-                        width: "9%", // Set percentage width for Monthly Deduction
-                    },
-                    {
-                        targets: 12,
-                        width: "9%", // Set percentage width for Payment Mode
-                    }
-              ]                 
-          });
-           
+                }
+            });
         }
-       
+
         function formatEditDate(dateStr) {
             if (!dateStr) return ''; 
             const date = new Date(dateStr);

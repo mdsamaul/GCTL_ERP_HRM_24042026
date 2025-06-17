@@ -96,13 +96,13 @@ function initializeMultiselects() {
         nonSelectedText: 'Select Items',
         nSelectedText: 'Selected',
         allSelectedText: 'All Selected',
-        filterPlaceholder: 'Search.......',
+        filterPlaceholder: 'Search........!',
         buttonWidth: '100%',
         maxHeight: 350,
         enableClickableOptGroups: true,
         dropUp: false,
         numberDisplayed: 1,
-        enableCaseInsensitiveFiltering: true
+        enableCaseInsensitiveFiltering: true,       
     });
 }
 
@@ -131,7 +131,7 @@ function toArray(value) {
 }
 
 function loadFilterEmp() {
-    showLoading();
+    //showLoading();
     var filterData = getAllFilterVal();
     //console.log(filterData);
     $.ajax({

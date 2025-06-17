@@ -61,6 +61,34 @@ $(document).ready(() => {
 
 });
 
+
+$(document).on('mousedown', '.dropdown-wrapper .multiselect', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var $dropdown = $(this).next('.multiselect-container');
+    var isVisible = $dropdown.is(':visible');
+
+    $('.multiselect-container').hide();
+
+    if (!isVisible) {
+        $dropdown.show();
+        $(this).addClass('active');
+    }
+
+    return false;
+});
+
+// Close dropdown when clicking outside
+$(document).on('click', function (e) {
+    if (!$(e.target).closest('.dropdown-wrapper').length) {
+        $('.multiselect-container').hide();
+        $('.multiselect').removeClass('active');
+    }
+});
+
+
+
 function initializeMultiselects() {
     $('#companySelect, #branchSelect, #divisionSelect, #departmentSelect, #designationSelect, #employeeSelect').multiselect({
         enableFiltering: true,
@@ -72,10 +100,11 @@ function initializeMultiselects() {
         filterPlaceholder: 'Search........!',
         buttonWidth: '100%',
         maxHeight: 350,
-        enableClickableOptGroups: true,       
+        enableClickableOptGroups: true,
         dropUp: false,
         numberDisplayed: 1,
         enableCaseInsensitiveFiltering: true
+        
     });
 }
 
@@ -87,7 +116,7 @@ function loadCompany() {
         success: function (e) {
             var optCompany = $("#companySelect");
             optCompany.empty();
-            optCompany.append("<option value=''>Select Company</option>");
+            //optCompany.append("<option value=''>Select Company</option>");
 
             $.each(e.data, function (index, company) {
                 optCompany.append(`<option value=${company.companyCode}>${company.companyName}</option>`);
@@ -311,45 +340,48 @@ function loadTableData(res) {
 }
 
 function initializeDataTable() {
-    weekendDataTable = $("#employee-weekend-grid").DataTable({
-        paging: true,
-        pageLength: 10,
-        lengthMenu: [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
-        lengthChange: true,
-        searching: true,
-        ordering: true,
-        info: true,
-        autoWidth: false,
-        responsive: true,
-        fixedHeader: false,
-        scrollX: true,
-        language: {
-            search: "🔍 Search:",
-            lengthMenu: "Show _MENU_ entries",
-            searchPlaceholder: "Search here.......",
-            info: "Showing _START_ to _END_ of _TOTAL_ entries",
-            paginate: {
-                first: "First",
-                previous: "Prev",
-                next: "Next",
-                last: "Last"
+    setTimeout(function () {
+        weekendDataTable = $("#employee-weekend-grid").DataTable({
+            paging: true,
+            pageLength: 10,
+            lengthMenu: [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
+            lengthChange: true,
+            searching: true,
+            ordering: true,
+            info: true,
+            autoWidth: false,
+            responsive: true,
+            fixedHeader: false,
+            scrollX: true,
+            language: {
+                search: "🔍 Search:",
+                lengthMenu: "Show _MENU_ entries",
+                searchPlaceholder: "Search here.......",
+                info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                paginate: {
+                    first: "First",
+                    previous: "Prev",
+                    next: "Next",
+                    last: "Last"
+                },
+                emptyTable: "No data available"
             },
-            emptyTable: "No data available"
-        },
-        columnDefs: [
-            { targets: 'no-sort', orderable: false }
-        ],
-        initComplete: function () {
-            hideLoading();
+            columnDefs: [
+                { targets: 'no-sort', orderable: false }
+            ],
+            initComplete: function () {
+                hideLoading();
 
-            $('.dataTables_filter input').css({
-                'width': '250px',
-                'padding': '6px 12px',
-                'border': '1px solid #ddd',
-                'border-radius': '4px'
-            });
-        }
-    });
+                $('.dataTables_filter input').css({
+                    'width': '250px',
+                    'padding': '6px 12px',
+                    'border': '1px solid #ddd',
+                    'border-radius': '4px'
+                });
+            }
+        });
+    }, 50);
+   
 }
 
 function initializeWeekendGrid() {
@@ -623,38 +655,40 @@ function loadEmployeeWeekend(res) {
 
     });
 
-
-    $('#employee-weekend-grid-show').DataTable({
-
-        responsive: true,
-        paging: true,       
-        pageLength: 10,
-        lengthMenu: [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
-        lengthChange: true,
-        searching: true,
-        ordering: true,
-        info: true,
-        autoWidth: false,
-        responsive: true,
-        fixedHeader: false,
-        scrollX: true,
-        scrollY: "400px",
-        scrollCollapse: true,
-        language: {
-            search: "🔍 Search:",
-            searchPlaceholder: "Search here...",
-            lengthMenu: "Show _MENU_ entries",
-            info: "Showing _START_ to _END_ of _TOTAL_ entries",
-            paginate: {
-                first: "First",
-                previous: "Prev",
-                next: "Next",
-                last: "Last"
+    setTimeout(function () {
+        $('#employee-weekend-grid-show').DataTable({
+            responsive: true,
+            paging: true,
+            pageLength: 10,
+            lengthMenu: [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
+            lengthChange: true,
+            searching: true,
+            ordering: true,
+            info: true,
+            autoWidth: false,
+            fixedHeader: true, 
+            scrollY: '350px',  
+            scrollCollapse: true,
+            language: {
+                search: "🔍 Search:",
+                searchPlaceholder: "Search here...",
+                lengthMenu: "Show _MENU_ entries",
+                info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                paginate: {
+                    first: "First",
+                    previous: "Prev",
+                    next: "Next",
+                    last: "Last"
+                },
+                emptyTable: "No data available"
             },
-            emptyTable: "No data available"
-        },     
+            columnDefs: [
+                { width: "50px", targets: 0 } 
+            ]
+        });
+    }, 50);
 
-    });
+    
 
 }
 
