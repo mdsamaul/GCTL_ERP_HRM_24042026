@@ -1,0 +1,91 @@
+﻿@model GCTL.UI.Core.ViewModels.HRMEmployeeHolidayDeclarations.HRMEmployeeHolidayDeclarationViewModel
+
+@* @{
+    ViewBag.Title = "Employee Holiday Declaration";
+    Model.Breadcrumb = "EmployeeHolidayDeclaration";
+    Model.PageTitle = ViewBag.Title;
+}
+ *@
+    <style>
+    .card-header {
+        min-height: 50px;
+    }
+
+    th.no-sort::after,
+    th.no-sort::before {
+        display: none !important;
+    }
+
+    #employee-filter-grid tbody tr td:first-child {
+        width: 5%;
+        padding: 0;
+    }
+
+    #employee-filter-grid thead th:first-child {
+        width: 5%;
+    }
+    </style>
+
+
+<partial name="_PageHeader" model="Model"></partial>
+<section class="content-fluid">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 col-12 col-lg-12 col-xl-12 col-sm-12">
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header bg-white">
+                        <partial name="_Toolbars" model="new ToobarModel() { Title = Model.Breadcrumb, Code = Model.Code, Name = Model.Setup.Ehdid }"></partial>
+                    </div>
+
+
+                    <div class="col-md-12 mt-1">
+                        <partial name="_Grid" />
+                    </div>
+
+                    <hr class="my-4" />
+					<div class="card-body">
+						<div id="holidayForm">
+							<partial name="_DatePeaker"></partial>
+						</div>
+
+						<div>
+							<partial name="_ExcelFileUploaded"></partial>
+						</div>
+
+						<div>
+							<partial name="_EmployeeHolidayDeclaration"></partial>
+						</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @* <script src="~/js/pages/newJs.js"></script> *@
+    
+    <script src="~/js/pages/HRMEmployeeHolidayDeclaration.js"></script> 
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/css/bootstrap-multiselect.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/js/bootstrap-multiselect.min.js"></script>
+    @* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script> *@
+
+
+@*     <script type="text/javascript">
+        $(function () {
+            $.workingDayDeclaration({
+                baseUrl: '@Url.Action("Index", "HrmWorkingDayDeclaration")',
+                load: function () {
+                    console.log("Custom load logic called from Razor view");
+                }
+            });
+        });
+    </script> *@
+}
+
+

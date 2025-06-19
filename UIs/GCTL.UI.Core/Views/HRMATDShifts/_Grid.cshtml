@@ -8,21 +8,27 @@
                     Select <br /> <input type="checkbox" id="hRMATDShifts-check-all" />
                 </th>
                 <th class="text-center text-middle">ID</th>
-                <th class="text-left text-left">Shift Name</th>
-                <th class="text-left text-left">Description</th>
+                <th class="text-center text-middle">Shift Name</th>
+                <th class="text-center text-middle">Description</th>
                 <th class="text-center text-middle">In Time</th>
                 <th class="text-center text-middle">Out Time</th>
                 <th class="text-center text-middle">Leave Time</th>
                 <th class="text-center text-middle">Absent Time</th>
-                <th class="text-center text-middle">Lunch Out Time</th>
-                <th class="text-center text-middle">Lunch In Time</th>
-                <th class="text-center text-middle">Lunch Break(Hr)</th>
                 <th class="text-center text-middle">W.E.F</th>
-                <th class="text-center text-middle">Remarks</th>
-                <th class="text-center text-middle">Shift Type</th>              
+                <th class="text-center text-middle">Shift Type</th>
+              
             </tr>
         </thead>
-        <tbody> 
+        <tbody>
+
+            @if (Model == null || !Model.Any())
+            {
+                <tr class="text-center text-middle">
+                    <td colspan="8">No HRM_Attendence_Shifts Available.</td>
+                </tr>
+            }
+            else
+            {
                 @foreach (var item in Model.OrderByDescending(x => x.ShiftCode))
                 {
                     <tr>
@@ -37,22 +43,18 @@
                             </a>
                         </td>
 
-                        <td class="text-left text-left">@item.ShiftName</td>
-                <td class="text-left text-left">@item.Description</td>
-                    <td class="text-center text-middle">@item.ShiftStartTime.ToString("hh:mm:ss tt")</td>
-                    <td class="text-center text-middle">@item.ShiftEndTime.ToString("hh:mm:ss tt")</td>
-                    <td class="text-center text-middle">@item.LateTime.ToString("hh:mm:ss tt")</td>
-                    <td class="text-center text-middle">@item.AbsentTime.ToString("hh:mm:ss tt")</td>
-                    <td class="text-center text-middle">@item.LunchOutTime.ToString("hh:mm:ss tt")</td>
-                    <td class="text-center text-middle">@item.LunchInTime.ToString("hh:mm:ss tt")</td>
-                    <td class="text-center text-middle">@item.LunchBreakHour.ToString()</td>
-                    <td class="text-center text-middle">@item.Wef.ToString("dd/MM/yyyy")</td>
-                    <td class="text-center text-middle">@item.Remarks</td>
-                     <td class="text-center text-middle">@item.ShiftTypeId</td>
+                        <td class="text-center text-middle">@item.ShiftName</td>
+                        <td class="text-center text-middle">@item.Description</td>
+                        <td class="text-center text-middle">@item.ShiftStartTime.ToString("hh:mm ss tt")</td>
+                        <td class="text-center text-middle">@item.ShiftEndTime.ToString("hh:mm ss tt")</td>
+                        <td class="text-center text-middle">@item.LateTime.ToString("hh:mm ss tt")</td>
+                        <td class="text-center text-middle">@item.AbsentTime.ToString("hh:mm ss tt")</td>
+                        <td class="text-center text-middle">@item.Wef.ToString("dd/MM/yyyy")</td>
+                        <td class="text-center text-middle">@item.ShiftTypeId</td>
                      
                     </tr>
                 }
-            @* } *@
+            }
 
 
         </tbody>

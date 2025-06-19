@@ -251,9 +251,9 @@ namespace GCTL.Service.RosterScheduleEntry
                 Luser = entityVM.Luser,
                 Lip = entityVM.Lip,
                 Lmac = entityVM.Lmac,
-                LunchInTime = entityVM.LunchInTime,
-                LunchOutTime = entityVM.LunchOutTime,
-                LunchBreakHour = entityVM.LunchBreakHour
+                //LunchInTime = entityVM.LunchInTime,
+                //LunchOutTime = entityVM.LunchOutTime,
+                //LunchBreakHour = entityVM.LunchBreakHour 
             }).ToList();
         }
 

@@ -1,0 +1,81 @@
+﻿<div class="card mb-4 border-0 shadow-sm">
+    <div class="card-header bg-light">
+        <h6 class="mb-0 px-2"><i class="fa fa-file-excel me-2 px-3"></i>Excel File Upload</h6>
+    </div>
+    <div class="card-body">
+        <div id="massageShow" class="alert alert-danger" style="display: none;"></div>
+        <div class="row g-3 align-items-center">
+            <div class="col-md-6">
+				<div class="col-md-6">
+					<label for="ExcelFileDownload" class="form-label fw-bold">Excel File Format</label>
+                </div>
+				<div class="col-md-6">
+					<a href="/HRMEmployeeHolidayDeclaration/DownloadExcel" class="btn btn-outline-primary">
+						<i class="bi bi-download"></i> Download Template
+					</a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <form id="excelUploadForm" enctype="multipart/form-data" method="post">
+                    <label for="excelFile" class="form-label fw-bold">Upload Excel File</label>
+                    <div class="input-group">
+                        @* <span class="input-group-text"><i class="bi bi-file-earmark-excel"></i></span> *@
+                        <input type="file" class="form-control" id="excelFileInput" name="excelFile" accept=".xlsx,.xls" required>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-upload me-1"></i> Upload
+                        </button>
+                    </div>
+                    <div id="checkFileFormate" class="form-text text-danger mt-1" style="display: none;">Only .xlsx or .xls files are allowed</div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@* 
+
+<style>
+    .custom-file-upload {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+    }
+
+        .custom-file-upload input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            height: 100%;
+            width: 100%;
+        }
+
+    .file-name-display {
+        display: block;
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: #555;
+    }
+
+    .card-header h6 {
+        font-size: 1rem;
+    }
+
+    .form-label.small {
+        font-size: 0.8rem;
+    }
+
+    .btn-sm {
+        font-size: 0.8rem;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .bi {
+        font-size: 0.8rem;
+    }
+
+    .progress {
+        font-size: 0.6rem;
+    }
+</style> *@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">

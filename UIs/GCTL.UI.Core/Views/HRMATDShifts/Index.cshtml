@@ -1,30 +1,26 @@
 ﻿ @model GCTL.UI.Core.ViewModels.HrmAtdShifts.HrmAtdShiftPageViewModel
- 
+
+
 @{
 
-    Model.PageTitle = "Shift Information";
-    // ViewBag.Title = "Shift Information";
+    Model.PageTitle = ViewBag.Title;
+    ViewBag.Title = "Shift Information";
     Model.Breadcrumb = "Shift Information";
 }
-<style>
-    .card {
-        height: auto !important;
-    }
 
-</style>
-<div class="container">
-<partial name="_PageHeader" model="Model" />
-</div>
 <!-- Content Header (Page header) -->
+<partial name="_PageHeader" model="Model" />
 
-<section class="content  consistent-look">
-    <div class="row" style="margin-right: 0px; margin-left: 0px;">
-            <div class="col-md-9 mx-auto pr-0">
+<section class="content consistent-look">
+    <div class="container-fluid">
+         <div class="row">
+
+
+            <div class="col-md-6 pr-0">
                 <div class="card">
                     <div class="card-header px-2">
                         <partial name="_Toolbars" model="new ToobarModel() { Title = Model.Breadcrumb, Code = Model.Code, Name = Model.Setup.ShiftName }" />
                     </div> 
-    <div class="container-fluid">
                     <div class="card-body px-2">
 
                         <form asp-action="Setup" method="post" id="hRMATDShifts-form" asp-controller="HRMATDShifts">
@@ -36,32 +32,27 @@
                     </div>
                 </div>
             </div>
-        </div> 
-        <div class="col-md-12 container-fluid">
-            <div class="bg-white">
-                <div class="card-body p-2 pt-3">
-                    <div class="js-hRMATDShifts-grid-container">
-                        @await Html.PartialAsync("_Grid", Model.HrmAttendenceShiftList)
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body p-2 pt-3">
+                        <div class="js-hRMATDShifts-grid-container">
+                            @await Html.PartialAsync("_Grid", Model.HrmAttendenceShiftList)
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+
+        </div> 
+
+
+        
+
+        <partial name="_BottomNavigation" />
     </div>
 </section>
-<div class="container">
-    <partial name="_BottomNavigation" />
-    <partial name="DeleteModal" />
-</div>
-
-<!-- Flatpickr CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
-<!-- Optional: Theme (You can use this if you want a theme for Flatpickr) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
-
-<!-- Bootstrap (Optional, if you need it for layout styling) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-
+<partial name="DeleteModal" />
 
 @section Scripts {
     @{
@@ -77,12 +68,4 @@
 
         $.hrmAtdShift(options);
     </script>
-
-    <!-- Flatpickr JS -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-    <!-- Bootstrap JS (only if you need it for Bootstrap-based features like modals, dropdowns, etc.) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 }
-
- 

@@ -128,6 +128,7 @@ namespace GCTL.Data.Models
         public virtual DbSet<HrmDefExamTitle> HrmDefExamTitle { get; set; }
         public virtual DbSet<HrmDefGrade> HrmDefGrade { get; set; }
         public virtual DbSet<HrmDefGradeType> HrmDefGradeType { get; set; }
+        public virtual DbSet<HrmDefHolidayDeclarationType> HrmDefHolidayDeclarationType { get; set; }
         public virtual DbSet<HrmDefHolidayType> HrmDefHolidayType { get; set; }
         public virtual DbSet<HrmDefInstitute> HrmDefInstitute { get; set; }
         public virtual DbSet<HrmDefJobTitle> HrmDefJobTitle { get; set; }
@@ -154,6 +155,7 @@ namespace GCTL.Data.Models
         public virtual DbSet<HrmEmployeeEducation> HrmEmployeeEducation { get; set; }
         public virtual DbSet<HrmEmployeeExp> HrmEmployeeExp { get; set; }
         public virtual DbSet<HrmEmployeeFamily> HrmEmployeeFamily { get; set; }
+        public virtual DbSet<HrmEmployeeHolidayDeclaration> HrmEmployeeHolidayDeclaration { get; set; }
         public virtual DbSet<HrmEmployeeOfficialInfo> HrmEmployeeOfficialInfo { get; set; }
         public virtual DbSet<HrmEmployeePhoto> HrmEmployeePhoto { get; set; }
         public virtual DbSet<HrmEmployeeQualification> HrmEmployeeQualification { get; set; }
@@ -164,9 +166,14 @@ namespace GCTL.Data.Models
         public virtual DbSet<HrmLeaveApplicationEntry> HrmLeaveApplicationEntry { get; set; }
         public virtual DbSet<HrmNomineePhoto> HrmNomineePhoto { get; set; }
         public virtual DbSet<HrmNomineeSignature> HrmNomineeSignature { get; set; }
+        public virtual DbSet<HrmPayDefBenefitType> HrmPayDefBenefitType { get; set; }
+        public virtual DbSet<HrmPayDefDeductionType> HrmPayDefDeductionType { get; set; }
         public virtual DbSet<HrmPayLoanTypeEntry> HrmPayLoanTypeEntry { get; set; }
         public virtual DbSet<HrmPayMonth> HrmPayMonth { get; set; }
+        public virtual DbSet<HrmPayMonthlyOtentry> HrmPayMonthlyOtentry { get; set; }
+        public virtual DbSet<HrmPayOthersAdjustmentEntry> HrmPayOthersAdjustmentEntry { get; set; }
         public virtual DbSet<HrmPayPayHeadName> HrmPayPayHeadName { get; set; }
+        public virtual DbSet<HrmPaySalaryDeductionEntry> HrmPaySalaryDeductionEntry { get; set; }
         public virtual DbSet<HrmPayTaxAdjustmentEntry> HrmPayTaxAdjustmentEntry { get; set; }
         public virtual DbSet<HrmPayrollLoan> HrmPayrollLoan { get; set; }
         public virtual DbSet<HrmPayrollPaymentReceive> HrmPayrollPaymentReceive { get; set; }
@@ -4682,43 +4689,48 @@ namespace GCTL.Data.Models
 
             modelBuilder.Entity<HrmAttWorkingDayDeclaration>(entity =>
             {
-                entity.HasKey(e => e.WorkingDayCode)
-                    .HasName("PK__HRM_Att___0A0E67BDCA992F6A");
+                entity.HasKey(e => e.Tc)
+                    .HasName("PK__HRM_Att___3214E4084634B89D");
 
                 entity.ToTable("HRM_Att_WorkingDayDeclaration");
 
-                entity.Property(e => e.WorkingDayCode).HasMaxLength(50);
+                entity.HasIndex(e => new { e.EmployeeId, e.WorkingDayDate }, "IX_HrmAttWorkingDayDeclaration_EmployeeId_Date");
 
-                entity.Property(e => e.AutoId)
+                entity.Property(e => e.Tc)
                     .HasColumnType("numeric(18, 0)")
-                    .ValueGeneratedOnAdd();
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
 
-                entity.Property(e => e.CompanyCode)
+                entity.Property(e => e.CompanyCode).HasMaxLength(50);
+
+                entity.Property(e => e.EmployeeId)
                     .IsRequired()
-                    .HasMaxLength(50);
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
 
                 entity.Property(e => e.Ldate)
                     .HasColumnType("smalldatetime")
                     .HasColumnName("LDate");
 
                 entity.Property(e => e.Lip)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("LIP");
 
                 entity.Property(e => e.Lmac)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("LMAC");
 
                 entity.Property(e => e.Luser)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("LUser");
 
                 entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
 
                 entity.Property(e => e.Remarks)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.WorkingDayCode)
                     .IsRequired()
                     .HasMaxLength(50);
 
@@ -5476,6 +5488,51 @@ namespace GCTL.Data.Models
                 entity.Property(e => e.ShortName).HasMaxLength(50);
             });
 
+            modelBuilder.Entity<HrmDefHolidayDeclarationType>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("HRM_Def_HolidayDeclarationType");
+
+                entity.Property(e => e.AutoId)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.CompanyCode)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.EmployeeId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.Hdtcode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("HDTCode");
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.Name).HasMaxLength(100);
+            });
+
             modelBuilder.Entity<HrmDefHolidayType>(entity =>
             {
                 entity.HasKey(e => e.HolidayTypeCode)
@@ -6007,7 +6064,7 @@ namespace GCTL.Data.Models
             modelBuilder.Entity<HrmEarnLeaveEntry>(entity =>
             {
                 entity.HasKey(e => e.AutoId)
-                    .HasName("PK_HRM_EarnLeaveEntry_1");
+                    .HasName("PK__HRM_Earn__6B232905060942F7");
 
                 entity.ToTable("HRM_EarnLeaveEntry");
 
@@ -7146,6 +7203,70 @@ namespace GCTL.Data.Models
                     .HasColumnName("UserInfoEmployeeID");
             });
 
+            modelBuilder.Entity<HrmEmployeeHolidayDeclaration>(entity =>
+            {
+                entity.HasKey(e => e.AutoId);
+
+                entity.ToTable("HRM_EmployeeHolidayDeclaration");
+
+                entity.Property(e => e.AutoId)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.CompanyCode)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.Ehdid)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("EHDId");
+
+                entity.Property(e => e.EmployeeId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.EmployeeId2)
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID2");
+
+                entity.Property(e => e.Hdtcode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("HDTCode");
+
+                entity.Property(e => e.HolidayDetails).HasMaxLength(250);
+
+                entity.Property(e => e.InPlaceofDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsDayoffDuty).HasMaxLength(10);
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.Remark)
+                    .IsRequired()
+                    .HasMaxLength(500);
+            });
+
             modelBuilder.Entity<HrmEmployeeOfficialInfo>(entity =>
             {
                 entity.HasKey(e => e.AutoId)
@@ -7496,7 +7617,7 @@ namespace GCTL.Data.Models
             modelBuilder.Entity<HrmEmployeeWeekendDeclaration>(entity =>
             {
                 entity.HasKey(e => e.Tc)
-                    .HasName("PK__HRM_Empl__3214E4083DDC60D7");
+                    .HasName("PK__HRM_Empl__3214E40853F616C6");
 
                 entity.ToTable("HRM_EmployeeWeekendDeclaration");
 
@@ -7849,10 +7970,99 @@ namespace GCTL.Data.Models
                     .HasColumnType("image");
             });
 
+            modelBuilder.Entity<HrmPayDefBenefitType>(entity =>
+            {
+                entity.HasKey(e => e.Tc);
+
+                entity.ToTable("HRM_Pay_Def_BenefitType");
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
+
+                entity.Property(e => e.BenefitType)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.BenefitTypeId)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.CompanyCode).HasMaxLength(50);
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.ShortName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<HrmPayDefDeductionType>(entity =>
+            {
+                entity.HasKey(e => e.Tc)
+                    .HasName("PK__HRM_Pay___3214E40823A5C785");
+
+                entity.ToTable("HRM_Pay_Def_DeductionType");
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
+
+                entity.Property(e => e.CompanyCode).HasMaxLength(50);
+
+                entity.Property(e => e.DeductionType)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.DeductionTypeId)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.ShortName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
             modelBuilder.Entity<HrmPayLoanTypeEntry>(entity =>
             {
                 entity.HasKey(e => e.AutoId)
-                    .HasName("PK__HRM_PAY___6B232965C7E65C0B");
+                    .HasName("PK__HRM_PAY___6B232965C5B3B37D");
 
                 entity.ToTable("HRM_PAY_LoanTypeEntry");
 
@@ -7904,10 +8114,119 @@ namespace GCTL.Data.Models
                     .HasColumnName("MonthName_Bangla");
             });
 
+            modelBuilder.Entity<HrmPayMonthlyOtentry>(entity =>
+            {
+                entity.HasKey(e => e.Tc)
+                    .HasName("PK__HRM_PAY___3214E468FB91846A");
+
+                entity.ToTable("HRM_PAY_MonthlyOTEntry");
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.CompanyCode).HasMaxLength(10);
+
+                entity.Property(e => e.EmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.Month).HasMaxLength(50);
+
+                entity.Property(e => e.MonthlyOtid)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("MonthlyOTID");
+
+                entity.Property(e => e.Ot)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("OT");
+
+                entity.Property(e => e.Otamount)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("OTAmount");
+
+                entity.Property(e => e.Remarks).HasMaxLength(500);
+
+                entity.Property(e => e.Year).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<HrmPayOthersAdjustmentEntry>(entity =>
+            {
+                entity.HasKey(e => e.Tc);
+
+                entity.ToTable("HRM_PAY_OthersAdjustmentEntry");
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
+
+                entity.Property(e => e.BenefitAmount).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.BenefitTypeId).HasMaxLength(50);
+
+                entity.Property(e => e.CompanyCode).HasMaxLength(10);
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.EmployeeId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.OtherBenefitId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("OtherBenefitID");
+
+                entity.Property(e => e.PaidDays).HasColumnType("numeric(18, 2)");
+
+                entity.Property(e => e.SalaryMonth).HasMaxLength(50);
+
+                entity.Property(e => e.SalaryYear).HasMaxLength(50);
+            });
+
             modelBuilder.Entity<HrmPayPayHeadName>(entity =>
             {
                 entity.HasKey(e => e.PayHeadNameCode)
-                    .HasName("PK__HRM_PAY___11AD73ED2674F0CE");
+                    .HasName("PK__HRM_PAY___11AD73ED0F568806");
 
                 entity.ToTable("HRM_PAY_PayHeadName");
 
@@ -7948,6 +8267,62 @@ namespace GCTL.Data.Models
                 entity.Property(e => e.Wef)
                     .HasColumnType("datetime")
                     .HasColumnName("WEF");
+            });
+
+            modelBuilder.Entity<HrmPaySalaryDeductionEntry>(entity =>
+            {
+                entity.HasKey(e => e.AutoId)
+                    .HasName("PK__HRM_PAY___6B2329053EDD6976");
+
+                entity.ToTable("HRM_PAY_SalaryDeductionEntry");
+
+                entity.HasIndex(e => new { e.EmployeeId, e.SalaryMonth, e.SalaryYear, e.DeductionTypeId }, "IX_HrmPaySalaryDeductionEntry_Employee_Month_Year_Type");
+
+                entity.Property(e => e.AutoId)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.CompanyCode).HasMaxLength(10);
+
+                entity.Property(e => e.DeductionAmount).HasColumnType("numeric(18, 2)");
+
+                entity.Property(e => e.DeductionTypeId)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.EmployeeId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.Id)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.Remarks).HasMaxLength(500);
+
+                entity.Property(e => e.SalaryMonth).HasMaxLength(50);
+
+                entity.Property(e => e.SalaryYear).HasMaxLength(50);
             });
 
             modelBuilder.Entity<HrmPayTaxAdjustmentEntry>(entity =>
@@ -8018,7 +8393,7 @@ namespace GCTL.Data.Models
             modelBuilder.Entity<HrmPayrollLoan>(entity =>
             {
                 entity.HasKey(e => e.AutoId)
-                    .HasName("PK__HRM_Payr__6B232965EF4525F0");
+                    .HasName("PK__HRM_Payr__6B2329652F111117");
 
                 entity.ToTable("HRM_Payroll_Loan");
 
@@ -8093,7 +8468,7 @@ namespace GCTL.Data.Models
             modelBuilder.Entity<HrmPayrollPaymentReceive>(entity =>
             {
                 entity.HasKey(e => e.AutoId)
-                    .HasName("PK__HRM_Payr__6B232965282B432A");
+                    .HasName("PK__HRM_Payr__6B2329652D3891F2");
 
                 entity.ToTable("HRM_Payroll_PaymentReceive");
 
@@ -8160,7 +8535,7 @@ namespace GCTL.Data.Models
             modelBuilder.Entity<HrmPayrollPfassignEntry>(entity =>
             {
                 entity.HasKey(e => e.AutoId)
-                    .HasName("PK_HRM_Payroll_PFAssignEntry_1");
+                    .HasName("PK__HRM_Payr__385EFE4899FE9F31");
 
                 entity.ToTable("HRM_Payroll_PFAssignEntry");
 
@@ -8215,7 +8590,7 @@ namespace GCTL.Data.Models
             modelBuilder.Entity<HrmRosterScheduleEntry>(entity =>
             {
                 entity.HasKey(e => e.Tc)
-                    .HasName("PK_HRM_RosterScheduleEntry_1");
+                    .HasName("PK__HRM_Rost__3214E408093486D4");
 
                 entity.ToTable("HRM_RosterScheduleEntry");
 

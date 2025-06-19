@@ -60,7 +60,7 @@ namespace GCTL.UI.Core.Controllers
             try
             {
 
-                if (await service.IsExistAsync( modelVM.WorkingDayCode, modelVM.WorkingDayDate.ToString("MM/dd/yyyy")))
+                if (await service.IsExistAsync( modelVM.WorkingDayCode, modelVM.WorkingDayDate.Value.ToString("MM/dd/yyyy")))
                 {
                     return Json(new { isSuccess = false, message = $"Already  Exists!", isDuplicate = true });
                 }

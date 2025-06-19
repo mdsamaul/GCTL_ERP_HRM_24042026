@@ -90,7 +90,7 @@ namespace GCTL.UI.Core.Controllers
 
                 if (await hrmAtdShiftService.IsExistAsync(modelVM.ShiftName, modelVM.ShiftCode))
                 {
-                    return Json(new { isSuccess = false, message = $"Already Exists!", isDuplicate = true });
+                    return Json(new { isSuccess = false, message = $"Already <span style='color: blue;'>'{modelVM.ShiftName}'</span> Exists!", isDuplicate = true });
                 }
 
 
@@ -195,7 +195,7 @@ namespace GCTL.UI.Core.Controllers
             if (await hrmAtdShiftService.IsExistAsync(name, code))
             {
 
-                return Json(new { isSuccess = true, message = $"Already  Exists!" });
+                return Json(new { isSuccess = true, message = $"Already <span style='color: blue;'>'{name}'</span> Exists!" });
 
             }
 
@@ -210,7 +210,7 @@ namespace GCTL.UI.Core.Controllers
         {
             try
             {
-                var list = await hrmAtdShiftService.GetAllAsync();               
+                var list = await hrmAtdShiftService.GetAllAsync();
                 return PartialView("_Grid", list);
             }
             catch (Exception ex)
@@ -262,6 +262,30 @@ namespace GCTL.UI.Core.Controllers
                 worksheet.Row(dataStartRow).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 worksheet.Row(dataStartRow).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
 
+                // Add headers
+                //worksheet.Cell(dataStartRow, 1).Value = "Shift Id";
+                //worksheet.Cell(dataStartRow, 2).Value = "Shift Name";
+                //worksheet.Cell(dataStartRow, 3).Value = "Description";
+                //worksheet.Cell(dataStartRow, 4).Value = "In Time";
+                //worksheet.Cell(dataStartRow, 5).Value = "Out Time";
+                //worksheet.Cell(dataStartRow, 6).Value = "Leave Time";
+                //worksheet.Cell(dataStartRow, 7).Value = "Absent Time";
+                //worksheet.Cell(dataStartRow, 8).Value = "W.E.F";
+                //worksheet.Cell(dataStartRow, 9).Value = "Shift Type";
+
+                //// Make header row bold
+                //worksheet.Row(dataStartRow).Style.Font.Bold = true;
+
+                //// Set borders for the header row
+                //var headerRange = worksheet.Range(dataStartRow, 1, dataStartRow, 9); // Define the range for headers
+                //headerRange.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                //headerRange.Style.Border.OutsideBorderColor = XLColor.Black;
+                //headerRange.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                //headerRange.Style.Border.InsideBorderColor = XLColor.Black;
+
+                //// Center alignment for the header row
+                //headerRange.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                //headerRange.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
 
 
                 // Add data

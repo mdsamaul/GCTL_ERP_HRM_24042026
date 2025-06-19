@@ -230,11 +230,7 @@ namespace GCTL.Data.Models
                .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
             });
 
-            modelBuilder.Entity<HrmAttWorkingDayDeclaration>(entity =>
-            {
-                entity.Property(p => p.AutoId)
-               .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
-            });
+            
 
             modelBuilder.Entity<HrmAtdAttendanceType>(entity =>
             {
@@ -430,7 +426,6 @@ namespace GCTL.Data.Models
                 entity.Property(p => p.AutoId)
                 .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
             });
-
         }
     }
 }

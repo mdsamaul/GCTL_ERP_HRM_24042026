@@ -7,9 +7,10 @@ namespace GCTL.Data.Models
 {
     public partial class HrmAttWorkingDayDeclaration
     {
-        public decimal AutoId { get; set; }
+        public decimal Tc { get; set; }
         public string WorkingDayCode { get; set; }
-        public DateTime WorkingDayDate { get; set; }
+        public string EmployeeId { get; set; }
+        public DateTime? WorkingDayDate { get; set; }
         public string Remarks { get; set; }
         public string Luser { get; set; }
         public DateTime? Ldate { get; set; }

@@ -1,0 +1,141 @@
+﻿ @* @model GCTL.Core.ViewModels.HrmPaySalaryDeductionEntries.HrmPaySalaryDeductionSetupViewModel  *@
+
+<style>
+    #salary-deduction-form {
+        max-width: 80%;
+    }
+
+    .form-label {
+        text-align: right;
+    }
+
+    .form-group-row {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 1rem;
+    }
+
+        .form-group-row label {
+            min-width: 120px;
+            white-space: nowrap;
+            margin-bottom: 0;
+            
+        }
+
+        .form-group-row .form-control,
+        .form-group-row select {
+            flex: 1;
+            min-width: 0; /* Added to prevent overflow if content is too wide */
+            
+        }
+
+    /* .form-check-inline {
+        margin-right: 1rem;
+    } */
+
+</style>
+
+<div class="card mb-4 border-0 shadow-sm">
+    <div class="card-header bg-light">
+        <h6 class="mb-0"><i class="fa fa-calendar-alt me-2 px-3"></i>Employee Salary Deduction Entry</h6>
+    </div>
+    <div class="card-body">
+        <form id="salary-deduction-form" class="mt-4">
+            <input type="text" id="AutoId" hidden />
+            <input type="text" id="EmployeeId" hidden />
+
+            <!-- Row for ID field, making it appear in a single column (half-width of its parent row) -->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="Id" class="form-label">Salary Ded. ID:</label>
+                        <input type="text" id="Id" class="form-control" style="margin-left: 10px;" required readonly />
+                    </div>
+                </div>
+                <!-- The second col-md-6 on this row is intentionally left empty,
+                     so the ID field occupies the first "column" on this line. -->
+            </div>
+
+            <!-- Radio buttons - this will now be on its own line, below the ID field.
+                 The form-group-row will take the available width of the form. -->
+            <div class="form-group-row mt-2">
+                <div class="col-md-6">
+                    <label class="form-label" style="margin-right: 12px;">Duration Selected:</label>
+					<div class="form-check form-check-inline m-0">
+                        <input type="radio" id="byDate" name="durationType" value="date">
+						<label class="pe-0"  for="byDate">By Date</label>
+					</div>
+					<div class=" form-check-inline">
+						<input type="radio" id="byMonth" name="durationType" value="month">
+						<label class="form-check-label" for="byMonth">By Month</label>
+					</div>
+                </div>
+            </div>
+
+            <!-- Row 3: Date From and To -->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="dateFrom" class="form-label" id="dateFromLabel">Date From:</label>
+                        <input type="date" id="dateFrom" name="dateFrom" class="form-control" style="margin-left: 10px;"  />
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="dateTo" class="form-label" id="dateToLabel">To:</label>
+                        <input type="date" id="dateTo" name="dateTo" class="form-control" style="margin-left: 10px;" />
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+
+            <!-- Rest of the form -->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="SalaryMonth" class="form-label" id="SalaryMonthLabel">Salary Month:</label>
+                        <select id="SalaryMonth" class="form-control" style="margin-left: 10px;">
+                            <!-- Options -->
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="SalaryYear" class="form-label" id="SalaryYearLabel">Salary Year:</label>
+                        <input type="number" id="SalaryYear" class="form-control" step="1" style="margin-left: 10px;" />
+                    </div>
+                </div>
+               
+
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="DeductionTypeId" class="form-label">Deduction Type:<span class="text-danger">*</span></label>
+                        <select id="DeductionTypeId" class="form-control" style="margin-left: 10px;" tabindex="3"></select>
+                        <button type="button" class="btn btn-outline-secondary ms-2" id="openDeductionTypeModal">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="DeductionAmount" class="form-label">Amount:<span class="text-danger">*</span></label>
+                        <input type="text" id="DeductionAmount" class="form-control" style="margin-left: 10px;" tabindex="4" />
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+
+                <div class="col-md-10">
+                    <div class="form-group-row">
+                        <label for="remarks" class="form-label">Remarks:</label>
+                        <textarea id="remarks" class="form-control ms-2" rows="3" placeholder="Enter your remarks here" tabindex="5" style="margin-left: 12px;"></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

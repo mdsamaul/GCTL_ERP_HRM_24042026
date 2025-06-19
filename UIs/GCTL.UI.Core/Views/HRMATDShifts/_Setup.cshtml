@@ -6,230 +6,194 @@
 }
 
 
+@* <script>
+    function updateCurrentTime() {
+        const now = new Date();
+        const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+
+        document.getElementById('ShiftStartTime').value = formattedTime;
+        document.getElementById('ShiftEndTime').value = formattedTime;
+        document.getElementById('LateTime').value = formattedTime;
+        document.getElementById('AbsentTime').value = formattedTime;
+    }
+
+    // Update time every second
+    setInterval(updateCurrentTime, 1000);
+
+    // Initialize time on page load
+    updateCurrentTime();
+</script> *@
+
 <style>
-    body {
-        background-color: #f5f7fa;
+   
+    .TimePicker
+    {
+        font-size: 16px; 
+      /*   font-weight: bold;  */
     }
 
-    .form-group {
-        margin-bottom: 15px;
+    .time-with-spaces
+    {
+        letter-spacing: 1px;
     }
+</style>
 
-    .card {
-        margin-bottom: 15px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
+<div style="padding-top: 10px;">
+    <div class="row">
+        <div class="col-lg-6">
+            <span id="message"></span>
+        </div>
+        <div class="col-lg-6">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    .card-header {
-        background-color: #3498db;
-        color: #000;
-        font-weight: 600;
-        border-radius: 8px 8px 0 0;
-    }
-
-    .form-label {
-        font-weight: 500;
-        margin-bottom: 0.5rem;
-    }
-
-    .required::after {
-        content: "*";
-        color: red;
-        margin-left: 3px;
-    }
-
-    .time-section {
-        padding: 0;
-        background-color: #f8f9fa;
-        border-radius: 5px;
-        width: 100%;
-    }
-
-    .time-picker-container {
-        width: 100%;
-        padding: 0;
-        margin: 0;
-    }
-
-    .flatpickr-calendar{
-        width: 100% !important;
-        max-width: 390px !important;
-    }
-
-    #LunchBreakHour{
-        width: 284px !important;
-    }
-
-    .flatpickr-am-pm {
-        height: 25px;
-        line-height: 25px;
-        font-size: 14px;
-    }
-
-    .flatpickr-calendar.hasTime.noCalendar.animate.inline {
-        height: auto;
-        transform: scale(0.85);
-        transform-origin: left top;
-        margin: 0;
-        padding: 0;
-        width: 100% !important;
-    }
-
-    .flatpickr-time.hasSeconds {
-        height: 25px;
-        line-height: 25px;
-        text-align: center;
-        padding: 0;
-        margin: 0;
-        width: 100%;
-    }
-
-    .numInput.flatpickr-hour,
-    .numInput.flatpickr-minute,
-    .numInput.flatpickr-second {
-        height: 20px;
-        font-size: 14px;
-    }
-
-    .flatpickr-am-pm {
-        height: 20px;
-        line-height: 20px;
-        font-size: 14px;
-    }
-
-    .numInputWrapper .arrowUp,
-    .numInputWrapper .arrowDown {
-        height: 12px;
-    }
-
-    .numInputWrapper {
-        display: inline-flex;
-        align-items: center;
-    }
-
-    .select2-container {
-        width: 100% !important;
-    }
-</style> 
-
-
-<div class="container py-4">
-    <div>
         <input type="hidden" id="lastCode" />
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="Ldate" />
         <input type="hidden" asp-for="ModifyDate" />
         <input type="hidden" asp-for="AutoId" />
+        <div class="col-lg-6">
+            <label asp-for="ShiftTypeId"> Shift Type</label>
+            <select asp-for="ShiftTypeId" id="ShiftTypeIdDD" class="form-control form-control-sm selectpicker" tabindex="1"
+                    asp-items="@(ViewBag.ShiftTypeDD as SelectList)">
+                <option value="">--Select Shift Type--</option>
+            </select>
 
-        <!-- Basic Information Section -->
-        <div class="mb-3">
-           
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-12 col-md-6 col-xl-4">
-                        <div class="form-group">
-                            <label for="ShiftTypeIdDD" class="form-label required">Shift Type</label>
-                            <select asp-for="ShiftTypeId" id="ShiftTypeIdDD" class="form-control form-control-sm" tabindex="1"
-                                    asp-items="@(ViewBag.ShiftTypeDD as SelectList)">
-                                <option value="">--Select Shift Type--</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-xl-4">
-                        <div class="form-group">
-                            <label for="ShiftCode" class="form-label">Shift ID</label>
-                            <input asp-for="ShiftCode" type="text" class="form-control form-control-sm js-ShiftCode-code" readonly="readonly" />
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-xl-4">
-                        <div class="form-group">
-                            <label for="ShiftName" class="form-label required">Shift Name</label>
-                            <input type="text" asp-for="ShiftName" id="ShiftName" name="ShiftName" class="form-control form-control-sm js-hRMATDShifts-check-duplicateName" placeholder="Enter Shift Name" tabindex="2" autofocus />
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-xl-4">
-                        <div class="form-group">
-                            <label asp-for="Description" class="form-label">Description</label>
-                            <input type="text" id="Description" asp-for="ShiftShortName" name="Description" class="form-control form-control-sm" placeholder="Enter Description" tabindex="3" />
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-xl-4">
-                        <div class="form-group">
-                            <label asp-for="Wef" class="form-label required">W.E.F </label>
-                            <input type="text" id="WefDate" placeholder="dd/MM/yyyy" asp-for="Wef" class="form-control form-control-sm datepicker" />
-                            <input type="hidden" id="WefHidden" name="Wef" />
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-xl-4">
-                        <div class="form-group">
-                            <label asp-for="Remarks" class="form-label">Remarks</label>
-                            <textarea type="text" class="form-control form-control-sm" placeholder="Enter Remarks" asp-for="Remarks" tabindex="9" rows="2"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Shift Timing Section -->
-            <div class="mb-3">
-                <div class="bg-light text-dark py-2 px-4">
-                    <i class="fas fa-hourglass-half me-2"></i> Shift Timing
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <!-- In Time & Out Time -->
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <div class="form-group">
-                                <label for="inTimeInput" class="form-label">In Time</label>
-                                <div id="inTimeInput" class="time-picker-container w-100 p-0 m-0"></div>
-                                <input type="hidden" value="@(isEditing ? Model.ShiftStartTime.ToString("hh:mm:ss tt") : null)" id="inDateTimeInput" name="ShiftStartTime" />
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <div class="form-group">
-                                <label for="outTimeInput" class="form-label">Out Time</label>
-                                <div id="outTimeInput" class="time-picker-container w-100 p-0 m-0"></div>
-                                <input type="hidden" value="@(isEditing ? Model.ShiftEndTime.ToString("hh:mm:ss tt") : null)" id="outDateTimeInput" name="ShiftEndTime" />
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <div class="form-group">
-                                <label for="lateTimeInput" class="form-label">Late Time</label>
-                                <div id="lateTimeInput" class="time-picker-container w-100 p-0 m-0"></div>
-                                <input type="hidden" value="@(isEditing ? Model.LateTime.ToString("hh:mm:ss tt") : null)" id="lateDateTimeInput" name="LateTime" class="form-control form-control-sm" />
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <div class="form-group">
-                                <label for="AbsentTimeInput" class="form-label">Absent Time</label>
-                                <div id="AbsentTimeInput" class="time-picker-container w-100 p-0 m-0"></div>
-                                <input type="hidden" value="@(isEditing ? Model.AbsentTime.ToString("hh:mm:ss tt") : null)" id="AbsentDateTimeInput" name="AbsentTime" />
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <div class="form-group">
-                                <label for="LunchOutTime" class="form-label">Lunch Out Time</label>
-                                <div id="LunchOutTime" class="time-picker-container w-100 p-0 m-0"></div>
-                                <input type="hidden" value="@(isEditing ? Model.LunchOutTime.ToString("hh:mm:ss tt") : null)" id="LunchOutDateTime" name="LunchOutTime" />
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <div class="form-group">
-                                <label for="LunchInTime" class="form-label">Lunch In Time</label>
-                                <div id="LunchInTime" class="time-picker-container w-100 p-0 m-0"></div>
-                                <input type="hidden" value="@(isEditing ? Model.LunchInTime.ToString("hh:mm:ss tt") : null)" id="LunchInDateTime" name="LunchInTime" />
-                            </div>
-                        </div>                       
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <div class="form-group">
-                                <label for="LunchBreakHour" class="form-label">Lunch Break (Hr)</label>
-                                <input type="number" asp-for="LunchBreakHour" id="LunchBreakHour" class="form-control form-control-sm" name="LunchBreakHour" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
+    <div class="form-group row">
+
+        <div class="col-lg-6">
+            <label asp-for="ShiftCode">Shift Id</label>
+            <input asp-for="ShiftCode" type="text" class="form-control form-control-sm js-ShiftCode-code" readonly="readonly" />
+        </div>
+
+        <div class="col-lg-6">
+            <label asp-for="ShiftName">Shift Name<span style="color:red">*</span> </label>
+            <input type="text" asp-for="ShiftName" class="form-control form-control-sm js-hRMATDShifts-check-duplicateName" autofocus placeholder="Enter Shift Name" tabindex="2" />
+
+        </div>
+     
+    </div>
+
+    <div class="form-group row">
+
+        <div class="col-lg-6">
+            <label asp-for="Description">Description</label>
+            <input type="text" asp-for="Description" class="form-control form-control-sm " placeholder="Enter Description " tabindex="3" />
+        </div>
+
+        <div class="col-lg-6">
+            <label asp-for="ShiftStartTime">In Time </label>
+            <span class="text-danger"></span>
+           
+            <input type="text" value="@(isEditing ? Model.ShiftStartTime.ToString("hh:mm:ss tt") : currentTime)" class="form-control form-control-sm TimePicker" asp-for="ShiftStartTime" tabindex="4" />
+        </div>
+     
+          
+    </div>
+
+    <div class="form-group row">
+       
+        <div class="col-lg-6">   
+            <label asp-for="ShiftEndTime">Out Time </label>
+            <span class="text-danger"></span>
+
+            <input type="text" value="@(isEditing ? Model.ShiftEndTime.ToString("hh:mm:ss tt") : currentTime)" asp-for="ShiftEndTime" class="form-control large-font-time  form-control-sm TimePicker" tabindex="5" />
+        </div>
+
+        <div class="col-lg-6">
+
+            <label asp-for="LateTime">LateTime </label>
+            <span class="text-danger"></span>
+            <input type="text" value="@(isEditing ? Model.LateTime.ToString("hh:mm:ss tt") : currentTime)" class="form-control form-control-sm TimePicker" asp-for="LateTime" tabindex="6">
+
+        </div>
+    </div>
+
+    <div class="form-group row">
+       
+        
+        <div class="col-lg-6">
+            <label asp-for="AbsentTime">Absent Time </label>
+            <span class="text-danger"></span>
+            <input class="form-control form-control-sm TimePicker" value="@(isEditing ? Model.AbsentTime.ToString("hh:mm:ss tt") : currentTime)" type="datetime" asp-for="AbsentTime"  tabindex="7" />
+
+        </div>
+        <div class="col-lg-6">
+            <label asp-for="Wef">W.E.F <span style="color:red">*</span> </label>
+             <input type="hidden" id="WefHidden" name="Wef" />
+           <input type="text" id="WefDate" placeholder="dd/MM/yyyy"   asp-for="Wef"  class="form-control form-control-sm datepicker"  tabindex="7" />
+          
+        </div>
+    </div>
+
+
+
+    <div class="form-group row">
+   
+        <div class="col-lg-12">
+            <label asp-for="Remarks">Remarks </label>
+
+            <textarea type="text" class="form-control form-control-sm" placeholder="Enter  Remarks" asp-for="Remarks" tabindex="9" rows="2"></textarea>
+
+            <span asp-validation-for="Remarks" class="text-danger"></span>
+        </div>
+    </div>
+
+
+    @if (Model.AutoId > 0)
+    {
+        <hr />
+        <div class="form-group row" id="LdateModifyHide">
+            <div class="col-lg-6">
+                @if (Model.Ldate.HasValue)
+                {
+                    <label>Creation Date: </label>
+
+                    <label>@Model.Ldate?.ToString("dd/MM/yyyy")</label>
+                }
+            </div>
+            <div class="col-lg-6">
+                @if (Model.ModifyDate.HasValue)
+                {
+                    <label>Last Update Date: </label>
+
+                    <label>@Model.ModifyDate?.ToString("dd/MM/yyyy")</label>
+                }
+            </div>
+        </div>
+    }
+
 </div>
+<div class="row no-print" style="margin-top: 9px;">
+    <div class="col-12">
+        <button type="button" class="btn btn-default success-btn btn btn-outline-success btn-common btn-circle float-right js-hRMATDShifts-save" data-id="@Model.ShiftCode ">
+            <i class="fas fa-save"></i> Save
+        </button>
+    </div>
+</div>
+
+
+@* @if (!isEditing)
+{
+    <script>
+        function updateCurrentTime() {
+            const now = new Date();
+            const formattedTime = now.toLocaleTimeString('en-US', {
+                hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
+            });
+
+            document.getElementById('ShiftStartTime').value = formattedTime;
+            document.getElementById('ShiftEndTime').value = formattedTime;
+            document.getElementById('LateTime').value = formattedTime;
+            document.getElementById('AbsentTime').value = formattedTime;
+        }
+
+        setInterval(updateCurrentTime, 1000); // Update every second
+        updateCurrentTime(); // Initial call
+    </script>
+} *@
 

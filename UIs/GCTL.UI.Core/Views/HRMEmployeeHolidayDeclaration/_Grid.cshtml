@@ -1,0 +1,141 @@
+﻿@* <style>
+    /* Add fixed height to the table body with scrolling */
+    #employee-weekend-grid-body {
+        display: block;
+        max-height: 251px; /* Fixed height - adjust as needed */      
+        overflow-y: auto; /* Enable vertical scrolling */
+    }
+
+    /*Make the table headers fixed */
+     #employee-weekend-grid thead {
+        display: table;
+        width: calc(100% - 10px); 
+        table-layout: fixed;
+    } 
+   
+
+    /* Adjust the table body display */
+    #employee-weekend-grid tbody {
+        display: block;
+        overflow-y: auto;
+        width: 100%;
+    }
+
+        /* Make table rows properly sized */
+        #employee-weekend-grid tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+    /* Ensure the whole table container maintains appropriate sizing */
+    .table-responsive {
+        overflow-x: auto;
+    }
+    /* Increase width of the DataTable search input */
+    .dataTables_filter input {
+        width: 350px !important; /* Increase search input width */
+        max-width: 100%;
+        padding: 6px 12px;
+    }
+
+    /* Style the search box container if needed */
+    .dataTables_filter {
+        margin-bottom: 10px;
+    }
+</style> *@
+
+
+
+
+
+
+<div class="col-xl-12 col-md-12 col-lg-12 col-sm-12 col-12">
+    <div class="row g-2">
+        <div class="col-xl col-lg col-md col-sm-4 col-6">
+            <label for="companySelect" class="form-label small mb-1">Company</label>
+            <select id="companySelect" class="form-select form-select-sm mx-auto"></select>
+        </div>
+        <div class="col-xl col-lg col-md col-sm-4 col-6">
+            <label for="branchSelect" class="form-label small mb-1">Branch</label>
+            <select id="branchSelect" class="form-select form-select-sm mx-auto" multiple="multiple"></select>
+        </div>
+        <div class="col-xl col-lg col-md col-sm-4 col-6">
+            <label for="divisionSelect" class="form-label small mb-1">Division</label>
+            <select id="divisionSelect" class="form-select form-select-sm mx-auto" multiple="multiple"></select>
+        </div>
+
+        <div class="col-xl col-lg col-md col-sm-4 col-6">
+            <label for="departmentSelect" class="form-label small mb-1">Department</label>
+            <select id="departmentSelect" class="form-select form-select-sm mx- auto" multiple="multiple"></select>
+        </div>
+
+        <div class="col-xl col-lg col-md col-sm-4 col-6">
+            <label for="designationSelect" class="form-label small  mb-1">Designation</label>
+            <select id="designationSelect" class="form-select form-select-sm mx-    auto" multiple="multiple"></select>
+        </div>
+
+        <div class="col-xl col-lg col-md col-sm-4 col-6">
+            <label for="employeeSelect" class="form-label small mb-1">Employee</label>
+            <select id="employeeSelect" class="form-select form-select-sm mx-auto" multiple="multiple"></select>
+        </div>
+
+        <div class="col-xl col-lg col-md col-sm-4 col-6">
+            <label for="activityStatusSelect" class="form-label small mb-1">    Activity Status</label>
+            <select id="activityStatusSelect" class="form-select form-select-sm mx-auto" multiple="multiple">
+                <option value="Active" selected>Active</option>
+                <option value="Inactive">Inactive</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+
+<div class="card mb-4 mt-1 border-0 shadow-sm">
+    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+        <!-- Left Side: Title -->
+        <div class="mb-0 col-md-6 d-flex align-items-center">
+            <i class="fa fa-users mx-2"></i>   Employee List
+        </div>
+
+        <!-- Right Side: Search Input -->
+        <div class="d-flex col-md-6 align-items-center justify-content-end" style="min-width: 250px;">
+            🔍 <input id="custom-search" type="search" class="form-control form-control-sm"
+                   placeholder="Search employees..."
+                   style="width: 250px; padding: 6px 12px; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+    </div>
+    <div class="card-body">
+        <div id="loadingOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(255,255,255,0.7); z-index:9999; text-align:center; padding-top:200px;">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Loading...</p>
+        </div>
+
+        <div class="table-responsive mb-3">
+            <table id="employee-filter-grid" class="table table-bordered table-striped table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th class="text-center no-sort" style="width: 5%; padding-left: 0; padding-right: 0;">
+							<label for="employee-check-all">Select</label><br/>
+							<input type="checkbox" id="employee-check-all">
+                        </th>
+                        <th class="text-center">Employee ID</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Designation</th>
+                        <th class="text-center">Department</th>
+                        <th class="text-center">Branch</th>
+                        <th class="text-center">Company</th>
+                        <th class="text-center">Employee Type</th>
+                        <th class="text-center">Joining Date</th>
+                        <th class="text-center">Activity Status</th>
+                    </tr>
+                </thead>
+                <tbody id="employee-filter-grid-body">
+                    <!-- Data will be injected here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

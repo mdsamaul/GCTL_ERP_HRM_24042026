@@ -28,9 +28,6 @@ namespace GCTL.Core.ViewModels.HrmAtdShifts
         public DateTime Wef { get; set; }
         public string Remarks { get; set; }
         public string ShiftTypeId { get; set; }
-        public DateTime LunchInTime { get; set; }
-        public DateTime LunchOutTime { get; set; }
-        public decimal LunchBreakHour { get; set; }
 
     }
 }

@@ -1,0 +1,77 @@
+﻿@model GCTL.UI.Core.ViewModels.HrmPayDefBenefitTypes.HrmPayDefBenefitTypePagesViewModel
+
+@{
+	Model.PageTitle = ViewBag.Title;
+	ViewBag.Title = "Benefit Type";
+	Model.Breadcrumb = "Benefit Type";
+}
+
+
+<!-- Content Header (Page header) -->
+<partial name="_PageHeader" model="Model" />
+
+<section class="content consistent-look">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-6 pr-0">
+                <div class="card">
+                    <div class="card-header px-2">
+                        <partial name="_Toolbars" model="new ToobarModel() { Title = Model.Breadcrumb, Code = Model.Code, Name = Model.Setup.BenefitTypeId }" />
+                    </div>
+                    <div class="card-body px-2">
+
+                        <form asp-action="Setup" method="post" id="Benefit-type-form" asp-controller="HrmPayDefBenefitType">
+
+                            <div class="js-Benefit-type-form-container">
+                                <partial name="_Setup" model="Model.Setup" />
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6" >
+                <div class="card">
+                    <div class="card-body p-2 pt-3">
+                        <div class="js-Benefit-type-grid-container">
+                            @await Html.PartialAsync("_Grid", Model.BenefitTypeList)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <partial name="_BottomNavigation" />
+    </div>
+</section>
+<partial name="DeleteModal" />
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+    @* <script src="~/frontend/plugins/jquery-validation/jquery.validate.min.js"></script>
+
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+ *@
+    <script src="~/js/pages/payDefBenefitType.js"></script>
+ 
+@* 
+    <script type="text/javascript">
+        var options = {
+            baseUrl: '@Url.Action("", "HrmPayDefBenefitType")'
+        };
+        options.load = () => {
+        };
+
+        $.benefitTypes(options);
+    </script> *@
+}
+
+

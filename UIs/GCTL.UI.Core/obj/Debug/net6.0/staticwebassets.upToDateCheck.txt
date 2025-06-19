@@ -2005,6 +2005,7 @@ wwwroot\images\CoIcon.ico
 wwwroot\images\default-150x150.png
 wwwroot\images\delete.png
 wwwroot\images\delete2.png
+wwwroot\images\DP_logo.png
 wwwroot\images\edit.png
 wwwroot\images\eurolablogo.jpeg
 wwwroot\images\favicon.ico
@@ -2086,6 +2087,7 @@ wwwroot\js\pages\doctorTypes.js
 wwwroot\js\pages\dosages.js
 wwwroot\js\pages\dueCollectionReports.js
 wwwroot\js\pages\dueCollections.js
+wwwroot\js\pages\employeeFilter.js
 wwwroot\js\pages\employeeGeneralInfoReport.js
 wwwroot\js\pages\employees.js
 wwwroot\js\pages\EmployeeWeekendDeclarationReport.js
@@ -2107,7 +2109,11 @@ wwwroot\js\pages\hRMDefGradeTypes.js
 wwwroot\js\pages\hrmDefInstitutes.js
 wwwroot\js\pages\hrmDefOccupations.js
 wwwroot\js\pages\hrmEmployee2.js
+wwwroot\js\pages\hrmEmployeeHolidayDeclaration.js
+wwwroot\js\pages\hrmPayDefDeductionType.js
 wwwroot\js\pages\HRMPayrollLoan.js
+wwwroot\js\pages\hrmWorkingDayDeclaration.js
+wwwroot\js\pages\hrmWorkingDayDeclarationReport.js
 wwwroot\js\pages\inPatientBills.js
 wwwroot\js\pages\jobTitles.js
 wwwroot\js\pages\labTestListForAccount.js
@@ -2129,6 +2135,7 @@ wwwroot\js\pages\medicineSuppliers.js
 wwwroot\js\pages\medicineTypes.js
 wwwroot\js\pages\nationalitys.js
 wwwroot\js\pages\navigations.js
+wwwroot\js\pages\newJs.js
 wwwroot\js\pages\nurseReports.js
 wwwroot\js\pages\nurses.js
 wwwroot\js\pages\officialInfo.js
@@ -2138,8 +2145,13 @@ wwwroot\js\pages\patientCategories.js
 wwwroot\js\pages\patientReports.js
 wwwroot\js\pages\patients.js
 wwwroot\js\pages\patientTypes.js
+wwwroot\js\pages\payDefBenefitType.js
 wwwroot\js\pages\paymentModes.js
 wwwroot\js\pages\paymentTypes.js
+wwwroot\js\pages\payOthersBenefit.js
+wwwroot\js\pages\payOthersBenefitReport.js
+wwwroot\js\pages\paySalaryDeductionReport.js
+wwwroot\js\pages\paySalaryDeductions.js
 wwwroot\js\pages\performances.js
 wwwroot\js\pages\performancesType.js
 wwwroot\js\pages\PFAssignEntry.js

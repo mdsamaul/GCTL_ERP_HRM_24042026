@@ -1,0 +1,112 @@
+﻿@model GCTL.UI.Core.ViewModels.HrmPayOthersAdjustments.HrmPayOthersAdjustmentPageViewModel
+@* @{
+    ViewBag.Title = "Employee Holiday Declaration";
+    Model.Breadcrumb = "EmployeeHolidayDeclaration";
+    Model.PageTitle = ViewBag.Title;
+}
+ *@
+<style>
+    .card-header {
+        min-height: 50px;
+    }
+
+    #employee-filter-grid tbody tr td:first-child {
+        width: 5%;
+        padding: 0;
+    }
+
+    #employee-filter-grid thead th:first-child {
+        width: 5%;
+    }
+
+    th.no-sort::after,
+    th.no-sort::before {
+        display: none !important;
+    }
+
+    #employee-filter-grid_wrapper .dataTables_scrollBody {
+        height: auto !important;
+        max-height: 400px; /* Set your desired maximum height */
+        overflow-y: auto !important;
+    }
+
+    .customselect {
+        max-width: 300px;
+    }
+
+    /*
+        .modal-dialog {
+            max-width: 60% !important;
+            width: 50% !important;
+        } */
+</style>
+
+<partial name="_PageHeader" model="Model"></partial>
+<section class="content-fluid">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12 col-12 col-lg-12 col-xl-12 col-sm-12">
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header bg-white">
+                        <partial name="_Toolbars" model="new ToobarModel() { Title = Model.Breadcrumb, Code = Model.Code, Name = Model.Setup.BenefitTypeId }"></partial>
+                    </div>
+
+
+
+                    <div class="col-md-12">
+                        <partial name="_Grid" />
+                    </div>
+
+                    <hr class="my-4"/>
+                    <div class="card-body">
+                        <div id="salaryDeductionForm">
+                            <partial name="_Setup" model="Model.Setup"></partial>
+                        </div>
+
+                        <div>
+                            <partial name="_ExcelFileUpload"></partial>
+                        </div>
+
+                        <div>
+                            <partial name="_OtherAdjustmentGrid"></partial>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="benefitTypeModal" tabindex="-1" role="dialog" aria-labelledby="benefitTypeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document"> 
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="benefitTypeModalLabel">Benefit Type</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="benefitTypeContent"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @* <script src="~/frontend/plugins/jquery-validation/jquery.validate.min.js"></script> *@
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+	
+
+
+    <script src="~/js/pages/payOthersBenefit.js"></script>
+    <script src="~/js/pages/payDefBenefitType.js"></script> 
+
+    <link href="~/lib/bootstrap-multiselect-master/dist/css/bootstrap-multiselect.min.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap-multiselect-master/dist/js/bootstrap-multiselect.min.js"></script>
+}

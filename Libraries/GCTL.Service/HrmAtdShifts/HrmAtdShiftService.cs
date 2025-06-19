@@ -50,10 +50,7 @@ namespace GCTL.Service.HrmAtdShifts
                 ModifyDate = entity.ModifyDate,
                 Luser = entity.Luser,
                 Lip = entity.Lip,
-                Lmac = entity.Lmac,
-                LunchInTime = entity.LunchInTime,
-                LunchOutTime = entity.LunchOutTime,
-                LunchBreakHour = entity.LunchBreakHour
+                Lmac = entity.Lmac
             };
         }
         public async Task<List<HrmAtdShiftSetupViewModel>> GetAllAsync()
@@ -67,7 +64,7 @@ namespace GCTL.Service.HrmAtdShifts
                 ShiftName = entityVM.ShiftName,
                 ShiftShortName = entityVM.ShiftShortName,
                 Remarks = entityVM.Remarks,
-                Description = entityVM.ShiftShortName,
+                //Description = entityVM.Description,
                 ShiftStartTime = entityVM.ShiftStartTime,
                 ShiftEndTime = entityVM.ShiftEndTime,
                 AbsentTime = entityVM.AbsentTime,
@@ -77,103 +74,45 @@ namespace GCTL.Service.HrmAtdShifts
                 Wef = entityVM.Wef,
                 Luser = entityVM.Luser,
                 Lip = entityVM.Lip,
-                Lmac = entityVM.Lmac,
-                LunchInTime = entityVM.LunchInTime,
-                LunchOutTime = entityVM.LunchOutTime,
-                LunchBreakHour = entityVM.LunchBreakHour
+                Lmac = entityVM.Lmac
 
             }).ToList();
         }
 
 
-        //public async Task<bool> SaveAsync(HrmAtdShiftSetupViewModel entityVM)
-        //{
-        //    await hRmAtdShiftRepository.BeginTransactionAsync();
-        //    try
-        //    {
-
-        //        HrmAtdShift entity = new HrmAtdShift();
-        //        entity.ShiftCode = await GenerateNextCode();
-        //        entity.ShiftName = entityVM.ShiftName;
-        //        entity.ShiftShortName = entityVM.ShiftShortName ?? string.Empty;
-        //        //entity.Description = entityVM.Description ?? string.Empty;
-        //        entity.Remarks = entityVM.Remarks ?? string.Empty;
-        //        entity.ShiftStartTime = entityVM.ShiftStartTime;
-        //        entity.ShiftEndTime = entityVM.ShiftEndTime;
-        //        entity.AbsentTime = entityVM.AbsentTime;
-        //        entity.LateTime = entityVM.LateTime;
-        //        entity.Luser = entityVM.Luser ?? string.Empty;
-        //        entity.Lip = entityVM.Lip ?? string.Empty;
-        //        entity.Lmac = entityVM.Lmac ?? string.Empty;
-        //        entity.Wef = entityVM.Wef;
-        //        entity.ShiftTypeId = entityVM.ShiftTypeId??string.Empty;
-        //        entity.Ldate = DateTime.Now;
-        //        await hRmAtdShiftRepository.AddAsync(entity);
-        //       await hRmAtdShiftRepository.CommitTransactionAsync();
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine($"error message {ex.Message}");
-        //        await hRmAtdShiftRepository.RollbackTransactionAsync();
-        //        return false;
-        //    }
-        //}
         public async Task<bool> SaveAsync(HrmAtdShiftSetupViewModel entityVM)
         {
             await hRmAtdShiftRepository.BeginTransactionAsync();
             try
             {
-                // Check if shift with same name or shift code already exists
-                //string nextShiftCode = await GenerateNextCode();
-
-                //var existingShift = await hRmAtdShiftRepository
-                //    .FindByAsync(x => x.ShiftCode == nextShiftCode);
-
-                //if (existingShift != null)
-                //{
-                //    // ShiftCode already used
-                //    throw new InvalidOperationException($"ShiftCode '{nextShiftCode}' already exists.");
-                //}
-
-                HrmAtdShift entity = new HrmAtdShift
-                {
-                    ShiftCode = await GenerateNextCode(),
-                    ShiftName = entityVM.ShiftName,
-                    ShiftShortName = entityVM.Description ?? string.Empty,
-                    Remarks = entityVM.Remarks ?? string.Empty,
-                    ShiftStartTime = entityVM.ShiftStartTime,
-                    ShiftEndTime = entityVM.ShiftEndTime,
-                    AbsentTime = entityVM.AbsentTime,
-                    LateTime = entityVM.LateTime,
-                    Luser = entityVM.Luser ?? string.Empty,
-                    Lip = entityVM.Lip ?? string.Empty,
-                    Lmac = entityVM.Lmac ?? string.Empty,
-                    Wef = entityVM.Wef,
-                    ShiftTypeId = entityVM.ShiftTypeId ?? string.Empty,
-                    Ldate = DateTime.Now,
-                    LunchInTime = entityVM.LunchInTime,
-                    LunchOutTime = entityVM.LunchOutTime,
-                    LunchBreakHour = entityVM.LunchBreakHour
-                };
-
-
-
-
+                
+                HrmAtdShift entity = new HrmAtdShift();
+                entity.ShiftCode = await GenerateNextCode();
+                entity.ShiftName = entityVM.ShiftName;
+                entity.ShiftShortName = entityVM.ShiftShortName ?? string.Empty;
+                //entity.Description = entityVM.Description ?? string.Empty;
+                entity.Remarks = entityVM.Remarks ?? string.Empty;
+                entity.ShiftStartTime = entityVM.ShiftStartTime;
+                entity.ShiftEndTime = entityVM.ShiftEndTime;
+                entity.AbsentTime = entityVM.AbsentTime;
+                entity.LateTime = entityVM.LateTime;
+                entity.Luser = entityVM.Luser ?? string.Empty;
+                entity.Lip = entityVM.Lip ?? string.Empty;
+                entity.Lmac = entityVM.Lmac ?? string.Empty;
+                entity.Wef = entityVM.Wef;
+                entity.ShiftTypeId = entityVM.ShiftTypeId??string.Empty;
+                entity.Ldate = DateTime.Now;
                 await hRmAtdShiftRepository.AddAsync(entity);
-                await hRmAtdShiftRepository.CommitTransactionAsync();
+               await hRmAtdShiftRepository.CommitTransactionAsync();
                 return true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error message: {ex.Message}");
+                Console.WriteLine($"error message {ex.Message}");
                 await hRmAtdShiftRepository.RollbackTransactionAsync();
                 return false;
             }
         }
-
-
-      
 
         public async Task<bool> UpdateAsync(HrmAtdShiftSetupViewModel entityVM)
         {
@@ -191,7 +130,7 @@ namespace GCTL.Service.HrmAtdShifts
                  entity.ShiftCode = entityVM.ShiftCode;
                 entity.ShiftName = entityVM.ShiftName;
                 entity.ShiftShortName = entityVM.ShiftShortName ?? string.Empty;
-                entity.ShiftShortName = entityVM.Description ?? string.Empty;
+                //entity.Description = entityVM.Description ?? string.Empty;
                 entity.Remarks = entityVM.Remarks ?? string.Empty;
                 entity.ShiftStartTime = entityVM.ShiftStartTime;
                 entity.ShiftEndTime = entityVM.ShiftEndTime;
@@ -203,9 +142,6 @@ namespace GCTL.Service.HrmAtdShifts
                 entity.Wef = entityVM.Wef;
                 entity.ShiftTypeId = entityVM.ShiftTypeId ?? string.Empty;
                 entity.ModifyDate = DateTime.Now;
-                entity.LunchInTime = entityVM.LunchInTime;
-                entity.LunchOutTime = entityVM.LunchOutTime;
-                entity.LunchBreakHour = entityVM.LunchBreakHour;
                 await hRmAtdShiftRepository.UpdateAsync(entity);
                 await hRmAtdShiftRepository.CommitTransactionAsync();
                 return true;

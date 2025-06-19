@@ -1,0 +1,71 @@
+﻿@model GCTL.UI.Core.ViewModels.HrmPayDeductionTypes.HrmPayDeductionTypePageViewModel
+@{
+    ViewBag.Title = "Deduction Type";
+    Model.Breadcrumb = "Deduction Type";
+    Model.PageTitle = ViewBag.Title;
+}
+
+<style type="text/css">
+    .consistent-look .card {
+        min-height: 316px !important;
+    }
+</style>
+
+<!-- Content Header (Page header) -->
+<partial name="_PageHeader" model="Model" />
+
+
+<section class="content consistent-look">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 pr-0">
+                <div class="card">
+                    <div class="card-header px-2">
+                        <partial name="_Toolbars" model="new ToobarModel() { Title = Model.Breadcrumb, Code = Model.Code, Name = Model.Setup.DeductionType }" />
+                    </div>
+                    <div class="card-body px-2">
+                        <form asp-action="Setup" id="deduction-type-form">
+                            <div class="js-deduction-type-form-container">
+                                <partial name="_Setup" model="Model.Setup" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body p-2 pt-3">
+                        <div class="js-deduction-type-grid-container">
+                            <partial name="_Grid" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <partial name="_BottomNavigation" />
+    </div>
+</section>
+<partial name="DeleteModal" />
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+	
+}
+<script src="~/frontend/plugins/jquery-validation/jquery.validate.min.js"></script>
+@* <script src="~/frontend/plugins/jquery-validation/jquery.validate.unobtrusive.min.js"></script> *@
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<script src="~/js/pages/hrmPayDefDeductionType.js"></script>
+@* 
+<script type="text/javascript">
+	var options = {
+		baseUrl: '@Url.Action("", "HrmPayDefDeductionType")',
+	};
+	options.load = () => {
+	};
+
+	$.deductionTypes(options);
+</script>
+ *@

@@ -1,0 +1,49 @@
+﻿@model List<GCTL.Core.ViewModels.HrmPayDefBenefitTypes.HrmPayDefBenefitTypeViewModel>
+
+<table id="Benefit-type-grid" class="table table-striped  table-bordered table-sm table-hover table-common">
+    <thead class="row-border">
+        <tr class="table row-border">
+            <th class="text-center text-middle" style="width: 10%;">
+                Select <br /> <input type="checkbox" id="Benefit-type-check-all" />
+            </th>
+            <th class="text-center text-middle" style="width: 10%;"> Id</th>
+            <th class="text-center text-middle" style="width: 50%;"> Benefit Type</th>
+            <th class="text-center text-middle" style="width: 40%;"> Short Name</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model == null || !Model.Any())
+        {
+            <tr class="text-center text-middle">
+                <td colspan="8">No Data Available.</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model.OrderByDescending(x => x.BenefitTypeId))
+            {
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" class="text-center text-middle checkBox" data-id="@item.Tc" value="@item.Tc" />
+                    </td>
+                    <td>
+                        <a href="#" class='btn js-Benefit-type-edit'
+                           style="text-decoration: underline; color: rebeccapurple;"
+                           data-id="@item.BenefitTypeId" title="Edit">
+                            @item.BenefitTypeId
+                        </a>
+                    </td>
+
+                    <td class="text-center text-middle">@item.BenefitType</td>
+                    <td class="text-center text-middle">@item.ShortName</td>
+
+
+                </tr>
+            }
+        }
+
+
+    </tbody>
+</table>

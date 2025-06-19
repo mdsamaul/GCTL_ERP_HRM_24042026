@@ -13,7 +13,7 @@ namespace GCTL.Core.ViewModels.HrmAttWorkingDayDeclarations
         public string WorkingDayCode { get; set; }
         [Required(ErrorMessage ="{0} is required")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime WorkingDayDate { get; set; }
+        public DateTime? WorkingDayDate { get; set; }
         public string Remarks { get; set; }
         public string CompanyCode { get; set; }
     }

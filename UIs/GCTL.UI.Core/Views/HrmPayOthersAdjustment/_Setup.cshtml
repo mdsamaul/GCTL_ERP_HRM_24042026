@@ -1,0 +1,188 @@
+﻿@model GCTL.Core.ViewModels.HrmPayOthersAdjustmentEntries.HrmPayOthersAdjustmentEntryViewModel
+<style>
+    #other-benefit-form {
+        max-width: 100%;
+    }
+
+    .form-label {
+        text-align: right;
+        font-weight: 500;
+    }
+
+    /* Desktop and larger tablets */
+    @@media (min-width: 992px) {
+        .form-group-row
+
+    {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 1rem;
+    }
+
+    .form-group-row label {
+        min-width: 120px;
+        white-space: nowrap;
+        margin-bottom: 0;
+        text-align: right;
+    }
+
+    .form-group-row .form-control,
+    .form-group-row select,
+    .form-group-row textarea {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .form-group-row .btn {
+        flex-shrink: 0;
+    }
+
+    }
+
+    /* Tablets and smaller screens */
+    @@media (max-width: 991px) {
+        .form-group-row
+
+    {
+        display: block;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group-row label {
+        display: block;
+        margin-bottom: 0.5rem;
+        text-align: left;
+        font-weight: 500;
+    }
+
+    .form-group-row .form-control,
+    .form-group-row select,
+    .form-group-row textarea {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-group-row .btn {
+        width: 100%;
+    }
+
+    /* Stack benefit type select and button vertically on small screens */
+    .benefit-type-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+        .benefit-type-container select {
+            margin-bottom: 0;
+        }
+
+    }
+
+    /* Mobile phones */
+    @@media (max-width: 576px) {
+        #other-benefit-form
+
+    {
+        padding: 0 10px;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .form-group-row {
+        margin-bottom: 1.25rem;
+    }
+
+        .form-group-row label {
+            font-size: 0.9rem;
+        }
+
+    .form-control,
+    select.form-control,
+    textarea.form-control {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+
+    }
+
+    /* Hide the empty column spacers on smaller screens */
+    @@media (max-width: 991px) {
+        .col-spacer
+
+    {
+        display: none;
+    }
+
+    }
+</style>
+
+<div class="card mb-4 border-0 shadow-sm">
+    <div class="card-header bg-light">
+        <h6 class="mb-0">
+            <i class="fa fa-calendar-alt me-2 px-3"></i>
+            Employee Other Benefit Entry
+        </h6>
+    </div>
+    <div class="card-body">
+        <form id="other-benefit-form" class="mt-4">
+            <input type="text" asp-for="Tc" hidden />
+            <input type="text" asp-for="EmployeeId" hidden />
+
+            <div class="row mb-3">
+                <div class="col-lg-5 col-md-6 col-12">
+                    <div class="form-group-row">
+                        <label asp-for="BenefitTypeId" class="form-label">Benefit Type:<span class="text-danger">*</span></label>
+                        @* <div class="benefit-type-container d-lg-flex d-block"> *@
+                            <select asp-for="BenefitTypeId" class="form-control"></select>
+                            <button type="button" class="btn btn-outline-secondary ms-lg-2 ms-0" id="openBenefitTypeModal">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        @* </div> *@
+                    </div>
+                </div>
+                <div class="col-spacer col-lg-1 d-none d-lg-block"></div>
+                <div class="col-lg-5 col-md-6 col-12">
+                    <div class="form-group-row">
+                        <label asp-for="PaidDays" class="form-label">Pay Day:</label>
+                        <input type="text" asp-for="PaidDays" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-lg-5 col-md-6 col-12">
+                    <div class="form-group-row">
+                        <label asp-for="SalaryMonth" class="form-label">Month:<span class="text-danger">*</span></label>
+                        <select asp-for="SalaryMonth" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="col-spacer col-lg-1 d-none d-lg-block"></div>
+                <div class="col-lg-5 col-md-6 col-12">
+                    <div class="form-group-row">
+                        <label asp-for="SalaryYear" class="form-label">Year:<span class="text-danger">*</span></label>
+                        <input type="number" asp-for="SalaryYear" class="form-control" step="1" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-lg-5 col-md-6 col-12">
+                    <div class="form-group-row">
+                        <label asp-for="BenefitAmount" class="form-label">Benefit Amount:</label>
+                        <input type="text" asp-for="BenefitAmount" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-spacer col-lg-1 d-none d-lg-block"></div>
+                <div class="col-lg-5 col-md-6 col-12">
+                    <div class="form-group-row">
+                        <label asp-for="Remarks" class="form-label">Remarks:</label>
+                        <textarea asp-for="Remarks" class="form-control" rows="3" placeholder="Enter your remarks here"></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+﻿<style>    
+    #employee-holiday-grid-body {
+        display: block;
+        max-height: 351px;
+        overflow-y: auto;
+    }
+
+    #employee-holiday-grid thead {
+        display: table;
+        width: calc(100% - 17px);
+        table-layout: fixed;
+    }
+
+    #employee-holiday-grid tbody {
+        display: block;
+        overflow-y: auto;
+        width: 100%;
+    }
+
+        #employee-holiday-grid tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+    .dataTables_filter input {
+        width: 350px !important; 
+        max-width: 100%;
+        padding: 6px 12px;
+    }
+
+    .dataTables_filter {
+        margin-bottom: 10px;
+    }
+</style>
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+        <h6 class="mb-0"><i class="fa fa-list-alt me-2 px-3"></i>Employee Holiday Declaration List</h6>
+
+    </div>
+    <div class="card-body p-0 pt-3">
+        <div id="loadingOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(255,255,255,0.7); z-index:9999; text-align:center; padding-top:200px;">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Loading...</p>
+        </div>
+
+        <div class="table-responsive">
+            <table id="employee-holiday-grid-show" class="table table-bordered table-striped table-hover align-middle mb-0">
+                <thead>
+                    <tr style="font-size:15">
+                        <th width="5%" class="text-center no-sort" style="width: 5%; padding-left: 0; padding-right: 0;">
+								<label for="employee-holiday-check-all">Select</label><br/>
+                                <input type="checkbox" id="employee-holiday-check-all">
+                        </th>
+                        <th class="text-center">ID</th>
+                        <th class="text-center">Emp. ID</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Designation</th>
+                        <th class="text-center">Holiday Date</th>
+                        <th class="text-center">In Place of Date</th>
+                        <th class="text-center">Is Day off Duty</th>
+                        <th class="text-center">Holiday Type</th>
+                        <th class="text-center">Remarks</th>
+                        <th class="text-center">Entry User</th>
+                    </tr>
+                </thead>
+                <tbody id="employee-holiday-grid-body-show">
+                    <!-- Data will be injected here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+</div>
+
+
+

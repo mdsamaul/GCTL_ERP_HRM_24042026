@@ -1,115 +1,116 @@
-﻿using GCTL.Core.Data;
+﻿using GCTL.Core.Configurations;
+using GCTL.Core.Data;
 using GCTL.Data;
 using GCTL.Data.Models;
+using GCTL.Service.AdmissionTypes;
+using GCTL.Service.BloodGroups;
+//using GCTL.Service.HrmDefBankAndNomineeInfos;
+using GCTL.Service.Branches;
+//using GCTL.Service.EmployeeOfficialInfo;
+using GCTL.Service.BranchesTypeInfo;
 using GCTL.Service.Common;
 using GCTL.Service.Companies;
-
-using GCTL.Service.UnitTypes;
-using GCTL.Service.Users;
-using Microsoft.EntityFrameworkCore;
+//using GCTL.Service.HrmEmployeeFamilys;
+//using GCTL.Service.HrmEmployeeQualifications;
+//using GCTL.Service.HrmEmployeeDocumentInfos;
+using GCTL.Service.CompanyInfos;
+using GCTL.Service.CoreBranches;
 using GCTL.Service.Currencies;
-using GCTL.Service.PaymentModes;
+using GCTL.Service.DeliveryPeriods;
+using GCTL.Service.Departments;
+using GCTL.Service.Designations;
+using GCTL.Service.Districts;
 //using GCTL.Service.PaymentTypes;
 using GCTL.Service.Doctors;
 using GCTL.Service.DoctorTypes;
-using GCTL.Service.Specialities;
-using GCTL.Service.Qualifications;
-using GCTL.Service.Shifts;
-using GCTL.Service.BloodGroups;
-using GCTL.Service.Religions;
-using GCTL.Service.Relation;
-using GCTL.Service.Designations;
-using GCTL.Service.Departments;
-
-//using GCTL.Service.ReferencePersons;
-
-using GCTL.Service.Reports;
-using GCTL.Core.Configurations;
-using Microsoft.Extensions.Options;
-
-using GCTL.Service.LogsLoggers;
-using GCTL.Service.Loggers;
-
-using GCTL.Service.AdmissionTypes;
-
-using GCTL.Service.Units;
-
-using GCTL.Service.People;
-using GCTL.Service.Periods;
-
-using GCTL.Service.DeliveryPeriods;
-using Microsoft.AspNetCore.Http.Features;
-using GCTL.Service.Surnames;
-
 using GCTL.Service.DoctorWorkingPalace;
-using GCTL.Service.LeaveTypes;
-using GCTL.Service.HrmAtdShifts;
-using GCTL.Service.HRMCompanyWeekEnds;
+using GCTL.Service.EmailService;
+//using GCTL.Service.EducationalInfoReport;
+using GCTL.Service.EmployeeGeneralInfoReport;
+using GCTL.Service.Employees;
+using GCTL.Service.EmployeeWeekendDeclaration;
+using GCTL.Service.EmployeeWeekendDeclarationReport;
+//using GCTL.Service.EmployeeReferenceInfos;
+using GCTL.Service.ExperianceInfos;
+using GCTL.Service.FileHandle;
+using GCTL.Service.Grades;
 using GCTL.Service.HolidayTypes;
-using GCTL.Service.HrmAtdHolidays;
-using GCTL.Service.HRMAttWorkingDayDeclarations;
+using GCTL.Service.HRM_PAY_SalaryDeductionEntry;
 using GCTL.Service.HRMATDAttendanceTypes;
-using GCTL.Service.HrmDefEmpTypes;
-using GCTL.Service.HrmEmployees2;
+using GCTL.Service.HrmAtdHolidays;
+//using GCTL.Service.ManualAttendances;
+//using GCTL.Service.ManualAttendanceBulks;
+using GCTL.Service.HrmAtdMachineDatas;
+using GCTL.Service.HrmAtdShifts;
+using GCTL.Service.HRMAttWorkingDayDeclarations;
+using GCTL.Service.HRMCompanyWeekEnds;
+using GCTL.Service.HRMDefBoardCountryNames;
 //using GCTL.Service.BankInformations;
 //using GCTL.Service.BankBranchInformations;
 //using GCTL.Service.CoreBankAccountInformations;
 //using GCTL.Service.HrmEmployeeAdditionalInfos;
 using GCTL.Service.HrmDefDegrees;
-using GCTL.Service.HRMDefBoardCountryNames;
-using GCTL.Service.HRMDefExamTitles;
-using GCTL.Service.HrmDefInstitutes;
+using GCTL.Service.HrmDefEmpTypes;
 //using GCTL.Service.HrmEmployeeEducations;
 using GCTL.Service.HrmDefExamGroupInfos;
-//using GCTL.Service.EmployeeOfficialInfo;
-using GCTL.Service.BranchesTypeInfo;
-using GCTL.Service.Districts;
-//using GCTL.Service.EmployeeContactInfos;
-using GCTL.Service.Relationships;
-using GCTL.Service.HrmDefPerformances;
-using GCTL.Service.PerformancesType;
-using GCTL.Service.HrmDefSeparationTypes;
-using GCTL.Service.JobTitles;
+using GCTL.Service.HRMDefExamTitles;
 using GCTL.Service.HrmDefGradeTypes;
-using GCTL.Service.Grades;
+using GCTL.Service.HrmDefInstitutes;
 using GCTL.Service.HrmDefOccupations;
-//using GCTL.Service.HrmEmployeeFamilys;
-//using GCTL.Service.HrmEmployeeQualifications;
-//using GCTL.Service.HrmEmployeeDocumentInfos;
-using GCTL.Service.CompanyInfos;
-//using GCTL.Service.EmployeeReferenceInfos;
-using GCTL.Service.ExperianceInfos;
-using GCTL.Service.Nationalitys;
-using GCTL.Service.SeparationInfos;
-//using GCTL.Service.ManualAttendances;
-//using GCTL.Service.ManualAttendanceBulks;
-using GCTL.Service.HrmAtdMachineDatas;
-//using GCTL.Service.HrmDefBankAndNomineeInfos;
-using GCTL.Service.Branches;
-using GCTL.Service.CoreBranches;
-using GCTL.Service.EmailService;
-using GCTL.Service.FileHandle;
+using GCTL.Service.HrmDefPerformances;
+using GCTL.Service.HrmDefSeparationTypes;
+using GCTL.Service.HrmEmployeeHolidayDeclarations;
 //using GCTL.Service.HrmLeaveApplicationEntrys;
 //using GCTL.Service.IncrementService;
 //using GCTL.Service.LeaveAppDay;
 using GCTL.Service.HrmEmployeeOfficialInfoServe;
-using GCTL.Service.Employees;
-//using GCTL.Service.EducationalInfoReport;
-using GCTL.Service.EmployeeGeneralInfoReport;
+using GCTL.Service.HrmEmployees2;
+using GCTL.Service.HrmPayDefBenefitTypes;
+using GCTL.Service.HrmPayDefDeductionTypes;
+using GCTL.Service.HrmPayOthersAdjustmentEntries;
+using GCTL.Service.HrmPayOthersAdjustmentReports;
+using GCTL.Service.HRMPayrollLoan;
+using GCTL.Service.HrmPaySalaryDeductionReports;
+using GCTL.Service.HrmWorkingDayDeclarationReports;
+using GCTL.Service.HrmWorkingDayDeclarations;
+using GCTL.Service.JobTitles;
+using GCTL.Service.LeaveTypes;
+using GCTL.Service.Loggers;
+using GCTL.Service.LogsLoggers;
+using GCTL.Service.ManualEarnLeaveEntry;
+using GCTL.Service.Nationalitys;
+using GCTL.Service.PaymentModes;
+using GCTL.Service.People;
+using GCTL.Service.PerformancesType;
+using GCTL.Service.Periods;
+using GCTL.Service.PFAssignEntry;
+using GCTL.Service.PFAssignEntryReport;
+using GCTL.Service.Qualifications;
+using GCTL.Service.Relation;
+//using GCTL.Service.EmployeeContactInfos;
+using GCTL.Service.Relationships;
+using GCTL.Service.Religions;
+//using GCTL.Service.ReferencePersons;
+
+using GCTL.Service.Reports;
+using GCTL.Service.RosterScheduleApproval;
+using GCTL.Service.RosterScheduleEntry;
+using GCTL.Service.RosterScheduleReport;
+using GCTL.Service.SeparationInfos;
 //using GCTL.Service.EmployeeReferenceInformationReport;
 //using GCTL.Service.WorkingExperienceReport;
 //using GCTL.Service.TaxAdjustmentEntry;
 //using GCTL.Service.Reposition;
 using GCTL.Service.SeparationTypes;
-using GCTL.Service.EmployeeWeekendDeclaration;
-using GCTL.Service.ManualEarnLeaveEntry;
-using GCTL.Service.PFAssignEntry;
-using GCTL.Service.RosterScheduleApproval;
-using GCTL.Service.RosterScheduleEntry;
-using GCTL.Service.RosterScheduleReport;
-using GCTL.Service.EmployeeWeekendDeclarationReport;
-using GCTL.Service.PFAssignEntryReport;
-using GCTL.Service.HRMPayrollLoan;
+using GCTL.Service.Shifts;
+using GCTL.Service.Specialities;
+using GCTL.Service.Surnames;
+using GCTL.Service.Units;
+using GCTL.Service.UnitTypes;
+using GCTL.Service.Users;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 
 //using GCTL.Service.AccountReport;
@@ -181,16 +182,6 @@ namespace GCTL.UI.Core.Extensions
             //services.AddScoped<IAccountReportService, AccountReportService>();
 
           
-
-services.AddScoped<IEmployeeWeekendDeclarationService, EmployeeWeekendDeclarationService>(); 
-services.AddScoped<IManualEarnLeaveEntryService, ManualEarnLeaveEntryService>();
-services.AddScoped<IPFAssignEntryService, PFAssignEntryService>(); 
-services.AddScoped<IRosterScheduleEntryService, RosterScheduleEntryService>(); 
-services.AddScoped<IRosterScheduleApprovalService, RosterScheduleApprovalService>();
-services.AddScoped<IRosterScheduleReportServices, RosterScheduleReportServices>();
-services.AddScoped<IEmployeeWeekendDeclarationReportServices, EmployeeWeekendDeclarationReportServices>();
-services.AddScoped<IPFAssignEntryReportServices, PFAssignEntryReportServices>();
-services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
             services.AddScoped<IReportService, ReportService>();
           
 
@@ -256,29 +247,41 @@ services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
             services.AddScoped<IEmailService, EmailService>();
             //services.AddScoped<ILeaveEmailService, LeaveEmailService>();
             //services.AddScoped<IIncrementService, IncrementService>();
-			//services.AddScoped<ITaxAdjustmentEntryService, TaxAdjustmentEntryService>();
-			//services.AddScoped<IRepositionService, RepositionService>();
-			//services.AddScoped<IRepostionExcelService, RepostionExcelService>();
+            //services.AddScoped<ITaxAdjustmentEntryService, TaxAdjustmentEntryService>();
+            //services.AddScoped<IRepositionService, RepositionService>();
+            //services.AddScoped<IRepostionExcelService, RepostionExcelService>();
 
 
 
 
+            
+            services.AddScoped<IHrmEmployeeHolidayDeclarationService, HrmEmployeeHolidayDeclarationService>();
+            services.AddScoped<IHrmPaySalaryDeductionEntryService, HrmPaySalaryDeductionEntryService>();
+            services.AddScoped<IHrmPayDefDeductionTypeService, HrmPayDefDeductionTypeService>();
+			services.AddScoped<IHrmPayOthersAdjustmentEntryService, HrmPayOthersAdjustmentEntryService>();
+			services.AddScoped<IHrmPayOthersAdjustmentReportService, HrmPayOthersAdjustmentReportService>();
+            services.AddScoped<IHrmPayDefBenefitTypeService, HrmPayDefBenefitTypeService>();
+            services.AddScoped<IHrmPaySalaryDeductionReportService, HrmPaySalaryDeductionReportService>();
+			services.AddScoped<IHrmWorkingDayDeclarationService, HrmWorkingDayDeclarationService>();
+			services.AddScoped<IHrmWorkingDayDeclarationReportService, HrmWorkingDayDeclarationReportService>();
 
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-		
-			
-			
-			
-			services.AddScoped<ISeparationTypesService, SeparationTypesService>();
+
+            //Samaul
+            services.AddScoped<IEmployeeWeekendDeclarationService, EmployeeWeekendDeclarationService>();
+            services.AddScoped<IManualEarnLeaveEntryService, ManualEarnLeaveEntryService>();
+            services.AddScoped<IPFAssignEntryService, PFAssignEntryService>();
+            services.AddScoped<IRosterScheduleEntryService, RosterScheduleEntryService>();
+            services.AddScoped<IRosterScheduleApprovalService, RosterScheduleApprovalService>();
+            services.AddScoped<IRosterScheduleReportServices, RosterScheduleReportServices>();
+            services.AddScoped<IEmployeeWeekendDeclarationReportServices, EmployeeWeekendDeclarationReportServices>();
+            services.AddScoped<IPFAssignEntryReportServices, PFAssignEntryReportServices>();
+            services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
+            //services.AddScoped<IReportService, ReportService>(); 
+
+
+
+
+            services.AddScoped<ISeparationTypesService, SeparationTypesService>();
 
 
 

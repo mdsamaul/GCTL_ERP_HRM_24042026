@@ -455,6 +455,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[HRM_Def_HolidayDeclarationType]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[HRM_Def_HolidayType]",
          "ObjectType": 0
       },
@@ -559,6 +563,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[HRM_EmployeeHolidayDeclaration]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[HRM_EmployeeOfficialInfo]",
          "ObjectType": 0
       },
@@ -599,6 +607,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[HRM_Pay_Def_BenefitType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HRM_Pay_Def_DeductionType]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[HRM_PAY_LoanTypeEntry]",
          "ObjectType": 0
       },
@@ -607,7 +623,19 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[HRM_PAY_MonthlyOTEntry]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HRM_PAY_OthersAdjustmentEntry]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[HRM_PAY_PayHeadName]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HRM_PAY_SalaryDeductionEntry]",
          "ObjectType": 0
       },
       {

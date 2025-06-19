@@ -49,9 +49,7 @@
             // Save button click event
             $("body").on('click', settings.saveSelector, function ()
             {
-              
                 validation();
-               
                 $(settings.formSelector).submit();
             });
 
@@ -59,8 +57,9 @@
             $("body").on('submit', settings.formSelector, function (e) {
                 e.preventDefault();
                 var form = $(this)[0];
-                var formData = new FormData(form);              
-                var actionUrl = $(this).attr('action');              
+                var formData = new FormData(form);
+                var actionUrl = $(this).attr('action');
+
                 $.ajax({
                     type: 'POST',
                     url: actionUrl,
@@ -103,7 +102,7 @@
                     data: { code: code, name: name },
                     success: function (response)
                     {
-                        //console.log(response);
+                        console.log(response);
                         if (response.isSuccess)
                         {
                             toastr.error(response.message);
@@ -116,14 +115,12 @@
             $("body").on('click', settings.editSelector, function ()
             {
                 var id = $(this).data('id');
-               
                 $.get(getById, { id: id }, function (result)
                 {
-                    //console.log(getById,id);
                     $(settings.formSelector).html($(result).find(settings.formSelector).html());
 
-                    //TimePicker();
-                    GetTime(result); //get time
+                    TimePicker();
+                  
                     WEFDatePicker();
                     select2DD();
                     $(settings.saveSelector).html('<i class="fas fa-edit"></i> Update');
@@ -154,7 +151,7 @@
                         selectedIds.push($(this).val());
                     });
                 }
-           
+
                 if (selectedIds.length === 0) {
                     toastr.error('Please select at least one leave type to delete.');
                     return;
@@ -204,17 +201,15 @@
 
         // Initialization function
         function initialize()
-        {         
-            dataTable();
-            GetTime(); //get time           
+        {
+         
             WEFDatePicker();
             GenerateNextCode();
             loadTableData();
             ResetForm();
             select2DD();
             TimePicker();
-
-            //initializeTimePicker();
+     
         }
         function select2DD()
         {
@@ -242,7 +237,6 @@
                 url: loadTableURL,
                 success: function (data)
                 {
-                    //console.log(data);
                     $(settings.gridContainer).html(data);
                     dataTable();
 
@@ -254,133 +248,53 @@
             });
         }
 
-        //$(document).ready(function () {
-        //    $('#hRMATDShifts-grid').DataTable();
-        //});
-        $(document).ready(function () {
-            if (!$.fn.dataTable.isDataTable('#hRMATDShifts-grid')) {
-                $('#hRMATDShifts-grid').DataTable({
-                    paging: true,
-                    ordering: true,
-                    info: true,
-                    searching: true,
-                    responsive: true,
-                    pageLength: 5,
-                    lengthMenu: [5, 10, 25, 50, 100],
-                    scrollY: 'auto',
-                    scrollCollapse: true
-                });
-            }
-        });
-
-
         // Data table initialization function
-        //function dataTable()
-        //{
+        function dataTable()
+        {
 
 
-        //    $(settings.gridSelector).DataTable({
-        //        destroy: true
-        //    });
-        //    $(settings.gridSelector).DataTable({
-        //        "paging": true,
-        //        "ordering": true,
-        //        "info": true,
-        //        "searching": true,
-        //            responsive: true,
-        //            pageLength: 5,
-        //            destroy: true,
-        //            lengthMenu: [5,10, 25, 50, 100],
-        //        });
-
-
-        //}
-        $(document).ready(function () {
-            if (!$.fn.dataTable.isDataTable('#hRMATDShifts-grid')) {
-                $('#hRMATDShifts-grid').DataTable({
-                    paging: true,
-                    ordering: true,
-                    info: true,
-                    searching: true,
+           
+                $(settings.gridSelector).DataTable({
                     responsive: true,
                     pageLength: 5,
-                    lengthMenu: [5, 10, 25, 50, 100]
+                    destroy: true,
+                    lengthMenu: [5,10, 25, 50, 100],
                 });
-            }
-        });
+           
 
-        function dataTable() {
-            // Initialize DataTable only once
-            var table = $(settings.gridSelector);
-            if ($.fn.DataTable.isDataTable(table)) {
-                table.DataTable().clear().destroy(); // Destroy existing instance before re-initializing
-            }
-
-            // Now initialize the DataTable with the necessary options
-            table.DataTable({
-                paging: true,
-                ordering: true,
-                info: true,
-                searching: true,
-                responsive: true,
-                pageLength: 5,
-                lengthMenu: [5, 10, 25, 50, 100]
-            });
         }
 
 
-        //get time value
-
-        function GetTime(result) {
-            var startTime = $(result).find("#inDateTimeInput").val();
-            var endTime = $(result).find("#outDateTimeInput").val();
-            var lateTime = $(result).find("#lateDateTimeInput").val();
-            var absentTime = $(result).find("#AbsentDateTimeInput").val();
-            var wefDate = $(result).find("#WefDate").val();
-            var lunchIn = $(result).find("#LunchInDateTime").val();
-            var lunchOut = $(result).find("#LunchOutDateTime").val();
-            var lunchBreak = $(result).find("#LunchBreakTimeHour").val();
-
-            initializeTimePicker("#inTimeInput", "#inDateTimeInput", startTime);
-            initializeTimePicker("#outTimeInput", "#outDateTimeInput", endTime);
-            initializeTimePicker("#lateTimeInput", "#lateDateTimeInput", lateTime);
-            initializeTimePicker("#AbsentTimeInput", "#AbsentDateTimeInput", absentTime);
-            initializeTimePicker("#LunchInTime", "#LunchInDateTime", lunchIn);
-            initializeTimePicker("#LunchOutTime", "#LunchOutDateTime", lunchOut);
-            //initializeTimePicker("#LunchBreakHour", "#LunchBreakTimeHour", lunchBreak);
-            $("#WefDate").val(wefDate);
-        }
-
-        function WEFDatePicker() {
+        // WEF Date Picker
+        function WEFDatePicker()
+        {
             $("#WefDate").datepicker({
-                dateFormat: 'mm/dd/yy', 
+                dateFormat: 'dd/mm/yy',
                 changeMonth: true,
                 changeYear: true,
                 yearRange: "-100:+10",
-                //regional: 'en-GB',
-                onSelect: function () {
-                    var selectedDate = $(this).datepicker('getDate');
-                    //console.log(selectedDate);
-                    if (selectedDate) {
-                        var formatted = $.datepicker.formatDate('mm/dd/yy', selectedDate);
-                        $('#WefHidden').val(formatted);
-                    }
+                regional: 'en-GB', // Add localization if needed
+                beforeShow: function (input, inst) {
+                    $(this).toggleClass("placeholder-shown", !this.value);
+                },
+                onClose: function (dateText, inst) {
+                    $(this).toggleClass("placeholder-shown", !this.value);
+                },
+                onSelect: function (dateText) {
+                    var formattedDate = $.datepicker.formatDate('mm/dd/yy', $(this).datepicker('getDate'));
+                    $('#WefHidden').val(formattedDate);
                     $("#WefDate").valid();
                 }
             });
 
             var initialDate = $("#WefDate").val();
             if (initialDate) {
-                var parsedDate = $("#WefDate").datepicker('getDate');
-                if (parsedDate) {
-                    var formattedInit = $.datepicker.formatDate('mm/dd/yy', parsedDate);
-                    $('#WefHidden').val(formattedInit);
-                }
+                var formattedInitialDate = $.datepicker.formatDate('mm/dd/yy', $("#WefDate").datepicker('getDate'));
+                $('#WefHidden').val(formattedInitialDate);
             }
 
             $(".datepicker").trigger("input");
         }
-
       
         function GenerateNextCode()
         {
@@ -399,15 +313,14 @@
                 }
             });
         }
+
+
+
+
+
+      
         function ResetForm()
         {
-
-            if (!$('#Id').val()) {
-                var currentTime = moment().format('hh:mm:ss A');
-                $('.TimePicker').each(function () {
-                    $(this).val(currentTime);
-                });
-            }
             $(settings.formSelector)[0].reset();
             $('#Id').val('');
             $('#AutoId').val('');
@@ -416,7 +329,13 @@
             $('#ShiftName').val('').trigger('focus'); 
             $('#ShiftTypeIdDD').val(null).trigger('change');
             $('#Description').val('');
-           
+
+            var currentTime = moment().format('hh:mm:ss A');
+            $('.TimePicker').each(function ()
+            {
+                $(this).val(currentTime);
+            });
+          
             $('#WefDate').val(''); 
             $('#Remarks').val('');
             $('#LdateModifyHide').hide();
@@ -424,16 +343,6 @@
             $('.text-danger').text('');
             $(settings.formSelector).attr('action', testSave);
             GenerateNextCode();
-
-
-            initializeTimePicker("#inTimeInput", "#inDateTimeInput");
-            initializeTimePicker("#outTimeInput", "#outDateTimeInput");
-            initializeTimePicker("#lateTimeInput", "#lateDateTimeInput");
-            initializeTimePicker("#AbsentTimeInput", "#AbsentDateTimeInput");
-            initializeTimePicker("#LunchInTime", "#LunchInDateTime");
-            initializeTimePicker("#LunchOutTime", "#LunchOutDateTime");
-            //initializeTimePicker("#LunchBreakHour", "#LunchBreakTimeHour");
-
         }
 
 
@@ -450,19 +359,12 @@
         {
             var wefdate = $('#WefDate').val();
             var name = $("#ShiftName").val();
-            var shiftName = $("#ShiftTypeIdDD").val();
-            if (!shiftName) {
-                toastr.warning('Select Shift');
-                $('#ShiftTypeIdDD').select2('open');
-                return false;
-            }
             if (!name)
             {
                 toastr.warning('Enter Shift Name');
                 $('#ShiftName').trigger('focus');
                 return false;
             }
-            
             if (!wefdate)
             {
                 toastr.warning('Select WEF Date');
@@ -489,54 +391,8 @@
                     today: 'fas fa-check',
                     clear: 'fas fa-trash',
                     close: 'fas fa-times'
-                },
-
-            });
-        }
-
-        
-        $(document).ready(function () {
-            initializeTimePicker("#inTimeInput", "#inDateTimeInput");
-            initializeTimePicker("#outTimeInput", "#outDateTimeInput");
-            initializeTimePicker("#lateTimeInput", "#lateDateTimeInput");
-            initializeTimePicker("#AbsentTimeInput", "#AbsentDateTimeInput");
-            initializeTimePicker("#AbsentTimeInput", "#AbsentDateTimeInput");
-            initializeTimePicker("#LunchInTime", "#LunchInDateTime");
-            initializeTimePicker("#LunchOutTime", "#LunchOutDateTime");
-            //initializeTimePicker("#LunchBreakHour", "#LunchBreakTimeHour");
-
-        })       
-
-        function initializeTimePicker(timeInputId, dateTimeInputId, defaultValue = null) {
-            flatpickr(timeInputId, {
-                enableTime: true,
-                noCalendar: true,
-                enableSeconds: true,
-                time_24hr: false,
-                dateFormat: "h:i:s K",
-                inline: true,
-                defaultDate: defaultValue || new Date(),
-  		hourIncrement: 1,  
-        	minuteIncrement: 1, 
-        	secondIncrement: 1,  
-                onChange: function (selectedDates, dateStr, instance) {
-                    const today = new Date();
-                    const fullDate = today.toISOString().slice(0, 10);
-                    const dateTime = `${fullDate} ${dateStr}`;
-                    $(dateTimeInputId).val(dateTime);
-                },
-
-                onReady: function (selectedDates, dateStr, instance) {
-                    const today = new Date();
-                    const fullDate = today.toISOString().slice(0, 10);
-                    const currentTime = instance.input.value;
-                    const dateTime = `${fullDate} ${currentTime}`;
-                    $(dateTimeInputId).val(dateTime);
                 }
             });
         }
     }
-  
-  
 }(jQuery));
-

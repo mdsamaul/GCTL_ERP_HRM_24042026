@@ -36,7 +36,7 @@ namespace GCTL.Service.HRMAttWorkingDayDeclarations
             return new HrmAttWorkingDayDeclarationSetupViewModel
 
             {
-                AutoId = entity.AutoId, //id
+                AutoId = entity.Tc, //id
                 WorkingDayCode = entity.WorkingDayCode,
                 WorkingDayDate = entity.WorkingDayDate,
                 Remarks=entity.Remarks,
@@ -53,7 +53,7 @@ namespace GCTL.Service.HRMAttWorkingDayDeclarations
             var entity = await repository.GetAllAsync();
             return entity.Select(entityVM => new HrmAttWorkingDayDeclarationSetupViewModel
             {
-                AutoId = entityVM.AutoId,
+                AutoId = entityVM.Tc,
                 WorkingDayCode = entityVM.WorkingDayCode,
                 WorkingDayDate = entityVM.WorkingDayDate,
                 Remarks=entityVM.Remarks,
@@ -193,7 +193,7 @@ namespace GCTL.Service.HRMAttWorkingDayDeclarations
 
                 x.WorkingDayCode != typeCode &&
               
-                x.WorkingDayDate.Date == parsedToDate);
+                x.WorkingDayDate.Value.Date == parsedToDate);
         }
 
 
