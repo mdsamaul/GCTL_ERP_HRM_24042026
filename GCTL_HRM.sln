@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{16139D6E-D2F6-4B01-8D3E-44AF66FCAB8B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UIs", "UIs", "{9BE95B95-802E-4087-9082-E8CD3C24831B}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GCTL.Core", "Libraries\GCTL.Core\GCTL.Core.csproj", "{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}"
 EndProject

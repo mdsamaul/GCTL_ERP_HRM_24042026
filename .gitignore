@@ -1,0 +1,17 @@
+# Ignore Visual Studio related folders
+.vs/
+*.user
+*.suo
+
+# Ignore build results
+bin/
+obj/
+
+# Ignore Rider IDE
+.idea/
+
+# Ignore user secrets
+**/secrets.json
+
+# Ignore logs
+*.log
