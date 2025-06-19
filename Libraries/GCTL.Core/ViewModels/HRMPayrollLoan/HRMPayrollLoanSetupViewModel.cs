@@ -42,10 +42,6 @@ namespace GCTL.Core.ViewModels.HRMPayrollLoan
         public string ShowJoiningDate { get; set; }
         public string showCreateDate { get; set; }
         public string showModifyDate { get; set; }
-
-        //payment receive 
-        //public string PaymentId { get; set; }
-        //public DateTime? PaymentDate { get; set; }
-        //public decimal? PaymentAmount { get; set; }
+       
     }
 }

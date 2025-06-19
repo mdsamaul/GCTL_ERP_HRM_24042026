@@ -20,8 +20,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using GCTL.Service.Shifts;
 using GCTL.Core.Data;
 using GCTL.Data.Models;
-using OfficeOpenXml.Style;
-using OfficeOpenXml;
 
 namespace GCTL.UI.Core.Controllers
 {
@@ -77,132 +75,6 @@ namespace GCTL.UI.Core.Controllers
             model.PageUrl = Url.Action(nameof(Index));
             return View(model);
         }
-        #endregion
-
-        #region get all pdf download
-        //get all shift
-        [HttpGet]
-        public async Task<IActionResult> GetAllShifts()
-        {
-            var list = await hrmAtdShiftService.GetAllAsync();
-
-            if (list == null || !list.Any())
-            {
-                return Json(new { success = false, message = "No shifts found." });
-            }
-
-            return Json(new { success = true, data = list });
-        }
-
-        #endregion
-        #region excel download
-        [HttpPost]
-        public IActionResult DownloadShiftExcel([FromBody] List<HrmAtdShiftSetupViewModel> shifts)
-        {
-            if (shifts == null || !shifts.Any())
-            {
-                return BadRequest(new { message = "No data found to generate Excel." });
-            }
-
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-
-            using (var package = new ExcelPackage())
-            {
-                var worksheet = package.Workbook.Worksheets.Add("Shift Report");
-
-                var headers = new string[]
-                {
-            "SN", "Shift Name", "Description", "In Time", "Out Time", "Late Time",
-            "Lunch Out Time", "Lunch In Time", "Lunch Break(Hr)", "Absent Time", "W.E.F", "Shift Type", "Remarks"
-                };
-
-                int totalColumns = headers.Length;
-
-                // === HEADER 1 ===
-                worksheet.Cells[1, 1, 1, totalColumns].Merge = true;
-                worksheet.Cells[1, 1].Value = "Data Path";
-                worksheet.Cells[1, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                worksheet.Cells[1, 1].Style.Font.Size = 16;
-                worksheet.Cells[1, 1].Style.Font.Bold = true;
-
-                // === HEADER 2 ===
-                worksheet.Cells[2, 1, 2, totalColumns].Merge = true;
-                worksheet.Cells[2, 1].Value = "HRM Shift Setup Report";
-                worksheet.Cells[2, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                worksheet.Cells[2, 1].Style.Font.Size = 12;
-                worksheet.Cells[2, 1].Style.Font.Bold = true;
-
-                // === HEADER ROW 3 ===
-                for (int i = 0; i < headers.Length; i++)
-                {
-                    worksheet.Cells[3, i + 1].Value = headers[i];
-                    worksheet.Cells[3, i + 1].Style.Font.Bold = true;
-                    worksheet.Cells[3, i + 1].Style.Border.BorderAround(ExcelBorderStyle.Thin);
-                    worksheet.Cells[3, i + 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    worksheet.Cells[3, i + 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.White);
-                    worksheet.Cells[3, i + 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                }
-
-                // === DATA ROWS FROM ROW 4 ===
-                int rowIndex = 4;
-                int sn = 1;
-                foreach (var shift in shifts)
-                {
-                    worksheet.Cells[rowIndex, 1].Value = sn++;
-                    worksheet.Cells[rowIndex, 2].Value = shift.ShiftName ?? "";
-                    worksheet.Cells[rowIndex, 3].Value = shift.Description ?? "";
-                    worksheet.Cells[rowIndex, 4].Value = FormatTime(shift.ShiftStartTime);
-                    worksheet.Cells[rowIndex, 5].Value = FormatTime(shift.ShiftEndTime);
-                    worksheet.Cells[rowIndex, 6].Value = FormatTime(shift.LateTime);
-                    worksheet.Cells[rowIndex, 7].Value = FormatTime(shift.LunchOutTime);
-                    worksheet.Cells[rowIndex, 8].Value = FormatTime(shift.LunchInTime);
-                    worksheet.Cells[rowIndex, 9].Value = shift.LunchBreakHour;
-                    worksheet.Cells[rowIndex, 10].Value = FormatTime(shift.AbsentTime);
-                    worksheet.Cells[rowIndex, 11].Value = FormatDate(shift.Wef);
-                    worksheet.Cells[rowIndex, 12].Value = shift.ShiftTypeId ?? "";
-                    worksheet.Cells[rowIndex, 13].Value = shift.Remarks ?? "";
-
-                    for (int col = 1; col <= headers.Length; col++)
-                    {
-                        var cell = worksheet.Cells[rowIndex, col];
-                        cell.Style.Border.BorderAround(ExcelBorderStyle.Thin);
-
-                        // Center align by default
-                        cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-
-                        // Left-align only for Shift Name (col 2) and Description (col 3)
-                        if (col == 2 || col == 3)
-                        {
-                            cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
-                        }
-                    }
-
-                    rowIndex++;
-                }
-
-                worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
-
-                var stream = new MemoryStream();
-                package.SaveAs(stream);
-                stream.Position = 0;
-                string excelName = "HRM_Shift_Report.xlsx";
-                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
-            }
-        }
-
-
-
-        // Helpers
-        private string FormatTime(DateTime? time)
-        {
-            return time.HasValue ? time.Value.ToString("hh:mm:ss tt") : "";
-        }
-
-        private string FormatDate(DateTime? date)
-        {
-            return date.HasValue ? date.Value.ToString("dd/MM/yyyy") : "";
-        }
-
         #endregion
 
         #region Post Update 
@@ -390,30 +262,6 @@ namespace GCTL.UI.Core.Controllers
                 worksheet.Row(dataStartRow).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 worksheet.Row(dataStartRow).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
 
-                // Add headers
-                //worksheet.Cell(dataStartRow, 1).Value = "Shift Id";
-                //worksheet.Cell(dataStartRow, 2).Value = "Shift Name";
-                //worksheet.Cell(dataStartRow, 3).Value = "Description";
-                //worksheet.Cell(dataStartRow, 4).Value = "In Time";
-                //worksheet.Cell(dataStartRow, 5).Value = "Out Time";
-                //worksheet.Cell(dataStartRow, 6).Value = "Leave Time";
-                //worksheet.Cell(dataStartRow, 7).Value = "Absent Time";
-                //worksheet.Cell(dataStartRow, 8).Value = "W.E.F";
-                //worksheet.Cell(dataStartRow, 9).Value = "Shift Type";
-
-                //// Make header row bold
-                //worksheet.Row(dataStartRow).Style.Font.Bold = true;
-
-                //// Set borders for the header row
-                //var headerRange = worksheet.Range(dataStartRow, 1, dataStartRow, 9); // Define the range for headers
-                //headerRange.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
-                //headerRange.Style.Border.OutsideBorderColor = XLColor.Black;
-                //headerRange.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
-                //headerRange.Style.Border.InsideBorderColor = XLColor.Black;
-
-                //// Center alignment for the header row
-                //headerRange.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                //headerRange.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
 
 
                 // Add data

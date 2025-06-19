@@ -493,25 +493,6 @@ $(document).ready(function () {
    
   
    
-  
-    ////todo
-    //$("#FromDatePicker, #toDateRosterFrom").on('change', function () {
-    //    var dateFromVal = $("#FromDatePicker").val();
-    //    var dateToVal = $("#toDateRosterFrom").val();
-
-    //    if (dateFromVal && dateToVal) {
-    //        var dateFrom = new Date(dateFromVal);
-    //        var dateTo = new Date(dateToVal);
-
-    //        if (dateFrom > dateTo) {
-    //            showToast("warning", "From Date cannot be greater than To Date.");
-    //            $(".js-roster-schedule-entry-save").prop("disabled", true);
-    //        } else {
-    //            $(".js-roster-schedule-entry-save").prop("disabled", false);
-    //        }
-    //    }
-    //});
-
     $(".js-roster-schedule-entry-save").click(function () {
         var rosterId = $("#hiddenRosterId").val();
         //console.log({rosterId});

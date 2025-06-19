@@ -186,23 +186,16 @@ namespace GCTL.UI.Core.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteLoans([FromBody] List<decimal> autoIds)
         {
-            if (autoIds == null || autoIds.Count == 0)
-            {
-                return BadRequest("No loan IDs provided.");
-            }
+           
             var result =await hRMPayrollLoanService.deleteLoanAsync(autoIds); 
-            return Json(new { isSuccess= result});
+            return Json(new { isSuccess= result.isSuccess, message= result.message});
         }
 
         [HttpPost]
         public async Task<IActionResult> DeletePaymentReceive([FromBody] List<decimal> autoIds)
         {
-            if (autoIds == null || autoIds.Count == 0)
-            {
-                return BadRequest("No loan IDs provided.");
-            }
             var result = await hRMPayrollLoanService.deletePaymentReceiveAsync(autoIds);
-            return Json(new {result.isSuccess,result.message });
+            return Json(new {result.isSuccess, result.message });
         }
 
        

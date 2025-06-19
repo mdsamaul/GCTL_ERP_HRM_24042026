@@ -3,7 +3,6 @@ using GCTL.Data.Models;
 using System.Linq.Expressions;
 using System.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Data.SqlClient;
 
 namespace GCTL.Data
 {
@@ -159,8 +158,6 @@ namespace GCTL.Data
             context.Set<T>().RemoveRange(entities);
             await context.SaveChangesAsync();
         }
-       
-      
 
 
 

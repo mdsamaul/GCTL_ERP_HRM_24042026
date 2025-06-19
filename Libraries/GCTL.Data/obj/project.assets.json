@@ -9907,11 +9907,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj",
+      "projectUniqueName": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj",
       "projectName": "GCTL.Data",
-      "projectPath": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj",
+      "projectPath": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj",
       "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-      "outputPath": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\obj\\",
+      "outputPath": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -9933,8 +9933,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj": {
-              "projectPath": "D:\\git clone\\new clone\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj"
+            "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj": {
+              "projectPath": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj"
             }
           }
         }

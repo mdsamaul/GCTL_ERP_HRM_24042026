@@ -24,17 +24,11 @@ namespace GCTL.Core.ViewModels.HrmAtdShifts
         [DisplayFormat(DataFormatString = "{0:hh:mm:ss tt}", ApplyFormatInEditMode = true)]
         public DateTime AbsentTime { get; set; }
         public string Description { get; set; }
-        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        //[Required(ErrorMessage = "Please select effective date")]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Wef { get; set; }
-
-
         public string Remarks { get; set; }
         public string ShiftTypeId { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime LunchInTime { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime LunchOutTime { get; set; }
         public decimal LunchBreakHour { get; set; }
 

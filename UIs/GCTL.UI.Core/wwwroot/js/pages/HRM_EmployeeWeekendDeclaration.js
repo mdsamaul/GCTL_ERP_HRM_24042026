@@ -490,7 +490,7 @@ $(document).ready(function () {
                 WeekendDates: selectedDates,
                 WeekendEmployeeIds: selectedEmployeeIds,
                 Remark: remark,
-                CompanyCode: comId
+                CompanyCode: comId[0]
             };
 
             $.ajax({

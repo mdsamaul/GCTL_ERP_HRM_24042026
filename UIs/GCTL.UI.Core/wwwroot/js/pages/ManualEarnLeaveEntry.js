@@ -543,12 +543,7 @@ $(document).ready(function () {
            
             formData.EarnLeaveID = earnLeaveId;
             formData.isUpdate = true;
-            //formData.EmployeeID = ['08060103003'];
-            //formData.EmpId = '08060103003';
-            //$('#employee-earn-leave-grid-body input[type="checkbox"]').prop('disabled', true);
-            //$("#earn-leave-employee-check-all").prop('disabled', true);
-            //console.log(formData);
-            //console.log(earnLeaveId);
+           
             $.ajax({
                 //url: `/ManualEarnLeaveEntry/UpdateEarnLeaveEmployee`,
                 url: `/ManualEarnLeaveEntry/CreateManualEarnLeave`,
@@ -556,12 +551,7 @@ $(document).ready(function () {
                 data: JSON.stringify(formData),
                 contentType:'application/json',
                 success: function (res) {
-                    //console.log(res);
-                    //$("#massageUpdate").html(`<i class="fa fa-sync-alt text-primary px-2 "></i>` + res.message).fadeIn().delay(500).fadeOut(5000);
-                    //loadEmployeeWeekendCallAjax();
-                    //$("#submitButton").text("Save");
-                    //$("#hiddenEWDId").val("");
-                    //clearFormSafely();
+                   
                     if (res.success) {
                         showToast('success', res.message);
                         getEarnLeaveEmployee();

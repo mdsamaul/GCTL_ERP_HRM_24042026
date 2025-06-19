@@ -8,13 +8,14 @@
 		box-shadow: 3px 0 6px rgba(0, 0, 0, 0.2);
 		border-radius: 0px 11px 11px 0px;
 	}
-	*{
-		font-family:'Times New Roman', Times, serif;
+
+	* {
+		font-family: 'Times New Roman', Times, serif;
 	}
 
 	.loanDate,
 	#endDate,
-	.instStartDate, 
+	.instStartDate,
 	.chequeDate {
 		background-color: white !important;
 		color: black;
@@ -49,8 +50,6 @@
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow effect */
 	}
 
-
-
 </style>
 
 <div class="container-fluid">
@@ -60,8 +59,6 @@
 	<div class="row px-2">
 		<div class="col-auto col-md-12">
 			<div class="w-100 headerToobar">
-					@* <partial name="_Toolbars" model="new ToobarModel(){Title=Model.Breadcrumb, Code=Model.Code , Name=Model.Setup.LoanId}"></partial> *@
-
 				<div class="row">
 					<div id="stickyHeader" class="col-12 px-2">
 						<partial name="_Toolbars" model="new ToobarModel(){Title=Model.Breadcrumb, Code=Model.Code , Name=Model.Setup.LoanId}" />
@@ -70,10 +67,10 @@
 
 
 
-				
-				
+
+
 			</div>
-		</div>		
+		</div>
 		<div class="row w-100 mx-2 mt-3 px-3">
 			<ul class="nav nav-tabs" id="statusTabs" role="tablist">
 				<li class="nav-item">
@@ -180,9 +177,7 @@
 						<div class="row border bg-white rounded-lg shadow-lg my-2 py-3 px-0 mx-0">
 							<div class="col-12 col-md-6 pb-1">
 								<div class="row">
-									@* <div class="col-12 col-md-4 text-right" style="padding-right: 5px;">
-										<p class="mb-0">Loan Type: </p>
-									</div> *@
+
 									<div class="col-12 col-md-4 d-flex justify-content-end align-items-center" style="padding-right: 5px;">
 										<p class="mb-0">Loan Type:</p>
 									</div>
@@ -193,21 +188,9 @@
 										</select>
 
 									</div>
-									<div class="col-0 col-md-2"></div>	
+									<div class="col-0 col-md-2"></div>
 								</div>
 							</div>
-						@* 	<div class="col-12 col-md-6 pb-1">
-								<div class="d-flex justify-content-center align-items-center">
-									<div class="text-right pr-2">
-										<p class="mb-0">Loan Type:</p>
-									</div>
-									<div>
-										<select id="paymentLoanSelect" class="form-control form-control-sm ml-2">
-											<option value="0">--Select Loan Type--</option>
-										</select>
-									</div>
-								</div>
-							</div> *@
 
 							<div class="col-12 col-md-6 pb-1"></div>
 
@@ -228,7 +211,7 @@
 										<p class="mb-0">Loan Date: </p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
-										<input type="date"  class="loanDate form-control form-control-sm" />
+										<input type="date" class="loanDate form-control form-control-sm" />
 									</div>
 								</div>
 							</div>
@@ -238,7 +221,7 @@
 										<p class="mb-0">Inst. Start Date: </p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
-										<input type="date"  class="instStartDate form-control form-control-sm" />
+										<input type="date" class="instStartDate form-control form-control-sm" />
 									</div>
 								</div>
 							</div>
@@ -271,9 +254,10 @@
 							</div>
 							<div class="col-12 col-md-6 pb-1" style="padding-right: 0px;">
 								<div class="row">
-									<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px; padding-left: 0px;">
-										<p class="mb-0">No.of Installment(s):</p>
+									<div class="col-12 col-md-3 col-lg-2 d-flex align-items-center justify-content-end" style="padding-right: 5px; padding-left: 0px;">
+										<p class="mb-0" style="white-space: nowrap;">No.of Installment(s):</p>
 									</div>
+
 									<div class="col-12 col-md-6" style="padding-left: 0px; padding-right: 25px;">
 										<input type="text" id="noOfInstallment" class="form-control form-control-sm" readonly placeholder="No.of Installment(s)" />
 									</div>
@@ -291,8 +275,8 @@
 							</div>
 							<div class="col-12 col-md-6 pb-1">
 								<div class="row">
-									<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<p class="mb-0">Deduction Head: </p>
+									<div class="col-12 col-md-3 col-lg-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
+										<p class="mb-0" style="white-space: nowrap;">Deduction Head: </p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										@* <input type="date" class="form-control form-control-sm"   /> *@
@@ -324,7 +308,7 @@
 											<p class="mb-0">Bank Account: </p>
 										</div>
 										<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
-											<input  type="text" class="bankAccount form-control form-control-sm" value="" placeholder="Enter Bank Account" />
+											<input type="text" class="bankAccount form-control form-control-sm" value="" placeholder="Enter Bank Account" />
 										</div>
 									</div>
 								</div>
@@ -360,7 +344,7 @@
 												<p class="mb-0">Cheque Date: </p>
 											</div>
 											<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
-												<input type="date"  class="chequeDate form-control form-control-sm" />
+												<input type="date" class="chequeDate form-control form-control-sm" />
 											</div>
 										</div>
 									</div>
@@ -410,7 +394,7 @@
 
 				</div>
 
-			@* payment receive into *@
+				@* payment receive into *@
 				<div class="tab-pane fade" id="PaymentReceiveInfo" role="tabpanel" aria-labelledby="PaymentReceiveInfo-tab">
 
 
@@ -536,7 +520,7 @@
 						<div class="col-12 col-md-6 py-1">
 							<div class="row">
 								<div class="col-md-2 text-right" style="padding-right: 5px; padding-left:0px;">
-									<p class="mb-0">Loan Amount: </p>
+									<p class="mb-0" style="white-space: nowrap;">Loan Amount: </p>
 								</div>
 								<div class="col-md-6" style="padding-left: 0px;">
 									<span class="LoanAmount"></span>
@@ -557,8 +541,11 @@
 						</div>
 						<div class="col-12 col-md-6 py-1">
 							<div class="row">
-								<div class="col-md-2 text-right" style="padding-right: 5px;padding-left: 0px;">
-									<p class="mb-0">No.of Installment(s): </p>
+								@* 	<div class="col-md-2 text-right" style="padding-right: 5px;padding-left: 0px;">
+									<p class="mb-0" style="white-space:nowrap;">No.of Installment(s): </p>
+								</div> *@
+								<div class="col-12 col-md-3 col-lg-2 d-flex align-items-center justify-content-end" style="padding-right: 5px; padding-left: 0px;">
+									<p class="mb-0" style="white-space: nowrap;">No.of Installment(s):</p>
 								</div>
 								<div class="col-md-6" style="padding-left: 0px;">
 									<span class="LoanNoOfInstallment"></span>
@@ -568,7 +555,7 @@
 						</div>
 					</div>
 
-					
+
 
 
 
@@ -576,23 +563,6 @@
 					<input type="hidden" id="paymentReceiveAutoId" name="name" value="" />
 					<div class="row">
 						<div class="row border bg-white rounded-lg shadow-lg my-2 py-3 px-0 mx-0">
-							@* <div class="col-12 col-md-6 pb-1">
-								<div class="row">
-									<div class="col-12 col-md-4 text-right" style="padding-right: 5px;">
-										<p class="mb-0">Payment ID: </p>
-									</div>
-									<div class="col-12 col-md-6" style="padding-left: 0px;">
-										<select id="paymentLoanSelect" class="form-control form-control-sm">
-											<option value="0">--Select Loan Type--</option>
-										</select>
-
-									</div>
-									<div class="col-0 col-md-2"></div>								
-
-								</div>
-							</div>
-							<div class="col-12 col-md-6 pb-1"></div> *@
-
 
 							<div class="col-12 col-md-6 pb-1">
 								<div class="row">
@@ -607,23 +577,14 @@
 							<div class="col-12 col-md-6 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<p class="mb-0">Payment Date: </p>
+										<p class="mb-0" style="white-space:nowrap;">Payment Date: </p>
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										<input type="date" class="PaymentLoanDate form-control form-control-sm" />
 									</div>
 								</div>
 							</div>
-						@* 	<div class="col-12 col-md-6 pb-1">
-								<div class="row">
-									<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<p class="mb-0">Payment Amount: </p>
-									</div>
-									<div class="col-12 col-md-6" style="padding-left: 0px;">
-										<input type="date"  class="instStartDate form-control form-control-sm" />
-									</div>
-								</div>
-							</div> *@
+
 							<div class="col-12 col-md-6 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
@@ -633,7 +594,7 @@
 										<input type="number" class="paymentLoanAmount form-control form-control-sm" value="" placeholder="Enter Loan Amount" />
 									</div>
 								</div>
-								<div  style="display:none;" class="row amountWorningMessage">
+								<div style="display:none;" class="row amountWorningMessage">
 									<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
 									</div>
 									<div class="col-12 col-md-6" style="padding-left: 0px;">
@@ -641,77 +602,19 @@
 									</div>
 								</div>
 							</div>
-							@* <div class="col-12 col-md-6 pb-1">
-								<div class="row">
-									<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<p class="mb-0">Payment Method: </p>
-									</div>
-									<div class="col-12 col-md-6" style="padding-left: 0px;">
-										<input type="date" id="endDate" class="form-control form-control-sm" />
-									</div>
-								</div>
-							</div> *@
-							@* <div class="col-12 col-md-6 pb-1">
-								<div class="row">
-									<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<p class="mb-0">Loan Amount: <span class="text-danger" style="font-size: 18px;">*</span></p>
-									</div>
-									<div class="col-12 col-md-6" style="padding-left: 0px;">
-										<input type="number" id="loanAmount" class="form-control form-control-sm" value="" placeholder="Enter Loan Amount" />
-									</div>
-								</div>
-								<div id="amountWorningMessage" style="display:none;" class="row">
-									<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-									</div>
-									<div class="col-12 col-md-6" style="padding-left: 0px;">
-										<h6 class="text-sm text-danger pt-1">Amount cannot be negative!</h6>
-									</div>
-								</div>
-							</div> *@
-							@* <div class="col-12 col-md-6 pb-1" style="padding-right: 0px;">
-								<div class="row">
-									<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px; padding-left: 0px;">
-										<p class="mb-0">No.of Installment(s):</p>
-									</div>
-									<div class="col-12 col-md-6" style="padding-left: 0px; padding-right: 25px;">
-										<input type="text" id="noOfInstallment" class="form-control form-control-sm" readonly placeholder="No.of Installment(s)" />
-									</div>
-								</div>
-							</div>
-							<div class="col-12 col-md-6 pb-1">
-								<div class="row">
-									<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<p class="mb-0">Monthly Deduction: </p>
-									</div>
-									<div class="col-12 col-md-6" style="padding-left: 0px;">
-										<input id="monthlyDeduction" type="text" class="form-control form-control-sm" readonly value="" placeholder="Enter Monthly Deduction" />
-									</div>
-								</div>
-							</div> *@
+
 							<div class="col-12 col-md-6 pb-1">
 								<div class="row">
 									<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<p class="mb-0">Payment Method: </p>
+										<p class="mb-0" style="white-space:nowrap;">Payment Method: </p>
 									</div>
-									<div class="col-12 col-md-6" style="padding-left: 0px;">										
+									<div class="col-12 col-md-6" style="padding-left: 0px;">
 										<select class="paymentMode paymentReceivePaymentMode form-control form-control-sm">
-											@* <option class="text-left" value="">--Select Payment Mode--</option> *@
 										</select>
 									</div>
 								</div>
-							</div> 
-							@* <div class="col-12 col-md-6 pb-1">
-								<div class="row">
-									<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-										<p class="mb-0">Payment Mode: </p>
-									</div>
-									<div class="col-12 col-md-6" style="padding-left: 0px;">
-										<select id="paymentMode" class="form-control form-control-sm">
-											<option class="text-left" value="">--Select Payment Mode--</option>
-										</select>
-									</div>
-								</div>
-							</div> *@
+							</div>
+
 							<div class="col-12 col-md-10 pb-1"></div>
 							@* if cheque *@
 							<div class="if_cheque row col-12" style="display:none;">
@@ -731,7 +634,7 @@
 											<p class="mb-0">Bank: </p>
 										</div>
 										<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
-											@* <input type="date" class="form-control form-control-sm"   /> *@
+
 											<select class="Bank paymentBank form-control form-control-sm">
 												<option value="0">--Select Bank--</option>
 
@@ -797,328 +700,21 @@
 									</div>
 								</div>
 							</div>
-							
+
 						</div>
-					
+
 					</div>
 					<div class="mt-2">
 						<partial name="_PaymentReceiveEmployeeGrid"></partial>
-					</div>					
+					</div>
 
 				</div>
 			</div>
 		</div>
 
 
-
-		@* <div class="row w-100 border rounded-lg shadow-lg m-2 p-3" style="background-color:aliceblue;"> *@
-		@* <div class="row w-100 border border-white rounded-lg shadow-lg mx-2 px-3" style="background-color: #f9f9f9; box-shadow: 0 4px 10px rgba(255, 255, 255, 1);">
-			<div class="col-12 col-md-6">
-				<div class="row">
-					<div class="col-12 col-md-4 text-right" style="padding-right: 5px;">
-						<p class="mb-0">Company <span class="text-danger" style="font-size: 18px;">*</span></p>
-					</div>
-					<div class="col-12 col-md-6" style="padding-left: 0px;">
-						<select class="companySelect" class="form-control form-control-sm">							
-						</select>
-						
-					</div>
-					<div class="col-0 col-md-2"></div>
-					<div class="col-10 ">
-						<div class="row">
-							<div class="col-2"></div>
-							<div class="col-10">
-								<hr class="w-100 text-right mb-1" />
-							</div>
-						</div>
-					</div>
-					
-				</div>
-			</div>
-			<div class="col-12 col-md-6"></div>
-			
-
-			<div class="col-12 col-md-6">
-				<div class="row">
-					<div class="col-12 col-md-4 text-right" style="padding-right: 5px;">
-						<p class="mb-0">Employee <span class="text-danger" style="font-size: 18px;">*</span></p>
-					</div>
-					<div class="col-12 col-md-6" style="padding-left: 0px;">
-						<select id="employeeSelect" class="form-control form-control-sm">
-							<option value="">--Select Employee--</option>
-						</select>
-					</div>	
-				</div>
-			</div>
-			<div class="col-12 col-md-6 py-1">
-				<div class="row">
-					<div class="col-md-2 text-right" style="padding-right: 5px;">
-						<p class="mb-0">Name: </p>
-					</div>
-					<div class="col-md-6" style="padding-left: 0px;">
-						<span class="EmployeeName"></span>
-					</div>
-					<div class="col-0 col-md-2"></div>
-				</div>
-			</div>
-			<div class="col-12 col-md-6 py-1">
-				<div class="row">
-					<div class="col-md-4 text-right" style="padding-right: 5px;">
-						<p class="mb-0">Designation: </p>
-					</div>
-					<div class="col-md-6" style="padding-left: 0px;">
-						<span class="EmployeeDesignation"></span>
-					</div>
-					<div class="col-0 col-md-2"></div>
-				</div>
-			</div>
-			<div class="col-12 col-md-6 py-1">
-				<div class="row">
-					<div class="col-md-2 text-right" style="padding-right: 5px;">						
-						<p class="mb-0">Department: </p>
-					</div>
-					<div class="col-md-6" style="padding-left: 0px;">
-						<span class="EmployeeDepartment"></span>
-					</div>
-					<div class="col-0 col-md-2"></div>
-				</div>
-			</div>
-			<div class="col-12 col-md-6 py-1">
-				<div class="row">
-					<div class="col-md-4 text-right" style="padding-right: 5px;">
-						<p class="mb-0">Joining Date: </p>
-					</div>
-					<div class="col-md-6" style="padding-left: 0px;">
-						<span class="EmployeeJoinDate"></span>
-					</div>
-					<div class="col-0 col-md-2"></div>
-				</div>
-			</div>
-		</div> *@
 	</div>
-	<!--
-	<input type="hidden" id="loanAutoId" name="name" value="" />
-	<div class="row px-2">		
-		<div class="row w-100 border bg-white rounded-lg shadow-lg m-2 p-3">
-			<div class="col-12 col-md-6 pb-1">
-				<div class="row">
-					<div class="col-12 col-md-4 text-right" style="padding-right: 5px;">
-						<p class="mb-0">Loan Type: </p>
-					</div>
-					<div class="col-12 col-md-6" style="padding-left: 0px;">
-						<select id="paymentLoanSelect" class="form-control form-control-sm">
-							<option value="0">--Select Loan Type--</option>
-						</select>
 
-					</div>
-					<div class="col-0 col-md-2"></div>
-					@* <div class="col-10 ">
-						<div class="row">
-							<div class="col-2"></div>
-							<div class="col-10">
-								<hr class="w-100 text-right mb-1" />
-							</div>
-						</div>
-					</div> *@
-
-				</div>
-			</div>
-			<div class="col-12 col-md-6 pb-1"></div>
-
-
-			<div class="col-12 col-md-6 pb-1">
-				<div class="row">
-					<div class="col-12 col-md-4 d-flex align-items-center justify-content-end"  style="padding-right: 5px;">
-						<p class="mb-0">Loan Id: </p>
-					</div>
-					<div class="col-12 col-md-6" style="padding-left: 0px;">
-						<input type="text" id="LoanIdAutoGenerate" class="form-control form-control-sm" readonly  value="" />
-					</div>
-				</div>
-			</div>
-			<div class="col-12 col-md-6 pb-1" >
-				<div class="row">
-					<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-						<p class="mb-0">Loan Date: </p>
-					</div>
-					<div class="col-12 col-md-6" style="padding-left: 0px;">
-						<input type="date" id="loanDate" class="form-control form-control-sm" />
-					</div>
-				</div>
-			</div>			
-			<div class="col-12 col-md-6 pb-1">
-				<div class="row">
-					<div class="col-12 col-md-4 d-flex align-items-center justify-content-end"  style="padding-right: 5px;">
-						<p class="mb-0">Inst. Start Date: </p>
-					</div>
-					<div class="col-12 col-md-6" style="padding-left: 0px;">
-						<input type="date" id="instStartDate" class="form-control form-control-sm"  />
-					</div>
-				</div>
-			</div>
-			<div class="col-12 col-md-6 pb-1">
-				<div class="row">
-					<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-						<p class="mb-0">End Date: </p>
-					</div>
-					<div class="col-12 col-md-6" style="padding-left: 0px;">
-						<input type="date" id="endDate" class="form-control form-control-sm"   />
-					</div>
-				</div>
-			</div>
-			<div class="col-12 col-md-6 pb-1">
-				<div class="row">
-					<div class="col-12 col-md-4 d-flex align-items-center justify-content-end"  style="padding-right: 5px;">
-						<p class="mb-0">Loan Amount: <span class="text-danger" style="font-size: 18px;">*</span></p>
-					</div>
-					<div class="col-12 col-md-6" style="padding-left: 0px;">
-						<input type="number" id="loanAmount" class="form-control form-control-sm"   value="" placeholder="Enter Loan Amount" />
-					</div>
-				</div>
-				<div id="amountWorningMessage" style="display:none;" class="row">
-					<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-					</div>
-					<div class="col-12 col-md-6" style="padding-left: 0px;">
-						<h6 class="text-sm text-danger pt-1">Amount cannot be negative!</h6>
-					</div>
-				</div>
-			</div>
-			<div class="col-12 col-md-6 pb-1" style="padding-right: 0px;">
-				<div class="row">
-					<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px; padding-left: 0px;">
-						<p class="mb-0">No.of Installment(s):</p>
-					</div>
-					<div class="col-12 col-md-6" style="padding-left: 0px; padding-right: 25px;">
-						<input type="text" id="noOfInstallment" class="form-control form-control-sm" readonly  placeholder="No.of Installment(s)"/>
-					</div>
-				</div>
-			</div>	
-			<div class="col-12 col-md-6 pb-1">
-				<div class="row">
-					<div class="col-12 col-md-4 d-flex align-items-center justify-content-end"  style="padding-right: 5px;">
-						<p class="mb-0">Monthly Deduction: </p>
-					</div>
-					<div class="col-12 col-md-6" style="padding-left: 0px;">
-						<input id="monthlyDeduction" type="text" class="form-control form-control-sm" readonly  value="" placeholder="Enter Monthly Deduction" />
-					</div>
-				</div>
-			</div>
-			<div class="col-12 col-md-6 pb-1">
-				<div class="row">
-					<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-						<p class="mb-0">Deduction Head: </p>
-					</div>
-					<div class="col-12 col-md-6" style="padding-left: 0px;">
-						@* <input type="date" class="form-control form-control-sm"   /> *@
-						<select id="DeductionHead" class="form-control form-control-sm">
-							<option value="0">--Select Deduction Head--</option>
-						
-						</select>
-					</div>
-				</div>
-			</div>
-			<div class="col-12 col-md-6 pb-1">
-				<div class="row">
-					<div class="col-12 col-md-4 d-flex align-items-center justify-content-end"  style="padding-right: 5px;">
-						<p class="mb-0">Payment Mode: </p>
-					</div>
-					<div class="col-12 col-md-6" style="padding-left: 0px;">
-						<select id="paymentMode" class="form-control form-control-sm">
-							@* <option class="text-left" value="">--Select Payment Mode--</option> *@
-						</select>
-					</div>
-				</div>
-			</div>
-			<div class="col-12 col-md-10 pb-1"></div>
-			@* if cheque *@
-			<div class="row col-12" id="if_cheque" style="display:none;">
-				<div class="col-12 col-md-6 pb-1">
-					<div class="row">
-						<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
-							<p class="mb-0">Bank Account: </p>
-						</div>
-						<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
-							<input id="bankAccount" type="text" class="form-control form-control-sm" value="" placeholder="Enter Bank Account" />
-						</div>
-					</div>
-				</div>
-				<div class="col-12 col-md-6 pb-1" style="padding-left: 25px;padding-right: 5px;">
-					<div class="row">
-						<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
-							<p class="mb-0">Bank: </p>
-						</div>
-						<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
-							@* <input type="date" class="form-control form-control-sm"   /> *@
-							<select id="Bank" class="form-control form-control-sm">
-								<option value="0">--Select Bank--</option>
-
-							</select>
-						</div>
-					</div>
-				</div>
-				@* if wair transfer *@
-				<div class="col-12 row" style="padding:0; display:none;" id="if_wair-transfer-then-hide">
-					<div class="col-12 col-md-6 pb-1" style="padding-right: 0px;padding-left: 30px;">
-						<div class="row">
-							<div class="col-12 col-md-4 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
-								<p class="mb-0">Cheque No: </p>
-							</div>
-							<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
-								<input id="chequeNo" type="text" class="form-control form-control-sm" value="" placeholder="Enter Cheque No" />
-							</div>
-						</div>
-					</div>
-					<div class="col-12 col-md-6 pb-1" style="padding-left: 45px; padding-right: 0px;">
-						<div class="row">
-							<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
-								<p class="mb-0">Cheque Date: </p>
-							</div>
-							<div class="col-12 col-md-6" style="padding-left: 5px; padding-right: 0px;">
-								<input type="date" id="chequeDate" class="form-control form-control-sm" />
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-12 col-md-12 pb-1">
-				<div class="row">
-					<div class="col-12 col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 5px;">
-						<p class="mb-0">Remarks: </p>
-					</div>
-					<div class="col-12 col-md-8" style="padding-left: 0px;">
-						<textarea id="remarks" type="text" class="form-control form-control-sm" rows="2" placeholder="Enter Remarks"></textarea>
-					</div>
-					<div class="col-2"></div>
-				</div>
-			</div>
-			<div class="col-12 col-md-12 pb-1">
-				<div class="row">
-					<div class="col-6 ">
-						<div class="row">
-							<div class="col-4"></div>
-							<div class="col-8">
-								<hr class="w-100 text-right mb-1" />
-								<p class="w-100 text-center">Creation Date: <span class="createDate"></span> </p>
-							</div>
-						</div>
-					</div>
-					<div class="col-6 ">
-						<div class="row">							
-							<div class="col-8">
-								<hr class="w-100 text-right mb-1" />
-								<p class="w-100 text-center">Last Update Date: <span class="updateDate"></span></p>
-							</div>
-							<div class="col-4"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>-->
-	@* <div class="mt-2">
-		<partial name="_Grid"></partial>
-	</div> *@
 </section>
 
 <!-- Flatpickr CSS -->
@@ -1160,7 +756,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/js/bootstrap-multiselect.min.js"></script>
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	
+
 
 	<!-- DataTable JS -->
 	<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -1182,7 +778,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-	
+
 	<!-- Load the plugin -->
 	<script src="~/js/pages/HRMPayrollLoan.js"></script>
 

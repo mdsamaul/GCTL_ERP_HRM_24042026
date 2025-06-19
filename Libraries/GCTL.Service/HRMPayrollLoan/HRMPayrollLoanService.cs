@@ -188,56 +188,7 @@ namespace GCTL.Service.HRMPayrollLoan
             };
             return result;
         }
-        //public async Task<List<HrmPayrollPaymentReceiveDto>> GetPaymentReceiveAsync()
-        //{            
-
-        //    try
-        //    {
-        //        var result = await (from py in paymentRepo.All()
-
-        //                            join le in payrollLoanRepo.All() on py.LoanId equals le.LoanId into le_join
-        //                            from le in le_join.DefaultIfEmpty()
-
-        //                            join eoi in empOffRepo.All() on le.EmployeeId equals eoi.EmployeeId into eoi_join
-        //                            from eoi in eoi_join.DefaultIfEmpty()
-
-        //                            join e in empRepo.All() on eoi.EmployeeId equals e.EmployeeId into e_join
-        //                            from e in e_join.DefaultIfEmpty()
-
-        //                            join c in comRepo.All() on eoi.CompanyCode equals c.CompanyCode into c_join
-        //                            from c in c_join.DefaultIfEmpty()
-
-        //                            join dg in desiRepo.All() on eoi.DesignationCode equals dg.DesignationCode into dg_join
-        //                            from dg in dg_join.DefaultIfEmpty()
-
-        //                            join dp in dpRepo.All() on eoi.DepartmentCode equals dp.DepartmentCode into dp_join
-        //                            from dp in dp_join.DefaultIfEmpty()
-
-        //                            join pm in payModeRepo.All() on le.PaymentModeId equals pm.PaymentModeId into pm_join
-        //                            from pm in pm_join.DefaultIfEmpty()
-
-        //                            select new HrmPayrollPaymentReceiveDto
-        //                            {
-        //                                AutoId= py.AutoId,
-        //                                LoanId = le.LoanId,
-        //                                PaymentId = py.PaymentId,
-        //                                ShowPaymentDate = py.PaymentDate.HasValue ? py.PaymentDate.Value.ToString("dd/MM/yyyy") : "",
-        //                                PaymentAmount = py.PaymentAmount,
-        //                                PaymentMode = pm.PaymentModeName,
-        //                                Remarks = py.Remarks,
-        //                                EmpId = e.EmployeeId,
-        //                                EmpName = e.FirstName + " " + e.LastName,
-        //                                Designation = dg.DesignationName,
-        //                            }).OrderBy(x => x.PaymentId).ToListAsync();
-
-        //        return (result);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return (null);
-        //    }
-        //}
-
+       
 
 
         public async Task<List<HrmPayrollPaymentReceiveDto>> GetPaymentReceiveAsync()
@@ -802,21 +753,38 @@ namespace GCTL.Service.HRMPayrollLoan
         }
         public async Task<(bool isSuccess, string message)> deleteLoanAsync(List<decimal> autoIds)
         {
+            if (autoIds == null || autoIds.Count == 0)
+            {
+                return (false, DeleteFailed);
+            }
+
             foreach (var autoId in autoIds)
             {
                  var loanToDelete = await payrollLoanRepo.GetByIdAsync(autoId);
+               
                     if (loanToDelete == null)
                     {
                         return (false, DeleteFailed);
                     }
-                    await payrollLoanRepo.DeleteAsync(loanToDelete);
+                bool paymentDataExist = paymentRepo.All().Any(x => x.LoanId == loanToDelete.LoanId);
+                if (paymentDataExist)
+                {
+                    var paymentData = paymentRepo.All().Where(x => x.LoanId == loanToDelete.LoanId).FirstOrDefault();
+                    await paymentRepo.DeleteAsync(paymentData);
+                }
+
+                await payrollLoanRepo.DeleteAsync(loanToDelete);
                 }
            
             //var loanToDelete = await payrollLoanRepo.GetByIdAsync(loanId);
             return (true, DeleteSuccess);
         }
         public async Task<(bool isSuccess, string message)> deletePaymentReceiveAsync(List<decimal> autoIds)
-        {            
+        {
+            if (autoIds == null || autoIds.Count == 0)
+            {
+                return (false, DeleteFailed);
+            }
             foreach (var autoId in autoIds)
             {
                 var paymentToDelete = await paymentRepo.GetByIdAsync(autoId);

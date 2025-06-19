@@ -242,7 +242,9 @@
 
 </style>
 <!-- Content Header (Page header) -->
-<partial name="_PageHeader" model="Model"></partial>
+<div class="container-fluid">
+    <partial name="_PageHeader" model="Model"></partial>
+</div>
 <section class="content consistent-look">
     <div class="container-fluid">
         <div class="row px-2 pr-3">
@@ -255,15 +257,15 @@
                     <div id="stickyHeader" class="card-header px-2 sticky-top" style="min-height: 50px; z-index: 1020;">
                         <partial name="_Toolbars" model="new ToobarModel() { Title = Model.Breadcrumb, Code = Model.Code, Name = Model.Setup.EWDId }"></partial>
                     </div>
-                   <div id="massageSeccess" class="alert-default-light  pt-2 " style="display: none; color: green; font-weight: bold; padding-left:20px; display: inline-block;">                       
+                   <div id="massageSeccess" class="alert-default-light " style="display: none; color: green; font-weight: bold; padding-left:20px; display: inline-block;">                       
                     </div>
-                    <div id="massageError" class="alert-default-light  pt-2 " style="display: none; color: red; font-weight: bold; padding-left:20px; display: inline-block;">                       
+                    <div id="massageError" class="alert-default-light " style="display: none; color: red; font-weight: bold; padding-left:20px; display: inline-block;">                       
                     </div>
-                    <div id="massageUpdate" class="alert-default-light  pt-2 " style="display: none; color: blue; font-weight: bold; padding-left:20px; display: inline-block;">                       
+                    <div id="massageUpdate" class="alert-default-light  " style="display: none; color: blue; font-weight: bold; padding-left:20px; display: inline-block;">                       
                     </div>
 
-                    <div class="card-body px-2" >
-                        <div class="container-fluid py-2">
+                    <div class="card-body px-2" style="padding-top:0px;">
+                        <div class="container-fluid py-2" style="padding-top:0px;">
                             <div>
                                 <h5>Filter By:</h5>
                             </div>   

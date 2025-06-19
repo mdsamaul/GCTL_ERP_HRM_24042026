@@ -60,7 +60,7 @@
                 e.preventDefault();
                 var form = $(this)[0];
                 var formData = new FormData(form);              
-                var actionUrl = $(this).attr('action');               
+                var actionUrl = $(this).attr('action');              
                 $.ajax({
                     type: 'POST',
                     url: actionUrl,
@@ -103,7 +103,7 @@
                     data: { code: code, name: name },
                     success: function (response)
                     {
-                        console.log(response);
+                        //console.log(response);
                         if (response.isSuccess)
                         {
                             toastr.error(response.message);
@@ -119,7 +119,7 @@
                
                 $.get(getById, { id: id }, function (result)
                 {
-                    console.log(getById,id);
+                    //console.log(getById,id);
                     $(settings.formSelector).html($(result).find(settings.formSelector).html());
 
                     //TimePicker();
@@ -193,225 +193,14 @@
                 });
             });
 
-            //load pdf           
+            //
 
-            $(document).on('click', "#downloadShiftPdf", function (e) {
-                e.preventDefault();
-                downloadShiftPdf();
-            });
-
-            function LoadFullShiftTable(callback) {
-                $.ajax({
-                    url: '/HRMATDShifts/GetAllShifts',
-                    type: "GET",
-                    success: function (res) {
-                        if (res.success && res.data.length) {
-                            callback(res.data);
-                        } else {
-                            alert("No shift data found.");
-                        }
-                    },
-                    error: function (e) {
-                        console.error("Error fetching shift data", e);
-                    }
-                });
-            }
-
-            function getImageBase64FromUrl(url, callback) {
-                var img = new Image();
-                img.crossOrigin = 'Anonymous';
-                img.onload = function () {
-                    var canvas = document.createElement('canvas');
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    var ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0);
-                    var dataURL = canvas.toDataURL('image/png');
-                    callback(dataURL);
-                };
-                img.onerror = function () {
-                    //console.error("Image not found or CORS issue.");
-                    callback(null);
-                };
-                img.src = url;
-            }
-
-
-            function downloadShiftPdf() {
-                LoadFullShiftTable(function (data) {
-                    getImageBase64FromUrl('/images/DP_logo.png', function (base64Logo) {
-                    const { jsPDF } = window.jspdf;
-                    const doc = new jsPDF({ orientation: 'landscape' });
-                    const pageWidth = doc.internal.pageSize.getWidth();
-                    const pageHeight = doc.internal.pageSize.getHeight();
-
-                    // Common header/footer hook
-                        const drawHeaderFooter = function (dataTable) {
-                            if (base64Logo) {
-                                doc.addImage(base64Logo, 'PNG', 15, 1, 25, 13);
-                            }
-                        // HEADER
-                        doc.setFontSize(16);
-                        doc.text("Data Path", pageWidth / 2, 10, { align: 'center' });
-                        doc.setFontSize(9);
-                        doc.text("HRM Shift Setup Report", pageWidth / 2, 15, { align: 'center' });
-
-                        // Horizontal line under header
-                        const lineLength = pageWidth / 8.7;
-                        const startX = (pageWidth - lineLength) / 2 +.1;
-                        const endX = startX + lineLength;
-                        doc.setDrawColor(0);
-                        doc.setLineWidth(0.3);
-                        doc.line(startX, 16, endX, 16);
-
-                        // FOOTER
-                        const now = new Date();
-                        const day = String(now.getDate()).padStart(2, '0');
-                        const month = String(now.getMonth() + 1).padStart(2, '0');
-                        const year = now.getFullYear();
-                        const hours = String(now.getHours() % 12 || 12).padStart(2, '0');
-                        const minutes = String(now.getMinutes()).padStart(2, '0');
-                        const seconds = String(now.getSeconds()).padStart(2, '0');
-                        const ampm = now.getHours() < 12 ? 'AM' : 'PM';
-                        const dateTimeText = `Print Datetime: ${day}/${month}/${year} ${hours}:${minutes}:${seconds} ${ampm}`;
-
-                        doc.setFontSize(8);
-                        // left aligned date/time
-                        doc.text(dateTimeText, dataTable.settings.margin.left, pageHeight - 10);
-                        // right aligned page count
-                        const pageInfo = doc.internal.getCurrentPageInfo();
-                        const pageStr = `Page ${pageInfo.pageNumber} of ${doc.internal.getNumberOfPages()}`;
-                        doc.text(pageStr, pageWidth - dataTable.settings.margin.right, pageHeight - 10, { align: 'right' });
-                    };
-
-                    // Prepare table
-                    const headers = [[
-                        "SN", "Shift Name", "Description", "In Time", "Out Time", "Late Time",
-                        "Lunch Out Time", "Lunch In Time", "Lunch Break(Hr)", "Absent Time", "W.E.F", "Shift Type", "Remarks"
-                    ]];
-                    let count = 1;
-                    const body = data.map(shift => ([
-                        count++,
-                        shift.shiftName || '',
-                        shift.description || '',
-                        formatTime(shift.shiftStartTime),
-                        formatTime(shift.shiftEndTime),
-                        formatTime(shift.lateTime),
-                        formatTime(shift.lunchOutTime),
-                        formatTime(shift.lunchInTime),
-                        shift.lunchBreakHour,
-                        formatTime(shift.absentTime),
-                        formatDate(shift.wef),
-                        shift.shiftTypeId || '',
-                        shift.remarks || ''
-                    ]));
-
-                    // Generate PDF with autoTable and hooks
-                    doc.autoTable({
-                        head: headers,
-                        body: body,
-                        startY: 22,
-                        theme: 'grid',
-                        styles: {
-                            fontSize: 8,
-                            cellPadding: 2,
-                            halign: 'center',
-                            valign: 'middle',
-                            lineColor: [210, 210, 210],
-                            textColor: [0, 0, 0],
-                            lineWidth: 0.1,
-                            fillColor: [255, 255, 255]
-                        },
-                        headStyles: {
-                            fillColor: [255, 255, 255],
-                            textColor: [0, 0, 0],
-                            fontStyle: 'bold',
-                            halign: 'center',
-                            fontSize: 7
-                        },
-                        columnStyles: {
-                            1: { cellWidth: 35, halign: 'left' },
-                            2: { cellWidth: 30, halign: 'left' }
-                        },
-                        didDrawPage: function (dataTable) {
-                            drawHeaderFooter(dataTable);
-                        }
-                    });
-
-                    doc.save("HRM_Shift_Report.pdf");
-                    });
-                });
-            }
-
-            function formatTime(datetimeStr) {
-                if (!datetimeStr) return '';
-                const d = new Date(datetimeStr);
-                const hh = String(d.getHours() % 12 || 12).padStart(2, '0');
-                const mm = String(d.getMinutes()).padStart(2, '0');
-                const ss = String(d.getSeconds()).padStart(2, '0');
-                const ampm = d.getHours() < 12 ? 'AM' : 'PM';
-                return `${hh}:${mm}:${ss} ${ampm}`;
-            }
-
-            function formatDate(datetimeStr) {
-                if (!datetimeStr) return '';
-                const d = new Date(datetimeStr);
-                const dd = String(d.getDate()).padStart(2, '0');
-                const mm = String(d.getMonth() + 1).padStart(2, '0');
-                const yyyy = d.getFullYear();
-                return `${dd}/${mm}/${yyyy}`;
-            }
-
-
-            //download excel
-
-            $(document).on('click', "#downloadShiftExcel", function (e) {
-                e.preventDefault();
-                downloadShiftExcel();
-            });
-
-            function downloadShiftExcel() {
-                LoadFullShiftTable(function (data) {
-                    if (!data || !data.length) {
-                        alert("No data to export.");
-                        return;
-                    }
-
-                    $.ajax({
-                        url: '/HRMATDShifts/DownloadShiftExcel',
-                        type: 'POST',
-                        contentType: 'application/json',
-                        data: JSON.stringify(data),
-                        xhrFields: {
-                            responseType: 'blob' // Important for file download
-                        },
-                        success: function (blob, status, xhr) {
-                            
-                            const fileName =  'HRM_Shift_Report.xlsx';
-
-                            const link = document.createElement('a');
-                            const url = window.URL.createObjectURL(blob);
-                            link.href = url;
-                            link.download = fileName;
-                            document.body.appendChild(link);
-                            link.click();
-                            document.body.removeChild(link);
-                            window.URL.revokeObjectURL(url);
-                        },
-                        error: function () {
-                            alert("Failed to download Excel.");
-                        }
-                    });
-                });
-            }
-
-
-
-
+          
 
         });
 
-     
+
+
 
         // Initialization function
         function initialize()
@@ -453,6 +242,7 @@
                 url: loadTableURL,
                 success: function (data)
                 {
+                    //console.log(data);
                     $(settings.gridContainer).html(data);
                     dataTable();
 
@@ -561,53 +351,19 @@
             $("#WefDate").val(wefDate);
         }
 
-
-
-        //// WEF Date Picker
-        //function WEFDatePicker()
-        //{
-        //    $("#WefDate").datepicker({
-        //        dateFormat: 'dd/mm/yy',
-        //        changeMonth: true,
-        //        changeYear: true,
-        //        yearRange: "-100:+10",
-        //        regional: 'en-GB', // Add localization if needed
-        //        beforeShow: function (input, inst) {
-        //            $(this).toggleClass("placeholder-shown", !this.value);
-        //        },
-        //        onClose: function (dateText, inst) {
-        //            $(this).toggleClass("placeholder-shown", !this.value);
-        //        },
-        //        onSelect: function (dateText) {
-        //            var formattedDate = $.datepicker.formatDate('dd/mm/yy', $(this).datepicker('getDate'));
-        //            //var formattedDate = $.datepicker.formatDate('mm/dd/yy', $(this).datepicker('getDate'));
-        //            $('#WefHidden').val(formattedDate);
-        //            $("#WefDate").valid();
-        //        }
-        //    });
-
-        //    var initialDate = $("#WefDate").val();
-        //    if (initialDate) {
-        //        var formattedInitialDate = $.datepicker.formatDate('dd/mm/yy', $("#WefDate").datepicker('getDate'));//var formattedInitialDate = $.datepicker.formatDate('mm/dd/yy', $("#WefDate").datepicker('getDate'));
-        //        $('#WefHidden').val(formattedInitialDate);
-        //    }
-
-        //    $(".datepicker").trigger("input");
-        //}
-
         function WEFDatePicker() {
             $("#WefDate").datepicker({
-                dateFormat: 'mm/dd/yy', // ইউজার এই ফরম্যাটে ইনপুট দিবে (default display format)
+                dateFormat: 'mm/dd/yy', 
                 changeMonth: true,
                 changeYear: true,
                 yearRange: "-100:+10",
                 //regional: 'en-GB',
                 onSelect: function () {
                     var selectedDate = $(this).datepicker('getDate');
-                    console.log(selectedDate);
+                    //console.log(selectedDate);
                     if (selectedDate) {
                         var formatted = $.datepicker.formatDate('mm/dd/yy', selectedDate);
-                        $('#WefHidden').val(formatted); // একই ফরম্যাটে hidden এ সেট
+                        $('#WefHidden').val(formatted);
                     }
                     $("#WefDate").valid();
                 }
@@ -643,12 +399,6 @@
                 }
             });
         }
-
-
-
-
-
-      
         function ResetForm()
         {
 
@@ -666,13 +416,7 @@
             $('#ShiftName').val('').trigger('focus'); 
             $('#ShiftTypeIdDD').val(null).trigger('change');
             $('#Description').val('');
-
-            //var currentTime = moment().format('hh:mm:ss A');
-            //$('.TimePicker').each(function ()
-            //{
-            //    $(this).val(currentTime);
-            //});
-          
+           
             $('#WefDate').val(''); 
             $('#Remarks').val('');
             $('#LdateModifyHide').hide();
@@ -763,45 +507,6 @@
 
         })       
 
-        //function initializeTimePicker(timeInputId, dateTimeInputId) {
-        //    flatpickr(timeInputId, {
-        //        enableTime: true,
-        //        noCalendar: true,
-        //        enableSeconds: true,
-        //        time_24hr: false,
-        //        dateFormat: "h:i:s K",
-        //        inline: true,
-
-        //        defaultDate: new Date(),
-
-        //        hourIncrement: 1,
-        //        minuteIncrement: 1,
-        //        secondIncrement: 1,
-
-        //        onChange: function (selectedDates, dateStr, instance) {
-        //            const today = new Date();
-        //            const year = today.getFullYear();
-        //            const month = String(today.getMonth() + 1).padStart(2, '0');
-        //            const day = String(today.getDate()).padStart(2, '0');
-        //            const fullDate = `${year}-${month}-${day}`;
-        //            const dateTime = `${fullDate} ${dateStr}`;
-        //            $(dateTimeInputId).val(dateTime);
-        //        },
-
-        //        onReady: function (selectedDates, dateStr, instance) {
-        //            const today = new Date();
-        //            const year = today.getFullYear();
-        //            const month = String(today.getMonth() + 1).padStart(2, '0');
-        //            const day = String(today.getDate()).padStart(2, '0');
-        //            const fullDate = `${year}-${month}-${day}`;
-
-        //            const currentTime = instance.input.value;
-        //            const dateTime = `${fullDate} ${currentTime}`;
-        //            $(dateTimeInputId).val(dateTime);
-        //        }
-        //    });
-        //}
-
         function initializeTimePicker(timeInputId, dateTimeInputId, defaultValue = null) {
             flatpickr(timeInputId, {
                 enableTime: true,
@@ -811,9 +516,9 @@
                 dateFormat: "h:i:s K",
                 inline: true,
                 defaultDate: defaultValue || new Date(),
-                hourIncrement: 1,     
-                minuteIncrement: 1,   
-                secondIncrement: 1, 
+  		hourIncrement: 1,  
+        	minuteIncrement: 1, 
+        	secondIncrement: 1,  
                 onChange: function (selectedDates, dateStr, instance) {
                     const today = new Date();
                     const fullDate = today.toISOString().slice(0, 10);
@@ -830,10 +535,6 @@
                 }
             });
         }
-
-
-
-
     }
   
   

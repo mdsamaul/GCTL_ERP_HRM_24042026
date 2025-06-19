@@ -104,8 +104,8 @@ using GCTL.Service.SeparationTypes;
 using GCTL.Service.EmployeeWeekendDeclaration;
 using GCTL.Service.ManualEarnLeaveEntry;
 using GCTL.Service.PFAssignEntry;
-using GCTL.Service.RosterScheduleEntry;
 using GCTL.Service.RosterScheduleApproval;
+using GCTL.Service.RosterScheduleEntry;
 using GCTL.Service.RosterScheduleReport;
 using GCTL.Service.EmployeeWeekendDeclarationReport;
 using GCTL.Service.PFAssignEntryReport;
@@ -153,26 +153,14 @@ namespace GCTL.UI.Core.Extensions
             services.AddScoped<ICurrencyService, CurrencyService>();
             services.AddScoped<IPaymentModeService, PaymentModeService>();
            
-            //samaul
-            services.AddScoped<IEmployeeWeekendDeclarationService, EmployeeWeekendDeclarationService>(); 
-            services.AddScoped<IManualEarnLeaveEntryService, ManualEarnLeaveEntryService>();
-            services.AddScoped<IPFAssignEntryService, PFAssignEntryService>(); 
-            services.AddScoped<IRosterScheduleEntryService, RosterScheduleEntryService>(); 
-            services.AddScoped<IRosterScheduleApprovalService, RosterScheduleApprovalService>();
-            services.AddScoped<IRosterScheduleReportServices, RosterScheduleReportServices>();
-            services.AddScoped<IEmployeeWeekendDeclarationReportServices, EmployeeWeekendDeclarationReportServices>();
-            services.AddScoped<IPFAssignEntryReportServices, PFAssignEntryReportServices>();
-            services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
 
 
-            //samaul end
 
             services.AddScoped<IDoctorTypeService, DoctorTypeService>();
             services.AddScoped<ISpecialityService, SpecialityService>();
             services.AddScoped<IQualificationService, QualificationService>();
             services.AddScoped<IShiftService, ShiftService>();
             services.AddScoped<IDoctorService, DoctorService>();
-            
             
 
             //services.AddScoped<IReferencePersonService, ReferencePersonService>();
@@ -193,6 +181,16 @@ namespace GCTL.UI.Core.Extensions
             //services.AddScoped<IAccountReportService, AccountReportService>();
 
           
+
+services.AddScoped<IEmployeeWeekendDeclarationService, EmployeeWeekendDeclarationService>(); 
+services.AddScoped<IManualEarnLeaveEntryService, ManualEarnLeaveEntryService>();
+services.AddScoped<IPFAssignEntryService, PFAssignEntryService>(); 
+services.AddScoped<IRosterScheduleEntryService, RosterScheduleEntryService>(); 
+services.AddScoped<IRosterScheduleApprovalService, RosterScheduleApprovalService>();
+services.AddScoped<IRosterScheduleReportServices, RosterScheduleReportServices>();
+services.AddScoped<IEmployeeWeekendDeclarationReportServices, EmployeeWeekendDeclarationReportServices>();
+services.AddScoped<IPFAssignEntryReportServices, PFAssignEntryReportServices>();
+services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
             services.AddScoped<IReportService, ReportService>();
           
 

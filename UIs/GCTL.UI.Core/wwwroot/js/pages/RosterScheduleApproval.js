@@ -139,29 +139,27 @@ function toArray(value) {
 function loadFilterEmp() {
     showLoading();
     var filterData = getAllFilterVal();
-    console.log(filterData);
     $.ajax({
         url: `/RosterScheduleApproval/GetRosterScheduleFilter`,
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify(filterData),
         success: function (res) {
-            ////console.log(res);
+           
             if (!res.isSuccess) {
                 showToast('error', res.message);
                 return;
             }
-            //showToast('success', res.message);
-            ////console.log(res.data);
+          
             $("#companySelect, #branchSelect, #divisionSelect, #departmentSelect, #designationSelect, #employeeSelect, #employeeStatus, #activityStatusSelect, #ToDateFilter, #FromDateFilter")
                 .off("change");
             loadTableData(res);
-            ////console.log(res);
+           
             const data = res.data;
-            ////console.log(data.companies);
+
             if (data.companies && data.companies.length > 0 && data.companies.some(x => x.code != null && x.name != null)) {
                 var Companys = data.companies;
-                ////console.log(dataCompany);
+
                 var optCompany = $("#companySelect");
                 $.each(Companys, function (index, company) {
                     if (company.code != null && company.name != null && optCompany.find(`option[value="${company.code}"]`).length === 0) {
@@ -279,7 +277,7 @@ function loadFilterEmp() {
 }
 
 function loadTableData(res) {
-    console.log(res);
+    
     var tableData = res.data.employees;
 
     if ($.fn.DataTable.isDataTable("#RosterScheduleApprove-grid")) {
@@ -320,7 +318,7 @@ function initializeDataTable() {
         info: true,
         autoWidth: false,
         scrollX: true,
-        ordering: true, // ✅ sorting enabled
+        ordering: true, 
         responsive: false,
         language: {
             search: "🔍 Search:",
@@ -336,7 +334,7 @@ function initializeDataTable() {
             emptyTable: "No data available"
         },
         columnDefs: [
-            { orderable: false, targets: 0 }, // checkbox column no sort
+            { orderable: false, targets: 0 },
             { className: "text-center", targets: "_all" },
             { targets: 0, width: "80px" }
         ],
@@ -398,8 +396,7 @@ $(document).ready(function () {
             success: function (res) {
                 loadFilterEmp();
                 GetRosterScheduleApproveGride();
-                console.log(res);
-                //$("#remarks").attr("placeholder", "Remarks");
+                
                 $("#remarks").val("");
                 $("#rosterScheduleApprove-check-all").prop('checked', false);
             },
@@ -512,12 +509,11 @@ function GetRosterScheduleApproveGride() {
                 borderRadius: '4px'
             });
 
-            // Column adjust with timeout
             setTimeout(function () {
                 $('#RosterScheduleApproveShowData-grid').DataTable().columns.adjust().draw(false);
-            }, 300); // 300ms delay for better layout stabilization
+            }, 300); 
 
-            // Resize handler
+
             $(window).off('resize.rosterGridResize').on('resize.rosterGridResize', function () {
                 $('#RosterScheduleApproveShowData-grid').DataTable().columns.adjust();
             });
@@ -525,7 +521,7 @@ function GetRosterScheduleApproveGride() {
         drawCallback: function () {
             setTimeout(function () {
                 $('#RosterScheduleApproveShowData-grid').DataTable().columns.adjust();
-            }, 300); // ensure adjustment on redraw
+            }, 300); 
         }
     });
 }
