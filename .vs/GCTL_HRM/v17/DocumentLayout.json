@@ -1,0 +1,92 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Git\\GCTL_ERP_HRM_24042026\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\hrmpaysalarydeductionentries\\hrmpaysalarydeductionentryviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\hrmpaysalarydeductionentries\\hrmpaysalarydeductionentryviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5F74230-9C16-46D1-8E42-078F76071143}|Libraries\\GCTL.Data\\GCTL.Data.csproj|d:\\git\\gctl_erp_hrm_24042026\\libraries\\gctl.data\\models\\hrmpaymonthlyotentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D5F74230-9C16-46D1-8E42-078F76071143}|Libraries\\GCTL.Data\\GCTL.Data.csproj|solutionrelative:libraries\\gctl.data\\models\\hrmpaymonthlyotentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|d:\\git\\gctl_erp_hrm_24042026\\libraries\\gctl.core\\viewmodels\\hrmpaysalarydeductionentries\\hrmpaysalarydeductionsetupviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{065CE8B2-9FF4-4C03-A263-D7A47D23BFEC}|Libraries\\GCTL.Core\\GCTL.Core.csproj|solutionrelative:libraries\\gctl.core\\viewmodels\\hrmpaysalarydeductionentries\\hrmpaysalarydeductionsetupviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5F74230-9C16-46D1-8E42-078F76071143}|Libraries\\GCTL.Data\\GCTL.Data.csproj|d:\\git\\gctl_erp_hrm_24042026\\libraries\\gctl.data\\models\\hrmpaysalarydeductionentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D5F74230-9C16-46D1-8E42-078F76071143}|Libraries\\GCTL.Data\\GCTL.Data.csproj|solutionrelative:libraries\\gctl.data\\models\\hrmpaysalarydeductionentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "HrmPaySalaryDeductionEntry.cs",
+              "DocumentMoniker": "D:\\Git\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\Models\\HrmPaySalaryDeductionEntry.cs",
+              "RelativeDocumentMoniker": "Libraries\\GCTL.Data\\Models\\HrmPaySalaryDeductionEntry.cs",
+              "ToolTip": "D:\\Git\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\Models\\HrmPaySalaryDeductionEntry.cs",
+              "RelativeToolTip": "Libraries\\GCTL.Data\\Models\\HrmPaySalaryDeductionEntry.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T08:44:14.776Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HrmPaySalaryDeductionSetupViewModel.cs",
+              "DocumentMoniker": "D:\\Git\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HrmPaySalaryDeductionEntries\\HrmPaySalaryDeductionSetupViewModel.cs",
+              "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HrmPaySalaryDeductionEntries\\HrmPaySalaryDeductionSetupViewModel.cs",
+              "ToolTip": "D:\\Git\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HrmPaySalaryDeductionEntries\\HrmPaySalaryDeductionSetupViewModel.cs",
+              "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HrmPaySalaryDeductionEntries\\HrmPaySalaryDeductionSetupViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T08:44:49.308Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HrmPaySalaryDeductionEntryViewModel.cs",
+              "DocumentMoniker": "D:\\Git\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HrmPaySalaryDeductionEntries\\HrmPaySalaryDeductionEntryViewModel.cs",
+              "RelativeDocumentMoniker": "Libraries\\GCTL.Core\\ViewModels\\HrmPaySalaryDeductionEntries\\HrmPaySalaryDeductionEntryViewModel.cs",
+              "ToolTip": "D:\\Git\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\ViewModels\\HrmPaySalaryDeductionEntries\\HrmPaySalaryDeductionEntryViewModel.cs",
+              "RelativeToolTip": "Libraries\\GCTL.Core\\ViewModels\\HrmPaySalaryDeductionEntries\\HrmPaySalaryDeductionEntryViewModel.cs",
+              "ViewState": "AgIAAGEAAAAAAAAAAAAuwGQAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T08:44:47.299Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "HrmPayMonthlyOtentry.cs",
+              "DocumentMoniker": "D:\\Git\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\Models\\HrmPayMonthlyOtentry.cs",
+              "RelativeDocumentMoniker": "Libraries\\GCTL.Data\\Models\\HrmPayMonthlyOtentry.cs",
+              "ToolTip": "D:\\Git\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\Models\\HrmPayMonthlyOtentry.cs",
+              "RelativeToolTip": "Libraries\\GCTL.Data\\Models\\HrmPayMonthlyOtentry.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T08:42:08.185Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
