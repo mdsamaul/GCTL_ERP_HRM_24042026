@@ -23,43 +23,43 @@ $(window).on('load', function () {
     $('#employee-filter-grid-body')[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
-function setupLoadingOverlay() {
-    if ($("#loadingOverlay").length === 0) {
-        $("body").append(`
-            <div id="loadingOverlay" style="
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                z-index: 9999;
-                justify-content: center;
-                align-items: center;">
-                <div style="
-                    background-color: white;
-                    padding: 20px;
-                    border-radius: 5px;
-                    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-                    text-align: center;">
-                    <div class="spinner-border text-primary" role="status">
+    function setupLoadingOverlay() {
+        if ($("#loadingOverlay").length === 0) {
+            $("body").append(`
+                <div id="loadingOverlay" style="
+                    display: none;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    z-index: 9999;
+                    justify-content: center;
+                    align-items: center;">
+                    <div style="
+                        background-color: white;
+                        padding: 20px;
+                        border-radius: 5px;
+                        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+                        text-align: center;">
+                        <div class="spinner-border text-primary" role="status">
                        
+                        </div>
                     </div>
                 </div>
-            </div>
-        `);
+            `);
+        }
     }
-}
-function showLoading() {
-    $('body').css('overflow', 'hidden');
-    $("#loadingOverlay").fadeIn(200);
-}
+    function showLoading() {
+        $('body').css('overflow', 'hidden');
+        $("#loadingOverlay").fadeIn(200);
+    }
 
-function hideLoading() {
-    $('body').css('overflow', '');
-    $("#loadingOverlay").fadeOut(200);
-}
+    function hideLoading() {
+        $('body').css('overflow', '');
+        $("#loadingOverlay").fadeOut(200);
+    }
 function setupEnterKeyNavigation() {
     const $form = $('#salary-deduction-form');
     if (!$form.length) return;
@@ -74,7 +74,8 @@ function setupEnterKeyNavigation() {
 
             const index = $focusable.index(this);
             if (index > -1) {
-                const $next = $focusable.eq(index + 1).length ? $focusable.eq(index + 1) : $focusable.eq(0);
+                const $next = $focusable.eq(index + 1).length ?
+                    $focusable.eq(index + 1) : $focusable.eq(0);
                 $next.focus();
             }
         }
