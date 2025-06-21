@@ -1,0 +1,128 @@
+﻿
+<style>
+    .form-label {
+        text-align: right;
+    }
+
+    .form-group-row {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 1rem;
+    }
+
+    .form-group-row label {
+        min-width: 120px;
+        white-space: nowrap;
+        margin-bottom: 0;
+    }
+
+    .form-group-row .form-control,
+    .form-group-row select {
+        flex: 1;
+        min-width: 0;
+    }
+</style>
+
+
+<div class="card mb-4 border-0 shadow-sm">
+    <div class="card-header bg-light">
+        <h6 class="mb-0"><i class="fa fa-calendar-alt me-2 px-3"></i>Monthly OT Entry</h6>
+    </div>
+    <div class="card-body">
+        <form id="salary-deduction-form" class="mt-4">
+            <input type="text" id="Tc" hidden />
+            <input type="text" id="EmployeeId" hidden />
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="MonthlyOtid" class="form-label">ID:</label>
+                        <input type="text" id="MonthlyOtid" class="form-control" style="margin-left: 10px;" required readonly />
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-6">
+                    <label class="form-label" style="margin-right: 12px;">Duration Selected:</label>
+                    <div class="form-check form-check-inline m-0">
+                        <input type="radio" id="byDate" name="durationType" value="date">
+                        <label class="pe-0" for="byDate">By Date</label>
+                    </div>
+                    <div class=" form-check-inline">
+                        <input type="radio" id="byMonth" name="durationType" value="month">
+                        <label class="form-check-label" for="byMonth">By Month</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="dateFrom" class="form-label" id="dateFromLabel">Date From:</label>
+                        <input type="date" id="dateFrom" name="dateFrom" class="form-control" style="margin-left: 10px;" />
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="dateTo" class="form-label" id="dateToLabel">To:</label>
+                        <input type="date" id="dateTo" name="dateTo" class="form-control" style="margin-left: 10px;" />
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="Month" class="form-label" id="MonthLabel">Month:</label>
+                        <select id="Month" class="form-control" style="margin-left: 10px;">
+                            <!-- Options -->
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="Year" class="form-label" id="YearLabel">Year:</label>
+                        <input type="number" id="Year" class="form-control" step="1" style="margin-left: 10px;" />
+                    </div>
+                </div>
+
+
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="Ot" class="form-label">OT:<span class="text-danger">*</span></label>
+                        <input type="text" id="Ot" class="form-control" style="margin-left: 10px;" tabindex="3"/>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="Amount" class="form-label">Amount:</label>
+                        <input type="text" id="Amount" class="form-control" style="margin-left: 10px;" tabindex="4" />
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+
+                <div class="col-md-10">
+                    <div class="form-group-row">
+                        <label for="remarks" class="form-label">Remarks:</label>
+                        <textarea id="remarks" class="form-control ms-2" rows="3" placeholder="Enter your remarks here" tabindex="5" style="margin-left: 12px;"></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="row mb-3">
+            <div class="col-md-10"></div>
+            <div class="col-md-2 d-flex justify-content-center">
+                <button type="button" class="btn btn-default success-btn rounded-pill pt-2 pb-2 js-monthlyOt-dec-save" id="submitButton" tabindex="3">
+                    <i class="fa fa-save">&nbsp;</i> Save
+                </button>
+
+
+            </div>
+        </div>
+    </div>
+</div>

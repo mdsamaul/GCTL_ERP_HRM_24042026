@@ -2148,6 +2148,7 @@ wwwroot\js\pages\patientTypes.js
 wwwroot\js\pages\payDefBenefitType.js
 wwwroot\js\pages\paymentModes.js
 wwwroot\js\pages\paymentTypes.js
+wwwroot\js\pages\payMonthlyOt.js
 wwwroot\js\pages\payOthersBenefit.js
 wwwroot\js\pages\payOthersBenefitReport.js
 wwwroot\js\pages\paySalaryDeductionReport.js

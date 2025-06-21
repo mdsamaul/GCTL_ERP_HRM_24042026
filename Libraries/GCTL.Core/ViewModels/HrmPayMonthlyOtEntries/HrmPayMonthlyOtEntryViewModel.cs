@@ -13,6 +13,7 @@ namespace GCTL.Core.ViewModels.HrmPayMonthlyOtEntries
         public List<decimal>? Tcs { get; set; }
         public string MonthlyOtid { get; set; }
         public string? EmployeeId { get; set; }
+        public List<string>? EmployeeIds { get; set; }
         public string? EmployeeName { get; set; }
         public string? Designation { get; set; }
         public decimal? Ot { get; set; }
@@ -22,7 +23,7 @@ namespace GCTL.Core.ViewModels.HrmPayMonthlyOtEntries
         public string Remarks { get; set; }
         public string CompanyCode { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime? DateTo { get; set; }
+        public DateTime DateTo { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime DateForm { get; set; }
     }
@@ -45,6 +46,7 @@ namespace GCTL.Core.ViewModels.HrmPayMonthlyOtEntries
         public List<string>? DivisionCodes { get; set; }
         public List<string>? DepartmentCodes { get; set; }
         public List<string>? DesignationCodes { get; set; }
+        public List<string>? DivistionCodes { get; set; }
         public List<string>? EmployeeIDs { get; set; }
         public List<string>? EmployeeStatuses { get; set; }
         public List<string>? MonthIDs { get; set; }
@@ -55,12 +57,13 @@ namespace GCTL.Core.ViewModels.HrmPayMonthlyOtEntries
     { 
         public string? EmployeeId { get; set; }
         public string? EmployeeName { get; set; }
+        public string? JoiningDate { get; set; }
         public string? DesignationName { get; set; }
         public string? BranchName { get; set; }
         public string? DepartmentName { get; set; }
         public string? EmployeeTypeName { get; set; }
         public string? EmployeeStatus { get; set; }
-        public string? EmployeeNature { get; set; }
+        public string? EmploymentNature { get; set; }
     }
 
 

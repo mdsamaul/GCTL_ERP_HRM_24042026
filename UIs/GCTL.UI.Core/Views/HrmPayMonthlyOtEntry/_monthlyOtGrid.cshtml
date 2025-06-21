@@ -1,0 +1,43 @@
+﻿<div class="card border-0 shadow-sm">
+    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+        <h6 class="mb-0">
+            <i class="fa fa-list-alt me-2 px-3"></i>Monthly OT Entry List
+        </h6>
+
+    </div>
+    <div class="card-body pt-3">
+        <div id="loadingOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(255,255,255,0.7); z-index:9999; text-align:center; padding-top:200px;">
+            <div class="spinner-border text-primary" role="status">
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table id="monthlyOt-grid" class="table table-bordered table-striped table-hover align-middle mb-0">
+
+                <thead>
+                    <tr>
+                        <th class="text-center no-sort" style="width: 5%; padding-left: 0; padding-right: 0;">
+                            <label for="monthlyOt-check-all">Select</label><br />
+                            <input type="checkbox" id="monthlyOt-check-all">
+                        </th>
+                        <th class="text-center">ID</th>
+                        <th class="text-center">Emp. ID</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Designation</th>
+                        <th class="text-center">OT</th>
+                        <th class="text-center">OT Amount</th>
+                        <th class="text-center">Month</th>
+                        <th class="text-center">Year</th>
+                        <th class="text-center">Remarks</th>
+                        <th class="text-center">Entry Date</th>
+                        <th class="text-center">Entry User</th>
+                    </tr>
+                </thead>
+                <tbody id="monthlyOt-grid-body">
+                    <!-- Data will be injected here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
