@@ -1,9 +1,17 @@
-﻿(function ($) {
+﻿
+(function ($) {
     $.patientTypes = function (options) {
-        var settings = $.extend({
+        var commonName = $.extend({
             baseUrl: "/",
+            CompanyMultiSelectInput: "#companyMultiselectInput",
+            CompanyDropdown: "#companyMultiselectDropdown",
+            EmployeeDropdown: "#employeeMultiselectDropdown",
+            EmployeeMultiselectInput:"#employeeMultiselectInput",
         }, options);
-        var filterUrl = settings.baseUrl + "/GetFilterData";
+        var filterUrl = commonName.baseUrl + "/GetFilterData";
+        var getAllAndFilterCompanyUrl = commonName.baseUrl + "/GetAllAndFilterCompany";
+        var GetEmployeesByFilterUrl = commonName.baseUrl + "/GetEmployeesByFilter";
+
 
         function stHeader() {
             window.addEventListener('scroll', function () {
@@ -21,31 +29,19 @@
         var $dropdown = $('#multiselectDropdown');
         var $selectedValuesSpan = $('#selectedValues');
 
-        // Dynamic options array
-        var dynamicOptions = [
-            { value: 'personal-loan', label: 'Personal Loan' },
-            { value: 'home-loan', label: 'Home Loan' },
-            { value: 'car-loan', label: 'Car Loan' },
-            { value: 'business-loan', label: 'Business Loan' },
-            { value: 'education-loan', label: 'Education Loan' }
+        var adjustmentOption = [
+            { value: 'Advance', label: 'Advance' },
+            { value: 'Loan', label: 'Loan' }          
         ];
 
-        async function fetchOptionsFromAPI() {
-            try {
-                // Demo data for example
-                return [
-                    { value: 'api-option-1', label: 'API Option 1' },
-                    { value: 'api-option-2', label: 'API Option 2' },
-                    { value: 'api-option-3', label: 'API Option 3' }
-                ];
-            } catch (error) {
-                console.error('Error fetching options:', error);
-                return [];
-            }
-        }
+        // Generate option list with checkboxes, maintaining checked states
+        function adjustmentGenerateOptions(options) {
+            var currentlySelected = $dropdown.find('input[type="checkbox"]:checked').map(function () {
+                return $(this).val();
+            }).get();
 
-        function generateOptions(options) {
             $dropdown.empty();
+
             $.each(options, function (index, option) {
                 var checkboxId = 'option' + (index + 1);
                 var $optionDiv = $('<div>', { class: 'multiselect-option' });
@@ -58,25 +54,55 @@
                     for: checkboxId,
                     text: option.label
                 });
+
+                if (currentlySelected.indexOf(option.value) !== -1) {
+                    $checkbox.prop('checked', true);
+                }
+
                 $optionDiv.append($checkbox).append($label);
                 $dropdown.append($optionDiv);
 
                 $checkbox.on('change', function () {
-                    updateInputValue();
-                    updateSelectedValues();
+                    updateAdjustmentInputValue();
+                    updateAdjustmentSelectedValues();
+                    logAdjustmentSelectedValues();
                 });
             });
         }
 
-        // নতুন ফাংশন: initMultiselect
-        function initMultiselect() {
-            generateOptions(dynamicOptions);
+        // Show/hide dropdown options based on input search text
+        function filterOptions(searchText) {
+            searchText = searchText.toLowerCase();
 
+            $dropdown.find('.multiselect-option').each(function () {
+                var label = $(this).find('label').text().toLowerCase();
+                $(this).toggle(label.indexOf(searchText) !== -1);
+            });
+        }
+
+        function initMultiselect() {
+            adjustmentGenerateOptions(adjustmentOption);
+
+            // Show/hide dropdown on input click
             $input.on('click', function () {
                 $dropdown.toggleClass('show');
                 $arrow.toggleClass('rotated');
+                if ($dropdown.hasClass('show')) {
+                    filterOptions($input.val());
+                }
             });
 
+            // Filter options as user types in input
+            $input.on('input', function () {
+                var val = $(this).val();
+                filterOptions(val);
+                if (!$dropdown.hasClass('show')) {
+                    $dropdown.addClass('show');
+                    $arrow.addClass('rotated');
+                }
+            });
+
+            // Click outside closes dropdown
             $(document).on('click', function (event) {
                 if ($(event.target).closest('.custom-multiselect').length === 0) {
                     $dropdown.removeClass('show');
@@ -88,18 +114,20 @@
                 event.stopPropagation();
             });
 
-            updateInputValue();
-            updateSelectedValues();
+            updateAdjustmentInputValue();
+            updateAdjustmentSelectedValues();
+            logAdjustmentSelectedValues();
         }
 
-        function updateInputValue() {
+        // Update main input text based on selected checkboxes
+        function updateAdjustmentInputValue() {
             var selectedLabels = $dropdown.find('input[type="checkbox"]:checked').map(function () {
                 return $(this).next('label').text().trim();
             }).get();
 
             if (selectedLabels.length === 0) {
                 $input.val('');
-                $input.attr('placeholder', 'Select options...');
+                $input.attr('placeholder', '~~Select Adjustment Type~~');
             } else if (selectedLabels.length === 1) {
                 $input.val(selectedLabels[0]);
                 $input.attr('placeholder', '');
@@ -109,7 +137,8 @@
             }
         }
 
-        function updateSelectedValues() {
+        // Update span below with selected values (comma separated)
+        function updateAdjustmentSelectedValues() {
             var selectedValues = $dropdown.find('input[type="checkbox"]:checked').map(function () {
                 return $(this).val();
             }).get();
@@ -117,49 +146,200 @@
             $selectedValuesSpan.text(selectedValues.length > 0 ? selectedValues.join(', ') : 'None');
         }
 
-        // Global functions (window scope) for API load, add, remove, update, clear
-        window.loadFromAPI = async function () {
-            var apiOptions = await fetchOptionsFromAPI();
-            dynamicOptions = apiOptions;
-            generateOptions(dynamicOptions);
-            updateInputValue();
-            updateSelectedValues();
-        };
+        // Console log selected values array on every change
+        function logAdjustmentSelectedValues() {
+            var selectedValues = $dropdown.find('input[type="checkbox"]:checked').map(function () {
+                return $(this).val();
+            }).get();
+            console.log("Selected Values:", selectedValues);
+            if (selectedValues.length === 0) {
+                adjustmentGenerateOptions(adjustmentOption);
+            }
+        }
 
-        window.addOption = function (value, label) {
-            dynamicOptions.push({ value: value, label: label });
-            generateOptions(dynamicOptions);
-            updateInputValue();
-            updateSelectedValues();
-        };
 
-        window.removeOption = function (value) {
-            dynamicOptions = dynamicOptions.filter(function (opt) {
-                return opt.value !== value;
+        var $companyInput = $(commonName.CompanyMultiSelectInput);
+        var $companyDropdown = $(commonName.CompanyDropdown);
+
+        function GetAllCompany(SearchCompanyText) {
+            $.ajax({
+                url: getAllAndFilterCompanyUrl,
+                type: "GET",
+                data: { companyName: SearchCompanyText },
+                success: function (res) {
+                    renderCompanyOptions(res);
+                },
+                error: function (e) {
+                    console.log(e);
+                }
             });
-            generateOptions(dynamicOptions);
-            updateInputValue();
-            updateSelectedValues();
-        };
+        }
 
-        window.updateOptions = function (newOptions) {
-            dynamicOptions = newOptions;
-            generateOptions(dynamicOptions);
-            updateInputValue();
-            updateSelectedValues();
-        };
+        function renderCompanyOptions(companies) {
+            $companyDropdown.empty();
 
-        window.clearOptions = function () {
-            dynamicOptions = [];
-            $dropdown.empty();
-            $input.val('');
-            $input.attr('placeholder', 'No options available');
-            $selectedValuesSpan.text('None');
-        };
+            if (!companies || companies.length === 0) {
+                $companyDropdown.append(`<div class="multiselect-option">Company Not Found</div>`);
+                return;
+            }
 
+            $.each(companies, function (index, company) {
+                var $optionDiv = $('<div>', {
+                    class: 'multiselect-option',
+                    text: company.companyName,
+                    'data-value': company.companyCode
+                });
+
+                // Click event to set value
+                $optionDiv.on('click', function () {
+                    var selectedName = $(this).text();
+                    var selectedValue = $(this).data("value");
+
+                    $companyInput.val(selectedName);
+                    $companyInput.attr("data-selected-value", selectedValue); // Store ID if needed
+
+                    $companyDropdown.removeClass('show');
+                });
+
+                $companyDropdown.append($optionDiv);
+            });
+
+            if (companies.length > 0) {
+                var firstCompay = companies[0];
+                $companyInput.val(firstCompay.companyName);
+                $companyInput.attr("data-selected-value", firstCompay.companyCode);
+            }
+        }
+
+        function initCompanyMultiselect() {
+            $companyInput.on('click', function () {
+                $companyDropdown.toggleClass('show');
+            });
+
+            $companyInput.on('input', function () {
+                var searchText = $(this).val();
+                GetAllCompany(searchText);
+            });
+
+            // Hide dropdown when clicking outside
+            $(document).on('click', function (e) {
+                if (!$(e.target).closest('.custom-multiselect').length) {
+                    $companyDropdown.removeClass('show');
+                }
+            });
+
+            // Prevent closing when clicking inside the dropdown
+            $companyDropdown.on('click', function (e) {
+                e.stopPropagation();
+            });
+
+            // Initial load (optional)
+            GetAllCompany('');
+        }
+               
+
+        var statusId = "";
+        var company = "";
+
+
+        //get employee
+
+
+        var $employeeInput = $(commonName.EmployeeMultiselectInput);
+        var $employeeDropdown = $(commonName.EmployeeDropdown);
+        function getEmployeeByFilter(SearchEmployeeText) {
+            console.log(statusId);
+            console.log(company);
+            console.log(SearchEmployeeText);
+            $.ajax({
+                url: GetEmployeesByFilterUrl,
+                type: 'GET',
+                data: {
+                    employeeStatusId: '',
+                    companyCode: '',
+                    employeeName: ''
+                },
+                success: function (data) {
+                    console.log(data);
+                    //renderEmployeeOptions(data);
+                    //$('#employeeTableBody').empty();
+                    //$.each(data, function (i, emp) {
+                    //    $('#employeeTableBody').append(`
+                    //        <tr>
+                    //            <td>${emp.employeeId}</td>
+                    //            <td>${emp.fullName}</td>
+                    //            <td>${emp.departmentName}</td>
+                    //            <td>${emp.designationName}</td>
+                    //            <td>${emp.joiningDate}</td>
+                    //        </tr>
+                    //    `);
+                    //});
+                }, error: function (e) {
+                    console.log(e);
+                }
+            });
+        }
+
+        function renderEmployeeOptions(employees) {
+            $employeeDropdown.empty();
+
+            if (!employees || employees.length === 0) {
+                $employeeDropdown.append(`<div class="multiselect-option">Employee Not Found</div>`);
+                return;
+            }
+
+            $.each(employees, function (index, employee) {
+                var $optionDiv = $('<div>', {
+                    class: 'multiselect-option',
+                    text: employee.employeeName,
+                    'data-value': employee.employeeId
+                });
+
+                // Click event to set value
+                $optionDiv.on('click', function () {
+                    var selectedName = $(this).text();
+                    var selectedValue = $(this).data("value");
+
+                    $employeeInput.val(selectedName);
+                    $employeeInput.attr("data-selected-value", selectedValue); // Store ID if needed
+
+                    $employeeDropdown.removeClass('show');
+                });
+
+                $employeeDropdown.append($optionDiv);
+            });
+        }
+
+        function initEmployeeMultiselect() {
+            $companyInput.on('click', function () {
+                $employeeDropdown.toggleClass('show');
+            });
+
+            $employeeInput.on('input', function () {
+                var searchText = $(this).val();
+                getEmployeeByFilter(searchText);
+            });
+
+            // Hide dropdown when clicking outside
+            $(document).on('click', function (e) {
+                if (!$(e.target).closest('.custom-multiselect').length) {
+                    $employeeDropdown.removeClass('show');
+                }
+            });
+
+            // Prevent closing when clicking inside the dropdown
+            $employeeDropdown.on('click', function (e) {
+                e.stopPropagation();
+            });
+
+            // Initial load (optional)
+            getEmployeeByFilter('');
+        }
         var init = function () {
             stHeader();
             initMultiselect();
+            initCompanyMultiselect();
+            initEmployeeMultiselect();
             console.log("test", filterUrl);
         };
         init();

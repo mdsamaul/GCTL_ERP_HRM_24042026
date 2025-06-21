@@ -37,11 +37,11 @@
 
      .custom-multiselect {
          position: relative;
-         width: 100%; /* Full width of parent container */
+         width: 100%;
      }
 
      .multiselect-input {
-         width: 100%; /* Full width */
+         width: 100%; 
          padding: 8px 40px 8px 12px;
          border: 1px solid #ced4da;
          border-radius: 4px;
@@ -50,7 +50,7 @@
          font-size: 14px;
          color: #495057;
          transition: all 0.2s ease;
-         min-height: 38px; /* Consistent height */
+         min-height: 38px; 
      }
 
          .multiselect-input:hover {
@@ -83,14 +83,14 @@
          top: 100%;
          left: 0;
          right: 0;
-         width: 100%; /* Full width of parent */
+         width: 100%; 
          background: white;
          border: 1px solid #ced4da;
          border-top: none;
          border-radius: 0 0 4px 4px;
          max-height: 200px;
          overflow-y: auto;
-         z-index: 1050; /* Higher than sticky header */
+         z-index: 1050;
          display: none;
          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
      }
@@ -104,7 +104,7 @@
          cursor: pointer;
          border-bottom: 1px solid #f8f9fa;
          transition: background-color 0.2s ease;
-         white-space: nowrap; /* Prevent text wrapping */
+         white-space: nowrap; 
      }
 
          .multiselect-option:hover {
@@ -129,12 +129,14 @@
          margin-left: 5px;
      }
 
-     /* Responsive adjustments */
+
+
+
     @@media (max-width: 768px) {
          .multiselect-input
 
      {
-         font-size: 16px; /* Prevent zoom on iOS */
+         font-size: 16px; 
          padding: 10px 40px 10px 12px;
      }
 
@@ -148,22 +150,17 @@
          .multiselect-dropdown
 
      {
-         max-height: 150px; /* Smaller dropdown on mobile */
+         max-height: 150px;
      }
 
      }
 
-     /* Custom border styles to match your design */
-     . {
-         border: 1px solid #dee2e6 !important;
-     }
-
+   
      .col-md-custom {
-         width: 66.66667% !important; /* col-md-8 এর প্রায় width */
+         width: 66.66667% !important;
          max-width: 66.66667% !important;
      }
 
-     /* 1400px এর উপরে হলে col-md-6 এর মতো width দিবে */
     @@media (min-width: 1400px) {
          .col-md-custom
 
@@ -171,8 +168,7 @@
          width: 50% !important ;
          max-width: 50% !important;
      }
-
-     }
+   } 
 </style>
 <div class="container-fluid">
     <partial name="_PageHeader" model="Model"></partial>
@@ -192,7 +188,7 @@
                         <b style="white-space:nowrap;">Adjustment Type <span class="text-danger fs-6">*</span></b>
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
-                        <div class="custom-multiselect">
+                       @*  <div class="custom-multiselect">
                             <input type="text" class="multiselect-input form-control-sm" id="multiselectInput" placeholder="Select options..." readonly>
                             <i class="fas fa-chevron-down multiselect-arrow" id="multiselectArrow"></i>
 
@@ -218,7 +214,14 @@
                                     <label for="option5">Fixed Deposit Adjustment</label>
                                 </div>
                             </div>
-                        </div>                       
+                        </div>    *@ 
+                 <div class="custom-multiselect" style="position:relative;">
+                            <input type="text" class="multiselect-input form-control-sm" id="multiselectInput" placeholder="~~Select Adjustment Type~~">
+                            <i class="fas fa-chevron-down multiselect-arrow" id="multiselectArrow"></i>
+
+                            <div class="multiselect-dropdown" id="multiselectDropdown" style="position:absolute; width: 100%; z-index:1000; background:#fff; border: 1px solid #ccc; max-height: 250px; overflow-y: auto;"></div>
+                        </div>
+                       
                     </div>
                 </div>
             </div>
@@ -229,8 +232,8 @@
                         <b style="white-space:nowrap;">Company <span class="text-danger fs-6">*</span></b>
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
-                        <div class="custom-multiselect">
-                            <input type="text" class="multiselect-input form-control-sm" id="companyMultiselectInput" placeholder="Select options..." readonly>
+                       @*  <div class="custom-multiselect">
+                            <input type="text" class="multiselect-input form-control-sm" id="companyMultiselectInput" placeholder="Select options...">
                             <i class="fas fa-chevron-down multiselect-arrow" id="companyMultiselectArrow"></i>
 
                             <div class="multiselect-dropdown" id="companyMultiselectDropdown">
@@ -255,7 +258,14 @@
                                     <label for="option5">Fixed Deposit Adjustment</label>
                                 </div>
                             </div>
-                        </div>
+                        </div> *@
+                            <div class="custom-multiselect">
+                                <input type="text" class="multiselect-input form-control-sm" id="companyMultiselectInput" placeholder="Search companies...">
+                                <i class="fas fa-chevron-down multiselect-arrow" id="companyMultiselectArrow"></i>
+
+                                <div class="multiselect-dropdown" id="companyMultiselectDropdown" style="position:absolute; z-index:1000; background:#fff; border:1px solid #ccc; width:100%; max-height:250px; overflow-y:auto;"></div>
+                            </div>
+
                     </div>
                     <hr class="col-12 col-md-10 mx-2" style="height: 2px;background-color: #000;border: none;margin-bottom: 0px;">
                 </div>
@@ -270,29 +280,7 @@
                         <div class="custom-multiselect">
                             <input type="text" class="multiselect-input form-control-sm" id="employeeMultiselectInput" placeholder="Select options..." readonly>
                             <i class="fas fa-chevron-down multiselect-arrow" id="employeeMultiselectArrow"></i>
-
-                            <div class="multiselect-dropdown" id="employeeMultiselectDropdown">
-                                <div class="multiselect-option">
-                                    <input type="checkbox" id="option1e" class="form-control-sm" value="loan">
-                                    <label for="option1">Loan Adjustment</label>
-                                </div>
-                                <div class="multiselect-option">
-                                    <input type="checkbox" id="optione2" class="form-control-sm" value="investment">
-                                    <label for="option2">Investment Adjustment</label>
-                                </div>
-                                <div class="multiselect-option">
-                                    <input type="checkbox" id="optione3" class="form-control-sm" value="savings">
-                                    <label for="option3">Savings Account Adjustment</label>
-                                </div>
-                                <div class="multiselect-option">
-                                    <input type="checkbox" id="optione4" class="form-control-sm" value="credit">
-                                    <label for="option4">Credit Card Adjustment</label>
-                                </div>
-                                <div class="multiselect-option">
-                                    <input type="checkbox" id="optione5" class="form-control-sm" value="deposit">
-                                    <label for="option5">Fixed Deposit Adjustment</label>
-                                </div>
-                            </div>
+                            <div class="multiselect-dropdown" id="employeeMultiselectDropdown" style="position:absolute; z-index:1000; background:#fff; border:1px solid #ccc; width:100%; max-height:250px; overflow-y:auto;"></div>
                         </div>
                     </div>
                 </div>

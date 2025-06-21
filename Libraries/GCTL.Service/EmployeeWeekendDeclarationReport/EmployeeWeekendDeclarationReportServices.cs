@@ -16,7 +16,6 @@ namespace GCTL.Service.EmployeeWeekendDeclarationReport
 {
     public class EmployeeWeekendDeclarationReportServices : AppService<HrmEmployeeWeekendDeclaration>, IEmployeeWeekendDeclarationReportServices
     {
-        private readonly IRepository<GCTL_ERP_DB_DatapathContext> _context;
         private readonly IRepository<HrmEmployee> employeeRepo;
         private readonly IRepository<HrmEmployeeOfficialInfo> empOffRepo;
         private readonly IRepository<HrmDefDesignation> desiRepo;
