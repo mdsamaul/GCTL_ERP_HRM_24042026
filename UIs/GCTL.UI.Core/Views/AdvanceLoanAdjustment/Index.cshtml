@@ -130,7 +130,10 @@
      }
 
 
-
+     .employee-list-item div:hover {
+         background-color: #f2f2f2;
+         transition: 0.2s ease;
+     }
 
     @@media (max-width: 768px) {
          .multiselect-input
@@ -168,7 +171,11 @@
          width: 50% !important ;
          max-width: 50% !important;
      }
-   } 
+   }
+
+     .custom-remarks-textarea {
+         width: 105.5% !important;
+     }
 </style>
 <div class="container-fluid">
     <partial name="_PageHeader" model="Model"></partial>
@@ -187,36 +194,9 @@
                     <div class="col-12 col-sm-4 text-sm-end d-flex justify-content-end align-center align-items-center text-start  p-1">
                         <b style="white-space:nowrap;">Adjustment Type <span class="text-danger fs-6">*</span></b>
                     </div>
-                    <div class="col-12 col-sm-7 p-1 ">
-                       @*  <div class="custom-multiselect">
-                            <input type="text" class="multiselect-input form-control-sm" id="multiselectInput" placeholder="Select options..." readonly>
-                            <i class="fas fa-chevron-down multiselect-arrow" id="multiselectArrow"></i>
-
-                            <div class="multiselect-dropdown" id="multiselectDropdown">
-                                <div class="multiselect-option">
-                                    <input type="checkbox" id="option1" class="form-control-sm" value="loan">
-                                    <label for="option1">Loan Adjustment</label>
-                                </div>
-                                <div class="multiselect-option">
-                                    <input type="checkbox" id="option2" class="form-control-sm" value="investment">
-                                    <label for="option2">Investment Adjustment</label>
-                                </div>
-                                <div class="multiselect-option">
-                                    <input type="checkbox" id="option3" class="form-control-sm" value="savings">
-                                    <label for="option3">Savings Account Adjustment</label>
-                                </div>
-                                <div class="multiselect-option">
-                                    <input type="checkbox" id="option4" class="form-control-sm" value="credit">
-                                    <label for="option4">Credit Card Adjustment</label>
-                                </div>
-                                <div class="multiselect-option">
-                                    <input type="checkbox" id="option5" class="form-control-sm" value="deposit">
-                                    <label for="option5">Fixed Deposit Adjustment</label>
-                                </div>
-                            </div>
-                        </div>    *@ 
+                    <div class="col-12 col-sm-7 p-1">                     
                  <div class="custom-multiselect" style="position:relative;">
-                            <input type="text" class="multiselect-input form-control-sm" id="multiselectInput" placeholder="~~Select Adjustment Type~~">
+                            <input type="text" class="multiselect-input form-control-sm" id="multiselectInput" placeholder="~~Select Adjustment Type~~" readonly>
                             <i class="fas fa-chevron-down multiselect-arrow" id="multiselectArrow"></i>
 
                             <div class="multiselect-dropdown" id="multiselectDropdown" style="position:absolute; width: 100%; z-index:1000; background:#fff; border: 1px solid #ccc; max-height: 250px; overflow-y: auto;"></div>
@@ -232,33 +212,7 @@
                         <b style="white-space:nowrap;">Company <span class="text-danger fs-6">*</span></b>
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
-                       @*  <div class="custom-multiselect">
-                            <input type="text" class="multiselect-input form-control-sm" id="companyMultiselectInput" placeholder="Select options...">
-                            <i class="fas fa-chevron-down multiselect-arrow" id="companyMultiselectArrow"></i>
-
-                            <div class="multiselect-dropdown" id="companyMultiselectDropdown">
-                                <div class="multiselect-option">
-                                    <input type="checkbox" id="option1C" class="form-control-sm" value="loan">
-                                    <label for="option1">Loan Adjustment</label>
-                                </div>
-                                <div class="multiselect-option">
-                                    <input type="checkbox" id="optionC2" class="form-control-sm" value="investment">
-                                    <label for="option2">Investment Adjustment</label>
-                                </div>
-                                <div class="multiselect-option">
-                                    <input type="checkbox" id="optionC3" class="form-control-sm" value="savings">
-                                    <label for="option3">Savings Account Adjustment</label>
-                                </div>
-                                <div class="multiselect-option">
-                                    <input type="checkbox" id="optionC4" class="form-control-sm" value="credit">
-                                    <label for="option4">Credit Card Adjustment</label>
-                                </div>
-                                <div class="multiselect-option">
-                                    <input type="checkbox" id="optionC5" class="form-control-sm" value="deposit">
-                                    <label for="option5">Fixed Deposit Adjustment</label>
-                                </div>
-                            </div>
-                        </div> *@
+                     
                             <div class="custom-multiselect">
                                 <input type="text" class="multiselect-input form-control-sm" id="companyMultiselectInput" placeholder="Search companies...">
                                 <i class="fas fa-chevron-down multiselect-arrow" id="companyMultiselectArrow"></i>
@@ -278,7 +232,7 @@
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
                         <div class="custom-multiselect">
-                            <input type="text" class="multiselect-input form-control-sm" id="employeeMultiselectInput" placeholder="Select options..." readonly>
+                            <input type="text" class="multiselect-input form-control-sm" id="employeeMultiselectInput" placeholder="Select options...">
                             <i class="fas fa-chevron-down multiselect-arrow" id="employeeMultiselectArrow"></i>
                             <div class="multiselect-dropdown" id="employeeMultiselectDropdown" style="position:absolute; z-index:1000; background:#fff; border:1px solid #ccc; width:100%; max-height:250px; overflow-y:auto;"></div>
                         </div>
@@ -292,30 +246,9 @@
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
                         <div class="custom-multiselect">
-                            <input type="text" class="multiselect-input form-control-sm" id="loanMultiselectInput" placeholder="Select options..." readonly>
-                            <i class="fas fa-chevron-down multiselect-arrow" id="loanMultiselectArrow"></i>
-
-                            <div class="multiselect-dropdown" id="loanMultiselectDropdown">
-                                <div class="multiselect-option">
-                                    <input type="checkbox" id="option1l" class="form-control-sm" value="loan">
-                                    <label for="option1">Loan Adjustment</label>
-                                </div>
-                                <div class="multiselect-option">
-                                    <input type="checkbox" id="optionl2" class="form-control-sm" value="investment">
-                                    <label for="option2">Investment Adjustment</label>
-                                </div>
-                                <div class="multiselect-option">
-                                    <input type="checkbox" id="optionel3" class="form-control-sm" value="savings">
-                                    <label for="option3">Savings Account Adjustment</label>
-                                </div>
-                                <div class="multiselect-option">
-                                    <input type="checkbox" id="optionel4" class="form-control-sm" value="credit">
-                                    <label for="option4">Credit Card Adjustment</label>
-                                </div>
-                                <div class="multiselect-option">
-                                    <input type="checkbox" id="optionel5" class="form-control-sm" value="deposit">
-                                    <label for="option5">Fixed Deposit Adjustment</label>
-                                </div>
+                            <input type="text" class="multiselect-input form-control-sm" id="loanSelectInput" placeholder="--Select Loan--" readonly>
+                            <i class="fas fa-chevron-down multiselect-arrow" id="loanArrow"></i>
+                            <div class="multiselect-dropdown" id="loanSelectItem" style="position:absolute; z-index:1000; background:#fff; border:1px solid #ccc; width:100%; max-height:250px; overflow-y:auto;" >
                             </div>
                         </div>
                     </div>
@@ -328,7 +261,7 @@
                         <b style="white-space:nowrap;">Name: </b>
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
-                       todo
+                      <span class="EmployeeShowName"></span>
                     </div>
                 </div>
             </div>
@@ -339,7 +272,7 @@
                         <b style="white-space:nowrap;">Designation: </b>
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
-                        todo
+                        <span class="EmployeeShowDesignation"></span>
                     </div>
                 </div>
             </div>
@@ -349,7 +282,7 @@
                         <b style="white-space:nowrap;">Department: </b>
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
-                        todo
+                        <span class="EmployeeShowDepartment"></span>
                     </div>
                 </div>
             </div>
@@ -359,7 +292,7 @@
                         <b style="white-space:nowrap;">Joining Date: </b>
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
-                        todo
+                        <span class="EmployeeShowJoiningDate"></span>
                     </div>
                 </div>
             </div>
@@ -378,7 +311,7 @@
                         <b style="white-space:nowrap;">Loan ID: </b>
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
-                        todo
+                       <span class="loanId"></span>
                     </div>
                 </div>
             </div>
@@ -388,7 +321,7 @@
                         <b style="white-space:nowrap;">Loan Date: </b>
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
-                        todo
+                        <span class="loanDate"></span>
                     </div>
                 </div>
             </div>
@@ -398,7 +331,7 @@
                         <b style="white-space:nowrap;">Loan Type: </b>
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
-                        todo
+                        <span class="loanType"></span>
                     </div>
                 </div>
             </div>
@@ -408,7 +341,7 @@
                         <b style="white-space:nowrap;">Loan Amount: </b>
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
-                        todo
+                        <span class="loanAmount"></span>
                     </div>
                 </div>
             </div>
@@ -418,7 +351,7 @@
                         <b style="white-space:nowrap;">Inst. Start-End Date: </b>
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
-                        todo
+                        <span class="loanStartEndDate"></span>
                     </div>
                 </div>
             </div>
@@ -428,7 +361,7 @@
                         <b style="white-space:nowrap;">No. of Installment: </b>
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
-                        todo
+                        <span class="loanInstallment"></span>
                     </div>
                 </div>
             </div>
@@ -442,7 +375,7 @@
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
                         <div class="custom-multiselect">
-                            <input type="text"  class="multiselect-input form-control-sm" id="multiselectInput" placeholder="0000001" readonly>
+                            <input type="text" class="multiselect-input form-control-sm" id="AdjustmentAutoId" placeholder="0000001" readonly>
                         </div>                       
                     </div>
                 </div>
@@ -455,11 +388,11 @@
                     </div>
                     <div class="col-12 col-sm-7 p-1">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="filterType" id="byDate" value="date" checked>
+                            <input class="form-check-input" type="radio" name="filterType" id="byDate" value="By Date" checked>
                             <label class="form-check-label" for="byDate">By Date</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="filterType" id="byMonth" value="month">
+                            <input class="form-check-input" type="radio" name="filterType" id="byMonth" value="By Month">
                             <label class="form-check-label" for="byMonth">By Month</label>
                         </div>
                     </div>
@@ -474,7 +407,7 @@
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
                         <div class="custom-multiselect">
-                            <input type="text" class="multiselect-input form-control-sm" id="multiselectInput" placeholder="0000001" readonly>
+                            <input type="text" class="multiselect-input form-control-sm" id="dateFrom" placeholder="Date From">
                         </div>
                     </div>
                 </div>
@@ -486,7 +419,7 @@
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
                         <div class="custom-multiselect">
-                            <input type="text" class="multiselect-input form-control-sm" id="multiselectInput" placeholder="0000001" readonly>
+                            <input type="text" class="multiselect-input form-control-sm" id="toDate" placeholder="To Date">
                         </div>
                     </div>
                 </div>
@@ -498,7 +431,7 @@
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
                         <div class="custom-multiselect">
-                            <input type="text" class="multiselect-input form-control-sm" id="multiselectInput" placeholder="0000001" readonly>
+                            <input type="text" class="multiselect-input form-control-sm month" placeholder="Month" readonly>
                         </div>
                     </div>
                 </div>
@@ -510,7 +443,7 @@
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
                         <div class="custom-multiselect">
-                            <input type="text" class="multiselect-input form-control-sm" id="multiselectInput" placeholder="0000001" readonly>
+                            <input type="text" class="multiselect-input form-control-sm year"  placeholder="0000001" readonly>
                         </div>
                     </div>
                 </div>
@@ -522,7 +455,7 @@
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
                         <div class="custom-multiselect">
-                            <input type="text" class="multiselect-input form-control-sm" id="multiselectInput" placeholder="0000001" readonly>
+                            <input type="text" class="multiselect-input form-control-sm loanAmount" placeholder="Loan Amount" readonly>
                         </div>
                     </div>
                 </div>
@@ -534,7 +467,7 @@
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
                         <div class="custom-multiselect">
-                            <input type="text" class="multiselect-input form-control-sm" id="multiselectInput" placeholder="0000001" readonly>
+                            <input type="text" class="multiselect-input form-control-sm loanInstallment" placeholder="No. of Installment(s)" readonly>
                         </div>
                     </div>
                 </div>
@@ -546,7 +479,7 @@
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
                         <div class="custom-multiselect">
-                            <input type="text" class="multiselect-input form-control-sm" id="multiselectInput" placeholder="0000001" readonly>
+                            <input type="text" class="multiselect-input form-control-sm monthDeduction" placeholder="Month Deduction" readonly>
                         </div>
                     </div>
                 </div>
@@ -558,19 +491,19 @@
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
                         <div class="custom-multiselect">
-                            <input type="text" class="multiselect-input form-control-sm" id="multiselectInput" placeholder="0000001" readonly>
+                            <input type="text" class="multiselect-input form-control-sm deductionHead" placeholder="Deduction Head" readonly>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-12">
-                <div class="row ">
+                <div class="row">
                     <div class="col-12 col-sm-2 text-sm-end d-flex justify-content-end align-center align-items-center text-start  p-1">
                         <b style="white-space:nowrap;">Remarks</b>
                     </div>
                     <div class="col-12 col-sm-9 p-1 ">
                         <div class="custom-multiselect">
-                            <input type="text" class="multiselect-input form-control-sm" id="multiselectInput" placeholder="0000001" readonly>
+                            <textarea rows="2" class="multiselect-input custom-remarks-textarea"></textarea>
                         </div>
                     </div>
                 </div>
@@ -634,6 +567,9 @@
 	<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 
+    <!--flat picker-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
 
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 

@@ -37,5 +37,24 @@ namespace GCTL.UI.Core.Controllers
             var employees = await advanceLoanAdjustmentServices.GetEmployeesByFilterAsync(employeeStatusId, companyCode, EmployeeName);
             return Json(employees);
         }
+        [HttpPost]
+        public async Task<IActionResult> GetLoadEmployeeById(string employeeId)
+        {
+            var employee = await advanceLoanAdjustmentServices.GetLoadEmployeeByIdAsync(employeeId);
+            return Json(employee);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetLoanByEmployeeId(string employeeId)
+        {
+            var Loans = await advanceLoanAdjustmentServices.GetLoanByEmployeeIdAsync(employeeId);
+            return Json(Loans);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetLoanById(string loanId)
+        {
+            var loan = await advanceLoanAdjustmentServices.GetLoanByIdAsync(loanId);
+            return Json(loan);
+        }
     }
 }
