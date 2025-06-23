@@ -22,6 +22,8 @@ namespace GCTL.Service.AdvanceLoanAdjustment
         private readonly IRepository<HrmPayrollLoan> payrollLoanRepo;
         private readonly IRepository<HrmPayLoanTypeEntry> loanTypeRepo;
         private readonly IRepository<HrmPayPayHeadName> payHeadRepo;
+        private readonly IRepository<HrmPayMonth> monthRepo;
+        private readonly IRepository<HrmPayPayHeadName> headRepo;
 
         public AdvanceLoanAdjustmentServices(
             IRepository<HrmPayAdvancePay> advancePayRepo,
@@ -29,7 +31,9 @@ namespace GCTL.Service.AdvanceLoanAdjustment
             IRepository<HrmEmployee> empRepo,
             IRepository<HrmPayrollLoan> payrollLoanRepo,
             IRepository<HrmPayLoanTypeEntry> LoanTypeRepo,
-            IRepository<HrmPayPayHeadName> payHeadRepo
+            IRepository<HrmPayPayHeadName> payHeadRepo,
+            IRepository<HrmPayMonth> monthRepo,
+            IRepository<HrmPayPayHeadName> headRepo
         ) : base(advancePayRepo)
         {
             this.advancePayRepo = advancePayRepo;
@@ -38,7 +42,16 @@ namespace GCTL.Service.AdvanceLoanAdjustment
             this.payrollLoanRepo = payrollLoanRepo;
             this.loanTypeRepo = LoanTypeRepo;
             this.payHeadRepo = payHeadRepo;
+            this.monthRepo = monthRepo;
+            this.headRepo = headRepo;
         }
+        private readonly string CreateSuccess = "Data saved successfully.";
+        private readonly string CreateFailed = "Data insertion failed.";
+        private readonly string UpdateSuccess = "Data updated successfully.";
+        private readonly string UpdateFailed = "Data update failed.";
+        private readonly string DeleteSuccess = "Data deleted successfully.";
+        private readonly string DeleteFailed = "Data deletion failed.";
+        private readonly string DataExists = "Data already exists.";
 
         public async Task<List<CompanyDto>> GetAllAndFilterCompanyAsync(string searchCompanyName)
         {
@@ -69,35 +82,44 @@ namespace GCTL.Service.AdvanceLoanAdjustment
 
             return companies;
         }
-        public async Task<List<EmployeeAdjustmentDto>> GetEmployeesByFilterAsync(string employeeStatusId, string companyCode, string employeeName)
+        
+        public async Task<List<EmployeeAdjustmentDto>> GetEmployeesByFilterAsync(string employeeStatusId, string companyCode, string employeeName, bool loanAdjustment)
         {
             List<EmployeeAdjustmentDto> employees = new List<EmployeeAdjustmentDto>();
 
             try
             {
+                var sPName = loanAdjustment ? "GetEmployeesByCompanyLoanAdjustment" : "GetEmployeesByCompanyAdvanceLoanAdjustment";
+
                 using (SqlConnection conn = new SqlConnection(configuration.GetConnectionString("ApplicationDbConnection")))
                 {
-                    using (SqlCommand cmd = new SqlCommand("GetEmployeesByCompanyAdvanceLoanAdjustment", conn))
+                    using (SqlCommand cmd = new SqlCommand(sPName, conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@EmployeeStatusId", employeeStatusId ?? (object)DBNull.Value);
                         cmd.Parameters.AddWithValue("@CompanyCode", companyCode ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@EmployeeName", employeeName ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@EmployeeName", employeeName ?? (object)DBNull.Value);    
 
                         await conn.OpenAsync();
                         using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                         {
                             while (await reader.ReadAsync())
                             {
-                                employees.Add(new EmployeeAdjustmentDto
+                                var employee = new EmployeeAdjustmentDto
                                 {
                                     EmployeeId = reader["EmployeeID"].ToString(),
                                     FullName = reader["FullName"].ToString(),
                                     DepartmentName = reader["DepartmentName"].ToString(),
                                     DesignationName = reader["DesignationName"].ToString(),
-                                    //JoiningDate = Convert.ToDateTime(reader["JoiningDate"])
-                                    JoiningDate = Convert.ToDateTime(reader["JoiningDate"]).ToString("dd/MM/yyyy"),
-                                });
+                                    JoiningDate = Convert.ToDateTime(reader["JoiningDate"]).ToString("dd/MM/yyyy")
+                                };
+
+                                if (loanAdjustment && reader["LoanId"] != DBNull.Value)
+                                {
+                                    employee.LoanId = reader["LoanId"].ToString();
+                                }
+
+                                employees.Add(employee);
                             }
                         }
                     }
@@ -105,11 +127,12 @@ namespace GCTL.Service.AdvanceLoanAdjustment
 
                 return employees;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw;
             }
         }
+
         public async Task<EmployeeAdjustmentDto> GetLoadEmployeeByIdAsync(string employeeId)
         {
             if(employeeId == null)
@@ -206,6 +229,215 @@ namespace GCTL.Service.AdvanceLoanAdjustment
             {
                 throw;
             }
+        }
+
+        // Create loan adjustment installments
+        public async Task<(bool isSuccess, string message, object data)> SaveUpdateLoanAdjustmentAsync(AdvanceLoanAdjustmentSetupViewModel modelData)
+        {
+            if (modelData == null)
+                return (false, "Model data is null.", null);
+
+            if (modelData.FromDate == null || modelData.Todate == null)
+                return (false, "From Date and To Date are required.", null);
+
+            DateTime fromDate = modelData.FromDate.Value;
+            DateTime toDate = modelData.Todate.Value;
+            int advancePayId =int.Parse(modelData.AdvancePayId);
+            List<HrmPayAdvancePay> installments = new List<HrmPayAdvancePay>();
+
+            while (fromDate <= toDate)
+            {
+                var installment = new HrmPayAdvancePay
+                {
+                    AdvancePayId = advancePayId.ToString("D8"),
+                    EmployeeId = modelData.EmployeeID,
+                    AdvanceAdjustStatus = modelData.AdvanceAdjustStatus,
+                    AdvanceAmount = modelData.AdvanceAmount,
+                    MonthlyDeduction = modelData.MonthlyDeduction,
+
+                    SalaryMonth = fromDate.ToString("MMMM"), // Full month name in English
+                    SalaryYear = fromDate.Year.ToString(),
+
+                    NoOfPaymentInstallment = modelData.NoOfPaymentInstallment,
+                    PayHeadNameId = modelData.PayHeadNameId,
+                    Remarks = modelData.Remarks,
+                    Luser = modelData.Luser,
+                    Ldate = DateTime.Now,
+                    Lip = modelData.Lip,
+                    Lmac = modelData.Lmac,
+                    AdjustmentType = modelData.AdjustmentType,
+                    LoanId = modelData.LoanID,
+                    CompanyCode = "001"
+                };
+
+                installments.Add(installment);
+                fromDate = fromDate.AddMonths(1);
+                advancePayId++;
+            }
+
+            try
+            {
+                foreach (var item in installments)
+                {
+                    await advancePayRepo.AddAsync(item);
+                }
+
+                return (true, "Installments saved successfully.", null);
+            }
+            catch (Exception ex)
+            {
+                return (false, $"Failed to save installments: {ex.Message}", null);
+            }
+        }
+
+        //auto id 
+        public async Task<string> AdjustmentAutoGanarateIdAsync()
+        {
+            var lastItem = advancePayRepo.All().OrderByDescending(x => x.AdvancePayId).FirstOrDefault();
+
+            string newId;
+            if (lastItem != null && !string.IsNullOrEmpty(lastItem.AdvancePayId))
+            {
+                string numericPart = lastItem.AdvancePayId.Substring(1); // "00000011"
+                int number = int.Parse(numericPart) + 1;
+                newId = number.ToString("D8");
+            }
+            else
+            {
+                newId = "00000001";
+            }
+
+            return newId;
+        }
+
+        //get month
+      public async  Task<List<MonthDto>> GetMonthAsync()
+        {
+            var monthAll = monthRepo.All().OrderBy(x => x.MonthId).ToList();
+            var months = monthAll.Select(x => new MonthDto
+            {
+                MonthId = x.MonthId,
+                MonthName = x.MonthName,
+            }).ToList();
+            return months;
+        }
+        //get Deduction Heads
+        public async  Task<List<PayHeadNameDto>> GetHeadDeductionAsync()
+        {
+            var deductionHeadAll = headRepo.All().OrderBy(x => x.PayHeadNameId).ToList();
+            var head = deductionHeadAll.Select(x => new PayHeadNameDto
+            {
+                 PayHeadNameId= x.PayHeadNameId,
+                Name = x.Name,
+            }).ToList();
+            return head;
+        }
+
+        // Helper method for safe conversion
+        private static int SafeConvertToInt32(object value, int defaultValue = 0)
+        {
+            if (value == null || value == DBNull.Value)
+                return defaultValue;
+
+            if (int.TryParse(value.ToString(), out int result))
+                return result;
+
+            return defaultValue;
+        }
+
+        private static decimal SafeConvertToDecimal(object value, decimal defaultValue = 0)
+        {
+            if (value == null || value == DBNull.Value)
+                return defaultValue;
+
+            if (decimal.TryParse(value.ToString(), out decimal result))
+                return result;
+
+            return defaultValue;
+        }
+
+        public async Task<DataTableResponse<AdvancePayViewModel>> GetAdvancePayPaged(DataTableRequest request)
+        {
+            var response = new DataTableResponse<AdvancePayViewModel>
+            {
+                Data = new List<AdvancePayViewModel>(),
+                TotalRecords = 0,
+                FilteredRecords = 0
+            };
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(configuration.GetConnectionString("ApplicationDbConnection")))
+                {
+                    using (SqlCommand cmd = new SqlCommand("GetAdvancePayPagedWithFilter", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@PageNumber", request.Page);
+                        cmd.Parameters.AddWithValue("@PageSize", request.PageSize);
+                        cmd.Parameters.AddWithValue("@SearchValue", request.SearchValue ?? "");
+                        cmd.Parameters.AddWithValue("@Department", request.Department ?? "");
+                        cmd.Parameters.AddWithValue("@Month", request.Month ?? "");
+                        cmd.Parameters.AddWithValue("@Year", request.Year ?? "");
+
+                        await con.OpenAsync();
+
+                        using (SqlDataReader rdr = await cmd.ExecuteReaderAsync())
+                        {
+                            // First result set: Data
+                            while (await rdr.ReadAsync())
+                            {
+                                response.Data.Add(new AdvancePayViewModel
+                                {
+                                    AdvancePayId = SafeConvertToInt32(rdr["AdvancePayId"]),
+                                    EmployeeID = SafeConvertToInt32(rdr["EmployeeID"]),
+                                    //EmployeeID = rdr["EmployeeID"].ToString(),
+                                    FullName = rdr["FullName"]?.ToString() ?? "",
+                                    DepartmentName = rdr["DepartmentName"]?.ToString() ?? "",
+                                    DesignationName = rdr["DesignationName"]?.ToString() ?? "",
+                                    AdvanceAmount = SafeConvertToDecimal(rdr["AdvanceAmount"]),
+                                    MonthlyDeduction = rdr["MonthlyDeduction"] == DBNull.Value
+                                        ? (decimal?)null
+                                        : SafeConvertToDecimal(rdr["MonthlyDeduction"]),
+                                    SalaryMonth = rdr["SalaryMonth"]?.ToString() ?? "",
+                                    SalaryYear = rdr["SalaryYear"]?.ToString() ?? "",
+                                    NoOfPaymentInstallment = rdr["NoOfPaymentInstallment"] == DBNull.Value
+                                        ? (int?)null
+                                        : SafeConvertToInt32(rdr["NoOfPaymentInstallment"]),
+                                    PayHeadNameId = rdr["PayHeadNameId"] == DBNull.Value
+                                        ? (int?)null
+                                        : SafeConvertToInt32(rdr["PayHeadNameId"]),
+                                    Remarks = rdr["Remarks"]?.ToString() ?? "",
+                                    LoanID = rdr["LoanID"] == DBNull.Value
+                                        ? (int?)null
+                                        : SafeConvertToInt32(rdr["LoanID"])
+                                });
+                            }
+
+                            // Second result set: Total count
+                            if (await rdr.NextResultAsync())
+                            {
+                                if (await rdr.ReadAsync())
+                                {
+                                    response.TotalRecords = SafeConvertToInt32(rdr["TotalRecords"]);
+                                    response.FilteredRecords = SafeConvertToInt32(rdr["FilteredRecords"]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the error
+                Console.WriteLine($"Error in GetAdvancePayPaged: {ex.Message}");
+
+                // Return empty response with error info
+                response.Data = new List<AdvancePayViewModel>();
+                response.TotalRecords = 0;
+                response.FilteredRecords = 0;
+            }
+
+            return response;
         }
     }
 

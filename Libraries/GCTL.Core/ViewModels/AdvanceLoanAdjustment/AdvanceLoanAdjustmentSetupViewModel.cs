@@ -18,14 +18,12 @@ namespace GCTL.Core.ViewModels.AdvanceLoanAdjustment
         public string SalaryYear { get; set; }
         public string NoOfPaymentInstallment { get; set; }
         public string PayHeadNameId { get; set; }
-        public string Remarks { get; set; }
-        public string? LUser { get; set; }
-        public DateTime? LDate { get; set; }
-        public string? LIP { get; set; }
-        public string? LMAC { get; set; }
+        public string Remarks { get; set; }        
         public DateTime? ModifyDate { get; set; }
         public string CompanyCode { get; set; }
         public string? AdjustmentType { get; set; }
         public string? LoanID { get; set; }
+        public DateTime? FromDate { get; set; }
+        public DateTime? Todate { get; set; }
     }
 }

@@ -13,5 +13,6 @@ namespace GCTL.Core.ViewModels.AdvanceLoanAdjustment
         public string DepartmentName { get; set; }
         public string DesignationName { get; set; }
         public string JoiningDate { get; set; }
+        public string LoanId { get; set; }
     }
 }

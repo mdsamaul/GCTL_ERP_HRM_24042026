@@ -176,6 +176,18 @@
      .custom-remarks-textarea {
          width: 105.5% !important;
      }
+
+     .disable {
+         pointer-events: none; /* Prevent click */
+         opacity: 0.6; /* Make it look disabled */
+         cursor: not-allowed; /* Show disabled cursor */
+     }
+
+     .enable {
+         pointer-events: auto;
+         opacity: 1;
+         cursor: pointer;
+     }
 </style>
 <div class="container-fluid">
     <partial name="_PageHeader" model="Model"></partial>
@@ -431,7 +443,10 @@
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
                         <div class="custom-multiselect">
-                            <input type="text" class="multiselect-input form-control-sm month" placeholder="Month" readonly>
+                            @* <input type="text" class="multiselect-input form-control-sm month" placeholder="Month"> *@
+                            <select class="multiselect-input form-control-sm month">
+                                <option value="">--Select Month--</option>                               
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -443,7 +458,7 @@
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
                         <div class="custom-multiselect">
-                            <input type="text" class="multiselect-input form-control-sm year"  placeholder="0000001" readonly>
+                            <input type="number" class="multiselect-input form-control-sm year" value="2025"  placeholder="Year" >
                         </div>
                     </div>
                 </div>
@@ -455,7 +470,7 @@
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
                         <div class="custom-multiselect">
-                            <input type="text" class="multiselect-input form-control-sm loanAmount" placeholder="Loan Amount" readonly>
+                            <input type="number" class="multiselect-input form-control-sm loanAmount" placeholder="Loan Amount">
                         </div>
                     </div>
                 </div>
@@ -467,7 +482,7 @@
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
                         <div class="custom-multiselect">
-                            <input type="text" class="multiselect-input form-control-sm loanInstallment" placeholder="No. of Installment(s)" readonly>
+                            <input type="text" class="multiselect-input form-control-sm loanInstallment" placeholder="No. of Installment(s)">
                         </div>
                     </div>
                 </div>
@@ -479,7 +494,7 @@
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
                         <div class="custom-multiselect">
-                            <input type="text" class="multiselect-input form-control-sm monthDeduction" placeholder="Month Deduction" readonly>
+                            <input type="text" class="multiselect-input form-control-sm monthDeduction" placeholder="Month Deduction" >
                         </div>
                     </div>
                 </div>
@@ -491,7 +506,16 @@
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
                         <div class="custom-multiselect">
-                            <input type="text" class="multiselect-input form-control-sm deductionHead" placeholder="Deduction Head" readonly>
+                            @* <input type="text" class="multiselect-input form-control-sm deductionHead" placeholder="Deduction Head" > *@
+                          @*   <select class="multiselect-input form-control-sm deductionHead">
+                                <option value="12">value 1</option>
+                                <option value="12">value 1</option>
+                                <option value="12">value 1</option>
+                                <option value="12">value 1</option>
+                            </select> *@
+                            <select class="multiselect-input form-control-sm deductionHead">
+                                <option value="">--Select Month--</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -523,8 +547,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h6>Selected Values:</h6>
-                        <span id="selectedValues" class="text-muted">None</span>
+                        <partial name="_Grid"></partial>
                     </div>
                 </div>
             </div>
@@ -547,6 +570,12 @@
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<!-- jQuery (DataTables এর জন্য প্রয়োজন) -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
 
 
 @section Scripts {

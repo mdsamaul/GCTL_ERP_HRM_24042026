@@ -238,7 +238,6 @@ namespace GCTL.Service.HRMPayrollLoan
             }
             catch (Exception ex)
             {
-                // Logging করা উচিত ex.Message, ex.StackTrace ইত্যাদি
                 return null;
             }
         }

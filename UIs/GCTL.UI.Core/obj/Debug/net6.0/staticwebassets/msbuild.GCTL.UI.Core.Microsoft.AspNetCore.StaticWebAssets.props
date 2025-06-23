@@ -37056,8 +37056,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>wqyqgbhzgd</Fingerprint>
-      <Integrity>aB6JYFQpwyM/kml0gRibpHVZ98a3m/7nUCj3lZHgvlU=</Integrity>
+      <Fingerprint>roiisihui1</Fingerprint>
+      <Integrity>G+P7iYBHFKETGbKuuHZEjtPV/Flke7YQ04LtLNboNLs=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\AdvanceLoanAdjustment.js'))</OriginalItemSpec>
