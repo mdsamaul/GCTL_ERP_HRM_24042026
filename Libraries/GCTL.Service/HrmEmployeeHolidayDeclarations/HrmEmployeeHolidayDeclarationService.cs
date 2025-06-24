@@ -341,11 +341,11 @@ namespace GCTL.Service.HrmEmployeeHolidayDeclarations
                 list = list.OrderBy(a => a.AutoId);
             }
 
-            var data = list
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-            //Id,Emp. Id, Name, Designation, HolidayDate, In Place of Date, Is Day off Duty, Holiday Type, Remarks, Entry User
+            var data = pageSize < 0
+                ? list.ToList()
+                : list.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+
             return (data, totalRecords);
         }
         public Task<List<HrmDefHolidayDeclarationTypeViewModel>> GetAllHolidayType()

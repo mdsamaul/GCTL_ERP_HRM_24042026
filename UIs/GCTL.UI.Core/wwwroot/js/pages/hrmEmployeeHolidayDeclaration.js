@@ -376,7 +376,7 @@ function loadEmployeeHolidayData() {
         fixedHeader: false,
         info: true,
         lengthChange: true,
-        lengthMenu: [[10, 25, 50, 100, 1000], [10, 25, 50, 100, 1000]],
+        lengthMenu: [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
         ordering: true,
         pageLength: 10,
         paging: true,

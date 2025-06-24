@@ -314,10 +314,10 @@ namespace GCTL.Service.HRM_PAY_SalaryDeductionEntry
             }
 
             // Apply pagination
-            var data = filteredQuery
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
+            var data = pageSize < 0
+                ? filteredQuery.ToList()
+                : filteredQuery.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
 
             return (data, totalRecords);
         }

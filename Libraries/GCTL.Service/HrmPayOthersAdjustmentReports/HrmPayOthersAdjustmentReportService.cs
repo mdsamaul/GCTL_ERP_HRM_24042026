@@ -186,11 +186,7 @@ namespace GCTL.Service.HrmPayOthersAdjustmentReports
                 totalEmployees += uniqueEmployees.Count;
             }
 
-            worksheet.Cells[currentRow, 1].Value = "Summary";
-            worksheet.Cells[currentRow, 1].Style.Font.Bold = true;
-            worksheet.Cells[currentRow, 1].Style.Font.Size = 14;
-            currentRow++;
-            worksheet.Cells[currentRow, 1].Value = "Total Employees:";
+            worksheet.Cells[currentRow, 1].Value = "No. of Employee:";
             worksheet.Cells[currentRow, 1].Style.Font.Bold = true;
             //worksheet.Cells[currentRow, 1].Style.Border.BorderAround(ExcelBorderStyle.Thin);
 
@@ -418,14 +414,10 @@ namespace GCTL.Service.HrmPayOthersAdjustmentReports
             var summaryTable = new Table(new float[] { 1, 1, 1 });
             summaryTable.SetWidth(UnitValue.CreatePercentValue(100));
 
-            summaryTable.AddCell(new Cell().Add(new Paragraph($"Total Employee: {totalEmployees}"))
+            summaryTable.AddCell(new Cell().Add(new Paragraph($"No. of Employee: {totalEmployees}"))
                 .SetTextAlignment(TextAlignment.LEFT)
                 .SetBorder(iText.Layout.Borders.Border.NO_BORDER));
-
-            summaryTable.AddCell(new Cell().Add(new Paragraph($"Total Benefit: {totalDeductions}"))
-                .SetTextAlignment(TextAlignment.CENTER)
-                .SetBorder(iText.Layout.Borders.Border.NO_BORDER));
-
+                    
             summaryTable.AddCell(new Cell().Add(new Paragraph($"Grand Total: {grandTotal:N2}"))
                 .SetTextAlignment(TextAlignment.RIGHT)
                 .SetBorder(iText.Layout.Borders.Border.NO_BORDER));

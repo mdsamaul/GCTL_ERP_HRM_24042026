@@ -371,14 +371,13 @@ function loadTableData(res) {
         const checkboxDisabled = isEditMode ? 'disabled' : '';
         const checkboxChecked = isOriginalEmployee ? 'checked' : '';
 
-        row.append(`<td class="text-center"><input type="checkbox" class="empSelect" ${checkboxDisabled} ${checkboxChecked} /></td>`);
+        row.append(`<td class="text-center"><input type="checkbox" style="padding-left:0; padding-right:0" class="empSelect" ${checkboxDisabled} ${checkboxChecked} /></td>`);
         row.append('<td class="text-center">' + employee.employeeId + '</td>');
         row.append('<td class="text-center">' + employee.employeeName + '</td>');
         row.append('<td class="text-center">' + employee.designationName + '</td>');
-        row.append('<td class="text-center">' + employee.departmentName + '</td>');
         row.append('<td class="text-center">' + employee.branchName + '</td>');
+        row.append('<td class="text-center">' + employee.departmentName + '</td>');
         row.append('<td class="text-center">' + employee.employeeTypeName + '</td>');
-        row.append('<td class="text-center">' + employee.employmentNature + '</td>');
         row.append('<td class="text-center">' + employee.joiningDate + '</td>');
         row.append('<td class="text-center">' + employee.employeeStatus + '</td>');
 
@@ -396,9 +395,9 @@ function initializeDataTable() {
     empDataTable = $("#employee-filter-grid").DataTable({
         paging: true,
         pageLength: 10,
-        lengthMenu: [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
+        lengthMenu: [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000,"All"]],
         lengthChange: true,
-        //scrollY: "400px",
+       // scrollY: "400px",
         info: true,
         autoWidth: false,
         responsive: true,
@@ -571,7 +570,7 @@ function displayMonthlyOtTable() {
         ajax: {
             url: '/HrmPayMonthlyOtEntry/GetPaginatedMonthlyOt',
             type: 'POST',
-           // success: function (data) { console.log(data) }
+            // success: function (data) { console.log(data) }
         },
         columns: [
             {
@@ -615,7 +614,7 @@ function displayMonthlyOtTable() {
         fixedHeader: false,
         info: true,
         lengthChange: true,
-        lengthMenu: [[10, 25, 50, 100, 1000], [10, 25, 50, 100, 1000]],
+        lengthMenu: [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
         ordering: true,
         pageLength: 10,
         paging: true,

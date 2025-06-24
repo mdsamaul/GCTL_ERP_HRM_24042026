@@ -358,8 +358,8 @@ namespace GCTL.UI.Core.Controllers
 
             var summaryRow = new TableRow();
             summaryRow.Append(
-                CreateCell($"Total Employee: {totalEmployees}", 5040, false, null, centerAlign: false),
-                CreateCell($"Total Benefits: {totalBenefits}", 5040, false, null, centerAlign: true),
+                CreateCell($"No. of Employee: {totalEmployees}", 5040, false, null, centerAlign: false),
+               // CreateCell($"Total Benefits: {totalBenefits}", 5040, false, null, centerAlign: true),
                 CreateCell($"Grand Total: {grandTotal:N2}", 5040, false, null, rightAlign: true)
             );
             summaryTable.Append(summaryRow);

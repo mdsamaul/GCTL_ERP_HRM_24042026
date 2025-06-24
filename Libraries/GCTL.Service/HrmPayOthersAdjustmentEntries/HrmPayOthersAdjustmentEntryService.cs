@@ -469,10 +469,10 @@ namespace GCTL.Service.HrmPayOthersAdjustmentEntries
                 filteredQuery = filteredQuery.OrderBy(a => a.Tc);
             }
 
-            var data = filteredQuery
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
+            var data = pageSize < 0
+                ? filteredQuery.ToList()
+                : filteredQuery.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
 
             return (data, totalRecords);
         }

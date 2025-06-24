@@ -431,18 +431,10 @@ namespace GCTL.Service.HrmWorkingDayDeclarations
                 list = list.OrderBy(a => a.Tc);
             }
 
-            List<HrmWorkingDayDeclarationViewModel> data;
-            if (pageSize == -1)
-            {
-                data = list.ToList();
-            }
-            else
-            {
-                data = list
-                    .Skip((page - 1) * pageSize)
-                    .Take(pageSize)
-                    .ToList();
-            }
+            var data = pageSize < 0
+                ? list.ToList()
+                : list.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
 
             return (data, totalRecords);
 

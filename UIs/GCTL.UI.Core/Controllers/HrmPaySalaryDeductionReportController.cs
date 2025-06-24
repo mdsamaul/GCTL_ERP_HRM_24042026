@@ -3,7 +3,6 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using DocumentFormat.OpenXml;
 using GCTL.Core.ViewModels.HrmPaySalaryDeductionEntries;
 using GCTL.Service.HrmPaySalaryDeductionReports;
-using GCTL.UI.Core.ViewModels.HrmPaySalaryDeductionReport;
 using GCTL.UI.Core.ViewModels.HrmPaySalaryDeductions;
 using Microsoft.AspNetCore.Mvc;
 using AspNetCore.Reporting;
@@ -66,7 +65,7 @@ namespace GCTL.UI.Core.Controllers
             var pdfBytes = await reportService.GeneratePdfReport(data.SalaryDeduction,model);
             return File(pdfBytes, "application/pdf");
         }
-
+        
         [HttpPost]
         [Route("HrmPaySalaryDeductionReport/ExportReport")]
         public async Task<IActionResult> ExportReport([FromBody] ReportExportRequest request)
@@ -286,17 +285,17 @@ namespace GCTL.UI.Core.Controllers
                     // All columns including Month and Year
                     var values = new[]
                     {
-                serialNo.ToString(),
-                item.Code ?? "",
-                item.Name ?? "",
-                item.DesignationName ?? "",
-                item.BranchName ?? "",
-                item.DeductionType ?? "", // Changed from DeductionType to BenefitType
-                amount.ToString("N2"),
-                //item.Month ?? "",
-                //item.Year ?? "",
-                item.Remarks ?? ""
-            };
+                        serialNo.ToString(),
+                        item.Code ?? "",
+                        item.Name ?? "",
+                        item.DesignationName ?? "",
+                        item.BranchName ?? "",
+                        item.DeductionType ?? "", // Changed from DeductionType to BenefitType
+                        amount.ToString("N2"),
+                        //item.Month ?? "",
+                        //item.Year ?? "",
+                        item.Remarks ?? ""
+                    };
 
                     var dataRow = new TableRow();
                     for (int j = 0; j < values.Length; j++)
@@ -378,8 +377,8 @@ namespace GCTL.UI.Core.Controllers
 
             var summaryRow = new TableRow();
             summaryRow.Append(
-                CreateCell($"Total Employee: {totalEmployees}", 5040, false, null, centerAlign: false), // Left-align
-                CreateCell($"Total Deductions: {totalBenefits}", 5040, false, null, centerAlign: true), // Center-align
+                CreateCell($"No. of Employee: {totalEmployees}", 5040, false, null, centerAlign: false), // Left-align
+               // CreateCell($"Total Deductions: {totalBenefits}", 5040, false, null, centerAlign: true), // Center-align
                 CreateCell($"Grand Total: {grandTotal:N2}", 5040, false, null, rightAlign: true) // Right-align
             );
             summaryTable.Append(summaryRow);

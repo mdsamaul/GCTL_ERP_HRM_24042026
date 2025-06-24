@@ -461,7 +461,7 @@ namespace GCTL.Service.HrmPaySalaryDeductionReports
             var summaryTable = new PdfTable(new float[] { 1, 1, 1 });
             summaryTable.SetWidth(UnitValue.CreatePercentValue(100));
 
-            summaryTable.AddCell(new Cell().Add(new PdfParagraph($"Total Employee: {totalEmployees}"))
+            summaryTable.AddCell(new Cell().Add(new PdfParagraph($"No. of Employee: {totalEmployees}"))
                 .SetTextAlignment(PdfTextAlignment.LEFT)
                 .SetBorder(iText.Layout.Borders.Border.NO_BORDER));
 
@@ -1031,20 +1031,12 @@ namespace GCTL.Service.HrmPaySalaryDeductionReports
                 totalEmployees += uniqueEmployees.Count;
             }
 
-            worksheet.Cells[currentRow, 1].Value = "Summary";
-            worksheet.Cells[currentRow, 1].Style.Font.Bold = true;
-            worksheet.Cells[currentRow, 1].Style.Font.Size = 14;
-            currentRow++;
-            worksheet.Cells[currentRow, 1].Value = "Total Employees:";
+            worksheet.Cells[currentRow, 1].Value = "No. of Employee:";
             worksheet.Cells[currentRow, 1].Style.Font.Bold = true;
             //worksheet.Cells[currentRow, 1].Style.Border.BorderAround(ExcelBorderStyle.Thin);
 
             worksheet.Cells[currentRow, 2].Value = totalEmployees;
             //worksheet.Cells[currentRow, 2].Style.Border.BorderAround(ExcelBorderStyle.Thin);
-
-            worksheet.Cells[currentRow, 4].Value = $"Total Deductions: {totalDeductions}";
-            worksheet.Cells[currentRow, 4].Style.Font.Bold = true;
-            //worksheet.Cells[currentRow, 4].Style.Border.BorderAround(ExcelBorderStyle.Thin);
 
             worksheet.Cells[currentRow, 6].Value = "Grand Total:";
             worksheet.Cells[currentRow, 6].Style.Font.Bold = true;
@@ -1232,14 +1224,14 @@ namespace GCTL.Service.HrmPaySalaryDeductionReports
 
             // Summary
             var summaryParagraph = new DocumentFormat.OpenXml.Wordprocessing.Paragraph();
-            var summaryRun = new Run();
-            summaryRun.AppendChild(new RunProperties(new Bold()));
-            summaryRun.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Text("Summary"));
-            summaryParagraph.AppendChild(summaryRun);
-            body.AppendChild(summaryParagraph);
+            //var summaryRun = new Run();
+            //summaryRun.AppendChild(new RunProperties(new Bold()));
+            //summaryRun.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Text("Summary"));
+            //summaryParagraph.AppendChild(summaryRun);
+            //body.AppendChild(summaryParagraph);
 
-            body.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Paragraph(new Run(new DocumentFormat.OpenXml.Wordprocessing.Text($"Total Departments: {groupedData.Count()}"))));
-            body.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Paragraph(new Run(new DocumentFormat.OpenXml.Wordprocessing.Text($"Total Employees: {totalEmployees}"))));
+            //body.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Paragraph(new Run(new DocumentFormat.OpenXml.Wordprocessing.Text($"Total Departments: {groupedData.Count()}"))));
+            body.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Paragraph(new Run(new DocumentFormat.OpenXml.Wordprocessing.Text($"No. of Employee: {totalEmployees}"))));
 
             var grandTotalParagraph = new DocumentFormat.OpenXml.Wordprocessing.Paragraph();
             var grandTotalRun = new Run();

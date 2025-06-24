@@ -800,6 +800,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtUGF5TW9udGhseU90RW50cnlcX1Rvb2xiYXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmPayMonthlyOtReport/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtUGF5TW9udGhseU90UmVwb3J0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmPayMonthlyOtReport/_MonthlyOTPreview.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtUGF5TW9udGhseU90UmVwb3J0XF9Nb250aGx5T1RQcmV2aWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmPayMonthlyOtReport/_Toolbar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtUGF5TW9udGhseU90UmVwb3J0XF9Ub29sYmFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmPayOthersAdjustmentReport/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtUGF5T3RoZXJzQWRqdXN0bWVudFJlcG9ydFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

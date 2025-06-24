@@ -61,6 +61,7 @@ namespace GCTL.Core.ViewModels.HrmPayMonthlyOtEntries
         public string? DesignationName { get; set; }
         public string? BranchName { get; set; }
         public string? DepartmentName { get; set; }
+        public string? CompanyName { get; set; }
         public string? EmployeeTypeName { get; set; }
         public string? EmployeeStatus { get; set; }
         public string? EmploymentNature { get; set; }
@@ -93,7 +94,7 @@ namespace GCTL.Core.ViewModels.HrmPayMonthlyOtEntries
         public List<ReportFilterResultDto> Employees { get; set; }
         //public List<ReportFilterResultDto> DeductionTypes { get; set; }
         public List<ReportFilterResultDto> Months { get; set; }
-        public List<ReportFilterResultDto> SalaryDeduction { get; set; }
+        public List<ReportFilterResultDto> MonthlyOt { get; set; }
     }
     public class ReportFilterResultDto
     {
@@ -104,6 +105,7 @@ namespace GCTL.Core.ViewModels.HrmPayMonthlyOtEntries
         public string DesignationName { get; set; }
         public string BranchName { get; set; }
         //public string DivisionName { get; set; }
+        public string EmployeeType { get; set; }
         public string DepartmentName { get; set; }
         //public string EmployeeStatus { get; set; }
         public string MonthlyOtid { get; set; }
@@ -113,5 +115,6 @@ namespace GCTL.Core.ViewModels.HrmPayMonthlyOtEntries
         public decimal? OtAmount { get; set; }
         public string EmployeeID { get; set; }
         public string Remarks { get; set; }
+        public string JoiningDate { get; set; }
     }
 }

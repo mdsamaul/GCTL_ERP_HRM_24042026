@@ -312,7 +312,7 @@ namespace GCTL.Service.HrmPayMonthlyOtEntries
                 DesignationName = x.DesignationName,
                 DepartmentName = x.DepartmentName,
                 BranchName = x.BranchName,
-                //CompanyName = x.CompanyName,
+                CompanyName = x.CompanyName,
                 EmployeeTypeName = x.EmployeeTypeName,
                 EmployeeStatus = x.EmployeeStatusName,
                 EmploymentNature = x.EmpNatureName ?? " "
@@ -437,11 +437,10 @@ namespace GCTL.Service.HrmPayMonthlyOtEntries
                 filteredQuery = filteredQuery.OrderBy(a => a.Tc);
             }
 
-            // Apply pagination
-            var data = filteredQuery
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
+            var data = pageSize < 0
+                        ? filteredQuery.ToList()
+                        : filteredQuery.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
 
             return (data, totalRecords);
         }
