@@ -5,17 +5,17 @@
 }<style>
      #stickyHeader{
          position: sticky;
-         top: 3px;
+         top: 0px;
          z-index: 1020;
          min-height: 50px;
-         background: linear-gradient(to right, #d0e7ff, white);
+         background: linear-gradient(to right, #fff, white);
          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
          transition: box-shadow 0.3s ease-in-out;
          transition: all 0.5s ease-in-out;
      }
 
      .adjustmentTypeBody{
-         background: linear-gradient(to right, #d0e7ff, white);
+         background: linear-gradient(to right, #fff, white);
          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
          border-radius:10px;
          border:1px solid rgba(0,0,0,0.3);
@@ -206,11 +206,11 @@
                     <div class="col-12 col-sm-4 text-sm-end d-flex justify-content-end align-center align-items-center text-start  p-1">
                         <b style="white-space:nowrap;">Adjustment Type <span class="text-danger fs-6">*</span></b>
                     </div>
-                    <div class="col-12 col-sm-7 p-1">                     
+                    <div class="col-12 col-sm-7 p-1">        
+                        <input type="hidden" id="advancePayCodeId" value="0"/>
                  <div class="custom-multiselect" style="position:relative;">
                             <input type="text" class="multiselect-input form-control-sm" id="multiselectInput" placeholder="~~Select Adjustment Type~~" readonly>
                             <i class="fas fa-chevron-down multiselect-arrow" id="multiselectArrow"></i>
-
                             <div class="multiselect-dropdown" id="multiselectDropdown" style="position:absolute; width: 100%; z-index:1000; background:#fff; border: 1px solid #ccc; max-height: 250px; overflow-y: auto;"></div>
                         </div>
                        
@@ -466,7 +466,7 @@
              <div class="col-12 col-md-6 ">
                 <div class="row ">
                     <div class="col-12 col-sm-4 text-sm-end d-flex justify-content-end align-center align-items-center text-start  p-1">
-                        <b style="white-space:nowrap;">Adv/Loan Amount </b>
+                        <b style="white-space:nowrap;">Adv/Loan Amount <span class="text-danger fs-6">*</span></b>
                     </div>
                     <div class="col-12 col-sm-7 p-1 ">
                         <div class="custom-multiselect">
@@ -532,19 +532,25 @@
                     </div>
                 </div>
             </div>
-             <div class="col-12 col-md-6 text-center">
-                <hr class="col-12 col-md-10 mx-2" style="height: 2px;background-color: #000;border: none;margin-bottom: 0px;">
-                <b style="white-space:nowrap;">Create Date<span>30/02/2025</span></b>
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center text-center">
+                <div class="w-100 d-flex flex-column align-items-center">
+                    <hr class="w-75" style="height: 2px; background-color: #000; border: none; margin-bottom: 5px;">
+                    <b style="white-space: nowrap;">Create Date: <span id="createDateShow"></span></b>
+                </div>
             </div>
-            <div class="col-12 col-md-6 text-center">
-                <hr class="col-12 col-md-10 mx-2" style="height: 2px;background-color: #000;border: none;margin-bottom: 0px;">
-                <b style="white-space:nowrap;">Modify Date<span>30/02/2025</span></b>
+
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center text-center">
+                <div class="w-100 d-flex flex-column align-items-center">
+                    <hr class="w-75" style="height: 2px; background-color: #000; border: none; margin-bottom: 5px;">
+                    <b style="white-space: nowrap;">Modify Date: <span id="modifyDateshow"></span></b>
+                </div>
             </div>
+
          </div>
 
         <!-- Demo section for testing -->
         <div class="row mt-3">
-            <div class="col-12">
+            <div class="col-12 px-0">
                 <div class="card">
                     <div class="card-body">
                         <partial name="_Grid"></partial>

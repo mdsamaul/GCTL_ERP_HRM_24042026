@@ -19,5 +19,6 @@ namespace GCTL.Service.AdvanceLoanAdjustment
         Task<List<MonthDto>> GetMonthAsync();
         Task<List<PayHeadNameDto>> GetHeadDeductionAsync();
         Task<DataTableResponse<AdvancePayViewModel>> GetAdvancePayPaged(DataTableRequest request);
+        Task<(bool isSuccess, string message)> DeleteAdvancePayAsync(List<decimal> Ids);
     }
 }

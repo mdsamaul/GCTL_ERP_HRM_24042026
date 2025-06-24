@@ -68,7 +68,7 @@ namespace GCTL.UI.Core.Controllers
                 // Save to database logic goes here
                 modelData.ToAudit(LoginInfo);
                 var AdjustmentLoan = await advanceLoanAdjustmentServices.SaveUpdateLoanAdjustmentAsync(modelData);
-                return Json(new { success = true, message = "Loan adjustment saved successfully." , data = AdjustmentLoan });
+                return Json(new { success = AdjustmentLoan.isSuccess, message = AdjustmentLoan.message , data = AdjustmentLoan });
             }
 
             return Json(new { success = false, message = "Invalid data." });
@@ -129,6 +129,13 @@ namespace GCTL.UI.Core.Controllers
                     error = $"An error occurred: {ex.Message}"
                 });
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteAdvancePay([FromBody] List<decimal> selectedIds)
+        {
+            var result = await advanceLoanAdjustmentServices.DeleteAdvancePayAsync(selectedIds);
+            return Json(new {isSuccess=result.isSuccess, message = result.message});
         }
 
     }

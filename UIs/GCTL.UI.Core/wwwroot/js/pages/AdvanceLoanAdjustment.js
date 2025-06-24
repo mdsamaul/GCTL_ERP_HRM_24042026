@@ -32,7 +32,11 @@
             Year: ".year",
             Remarks: ".custom-remarks-textarea",
             AdjustmentMultiselectInput: "#multiselectInput",
-            ClearBtn:"#js-Advance-loan-adjustment-clear",
+            ClearBtn: "#js-Advance-loan-adjustment-clear",
+            DeleteBtn: "#js-Advance-loan-adjustment-delete-confirm",
+            AdvancePayCodeId: "#advancePayCodeId",
+            CreateDateShow:"#createDateShow",
+            ModifyDateshow:"#modifyDateshow",
         }, options);
         var filterUrl = commonName.baseUrl + "/GetFilterData";
         var getAllAndFilterCompanyUrl = commonName.baseUrl + "/GetAllAndFilterCompany";
@@ -44,7 +48,8 @@
         var AdjustmentAutoGanarateIdUrl = commonName.baseUrl + "/AdjustmentAutoGanarateId";
         var GetMonthUrl = commonName.baseUrl + "/GetMonth";
         var GetHeadDeductionUrl = commonName.baseUrl + "/GetHeadDeduction";
-        var GetAdvancePayDataUrl = commonName.baseUrl +"/GetAdvancePayData"
+        var GetAdvancePayDataUrl = commonName.baseUrl + "/GetAdvancePayData"
+        var DeleteAdvancePayUrl = commonName.baseUrl +"/DeleteAdvancePay"
         function stHeader() {
             window.addEventListener('scroll', function () {
                 const header = document.getElementById('stickyHeader');
@@ -55,7 +60,26 @@
                 }
             });
         }
+        function showToast(iconType, message) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 5000,
+                timerProgressBar: true,
+                showClass: {
+                    popup: 'swal2-show swal2-fade-in'
+                },
+                hideClass: {
+                    popup: 'swal2-hide swal2-fade-out'
+                }
+            });
 
+            Toast.fire({
+                icon: iconType,
+                title: message
+            });
+        }
         var $input = $('#multiselectInput');
         var $adjustmentArrow = $('#multiselectArrow');
        
@@ -91,13 +115,20 @@
         }
 
         // Selected value span update
-        function updateAdjustmentSelectedValues() {
-            var selectedValue = $input.attr('data-selected-value');
-            $selectedValuesSpan.text(selectedValue ? selectedValue : 'None');
-        }
-        $(document).on('input', commonName.LoanAmount, function () {
+        //function updateAdjustmentSelectedValues() {
+        //    var selectedValue = $input.attr('data-selected-value');
+        //    $selectedValuesSpan.text(selectedValue ? selectedValue : 'None');
+        //}
+        $(document).on('input', commonName.LoanAmount, function () { //todo loan
+            if ($(this).val() < 0) {
+                $(commonName.LoanAmount).css('border', '1px solid red');
+            } else {
+                $(commonName.LoanAmount).css('border', '');
+            }
             $(commonName.MonthDeduction).val($(this).val());
+            console.log($(this).val());
         })
+        var loanAdjustment = false;
         function logAdjustmentSelectedValues() {
             var selectedValue = $input.attr('data-selected-value');
 
@@ -172,7 +203,7 @@
                     $(commonName.Month).append(`<option value="">--Select Month--</option>`);
                     if (res.length > 0) {
                         $.each(res, function (index, month) {
-                            $(commonName.Month).append(`<option value="${month.monthId}">${month.monthName}</option>  `);
+                            $(commonName.Month).append(`<option value="${month.monthName}">${month.monthName}</option>  `);
                         })
                     }
                 },
@@ -194,7 +225,7 @@
                     console.log(res);
                     if (res.length > 0) {
                         $.each(res, function (index, dHead) {
-                            $(commonName.DeductionHead).append(`<option value="${dHead.payHeadNameId}">${dHead.name}</option>  `);
+                            $(commonName.DeductionHead).append(`<option value="${dHead.name}">${dHead.name}</option>  `);
                         })
                     }
                 },
@@ -204,25 +235,68 @@
             });
         }
         // Initialization function
+        //function initMultiselect() {
+        //    adjustmentGenerateOptions(adjustmentOption);
+
+        //    $input.on('click', function () {
+        //        $dropdown.toggleClass('show');
+        //        $companyDropdown.removeClass('show');
+        //        $employeeDropdown.removeClass('show');
+        //        $loanDropdown.removeClass('show');
+        //        $adjustmentArrow.toggleClass('rotated');
+        //    });
+
+        //    $(document).on('click', function (event) {
+
+        //        if ($(event.target).closest('.custom-multiselect').length === 0) {
+        //            $dropdown.removeClass('show');
+        //            $adjustmentArrow.removeClass('rotated');
+        //        }
+        //    });
+
+        //    $dropdown.on('click', function (event) {
+        //        event.stopPropagation();
+        //    });
+
+        //    updateAdjustmentSelectedValues();
+        //    logAdjustmentSelectedValues();
+        //}
+
+
+
+
+        // Enhanced multiselect initialization
         function initMultiselect() {
             adjustmentGenerateOptions(adjustmentOption);
 
-            $input.on('click', function () {
+            // Input click handler
+            $input.on('click', function (e) {
+                e.stopPropagation();
+
+                // Toggle current dropdown
                 $dropdown.toggleClass('show');
+
+                // Hide other dropdowns
                 $companyDropdown.removeClass('show');
                 $employeeDropdown.removeClass('show');
                 $loanDropdown.removeClass('show');
+
+                // Toggle arrow rotation
                 $adjustmentArrow.toggleClass('rotated');
+
+                // Remove validation error when user interacts
+                $(this).removeClass('validation-error');
             });
 
+            // Enhanced document click handler for outside clicks
             $(document).on('click', function (event) {
-
+                // Check if click is outside the multiselect container
                 if ($(event.target).closest('.custom-multiselect').length === 0) {
-                    $dropdown.removeClass('show');                  
-                    $adjustmentArrow.removeClass('rotated');
+                    hideAdjustmentDropdown();
                 }
             });
 
+            // Prevent dropdown from closing when clicking inside
             $dropdown.on('click', function (event) {
                 event.stopPropagation();
             });
@@ -230,7 +304,127 @@
             updateAdjustmentSelectedValues();
             logAdjustmentSelectedValues();
         }
-       
+
+        // Function to hide adjustment dropdown
+        function hideAdjustmentDropdown() {
+            $dropdown.removeClass('show');
+            $adjustmentArrow.removeClass('rotated');
+        }
+
+        // Enhanced option generation with better click handling
+        function adjustmentGenerateOptions(options) {
+            $dropdown.empty();
+
+            $.each(options, function (index, option) {
+                var $optionDiv = $('<div>', {
+                    class: 'multiselect-option',
+                    text: option.label,
+                    'data-value': option.value
+                });
+
+                // Enhanced option click handler
+                $optionDiv.on('click', function (e) {
+                    e.stopPropagation();
+
+                    // Set selected value
+                    $input.val(option.label);
+                    $input.attr("data-selected-value", option.value);
+
+                    // Remove validation error class
+                    $input.removeClass('validation-error');
+
+                    // Hide dropdown
+                    hideAdjustmentDropdown();
+
+                    // Update and log selected values
+                    updateAdjustmentSelectedValues();
+                    logAdjustmentSelectedValues();
+
+                    console.log("Option selected:", option.label, "Value:", option.value);
+                });
+
+                $dropdown.append($optionDiv);
+            });
+        }
+
+        // Enhanced update selected values function
+        function updateAdjustmentSelectedValues() {
+            var selectedValue = $input.attr('data-selected-value');
+            var displayText = selectedValue ? selectedValue : 'None';
+            $selectedValuesSpan.text(displayText);
+
+            // Add visual feedback for selection
+            if (selectedValue) {
+                $input.addClass('has-selection');
+            } else {
+                $input.removeClass('has-selection');
+            }
+        }
+
+        // Function to programmatically open dropdown (useful for validation)
+        function openAdjustmentDropdown() {
+            $dropdown.addClass('show');
+            $adjustmentArrow.addClass('rotated');
+
+            // Hide other dropdowns
+            $companyDropdown.removeClass('show');
+            $employeeDropdown.removeClass('show');
+            $loanDropdown.removeClass('show');
+        }
+
+        // Function to programmatically close dropdown
+        function closeAdjustmentDropdown() {
+            hideAdjustmentDropdown();
+        }
+
+        $input.on('keydown', function (e) {
+            switch (e.keyCode) {
+                case 13: // Enter
+                    if ($dropdown.hasClass('show')) {
+                        // Select first option if dropdown is open
+                        $dropdown.find('.multiselect-option:first').click();
+                    } else {
+                        // Open dropdown if closed
+                        openAdjustmentDropdown();
+                    }
+                    e.preventDefault();
+                    break;
+                case 27: // Escape
+                    hideAdjustmentDropdown();
+                    e.preventDefault();
+                    break;
+                case 40: // Down arrow
+                    if (!$dropdown.hasClass('show')) {
+                        openAdjustmentDropdown();
+                    }
+                    e.preventDefault();
+                    break;
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //company
 
         var $companyInput = $(commonName.CompanyMultiSelectInput);
@@ -345,7 +539,6 @@
 
         function renderEmployeeOptions(employees) {
             $employeeDropdown.empty();
-            console.log(employees);
             if (!employees || employees.length === 0) {
                 $employeeDropdown.append(`<div class="EmployeeMultiselect-option">Employee Not Found</div>`);
                 return;
@@ -556,6 +749,7 @@
                 data: { loanId },
                 success: function (res) {
                     if (res) {
+                        $(commonName.DeductionHead).empty();
                         $(commonName.LoanId).text(res.loanId);
                         $(commonName.LoanDate).text(res.loanDate);
                         $(commonName.LoanType).text(res.loanType);
@@ -567,7 +761,8 @@
                         customDateFlatpicker($(commonName.DateFrom)[0], res.starDate);
                         customDateFlatpicker($(commonName.ToDate)[0], res.endDate);
                         $(commonName.MonthDeduction).val(res.monthlyDeduction);
-                        $(commonName.DeductionHead).val(res.payHeadNameId);
+                        //$(commonName.DeductionHead).val(res.payHeadNameId);
+                        $(commonName.DeductionHead).append(`<option value="${res.payHeadNameName}">${res.payHeadNameName}</option>  `);
                     }
                 }, error: function (e) {
                     console.log(e);
@@ -603,45 +798,10 @@
             if (parts.length !== 3) return null;
             return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
         }
-
-        //$(document).ready(function () {
-        //    console.log("Initial loan amount:", $("input.loanAmount.enable").val());  // প্রাথমিক মান (ফাঁকা হবে)
-
-        //    $(document).on('input', 'input.loanAmount.enable', function () {
-        //        console.log("User typed loan amount:", $(this).val());
-        //    });
-        //});
-
-
-
-        //CreateInputData = function () {
-        //    var FormValue = {
-        //        AdjustmentType: $input.attr('data-selected-value'),
-        //        AdvancePayId: $(commonName.AdjustmentAutoId).val(),
-        //        EmployeeID: $(commonName.EmployeeMultiselectInput).attr("data-selected-value"),
-        //        AdvanceAdjustStatus: $('input[name="filterType"]:checked').val(),
-        //        AdvanceAmount: $(commonName.LoanAmount).val(),
-        //        MonthlyDeduction: $(commonName.MonthDeduction).val(),
-        //        SalaryMonth: $(commonName.Month).val(),
-        //        SalaryYear: $(commonName.Year).val(),
-        //        NoOfPaymentInstallment: $(commonName.LoanInstallment).val(),
-        //        PayHeadNameId: $(commonName.DeductionHead).val(),
-        //        Remarks: $(commonName.Remarks).val(),
-        //        LoanID: $(commonName.LoanSelectInput).attr('data-selected-value') ,
-        //        FromDate: CustomFlatDate($(commonName.DateFrom).val()),
-        //       ToDate: CustomFlatDate($(commonName.ToDate).val())
-        //    }
-        //    return FormValue;
-        //}
-
-        // ১. একবার শুধু event handler বসান (ডকুমেন্ট রেডি বা স্ক্রিপ্ট লোডে)
-        $(document).on('input', 'input.loanAmount.enable', function () {
-            console.log("User typed loan amount:", $(this).val());
-        });
-
-        // ২. CreateInputData ফাংশন — শুধুমাত্র ডেটা রিটার্ন করবে
+               
         CreateInputData = function () {
             var FormValue = {
+                AdvancePayCode: $(commonName.AdvancePayCodeId).val(),
                 AdjustmentType: $input.attr('data-selected-value'),
                 AdvancePayId: $(commonName.AdjustmentAutoId).val(),
                 EmployeeID: $(commonName.EmployeeMultiselectInput).attr("data-selected-value"),
@@ -660,8 +820,6 @@
             return FormValue;
         }
 
-        // ৩. যখন data তৈরি করবেন, তখন console.log করুন
-        console.log("Form data:", CreateInputData());
 
       
 
@@ -679,7 +837,7 @@
             //$(commonName.AdjustmentMultiselectInput).attr('data-selected-value', '').val(''); // EmployeeID
             //$(commonName.EmployeeMultiselectInput).attr('data-selected-value', '').val(''); 
             $('input[name="filterType"][value="By Date"]').prop('checked', true);
-
+            $(commonName.AdvancePayCodeId).val(0);
 
             $(commonName.LoanAmount).val(''); // AdvanceAmount
             $(commonName.MonthDeduction).val(''); // MonthlyDeduction
@@ -709,118 +867,170 @@
         }
 
 
-        //$(document).on('input', 'input.loanAmount.enable', function () {
-        //    console.log("User typed loan amount:", $(this).val());
+
+       
+
+
+        //$(document).on('click', commonName.SaveBtn, function () {
+        //    var formData = CreateInputData();
+        //    if (!loanAdjustment) {
+        //        formData.AdvanceAmount = $("input.loanAmount.enable").val();
+        //        console.log(formData);
+        //    }
+        //    console.log(formData);
+        //    if (formData.AdjustmentType === undefined || formData.AdjustmentType === "" || formData.AdjustmentType == null) {
+        //        $(commonName.AdjustmentMultiselectInput).addClass('show');
+        //        console.log("Adjustment dropdown opened due to undefined value");
+        //    }
+
+
+
+
+        //    $.ajax({
+        //        type: "POST",
+        //        url: SaveUpdateLoanAdjustmentUrl,
+        //        data: JSON.stringify(formData),
+        //        contentType: "application/json; charset=utf-8",
+        //        //dataType: "json",
+        //        success: function (response) {
+        //            console.log(response);
+        //            if (response.success) {
+        //                GridAdvanceLoan();
+        //                showToast('success', response.message);
+        //            } else {
+        //                showToast('error', response.message);
+        //            }
+        //        }
+        //        ,
+        //        error: function (xhr, status, error) {
+        //            alert("Ajax Error: " + error);
+        //        },complete: function () {
+        //            // Always call auto ID generate after request completes
+        //            ClearInputData();
+        //            $(commonName.AdjustmentMultiselectInput).attr('data-selected-value', '').val('');
+        //            $(commonName.EmployeeMultiselectInput).attr('data-selected-value', '').val('');
+        //            AdjustmentAutoGanarateId();
+        //        }
+        //    });
         //});
+
+
         $(document).on('click', commonName.SaveBtn, function () {
             var formData = CreateInputData();
-            if (!loanAdjustment) {
-                formData.AdvanceAmount = $("input.loanAmount.enable").val();
+           
+
+            // Enhanced validation with dropdown handling
+            if (formData.AdjustmentType === undefined || formData.AdjustmentType === "" || formData.AdjustmentType == null) {
+                // Force show dropdown by adding show class to dropdown element
+                $dropdown.addClass('show');
+                $adjustmentArrow.addClass('rotated');
+
+                // Add validation error class to input
+                $input.addClass('validation-error');
+
+                // Hide other dropdowns
+                $companyDropdown.removeClass('show');
+                $employeeDropdown.removeClass('show');
+                $loanDropdown.removeClass('show');
+
+                console.log("Adjustment dropdown opened due to undefined value");
+
+                // Focus on the input for better UX
+                $input.focus();
+
+                // Don't proceed with AJAX call
+                return false;
             }
+
+
+            if (formData.EmployeeID === undefined || formData.EmployeeID === "" || formData.EmployeeID == null) {
+                    // Force show dropdown by adding show class to dropdown element
+                $dropdown.removeClass('show');
+                $adjustmentArrow.removeClass('rotated');
+
+                    // Add validation error class to input
+                    $input.addClass('validation-error');
+
+                // Hide other dropdowns
+                $companyDropdown.removeClass('show');
+                $employeeDropdown.addClass('show');
+                    $loanDropdown.removeClass('show');
+
+                    console.log("Adjustment dropdown opened due to undefined value");
+
+                    // Focus on the input for better UX
+                    $input.focus();
+
+                    // Don't proceed with AJAX call
+                    return false;
+                }
+
+            if (formData.AdvanceAdjustStatus === "") {
+                showToast("warning","Please select adjustment status.");
+                $('input[name="filterType"][value="By Date"]').prop('checked', true);
+
+                document.getElementById("byDate").scrollIntoView({ behavior: "smooth", block: "center" });
+
+                return;
+            }
+            console.log(formData);
+            if (!loanAdjustment && formData.AdvancePayCode == 0) {
+                console.log("new test");
+                formData.AdvanceAmount = $("input.loanAmount.enable").val();
+                console.log(formData);
+            }
+
+            console.log(formData);
+            if (formData.AdvanceAmount == "" || formData.AdvanceAmount == undefined || formData.AdvanceAmount == null) {
+                $(commonName.LoanAmount).focus().css('border','1px solid red');
+                return;
+            }
+            // If validation passed, remove error class
+            $(commonName.AdjustmentMultiselectInput).removeClass('validation-error');
 
             $.ajax({
                 type: "POST",
                 url: SaveUpdateLoanAdjustmentUrl,
                 data: JSON.stringify(formData),
                 contentType: "application/json; charset=utf-8",
-                //dataType: "json",
                 success: function (response) {
+                    console.log(response);
                     if (response.success) {
-                        alert(response.message);
-                       
+                        GridAdvanceLoan();
+                        showToast('success', response.message);
+                        ClearInputData();
+                        $(commonName.AdjustmentMultiselectInput).attr('data-selected-value', '').val('');
+                        $(commonName.EmployeeMultiselectInput).attr('data-selected-value', '').val('');
                     } else {
-                        alert("Error: " + response.message);
+                        showToast('error', response.message);
                     }
-                }
-                ,
+                },
                 error: function (xhr, status, error) {
                     alert("Ajax Error: " + error);
-                },complete: function () {
-                    // Always call auto ID generate after request completes
-                    ClearInputData();
-                    $(commonName.AdjustmentMultiselectInput).attr('data-selected-value', '').val(''); // EmployeeID
-                    $(commonName.EmployeeMultiselectInput).attr('data-selected-value', '').val(''); 
+                },
+                complete: function () {
+                    
+                   
                     AdjustmentAutoGanarateId();
                 }
             });
         });
 
-        //GridAdvanceLoan = function () {
-        //    $('#advancePayTable').DataTable({
-        //        "processing": true,
-        //        "serverSide": true,
-        //        "ajax": {
-        //            "url": GetAdvancePayDataUrl,
-        //            "type": "POST",
-        //            "data": function (d) {
-        //                d.page = (d.start / d.length) + 1;
-        //                d.pageSize = d.length;
-        //            },
-        //            "dataSrc": "data"
-        //        },
-        //        "columns": [
-        //            { "data": "AdvancePayId" },
-        //            { "data": "FullName" },
-        //            { "data": "DepartmentName" },
-        //            { "data": "DesignationName" },
-        //            { "data": "AdvanceAmount" },
-        //            { "data": "SalaryMonth" },
-        //            { "data": "SalaryYear" }
-        //        ]
-        //    });
-        //}
-
-        //GridAdvanceLoan = function () {
-        //    var table = $('#advancePayTable').DataTable({
-        //        "processing": true,
-        //        "serverSide": true,
-        //        "ajax": {
-        //            "url": GetAdvancePayDataUrl,  // আপনার API URL দিন
-        //            "type": "POST",
-        //            "data": function (d) {
-        //                // DataTables থেকে page number এবং page size বের করা
-        //                d.page = (d.start / d.length) + 1;
-        //                d.pageSize = d.length;
-        //            },
-        //            "dataSrc": function (json) {
-        //                console.log("Received Data:", json.data); // কনসোলে ডেটা দেখুন
-        //                return json.data; // ডেটাকে DataTable এ পাঠান
-        //            }
-        //        },
-        //        "columns": [
-        //            { "data": "advancePayId" },
-        //            { "data": "fullName" },
-        //            { "data": "departmentName" },
-        //            { "data": "designationName" },
-        //            { "data": "advanceAmount" },
-        //            { "data": "salaryMonth" },
-        //            { "data": "salaryYear" }
-        //        ]
-        //    });
-
-        //    // Optional: প্রতিবার AJAX call হবার পরে ডেটা দেখতে এই ইভেন্ট ইউজ করতে পারেন
-        //    table.on('xhr', function (e, settings, json) {
-        //        console.log("XHR Data:", json);
-        //    });
-        //};
-
-
-
-
-
-
-
-
-
 
         // Updated GridAdvanceLoan function with proper error handling
         GridAdvanceLoan = function () {
+            if ($.fn.DataTable.isDataTable('#advancePayTable')) {
+                $('#advancePayTable').DataTable().clear().destroy();
+            }
             var table = $('#advancePayTable').DataTable({
                 "processing": true,
                 "serverSide": true,
                 "responsive": true,
                 "pageLength": 10,
-                "lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
+                "scrollY": "600px",
+                "scrollCollapse": true,
+                "lengthMenu": [[5, 10, 25, 50, 100,1000], [5, 10, 25, 50, 100, 1000]],
+                pagingType: 'full_numbers',
                 "language": {
                     "processing": "Processing...",
                     "lengthMenu": "Show _MENU_ entries",
@@ -829,11 +1039,14 @@
                     "infoEmpty": "Showing 0 to 0 of 0 entries",
                     "infoFiltered": "(filtered from _MAX_ total entries)",
                     "search": "Search:",
-                    "paginate": {
-                        "first": "First",
-                        "last": "Last",
-                        "next": "Next",
-                        "previous": "Previous"
+                   
+                    language: {
+                        paginate: {
+                            first: 'First',
+                            previous: 'Previous',
+                            next: 'Next',
+                            last: 'Last'
+                        }
                     },
                     "emptyTable": "No data available in table",
                     "loadingRecords": "Loading..."
@@ -906,19 +1119,29 @@
                 "columns": [
                     {
                         "data": null,
-                        "title": "Select",
+                        "title": `Select <br /><input type='checkbox' id='selectAllCheckbox'>`,
                         "render": function (data, type, row, meta) {
-                            return `<input type="checkbox" class="row-checkbox" data-id="${row.advancePayId}">`;
+                            return `<input type="checkbox" class="row-checkbox" data-id="${row.advancePayCode}">`;
                         },
                         "orderable": false,
-                        "width": "5%"
+                        "width": "5%",
+                        "className":"text-center"
                     },
+                    //{
+                    //    "data": "advancePayId",
+                    //    "title": "ID",
+                    //    "width": "5%",
+                    //    "render": function (data) {
+                    //        return data || 'N/A';
+                    //    }
+                    //},
                     {
                         "data": "advancePayId",
                         "title": "ID",
                         "width": "5%",
-                        "render": function (data) {
-                            return data || 'N/A';
+                        "render": function (data, type, row, meta) {
+                            if (!data) return "";
+                            return `<a href="#" class="advance-id-link" data-advancepayid=${data}>${data}</a>`
                         }
                     },
                     {
@@ -951,12 +1174,15 @@
                         "width": "10%",
                         "render": function (data) {
                             const amount = parseFloat(data) || 0;
+
                             return  amount.toLocaleString('en-US', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0
                             });
+                            
                         }
                     },
+
                     {
                         "data": "noOfPaymentInstallment",
                         "title": "No. Of Inst(s)",
@@ -973,8 +1199,8 @@
                             if (data == null || data === '') return 'N/A';
                             const amount = parseFloat(data) || 0;
                             return  amount.toLocaleString('en-US', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0
                             });
                         }
                     },
@@ -1000,98 +1226,147 @@
                     $('[title]').tooltip(); // Tooltip reinit if needed
                 },
                 "initComplete": function () {
-                    console.log("Advance Pay Table initialized.");
+                    $('#advancePayTable_filter input[type="search"]').attr('placeholder', 'Search Here..');
                 }
 
-            });
-
-            // Event handlers for action buttons
-            $('#advancePayTable').on('click', '.view-btn', function () {
-                const id = $(this).data('id');
-                if (id && id > 0) {
-                    viewAdvancePay(id);
-                } else {
-                    alert('Invalid ID for view operation');
-                }
-            });
-
-            $('#advancePayTable').on('click', '.edit-btn', function () {
-                const id = $(this).data('id');
-                if (id && id > 0) {
-                    editAdvancePay(id);
-                } else {
-                    alert('Invalid ID for edit operation');
-                }
-            });
-
-            $('#advancePayTable').on('click', '.delete-btn', function () {
-                const id = $(this).data('id');
-                if (id && id > 0) {
-                    deleteAdvancePay(id);
-                } else {
-                    alert('Invalid ID for delete operation');
-                }
             });
 
             return table;
         };
 
-        // Action functions with validation
-        function viewAdvancePay(id) {
-            if (!id || id <= 0) {
-                alert('Invalid ID');
+     
+        //edit
+
+        $(document).on('click', '.advance-id-link', function (e) {
+            e.preventDefault();
+
+            var id = $(this).data('advancepayid');
+            var table = $('#advancePayTable').DataTable();
+            var allRowsData = table.rows().data().toArray();
+            $(commonName.MonthDeduction).removeClass('enable').addClass("disable");
+            var rowData = allRowsData.find(row => row.advancePayId === id);
+
+            console.log("Select row data: ", rowData);
+
+            if (rowData.advanceAdjustStatus == "By Month") {
+                $(commonName.DateFrom).removeClass('enable').addClass('disable');
+                $(commonName.ToDate).removeClass('enable').addClass('disable');
+                $(commonName.LoanSelectInput).removeClass('enable').addClass('disable');
+                $(commonName.LoanId).text('');
+                $(commonName.LoanDate).text('');
+                $(commonName.LoanType).text('');
+                $(commonName.LoanAmount).text('');
+                $(commonName.LoanStartEndDate).text('');
+                $(commonName.LoanInstallment).text('');
+                $(commonName.LoanSelectInput).attr('data-selected-value', '').val('');
+            }
+            if (rowData.advanceAdjustStatus == "By Date") {
+                $(commonName.LoanId).text(rowData.loanID);
+                $(commonName.LoanDate).text(rowData.loanDate);
+                $(commonName.LoanType).text(rowData.loanTypeName);
+                $(commonName.LoanAmount).text(rowData.advanceAmount);
+                $(commonName.LoanStartEndDate).text(rowData.loanStartDate + " - " + rowData.loanEndDate);
+                $(commonName.LoanInstallment).text(rowData.noOfPaymentInstallment);
+            }
+
+            $(commonName.AdjustmentAutoId).val(rowData.advancePayId); // AdvancePayId
+            $(commonName.AdjustmentMultiselectInput).attr('data-selected-value', `${rowData.adjustmentType}`).val(`${rowData.adjustmentType}`); // EmployeeID
+            $(commonName.AdvancePayCodeId).val(rowData.advancePayCode);
+            if (rowData) {
+                const fullText = `${rowData.fullName} (${rowData.employeeID})` +
+                    (rowData.loanID ? ` (${rowData.loanID})` : '');
+
+                $(commonName.EmployeeMultiselectInput)
+                    .attr('data-selected-value', rowData.employeeID)
+                    .val(fullText);
+            }
+            if (rowData.advanceAdjustStatus == "By Date") {
+                $('input[name="filterType"][value="By Date"]').prop('checked', true);
+            }
+            if (rowData.advanceAdjustStatus == "By Month") {
+                $('input[name="filterType"][value="By Month"]').prop('checked', true);
+            }
+
+
+            $(commonName.LoanAmount).val(rowData.advanceAmount); // AdvanceAmount
+            $(commonName.MonthDeduction).val(rowData.monthlyDeduction); // MonthlyDeduction
+            $(commonName.Month).val(rowData.salaryMonth); // SalaryMonth
+            $(commonName.Year).val(rowData.salaryYear); // SalaryYear
+            $(commonName.LoanInstallment).val(rowData.noOfPaymentInstallment); // NoOfPaymentInstallment
+            $(commonName.DeductionHead).val(rowData.payHeadNameId); // PayHeadNameId
+            $(commonName.Remarks).val(rowData.remarks); // Remarks
+            if (rowData.loanID)
+                if (rowData.loanID != "") {
+                    $(commonName.LoanSelectInput).attr('data-selected-value', `${rowData.loanID}`).val(`${rowData.loanID}`); // LoanID
+                }
+
+            $(commonName.CreateDateShow).text(rowData.createDate);
+            $(commonName.ModifyDateshow).text(rowData.modifyDate);
+
+            //$(commonName.DateFrom). todo
+            //customDateFlatpicker(commonName.ToDate, null);
+
+            $(commonName.EmployeeShowName).text(rowData.fullName);
+            $(commonName.EmployeeShowDesignation).text(rowData.designationName);
+            $(commonName.EmployeeShowDepartment).text(rowData.departmentName);
+            $(commonName.EmployeeShowJoiningDate).text(rowData.joiningDate);
+
+            
+        });
+
+        $(document).on('change', "#selectAllCheckbox", function () {
+            var isChecked = $(this).is(':checked');
+            $('.row-checkbox').prop('checked', isChecked);
+        })
+
+        $(document).on('change', '.row-checkbox', function () {
+            var totalChecked = $('.row-checkbox').length;
+            var checked = $('.row-checkbox:checked').length;
+            $('#selectAllCheckbox').prop('checked', totalChecked === checked);
+        })
+
+        var selectedIds = [];
+        $(document).on('click', commonName.DeleteBtn, function () {
+
+            $('.row-checkbox:checked').each(function () {
+                var id = $(this).data('id');
+                if (id) {
+                    selectedIds.push(id);
+                }
+            })
+
+            if (selectedIds.length === 0) {
+                showToast('warning', "Please select at least one adjustment item.");
                 return;
             }
-            console.log('View Advance Pay ID: ' + id);
-            // Implement your view logic here
-        }
-
-        function editAdvancePay(id) {
-            if (!id || id <= 0) {
-                alert('Invalid ID');
-                return;
-            }
-            console.log('Edit Advance Pay ID: ' + id);
-            // Implement your edit logic here
-        }
-
-        function deleteAdvancePay(id) {
-            if (!id || id <= 0) {
-                alert('Invalid ID');
-                return;
-            }
-
-            if (confirm('Are you sure you want to delete this advance pay record?')) {
-                console.log('Delete Advance Pay ID: ' + id);
-                // Implement your delete logic here
-
-                // Example AJAX call for delete:
-                /*
+            if (confirm("Are you sure you want to delete it..!")) {
                 $.ajax({
-                    url: '/AdvanceLoanAdjustment/Delete',
+                    url: DeleteAdvancePayUrl,
                     type: 'POST',
-                    data: { id: id },
-                    success: function(response) {
-                        if (response.success) {
-                            alert('Record deleted successfully');
-                            advancePayTable.ajax.reload();
+                    contentType: 'application/json',
+                    data: JSON.stringify(selectedIds),
+                    success: function (res) {
+                        if (res.isSuccess) {
+                            console.log(res);
+                            selectedIds = [];
+                            showToast('success', res.message);
+                            GridAdvanceLoan();
+                            $('#selectAllCheckbox').prop('checked', false);
                         } else {
-                            alert('Error: ' + response.message);
+                            showToast('error', res.message);
                         }
+
+
                     },
-                    error: function(xhr, status, error) {
-                        alert('Error deleting record: ' + error);
+                    error: function (e) {
+                        console.log(e);
+                        showToast('error', e.message);
                     }
                 });
-                */
             }
-        }
 
-
-
-
-
-
+            
+        })
 
 
 
@@ -1118,6 +1393,8 @@
             initCompanyMultiselect();
             initLoan();
             AdjustmentAutoGanarateId();
+            SelectDropdownMonth();
+            SelectDropdownHeadDeduction();
             GridAdvanceLoan();
             console.log("test", filterUrl);
         };

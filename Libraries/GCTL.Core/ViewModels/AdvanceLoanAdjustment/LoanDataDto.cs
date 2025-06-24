@@ -18,5 +18,6 @@ namespace GCTL.Core.ViewModels.AdvanceLoanAdjustment
         public string EndDate { get; set; }
         public decimal? MonthlyDeduction { get; set; }
         public string PayHeadNameId { get; set; }
+        public string PayHeadNameName { get; set; }
     }
 }
