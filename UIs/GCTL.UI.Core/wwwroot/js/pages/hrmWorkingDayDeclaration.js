@@ -171,6 +171,7 @@ function setupEnterKeyNavigation() {
         }
     });
 }
+
 function initializeEventHandlers() {
     $("#companySelect, #branchSelect, #divisionSelect, #departmentSelect, #designationSelect, #employeeSelect, #employeeStatus, #activityStatusSelect")
         .on("change", function () {

@@ -736,6 +736,26 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNRW1wbG95ZWVIb2xpZGF5RGVjbGFyYXRpb25cX1Rvb2xiYXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmEmployeeSalaryInfoEntry/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVTYWxhcnlJbmZvRW50cnlcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmEmployeeSalaryInfoEntry/_ExcelFileUpload.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVTYWxhcnlJbmZvRW50cnlcX0V4Y2VsRmlsZVVwbG9hZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmEmployeeSalaryInfoEntry/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVTYWxhcnlJbmZvRW50cnlcX0dyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmEmployeeSalaryInfoEntry/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVTYWxhcnlJbmZvRW50cnlcX1NldHVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmEmployeeSalaryInfoEntry/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVTYWxhcnlJbmZvRW50cnlcX1Rvb2xiYXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmPayDefBenefitType/DeleteModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtUGF5RGVmQmVuZWZpdFR5cGVcRGVsZXRlTW9kYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

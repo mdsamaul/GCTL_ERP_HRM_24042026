@@ -36,7 +36,7 @@ namespace GCTL.Core.ViewModels.HrmEmployeeSalaryInfoEntry
         public List<string>? EmployeeTypes { get; set; }
     }
 
-    public class EmployeeListItemViewModel
+    public class EmployeeListItemViewModel:BaseViewModel
     {
         public string? AutoId { get; set; }
         public string? EmployeeId { get; set; }
@@ -54,6 +54,7 @@ namespace GCTL.Core.ViewModels.HrmEmployeeSalaryInfoEntry
         public string? DisbursementMethodId { get; set; }
         public string? DisbursementMethodName { get; set; }
         //public string? BranchName { get; set; }
+        public string? CompanyCode { get; set; }
         public string? CompanyName { get; set; }
     }
 
