@@ -146,9 +146,7 @@ namespace GCTL.UI.Core.Controllers
                 return BadRequest("Invalid data.");
             }
             modelData.ToAudit(LoginInfo);            
-            var result = await hRMPayrollLoanService.CreateEditLoanAsycn(modelData);
-            //if(result.I)
-            // await _loanService.SaveLoanAsync(modelData);
+            var result = await hRMPayrollLoanService.CreateEditLoanAsycn(modelData);          
 
             return Ok(new {isSuccess = result.isSuccess, message = result.message, data= result});
         }

@@ -114,19 +114,13 @@
             });
         }
 
-        // Selected value span update
-        //function updateAdjustmentSelectedValues() {
-        //    var selectedValue = $input.attr('data-selected-value');
-        //    $selectedValuesSpan.text(selectedValue ? selectedValue : 'None');
-        //}
-        $(document).on('input', commonName.LoanAmount, function () { //todo loan
+        $(document).on('input', commonName.LoanAmount, function () { 
             if ($(this).val() < 0) {
                 $(commonName.LoanAmount).css('border', '1px solid red');
             } else {
                 $(commonName.LoanAmount).css('border', '');
             }
-            $(commonName.MonthDeduction).val($(this).val());
-            console.log($(this).val());
+            $(commonName.MonthDeduction).val($(this).val());            
         })
         var loanAdjustment = false;
         function logAdjustmentSelectedValues() {
@@ -137,8 +131,6 @@
                 return;
             }
 
-            console.log("Selected:", selectedValue);
-
             // Clear employee input
             $employeeInput.val('');
             $employeeInput.attr("data-selected-value", '');
@@ -147,7 +139,6 @@
             // Set loan adjustment flag
             loanAdjustment = selectedValue === "Loan";
 
-            //console.log(loanAdjustment);
             if (!loanAdjustment) {
                 ClearInputData();
                 $(commonName.LoanSelectInput)
@@ -160,7 +151,7 @@
                 $(commonName.Month).removeClass('disable').addClass("enable");
                 $(commonName.Year).removeClass('disable').addClass("enable");
                 $(commonName.LoanAmount).removeClass('disable').addClass("enable");
-                $(commonName.LoanInstallment).removeClass('disable').addClass("enable").val("1");
+                $(commonName.LoanInstallment).removeClass('enable').addClass("disable").val("1");
                 $(commonName.MonthDeduction).removeClass('enable').addClass("disable");
                 $(commonName.DeductionHead).removeClass('disable').addClass("enable");
                 SelectDropdownMonth();
@@ -188,7 +179,7 @@
             // Reload employee filter and re-bind employee dropdown
             setTimeout(function () {
                 getEmployeeByFilter('');
-                initEmployeeMultiselect(); // only binds click once
+                initEmployeeMultiselect(); 
                 $(commonName.EmployeeArrow).addClass('rotated');
             }, 100);
         }
@@ -208,7 +199,6 @@
                     }
                 },
                 error: function (e) {
-                    console.log(e);
                 }
             });
         }
@@ -222,7 +212,6 @@
 
                     $(commonName.DeductionHead).append(`<option value="">--Select Deduction Head--</option>`);
 
-                    console.log(res);
                     if (res.length > 0) {
                         $.each(res, function (index, dHead) {
                             $(commonName.DeductionHead).append(`<option value="${dHead.name}">${dHead.name}</option>  `);
@@ -230,40 +219,11 @@
                     }
                 },
                 error: function (e) {
-                    console.log(e);
+
                 }
             });
         }
-        // Initialization function
-        //function initMultiselect() {
-        //    adjustmentGenerateOptions(adjustmentOption);
-
-        //    $input.on('click', function () {
-        //        $dropdown.toggleClass('show');
-        //        $companyDropdown.removeClass('show');
-        //        $employeeDropdown.removeClass('show');
-        //        $loanDropdown.removeClass('show');
-        //        $adjustmentArrow.toggleClass('rotated');
-        //    });
-
-        //    $(document).on('click', function (event) {
-
-        //        if ($(event.target).closest('.custom-multiselect').length === 0) {
-        //            $dropdown.removeClass('show');
-        //            $adjustmentArrow.removeClass('rotated');
-        //        }
-        //    });
-
-        //    $dropdown.on('click', function (event) {
-        //        event.stopPropagation();
-        //    });
-
-        //    updateAdjustmentSelectedValues();
-        //    logAdjustmentSelectedValues();
-        //}
-
-
-
+       
 
         // Enhanced multiselect initialization
         function initMultiselect() {
@@ -340,7 +300,6 @@
                     updateAdjustmentSelectedValues();
                     logAdjustmentSelectedValues();
 
-                    console.log("Option selected:", option.label, "Value:", option.value);
                 });
 
                 $dropdown.append($optionDiv);
@@ -371,11 +330,7 @@
             $employeeDropdown.removeClass('show');
             $loanDropdown.removeClass('show');
         }
-
-        // Function to programmatically close dropdown
-        function closeAdjustmentDropdown() {
-            hideAdjustmentDropdown();
-        }
+           
 
         $input.on('keydown', function (e) {
             switch (e.keyCode) {
@@ -403,28 +358,6 @@
         });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         //company
 
         var $companyInput = $(commonName.CompanyMultiSelectInput);
@@ -439,7 +372,6 @@
                     renderCompanyOptions(res);
                 },
                 error: function (e) {
-                    console.log(e);
                 }
             });
         }
@@ -517,7 +449,6 @@
         var $employeeInput = $(commonName.EmployeeMultiselectInput);
         var $employeeDropdown = $(commonName.EmployeeDropdown);
         function getEmployeeByFilter(SearchEmployeeText) {
-            console.log(loanAdjustment);
             $.ajax({
                 url: GetEmployeesByFilterUrl,
                 type: 'GET',
@@ -529,10 +460,9 @@
                 },
                 success: function (data) {
                     renderEmployeeOptions(data);   
-                    //$employeeDropdown.addClass('show');
-                    //$(commonName.EmployeeArrow).addClass('rotated');
+                    
                 }, error: function (e) {
-                    console.log(e);
+                   
                 }
             });
         }
@@ -580,33 +510,6 @@
             });
         }
 
-        //function initEmployeeMultiselect() {
-        //    $employeeInput.on('click', function () {
-        //        $employeeDropdown.toggleClass('show');
-        //        $companyDropdown.removeClass('show');
-        //        $dropdown.removeClass('show');
-        //        $loanDropdown.removeClass('show');
-        //        $(commonName.EmployeeArrow).toggleClass('rotated');
-        //    });
-
-        //    $employeeInput.on('input', function () {
-        //        var searchText = $(this).val();
-        //        getEmployeeByFilter(searchText);
-        //    });
-
-        //    $(document).on('click', function (e) {
-        //        if (!$(e.target).closest('.custom-multiselect').length) {
-        //            $employeeDropdown.removeClass('show');
-        //            $(commonName.EmployeeArrow).removeClass('rotated');
-        //        }
-        //    });
-
-        //    $employeeDropdown.on('click', function (e) {
-        //        e.stopPropagation();
-        //    });
-
-        //    getEmployeeByFilter('');
-        //}
 
         function initEmployeeMultiselect() {
             $employeeInput.off('click').on('click', function () {
@@ -656,7 +559,7 @@
                     }
                 },
                 error: function (e) {
-                    console.log(e);
+
                 }
             });
         }
@@ -676,7 +579,7 @@
                     }
                 },
                 error: function (e) {
-                    console.log(e);
+
                 }
             });
         }
@@ -761,16 +664,14 @@
                         customDateFlatpicker($(commonName.DateFrom)[0], res.starDate);
                         customDateFlatpicker($(commonName.ToDate)[0], res.endDate);
                         $(commonName.MonthDeduction).val(res.monthlyDeduction);
-                        //$(commonName.DeductionHead).val(res.payHeadNameId);
                         $(commonName.DeductionHead).append(`<option value="${res.payHeadNameName}">${res.payHeadNameName}</option>  `);
                     }
                 }, error: function (e) {
-                    console.log(e);
                 }
             });
         }
-
-        customDateFlatpicker = function (id, date) {           
+        
+        customDateFlatpicker = function (id, date) {   
             flatpickr(id, {
                 dateFormat: "d/m/Y",
                 defaultDate: date ?? "today",
@@ -785,12 +686,11 @@
                 success: function (res) {
                     $(commonName.AdjustmentAutoId).val(res);
                 }, error: function (e) {
-                    console.log(e);
+
                 }
             });
         }
         //create
-      
 
         CustomFlatDate = function (dateStr) {
             if (!dateStr) return null;
@@ -820,11 +720,8 @@
             return FormValue;
         }
 
-
-      
-
         $(document).on('click', commonName.ClearBtn, function () {
-            console.log("click");
+
             ClearInputData();
             $(commonName.AdjustmentMultiselectInput).attr('data-selected-value', '').val(''); // EmployeeID
             $(commonName.EmployeeMultiselectInput).attr('data-selected-value', '').val(''); 
@@ -833,91 +730,55 @@
 
         ClearInputData = function () {
             AdjustmentAutoGanarateId();
-            $(commonName.AdjustmentAutoId).val(''); // AdvancePayId
-            //$(commonName.AdjustmentMultiselectInput).attr('data-selected-value', '').val(''); // EmployeeID
-            //$(commonName.EmployeeMultiselectInput).attr('data-selected-value', '').val(''); 
+            $(commonName.AdjustmentAutoId).val(''); 
             $('input[name="filterType"][value="By Date"]').prop('checked', true);
             $(commonName.AdvancePayCodeId).val(0);
 
-            $(commonName.LoanAmount).val(''); // AdvanceAmount
-            $(commonName.MonthDeduction).val(''); // MonthlyDeduction
-            $(commonName.Month).val(''); // SalaryMonth
-            $(commonName.Year).val(''); // SalaryYear
-            $(commonName.LoanInstallment).val(''); // NoOfPaymentInstallment
-            $(commonName.DeductionHead).val(''); // PayHeadNameId
-            $(commonName.Remarks).val(''); // Remarks
-            $(commonName.LoanSelectInput).attr('data-selected-value', '').val(''); // LoanID
-
-
+            $(commonName.LoanAmount).val(''); 
+            $(commonName.MonthDeduction).val('');
+            $(commonName.Month).val(''); 
+            $(commonName.Year).val('');
+            $(commonName.LoanInstallment).val(''); 
+            $(commonName.DeductionHead).val(''); 
+            $(commonName.Remarks).val(''); 
+            $(commonName.LoanSelectInput).attr('data-selected-value', '').val('');
             customDateFlatpicker(commonName.DateFrom,null);
             customDateFlatpicker(commonName.ToDate, null);
-
             $(commonName.EmployeeShowName).text('');
             $(commonName.EmployeeShowDesignation).text('');
             $(commonName.EmployeeShowDepartment).text('');
             $(commonName.EmployeeShowJoiningDate).text('');
-
             $(commonName.LoanId).text('');
             $(commonName.LoanDate).text('');
             $(commonName.LoanType).text('');
             $(commonName.LoanAmount).text('');
             $(commonName.LoanStartEndDate).text('');
             $(commonName.LoanInstallment).text('');
+            $(commonName.CreateDateShow).text('');
+            $(commonName.ModifyDateshow).text('');
            
         }
+               
+        $(document).on('change', commonName.ToDate, function () {
+            if (loanAdjustment) {
+                var FormDatevalue = $(commonName.DateFrom).val();
+                var toDatevalue = $(this).val();
 
-
-
-       
-
-
-        //$(document).on('click', commonName.SaveBtn, function () {
-        //    var formData = CreateInputData();
-        //    if (!loanAdjustment) {
-        //        formData.AdvanceAmount = $("input.loanAmount.enable").val();
-        //        console.log(formData);
-        //    }
-        //    console.log(formData);
-        //    if (formData.AdjustmentType === undefined || formData.AdjustmentType === "" || formData.AdjustmentType == null) {
-        //        $(commonName.AdjustmentMultiselectInput).addClass('show');
-        //        console.log("Adjustment dropdown opened due to undefined value");
-        //    }
-
-
-
-
-        //    $.ajax({
-        //        type: "POST",
-        //        url: SaveUpdateLoanAdjustmentUrl,
-        //        data: JSON.stringify(formData),
-        //        contentType: "application/json; charset=utf-8",
-        //        //dataType: "json",
-        //        success: function (response) {
-        //            console.log(response);
-        //            if (response.success) {
-        //                GridAdvanceLoan();
-        //                showToast('success', response.message);
-        //            } else {
-        //                showToast('error', response.message);
-        //            }
-        //        }
-        //        ,
-        //        error: function (xhr, status, error) {
-        //            alert("Ajax Error: " + error);
-        //        },complete: function () {
-        //            // Always call auto ID generate after request completes
-        //            ClearInputData();
-        //            $(commonName.AdjustmentMultiselectInput).attr('data-selected-value', '').val('');
-        //            $(commonName.EmployeeMultiselectInput).attr('data-selected-value', '').val('');
-        //            AdjustmentAutoGanarateId();
-        //        }
-        //    });
-        //});
-
+                const FromMonth = parseInt(FormDatevalue.split('/')[1]);
+                const FromYear = parseInt(FormDatevalue.split('/')[2])
+                const ToMonth = parseInt(toDatevalue.split('/')[1]);
+                const ToYear = parseInt(toDatevalue.split('/')[2]);              
+                const totalMonths = (ToYear - FromYear) * 12 + ToMonth - FromMonth + 1;
+                $(commonName.LoanInstallment).val(totalMonths);
+                const loanAmount = $(commonName.LoanAmount).val()
+                const monthlyDeduction =Math.ceil(loanAmount / totalMonths) ;
+                $(commonName.MonthDeduction).val(monthlyDeduction);
+            }              
+            });
+      
 
         $(document).on('click', commonName.SaveBtn, function () {
-            var formData = CreateInputData();
-           
+            var formData = CreateInputData();          
 
             // Enhanced validation with dropdown handling
             if (formData.AdjustmentType === undefined || formData.AdjustmentType === "" || formData.AdjustmentType == null) {
@@ -932,8 +793,6 @@
                 $companyDropdown.removeClass('show');
                 $employeeDropdown.removeClass('show');
                 $loanDropdown.removeClass('show');
-
-                console.log("Adjustment dropdown opened due to undefined value");
 
                 // Focus on the input for better UX
                 $input.focus();
@@ -956,8 +815,6 @@
                 $employeeDropdown.addClass('show');
                     $loanDropdown.removeClass('show');
 
-                    console.log("Adjustment dropdown opened due to undefined value");
-
                     // Focus on the input for better UX
                     $input.focus();
 
@@ -973,20 +830,16 @@
 
                 return;
             }
-            console.log(formData);
             if (!loanAdjustment && formData.AdvancePayCode == 0) {
-                console.log("new test");
-                formData.AdvanceAmount = $("input.loanAmount.enable").val();
-                console.log(formData);
+                formData.AdvanceAmount = $("input.loanAmount.enable").val();             
             }
 
-            console.log(formData);
             if (formData.AdvanceAmount == "" || formData.AdvanceAmount == undefined || formData.AdvanceAmount == null) {
                 $(commonName.LoanAmount).focus().css('border','1px solid red');
                 return;
             }
             // If validation passed, remove error class
-            $(commonName.AdjustmentMultiselectInput).removeClass('validation-error');
+            $(commonName.AdjustmentMultiselectInput).removeClass('validation-error');           
 
             $.ajax({
                 type: "POST",
@@ -994,7 +847,6 @@
                 data: JSON.stringify(formData),
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
-                    console.log(response);
                     if (response.success) {
                         GridAdvanceLoan();
                         showToast('success', response.message);
@@ -1008,11 +860,9 @@
                 error: function (xhr, status, error) {
                     alert("Ajax Error: " + error);
                 },
-                complete: function () {
-                    
-                   
-                    AdjustmentAutoGanarateId();
-                }
+                //complete: function () {  
+                //    AdjustmentAutoGanarateId();
+                //}
             });
         });
 
@@ -1065,28 +915,23 @@
                         d.month = $('#monthFilter').val() || "";
                         d.year = $('#yearFilter').val() || "";
 
-                        console.log('Request Data:', d);
                         return d;
                     },
                     "dataSrc": function (json) {
-                        console.log("Response Data:", json);
 
                         // Check for errors
                         if (json.error) {
-                            console.error('Server Error:', json.error);
                             alert('Error: ' + json.error);
                             return [];
                         }
 
                         // Validate response structure
                         if (!json.data) {
-                            console.error('Invalid response: missing data property');
                             return [];
                         }
 
                         // Ensure data is an array
                         if (!Array.isArray(json.data)) {
-                            console.error('Invalid response: data is not an array');
                             return [];
                         }
 
@@ -1097,13 +942,7 @@
                         return json.data;
                     },
                     "error": function (xhr, error, thrown) {
-                        console.error('Ajax Error:', {
-                            status: xhr.status,
-                            statusText: xhr.statusText,
-                            responseText: xhr.responseText,
-                            error: error,
-                            thrown: thrown
-                        });
+                       
 
                         let errorMessage = 'Unknown error occurred';
                         try {
@@ -1127,14 +966,7 @@
                         "width": "5%",
                         "className":"text-center"
                     },
-                    //{
-                    //    "data": "advancePayId",
-                    //    "title": "ID",
-                    //    "width": "5%",
-                    //    "render": function (data) {
-                    //        return data || 'N/A';
-                    //    }
-                    //},
+                   
                     {
                         "data": "advancePayId",
                         "title": "ID",
@@ -1246,7 +1078,6 @@
             $(commonName.MonthDeduction).removeClass('enable').addClass("disable");
             var rowData = allRowsData.find(row => row.advancePayId === id);
 
-            console.log("Select row data: ", rowData);
 
             if (rowData.advanceAdjustStatus == "By Month") {
                 $(commonName.DateFrom).removeClass('enable').addClass('disable');
@@ -1267,6 +1098,10 @@
                 $(commonName.LoanAmount).text(rowData.advanceAmount);
                 $(commonName.LoanStartEndDate).text(rowData.loanStartDate + " - " + rowData.loanEndDate);
                 $(commonName.LoanInstallment).text(rowData.noOfPaymentInstallment);
+                $(commonName.Month).removeClass('disable').addClass('enable');
+                $(commonName.Year).removeClass('disable').addClass('enable');
+                $(commonName.DateFrom).removeClass('enable').addClass('disable');
+                $(commonName.ToDate).removeClass('enable').addClass('disable');
             }
 
             $(commonName.AdjustmentAutoId).val(rowData.advancePayId); // AdvancePayId
@@ -1288,23 +1123,21 @@
             }
 
 
-            $(commonName.LoanAmount).val(rowData.advanceAmount); // AdvanceAmount
-            $(commonName.MonthDeduction).val(rowData.monthlyDeduction); // MonthlyDeduction
-            $(commonName.Month).val(rowData.salaryMonth); // SalaryMonth
-            $(commonName.Year).val(rowData.salaryYear); // SalaryYear
-            $(commonName.LoanInstallment).val(rowData.noOfPaymentInstallment); // NoOfPaymentInstallment
-            $(commonName.DeductionHead).val(rowData.payHeadNameId); // PayHeadNameId
-            $(commonName.Remarks).val(rowData.remarks); // Remarks
+            $(commonName.LoanAmount).val(rowData.advanceAmount); 
+            $(commonName.MonthDeduction).val(rowData.monthlyDeduction); 
+            $(commonName.Month).val(rowData.salaryMonth); 
+            $(commonName.Year).val(rowData.salaryYear);
+            $(commonName.LoanInstallment).val(rowData.noOfPaymentInstallment); 
+            $(commonName.DeductionHead).val(rowData.payHeadNameId); 
+            $(commonName.Remarks).val(rowData.remarks); 
             if (rowData.loanID)
                 if (rowData.loanID != "") {
-                    $(commonName.LoanSelectInput).attr('data-selected-value', `${rowData.loanID}`).val(`${rowData.loanID}`); // LoanID
+                    $(commonName.LoanSelectInput).attr('data-selected-value', `${rowData.loanID}`).val(`${rowData.loanID}`);
                 }
 
             $(commonName.CreateDateShow).text(rowData.createDate);
             $(commonName.ModifyDateshow).text(rowData.modifyDate);
 
-            //$(commonName.DateFrom). todo
-            //customDateFlatpicker(commonName.ToDate, null);
 
             $(commonName.EmployeeShowName).text(rowData.fullName);
             $(commonName.EmployeeShowDesignation).text(rowData.designationName);
@@ -1347,7 +1180,6 @@
                     data: JSON.stringify(selectedIds),
                     success: function (res) {
                         if (res.isSuccess) {
-                            console.log(res);
                             selectedIds = [];
                             showToast('success', res.message);
                             GridAdvanceLoan();
@@ -1359,7 +1191,6 @@
 
                     },
                     error: function (e) {
-                        console.log(e);
                         showToast('error', e.message);
                     }
                 });
@@ -1368,24 +1199,8 @@
             
         })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         var init = function () {
+             $(commonName.LoanInstallment).addClass('disable').removeClass('enable');
             stHeader();
             customDateFlatpicker($(commonName.DateFrom)[0], null);
             customDateFlatpicker($(commonName.ToDate)[0], null);
@@ -1395,8 +1210,7 @@
             AdjustmentAutoGanarateId();
             SelectDropdownMonth();
             SelectDropdownHeadDeduction();
-            GridAdvanceLoan();
-            console.log("test", filterUrl);
+            GridAdvanceLoan();           
         };
         init();
     };

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GCTL.Service")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+490eb4fbd829f91f75f85d387dee000d70b5a9c7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7c81cc8eaccb6f70413c06fdf6e7bb3b0780f063")]
 [assembly: System.Reflection.AssemblyProductAttribute("GCTL.Service")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GCTL.Service")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

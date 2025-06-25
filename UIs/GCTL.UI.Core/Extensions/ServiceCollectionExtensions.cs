@@ -120,14 +120,7 @@ using GCTL.Service.AdvanceLoanAdjustment;
 namespace GCTL.UI.Core.Extensions
 {
     public static class ServiceCollectionExtensions
-    {
-        //public static void ConfigureContext(this IServiceCollection services, IConfiguration configuration)
-        //{
-        //    services.AddDbContext<ApplicationDbContext>(x => 
-        //    x.UseSqlServer(configuration.GetConnectionString("ApplicationDbConnection"),
-        //    x => x.UseDateOnlyTimeOnly()));
-        //}
-
+    {      
         public static void ConfigureContext(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<GCTL_ERP_DB_DatapathContext>(x =>

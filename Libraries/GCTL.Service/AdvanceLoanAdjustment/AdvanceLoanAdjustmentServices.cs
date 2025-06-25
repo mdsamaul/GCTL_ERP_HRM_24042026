@@ -59,16 +59,16 @@ namespace GCTL.Service.AdvanceLoanAdjustment
 
             using (SqlConnection conn = new SqlConnection(configuration.GetConnectionString("ApplicationDbConnection")))
             {
-                await conn.OpenAsync(); // Async connection open
+                await conn.OpenAsync(); 
 
                 using (SqlCommand cmd = new SqlCommand("GetCompanyNamesBySearch", conn))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@SearchCompanyName", searchCompanyName ?? "");
 
-                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync()) // Async reader
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync()) 
                     {
-                        while (await reader.ReadAsync()) // Async read loop
+                        while (await reader.ReadAsync()) 
                         {
                             companies.Add(new CompanyDto
                             {
@@ -259,6 +259,14 @@ namespace GCTL.Service.AdvanceLoanAdjustment
                     if (existing == null)
                         return (false, "Data not found to update", null);
 
+                    if (modelData.AdjustmentType == "Loan" )
+                    {
+                        isExist = advancePayRepo.All().Any(x =>x.LoanId == modelData.LoanID && x.EmployeeId == modelData.EmployeeID && x.SalaryMonth == modelData.SalaryMonth && x.SalaryYear == modelData.SalaryYear && x.AdvancePayId != modelData.AdvancePayId);
+                        if (isExist)
+                        {
+                            return (false, DataExists, null);
+                        }
+                    }
 
                     // ✅ Update the existing data
                     existing.EmployeeId = modelData.EmployeeID ?? "";
@@ -270,7 +278,7 @@ namespace GCTL.Service.AdvanceLoanAdjustment
                     existing.NoOfPaymentInstallment = modelData.NoOfPaymentInstallment ?? "";
                     existing.PayHeadNameId = modelData.PayHeadNameId ?? "";
                     existing.Remarks = modelData.Remarks ?? "";
-                    existing.ModifyDate = modelData.ModifyDate ;
+                    existing.ModifyDate = DateTime.Now ;
                     existing.AdjustmentType = modelData.AdjustmentType ?? "";
                     existing.LoanId = modelData.LoanID??"";
                     existing.CompanyCode = "001";
@@ -325,7 +333,7 @@ namespace GCTL.Service.AdvanceLoanAdjustment
 
                 DateTime fromDate = modelData.FromDate.Value;
                 DateTime toDate = modelData.Todate.Value;
-                while (fromDate < toDate)
+                while (fromDate <= toDate)
                 {
 
 
@@ -341,7 +349,7 @@ namespace GCTL.Service.AdvanceLoanAdjustment
                                 AdvanceAmount = modelData.AdvanceAmount,
                                 MonthlyDeduction = modelData.MonthlyDeduction,
 
-                                SalaryMonth = fromDate.ToString("MMMM"), // Full month name in English
+                                SalaryMonth = fromDate.ToString("MMMM"), 
                                 SalaryYear = fromDate.Year.ToString(),
 
                                 NoOfPaymentInstallment = modelData.NoOfPaymentInstallment,
@@ -395,7 +403,7 @@ namespace GCTL.Service.AdvanceLoanAdjustment
             string newId;
             if (lastItem != null && !string.IsNullOrEmpty(lastItem.AdvancePayId))
             {
-                string numericPart = lastItem.AdvancePayId.Substring(1); // "00000011"
+                string numericPart = lastItem.AdvancePayId.Substring(1); 
                 int number = int.Parse(numericPart) + 1;
                 newId = number.ToString("D8");
             }
@@ -490,21 +498,14 @@ namespace GCTL.Service.AdvanceLoanAdjustment
                                     LoanID = rdr["LoanID"]?.ToString() ?? "",
                                     NoOfPaymentInstallment = rdr["NoOfPaymentInstallment"]?.ToString() ?? "",
                                     PayHeadNameId = rdr["PayHeadNameId"]?.ToString() ?? "",
-
-                                    //AdvancePayId = rdr["AdvancePayId"].ToString(),
-                                    //AdvancePayId = SafeConvertToInt32(rdr["AdvancePayId"]),
                                     AdvancePayCode = SafeConvertToInt32(rdr["AdvancePayCode"]),
-                                    //EmployeeID = SafeConvertToInt32(rdr["EmployeeID"]),
-                                    //EmployeeID = rdr["EmployeeID"].ToString(),
                                     FullName = rdr["FullName"]?.ToString() ?? "",
-                                    //JoiningDate = rdr["JoiningDate"]?.ToString() ?? "",
                                     JoiningDate = rdr["JoiningDate"] != DBNull.Value? ((DateTime)rdr["JoiningDate"]).ToString("dd/MM/yyyy") : "",
                                     LoanDate = rdr["LoanDate"] != DBNull.Value? ((DateTime)rdr["LoanDate"]).ToString("dd/MM/yyyy") : "",
                                     CreateDate = rdr["LDate"] != DBNull.Value? ((DateTime)rdr["LDate"]).ToString("dd/MM/yyyy") : "",
                                     ModifyDate = rdr["ModifyDate"] != DBNull.Value? ((DateTime)rdr["ModifyDate"]).ToString("dd/MM/yyyy") : "",
                                     LoanTypeId = rdr["LoanTypeId"]?.ToString() ?? "",
                                     LoanTypeName = loanTypeRepo.All().Where(x=> x.LoanTypeId == rdr["LoanTypeId"].ToString()).Select(x=> x.LoanType).FirstOrDefault() ?? "",
-                                    //LoanStartDate = rdr["StartDate"]?.ToString() ?? "",
                                     LoanStartDate = rdr["StartDate"] != DBNull.Value? ((DateTime)rdr["StartDate"]).ToString("dd/MM/yyyy"):"",
                                     LoanEndDate = rdr["EndDate"] != DBNull.Value ? ((DateTime)rdr["EndDate"]).ToString("dd/MM/yyyy") : "",
                                     DepartmentName = rdr["DepartmentName"]?.ToString() ?? "",
@@ -517,16 +518,8 @@ namespace GCTL.Service.AdvanceLoanAdjustment
                                         : SafeConvertToDecimal(rdr["MonthlyDeduction"]),
                                     SalaryMonth = rdr["SalaryMonth"]?.ToString() ?? "",
                                     SalaryYear = rdr["SalaryYear"]?.ToString() ?? "",
-                                    //NoOfPaymentInstallment = rdr["NoOfPaymentInstallment"] == DBNull.Value
-                                    //    ? (int?)null
-                                        //: SafeConvertToInt32(rdr["NoOfPaymentInstallment"]),
-                                    //PayHeadNameId = rdr["PayHeadNameId"] == DBNull.Value
-                                        //? (int?)null
-                                        //: SafeConvertToInt32(rdr["PayHeadNameId"]),
+                                   
                                     Remarks = rdr["Remarks"]?.ToString() ?? "",
-                                    //LoanID = rdr["LoanID"] == DBNull.Value
-                                    //    ? (int?)null
-                                    //    : SafeConvertToInt32(rdr["LoanID"])
                                 });
                             }
 
@@ -545,10 +538,6 @@ namespace GCTL.Service.AdvanceLoanAdjustment
             }
             catch (Exception ex)
             {
-                // Log the error
-                Console.WriteLine($"Error in GetAdvancePayPaged: {ex.Message}");
-
-                // Return empty response with error info
                 response.Data = new List<AdvancePayViewModel>();
                 response.TotalRecords = 0;
                 response.FilteredRecords = 0;

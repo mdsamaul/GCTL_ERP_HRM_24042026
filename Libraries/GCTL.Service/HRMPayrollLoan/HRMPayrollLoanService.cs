@@ -510,7 +510,7 @@ namespace GCTL.Service.HRMPayrollLoan
             // Calculate total months like JavaScript logic
             int yearDiff = endDate.Year - startDate.Year;
             int monthDiff = endDate.Month - startDate.Month;
-            int totalMonths = (yearDiff * 12) + monthDiff;
+            int totalMonths = (yearDiff * 12) + monthDiff +1 ;
 
             if (totalMonths < 0)
             {
