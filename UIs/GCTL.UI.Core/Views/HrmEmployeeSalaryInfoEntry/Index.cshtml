@@ -19,10 +19,113 @@
         width: 5%;
     }
 
+    /* .single-row-form .row {
+        flex-wrap: nowrap !important;
+    }
+
+    .single-row-form .col-equal {
+        flex: 1;
+        min-width: 0;
+        max-width: none;
+    } */
+
+    .single-row-form .row {
+        flex-wrap: nowrap !important;
+    }
+
+    .single-row-form .col-equal {
+        flex: 1;
+        min-width: 0;
+        max-width: none;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .single-row-form .label-container {
+        height: 3rem; /* Fixed container height to accommodate wrapped text */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.5rem;
+        padding: 0.25rem;
+    }
+
+    .single-row-form .form-label {
+        margin: 0;
+        font-size: 0.875rem;
+        line-height: 1.2;
+        text-align: center;
+        word-wrap: break-word;
+        hyphens: auto;
+    }
+
+    .single-row-form .form-control,
+    .single-row-form .form-select {
+        flex: 1;
+    }
+
     th.no-sort::after,
     th.no-sort::before {
         display: none !important;
     }
+
+    table.dataTable thead > tr > th.sorting,
+    table.dataTable thead > tr > th.sorting_asc,
+    table.dataTable thead > tr > th.sorting_desc {
+        padding-right: 4px; /* Adjust as needed */
+        background-position: right center;
+        background-repeat: no-repeat;
+        background-size: 10px 10px; /* Optional: scale arrow icons */
+    }
+
+
+    @@media (max-width: 1366px) {
+        .single-row-form .label-container, .label-container, .label-container, .label-container
+
+    {
+        height: 2.5rem;
+        min-height: 2.5rem;
+    }
+
+    .form-label {
+        font-size: 0.8rem !important;
+    }
+
+    .form-select-sm, .form-control-sm {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
+    }
+
+    }
+
+    @@media (max-width: 1024px) {
+        .single-row-form .label-container, .label-container, .label-container, .label-container
+
+    {
+        height: 2rem;
+        min-height: 2rem;
+        padding: 0.25rem;
+    }
+
+    .form-label {
+        font-size: 0.7rem !important;
+        line-height: 1.1 !important;
+    }
+
+    .form-select-sm, .form-control-sm {
+        font-size: 0.65rem;
+        padding: 0.2rem 0.4rem;
+    }
+    
+
+    }
+
+    /* Utility for very long labels */
+    .break-word {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
 </style>
 
 <partial name="_PageHeader" model="Model"></partial>

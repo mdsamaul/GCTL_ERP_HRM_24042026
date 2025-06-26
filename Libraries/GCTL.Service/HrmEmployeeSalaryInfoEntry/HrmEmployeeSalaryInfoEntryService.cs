@@ -61,34 +61,52 @@ namespace GCTL.Service.HrmEmployeeSalaryInfoEntry
 
         public async Task<bool> BulkEditAsync(HrmEmployeeSalaryInfoEntryViewModel model)
         {
-            if (model == null || !model.SalaryInfoUpdate.Any())
+            if (model?.SalaryInfoUpdate?.Count == 0)
                 return false;
 
             await empOfficialInfoRepo.BeginTransactionAsync();
-
             try
             {
+                var employeeIds = model.SalaryInfoUpdate.Select(x => x.EmployeeId).ToHashSet();
+
+                var existingRecords = await empOfficialInfoRepo.All()
+                    .Where(e => employeeIds.Contains(e.EmployeeId))
+                    .ToListAsync();
+
+                var recordLookup = existingRecords.ToDictionary(e => e.EmployeeId);
+
+                List<HrmEmployeeOfficialInfo> recordsToUpdate = new List<HrmEmployeeOfficialInfo>();
+
                 foreach (var row in model.SalaryInfoUpdate)
                 {
-                    var exRecord = await empOfficialInfoRepo.GetByIdAsync(row.AutoId);
+                    if (!recordLookup.TryGetValue(row.EmployeeId, out var exRecord))
+                        continue;
 
-                    if(exRecord == null) continue;
+                    var newGrossSalary = row.GrossSalary ?? 0.00m;
 
-                    exRecord.GrossSalary = row.GrossSalary ?? 0.00m;
-                    exRecord.DisbursementMethodId=row.DisbursementMethodId;
-                    exRecord.ModifyDate = row.ModifyDate;
-                    exRecord.Luser = row.Luser;
-                    exRecord.Lip = row.Lip;
-                    exRecord.Lmac = row.Lmac;
+                    if (exRecord.GrossSalary != newGrossSalary ||
+                        exRecord.DisbursementMethodId != row.DisbursementMethodId)
+                    {
+                        exRecord.GrossSalary = newGrossSalary;
+                        exRecord.DisbursementMethodId = row.DisbursementMethodId;
+                        exRecord.ModifyDate = row.ModifyDate;
+                        exRecord.Luser = row.Luser;
+                        exRecord.Lip = row.Lip;
+                        exRecord.Lmac = row.Lmac;
 
-                    await empOfficialInfoRepo.UpdateAsync(exRecord);
+                        recordsToUpdate.Add(exRecord);
+                    }
+                }
+
+                if (recordsToUpdate.Count > 0)
+                {
+                    await empOfficialInfoRepo.UpdateRangeAsync(recordsToUpdate);
                 }
 
                 await empOfficialInfoRepo.CommitTransactionAsync();
-
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 await empOfficialInfoRepo.RollbackTransactionAsync();
                 return false;
@@ -125,6 +143,9 @@ namespace GCTL.Service.HrmEmployeeSalaryInfoEntry
                 worksheet.Cells[2, 2].Value = "135";
                 worksheet.Cells[2, 3].Value = 10000;
                 worksheet.Cells[2, 4].Value = "BT";
+
+                worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
 
                 return await package.GetAsByteArrayAsync();
             }
@@ -205,10 +226,14 @@ namespace GCTL.Service.HrmEmployeeSalaryInfoEntry
                 query = query.Where(x => model.EmployeeNatureCodes.Contains(x.EmploymentNatureId)); // Fixed bug
 
             if (model.JoiningDateFrom != null)
+            {
                 query = query.Where(x => x.JoiningDate.Value.Date >= model.JoiningDateFrom.Value.Date);
-
+            }
+                
             if (model.JoiningDateTO != null)
+            {
                 query = query.Where(x => x.JoiningDate.Value.Date <= model.JoiningDateTO.Value.Date);
+            }
 
             if (model.EmployeeStatuses?.Any() == true)
                 query = query.Where(x => model.EmployeeStatuses.Contains(x.EmployeeStatus));
@@ -223,10 +248,10 @@ namespace GCTL.Service.HrmEmployeeSalaryInfoEntry
                 DesignationName = x.DesignationName,
                 DepartmentName = x.DepartmentName,
                 EmployeeTypeName = x.EmpTypename,
-                EmploymentNature = x.EmpNatureName,
+                EmploymentNature = x.EmpNatureName ??"",
                 JoiningDate = x.JoiningDate.HasValue ? x.JoiningDate.Value.ToString("dd/MM/yyyy") : "",
                 SeparationDate = x.SeparationDate.HasValue ? x.SeparationDate.Value.ToString("dd/MM/yyyy") : "",
-                EmployeeStatus = x.EmployeeStatus,
+                EmployeeStatus = x.EmployeeStatusName,
                 GrossSalary = x.GrossSalary,
                 DisbursementMethodId = x.DisbursementMethodId,
                 DisbursementMethodName = x.DisbursementName,
@@ -278,7 +303,7 @@ namespace GCTL.Service.HrmEmployeeSalaryInfoEntry
             result.LookupData["employmentNature"] = allFilteredData
                 .Where(x => x.EmploymentNatureId != null && !string.IsNullOrWhiteSpace(x.EmpNatureName))
                 .GroupBy(x=>new { x.EmploymentNatureId, x.EmpNatureName })
-                .Select(x => new LookupItemDto { Code = x.Key.EmploymentNatureId.ToString(), Name = x.Key.EmploymentNatureId })
+                .Select(x => new LookupItemDto { Code = x.Key.EmploymentNatureId.ToString(), Name = x.Key.EmpNatureName })
                 .Distinct()
                 .ToList();
 
@@ -298,92 +323,110 @@ namespace GCTL.Service.HrmEmployeeSalaryInfoEntry
 
         public async Task<bool> ProcessExcelFileAsync(Stream stream, EmployeeListItemViewModel model)
         {
-            using var package = new ExcelPackage(stream);
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-            var worksheet = package.Workbook.Worksheets[0];
-
-            int rowCount = worksheet.Dimension.Rows;
-            if (rowCount <= 1) return false;
-
-            //var validationErrors = new List<string>();
-            var record= new List<EmployeeListItemViewModel>();
-
-            var methodMap = await disbursementRepo.All().ToListAsync();
-            var methodLookup = methodMap.ToDictionary(t => t.DisbursementMethodId, t => t.DisbursementMethod, StringComparer.OrdinalIgnoreCase);
-
-            var allEmp = await empOfficialInfoRepo.All().ToListAsync();
-            var empLookup= new Dictionary<string,object>();
-
-            foreach(var emp in allEmp)
-            {
-                if (!string.IsNullOrWhiteSpace(emp.EmployeeId))
-                    empLookup[emp.EmployeeId] = emp;
-                if(!string.IsNullOrWhiteSpace(emp.PayId))
-                    empLookup[emp.PayId] = emp;
-            }
-
-            var empToUpdate = new List<object>();
-
-            for(int row = 2; row <= rowCount; row++)
-            {
-                var empId = worksheet.Cells[row, 1].Text?.Trim();
-                var payId = worksheet.Cells[row, 2].Text?.Trim();
-                var rawMethod = worksheet.Cells[row, 3].Text?.Trim();
-                var amount = worksheet.Cells[row, 4].Text?.Trim();
-
-                if (string.IsNullOrWhiteSpace(empId) && string.IsNullOrWhiteSpace(payId))
-                {
-                    continue;
-                }
-
-                if (string.IsNullOrWhiteSpace(rawMethod) && string.IsNullOrWhiteSpace(amount))
-                {
-                    continue;
-                }
-
-                if (!decimal.TryParse(amount, out var parsedAmount))
-                {
-                    continue;
-                }
-
-                object employee = null;
-                if (!string.IsNullOrEmpty(empId) && empLookup.TryGetValue(empId, out employee))
-                {
-                }
-                else if (!string.IsNullOrEmpty(payId) && empLookup.TryGetValue(payId, out employee))
-                {
-                }
-                else
-                {
-                    continue;
-                }
-
-                var empRecord = (HrmEmployeeOfficialInfo)employee;
-                empRecord.GrossSalary = parsedAmount;
-                empRecord.Luser = model.Luser;
-                empRecord.ModifyDate = model.ModifyDate;
-                empRecord.Lip=model.Lip;
-                empRecord.Lmac=model.Lmac;
-                if (methodLookup.TryGetValue(rawMethod, out var mappedMethod))
-                {
-                    empRecord.DisbursementMethodId = mappedMethod;
-                }
-
-                empToUpdate.Add(empRecord);
-            }
-
-            await empOfficialInfoRepo.BeginTransactionAsync();
             try
             {
-                foreach (HrmEmployeeOfficialInfo emp in empToUpdate)
+                using var package = new ExcelPackage(stream);
+
+                var worksheet = package.Workbook.Worksheets[0];
+
+                int rowCount = worksheet.Dimension.Rows;
+                if (rowCount <= 1) return false;
+
+                //var validationErrors = new List<string>();
+                var record = new List<EmployeeListItemViewModel>();
+
+                var methodMap = await disbursementRepo.All().ToListAsync();
+                var methodLookup = methodMap.ToDictionary(
+                                    t => t.DisbursementMethod.ToLower(),
+                                    t => t.DisbursementMethodId);
+
+                foreach (var method in methodMap)
                 {
-                    await empOfficialInfoRepo.UpdateAsync(emp);
+                    methodLookup[method.DisbursementMethodId.ToLower()] = method.DisbursementMethodId;
                 }
 
-                await empOfficialInfoRepo.CommitTransactionAsync();
-                return true;
+
+                var allEmp = await empOfficialInfoRepo.All().ToListAsync();
+                var empLookup = new Dictionary<string, object>();
+
+                foreach (var emp in allEmp)
+                {
+                    if (!string.IsNullOrWhiteSpace(emp.EmployeeId))
+                        empLookup[emp.EmployeeId] = emp;
+                    if (!string.IsNullOrWhiteSpace(emp.PayId))
+                        empLookup[emp.PayId] = emp;
+                }
+
+                var empToUpdate = new List<object>();
+
+                for (int row = 2; row <= rowCount; row++)
+                {
+                    var empId = worksheet.Cells[row, 1].Text?.Trim();
+                    var payId = worksheet.Cells[row, 2].Text?.Trim();
+                    var rawMethod = worksheet.Cells[row, 4].Text?.Trim();
+                    var amount = worksheet.Cells[row, 3].Text?.Trim();
+
+                    if (string.IsNullOrWhiteSpace(empId) && string.IsNullOrWhiteSpace(payId))
+                    {
+                        continue;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(rawMethod) && string.IsNullOrWhiteSpace(amount))
+                    {
+                        continue;
+                    }
+
+                    if (!decimal.TryParse(amount, out var parsedAmount))
+                    {
+                        continue;
+                    }
+
+                    object employee = null;
+                    if (!string.IsNullOrEmpty(empId) && empLookup.TryGetValue(empId, out employee))
+                    {
+                    }
+                    else if (!string.IsNullOrEmpty(payId) && empLookup.TryGetValue(payId, out employee))
+                    {
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+                    var empRecord = (HrmEmployeeOfficialInfo)employee;
+                    empRecord.GrossSalary = parsedAmount;
+                    empRecord.Luser = model.Luser;
+                    empRecord.ModifyDate = model.ModifyDate;
+                    empRecord.Lip = model.Lip;
+                    empRecord.Lmac = model.Lmac;
+                    var normalized = rawMethod?.ToLower();
+                    if (!string.IsNullOrWhiteSpace(normalized) && methodLookup.TryGetValue(normalized, out var mappedMethodId))
+                    {
+                        empRecord.DisbursementMethodId = mappedMethodId;
+                    }
+
+                    empToUpdate.Add(empRecord);
+                }
+
+                await empOfficialInfoRepo.BeginTransactionAsync();
+                try
+                {
+                    foreach (HrmEmployeeOfficialInfo emp in empToUpdate)
+                    {
+                        await empOfficialInfoRepo.UpdateAsync(emp);
+                    }
+
+                    await empOfficialInfoRepo.CommitTransactionAsync();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }

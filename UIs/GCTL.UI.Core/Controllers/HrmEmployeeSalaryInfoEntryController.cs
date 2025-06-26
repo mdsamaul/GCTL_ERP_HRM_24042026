@@ -42,7 +42,7 @@ namespace GCTL.UI.Core.Controllers
         {
             if (model == null) return NotFound();
 
-            model.SalaryInfoUpdate.ForEach(x => x.ToAudit(LoginInfo));
+            model.SalaryInfoUpdate.ForEach(x => x.ToAudit(LoginInfo, true));
 
             var result = await entryService.BulkEditAsync(model);
             return Json(new
@@ -54,7 +54,7 @@ namespace GCTL.UI.Core.Controllers
         public async Task<IActionResult> DownloadExcel()
         {
             var fileBytes = await entryService.GenerateExcelSampleAsync();
-            string excelName = "MonthlyOTAmount.xlsx";
+            string excelName = "SalaryInfoEntry.xlsx";
             return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
         }
 
