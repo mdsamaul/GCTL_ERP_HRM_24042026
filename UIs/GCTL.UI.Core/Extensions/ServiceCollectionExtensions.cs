@@ -111,6 +111,7 @@ using GCTL.Service.EmployeeWeekendDeclarationReport;
 using GCTL.Service.PFAssignEntryReport;
 using GCTL.Service.HRMPayrollLoan;
 using GCTL.Service.AdvanceLoanAdjustment;
+using GCTL.Service.AdvanceLoanAdjustmentReport;
 
 
 //using GCTL.Service.AccountReport;
@@ -179,6 +180,7 @@ namespace GCTL.UI.Core.Extensions
             //samaul
 
 services.AddScoped<IEmployeeWeekendDeclarationService, EmployeeWeekendDeclarationService>(); 
+services.AddScoped<IAdvanceLoanAdjustmentReportServices, AdvanceLoanAdjustmentReportServices>(); 
 services.AddScoped<IManualEarnLeaveEntryService, ManualEarnLeaveEntryService>();
 services.AddScoped<IPFAssignEntryService, PFAssignEntryService>(); 
 services.AddScoped<IRosterScheduleEntryService, RosterScheduleEntryService>(); 
@@ -189,6 +191,7 @@ services.AddScoped<IPFAssignEntryReportServices, PFAssignEntryReportServices>();
 services.AddScoped<IAdvanceLoanAdjustmentServices, AdvanceLoanAdjustmentServices>();
 services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
             services.AddScoped<IReportService, ReportService>();
+            
           
 
             services.AddScoped<ILogService, LogService>();
