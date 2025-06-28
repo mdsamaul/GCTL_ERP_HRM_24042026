@@ -28,12 +28,7 @@ namespace GCTL.Core.ViewModels.HRMPayrollLoan
         public DateTime? ChequeDate { get; set; }
         public string BankId { get; set; }
         public string BankAccount { get; set; }
-        public string Remarks { get; set; }
-        //public string Luser { get; set; }
-        //public DateTime? Ldate { get; set; }
-        //public string Lip { get; set; }
-        //public string Lmac { get; set; }
-        //public DateTime? ModifyDate { get; set; }
+        public string Remarks { get; set; }       
         public string CompanyCode { get; set; }
         public string ShowLoanDate { get; set; }
         public string EmpName { get; set; }

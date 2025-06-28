@@ -5447,3 +5447,10 @@ D:\test\GCTL_ERP_HRM_24042026\GCTL_ERP_HRM_24042026\UIs\GCTL.UI.Core\obj\Debug\n
 D:\test\GCTL_ERP_HRM_24042026\GCTL_ERP_HRM_24042026\UIs\GCTL.UI.Core\obj\Debug\net6.0\GCTL.UI.Core.pdb
 D:\test\GCTL_ERP_HRM_24042026\GCTL_ERP_HRM_24042026\UIs\GCTL.UI.Core\obj\Debug\net6.0\GCTL.UI.Core.genruntimeconfig.cache
 D:\test\GCTL_ERP_HRM_24042026\GCTL_ERP_HRM_24042026\UIs\GCTL.UI.Core\obj\Debug\net6.0\ref\GCTL.UI.Core.dll
+D:\test\GCTL_ERP_HRM_24042026\GCTL_ERP_HRM_24042026\UIs\GCTL.UI.Core\bin\Debug\net6.0\System.Web.Mvc.dll
+D:\test\GCTL_ERP_HRM_24042026\GCTL_ERP_HRM_24042026\UIs\GCTL.UI.Core\bin\Debug\net6.0\System.Web.Razor.dll
+D:\test\GCTL_ERP_HRM_24042026\GCTL_ERP_HRM_24042026\UIs\GCTL.UI.Core\bin\Debug\net6.0\System.Web.Helpers.dll
+D:\test\GCTL_ERP_HRM_24042026\GCTL_ERP_HRM_24042026\UIs\GCTL.UI.Core\bin\Debug\net6.0\System.Web.WebPages.Deployment.dll
+D:\test\GCTL_ERP_HRM_24042026\GCTL_ERP_HRM_24042026\UIs\GCTL.UI.Core\bin\Debug\net6.0\System.Web.WebPages.Razor.dll
+D:\test\GCTL_ERP_HRM_24042026\GCTL_ERP_HRM_24042026\UIs\GCTL.UI.Core\bin\Debug\net6.0\System.Web.WebPages.dll
+D:\test\GCTL_ERP_HRM_24042026\GCTL_ERP_HRM_24042026\UIs\GCTL.UI.Core\bin\Debug\net6.0\Microsoft.Web.Infrastructure.dll

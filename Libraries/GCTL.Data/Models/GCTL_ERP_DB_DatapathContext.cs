@@ -164,6 +164,7 @@ namespace GCTL.Data.Models
         public virtual DbSet<HrmLeaveApplicationEntry> HrmLeaveApplicationEntry { get; set; }
         public virtual DbSet<HrmNomineePhoto> HrmNomineePhoto { get; set; }
         public virtual DbSet<HrmNomineeSignature> HrmNomineeSignature { get; set; }
+        public virtual DbSet<HrmPayAdvancePay> HrmPayAdvancePay { get; set; }
         public virtual DbSet<HrmPayLoanTypeEntry> HrmPayLoanTypeEntry { get; set; }
         public virtual DbSet<HrmPayMonth> HrmPayMonth { get; set; }
         public virtual DbSet<HrmPayPayHeadName> HrmPayPayHeadName { get; set; }
@@ -7849,6 +7850,83 @@ namespace GCTL.Data.Models
                     .HasColumnType("image");
             });
 
+            modelBuilder.Entity<HrmPayAdvancePay>(entity =>
+            {
+                entity.HasKey(e => e.AdvancePayCode)
+                    .HasName("PK__HRM_PAY___9ACB83C80108D57B");
+
+                entity.ToTable("HRM_PAY_AdvancePay");
+
+                entity.Property(e => e.AdvancePayCode)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.AdjustmentType).HasMaxLength(50);
+
+                entity.Property(e => e.AdvanceAdjustStatus)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.AdvanceAmount).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.AdvancePayId)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.CompanyCode)
+                    .IsRequired()
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.EmployeeId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.LoanId)
+                    .HasMaxLength(50)
+                    .HasColumnName("LoanID");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.MonthlyDeduction).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.NoOfPaymentInstallment)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.PayHeadNameId)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Remarks)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.SalaryMonth)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.SalaryYear)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
             modelBuilder.Entity<HrmPayLoanTypeEntry>(entity =>
             {
                 entity.HasKey(e => e.AutoId)
@@ -10494,6 +10572,7 @@ namespace GCTL.Data.Models
                 entity.Property(e => e.Weight).HasColumnType("decimal(18, 2)");
             });
 
+            OnModelCreatingGeneratedProcedures(modelBuilder);
             OnModelCreatingPartial(modelBuilder);
         }
 

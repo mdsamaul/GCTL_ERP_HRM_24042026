@@ -9621,6 +9621,10 @@
       "PackagePath": "staticwebassets\\js\\owl.carousel.min.js"
     },
     {
+      "Id": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\AdvanceLoanAdjustment.js",
+      "PackagePath": "staticwebassets\\js\\pages\\AdvanceLoanAdjustment.js"
+    },
+    {
       "Id": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\EmployeeWeekendDeclarationReport.js",
       "PackagePath": "staticwebassets\\js\\pages\\EmployeeWeekendDeclarationReport.js"
     },

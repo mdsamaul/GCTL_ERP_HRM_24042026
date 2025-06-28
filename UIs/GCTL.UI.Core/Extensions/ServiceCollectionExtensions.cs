@@ -110,6 +110,7 @@ using GCTL.Service.RosterScheduleReport;
 using GCTL.Service.EmployeeWeekendDeclarationReport;
 using GCTL.Service.PFAssignEntryReport;
 using GCTL.Service.HRMPayrollLoan;
+using GCTL.Service.AdvanceLoanAdjustment;
 
 
 //using GCTL.Service.AccountReport;
@@ -119,14 +120,7 @@ using GCTL.Service.HRMPayrollLoan;
 namespace GCTL.UI.Core.Extensions
 {
     public static class ServiceCollectionExtensions
-    {
-        //public static void ConfigureContext(this IServiceCollection services, IConfiguration configuration)
-        //{
-        //    services.AddDbContext<ApplicationDbContext>(x => 
-        //    x.UseSqlServer(configuration.GetConnectionString("ApplicationDbConnection"),
-        //    x => x.UseDateOnlyTimeOnly()));
-        //}
-
+    {      
         public static void ConfigureContext(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<GCTL_ERP_DB_DatapathContext>(x =>
@@ -152,6 +146,7 @@ namespace GCTL.UI.Core.Extensions
             services.AddScoped<IUnitTypeService, UnitTypeService>();
             services.AddScoped<ICurrencyService, CurrencyService>();
             services.AddScoped<IPaymentModeService, PaymentModeService>();
+            
            
 
 
@@ -181,6 +176,7 @@ namespace GCTL.UI.Core.Extensions
             //services.AddScoped<IAccountReportService, AccountReportService>();
 
           
+            //samaul
 
 services.AddScoped<IEmployeeWeekendDeclarationService, EmployeeWeekendDeclarationService>(); 
 services.AddScoped<IManualEarnLeaveEntryService, ManualEarnLeaveEntryService>();
@@ -190,6 +186,7 @@ services.AddScoped<IRosterScheduleApprovalService, RosterScheduleApprovalService
 services.AddScoped<IRosterScheduleReportServices, RosterScheduleReportServices>();
 services.AddScoped<IEmployeeWeekendDeclarationReportServices, EmployeeWeekendDeclarationReportServices>();
 services.AddScoped<IPFAssignEntryReportServices, PFAssignEntryReportServices>();
+services.AddScoped<IAdvanceLoanAdjustmentServices, AdvanceLoanAdjustmentServices>();
 services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
             services.AddScoped<IReportService, ReportService>();
           

@@ -803,13 +803,14 @@
             }
         });
         $(document).on('change', settings.EndDate, function () {
+           
             var startDateStr = $(settings.InstStartDate).val(); 
             var endDateStr = $(settings.EndDate).val();         
           
             if (!startDateStr || !endDateStr) {
                 return;
             }
-
+        
             var startParts = startDateStr.split('/');
             var endParts = endDateStr.split('/');
 
@@ -825,7 +826,7 @@
             var yearDiff = endDate.getFullYear() - startDate.getFullYear();
             var monthDiff = endDate.getMonth() - startDate.getMonth();
 
-            var totalMonths = yearDiff * 12 + monthDiff;   
+            var totalMonths = yearDiff * 12 + monthDiff + 1;
             if (totalMonths < 0) {
                 return;
             }
@@ -865,8 +866,7 @@
             var yearDiff = endDate.getFullYear() - startDate.getFullYear();
             var monthDiff = endDate.getMonth() - startDate.getMonth();
 
-            var totalMonths = yearDiff * 12 + monthDiff;
-
+            var totalMonths = yearDiff * 12 + monthDiff+1;
 
 
             if (totalMonths < 0) {

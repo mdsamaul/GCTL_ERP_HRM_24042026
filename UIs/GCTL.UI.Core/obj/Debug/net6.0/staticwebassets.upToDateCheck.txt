@@ -2055,6 +2055,7 @@ wwwroot\js\notify.min.js
 wwwroot\js\owl.carousel.min.js
 wwwroot\js\pages\accessCodes.js
 wwwroot\js\pages\admissionTypes.js
+wwwroot\js\pages\AdvanceLoanAdjustment.js
 wwwroot\js\pages\bankAccountInfo.js
 wwwroot\js\pages\bankAccounts.js
 wwwroot\js\pages\banks.js
