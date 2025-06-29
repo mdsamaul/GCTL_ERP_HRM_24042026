@@ -122,17 +122,63 @@
             e.stopPropagation();
         });
     }
+    //function populateOptions(field, container, searchTerm) {
+    //    const data = fieldData[field] || [];
+
+    //    const cleanData = data.filter(item => item && typeof item.id === 'string' && typeof item.name === 'string');
+    //    if (field === 'companyCodes' && selectedValues[field].length === 0 && cleanData.length > 0) {
+    //        selectedValues[field].push(cleanData[0].id);
+    //    }
+    //    const filtered = cleanData.filter(item =>
+    //        item.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    //        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    //    );
+    //    container.innerHTML = '';
+
+    //    if (filtered.length === 0) {
+    //        container.innerHTML = '<div class="multiselect-option disabled">No data available</div>';
+    //        return;
+    //    }
+
+    //    filtered.forEach(item => {
+    //        const option = document.createElement('div');
+    //        option.className = 'multiselect-option';
+
+    //        const checkbox = document.createElement('input');
+    //        checkbox.type = 'checkbox';
+    //        checkbox.value = item.id;
+    //        checkbox.checked = selectedValues[field].includes(item.id);
+
+    //        const label = document.createElement('span');
+    //        label.textContent = item.name;
+
+    //        option.appendChild(checkbox);
+    //        option.appendChild(label);
+
+    //        option.addEventListener('click', (e) => {
+    //            e.stopPropagation();
+    //            checkbox.checked = !checkbox.checked;
+    //            toggleSelection(field, item.id, checkbox.checked);
+    //        });
+
+    //        checkbox.addEventListener('change', (e) => {
+    //            e.stopPropagation();
+    //            toggleSelection(field, item.id, e.target.checked); 
+    //        });
+
+    //        container.appendChild(option);
+    //    });
+    //}
     function populateOptions(field, container, searchTerm) {
         const data = fieldData[field] || [];
+        const isMultiSelect = container.closest('.multiselect-container').dataset.multiselect !== "false";
 
         const cleanData = data.filter(item => item && typeof item.id === 'string' && typeof item.name === 'string');
-        if (field === 'companyCodes' && selectedValues[field].length === 0 && cleanData.length > 0) {
-            selectedValues[field].push(cleanData[0].id);
-        }
         const filtered = cleanData.filter(item =>
             item.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
+
         container.innerHTML = '';
 
         if (filtered.length === 0) {
@@ -140,46 +186,93 @@
             return;
         }
 
+        // ✅ Auto-select for companyCodes if empty
+        if (field === 'companyCodes' && selectedValues[field].length === 0 && cleanData.length > 0) {
+            selectedValues[field] = [cleanData[0].id];
+            updateDisplay(field);
+            fetchFilterOptionsBasedOn(field); // optional, if cascading
+        }
+
         filtered.forEach(item => {
             const option = document.createElement('div');
             option.className = 'multiselect-option';
 
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.value = item.id;
-            checkbox.checked = selectedValues[field].includes(item.id);
+            if (isMultiSelect) {
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = item.id;
+                checkbox.checked = selectedValues[field].includes(item.id);
 
-            const label = document.createElement('span');
-            label.textContent = item.name;
+                const label = document.createElement('span');
+                label.textContent = item.name;
 
-            option.appendChild(checkbox);
-            option.appendChild(label);
+                option.appendChild(checkbox);
+                option.appendChild(label);
 
-            option.addEventListener('click', (e) => {
-                e.stopPropagation();
-                checkbox.checked = !checkbox.checked;
-                toggleSelection(field, item.id, checkbox.checked);
-            });
+                option.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    checkbox.checked = !checkbox.checked;
+                    toggleSelection(field, item.id, checkbox.checked);
+                });
 
-            checkbox.addEventListener('change', (e) => {
-                e.stopPropagation();
-                toggleSelection(field, item.id, e.target.checked); 
-            });
+                checkbox.addEventListener('change', (e) => {
+                    e.stopPropagation();
+                    toggleSelection(field, item.id, e.target.checked);
+                });
+
+            } else {
+                option.textContent = item.name;
+
+                option.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    selectedValues[field] = [item.id];
+                    updateDisplay(field);
+
+                    const dropdown = container.closest('.multiselect-dropdown');
+                    dropdown.style.display = 'none';
+
+                    const arrow = container.closest('.multiselect-container').querySelector('.multiselect-arrow');
+                    if (arrow) arrow.classList.remove('open');
+
+                    fetchFilterOptionsBasedOn(field);
+                });
+            }
 
             container.appendChild(option);
         });
     }
 
+
+
+    //function toggleSelection(field, value, isSelected) {
+    //    if (isSelected) {
+    //        if (!selectedValues[field].includes(value)) selectedValues[field].push(value);
+    //    } else {
+    //        selectedValues[field] = selectedValues[field].filter(v => v !== value);
+    //    }
+
+    //    updateDisplay(field);
+
+    //    if (["companyCodes", "branchCodes", "departmentCodes", "designationCodes", "employeeIDs", "payHeadIDs","monthIDs"].includes(field)) {
+    //        fetchFilterOptionsBasedOn(field);
+    //    }
+    //}
     function toggleSelection(field, value, isSelected) {
-        if (isSelected) {
-            if (!selectedValues[field].includes(value)) selectedValues[field].push(value);
+        const isMultiSelect = document.querySelector(`[data-field="${field}"]`).dataset.multiselect !== "false";
+
+        if (isMultiSelect) {
+            if (isSelected && !selectedValues[field].includes(value)) {
+                selectedValues[field].push(value);
+            } else if (!isSelected) {
+                selectedValues[field] = selectedValues[field].filter(v => v !== value);
+            }
         } else {
-            selectedValues[field] = selectedValues[field].filter(v => v !== value);
+            selectedValues[field] = isSelected ? [value] : [];
         }
 
         updateDisplay(field);
 
-        if (["companyCodes", "branchCodes", "departmentCodes", "designationCodes", "employeeIDs", "payHeadIDs","monthIDs"].includes(field)) {
+        if (["companyCodes", "branchCodes", "departmentCodes", "designationCodes", "employeeIDs", "payHeadIDs", "monthIDs"].includes(field)) {
             fetchFilterOptionsBasedOn(field);
         }
     }
@@ -378,38 +471,80 @@
         });
     }
 
+    //function updateDisplay(field) {
+    //    const container = document.querySelector(`[data-field="${field}"]`);
+    //    const selectedItemsContainer = container.querySelector('.selected-items');
+    //    const placeholderText = container.querySelector('.placeholder-text');
+
+    //    selectedItemsContainer.innerHTML = '';
+
+    //    if (selectedValues[field].length > 0) {
+    //        placeholderText.style.display = 'none';
+
+    //        if (selectedValues[field].length <= 1) {
+    //            selectedValues[field].forEach(id => {
+    //                const item = fieldData[field].find(item => item.id === id);
+    //                if (item) {
+    //                    const selectedItem = document.createElement('div');
+    //                    selectedItem.className = 'selected-item';
+    //                    selectedItem.innerHTML = `
+    //                    <span>${item.name}</span>
+    //                `;
+    //                    selectedItemsContainer.appendChild(selectedItem);
+    //                }
+    //            });
+    //        } else {
+    //            const countDisplay = document.createElement('div');
+    //            countDisplay.className = 'count-display';
+    //            countDisplay.textContent = `${selectedValues[field].length} items selected`;
+    //            selectedItemsContainer.appendChild(countDisplay);
+    //        }
+    //    } else {
+    //        placeholderText.style.display = 'block';
+    //    }
+    //}
     function updateDisplay(field) {
         const container = document.querySelector(`[data-field="${field}"]`);
         const selectedItemsContainer = container.querySelector('.selected-items');
         const placeholderText = container.querySelector('.placeholder-text');
+        const isMultiSelect = container.dataset.multiselect !== "false";
 
         selectedItemsContainer.innerHTML = '';
 
         if (selectedValues[field].length > 0) {
             placeholderText.style.display = 'none';
 
-            if (selectedValues[field].length <= 1) {
-                selectedValues[field].forEach(id => {
-                    const item = fieldData[field].find(item => item.id === id);
+            if (isMultiSelect) {
+                if (selectedValues[field].length === 1) {
+                    const item = fieldData[field].find(item => item.id === selectedValues[field][0]);
                     if (item) {
                         const selectedItem = document.createElement('div');
                         selectedItem.className = 'selected-item';
-                        selectedItem.innerHTML = `
-                        <span>${item.name}</span>                        
-                    `;
+                        selectedItem.innerHTML = `<span>${item.name}</span>`;
                         selectedItemsContainer.appendChild(selectedItem);
                     }
-                });
+                } else {
+                    const countDisplay = document.createElement('div');
+                    countDisplay.className = 'count-display';
+                    countDisplay.textContent = `${selectedValues[field].length} items selected`;
+                    selectedItemsContainer.appendChild(countDisplay);
+                }
             } else {
-                const countDisplay = document.createElement('div');
-                countDisplay.className = 'count-display';
-                countDisplay.textContent = `${selectedValues[field].length} items selected`;
-                selectedItemsContainer.appendChild(countDisplay);
+                // Single select mode – show only one selected item name
+                const item = fieldData[field].find(item => item.id === selectedValues[field][0]);
+                if (item) {
+                    const selectedItem = document.createElement('div');
+                    selectedItem.className = 'selected-item';
+                    selectedItem.innerHTML = `<span>${item.name}</span>`;
+                    selectedItemsContainer.appendChild(selectedItem);
+                }
             }
+
         } else {
             placeholderText.style.display = 'block';
         }
     }
+
     function closeAllDropdowns() {
         document.querySelectorAll('.multiselect-dropdown').forEach(dropdown => {
             dropdown.style.display = 'none';
@@ -692,7 +827,7 @@
 
         }
 
-        let currentY = 35; 
+        let currentY = 30; 
         let currentDepartmentName = ""; 
         let isTableActive = false;
 
@@ -741,18 +876,29 @@
                 doc.text(currentDepartmentName, 14, 28);
             }
         }
-        function drawFooter() {
+        function drawFooter() {           
             const pageCount = doc.internal.getNumberOfPages();
-            const pageCurrent = doc.internal.getCurrentPageInfo().pageNumber;
 
-            doc.setFontSize(9);
-            doc.setFont(undefined, 'normal'); 
-            doc.text(`Page ${pageCurrent} of ${pageCount}`, 5, pageHeight - 2);
-            doc.text(createdBy, pageWidth - 5, pageHeight - 2, { align: 'right' });
+            for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                const pageWidth = doc.internal.pageSize.getWidth();
+                const pageHeight = doc.internal.pageSize.getHeight();
+
+                doc.setFontSize(9);
+                doc.setFont(undefined, 'normal');
+                doc.text(`Page ${i} of ${pageCount}`, 5, pageHeight - 2);
+                doc.text(createdBy, pageWidth - 5, pageHeight - 2, { align: 'right' });
+            }
+
         }
         drawHeader(false);
-
+        let totalAdvanceAmount = 0;
+        let totalMonthlyDeduction = 0;
         for (let group of groupedResponse) {
+            group.employees.map(emp => {
+                totalAdvanceAmount += emp.advanceAmount;
+                totalMonthlyDeduction += emp.monthlyDeduction;
+            });
             currentDepartmentName = `Department: ${group.departmentName}`;
             isTableActive = true; 
 
@@ -778,20 +924,20 @@
                     emp.fullName,
                     emp.designationName,
                     emp.branchName,
-                    emp.advanceAmount,
+                    emp.advanceAmount.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits:0 }),
                     emp.monthName,
-                    emp.monthlyDeduction,
+                    emp.monthlyDeduction.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits:0 }),
                     emp.remarks
-                ]),
+                ],),
                 margin: { left: 5, right: 5, top: 20, bottom: 15 },
                 columnStyles: {
                     0: { cellWidth: 25 },
                     1: { cellWidth: 32, halign: 'left' },
                     2: { cellWidth: 25 },
                     3: { cellWidth: 25 },
-                    4: { cellWidth: 20 },
+                    4: { cellWidth: 20, halign:'right' },
                     5: { cellWidth: 22 },
-                    6: { cellWidth: 22 },
+                    6: { cellWidth: 22, halign:'right' },
                     7: { cellWidth: 29, halign: 'left' }
                 },
                 styles: {
@@ -821,7 +967,7 @@
                     } else if (data.pageNumber === 1) {
                         drawHeader(false);
                     }
-                    drawFooter();
+                   
                 }
             });
 
@@ -834,6 +980,23 @@
                 drawHeader(false); 
             }
         }
+        currentY = doc.lastAutoTable.finalY + 5;
+
+        if (currentY > pageHeight - 20) {
+            doc.addPage();
+            currentY = 30;
+            drawHeader(false);
+        }
+
+        doc.setFontSize(11);
+        doc.setFont(undefined, 'bold');
+        //doc.text(`Grant Total:    ${totalAdvanceAmount.toFixed(0)}`, 89, currentY);
+        doc.text(`Grant Total:    ${totalAdvanceAmount.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`, 90, currentY);
+
+        //currentY += 6;
+        doc.text(`${totalMonthlyDeduction.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits:0 })}`, 162, currentY);
+
+       
 
         drawFooter();
         if (isPdf) {
