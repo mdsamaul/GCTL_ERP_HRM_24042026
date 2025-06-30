@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "Employee Loan Report";
+}
+
+<h2>Employee Loan Information Report</h2>
+<style>
+    #loanInfo {
+        background: white;
+        padding: 20px;
+        margin-top: 20px;
+        border-radius: 6px;
+        box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+    }
+
+    .loan-block {
+        border: 1px solid #dee2e6;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+    }
+
+        .loan-block h5 {
+            margin-bottom: 15px;
+        }
+
+    table th, table td {
+        vertical-align: middle !important;
+    }
+</style>
+<div>
+    <input type="text" id="employeeId" placeholder="Enter Employee ID" />
+    <button id="btnSearch">Search</button>
+</div>
+
+
+<select id="employeeIdOption" class="form-control">
+    <option value="">-- Select Employee --</option>
+</select>
+
+<br />
+<button id="btnDownloadPDF" class="btn btn-success mb-3" style="display:block;">Download PDF</button>
+<div id="loanInfo"></div>
+<br />
+<br />
+
+<div id="loanInfo" style="display:none; border: 2px solid black; padding: 15px; width: 900px;">
+    <h3 style="text-align:center;">Data Path Ltd.</h3>
+    <h4 style="border: 1px solid black; padding: 5px; text-align:center;">Employee Loan Information</h4>
+
+    <table>
+        <tr><td><strong>Employee ID:</strong></td><td id="employeeIDs"></td></tr>
+        <tr><td><strong>Employee Name:</strong></td><td id="empName"></td></tr>
+        <tr><td><strong>Department:</strong></td><td id="department"></td></tr>
+        <tr><td><strong>Designation:</strong></td><td id="designation"></td></tr>
+        <tr><td><strong>Reason of Loan taken:</strong></td><td id="reason"></td></tr>
+        <tr><td><strong>Loan Number:</strong></td><td id="loanId"></td></tr>
+        <tr><td><strong>Loan Amount:</strong></td><td id="loanAmount"></td></tr>
+        <tr><td><strong>Loan Disbursed Date:</strong></td><td id="startDate"></td></tr>
+        <tr><td><strong>Loan Repayment Method:</strong></td><td>Monthly Installments</td></tr>
+        <tr><td><strong>Installment Details:</strong></td><td id="installmentDetails"></td></tr>
+        <tr><td><strong>Loan Payout Date:</strong></td><td id="endDate"></td></tr>
+    </table>
+
+    <div><strong>Remarks (If Any):</strong></div>
+    <div id="remarks" style="border:1px solid black; padding:10px; margin-top:5px; margin-bottom:10px;"></div>
+
+    <h4 style="border: 1px solid black; padding: 5px; text-align:center;">Loan Installment Details</h4>
+
+    <table id="installmentTable" border="1" width="100%" style="border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>Installment No</th>
+                <th>Transaction Date</th>
+                <th>Installment Details</th>
+                <th>Deposit Amount</th>
+                <th>Outstanding Balance</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <div style="margin-top: 10px;"><strong>Total Deposit: </strong><span id="totalDeposit">0</span></div>
+</div>
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Multiselect CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/css/bootstrap-multiselect.min.css">
+    <!-- Bootstrap Multiselect JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/js/bootstrap-multiselect.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+    <!-- DataTable JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+
+
+    @* pdf *@
+    <!-- jsPDF & html2canvas CDN -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+    @* //excel *@
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <!-- PDF.js viewer core -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- Load the plugin -->
+    <script src="~/js/pages/EmployeeLoanInformationReport.js"></script>
+
+    <!-- Initialize the plugin -->
+    <script type="text/javascript">
+        $(function () {
+            $.patientTypes({
+                baseUrl: '@Url.Action("Index", "EmployeeLoanInformationReport")',
+                load: function () {
+                    console.log("Custom load logic called from Razor view");
+                }
+            });
+        });
+            if (typeof pdfjsLib !== 'undefined') {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+        }
+    </script>
+}

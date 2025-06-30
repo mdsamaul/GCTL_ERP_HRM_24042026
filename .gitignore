@@ -15,3 +15,11 @@ obj/
 
 # Ignore logs
 *.log
+**/bin/
+**/obj/
+*.dll
+*.exe
+*.pdb
+*.cache
+*.log
+*.user
