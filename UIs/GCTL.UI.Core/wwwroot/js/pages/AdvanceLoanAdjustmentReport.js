@@ -1021,9 +1021,9 @@
                 ]),
                 margin: { left: 10, right: 10, top: headerHeight },
                 columnStyles: {
-                    0: { cellWidth: 'auto' },
-                    1: { cellWidth: 'auto', halign: 'left' }, 
-                    2: { cellWidth: 26 }, 
+                    0: { cellWidth: 10 },
+                    1: { cellWidth: 25 }, 
+                    2: { cellWidth: 30, halign: 'left' }, 
                     3: { cellWidth: 24 },
                     4: { cellWidth: 22 }, 
                     5: { cellWidth: 24, halign: 'right' },
@@ -1078,8 +1078,8 @@
 
             doc.setFontSize(10);
             doc.setFont(undefined, 'bold');
-            doc.text(`Total: `, 114, currentY);
-            doc.text(totalAdvanceAmountDepartment.toLocaleString(undefined, { minimumFractionDigits: 0 }), 133, currentY);
+            doc.text(`Total: `, 112, currentY);
+            doc.text(totalAdvanceAmountDepartment.toLocaleString(undefined, { minimumFractionDigits: 0 }), 132, currentY);
             doc.text(totalMonthlyDeductionDepartment.toLocaleString(undefined, { minimumFractionDigits: 0 }), 159, currentY);
 
             currentY += 8; // Add more space between departments
@@ -1096,9 +1096,9 @@
 
         doc.setFontSize(11);
         doc.setFont(undefined, 'bold');
-        doc.text(`Grant Total:`, 101.5, currentY);
-        doc.text(totalAdvanceAmountGrant.toLocaleString(undefined, { minimumFractionDigits: 0 }), 132, currentY);
-        doc.text(totalMonthlyDeductionGrant.toLocaleString(undefined, { minimumFractionDigits: 0 }), 158, currentY);
+        doc.text(`Grant Total:`, 100, currentY);
+        doc.text(totalAdvanceAmountGrant.toLocaleString(undefined, { minimumFractionDigits: 0 }), 128, currentY);
+        doc.text(totalMonthlyDeductionGrant.toLocaleString(undefined, { minimumFractionDigits: 0 }), 157, currentY);
 
         drawFooter();
 
