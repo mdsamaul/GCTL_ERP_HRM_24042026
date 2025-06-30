@@ -122,53 +122,7 @@
             e.stopPropagation();
         });
     }
-    //function populateOptions(field, container, searchTerm) {
-    //    const data = fieldData[field] || [];
-
-    //    const cleanData = data.filter(item => item && typeof item.id === 'string' && typeof item.name === 'string');
-    //    if (field === 'companyCodes' && selectedValues[field].length === 0 && cleanData.length > 0) {
-    //        selectedValues[field].push(cleanData[0].id);
-    //    }
-    //    const filtered = cleanData.filter(item =>
-    //        item.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    //        item.name.toLowerCase().includes(searchTerm.toLowerCase())
-    //    );
-    //    container.innerHTML = '';
-
-    //    if (filtered.length === 0) {
-    //        container.innerHTML = '<div class="multiselect-option disabled">No data available</div>';
-    //        return;
-    //    }
-
-    //    filtered.forEach(item => {
-    //        const option = document.createElement('div');
-    //        option.className = 'multiselect-option';
-
-    //        const checkbox = document.createElement('input');
-    //        checkbox.type = 'checkbox';
-    //        checkbox.value = item.id;
-    //        checkbox.checked = selectedValues[field].includes(item.id);
-
-    //        const label = document.createElement('span');
-    //        label.textContent = item.name;
-
-    //        option.appendChild(checkbox);
-    //        option.appendChild(label);
-
-    //        option.addEventListener('click', (e) => {
-    //            e.stopPropagation();
-    //            checkbox.checked = !checkbox.checked;
-    //            toggleSelection(field, item.id, checkbox.checked);
-    //        });
-
-    //        checkbox.addEventListener('change', (e) => {
-    //            e.stopPropagation();
-    //            toggleSelection(field, item.id, e.target.checked); 
-    //        });
-
-    //        container.appendChild(option);
-    //    });
-    //}
+  
     function populateOptions(field, container, searchTerm) {
         const data = fieldData[field] || [];
         const isMultiSelect = container.closest('.multiselect-container').dataset.multiselect !== "false";
@@ -242,21 +196,6 @@
         });
     }
 
-
-
-    //function toggleSelection(field, value, isSelected) {
-    //    if (isSelected) {
-    //        if (!selectedValues[field].includes(value)) selectedValues[field].push(value);
-    //    } else {
-    //        selectedValues[field] = selectedValues[field].filter(v => v !== value);
-    //    }
-
-    //    updateDisplay(field);
-
-    //    if (["companyCodes", "branchCodes", "departmentCodes", "designationCodes", "employeeIDs", "payHeadIDs","monthIDs"].includes(field)) {
-    //        fetchFilterOptionsBasedOn(field);
-    //    }
-    //}
     function toggleSelection(field, value, isSelected) {
         const isMultiSelect = document.querySelector(`[data-field="${field}"]`).dataset.multiselect !== "false";
 
@@ -471,38 +410,7 @@
         });
     }
 
-    //function updateDisplay(field) {
-    //    const container = document.querySelector(`[data-field="${field}"]`);
-    //    const selectedItemsContainer = container.querySelector('.selected-items');
-    //    const placeholderText = container.querySelector('.placeholder-text');
-
-    //    selectedItemsContainer.innerHTML = '';
-
-    //    if (selectedValues[field].length > 0) {
-    //        placeholderText.style.display = 'none';
-
-    //        if (selectedValues[field].length <= 1) {
-    //            selectedValues[field].forEach(id => {
-    //                const item = fieldData[field].find(item => item.id === id);
-    //                if (item) {
-    //                    const selectedItem = document.createElement('div');
-    //                    selectedItem.className = 'selected-item';
-    //                    selectedItem.innerHTML = `
-    //                    <span>${item.name}</span>
-    //                `;
-    //                    selectedItemsContainer.appendChild(selectedItem);
-    //                }
-    //            });
-    //        } else {
-    //            const countDisplay = document.createElement('div');
-    //            countDisplay.className = 'count-display';
-    //            countDisplay.textContent = `${selectedValues[field].length} items selected`;
-    //            selectedItemsContainer.appendChild(countDisplay);
-    //        }
-    //    } else {
-    //        placeholderText.style.display = 'block';
-    //    }
-    //}
+    
     function updateDisplay(field) {
         const container = document.querySelector(`[data-field="${field}"]`);
         const selectedItemsContainer = container.querySelector('.selected-items');
@@ -723,15 +631,7 @@
         $('#errorMessage').show();
     }
 
-    //async function loadImageBase64(url) {
-    //    const response = await fetch(url);
-    //    const blob = await response.blob();
-    //    return new Promise((resolve) => {
-    //        const reader = new FileReader();
-    //        reader.onloadend = () => resolve(reader.result);
-    //        reader.readAsDataURL(blob);
-    //    });
-    //}
+    
 
     async function loadImageBase64(url) {
         try {
@@ -808,6 +708,203 @@
     };
 
 
+    //async function generatePDF(groupedResponse) {
+    //    const { jsPDF } = window.jspdf;
+    //    const doc = new jsPDF('p', 'mm', 'a4');
+    //    const pageWidth = doc.internal.pageSize.getWidth();
+    //    const pageHeight = doc.internal.pageSize.getHeight();
+
+    //    const companyName = `${groupedResponse[0].employees[0].companyName}`;
+    //    const reportName = "Advance Adjustment Report";
+    //    const reportDetails = `For the month of ${groupedResponse[0].employees[0].monthName} - ${groupedResponse[0].employees[0].salaryYear}`;
+    //    const createdBy = `Print Datetime: ${formatDateTime(now)} || ${groupedResponse[0].luser}`;
+    //    const logoUrl = '/images/DP_logo.png';
+
+    //    let logo = null;
+    //    try {
+    //        logo = await loadImageBase64(logoUrl);
+    //    } catch (e) { }
+
+    //    let currentY = 30;
+    //    let currentDepartmentName = "";
+    //    let isTableActive = false;
+
+    //    function drawHeader(showDepartment = false) {
+    //        doc.setFontSize(14);
+    //        doc.setFont(undefined, 'bold');
+
+    //        if (logo) {
+    //            doc.addImage(logo, 'PNG', 5, 2, 40, 17);
+    //        }
+
+    //        doc.text(companyName, pageWidth / 2, 10, { align: 'center' });
+    //        doc.setFontSize(10);
+    //        doc.setFont(undefined, 'normal');
+    //        doc.text(reportName, pageWidth / 2, 15, { align: 'center' });
+
+    //        const textWidth = doc.getTextWidth(reportName);
+    //        const centerX = pageWidth / 2;
+    //        const lineY = 16;
+    //        const lineStartX = centerX - textWidth / 2;
+    //        const lineEndX = centerX + textWidth / 2;
+    //        doc.setLineWidth(.05);
+    //        doc.line(lineStartX, lineY, lineEndX, lineY);
+
+    //        doc.setFontSize(8);
+    //        doc.setFont(undefined, 'normal');
+    //        doc.text(reportDetails, pageWidth / 2, 19, { align: 'center' });
+
+    //        if (showDepartment && currentDepartmentName) {
+    //            doc.setFontSize(12);
+    //            doc.setFont(undefined, 'bold');
+    //            doc.text(currentDepartmentName, 10, 28);
+    //        }
+    //    }
+
+    //    function drawFooter() {
+    //        const pageCount = doc.internal.getNumberOfPages();
+    //        for (let i = 1; i <= pageCount; i++) {
+    //            doc.setPage(i);
+    //            doc.setFontSize(9);
+    //            doc.setFont(undefined, 'normal');
+    //            doc.text(`Page ${i} of ${pageCount}`, 5, pageHeight - 2);
+    //            doc.text(createdBy, pageWidth - 5, pageHeight - 2, { align: 'right' });
+    //        }
+    //    }
+
+    //    drawHeader(false);
+
+    //    let totalAdvanceAmountGrant = 0;
+    //    let totalMonthlyDeductionGrant = 0;
+
+    //    for (let group of groupedResponse) {
+    //        currentDepartmentName = `Department: ${group.departmentName}`;
+    //        isTableActive = true;
+
+    //        let totalAdvanceAmountDepartment = 0;
+    //        let totalMonthlyDeductionDepartment = 0;
+
+    //        group.employees.forEach(emp => {
+    //            totalAdvanceAmountGrant += emp.advanceAmount;
+    //            totalMonthlyDeductionGrant += emp.monthlyDeduction;
+
+    //            totalAdvanceAmountDepartment += emp.advanceAmount;
+    //            totalMonthlyDeductionDepartment += emp.monthlyDeduction;
+    //        });
+
+    //        if (currentY > pageHeight - 60) {
+    //            doc.addPage();
+    //            currentY = 30;
+    //            drawHeader(true);
+    //        }
+
+    //        doc.setFontSize(12);
+    //        doc.setFont(undefined, 'bold');
+    //        doc.text(currentDepartmentName, 10, currentY);
+    //        currentY += 4;
+
+    //        doc.autoTable({
+    //            startY: currentY,
+    //            head: [[
+    //                'Employee ID', 'Name', 'Designation', 'Branch',
+    //                'Advance Amount', 'Monthly Deduction', 'Remarks'
+    //            ]],
+    //            body: group.employees.map(emp => [
+    //                emp.employeeID,
+    //                emp.fullName,
+    //                emp.designationName,
+    //                emp.branchName,
+    //                emp.advanceAmount.toLocaleString(undefined, { minimumFractionDigits: 0 }),
+    //                emp.monthlyDeduction.toLocaleString(undefined, { minimumFractionDigits: 0 }),
+    //                emp.remarks
+    //            ]),
+    //            margin: { left: 10, right: 10 },
+    //            columnStyles: {
+    //                0: { cellWidth: 25 },
+    //                1: { cellWidth: 35, halign: 'left' },
+    //                2: { cellWidth: 28 },
+    //                3: { cellWidth: 26 },
+    //                4: { cellWidth: 22, halign: 'right' },
+    //                5: { cellWidth: 26, halign: 'right' },
+    //                6: { cellWidth: 30, halign: 'left' }
+    //            },
+    //            styles: {
+    //                halign: 'center',
+    //                valign: 'middle',
+    //                lineWidth: 0.1,
+    //                lineColor: [0, 0, 0],
+    //                fontSize: 10,
+    //                cellPadding: 2,
+    //                textColor: 0,
+    //            },
+    //            headStyles: {
+    //                halign: 'center',
+    //                valign: 'middle',
+    //                fillColor: [255, 255, 255],
+    //                textColor: 0,
+    //                fontStyle: 'bold',
+    //                lineWidth: 0.2,
+    //                lineColor: [0, 0, 0]
+    //            },
+    //            alternateRowStyles: {
+    //                fillColor: [255, 255, 255]
+    //            },
+    //            didDrawPage: function (data) {
+    //                if (data.pageNumber > 1 && isTableActive) {
+    //                    drawHeader(true);
+    //                }
+    //            }
+    //        });
+
+    //        isTableActive = false;
+    //        currentY = doc.lastAutoTable.finalY + 5;
+
+    //        if (currentY > pageHeight - 20) {
+    //            doc.addPage();
+    //            currentY = 30;
+    //            drawHeader(true);
+    //        }
+
+    //        doc.setFontSize(10);
+    //        doc.setFont(undefined, 'bold');
+    //        doc.text(`Total: `, 114, currentY);
+    //        doc.text(totalAdvanceAmountDepartment.toLocaleString(undefined, { minimumFractionDigits: 0 }), 132, currentY);
+    //        doc.text(totalMonthlyDeductionDepartment.toLocaleString(undefined, { minimumFractionDigits: 0 }), 158, currentY);
+
+    //        currentY += 5;
+
+    //        if (currentY > pageHeight - 50) {
+    //            doc.addPage();
+    //            currentY = 30;
+    //            drawHeader(false);
+    //        }
+    //    }
+
+    //    currentY = doc.lastAutoTable.finalY + 15;
+
+    //    if (currentY > pageHeight - 20) {
+    //        doc.addPage();
+    //        currentY = 30;
+    //        drawHeader(false);
+    //    }
+
+    //    doc.setFontSize(11);
+    //    doc.setFont(undefined, 'bold');
+    //    doc.text(`Grant Total:`, 101.5, currentY);
+    //    doc.text(totalAdvanceAmountGrant.toLocaleString(undefined, { minimumFractionDigits: 0 }), 132, currentY);
+    //    doc.text(totalMonthlyDeductionGrant.toLocaleString(undefined, { minimumFractionDigits: 0 }), 158, currentY);
+
+    //    drawFooter();
+
+    //    if (isPdf) {
+    //        doc.save("AdvancePayReport.pdf");
+    //    } else {
+    //        const pdfBlob = doc.output('blob');
+    //        const blobUrl = URL.createObjectURL(pdfBlob);
+    //        document.getElementById('pdfViewer').src = blobUrl;
+    //    }
+    //}
+
     async function generatePDF(groupedResponse) {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF('p', 'mm', 'a4');
@@ -816,20 +913,19 @@
 
         const companyName = `${groupedResponse[0].employees[0].companyName}`;
         const reportName = "Advance Adjustment Report";
-        const reportDetails = `For the month of ${groupedResponse[0].employees[0].monthName} - ${groupedResponse[0].employees[0].salaryYear}`;  
+        const reportDetails = `For the month of ${groupedResponse[0].employees[0].monthName} - ${groupedResponse[0].employees[0].salaryYear}`;
         const createdBy = `Print Datetime: ${formatDateTime(now)} || ${groupedResponse[0].luser}`;
         const logoUrl = '/images/DP_logo.png';
 
         let logo = null;
         try {
             logo = await loadImageBase64(logoUrl);
-        } catch (e) {
+        } catch (e) { }
 
-        }
-
-        let currentY = 30; 
-        let currentDepartmentName = ""; 
+        let currentY = 30;
+        let currentDepartmentName = "";
         let isTableActive = false;
+        const headerHeight = 35; // Fixed header height including department name
 
         function drawHeader(showDepartment = false) {
             doc.setFontSize(14);
@@ -837,112 +933,107 @@
 
             if (logo) {
                 doc.addImage(logo, 'PNG', 5, 2, 40, 17);
-                doc.text(companyName, pageWidth / 2, 10, { align: 'center' });
-                doc.setFontSize(10);         
-                doc.setFont(undefined, 'normal'); 
-                doc.text(reportName, pageWidth / 2, 15, { align: 'center' });
-                const textWidth = doc.getTextWidth(reportName);
-                const centerX = pageWidth / 2;
-                const lineY = 16; 
-                const lineStartX = centerX - textWidth / 2;
-                const lineEndX = centerX + textWidth / 2;
-                doc.setLineWidth(.05);
-                doc.line(lineStartX, lineY, lineEndX, lineY);
+            }
 
-                doc.setFontSize(8);
-                doc.setFont(undefined, 'normal');
-                doc.text(reportDetails, pageWidth / 2, 19, { align: 'center' });
+            doc.text(companyName, pageWidth / 2, 10, { align: 'center' });
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'normal');
+            doc.text(reportName, pageWidth / 2, 15, { align: 'center' });
 
-            } else {
-                doc.text(companyName, pageWidth / 2, 10, { align: 'center' });
-                doc.setFontSize(10);
-                doc.setFont(undefined, 'normal');
-                doc.text(reportName, pageWidth / 2, 15, { align: 'center' });
-                const textWidth = doc.getTextWidth(reportName);
-                const centerX = pageWidth / 2;
-                const lineY = 16; 
-                const lineStartX = centerX - textWidth / 2;
-                const lineEndX = centerX + textWidth / 2;
-                doc.setLineWidth(.05);
-                doc.line(lineStartX, lineY, lineEndX, lineY);
+            const textWidth = doc.getTextWidth(reportName);
+            const centerX = pageWidth / 2;
+            const lineY = 16;
+            const lineStartX = centerX - textWidth / 2;
+            const lineEndX = centerX + textWidth / 2;
+            doc.setLineWidth(.05);
+            doc.line(lineStartX, lineY, lineEndX, lineY);
 
-                doc.setFontSize(8);
-                doc.setFont(undefined, 'normal');
-                doc.text(reportDetails, pageWidth / 2, 19, { align: 'center' });
-            }            
+            doc.setFontSize(8);
+            doc.setFont(undefined, 'normal');
+            doc.text(reportDetails, pageWidth / 2, 19, { align: 'center' });
+
             if (showDepartment && currentDepartmentName) {
                 doc.setFontSize(12);
                 doc.setFont(undefined, 'bold');
-                doc.text(currentDepartmentName, 14, 28);
+                doc.text(currentDepartmentName, 10, 28);
             }
         }
-        function drawFooter() {           
-            const pageCount = doc.internal.getNumberOfPages();
 
+        function drawFooter() {
+            const pageCount = doc.internal.getNumberOfPages();
             for (let i = 1; i <= pageCount; i++) {
                 doc.setPage(i);
-                const pageWidth = doc.internal.pageSize.getWidth();
-                const pageHeight = doc.internal.pageSize.getHeight();
-
                 doc.setFontSize(9);
                 doc.setFont(undefined, 'normal');
                 doc.text(`Page ${i} of ${pageCount}`, 5, pageHeight - 2);
                 doc.text(createdBy, pageWidth - 5, pageHeight - 2, { align: 'right' });
             }
-
         }
+
         drawHeader(false);
-        let totalAdvanceAmount = 0;
-        let totalMonthlyDeduction = 0;
+
+        let totalAdvanceAmountGrant = 0;
+        let totalMonthlyDeductionGrant = 0;
+
         for (let group of groupedResponse) {
-            group.employees.map(emp => {
-                totalAdvanceAmount += emp.advanceAmount;
-                totalMonthlyDeduction += emp.monthlyDeduction;
-            });
             currentDepartmentName = `Department: ${group.departmentName}`;
-            isTableActive = true; 
+            isTableActive = true;
 
-            if (currentY > pageHeight - 60) {
+            let totalAdvanceAmountDepartment = 0;
+            let totalMonthlyDeductionDepartment = 0;
+
+            group.employees.forEach(emp => {
+                totalAdvanceAmountGrant += emp.advanceAmount;
+                totalMonthlyDeductionGrant += emp.monthlyDeduction;
+
+                totalAdvanceAmountDepartment += emp.advanceAmount;
+                totalMonthlyDeductionDepartment += emp.monthlyDeduction;
+            });
+
+            // Check if we need a new page for department header and some table content
+            if (currentY > pageHeight - 80) {
                 doc.addPage();
-                currentY = 30;
-                drawHeader(false); 
+                currentY = headerHeight;
+                drawHeader(true);
+            } else {
+                // Draw department name on same page
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'bold');
+                doc.text(currentDepartmentName, 10, currentY);
+                currentY += 4;
             }
-
-            doc.setFontSize(12);
-            doc.setFont(undefined, 'bold');
-            doc.text(currentDepartmentName, 5, currentY);
-            currentY += 2;
 
             doc.autoTable({
                 startY: currentY,
                 head: [[
-                    'Employee ID', 'Name', 'Designation', 'Branch',
-                    'Advance Amount', 'Month', 'Monthly Deduction', 'Remarks'
+                    'SN', 'Employee ID', 'Name', 'Designation', 'Branch',
+                    'Advance Amount', 'Monthly Deduction', 'Remarks'
                 ]],
-                body: group.employees.map(emp => [
+                body: group.employees.map((emp, index) => [
+                    index + 1,
                     emp.employeeID,
                     emp.fullName,
                     emp.designationName,
                     emp.branchName,
-                    emp.advanceAmount.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits:0 }),
-                    emp.monthName,
-                    emp.monthlyDeduction.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits:0 }),
+                    emp.advanceAmount.toLocaleString(undefined, { minimumFractionDigits: 0 }),
+                    emp.monthlyDeduction.toLocaleString(undefined, { minimumFractionDigits: 0 }),
                     emp.remarks
-                ],),
-                margin: { left: 5, right: 5, top: 20, bottom: 15 },
+                ]),
+                margin: { left: 10, right: 10, top: headerHeight },
                 columnStyles: {
-                    0: { cellWidth: 25 },
-                    1: { cellWidth: 32, halign: 'left' },
-                    2: { cellWidth: 25 },
-                    3: { cellWidth: 25 },
-                    4: { cellWidth: 20, halign:'right' },
-                    5: { cellWidth: 22 },
-                    6: { cellWidth: 22, halign:'right' },
-                    7: { cellWidth: 29, halign: 'left' }
+                    0: { cellWidth: 'auto' },
+                    1: { cellWidth: 'auto', halign: 'left' }, 
+                    2: { cellWidth: 26 }, 
+                    3: { cellWidth: 24 },
+                    4: { cellWidth: 22 }, 
+                    5: { cellWidth: 24, halign: 'right' },
+                    6: { cellWidth: 28, halign: 'right' }, 
+                    7: { cellWidth: 'auto', halign: 'left' }
                 },
+
                 styles: {
                     halign: 'center',
-                    valign: 'middle',  
+                    valign: 'middle',
                     lineWidth: 0.1,
                     lineColor: [0, 0, 0],
                     fontSize: 10,
@@ -950,8 +1041,8 @@
                     textColor: 0,
                 },
                 headStyles: {
-                    halign: 'center',       
-                    valign: 'middle',  
+                    halign: 'center',
+                    valign: 'middle',
                     fillColor: [255, 255, 255],
                     textColor: 0,
                     fontStyle: 'bold',
@@ -961,52 +1052,65 @@
                 alternateRowStyles: {
                     fillColor: [255, 255, 255]
                 },
-                didDrawPage: function (data) {                   
-                    if (data.pageNumber > 1 && isTableActive) {
-                        drawHeader(true); 
-                    } else if (data.pageNumber === 1) {
-                        drawHeader(false);
+                didDrawPage: function (data) {
+                    // Only draw header on new pages (not the first page of the table)
+                    if (data.pageCount > 1) {
+                        drawHeader(true);
                     }
-                   
-                }
+                },
+                // Ensure proper page breaking
+                pageBreak: 'auto',
+                rowPageBreak: 'avoid',
+                // Set minimum space for table continuation
+                tableLineColor: [0, 0, 0],
+                tableLineWidth: 0.1,
             });
 
             isTableActive = false;
             currentY = doc.lastAutoTable.finalY + 5;
 
-            if (currentY > pageHeight - 50) {
+            // Check if we need new page for department total
+            if (currentY > pageHeight - 25) {
                 doc.addPage();
-                currentY = 30;
-                drawHeader(false); 
+                currentY = headerHeight;
+                drawHeader(false);
             }
-        }
-        currentY = doc.lastAutoTable.finalY + 5;
 
-        if (currentY > pageHeight - 20) {
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'bold');
+            doc.text(`Total: `, 114, currentY);
+            doc.text(totalAdvanceAmountDepartment.toLocaleString(undefined, { minimumFractionDigits: 0 }), 133, currentY);
+            doc.text(totalMonthlyDeductionDepartment.toLocaleString(undefined, { minimumFractionDigits: 0 }), 159, currentY);
+
+            currentY += 8; // Add more space between departments
+        }
+
+        // Grand total section
+        currentY = doc.lastAutoTable.finalY + 15;
+
+        if (currentY > pageHeight - 25) {
             doc.addPage();
-            currentY = 30;
+            currentY = headerHeight;
             drawHeader(false);
         }
 
         doc.setFontSize(11);
         doc.setFont(undefined, 'bold');
-        //doc.text(`Grant Total:    ${totalAdvanceAmount.toFixed(0)}`, 89, currentY);
-        doc.text(`Grant Total:    ${totalAdvanceAmount.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`, 90, currentY);
-
-        //currentY += 6;
-        doc.text(`${totalMonthlyDeduction.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits:0 })}`, 162, currentY);
-
-       
+        doc.text(`Grant Total:`, 101.5, currentY);
+        doc.text(totalAdvanceAmountGrant.toLocaleString(undefined, { minimumFractionDigits: 0 }), 132, currentY);
+        doc.text(totalMonthlyDeductionGrant.toLocaleString(undefined, { minimumFractionDigits: 0 }), 158, currentY);
 
         drawFooter();
+
         if (isPdf) {
             doc.save("AdvancePayReport.pdf");
         } else {
             const pdfBlob = doc.output('blob');
             const blobUrl = URL.createObjectURL(pdfBlob);
-            document.getElementById('pdfViewer').src = blobUrl;       
+            document.getElementById('pdfViewer').src = blobUrl;
         }
     }
+
 
     function downloadWordReport(groupedResponse) {
         try {
@@ -1016,13 +1120,19 @@
             }
             const companyName = groupedResponse[0].employees[0].companyName || "";
             const reportName = "Advance Adjustment Report";
-            const monthName = groupedResponse[0].employees[0].monthName || "";
+            const salaryMonth = groupedResponse[0].employees[0].monthName || "";
             const salaryYear = groupedResponse[0].employees[0].salaryYear || "";
             const createdBy = groupedResponse[0].luser || "";
             const now = new Date().toLocaleString('en-US', {
+
+
                 year: 'numeric', month: 'short', day: 'numeric',
                 hour: 'numeric', minute: 'numeric', hour12: true
             });
+
+            // Initialize grand totals
+            let totalAdvanceAmountGrant = 0;
+            let totalMonthlyDeductionGrant = 0;
 
             let htmlContent = `
 <!DOCTYPE html>
@@ -1056,6 +1166,8 @@
         table, th, td { border: 1px solid black; padding: 4px 5px; margin: 0; font-size: 12px; vertical-align: top; line-height: 1.2; }
         th { background-color: #f0f0f0; font-weight: bold; text-align: center; }
         td { text-align: left; }
+        .total-row { font-weight: bold; background-color: #f5f5f5; }
+        .grand-total-row { font-weight: bold; background-color: #e0e0e0; font-size: 14px; }
         .footer { margin-top: 20px; font-size: 12px; }
         .page-info { text-align: left; display: inline-block; width: 50%; }
         .date-user { text-align: right; display: inline-block; width: 49%; }
@@ -1065,21 +1177,25 @@
 <div class="Section1">
     <div class="header">${companyName}</div>
     <div class="sub-header">${reportName}</div>
-    <h6 class="top-date">For the month of ${monthName} - ${salaryYear}</h6>
+    <h6 class="top-date">For the ${salaryMonth} of ${salaryYear}</h6>
     <h6 class="top-date">Generated on: ${now} | Created by: ${createdBy}</h6>
 `;
 
             groupedResponse.forEach(group => {
+                // Initialize department totals
+                let totalAdvanceAmountDepartment = 0;
+                let totalMonthlyDeductionDepartment = 0;
+
                 htmlContent += `<h2>Department: ${group.departmentName || "Unknown"}</h2>`;
                 htmlContent += `<table>
                 <thead>
                     <tr>
+                        <th style="width:5%;">SN</th>
                         <th style="width:12%;">Employee ID</th>
-                        <th style="width:20%;">Name</th>
+                        <th style="width:25%;">Name</th>
                         <th style="width:15%;">Designation</th>
                         <th style="width:15%;">Branch</th>
                         <th style="width:12%; text-align:center;">Advance Amount</th>
-                        <th style="width:10%;">Month</th>
                         <th style="width:12%; text-align:center;">Monthly Deduction</th>
                         <th style="width:150px;">Remarks</th>
                     </tr>
@@ -1087,29 +1203,63 @@
                 <tbody>
             `;
 
-                group.employees.forEach(emp => {
+                group.employees.forEach((emp, index) => {
+                    const advanceAmount = parseFloat(emp.advanceAmount) || 0;
+                    const monthlyDeduction = parseFloat(emp.monthlyDeduction) || 0;
+
+                    // Add to department totals
+                    totalAdvanceAmountDepartment += advanceAmount;
+                    totalMonthlyDeductionDepartment += monthlyDeduction;
+
                     htmlContent += `
                     <tr>
+                        <td style="text-align:center;">${++index || ''}</td>
                         <td style="text-align:center;">${emp.employeeID || ''}</td>
                         <td>${emp.fullName || ''}</td>
                         <td>${emp.designationName || ''}</td>
                         <td>${emp.branchName || ''}</td>
-                        <td style="text-align:center;">${emp.advanceAmount || ''}</td>
-                        <td>${emp.monthName || ''}</td>
-                        <td style="text-align:center;">${emp.monthlyDeduction || ''}</td>
+                        <td style="text-align:right;">${advanceAmount.toFixed(2)}</td>
+                        <td style="text-align:right;">${monthlyDeduction.toFixed(2)}</td>
                         <td>${emp.remarks || ''}</td>
                     </tr>
                 `;
                 });
 
-                htmlContent += `</tbody></table>`;
+                // Add department total row
+                htmlContent += `
+                <tr class="total-row">
+                    <td colspan="5" style="text-align:right; font-weight:bold;">Total:</td>
+                    <td style="text-align:right; font-weight:bold;">${totalAdvanceAmountDepartment.toFixed(2)}</td>
+                    <td style="text-align:right; font-weight:bold;">${totalMonthlyDeductionDepartment.toFixed(2)}</td>
+                    <td></td>
+                </tr>
+            `;
+
+                htmlContent += `</tbody></table><br>`;
+
+                // Add to grand totals
+                totalAdvanceAmountGrant += totalAdvanceAmountDepartment;
+                totalMonthlyDeductionGrant += totalMonthlyDeductionDepartment;
             });
+
+            // Add grand total section
+            htmlContent += `
+            <table style="margin-top: 20px;">
+                <tr class="grand-total-row">
+                    <td colspan="4" style="text-align:right; font-weight:bold; font-size:14px;">Grand Total:</td>
+                    <td style="text-align:right; font-weight:bold; font-size:14px; width:12%;">${totalAdvanceAmountGrant.toFixed(2)}</td>
+                    <td style="text-align:right; font-weight:bold; font-size:14px; width:12%;">${totalMonthlyDeductionGrant.toFixed(2)}</td>
+                    <td style="width:60px;"></td>
+                </tr>
+            </table>
+        `;
 
             htmlContent += `
    
 </div>
 </body>
 </html>`;
+
             const blob = new Blob([htmlContent], { type: 'application/msword' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
@@ -1119,7 +1269,6 @@
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
-
 
         } catch (error) {
             alert("Error generating document: " + error.message);
