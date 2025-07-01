@@ -387,16 +387,16 @@ function loadTableData(res) {
         const checkboxDisabled = isEditMode ? 'disabled' : '';
         const checkboxChecked = isOriginalEmployee ? 'checked' : '';
 
-        row.append(`<td width="1%" class="text-center"><input type="checkbox" class="empSelect" ${checkboxDisabled} ${checkboxChecked}"/></td>`);
-        row.append('<td class="text-center" style="padding: 0;">' + employee.employeeId + '</td>');
-        row.append('<td class="text-center" style="padding: 0;">' + employee.employeeName + '</td>');
-        row.append('<td class="text-center" style="padding: 0;">' + employee.designationName + '</td>');
-        row.append('<td class="text-center" style="padding: 0;">' + employee.departmentName + '</td>');
-        row.append('<td class="text-center" style="padding: 0;">' + employee.branchName + '</td>');
-        row.append('<td class="text-center" style="padding: 0;">' + employee.employeeTypeName + '</td>');
-        row.append('<td class="text-center" style="padding: 0;">' + employee.employmentNature + '</td>');
-        row.append('<td class="text-center" style="padding: 0;">' + employee.joiningDate + '</td>');
-        row.append('<td class="text-center" >' + employee.employeeStatus + '</td>');
+        row.append(`<td width="1%" class="text-center p-2"><input type="checkbox" class="empSelect" ${checkboxDisabled} ${checkboxChecked}"/></td>`);
+        row.append('<td class="text-center p-2">' + employee.employeeId + '</td>');
+        row.append('<td class="p-2">' + employee.employeeName + '</td>');
+        row.append('<td class="p-2">' + employee.designationName + '</td>');
+        row.append('<td class="text-center p-2">' + employee.departmentName + '</td>');
+        row.append('<td class="text-center p-2">' + employee.branchName + '</td>');
+        row.append('<td class="text-center p-2">' + employee.employeeTypeName + '</td>');
+        row.append('<td class="text-center p-2">' + employee.employmentNature + '</td>');
+        row.append('<td class="text-center p-2">' + employee.joiningDate + '</td>');
+        row.append('<td class="text-center p-2">' + employee.employeeStatus + '</td>');
 
         tableBody.append(row);
     });

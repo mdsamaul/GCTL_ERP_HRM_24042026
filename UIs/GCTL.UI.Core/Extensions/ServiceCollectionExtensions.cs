@@ -66,6 +66,7 @@ using GCTL.Service.HrmEmployeeHolidayDeclarations;
 using GCTL.Service.HrmEmployeeOfficialInfoServe;
 using GCTL.Service.HrmEmployees2;
 using GCTL.Service.HrmEmployeeSalaryInfoEntry;
+using GCTL.Service.HrmEmployeeSalaryInfoReport;
 using GCTL.Service.HrmPayDefBenefitTypes;
 using GCTL.Service.HrmPayDefDeductionTypes;
 using GCTL.Service.HrmPayMonthlyOtEntries;
@@ -270,6 +271,7 @@ namespace GCTL.UI.Core.Extensions
             services.AddScoped<IHrmPayMonthlyOtEntryService, HrmPayMonthlyOtEntryService>();
             services.AddScoped<IHrmPayMonthlyOtReportService, HrmPayMonthlyOtReportService>();
             services.AddScoped<IHrmEmployeeSalaryInfoEntryService, HrmEmployeeSalaryInfoEntryService>();
+            services.AddScoped<IHrmEmployeeSalaryInfoReportService, HrmEmployeeSalaryInfoReportService>();
 
             //Samaul
             services.AddScoped<IEmployeeWeekendDeclarationService, EmployeeWeekendDeclarationService>();

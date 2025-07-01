@@ -756,6 +756,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVTYWxhcnlJbmZvRW50cnlcX1Rvb2xiYXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmEmployeeSalaryInfoReport/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVTYWxhcnlJbmZvUmVwb3J0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmEmployeeSalaryInfoReport/_SalaryInfoReportPreview.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVTYWxhcnlJbmZvUmVwb3J0XF9TYWxhcnlJbmZvUmVwb3J0UHJldmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmEmployeeSalaryInfoReport/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtRW1wbG95ZWVTYWxhcnlJbmZvUmVwb3J0XF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmPayDefBenefitType/DeleteModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtUGF5RGVmQmVuZWZpdFR5cGVcRGVsZXRlTW9kYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

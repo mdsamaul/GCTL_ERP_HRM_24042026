@@ -406,15 +406,14 @@ function loadTableData(res) {
         const checkboxChecked = isOriginalEmployee ? 'checked' : '';
 
         row.append(`<td class="text-center p0" width="1%"><input type="checkbox" width="1%" class="empSelect" ${checkboxDisabled} ${checkboxChecked}/></td>`);
-        row.append('<td class="text-center">' + employee.employeeId + '</td>');
-        row.append('<td class="text-center">' + employee.employeeName + '</td>');
-        row.append('<td class="text-center">' + employee.designationName + '</td>');
-        row.append('<td class="text-center">' + employee.departmentName + '</td>');
-        row.append('<td class="text-center">' + employee.branchName + '</td>');
-        row.append('<td class="text-center">' + employee.employeeTypeName + '</td>');
-        row.append('<td class="text-center">' + employee.joiningDate + '</td>');
-
-        row.append('<td class="text-center">' + employee.employeeStatus + '</td>');
+        row.append('<td class="text-center p-2">' + employee.employeeId + '</td>');
+        row.append('<td class="p-2">' + employee.employeeName + '</td>');
+        row.append('<td class="p-2">' + employee.designationName + '</td>');
+        row.append('<td class="text-center p-2">' + employee.departmentName + '</td>');
+        row.append('<td class="text-center p-2">' + employee.branchName + '</td>');
+        row.append('<td class="text-center p-2">' + employee.employeeTypeName + '</td>');
+        row.append('<td class="text-center p-2">' + employee.joiningDate + '</td>');
+        row.append('<td class="text-center p-2">' + employee.employeeStatus + '</td>');
 
         tableBody.append(row);
     });

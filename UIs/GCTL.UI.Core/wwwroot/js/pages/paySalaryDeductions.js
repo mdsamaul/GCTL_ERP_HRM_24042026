@@ -459,16 +459,16 @@ function loadTableData(res) {
         const checkboxDisabled = isEditMode ? 'disabled' : '';
         const checkboxChecked = isOriginalEmployee ? 'checked' : '';
 
-        row.append(`<td class="text-center"><input type="checkbox" class="empSelect" ${checkboxDisabled} ${checkboxChecked} /></td>`);
-        row.append('<td class="text-center">' + employee.employeeId + '</td>');
-        row.append('<td class="text-center">' + employee.employeeName + '</td>');
-        row.append('<td class="text-center">' + employee.designationName + '</td>');
-        row.append('<td class="text-center">' + employee.departmentName + '</td>');
-        row.append('<td class="text-center">' + employee.branchName + '</td>');
-        row.append('<td class="text-center">' + employee.employeeTypeName + '</td>');
-        row.append('<td class="text-center">' + employee.employmentNature + '</td>');
-        row.append('<td class="text-center">' + employee.joiningDate + '</td>');
-        row.append('<td class="text-center">' + employee.employeeStatus + '</td>');
+        row.append(`<td class="p-2 text-center"><input type="checkbox" class="empSelect" ${checkboxDisabled} ${checkboxChecked} /></td>`);
+        row.append('<td class="p-2 text-center">' + employee.employeeId + '</td>');
+        row.append('<td class="p-2 text-start">' + employee.employeeName + '</td>');
+        row.append('<td class="p-2 text-start">' + employee.designationName + '</td>');
+        row.append('<td class="p-2 text-center">' + employee.departmentName + '</td>');
+        row.append('<td class="p-2 text-center">' + employee.branchName + '</td>');
+        row.append('<td class="p-2 text-center">' + employee.employeeTypeName + '</td>');
+        row.append('<td class="p-2 text-center">' + employee.employmentNature + '</td>');
+        row.append('<td class="p-2 text-center">' + employee.joiningDate + '</td>');
+        row.append('<td class="p-2 text-center">' + employee.employeeStatus + '</td>');
 
         tableBody.append(row);
     });

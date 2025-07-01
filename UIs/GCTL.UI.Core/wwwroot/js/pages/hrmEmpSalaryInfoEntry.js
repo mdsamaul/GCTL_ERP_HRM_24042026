@@ -179,7 +179,7 @@ function getAllFilterVal() {
         BranchCodes: toArray($("#branchSelect").val()),
         DepartmentCodes: toArray($("#departmentSelect").val()),
         DesignationCodes: toArray($("#designationSelect").val()),
-        EmployeeTypes: toArray($("#empTypeSelect").val()),
+        EmpTypes: toArray($("#empTypeSelect").val()),
         EmployeeNatureCodes: toArray($("#empNatureSelect").val()),
         JoiningDateFrom: formatDate($("#joinDateFromSelect").val()),
         JoiningDateTO: formatDate($("#joinDateToSelect").val()),
@@ -329,9 +329,9 @@ function loadTableData(res) {
         row.append(`<td class="text-center p-0" width="1%"><input type="checkbox" width="1%" class="empSelect" ${checkboxDisabled} ${checkboxChecked}/></td>`);
         row.append('<td class="text-center p-1">' + employee.employeeId + '</td>');
         row.append('<td class="text-center p-1">' + employee.payId + '</td>');
-        row.append('<td class="text-center p-1">' + employee.employeeName + '</td>');
-        row.append('<td class="text-center p-1">' + employee.designationName + '</td>');
-        row.append('<td class="text-center p-1">' + employee.departmentName + '</td>');
+        row.append('<td class="p-1">' + employee.employeeName + '</td>');
+        row.append('<td class="text-nowrap p-1">' + employee.designationName + '</td>');
+        row.append('<td class="text-nowrap p-1">' + employee.departmentName + '</td>');
         row.append('<td class="text-center p-1">' + employee.employeeTypeName + '</td>');
         row.append('<td class="text-center p-1">' + employee.employmentNature + '</td>');
         row.append('<td class="text-center p-1">' + employee.joiningDate + '</td>');

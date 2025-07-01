@@ -12,13 +12,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GCTL.Service.HrmWorkingDayDeclarations
 {
-    public class HrmWorkingDayDeclarationService:AppService<HrmAttWorkingDayDeclaration>, IHrmWorkingDayDeclarationService
+    public class HrmWorkingDayDeclarationService : AppService<HrmAttWorkingDayDeclaration>, IHrmWorkingDayDeclarationService
     {
         private readonly IRepository<HrmAttWorkingDayDeclaration> declarationRepository;
         private readonly IRepository<HrmEmployee> employeeRepository;
         private readonly IRepository<HrmEmployeeOfficialInfo> employeeOfficialInfoRepository;
         private readonly IRepository<HrmDefDesignation> designationRepository;
-        
+
         private readonly IRepository<CoreCompany> companyRepository;
         private readonly IRepository<HrmDefDivision> divisionRepository;
         //private readonly IRepository<CoreAccessCode> accessCodeRepository;
@@ -40,13 +40,13 @@ namespace GCTL.Service.HrmWorkingDayDeclarations
             IRepository<HrmDefEmployeeStatus> employeeStatusRepository,
             IRepository<HrmDefEmpType> empTypeRepository
         )
-            :base(declarationRepository)
+            : base(declarationRepository)
         {
             this.declarationRepository = declarationRepository;
             this.employeeRepository = employeeRepository;
             this.employeeOfficialInfoRepository = employeeOfficialInfoRepository;
             this.designationRepository = designationRepository;
-            
+
 
             this.companyRepository = companyRepository;
             this.divisionRepository = divisionRepository;
@@ -55,6 +55,125 @@ namespace GCTL.Service.HrmWorkingDayDeclarations
             this.departmentRepository = departmentRepository;
             this.employeeStatusRepository = employeeStatusRepository;
             this.empTypeRepository = empTypeRepository;
+        }
+
+        public async Task<EmployeeFilterResultDto> GetFilterDataAsync(EmployeeFilterViewModel filter)
+        {
+            var result = new EmployeeFilterResultDto();
+
+            var query = from e in employeeOfficialInfoRepository.All().AsNoTracking()
+                        join emp in employeeRepository.All().AsNoTracking() on e.EmployeeId equals emp.EmployeeId
+                        join c in companyRepository.All().AsNoTracking() on e.CompanyCode equals c.CompanyCode into companyGroup
+                        from c in companyGroup.DefaultIfEmpty()
+                        join b in branchRepository.All().AsNoTracking() on e.BranchCode equals b.BranchCode into branchGroup
+                        from b in branchGroup.DefaultIfEmpty()
+                        join d in departmentRepository.All().AsNoTracking() on e.DepartmentCode equals d.DepartmentCode into deptGroup
+                        from d in deptGroup.DefaultIfEmpty()
+                        join ds in designationRepository.All().AsNoTracking() on e.DesignationCode equals ds.DesignationCode into desigGroup
+                        from ds in desigGroup.DefaultIfEmpty()
+                        join status in employeeStatusRepository.All().AsNoTracking() on e.EmployeeStatus equals status.EmployeeStatusId into statusGroup
+                        from status in statusGroup.DefaultIfEmpty()
+                        join emptype in empTypeRepository.All().AsNoTracking() on e.EmpTypeCode equals emptype.EmpTypeCode into empTypeGroup
+                        from emptype in empTypeGroup.DefaultIfEmpty()
+                        select new
+                        {
+                            EmployeeId = e.EmployeeId,
+                            FirstName = emp.FirstName,
+                            LastName = emp.LastName,
+                            e.JoiningDate,
+                            e.CompanyCode,
+                            CompanyName = c.CompanyName,
+                            e.BranchCode,
+                            BranchName = b.BranchName,
+                            e.DepartmentCode,
+                            DepartmentName = d.DepartmentName,
+                            e.DesignationCode,
+                            DesignationName = ds.DesignationName,
+                            e.DivisionCode,
+                            EmployeeTypeName = emptype.EmpTypeName,
+                            EmployeeStatusId = e.EmployeeStatus,
+                            EmployeeStatusName = status.EmployeeStatus
+                        };
+
+            query = query.Where(x => x.CompanyCode == "001");
+
+            if (filter.BranchCodes?.Any() == true)
+                query = query.Where(x => filter.BranchCodes.Contains(x.BranchCode));
+
+            if (filter.DivisionCodes?.Any() == true)
+                query = query.Where(x => filter.DivisionCodes.Contains(x.DivisionCode));
+
+            if (filter.DepartmentCodes?.Any() == true)
+                query = query.Where(x => filter.DepartmentCodes.Contains(x.DepartmentCode));
+
+            if (filter.DesignationCodes?.Any() == true)
+                query = query.Where(x => filter.DesignationCodes.Contains(x.DesignationCode));
+
+            if (filter.EmployeeIDs?.Any() == true)
+                query = query.Where(x => filter.EmployeeIDs.Contains(x.EmployeeId));
+
+            if (filter.EmployeeStatuses?.Any() != true)
+                filter.EmployeeStatuses = new List<string> { "Active" };  // Default to "Active"
+
+            if (filter.EmployeeStatuses?.Any() == true)
+                query = query.Where(x => filter.EmployeeStatuses.Contains(x.EmployeeStatusName));
+
+            var filteredData = await query.ToListAsync();
+
+            result.Employees = filteredData.Select(x => new EmployeeListItemViewModel
+            {
+                EmployeeId = x.EmployeeId,
+                EmployeeName = string.Join(" ", new[] { x.FirstName, x.LastName }.Where(n => !string.IsNullOrWhiteSpace(n))),
+                JoiningDate = x.JoiningDate.HasValue ? x.JoiningDate.Value.ToString("dd/MM/yyyy") : "",
+                DesignationName = x.DesignationName ?? "",
+                DepartmentName = x.DepartmentName ?? "",
+                BranchName = x.BranchName ?? "",
+                CompanyName = x.CompanyName ?? "",
+                EmployeeTypeName = x.EmployeeTypeName ?? "",
+                EmployeeStatus = x.EmployeeStatusName ?? ""
+            }).ToList();
+
+            result.LookupData["companies"] = filteredData
+                .Where(x => x.CompanyCode != null && x.CompanyName != null)
+                .Select(x => new LookupItemDto { Code = x.CompanyCode, Name = x.CompanyName })
+                .Distinct()
+                .ToList();
+
+            result.LookupData["branches"] = filteredData
+                .Where(x => x.BranchCode != null && x.BranchName != null)
+                .Select(x => new LookupItemDto { Code = x.BranchCode, Name = x.BranchName })
+                .Distinct()
+                .ToList();
+
+            result.LookupData["departments"] = filteredData
+                .Where(x => x.DepartmentCode != null && x.DepartmentName != null)
+                .Select(x => new LookupItemDto { Code = x.DepartmentCode, Name = x.DepartmentName })
+                .Distinct()
+                .ToList();
+
+            result.LookupData["designations"] = filteredData
+                .Where(x => x.DesignationCode != null && x.DesignationName != null)
+                .Select(x => new LookupItemDto { Code = x.DesignationCode, Name = x.DesignationName })
+                .Distinct()
+                .ToList();
+
+            result.LookupData["employees"] = filteredData
+                .Where(x => x.EmployeeId != null && x.FirstName != null)
+                .Select(x => new LookupItemDto
+                {
+                    Code = x.EmployeeId,
+                    Name = string.Join(" ", new[] { x.FirstName, x.LastName }.Where(n => !string.IsNullOrWhiteSpace(n))) + $" ({x.EmployeeId})"
+                })
+                .Distinct()
+                .ToList();
+
+            result.LookupData["employeeStatuses"] = filteredData
+                .Where(x => !string.IsNullOrWhiteSpace(x.EmployeeStatusName))
+                .Select(x => new LookupItemDto { Code = x.EmployeeStatusName, Name = x.EmployeeStatusName })
+                .Distinct()
+                .ToList();
+
+            return result;
         }
 
         public async Task<bool> BulkDeleteAsync(List<decimal> ids)
@@ -195,8 +314,6 @@ namespace GCTL.Service.HrmWorkingDayDeclarations
                 if (ex.InnerException != null) Console.WriteLine($"Inner Exception: {ex.InnerException.Message}");
                 return (false, "An unexpected error occurred while updating the record.", ex.Message);
             }
-
-            throw new NotImplementedException();
         }
 
         public async Task<List<HrmWorkingDayDeclarationViewModel>> GetAllAsync()
@@ -245,125 +362,7 @@ namespace GCTL.Service.HrmWorkingDayDeclarations
             return holidayViewModel;
         }
 
-        public async Task<EmployeeFilterResultDto> GetFilterDataAsync(EmployeeFilterViewModel filter)
-        {
-            var result = new EmployeeFilterResultDto();
-
-            var query = from e in employeeOfficialInfoRepository.All().AsNoTracking()
-                        join emp in employeeRepository.All().AsNoTracking() on e.EmployeeId equals emp.EmployeeId
-                        join c in companyRepository.All().AsNoTracking() on e.CompanyCode equals c.CompanyCode into companyGroup
-                        from c in companyGroup.DefaultIfEmpty()
-                        join b in branchRepository.All().AsNoTracking() on e.BranchCode equals b.BranchCode into branchGroup
-                        from b in branchGroup.DefaultIfEmpty()
-                        join d in departmentRepository.All().AsNoTracking() on e.DepartmentCode equals d.DepartmentCode into deptGroup
-                        from d in deptGroup.DefaultIfEmpty()
-                        join ds in designationRepository.All().AsNoTracking() on e.DesignationCode equals ds.DesignationCode into desigGroup
-                        from ds in desigGroup.DefaultIfEmpty()
-                        join status in employeeStatusRepository.All().AsNoTracking() on e.EmployeeStatus equals status.EmployeeStatusId into statusGroup
-                        from status in statusGroup.DefaultIfEmpty()
-                        join emptype in empTypeRepository.All().AsNoTracking() on e.EmpTypeCode equals emptype.EmpTypeCode into empTypeGroup
-                        from emptype in empTypeGroup.DefaultIfEmpty()
-                        select new
-                        {
-                            EmployeeId = e.EmployeeId,
-                            FirstName = emp.FirstName,
-                            LastName = emp.LastName,
-                            e.JoiningDate,
-                            e.CompanyCode,
-                            CompanyName = c.CompanyName,
-                            e.BranchCode,
-                            BranchName = b.BranchName,
-                            e.DepartmentCode,
-                            DepartmentName = d.DepartmentName,
-                            e.DesignationCode,
-                            DesignationName = ds.DesignationName,
-                            e.DivisionCode,
-                            EmployeeTypeName = emptype.EmpTypeName,
-                            EmployeeStatusId = e.EmployeeStatus,
-                            EmployeeStatusName = status.EmployeeStatus
-                        };
-
-            query = query.Where(x => x.CompanyCode == "001");
-
-            if (filter.BranchCodes?.Any() == true)
-                query = query.Where(x => filter.BranchCodes.Contains(x.BranchCode));
-
-            if (filter.DivisionCodes?.Any() == true)
-                query = query.Where(x => filter.DivisionCodes.Contains(x.DivisionCode));
-
-            if (filter.DepartmentCodes?.Any() == true)
-                query = query.Where(x => filter.DepartmentCodes.Contains(x.DepartmentCode));
-
-            if (filter.DesignationCodes?.Any() == true)
-                query = query.Where(x => filter.DesignationCodes.Contains(x.DesignationCode));
-
-            if (filter.EmployeeIDs?.Any() == true)
-                query = query.Where(x => filter.EmployeeIDs.Contains(x.EmployeeId));
-
-            if (filter.EmployeeStatuses?.Any() != true)
-                filter.EmployeeStatuses = new List<string> { "Active" };  // Default to "Active"
-            
-            if (filter.EmployeeStatuses?.Any() == true)
-                query = query.Where(x => filter.EmployeeStatuses.Contains(x.EmployeeStatusName));
-
-            var filteredData = await query.ToListAsync();
-
-            result.Employees = filteredData.Select(x => new EmployeeListItemViewModel
-            {
-                EmployeeId = x.EmployeeId,
-                EmployeeName = string.Join(" ", new[] { x.FirstName, x.LastName }.Where(n => !string.IsNullOrWhiteSpace(n))),
-                JoiningDate = x.JoiningDate.HasValue ? x.JoiningDate.Value.ToString("dd/MM/yyyy") : "",
-                DesignationName = x.DesignationName ?? "",
-                DepartmentName = x.DepartmentName ?? "",
-                BranchName = x.BranchName ?? "",
-                CompanyName = x.CompanyName ?? "",
-                EmployeeTypeName = x.EmployeeTypeName ?? "",
-                EmployeeStatus = x.EmployeeStatusName ?? ""
-            }).ToList();
-
-            result.LookupData["companies"] = filteredData
-                .Where(x => x.CompanyCode != null && x.CompanyName != null)
-                .Select(x => new LookupItemDto { Code = x.CompanyCode, Name = x.CompanyName })
-                .Distinct()
-                .ToList();
-
-            result.LookupData["branches"] = filteredData
-                .Where(x => x.BranchCode != null && x.BranchName != null)
-                .Select(x => new LookupItemDto { Code = x.BranchCode, Name = x.BranchName })
-                .Distinct()
-                .ToList();
-
-            result.LookupData["departments"] = filteredData
-                .Where(x => x.DepartmentCode != null && x.DepartmentName != null)
-                .Select(x => new LookupItemDto { Code = x.DepartmentCode, Name = x.DepartmentName })
-                .Distinct()
-                .ToList();
-
-            result.LookupData["designations"] = filteredData
-                .Where(x => x.DesignationCode != null && x.DesignationName != null)
-                .Select(x => new LookupItemDto { Code = x.DesignationCode, Name = x.DesignationName })
-                .Distinct()
-                .ToList();
-
-            result.LookupData["employees"] = filteredData
-                .Where(x => x.EmployeeId != null && x.FirstName != null)
-                .Select(x => new LookupItemDto
-                {
-                    Code = x.EmployeeId,
-                    Name = string.Join(" ", new[] { x.FirstName, x.LastName }.Where(n => !string.IsNullOrWhiteSpace(n))) + $" ({x.EmployeeId})"
-                })
-                .Distinct()
-                .ToList();
-
-            result.LookupData["employeeStatuses"] = filteredData
-                .Where(x => !string.IsNullOrWhiteSpace(x.EmployeeStatusName))
-                .Select(x => new LookupItemDto { Code = x.EmployeeStatusName, Name = x.EmployeeStatusName })
-                .Distinct()
-                .ToList();
-
-            return result;
-        }
-
+        
         public async Task<(List<HrmWorkingDayDeclarationViewModel> Data, int TotalRecords)> GetPaginatedDataAsync(string searchValue, int page, int pageSize, string sortColumn, string sortDirection)
         {
             var query = from d in declarationRepository.All().AsNoTracking()

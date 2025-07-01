@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GCTL.Core.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -80,7 +81,7 @@ namespace GCTL.Core.ViewModels.HrmPayMonthlyOtEntries
         public List<string> DepartmentCodes { get; set; }
         public List<string> DesignationCodes { get; set; }
         public List<string> EmployeeIDs { get; set; }
-        public List<string> DeductionTypeIDs { get; set; }
+        //public List<string> DeductionTypeIDs { get; set; }
         public List<string> MonthIDs { get; set; }
         public string SalaryYear { get; set; } = DateTime.Now.Year.ToString();
     }

@@ -145,7 +145,6 @@ namespace GCTL.UI.Core.Controllers
                 new PageMargin { Top = 518, Right = 518, Bottom = 518, Left = 518 }
             );
 
-
             TableCell CreateCell(string text, int width, bool bold = false, TableCellBorders borders = null, bool centerAlign = false, bool rightAlign = false)
             {
                 var props = new TableCellProperties(
