@@ -9,7 +9,9 @@ namespace GCTL.Service.EmployeeLoanInformationReport
 {
     public interface IEmployeeLoanInformationReportServices
     {
-        Task<List<EmployeeLoanInformationReportVM>> GetLoanDetailsByEmployeeIdAsync(string employeeId);
-        Task<List<EmployeeBasicInfoVM>> GetDistinctLoanEmployeesAsync();
+        //Task<List<EmployeeLoanInformationReportVM>> GetLoanDetailsByEmployeeIdAsync(string employeeId);
+        //Task<List<EmployeeBasicInfoVM>> GetDistinctLoanEmployeesAsync();
+        //Task<List<EmployeeLoanReportResponseVM>> GetLoanDetailsAsync(LoanFilterVM filter);
+        Task<EmployeeLoanReportResponseVM> GetLoanDetailsAsync(LoanFilterVM filter);
     }
 }

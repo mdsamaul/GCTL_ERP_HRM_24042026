@@ -549,6 +549,7 @@ namespace GCTL.Service.HRMPayrollLoan
                     BankId = modelData.BankId,
                     BankAccount = modelData.BankAccount,
                     Remarks = modelData.Remarks,
+                    ReasonOfLoanTaken = modelData.ReasonOfLoanTaken,
                     CompanyCode = modelData.CompanyCode,
                     Luser = modelData.Luser,
                     Lip = modelData.Lip,
@@ -583,6 +584,7 @@ namespace GCTL.Service.HRMPayrollLoan
                     loanData.BankId = modelData.BankId;
                     loanData.BankAccount = modelData.BankAccount;
                     loanData.Remarks = modelData.Remarks;
+                loanData.ReasonOfLoanTaken = modelData.ReasonOfLoanTaken;
                     loanData.CompanyCode = modelData.CompanyCode;
                 loanData.ModifyDate = modelData.Ldate;
                 await payrollLoanRepo.UpdateAsync(loanData);

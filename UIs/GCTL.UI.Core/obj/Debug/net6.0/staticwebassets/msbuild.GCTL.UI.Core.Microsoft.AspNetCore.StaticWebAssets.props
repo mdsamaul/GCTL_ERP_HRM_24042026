@@ -37686,8 +37686,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>rn9z44bhe0</Fingerprint>
-      <Integrity>px8wpWqw+WpZWx1a4OzmeZXBR4H4l0Y1V1VJ7xmKN84=</Integrity>
+      <Fingerprint>yz96vpjzi4</Fingerprint>
+      <Integrity>4hQEoPWfQPjINslSW8NgLvsYwIxnM+JKyg7542tcenY=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\EmployeeLoanInformationReport.js'))</OriginalItemSpec>
@@ -38046,8 +38046,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>6j6yw4pdmq</Fingerprint>
-      <Integrity>bipZ3GIAdoOQ0OtbAeDUbV6AZsSpjqwXFirwCQRzUss=</Integrity>
+      <Fingerprint>fv8jf8ehcr</Fingerprint>
+      <Integrity>VZ3fLIZe9ru1vZ9I7Qk+JIR7tdlHIH8SfVZ6VBuTNL0=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\HRMPayrollLoan.js'))</OriginalItemSpec>

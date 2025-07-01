@@ -1,4 +1,5 @@
-﻿using GCTL.Service.EmployeeLoanInformationReport;
+﻿using GCTL.Core.ViewModels.EmployeeLoanInformationReport;
+using GCTL.Service.EmployeeLoanInformationReport;
 using GCTL.UI.Core.ViewModels.EmployeeLoanInformationReport;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,23 +23,31 @@ namespace GCTL.UI.Core.Controllers
             };
             return View(model);
         }
-
         [HttpGet]
-        public async Task<IActionResult> GetLoanDetails(string employeeId)
+        public async Task<IActionResult> GetLoanDetails([FromQuery] LoanFilterVM filter)
         {
-            //if (string.IsNullOrEmpty(employeeId))
-            //    return BadRequest("Employee ID is required");
-
-            var data = await employeeLoanInformationReportServices.GetLoanDetailsByEmployeeIdAsync(employeeId);
+            var data = await employeeLoanInformationReportServices.GetLoanDetailsAsync(filter);
             return Json(data);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetLoanEmployees()
-        {
-            var data = await employeeLoanInformationReportServices.GetDistinctLoanEmployeesAsync(); 
-            return Json(data);
-        }
+
+
+        //[HttpGet]
+        //public async Task<IActionResult> GetLoanDetails(string employeeId)
+        //{
+        //    //if (string.IsNullOrEmpty(employeeId))
+        //    //    return BadRequest("Employee ID is required");
+
+        //    var data = await employeeLoanInformationReportServices.GetLoanDetailsByEmployeeIdAsync(employeeId);
+        //    return Json(data);
+        //}
+
+        //[HttpGet]
+        //public async Task<IActionResult> GetLoanEmployees()
+        //{
+        //    var data = await employeeLoanInformationReportServices.GetDistinctLoanEmployeesAsync(); 
+        //    return Json(data);
+        //}
 
     }
 }

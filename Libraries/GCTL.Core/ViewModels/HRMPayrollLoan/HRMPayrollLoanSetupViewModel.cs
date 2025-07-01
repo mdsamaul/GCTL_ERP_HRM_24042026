@@ -29,6 +29,7 @@ namespace GCTL.Core.ViewModels.HRMPayrollLoan
         public string BankId { get; set; }
         public string BankAccount { get; set; }
         public string Remarks { get; set; }       
+        public string ReasonOfLoanTaken { get; set; }       
         public string CompanyCode { get; set; }
         public string ShowLoanDate { get; set; }
         public string EmpName { get; set; }

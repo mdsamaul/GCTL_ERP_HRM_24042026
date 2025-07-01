@@ -10,6 +10,8 @@ namespace GCTL.Core.ViewModels.EmployeeLoanInformationReport
     {
         public string EmployeeID { get; set; }
         public string FullName { get; set; }
+        public string DepartmentName { get; set; }
+        public string DesignationName { get; set; }
     }
 
 }
