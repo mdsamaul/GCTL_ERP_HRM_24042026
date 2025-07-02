@@ -1,5 +1,39 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model GCTL.UI.Core.ViewModels.HrmServiceNotConfirmationEntry.HrmServiceNotConfirmationPageViewModel
+
 @{
+	ViewBag.Title = "HrmServiceNotConfirmationEntry";
+	Model.PageTitle = "Service Not Confirmation Entry";
 }
+
+<div class="container-fluid">
+	<partial name="_PageHeader" model="Model"></partial>
+</div>
+<section class="container-fluid">
+	<div class="row px-2">
+        <div class="col-md-12">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-white py-3">
+                    <partial name="_Toolbars" model="new ToobarModel() { Title = Model.Breadcrumb, Code = Model.Code, Name = Model.Setup.Sncid }"></partial>
+                </div>
+
+
+
+                
+                <hr class="my-4" />
+                <div class="card-body">
+                    <div id="monthlyOtForm">
+                        <partial name="_Setup"></partial>
+                    </div>
+
+                    @* <div>
+                        <partial name="_ExcelFileUpload"></partial>
+                    </div> *@
+                    <div class="col-md-12">
+                        <partial name="_Grid" />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+	</div>
+</section>

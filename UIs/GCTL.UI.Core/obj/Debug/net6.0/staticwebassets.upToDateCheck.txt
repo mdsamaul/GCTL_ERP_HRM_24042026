@@ -2115,6 +2115,7 @@ wwwroot\js\pages\hrmEmpSalaryInfoEntry.js
 wwwroot\js\pages\hrmEmpSalaryInfoReport.js
 wwwroot\js\pages\hrmPayDefDeductionType.js
 wwwroot\js\pages\HRMPayrollLoan.js
+wwwroot\js\pages\HrmServiceNotConfirm.js
 wwwroot\js\pages\hrmWorkingDayDeclaration.js
 wwwroot\js\pages\hrmWorkingDayDeclarationReport.js
 wwwroot\js\pages\inPatientBills.js
