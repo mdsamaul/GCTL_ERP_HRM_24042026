@@ -41,77 +41,6 @@ namespace GCTL.Service.EmployeeLoanInformationReport
             this.paymentRepo = paymentRepo;
             this.configuration = configuration;
         }
-
-        //public async Task<List<EmployeeLoanInformationReportVM>> GetLoanDetailsAsync(LoanFilterVM filter)
-        //{
-        //    try
-        //    {
-        //        var result = new List<EmployeeLoanInformationReportVM>();
-
-        //        using var conn = new SqlConnection(configuration.GetConnectionString("ApplicationDbConnection"));
-        //        await conn.OpenAsync();
-
-        //        using var cmd = new SqlCommand("EmployeeLoanInformationReport", conn);
-        //        cmd.CommandType = CommandType.StoredProcedure;
-
-        //        cmd.Parameters.AddWithValue("@CompanyID", (object)filter.CompanyID ?? DBNull.Value);
-        //        cmd.Parameters.AddWithValue("@EmployeeID", (object)filter.EmployeeID ?? DBNull.Value);
-        //        cmd.Parameters.AddWithValue("@LoanID", (object)filter.LoanID ?? DBNull.Value);
-        //        cmd.Parameters.AddWithValue("@DateFrom", (object)filter.DateFrom ?? DBNull.Value);
-        //        cmd.Parameters.AddWithValue("@DateTo", (object)filter.DateTo ?? DBNull.Value);
-
-        //        using var reader = await cmd.ExecuteReaderAsync();
-        //        var loandDict = new Dictionary<string, EmployeeLoanInformationReportVM>();
-
-        //        while (await reader.ReadAsync())
-        //        {
-        //            string loanId = reader["LoanID"] as string;
-
-        //            if (!loandDict.ContainsKey(loanId))
-        //            {
-        //                var loanVm = new EmployeeLoanInformationReportVM
-        //                {
-        //                    LoanID = loanId,
-        //                    EmployeeID = reader["EmployeeID"].ToString(),
-        //                    FullName = reader["FullName"].ToString(),
-        //                    DepartmentName = reader["DepartmentName"].ToString(),
-        //                    DesignationName = reader["DesignationName"].ToString(),
-        //                    Reason = reader["Reason"]?.ToString() ?? "",
-        //                    TotalLoans = Convert.ToInt32(reader["TotalLoans"]),
-        //                    LoanAmount = Convert.ToDecimal(reader["LoanAmount"]),
-        //                    PaymentMode = reader["PaymentMode"].ToString(),
-        //                    CompanyName = reader["CompanyName"].ToString(),
-        //                    StartDate = Convert.ToDateTime(reader["StartDate"]),
-        //                    EndDate = Convert.ToDateTime(reader["EndDate"]),
-        //                    InstallmentDetails = reader["Installment Details"]?.ToString() ?? "",
-        //                    LoanRepaymentMethod = reader["LoanRepaymentMethod"].ToString(),
-        //                    Remarks = reader["Remarks"].ToString(),
-        //                    Installments = new List<InstallmentVM>()
-        //                };
-
-        //                loandDict.Add(loanId, loanVm);
-        //            }
-
-        //            var installment = new InstallmentVM
-        //            {
-        //                InstallmentNo = Convert.ToInt32(reader["InstallmentNo"]),
-        //                InstallmentDate = reader["InstallmentDate"]?.ToString() ?? "",
-        //                PaymentMode = reader["PaymentMode"]?.ToString() ?? "",
-        //                Deposit = Convert.ToDecimal(reader["Deposit"]),
-        //                OutstandingBalance = Convert.ToDecimal(reader["Outstanding Balance"])
-        //            };
-
-        //            loandDict[loanId].Installments.Add(installment);
-        //        }
-
-        //        return loandDict.Values.ToList();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw;
-        //    }
-        //}
-
         public async Task<EmployeeLoanReportResponseVM> GetLoanDetailsAsync(LoanFilterVM filter)
         {
             try
@@ -200,18 +129,17 @@ namespace GCTL.Service.EmployeeLoanInformationReport
                         }
                         var installment = new InstallmentVM
                         {
-                            InstallmentNo = Convert.ToInt32(reader["InstallmentNo"]),
-                            InstallmentDate = reader.IsDBNull(reader.GetOrdinal("InstallmentDate"))
-                            ? ""
-                            : DateTime.Parse(reader.GetString(reader.GetOrdinal("InstallmentDate"))).ToString("dd/MM/yyyy"),
+                            InstallmentNo = Convert.ToInt32(reader["InstallmentNo"]),                           
+                            InstallmentDate = reader.IsDBNull(reader.GetOrdinal("InstallmentDate"))? "": reader.GetString(reader.GetOrdinal("InstallmentDate")).ToString(),
                             PaymentMode = reader["PaymentMode"].ToString() ?? "",
                             Deposit = Convert.ToDecimal(reader["Deposit"]),
                             OutstandingBalance = Convert.ToDecimal(reader["Outstanding Balance"])
                         };
+                    loanDict[loanId].Installments.Add(installment);                  
 
-                    }
+                }
 
-                    response.LoanReports = loanDict.Values.ToList();
+                response.LoanReports = loanDict.Values.ToList();
                     response.Companies = companySet.Values.ToList();
                     response.LoanIDs = loanIdSet.ToList();
                     return response;
@@ -222,114 +150,5 @@ namespace GCTL.Service.EmployeeLoanInformationReport
                 throw e;
             }
         }
-
-
-
-
-        //    public async Task<List<EmployeeLoanInformationReportVM>> GetLoanDetailsByEmployeeIdAsync(string employeeId)
-        //    {
-        //        try
-        //        {
-        //            var result = new List<EmployeeLoanInformationReportVM>();
-
-        //            using var conn = new SqlConnection(configuration.GetConnectionString("ApplicationDbConnection"));
-        //            await conn.OpenAsync();
-
-        //            using var cmd = new SqlCommand("EmployeeLoanInformationReport", conn);
-
-        //            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-        //            cmd.Parameters.AddWithValue("@EmployeeID", employeeId ?? "");
-
-        //            using var reader = await cmd.ExecuteReaderAsync();
-
-        //            var loandDict = new Dictionary<string, EmployeeLoanInformationReportVM>();
-
-        //            while (await reader.ReadAsync())
-        //            {
-        //                string loanId = reader.IsDBNull(reader.GetOrdinal("LoanID")) ? null : reader.GetString(reader.GetOrdinal("LoanID"));
-
-
-        //                if (!loandDict.ContainsKey(loanId))
-        //                {
-        //                    var loanVm = new EmployeeLoanInformationReportVM
-        //                    {
-        //                        LoanID = loanId,
-        //                        EmployeeID = reader.GetString(reader.GetOrdinal("EmployeeID")),
-        //                        FullName = reader.GetString(reader.GetOrdinal("FullName")),
-        //                        DepartmentName = reader.GetString(reader.GetOrdinal("DepartmentName")),
-        //                        DesignationName = reader.GetString(reader.GetOrdinal("DesignationName")),
-        //                        Reason = reader.IsDBNull(reader.GetOrdinal("Reason")) ? "" : reader.GetString(reader.GetOrdinal("Reason")),
-        //                        TotalLoans = reader.GetInt32(reader.GetOrdinal("TotalLoans")),
-        //                        LoanAmount = reader.GetDecimal(reader.GetOrdinal("LoanAmount")),
-        //                        PaymentMode = reader.GetString(reader.GetOrdinal("PaymentMode")),
-        //                        CompanyName = reader.GetString(reader.GetOrdinal("CompanyName")),
-        //                        StartDate = reader.GetDateTime(reader.GetOrdinal("StartDate")),
-        //                        EndDate = reader.GetDateTime(reader.GetOrdinal("EndDate")),
-        //                        InstallmentDetails = reader.IsDBNull(reader.GetOrdinal("Installment Details")) ? "" : reader.GetString(reader.GetOrdinal("Installment Details")),
-        //                        LoanRepaymentMethod = reader.GetString(reader.GetOrdinal("LoanRepaymentMethod")),
-        //                        Remarks = reader.GetString(reader.GetOrdinal("Remarks")),
-        //                        Installments = new List<InstallmentVM>()
-        //                    };
-
-        //                    loandDict.Add(loanId, loanVm);
-        //                }
-        //                var installment = new InstallmentVM
-        //                {
-        //                    InstallmentNo = reader.GetInt32(reader.GetOrdinal("InstallmentNo")),
-        //                    InstallmentDate = reader.IsDBNull(reader.GetOrdinal("InstallmentDate"))
-        //? ""
-        //: DateTime.Parse(reader.GetString(reader.GetOrdinal("InstallmentDate"))).ToString("dd/MM/yyyy"),
-        //                    PaymentMode = reader.IsDBNull(reader.GetOrdinal("PaymentMode")) ? "" : reader.GetString(reader.GetOrdinal("PaymentMode")),
-        //                    Deposit = reader.GetDecimal(reader.GetOrdinal("Deposit")),
-        //                    OutstandingBalance = reader.GetDecimal(reader.GetOrdinal("Outstanding Balance"))
-        //                };
-        //                loandDict[loanId].Installments.Add(installment);
-        //            }
-        //            return loandDict.Values.ToList();
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            throw;
-        //        }
-        //   }
-        //public async Task<List<EmployeeBasicInfoVM>> GetDistinctLoanEmployeesAsync()
-        //{
-        //    try
-        //    {
-        //        var result = new List<EmployeeBasicInfoVM>();
-
-        //        using var conn = new SqlConnection(configuration.GetConnectionString("ApplicationDbConnection"));
-        //        await conn.OpenAsync();
-
-        //        string query = @"
-        //    SELECT DISTINCT 
-        //        em.EmployeeID, 
-        //        em.FirstName + ' ' + em.LastName AS FullName
-        //    FROM HRM_Payroll_Loan pl
-        //    INNER JOIN HRM_Employee em ON em.EmployeeID = pl.EmployeeID
-        //";
-
-        //        using var cmd = new SqlCommand(query, conn);
-        //        using var reader = await cmd.ExecuteReaderAsync();
-
-        //        while (await reader.ReadAsync())
-        //        {
-        //            var employee = new EmployeeBasicInfoVM
-        //            {
-        //                EmployeeID = reader.GetString(reader.GetOrdinal("EmployeeID")),
-        //                FullName = reader.GetString(reader.GetOrdinal("FullName"))
-        //            };
-        //            result.Add(employee);
-        //        }
-
-        //        return result;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw; 
-        //    }
-        //}
-
-
     }
 }

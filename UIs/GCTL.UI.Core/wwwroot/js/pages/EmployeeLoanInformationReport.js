@@ -5,40 +5,7 @@
         }, options);
 
         var filterUrl = commonName.baseUrl + "/GetLoanDetails";
-        var GetLoanEmployeesUrl = commonName.baseUrl + "/GetLoanEmployees";
-
-        
-
-        //loadEmployeeLoanReport = function (companyId, employeeId, loanId, dateFrom, dateTo) {
-        //    //var companyId = $("#companyId").val()?.trim();
-        //    //var employeeId = $("#employeeId").val()?.trim();
-        //    //var loanId = $("#loanId").val()?.trim();
-        //    //var dateFrom = $("#dateFrom").val();
-        //    //var dateTo = $("#dateTo").val();
-
-
-        //    $.ajax({
-        //        url: filterUrl,
-        //        type: "GET",
-        //        data: {
-        //            CompanyID: companyId,
-        //            EmployeeID: employeeId,
-        //            LoanID: loanId,
-        //            DateFrom: dateFrom,
-        //            DateTo: dateTo
-        //        },
-        //        success: function (data) {
-        //            console.log(data);
-        //            DropdownAppendCompany(data.companies);
-        //            DropdownAppendLoanType(data.loanIDs);
-        //            DropdownAppendEmployee(data.employees);
-        //        },
-        //        error: function () {
-        //            alert("Error fetching data");
-        //        }
-        //    });
-        //}
-
+        var GenerateExcelUrl = commonName.baseUrl + "/GenerateExcel";
         loadEmployeeLoanReport = function (companyId = null, employeeId = null, loanId = null, dateFrom = null, dateTo = null) {
             $.ajax({
                 url: filterUrl,
@@ -51,7 +18,6 @@
                     DateTo: dateTo
                 },
                 success: function (data) {
-                    console.log("AJAX data:", data);
                     DropdownAppendCompany(data.companies);
                     DropdownAppendLoanType(data.loanIDs);
                     DropdownAppendEmployee(data.employees);
@@ -63,11 +29,9 @@
         }
 
         DropdownAppendCompany = function (dropdownDataCompany) {
-            console.log(dropdownDataCompany);
             window.dropdownDataCompany = dropdownDataCompany;
 
             if (!dropdownDataCompany || !Array.isArray(dropdownDataCompany)) {
-                console.log("Invalid company data");
                 return;
             }
 
@@ -76,8 +40,6 @@
             $optionContainer.empty();
 
             dropdownDataCompany.forEach((company, index) => {
-                console.log(company);
-
                 const $option = $('<div class="multiselect-option"></div>')
                     .text(company.companyName)
                     .attr("data-value", company.companyCode);
@@ -92,7 +54,6 @@
                     // Call load report on selection with company code
                     loadEmployeeLoanReport(company.companyCode, null, null, null, null);
 
-                    console.log("Company selected:", company.companyCode);
                 });
 
                 $optionContainer.append($option);
@@ -112,24 +73,19 @@
             $container.find(".multiselect-dropdown").hide();
             $container.find(".multiselect-arrow").removeClass("rotate");
             $container.find("#companyId").val(code);
-            console.log("Company code selected:", code);
             setTextClear();
-            const $containerLoan = $('[data-field="loanType"]'); // loanType dropdown container
-            $containerLoan.find(".multiselect-options").empty();  // option গুলো মুছে ফেলো
-            $containerLoan.find(".selected-items").text('');      // selected value খালি করো
-            $containerLoan.find(".placeholder-text").show();      // placeholder আবার দেখাও
+            const $containerLoan = $('[data-field="loanType"]'); 
+            $containerLoan.find(".multiselect-options").empty(); 
+            $containerLoan.find(".selected-items").text('');     
+            $containerLoan.find(".placeholder-text").show();     
 
-            // Optional: loan type এর hidden input খালি করতে চাইলে
-            $containerLoan.find("#loanTypeId").val(''); // যদি থাকে hidden input
-            // Call load report on initial set
-            //loadEmployeeLoanReport(code, null, null, null, null);
+            $containerLoan.find("#loanTypeId").val('');
             setTextClear();
-            // employee dropdown খালি করা
             const $containerEmployee = $('[data-field="employeeId"]');
             $containerEmployee.find(".multiselect-options").empty();
             $containerEmployee.find(".selected-items").text('');
             $containerEmployee.find(".placeholder-text").show();
-            $containerEmployee.find("#employeeId").val(''); // hidden input থাকলে খালি করো
+            $containerEmployee.find("#employeeId").val(''); 
         }
 
         // Search company
@@ -160,10 +116,6 @@
                         $container.find(".multiselect-dropdown").hide();
                         $container.find(".multiselect-arrow").removeClass("rotate");
                         $container.find("#companyId").val(company.companyCode);
-
-                        //loadEmployeeLoanReport(company.companyCode, null, null, null, null);
-
-                        console.log("Company selected from search:", company.companyCode);
                     });
 
                     $optionContainer.append($option);
@@ -176,10 +128,8 @@
             const $container = $(this).closest('[data-field="companyId"]');
             const $dropdown = $container.find(".multiselect-dropdown");
             const $arrow = $container.find(".multiselect-arrow");
-
             $(".multiselect-dropdown").not($dropdown).hide();
             $(".multiselect-arrow").not($arrow).removeClass("rotate");
-
             $dropdown.toggle();
             $arrow.toggleClass("rotate", $dropdown.is(":visible"));
         });
@@ -200,25 +150,19 @@
             $container.find(".multiselect-dropdown").hide();
             $container.find(".multiselect-arrow").removeClass("rotate");
 
-            // Hidden field থাকলে সেটাও সেট করতে পারো
-            // $container.find("#loanTypeId").val(value);
-            console.log("loan id ",value);
             let companyId = $('[data-field="companyId"] .selected-items').attr("data-id");
-            console.log("Selected Company ID from data-id:", companyId);
             setTextClear();
             const $containerEmployee = $('[data-field="employeeId"]');
             $containerEmployee.find(".multiselect-options").empty();
             $containerEmployee.find(".selected-items").text('');
             $containerEmployee.find(".placeholder-text").show();
-            $containerEmployee.find("#employeeId").val(''); // hidden input থাকলে খালি করো
-          
+            $containerEmployee.find("#employeeId").val(''); 
             loadEmployeeByLoanIdAndCompanyIdReport(companyId, null, value, null, null);
          
 
         }
 
         DropdownAppendLoanType = function (loanTypesArray) {
-            console.log(loanTypesArray);
             window.dropdownLoanTypes = loanTypesArray;
 
             const $container = $('[data-field="loanType"]');
@@ -236,10 +180,6 @@
 
                 $optionContainer.append($option);
 
-                // ✅ Default select first one
-                //if (index === 0) {
-                //    setLoanTypeSelection($container, loanId);
-                //}
             });
         };
 
@@ -309,7 +249,6 @@
                     DateTo: dateTo
                 },
                 success: function (data) {
-                    console.log("AJAX data:", data);
                     DropdownAppendEmployee(data.employees);
                 },
                 error: function () {
@@ -319,12 +258,12 @@
         }
 
         function setEmployeeSelection($container, employee) {
-            const empText = `${employee.fullName} (${employee.employeeID})`; // ✅ display text
-            const empId = employee.employeeID; // ✅ employee ID
+            const empText = `${employee.fullName} (${employee.employeeID})`; 
+            const empId = employee.employeeID; 
 
             $container.find(".selected-items")
                 .text(empText)
-                .attr("data-value", empId); // ✅ set employee ID as data-value
+                .attr("data-value", empId); 
 
             $container.find(".placeholder-text").hide();
             $container.find(".multiselect-dropdown").hide();
@@ -332,10 +271,9 @@
 
             let companyId = $('[data-field="companyId"] .selected-items').attr("data-id") || '';
             let loanId = $('[data-field="loanType"] .selected-items').text() || '';
+            dateFromPicker.clear();
+            toDatePicker.clear();
 
-            console.log("📦 Selected Company ID:", companyId);
-            console.log("💸 Selected Loan ID:", loanId);
-            console.log("👨‍💼 Selected Employee:", empId);
 
             // Call the report loader
             loadEmployeeDetailsByEmployeeIdLoanIdAndCompanyIdReport(companyId, empId, loanId, null, null);
@@ -343,7 +281,6 @@
 
 
         DropdownAppendEmployee = function (employeeList) {
-            console.log(employeeList);
             window.dropdownEmployees = employeeList;
 
             const $container = $('[data-field="employeeId"]');
@@ -362,11 +299,6 @@
                 });
 
                 $optionContainer.append($option);
-
-                // ✅ Default select first employee
-                //if (index === 0) {
-                //    setEmployeeSelection($container, emp);
-                //}
             });
         };
 
@@ -397,11 +329,8 @@
             const searchTerm = $(this).val().toLowerCase().trim();
             const $container = $(this).closest('[data-field="employeeId"]');
             const $optionContainer = $container.find(".multiselect-options");
-
             const allEmployees = window.dropdownEmployees || [];
-
             $optionContainer.empty();
-
             const filtered = allEmployees.filter(emp =>
                 emp.fullName.toLowerCase().includes(searchTerm) ||
                 emp.employeeID.toLowerCase().includes(searchTerm)
@@ -426,11 +355,12 @@
             }
         });
 
-
         setTextClear = function () {
             $("#showEmployeeName").text('');
             $("#showDepartmentName").text('');
-            $("#showDesignationName").text('');
+            $("#showDesignationName").text(''); 
+            dateFromPicker.clear();
+            toDatePicker.clear();
         }
 
         loadEmployeeDetailsByEmployeeIdLoanIdAndCompanyIdReport = function (companyId = null, employeeId = null, loanId = null, dateFrom = null, dateTo = null) {
@@ -445,30 +375,28 @@
                     DateTo: dateTo
                 },
                 success: function (data) {
-                    console.log("AJAX data:", data);
                     //DropdownAppendEmployee(data.employees);
                     var empData = data.employees;
-                    console.log(empData);
-                    $("#showEmployeeName").text(empData[0].fullName);
-                    $("#showDepartmentName").text(empData[0].departmentName);
-                    $("#showDesignationName").text(empData[0].designationName);
+                    $("#showEmployeeName").text(empData[0].fullName??"");
+                    $("#showDepartmentName").text(empData[0].departmentName??"");
+                    $("#showDesignationName").text(empData[0].designationName ?? "");
+                    DropdownAppendLoanType(data.loanIDs);
+                    console.log(data);
                 },
                 error: function () {
                     alert("Error fetching data");
                 }
             });
-        }
+        }      
 
-
-
-        flatpickr("#dateFrom", {
+        const dateFromPicker = flatpickr("#dateFrom", {
             altInput: true,
-            altFormat: "d/m/Y",   // ইউজার যা দেখবে
-            dateFormat: "Y-m-d",  // যা যাবে controller-এ
+            altFormat: "d/m/Y",
+            dateFormat: "Y-m-d",
             allowInput: true
         });
 
-        flatpickr("#toDate", {
+        const toDatePicker = flatpickr("#toDate", {
             altInput: true,
             altFormat: "d/m/Y",
             dateFormat: "Y-m-d",
@@ -476,213 +404,184 @@
         });
 
 
-        
-        $(document).on('click', "#downloadReport", function () {
+        let isDownloadPdf = false;
+        let isDownloadExcel = false;
+        let isDownloadWord = false;
+        let isPreviewPdf = false;
+        $(document).on('click', "#btnPreview", function () {
+            console.log("click preview");
+            isPreviewPdf = true;
             let companyId = $('[data-field="companyId"] .selected-items').attr("data-id");
             const loanId = $('[data-field="loanType"] .selected-items').text();
-            const employeeId = $('[data-field="employeeId"] .selected-items').attr("data-value"); // ✅ correct way
-
-            console.log("📦 Company ID:", companyId);
-            console.log("💸 Loan ID:", loanId);
-            console.log("👨‍💼 Employee ID:", employeeId);
+            const employeeId = $('[data-field="employeeId"] .selected-items').attr("data-value");
 
             let dateFrom = $("#dateFrom").val();
             let toDate = $("#toDate").val();
-            console.log("📅 Date From:", dateFrom);
-            console.log("📅 To Date:", toDate);
+            loadEmployeeDetailsDocumentReport(companyId, employeeId, loanId, dateFrom, toDate);
+        })
+        $(document).on('click', "#downloadReport", function () {
+            let companyId = $('[data-field="companyId"] .selected-items').attr("data-id");
+            const loanId = $('[data-field="loanType"] .selected-items').text();
+            const employeeId = $('[data-field="employeeId"] .selected-items').attr("data-value");
+            
+            let dateFrom = $("#dateFrom").val();
+            let toDate = $("#toDate").val();
+
+            console.log($("#reportText").val());
+            var downloadText = $("#reportText").val();
+            if (downloadText === "downloadPdf") {
+                isDownloadPdf = true;
+                isDownloadExcel = false;
+                isDownloadWord = false;
+                isPreviewPdf = false;
+            } else if (downloadText === "downloadExcel") {
+                isDownloadPdf = false;
+                isDownloadExcel = true;
+                isDownloadWord = false;
+                isPreviewPdf = false;
+            } else if (downloadText === "downloadWord") {
+                isDownloadPdf = false;
+                isDownloadExcel = false;
+                isDownloadWord = true;
+                isPreviewPdf = false;
+            } else {
+                isDownloadPdf = true;
+                isDownloadExcel = false;
+                isDownloadWord = false;
+                isPreviewPdf = false;
+            }
+            loadEmployeeDetailsDocumentReport(companyId, employeeId, loanId, dateFrom, toDate);
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        $("#btnDownloadPDF1").click(function () {
-            var empId = $("#employeeIdOption").val().trim();
-            console.log(empId);
+        
+       
+        loadEmployeeDetailsDocumentReport = function (companyId = null, employeeId = null, loanId = null, dateFrom = null, dateTo = null) {
             $.ajax({
                 url: filterUrl,
-                type: 'GET',
-                data: { employeeId: empId },
+                type: "GET",
+                data: {
+                    CompanyID: companyId,
+                    EmployeeID: employeeId,
+                    LoanID: loanId,
+                    DateFrom: dateFrom,
+                    DateTo: dateTo
+                },
                 success: function (data) {
-                    if (!data || data.length === 0) {
-                        alert("No data found");
-                        $("#loanInfo").empty();
-                        $("#btnDownloadPDF").hide();
-                        return;
-                    }
 
-                    window.loanData = data; 
-
-                    $("#loanInfo").empty();
-
-                    data.forEach(function (loan, index) {
-                        let totalDeposit = 0;
-                        let installmentRows = "";
-
-                        $.each(loan.installments, function (i, inst) {
-                            totalDeposit += inst.deposit;
-
-                            installmentRows += `
-                                <tr>
-                                    <td>${inst.installmentNo}</td>
-                                    <td>${new Date(inst.installmentDate).toLocaleDateString()}</td>
-                                    <td>${inst.paymentMode || ""}</td>
-                                    <td>BDT ${inst.deposit.toFixed(2)}</td>
-                                    <td>BDT ${inst.outstandingBalance.toFixed(2)}</td>
-                                </tr>
-                            `;
-                        });
-
-                        
-                        let loanHtml = `
-                            <div class="loan-block" style="border:1px solid #ddd; padding:15px; margin-bottom:15px;">
-                                <h3 style="text-align:center;">${loan.companyName}</h3>
-                                <p><strong>Employee ID:</strong> ${loan.employeeID}</p>
-                                <p><strong>Name:</strong> ${loan.fullName}</p>
-                                <p><strong>Department:</strong> ${loan.departmentName}</p>
-                                <p><strong>Designation:</strong> ${loan.designationName}</p>
-                                <p><strong>Reason:</strong> ${loan.reason || ""}</p>
-                                <p><strong>Loan ID:</strong> ${loan.totalLoans}</p>
-                                <p><strong>Loan Amount:</strong> BDT ${loan.loanAmount.toFixed(2)}</p>
-                                <p><strong>Start Date:</strong> ${new Date(loan.startDate).toLocaleDateString()}</p>
-                                <p><strong>End Date:</strong> ${new Date(loan.endDate).toLocaleDateString()}</p>
-                                <p><strong>Installment Details:</strong> ${loan.installmentDetails || ""}</p>
-                                <p><strong>Remarks:</strong> ${loan.remarks || ""}</p>
-                                <h6>Installments</h6>
-                                <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; border-collapse: collapse;">
-                                    <thead>
-                                        <tr>
-                                            <th>Installment No</th>
-                                            <th>Date</th>
-                                            <th>Payment Mode</th>
-                                            <th>Deposit</th>
-                                            <th>Outstanding Balance</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        ${installmentRows}
-                                    </tbody>
-                                </table>
-                                <p><strong>Total Deposit:</strong> BDT ${totalDeposit.toFixed(2)}</p>
-                            </div>
-                        `;
-
-                        $("#loanInfo").append(loanHtml);
-                    });
-
-                    $("#btnDownloadPDF").show();
+                    if (isDownloadPdf) {
+                        GeneratePdf(data.loanReports);
+                        isDownloadPdf = false;
+                        isDownloadExcel = false;
+                        isDownloadWord = false;
+                        isPreviewPdf = false;
+                    } else if (isDownloadExcel) {
+                        GenerateExcel(data.loanReports);
+                        isDownloadPdf = false;
+                        isDownloadExcel = false;
+                        isDownloadWord = false;
+                        isPreviewPdf = false;
+                    } else if (isDownloadWord) {
+                        GenerateWordDocument(data.loanReports);
+                        isDownloadPdf = false;
+                        isDownloadExcel = false;
+                        isDownloadWord = false;
+                        isPreviewPdf = false;
+                    } else {
+                        GeneratePdf(data.loanReports);
+                        isDownloadPdf = false;
+                        isDownloadExcel = false;
+                        isDownloadWord = false;
+                        isPreviewPdf = false;
+                    }                   
                 },
                 error: function () {
-                    alert("Error retrieving loan details");
-                    $("#loanInfo").empty();
-                    $("#btnDownloadPDF").hide();
-                }
-            });
-        });
-
-
-
-
-        getLoanEmployee = function () {
-            $.ajax({
-                url: GetLoanEmployeesUrl,
-                type: 'GET',
-                success: function (data) {
-                   
-                    if (data && data.length > 0) {
-                        data.forEach(function (item) {
-                            console.log(item);
-                            $('#employeeIdOption').append(
-                                $('<option>', {
-                                    value: item.employeeID,
-                                    text: item.fullName + ' (' + item.employeeID + ')'
-                                })
-                            );
-                        });
-                    }
-                },
-                error: function () {
-                    alert('Failed to load employee list.');
+                    alert("Error fetching data");
                 }
             });
         }
 
-
         // PDF Download button click handler
-        $("#btnDownloadPDF").click(function () {
+
+        GeneratePdf = function (installmentData) {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF('p', 'pt', 'a4');
             const pageWidth = doc.internal.pageSize.getWidth();
             const marginLeft = 40;
-            let y = 20;
+            let y = 35;
 
-            if (!window.loanData || window.loanData.length === 0) {
+            if (!installmentData || installmentData.length === 0) {
                 alert("No data available for PDF");
                 return;
             }
 
-            window.loanData.forEach(function (loan, index) {
+            // 🛠️ Reusable function: full-width section title with border
+            function drawSectionTitle(titleText) {
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'normal');
+
+                let localMarginLeft = 10;
+                let paddingY = 4;
+                let rowHeight = 20;
+                let fullWidth = pageWidth - localMarginLeft * 2;
+
+                let textWidth = doc.getTextWidth(titleText);
+                let textX = (pageWidth - textWidth) / 2;
+                let rectY = y - rowHeight + paddingY;
+
+                doc.setLineWidth(0.5);
+                doc.rect(localMarginLeft, rectY, fullWidth, rowHeight);
+                doc.text(titleText, textX, y);
+                y += rowHeight + 15;
+            }
+
+            installmentData.forEach(function (loan, index) {
                 if (index > 0) {
                     doc.addPage();
-                    y = 20;
+                    y = 35;
                 }
 
-                console.log(loan);
-                doc.setFontSize(14);
-                doc.setFont(undefined, 'bold'); // Optional: bold
+                // 🟦 Company Title
+                doc.setFontSize(18);
+                doc.setFont(undefined, 'bold');
                 let companyText = `${loan.companyName}`;
                 let textWidth = doc.getTextWidth(companyText);
                 doc.text(companyText, (pageWidth - textWidth) / 2, y);
                 y += 25;
 
+                // 🟩 Section Title: Employee Loan Information
+                drawSectionTitle("Employee Loan Information");
 
+                // 🟨 Employee Details
                 doc.setFontSize(11);
-
-                // Helper function to center text
                 const centerX = pageWidth / 2;
-                const labelWidth = 0;   // label এর জন্য ফিক্সড জায়গা
-                const valueWidth = 100;   // value এর জন্য ফিক্সড জায়গা
-                const colonX = centerX;   // ‘:’ সবসময় center-এ থাকবে
-                const labelX = colonX - 5 - labelWidth;  // ‘:’ এর বাঁ দিকে label
-                const valueX = colonX + 5;               // ‘:’ এর ডান দিকে value
-                function drawKeyValue(label, value, y) {
-                    doc.text(label, labelX, y, { align: "right" });
-                    doc.text(":", colonX, y, { align: "center" });
-                    doc.text(value, valueX, y, { align: "left" });
+                const colonX = centerX;
+                const labelX = colonX - 2;
+                const valueX = colonX + 5;
+
+                function drawKeyValue(label, value, yPos) {
+                    doc.text(label, labelX, yPos, { align: "right" });
+                    doc.text(":", colonX, yPos, { align: "center" });
+                    doc.text(value, valueX, yPos, { align: "left" });
                 }
-                drawKeyValue("Employee ID", loan.employeeID.toString(), y); y += 18;
+
+                drawKeyValue("Employee ID", loan.employeeID.toString(), y-=10); y += 18;
                 drawKeyValue("Name", loan.fullName, y); y += 18;
                 drawKeyValue("Department", loan.departmentName, y); y += 18;
                 drawKeyValue("Designation", loan.designationName, y); y += 18;
                 drawKeyValue("Reason of Loan taken", loan.reason || "", y); y += 18;
-                drawKeyValue("Loan ID", loan.totalLoans.toString(), y); y += 18;
+                drawKeyValue("Loan Number", loan.totalLoans.toString(), y); y += 18;
                 drawKeyValue("Loan Amount", `BDT ${loan.loanAmount.toFixed(2)}`, y); y += 18;
                 drawKeyValue("Loan Disbursed Date", new Date(loan.startDate).toLocaleDateString(), y); y += 18;
                 drawKeyValue("Loan Repayment Method", loan.loanRepaymentMethod.toString(), y); y += 18;
-                drawKeyValue("Installemnt Details", loan.installmentDetails.toString(), y); y += 18;
+                drawKeyValue("Installment Details", loan.installmentDetails.toString(), y); y += 18;
                 drawKeyValue("Loan Paidout Date", new Date(loan.endDate).toLocaleDateString(), y); y += 18;
                 drawKeyValue("Remarks", loan.remarks || "", y); y += 25;
 
+                // 🟦 Section Title: Loan Installment Details
+                drawSectionTitle("Loan Installment Details");
 
+                // 🎯 Total deposit calculation
                 let totalDeposit = 0;
-
-                // Prepare installments for autotable
                 let installmentRows = loan.installments.map(inst => {
                     totalDeposit += inst.deposit || 0;
                     return [
@@ -693,10 +592,12 @@
                         `BDT ${inst.outstandingBalance.toFixed(2)}`
                     ];
                 });
+                y -= 10;
 
+                // ➕ Table with autoTable
                 doc.autoTable({
                     startY: y,
-                    head: [['Installment No', 'Date', 'Payment Mode', 'Deposit', 'Outstanding Balance']],
+                    head: [['Installment No', 'Transaction Date', 'Installment Details (Cash/Cheque)', 'Deposit Amount', 'Outstanding Balance']],
                     body: installmentRows,
                     margin: { left: marginLeft, right: marginLeft },
                     styles: {
@@ -717,45 +618,430 @@
                     },
                     theme: 'grid',
                     columnStyles: {
-                        0: { cellWidth: 80 },   // Installment No
-                        1: { cellWidth: 100 },   // Date
-                        2: { cellWidth: 110 },  // Payment Mode
-                        3: { cellWidth: 115, halign:'right' },  // Deposit
-                        4: { cellWidth: 'auto', halign: 'right' }   // Outstanding Balance
+                        0: { cellWidth: 80 },
+                        1: { cellWidth: 100 },
+                        2: { cellWidth: 110 },
+                        3: { cellWidth: 115, halign: 'right' },
+                        4: { cellWidth: 'auto', halign: 'right' }
                     },
                     didDrawPage: (data) => {
                         y = data.cursor.y + 10;
-                    },
-                    didDrawCell: function (data) {
-                        // Optional: for custom styling per cell
                     }
                 });
 
-                // Show total deposit under the 'Deposit' column
-                let depositColumnIndex = 3; // 0-based index: Deposit is 4th column
-                let columnStartX = doc.autoTable.previous.finalX;
-                let cellWidth = (pageWidth - marginLeft * 2) / 5.24; // 5 columns
+                // 🔢 Draw Total Deposit Summary
+                let depositColumnIndex = 3;
+                let cellWidth = (pageWidth - marginLeft * 2) / 5;
                 let depositColumnX = marginLeft + depositColumnIndex * cellWidth;
 
+                let valueText = `BDT ${totalDeposit.toFixed(2)}`;
+                let textY = y + 5;
                 doc.setFontSize(11);
                 doc.setFont(undefined, 'bold');
-                doc.text(
-                    `Total Deposit: BDT ${totalDeposit.toFixed(2)}`,
-                    depositColumnX,
-                    y + 15,
-                    { align: 'center' }
+
+                // Upper line
+                doc.setLineWidth(0.5);
+                doc.line(
+                    depositColumnX + (cellWidth - doc.getTextWidth(valueText)) / 2,
+                    textY - 6,
+                    depositColumnX + (cellWidth + doc.getTextWidth(valueText)) / 2,
+                    textY - 6
                 );
-                y += 25;
 
+                textY += 5;
+                doc.text(valueText, depositColumnX + cellWidth / 2, textY, { align: 'center' });
+
+                let textWidthValue = doc.getTextWidth(valueText);
+                let lineY1 = textY + 2;
+                doc.line(
+                    depositColumnX + (cellWidth - textWidthValue) / 2,
+                    lineY1,
+                    depositColumnX + (cellWidth + textWidthValue) / 2,
+                    lineY1
+                );
+
+                let lineY2 = textY + 4;
+                doc.line(
+                    depositColumnX + (cellWidth - textWidthValue) / 2,
+                    lineY2,
+                    depositColumnX + (cellWidth + textWidthValue) / 2,
+                    lineY2
+                );
+
+                y = textY + 15;
             });
+            console.log(isPreviewPdf);
+            if (isPreviewPdf) {
+                console.log("test");
+                const pdfBlob = doc.output('blob');
+                const pdfUrl = URL.createObjectURL(pdfBlob);
 
+                const container = document.getElementById("pdfContainer");
+                container.innerHTML = ""; 
+
+                const embed = document.createElement("embed");
+                embed.src = pdfUrl;
+                embed.type = "application/pdf";
+                embed.width = "100%";
+                embed.height = "100%";
+
+                container.appendChild(embed);
+            }
+            else if (isDownloadPdf) {
             doc.save("Loan_Report.pdf");
-        });
+            }
+        }
+
+
+
+        //word 
+        GenerateWordDocument = function (installmentData) {
+            try {
+                if (!installmentData || installmentData.length === 0) {
+                    alert("No data available for Word document");
+                    return;
+                }
+
+                const now = new Date().toLocaleString('en-US', {
+                    year: 'numeric', month: 'short', day: 'numeric',
+                    hour: 'numeric', minute: 'numeric', hour12: true
+                });
+
+                let htmlContent = `
+<!DOCTYPE html>
+<html xmlns:v="urn:schemas-microsoft-com:vml" 
+      xmlns:o="urn:schemas-microsoft-com:office:office" 
+      xmlns:w="urn:schemas-microsoft-com:office:word" 
+      xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" 
+      xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+    <meta charset="utf-8">
+    <title>Loan Report</title>
+    <!--[if gte mso 9]>
+    <xml>
+    <w:WordDocument>
+        <w:View>Print</w:View>
+        <w:Zoom>90</w:Zoom>
+        <w:DoNotPromptForConvert/>
+        <w:DoNotShowInsertionsAndDeletions/>
+    </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+        @page Section1 { 
+            size: 595.3pt 841.9pt; 
+            mso-page-orientation: portrait; 
+            margin: 0.5in; 
+        }
+        div.Section1 { page: Section1; }
+        body { 
+            font-family: 'Times New Roman', serif; 
+            margin: 0; 
+            padding: 20px; 
+            font-size: 12pt;
+        }
+        .page-break { 
+            page-break-before: always; 
+        }
+        .company-header { 
+            text-align: center; 
+            font-size: 18pt; 
+            font-weight: bold; 
+            margin-bottom: 1pt; 
+        }
+        .report-title { 
+            text-align: center; 
+            font-size: 14pt; 
+            margin-bottom: 2pt;
+            border:2px solid #000;
+        }
+        .employee-info { 
+            margin-bottom: 2pt; 
+        }
+        .info-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-bottom: 2pt; 
+        }
+        .info-table td { 
+            padding: 2pt 5pt; 
+            border: none; 
+            font-size: 11pt; 
+            vertical-align: top; 
+        }
+        .info-label { 
+            text-align: right; 
+            width: 48%; 
+            padding-right: -5pt; 
+        }
+        .info-colon { 
+            text-align: center; 
+            width: 1%; 
+        }
+        .info-value { 
+            text-align: left; 
+            width: 50%; 
+            padding-left: 2pt; 
+        }
+        .installment-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-bottom: 15pt; 
+        }
+        .installment-table, 
+        .installment-table th, 
+        .installment-table td { 
+            border: 1px solid black; 
+            padding: 2pt 1pt; 
+            font-size: 10pt; 
+            text-align: center; 
+            vertical-align: middle; 
+        }
+        .installment-table th { 
+            background-color: #f0f0f0; 
+            font-weight: bold; 
+        }
+        .installment-table .amount-col { 
+            text-align: right; 
+        }
+        .total-section { 
+            margin-top: 10pt; 
+            text-align: center;           
+        }
+        .total-amount { 
+            font-weight: bold; 
+            font-size: 11pt; 
+            border-top: 1px solid black; 
+            border-bottom: 2px double black; 
+            padding: 3pt 10pt; 
+            display: inline-block; 
+            margin-top: 5pt;
+             margin-left: 282px;
+        }
+
+       
+        .footer-info { 
+            margin-top: 20pt; 
+            font-size: 10pt; 
+        }
+    </style>
+</head>
+<body>
+<div class="Section1">
+`;
+
+                installmentData.forEach(function (loan, index) {
+                    if (index > 0) {
+                        htmlContent += `<div class="page-break"></div>`;
+                    }
+
+                    // Company header
+                    htmlContent += `
+    <div class="company-header">${loan.companyName || 'Company Name'}</div>
+    <div class="report-title">Employee Loan Information</div>
+    
+    <div class="employee-info">
+        <table class="info-table">
+            <tr>
+                <td class="info-label">Employee ID</td>
+                <td class="info-colon">:</td>
+                <td class="info-value">${loan.employeeID || ''}</td>
+            </tr>
+            <tr>
+                <td class="info-label">Name</td>
+                <td class="info-colon">:</td>
+                <td class="info-value">${loan.fullName || ''}</td>
+            </tr>
+            <tr>
+                <td class="info-label">Department</td>
+                <td class="info-colon">:</td>
+                <td class="info-value">${loan.departmentName || ''}</td>
+            </tr>
+            <tr>
+                <td class="info-label">Designation</td>
+                <td class="info-colon">:</td>
+                <td class="info-value">${loan.designationName || ''}</td>
+            </tr>
+            <tr>
+                <td class="info-label">Reason of Loan taken</td>
+                <td class="info-colon">:</td>
+                <td class="info-value">${loan.reason || ''}</td>
+            </tr>
+            <tr>
+                <td class="info-label">Loan Number</td>
+                <td class="info-colon">:</td>
+                <td class="info-value">${loan.totalLoans || ''}</td>
+            </tr>
+            <tr>
+                <td class="info-label">Loan Amount</td>
+                <td class="info-colon">:</td>
+                <td class="info-value">BDT ${(loan.loanAmount || 0).toFixed(2)}</td>
+            </tr>
+            <tr>
+                <td class="info-label">Loan Disbursed Date</td>
+                <td class="info-colon">:</td>
+                <td class="info-value">${loan.startDate ? new Date(loan.startDate).toLocaleDateString() : ''}</td>
+            </tr>
+            <tr>
+                <td class="info-label">Loan Repayment Method</td>
+                <td class="info-colon">:</td>
+                <td class="info-value">${loan.loanRepaymentMethod || ''}</td>
+            </tr>
+            <tr>
+                <td class="info-label">Installment Details</td>
+                <td class="info-colon">:</td>
+                <td class="info-value">${loan.installmentDetails || ''}</td>
+            </tr>
+            <tr>
+                <td class="info-label">Loan Paidout Date</td>
+                <td class="info-colon">:</td>
+                <td class="info-value">${loan.endDate ? new Date(loan.endDate).toLocaleDateString() : ''}</td>
+            </tr>
+            <tr>
+                <td class="info-label">Remarks</td>
+                <td class="info-colon">:</td>
+                <td class="info-value">${loan.remarks || ''}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="report-title">Loan Installment Details</div>
+`;
+                    
+
+                    // Installments table
+                    let totalDeposit = 0;
+
+                    htmlContent += `
+    <table class="installment-table">
+        <thead>
+            <tr>
+                <th style="width: 15%;">Installment No</th>
+                <th style="width: 20%;">Transaction Date</th>
+                <th style="width: 25%;">Installment Details<br>(Cash/Cheque)</th>
+                <th style="width: 20%;">Deposit Amount</th>
+                <th style="width: 20%;">Outstanding Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+`;
+
+                    if (loan.installments && loan.installments.length > 0) {
+                        loan.installments.forEach(function (inst) {
+                            const deposit = inst.deposit || 0;
+                            totalDeposit += deposit;
+
+                            htmlContent += `
+            <tr>
+                <td>${inst.installmentNo || ''}</td>
+                <td>${inst.installmentDate || ''}</td>
+                <td>${inst.paymentMode || ''}</td>
+                <td class="amount-col">${deposit ? `BDT ${deposit.toFixed(2)}` : ''}</td>
+                <td class="amount-col">BDT ${(inst.outstandingBalance || 0).toFixed(2)}</td>
+            </tr>
+`;
+                        });
+                    }
+
+                    htmlContent += `
+        </tbody>
+    </table>
+    
+    <div class="total-section">
+        <div class="total-amount">BDT ${totalDeposit.toFixed(2)}</div>
+    </div>
+    </div>
+</body>
+</html>
+`;
+                });
+
+                // Create and download the Word document
+                const blob = new Blob([htmlContent], { type: 'application/msword' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = "Loan_Report.doc";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+
+            } catch (error) {
+                alert("Error generating Word document: " + error.message);
+                console.error("Word generation error:", error);
+            }
+        }
+
+        // Fixed JavaScript Function
+        function GenerateExcel(installmentData) {
+            if (!installmentData || installmentData.length === 0) {
+                alert("No data available for Excel");
+                return;
+            }
+
+            // Show loading indicator
+            var loadingElement = document.getElementById('loadingIndicator');
+            if (loadingElement) {
+                loadingElement.style.display = 'block';
+            }
+
+            $.ajax({
+                url: GenerateExcelUrl,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(installmentData),
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                success: function (data, status, xhr) {
+                    // Create blob and download
+                    var blob = new Blob([data], {
+                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                    });
+
+                    var url = window.URL.createObjectURL(blob);
+                    var link = document.createElement('a');
+                    link.href = url;
+                    link.download = 'Loan_Report.xlsx';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(url);
+
+                    // Hide loading indicator
+                    if (loadingElement) {
+                        loadingElement.style.display = 'none';
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error generating Excel:', error);
+                    alert('Error generating Excel file: ' + (xhr.responseText || error));
+
+                    // Hide loading indicator
+                    if (loadingElement) {
+                        loadingElement.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         init = function () {
-            //getLoanEmployee();
-            console.log("asdfasdf");
-                loadEmployeeLoanReport();          
+                loadEmployeeLoanReport();  
+         
         }
         init();
     }

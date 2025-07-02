@@ -4,31 +4,6 @@
     Model.PageTitle = "Employee Loan Information Report";
 }
 
-@* <style>
-    #loanInfo {
-        background: white;
-        padding: 20px;
-        margin-top: 20px;
-        border-radius: 6px;
-        box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
-    }
-
-    .loan-block {
-        border: 1px solid #dee2e6;
-        padding: 15px;
-        margin-bottom: 20px;
-        border-radius: 5px;
-    }
-
-        .loan-block h5 {
-            margin-bottom: 15px;
-        }
-
-    table th, table td {
-        vertical-align: middle !important;
-    }
-</style> *@
-
 <style>
     .multiselect-container {
         position: relative;
@@ -219,58 +194,11 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    @* <h3 class="card-title">Employee Loan Information Report</h3> *@
                     <h3 class="card-title">Pay Head Balance Report</h3>
                 </div>
                 <div class="card-body py-0">
                     <div class="container-fluid card bg-gradient-light py-2 border mt-4">  
-                        <div class="row mb-1">
-                           @*  <div class="col-12 col-md-6">
-                                <div class="d-flex justify-content-center">
-                                    <div class="col-md-3  d-flex justify-content-end align-items-center " style="padding-right:0px;">
-                                        <label for="companyCodes" class="form-label" style="white-space:nowrap;">Company<span class="text-danger" style="font-size: 18px;">*</span></label>
-                                    </div>
-
-                                    <div class="multiselect-container col-md-6" data-field="companyCodes" data-multiselect="false">
-                                        <div class="multiselect-input" tabindex="0">
-                                            <div class="selected-items"></div>
-                                            <div class="placeholder-text">Select Company Codes...</div>
-                                            <i class="fas fa-chevron-down multiselect-arrow"></i>
-                                        </div>
-                                        <div class="multiselect-dropdown">
-                                            <div class="multiselect-search">
-                                                <input type="text" placeholder="Search company codes...">
-                                            </div>
-                                            <div class="multiselect-options"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> *@
-                          @*   <div class="col-12 col-md-6">
-                                <div class="d-flex justify-content-center">
-                                    <div class="col-md-3 d-flex justify-content-end align-items-center" style="padding-right:0px;">
-                                        <label for="companyCodes" class="form-label" style="white-space:nowrap;">
-                                            Company <span class="text-danger" style="font-size: 18px;">*</span>
-                                        </label>
-                                    </div>
-
-                                    <div class="multiselect-container company-multiselect col-md-6" data-multiselect="false">
-                                        <div class="multiselect-input" tabindex="0">
-                                            <div class="selected-items"></div>
-                                            <div class="placeholder-text">Select Company Codes...</div>
-                                            <i class="fas fa-chevron-down multiselect-arrow"></i>
-                                        </div>
-                                        <div class="multiselect-dropdown">
-                                            <div class="multiselect-search">
-                                                <input type="text" placeholder="Search company codes...">
-                                            </div>
-                                            <div class="multiselect-options"></div>
-                                        </div>
-                                        <input type="hidden" id="companyId" name="companyId" />
-                                    </div>
-                                </div>
-                            </div> *@
-
+                        <div class="row mb-1">                          
                             <div class="col-12 col-md-6">
                                 <div class="d-flex justify-content-center">
                                     <div class="col-md-3 d-flex justify-content-end align-items-center" style="padding-right:0px;">
@@ -294,28 +222,7 @@
                                         <input type="hidden" id="companyId" name="companyId" />
                                     </div>
                                 </div>
-                            </div>
-
-                           @*  <div class="col-12 col-md-6 ">
-                                <div class="d-flex justify-content-center">
-                                    <div class="col-md-3 d-flex justify-content-end align-items-center" style="padding-right:0px;">
-                                        <label for="loanType" class="form-label" style="white-space:nowrap;">Loan Type</label>
-                                    </div>
-                                    <div class="multiselect-container col-md-6" data-field="loanType" data-multiselect="false">
-                                        <div class="multiselect-input" tabindex="0">
-                                            <div class="selected-items"></div>
-                                            <div class="placeholder-text">Select Loan Type...</div>
-                                            <i class="fas fa-chevron-down multiselect-arrow"></i>
-                                        </div>
-                                        <div class="multiselect-dropdown">
-                                            <div class="multiselect-search">
-                                                <input type="text" placeholder="Search Loan type...">
-                                            </div>
-                                            <div class="multiselect-options"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> *@
+                            </div>                          
                             <div class="col-12 col-md-6">
                                 <div class="d-flex justify-content-center">
                                     <div class="col-md-3 d-flex justify-content-end align-items-center" style="padding-right:0px;">
@@ -341,28 +248,7 @@
                         <div style="width:36.5vw;">
                             <hr style="height:2px; color:#333; margin:4px;" />
                         </div>
-                        <div class="row mb-1">
-                           @*  <div class="col-12 col-md-6 ">
-                                <div class="d-flex justify-content-center">
-                                    <div class="col-md-3 d-flex justify-content-end align-items-center" style="padding-right:0px;">
-                                        <label for="employeeId" class="form-label" style="white-space:nowrap;">Employee ID<span class="text-danger" style="font-size: 18px;">*</span></label>
-
-                                    </div>
-                                    <div class="multiselect-container col-md-6" data-field="employeeId">
-                                        <div class="multiselect-input" tabindex="0">
-                                            <div class="selected-items"></div>
-                                            <div class="placeholder-text">Select Employee...</div>
-                                            <i class="fas fa-chevron-down multiselect-arrow"></i>
-                                        </div>
-                                        <div class="multiselect-dropdown">
-                                            <div class="multiselect-search">
-                                                <input type="text" placeholder="Search Employee...">
-                                            </div>
-                                            <div class="multiselect-options"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> *@
+                        <div class="row mb-1">                          
                             <div class="col-12 col-md-6">
                                 <div class="d-flex justify-content-center">
                                     <div class="col-md-3 d-flex justify-content-end align-items-center" style="padding-right:0px;">
@@ -433,7 +319,7 @@
                                     </div>
 
                                     <div class="multiselect-container col-md-6" data-field="companyCodes" data-multiselect="false">
-                                        <input type="text" id="dateFrom" class="form-control flatpickr" placeholder="DD/MM/YYYY">
+                                        <input type="text" id="dateFrom" class="form-control flatpickr" placeholder="dd/mm/yyyy">
                                     </div>
                                 </div>
                             </div>
@@ -444,7 +330,7 @@
                                         <label for="toDate" class="form-label" style="white-space:nowrap;">To</label>
                                     </div>
                                     <div class="multiselect-container col-md-6" data-field="branchCodes">
-                                        <input type="text" id="toDate" class="form-control flatpickr" placeholder="DD/MM/YYYY">
+                                        <input type="text" id="toDate" class="form-control flatpickr" placeholder="dd/mm/yyyy">
                                     </div>
                                 </div>
                             </div>
@@ -494,7 +380,10 @@
             </div>
         </div>
     </div>
+    <div class="card" id="pdfContainer" style="width:100%; height:90vh; border:1px solid #ccc;"></div>
 </div>
+
+
 
 @section Scripts {
     @{
