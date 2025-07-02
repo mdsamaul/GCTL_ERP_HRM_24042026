@@ -2,6 +2,7 @@
 using GCTL.Core.Data;
 using GCTL.Data;
 using GCTL.Data.Models;
+using GCTL.Service.AccFinancialYears;
 using GCTL.Service.AdmissionTypes;
 using GCTL.Service.BloodGroups;
 //using GCTL.Service.HrmDefBankAndNomineeInfos;
@@ -272,6 +273,7 @@ namespace GCTL.UI.Core.Extensions
             services.AddScoped<IHrmPayMonthlyOtReportService, HrmPayMonthlyOtReportService>();
             services.AddScoped<IHrmEmployeeSalaryInfoEntryService, HrmEmployeeSalaryInfoEntryService>();
             services.AddScoped<IHrmEmployeeSalaryInfoReportService, HrmEmployeeSalaryInfoReportService>();
+            services.AddScoped<IAccFinancialYearService, AccFinancialYearService>();
 
             //Samaul
             services.AddScoped<IEmployeeWeekendDeclarationService, EmployeeWeekendDeclarationService>();

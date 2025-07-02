@@ -21,6 +21,7 @@ namespace GCTL.Data.Models
         public virtual DbSet<AccCashFlowType> AccCashFlowType { get; set; }
         public virtual DbSet<AccCompanyOpeningBalance> AccCompanyOpeningBalance { get; set; }
         public virtual DbSet<AccControlLedger> AccControlLedger { get; set; }
+        public virtual DbSet<AccFinancialYear> AccFinancialYear { get; set; }
         public virtual DbSet<AccGeneralLedger> AccGeneralLedger { get; set; }
         public virtual DbSet<AccSubControlLedger> AccSubControlLedger { get; set; }
         public virtual DbSet<AccSubSubsidiaryLedger> AccSubSubsidiaryLedger { get; set; }
@@ -180,6 +181,7 @@ namespace GCTL.Data.Models
         public virtual DbSet<HrmPayrollPfassignEntry> HrmPayrollPfassignEntry { get; set; }
         public virtual DbSet<HrmRosterScheduleEntry> HrmRosterScheduleEntry { get; set; }
         public virtual DbSet<HrmSeparation> HrmSeparation { get; set; }
+        public virtual DbSet<HrmServiceNotConfirmationEntry> HrmServiceNotConfirmationEntry { get; set; }
         public virtual DbSet<InvDefFactory> InvDefFactory { get; set; }
         public virtual DbSet<InvDefLocation> InvDefLocation { get; set; }
         public virtual DbSet<InvDefWarehouse> InvDefWarehouse { get; set; }
@@ -363,6 +365,50 @@ namespace GCTL.Data.Models
                 entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
 
                 entity.Property(e => e.ShortName).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<AccFinancialYear>(entity =>
+            {
+                entity.HasKey(e => e.Tc)
+                    .HasName("PK__Acc_Fina__3214E408F9928571");
+
+                entity.ToTable("Acc_FinancialYear");
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
+
+                entity.Property(e => e.EndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.FinancialCodeNo)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(100)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(150)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(100)
+                    .HasColumnName("LUser")
+                    .IsFixedLength();
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<AccGeneralLedger>(entity =>
@@ -5952,7 +5998,7 @@ namespace GCTL.Data.Models
             modelBuilder.Entity<HrmDefSeparationType>(entity =>
             {
                 entity.HasKey(e => e.SeparationTypeId)
-                    .HasName("PK__HRM_Def___3037F338A6CEBDAB");
+                    .HasName("PK__HRM_Def___3037F338E70A5C6D");
 
                 entity.ToTable("HRM_Def_SeparationType");
 
@@ -8661,7 +8707,7 @@ namespace GCTL.Data.Models
             modelBuilder.Entity<HrmSeparation>(entity =>
             {
                 entity.HasKey(e => e.SeparationId)
-                    .HasName("PK__HRM_Sepa__3850A09C7A85CA46");
+                    .HasName("PK__HRM_Sepa__3850A09C22CB7B70");
 
                 entity.ToTable("HRM_Separation");
 
@@ -8719,6 +8765,62 @@ namespace GCTL.Data.Models
                 entity.Property(e => e.SeparationTypeId)
                     .IsRequired()
                     .HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<HrmServiceNotConfirmationEntry>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("HRM_ServiceNotConfirmationEntry");
+
+                entity.Property(e => e.CompanyCode).HasMaxLength(50);
+
+                entity.Property(e => e.DuePaymentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EffectiveDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EmployeeId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.RefLetterDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RefLetterNo).HasMaxLength(100);
+
+                entity.Property(e => e.Remarks).HasMaxLength(500);
+
+                entity.Property(e => e.Sncid)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("SNCID");
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
+
+                entity.Property(e => e.UserEmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("UserEmployeeID");
             });
 
             modelBuilder.Entity<InvDefFactory>(entity =>

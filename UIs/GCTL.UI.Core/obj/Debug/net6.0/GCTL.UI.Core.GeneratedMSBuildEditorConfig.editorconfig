@@ -44,6 +44,26 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjZXNzQ29kZXNcX1Rvb2xiYXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/AccFinancialYear/DeleteModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjRmluYW5jaWFsWWVhclxEZWxldGVNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/AccFinancialYear/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjRmluYW5jaWFsWWVhclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/AccFinancialYear/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjRmluYW5jaWFsWWVhclxfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/AccFinancialYear/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjRmluYW5jaWFsWWVhclxfU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/AccFinancialYear/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjRmluYW5jaWFsWWVhclxfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/Accounts/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudHNcTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -930,6 +950,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmPaySalaryDeduction/_Toolbars.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtUGF5U2FsYXJ5RGVkdWN0aW9uXF9Ub29sYmFycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmServiceNotConfirmationEntry/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtU2VydmljZU5vdENvbmZpcm1hdGlvbkVudHJ5XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmServiceNotConfirmationEntry/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtU2VydmljZU5vdENvbmZpcm1hdGlvbkVudHJ5XF9HcmlkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmServiceNotConfirmationEntry/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtU2VydmljZU5vdENvbmZpcm1hdGlvbkVudHJ5XF9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmServiceNotConfirmationEntry/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtU2VydmljZU5vdENvbmZpcm1hdGlvbkVudHJ5XF9Ub29sYmFycy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmWorkingDayDeclarationReport/Index.cshtml]

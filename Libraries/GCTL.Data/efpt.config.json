@@ -27,6 +27,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Acc_FinancialYear]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Acc_GeneralLedger]",
          "ObjectType": 0
       },
@@ -660,6 +664,10 @@
       },
       {
          "Name": "[dbo].[HRM_Separation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HRM_ServiceNotConfirmationEntry]",
          "ObjectType": 0
       },
       {

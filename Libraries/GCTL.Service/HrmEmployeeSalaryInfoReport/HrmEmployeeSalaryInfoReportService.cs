@@ -9,6 +9,7 @@ using iText.Kernel.Font;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas;
 using iText.Layout;
+using iText.Layout.Borders;
 using iText.Layout.Element;
 using iText.Layout.Properties;
 using Microsoft.EntityFrameworkCore;
@@ -197,7 +198,14 @@ namespace GCTL.Service.HrmEmployeeSalaryInfoReport
             using var pdf = new PdfDocument(writer);
             using var document = new PdfDocument2(pdf, iText.Kernel.Geom.PageSize.A4.Rotate());
 
+            string logoPath = "wwwroot/images/DP_logo.png";
+            var imageData = ImageDataFactory.Create(logoPath);
+            var logo = new Image(imageData);
+
             document.SetMargins(60, 36, 60, 36);
+
+            var boldFont = PdfFontFactory.CreateFont(StandardFonts.TIMES_BOLD);
+            var regularFont = PdfFontFactory.CreateFont(StandardFonts.TIMES_ROMAN);
 
             var groupData = data
                 .GroupBy(x => x.DepartmentName ?? "Unknown Department")
@@ -231,31 +239,25 @@ namespace GCTL.Service.HrmEmployeeSalaryInfoReport
                 }
                 return false;
             }
+            
+            float[] columnWidths = new float[]
+            {
+                3.8f, 9.4f, 3.8f, 19.8f, 19.8f, 7f, 8.4f, 8.4f, 8.4f, 8f, 8f
+            };
+
+            string[] headers = { "SL", "Employee ID", "Pay ID", "Name", "Designation", "Employee Type", "Employee Nature", "Joining Date", "Last Inc. Date", "Gross Salary", "Mode of Payment" };
 
             foreach (var dpGroup in groupData)
             {
                 if (NeedsPageBreak(document))
                     document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
 
-                float[] columnWidths = new float[]
-                {
-                    3.8f,
-                    9.4f,
-                    3.8f,
-                    19.8f,
-                    19.8f,
-                    7f,
-                    8.4f,
-                    8.4f,
-                    8.4f,
-                    8f,
-                    8f
-                };
+                
 
                 var table = new Table(UnitValue.CreatePercentArray(columnWidths));
                 table.SetWidth(UnitValue.CreatePercentValue(100));
 
-                string[] headers = { "SL", "Employee ID", "Pay ID", "Name", "Designation", "Employee Type", "Employee Nature", "Joining Date", "Last Inc. Date", "Gross Salary", "Mode of Payment" };
+                
 
                 var departmentHeaderRow = new Cell(1, 11)
                     .Add(new Paragraph($"Department: {dpGroup.Key}"))
@@ -389,10 +391,6 @@ namespace GCTL.Service.HrmEmployeeSalaryInfoReport
 
                 try
                 {
-                    string logoPath = "wwwroot/images/DP_logo.png";
-                    var imageData = ImageDataFactory.Create(logoPath);
-                    var logo = new Image(imageData);
-
                     float logoWidth = 90;
                     float logoHeight = 25;
                     float logoX = 30; // Left margin
@@ -468,6 +466,101 @@ namespace GCTL.Service.HrmEmployeeSalaryInfoReport
 
             outputPdf.Close();
             return outputStream.ToArray();
+        }
+
+        private Table CreateDepartmentTable(IGrouping<string, ReportFilterResultViewModel> dpGroup,
+    float[] columnWidths, string[] headers, PdfFont boldFont, PdfFont regularFont)
+        {
+            var table = new Table(UnitValue.CreatePercentArray(columnWidths));
+            table.SetWidth(UnitValue.CreatePercentValue(100));
+
+            // Department header
+            var departmentHeaderRow = new Cell(1, 11)
+                .Add(new Paragraph($"Department: {dpGroup.Key}"))
+                .SetFont(boldFont)
+                .SetFontSize(11)
+                .SetTextAlignment(TextAlignment.LEFT)
+                .SetPadding(5)
+                .SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+
+            table.AddHeaderCell(departmentHeaderRow);
+
+            // Column headers - batch create
+            foreach (var header in headers)
+            {
+                var headerCell = new Cell()
+                    .Add(new Paragraph(header).SetFont(boldFont).SetFontSize(7))
+                    .SetTextAlignment(TextAlignment.CENTER)
+                    .SetBorder(new SolidBorder(ColorConstants.LIGHT_GRAY, 0.2f));
+                table.AddHeaderCell(headerCell);
+            }
+
+            // Data rows - optimized processing
+            int serialNo = 1;
+            decimal departmentTotal = 0;
+            var orderedItems = dpGroup.OrderBy(x => x.Code).ToList();
+
+            foreach (var item in orderedItems)
+            {
+                var grossSalary = item.GrossSalary ?? 0;
+                departmentTotal += grossSalary;
+
+                var values = new[]
+                {
+            serialNo.ToString(),
+            item.Code ?? "",
+            item.PayId ?? "",
+            item.Name ?? "",
+            item.DesignationName ?? "",
+            item.EmployeeTypeName ?? "",
+            item.EmploymentNature ?? "",
+            item.JoiningDate ?? "",
+            item.LastIncDate ?? "",
+            grossSalary.ToString("G29"),
+            item.DisbursementMethodName ?? ""
+        };
+
+                // Batch add cells with pre-determined alignment
+                for (int i = 0; i < values.Length; i++)
+                {
+                    TextAlignment alignment = i switch
+                    {
+                        3 or 4 => TextAlignment.LEFT,
+                        9 => TextAlignment.RIGHT,
+                        _ => TextAlignment.CENTER
+                    };
+
+                    table.AddCell(new Cell()
+                        .Add(new Paragraph(values[i]))
+                        .SetFont(regularFont)
+                        .SetFontSize(8)
+                        .SetTextAlignment(alignment)
+                        .SetBorder(new SolidBorder(ColorConstants.LIGHT_GRAY, 0.2f)));
+                }
+                serialNo++;
+            }
+
+            // Department total row
+            for (int i = 0; i < 8; i++)
+            {
+                table.AddCell(new Cell().Add(new Paragraph("")).SetBorder(iText.Layout.Borders.Border.NO_BORDER));
+            }
+
+            table.AddCell(new Cell()
+                .Add(new Paragraph("Total:"))
+                .SetFont(regularFont)
+                .SetTextAlignment(TextAlignment.RIGHT)
+                .SetBorder(iText.Layout.Borders.Border.NO_BORDER));
+
+            table.AddCell(new Cell()
+                .Add(new Paragraph(departmentTotal.ToString("G29")))
+                .SetFont(regularFont)
+                .SetTextAlignment(TextAlignment.RIGHT)
+                .SetBorder(iText.Layout.Borders.Border.NO_BORDER));
+
+            table.AddCell(new Cell().Add(new Paragraph("")).SetBorder(iText.Layout.Borders.Border.NO_BORDER));
+
+            return table;
         }
 
         public async Task<ReportFilterListViewModel> GetDataAsync(ReportFilterViewModel filter)

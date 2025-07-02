@@ -2055,6 +2055,7 @@ wwwroot\js\jquery-ui.min.js
 wwwroot\js\notify.min.js
 wwwroot\js\owl.carousel.min.js
 wwwroot\js\pages\accessCodes.js
+wwwroot\js\pages\accFinancialYears.js
 wwwroot\js\pages\admissionTypes.js
 wwwroot\js\pages\bankAccountInfo.js
 wwwroot\js\pages\bankAccounts.js
