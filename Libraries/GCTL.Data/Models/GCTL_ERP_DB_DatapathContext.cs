@@ -8163,6 +8163,10 @@ namespace GCTL.Data.Models
                     .HasMaxLength(15)
                     .HasColumnName("PaymentModeID");
 
+                entity.Property(e => e.ReasonOfLoanTaken)
+                    .HasMaxLength(255)
+                    .HasDefaultValueSql("('')");
+
                 entity.Property(e => e.Remarks).HasMaxLength(500);
 
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
@@ -10572,7 +10576,6 @@ namespace GCTL.Data.Models
                 entity.Property(e => e.Weight).HasColumnType("decimal(18, 2)");
             });
 
-            OnModelCreatingGeneratedProcedures(modelBuilder);
             OnModelCreatingPartial(modelBuilder);
         }
 

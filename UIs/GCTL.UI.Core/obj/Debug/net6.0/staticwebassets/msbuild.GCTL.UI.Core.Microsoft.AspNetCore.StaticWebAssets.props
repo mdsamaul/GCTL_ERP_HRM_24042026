@@ -37092,8 +37092,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>44ozxeml07</Fingerprint>
-      <Integrity>1L0etOpllQdUIpq38769nMKMqkXo2u9sFhdEk9u8SdE=</Integrity>
+      <Fingerprint>bpizyvzprb</Fingerprint>
+      <Integrity>kQjbnpwDFpGIJgXc/IvWp+x1O3GX6dOYq6uRC+wjhME=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\AdvanceLoanAdjustmentReport.js'))</OriginalItemSpec>
@@ -37674,6 +37674,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\employeeGeneralInfoReport.js'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\EmployeeLoanInformationReport.js'))">
+      <SourceType>Package</SourceType>
+      <SourceId>GCTL.UI.Core</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/GCTL.UI.Core</BasePath>
+      <RelativePath>js/pages/EmployeeLoanInformationReport.js</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>uttzlp5aiq</Fingerprint>
+      <Integrity>woqRVUyVMZ0MBguMWRVpZGm+xoKrXvP/YoN/aprPewE=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\EmployeeLoanInformationReport.js'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\employees.js'))">
       <SourceType>Package</SourceType>
       <SourceId>GCTL.UI.Core</SourceId>
@@ -38028,8 +38046,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>6j6yw4pdmq</Fingerprint>
-      <Integrity>bipZ3GIAdoOQ0OtbAeDUbV6AZsSpjqwXFirwCQRzUss=</Integrity>
+      <Fingerprint>fv8jf8ehcr</Fingerprint>
+      <Integrity>VZ3fLIZe9ru1vZ9I7Qk+JIR7tdlHIH8SfVZ6VBuTNL0=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\HRMPayrollLoan.js'))</OriginalItemSpec>

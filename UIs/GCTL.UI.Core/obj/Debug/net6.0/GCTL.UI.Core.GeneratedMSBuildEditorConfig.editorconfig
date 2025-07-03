@@ -312,6 +312,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVHZW5lcmFsSW5mb1JlcG9ydFxfVG9vbGJhcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/test/GCTL_ERP_HRM_24042026/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/EmployeeLoanInformationReport/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVMb2FuSW5mb3JtYXRpb25SZXBvcnRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/test/GCTL_ERP_HRM_24042026/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/Employees/DeleteModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXERlbGV0ZU1vZGFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

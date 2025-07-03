@@ -25,6 +25,7 @@
             NoOfInstallment: "#noOfInstallment",
             MonthlyDeduction: "#monthlyDeduction",
             Remarks: "#remarks",
+            ReasonOfLoanTaken: "#ReasonOfLoanTaken",
             PaymentRemarks: ".paymentRemarks",
             ChequeDate: ".chequeDate",
             PaymentCheckDate: ".paymentCheckDate",
@@ -197,6 +198,7 @@
                 BankId: $(settings.Bank).val() || '',
                 BankAccount: $(settings.BankAccount).val() || '',
                 Remarks: $(settings.Remarks).val() || '',
+                ReasonOfLoanTaken: $(settings.ReasonOfLoanTaken).val() || '',
                 CompanyCode: $(settings.companyIds).val() || '',
                 LoanDate: formatDate($(settings.LoanDate).val())||null,
                 StartDate: formatDate($(settings.InstStartDate).val()) || null,
@@ -219,6 +221,7 @@
             $(settings.ChequeNo).val('');
             $(settings.BankAccount).val('');
             $(settings.Remarks).val('');
+            $(settings.ReasonOfLoanTaken).val('');
             $(settings.EmployeeName).text('');
             $(settings.EmployeeDesignation).text('');
             $(settings.EmployeeDepartment).text('');
@@ -994,7 +997,7 @@
         //create 
         $(document).on('click', settings.LoanEntryBtn, function () {
             var filterData = submitLoanData()
-           
+          
             if (!paymentTab) {
                 if (!filterData.CompanyCode || filterData.CompanyCode === "") {
                     showToast('warning', 'Please select an company first!');

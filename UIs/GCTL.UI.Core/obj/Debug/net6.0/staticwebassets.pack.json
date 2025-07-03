@@ -9633,6 +9633,10 @@
       "PackagePath": "staticwebassets\\js\\pages\\AdvanceLoanAdjustmentReport.js"
     },
     {
+      "Id": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\EmployeeLoanInformationReport.js",
+      "PackagePath": "staticwebassets\\js\\pages\\EmployeeLoanInformationReport.js"
+    },
+    {
       "Id": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\EmployeeWeekendDeclarationReport.js",
       "PackagePath": "staticwebassets\\js\\pages\\EmployeeWeekendDeclarationReport.js"
     },

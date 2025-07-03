@@ -2090,6 +2090,7 @@ wwwroot\js\pages\dosages.js
 wwwroot\js\pages\dueCollectionReports.js
 wwwroot\js\pages\dueCollections.js
 wwwroot\js\pages\employeeGeneralInfoReport.js
+wwwroot\js\pages\EmployeeLoanInformationReport.js
 wwwroot\js\pages\employees.js
 wwwroot\js\pages\EmployeeWeekendDeclarationReport.js
 wwwroot\js\pages\experianceInfos.js
