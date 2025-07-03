@@ -12,6 +12,7 @@ namespace GCTL.Core.ViewModels.EmployeeLoanInformationReport
         public List<CompanyBasicInfoVM> Companies { get; set; }
         public List<EmployeeBasicInfoVM> Employees { get; set; }
         public List<LoanBasicInfoVm> LoanIDs { get; set; }
+        public List<LoanTypeInfoVm> LoanTypes { get; set; }
     }
 
     public class CompanyBasicInfoVM
@@ -28,6 +29,11 @@ namespace GCTL.Core.ViewModels.EmployeeLoanInformationReport
         public decimal LoanAmount { get; set; }
         public string InstStartEndDate { get; set; }
         public string NoOfInstallment { get; set; }
+    }
+    public class LoanTypeInfoVm
+    {
+        public string LoanTypeId { get; set; }
+        public string LoanType { get; set; }
     }
 
 }

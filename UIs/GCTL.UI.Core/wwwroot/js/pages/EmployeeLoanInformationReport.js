@@ -18,9 +18,11 @@
                     DateTo: dateTo
                 },
                 success: function (data) {
+                    console.log(data);
                     DropdownAppendCompany(data.companies);
-                    DropdownAppendLoanType(data.loanIDs);
-                    DropdownAppendEmployee(data.employees);
+                    //DropdownAppendLoanId(data.loanIDs);
+                    //DropdownAppendEmployee(data.employees);
+                    DropdownAppendLoanType(data.loanTypes);
                 },
                 error: function () {
                     alert("Error fetching data");
@@ -74,7 +76,7 @@
             $container.find(".multiselect-arrow").removeClass("rotate");
             $container.find("#companyId").val(code);
             setTextClear();
-            const $containerLoan = $('[data-field="loanType"]'); 
+            const $containerLoan = $('[data-field="loanTypeId"]'); 
             $containerLoan.find(".multiselect-options").empty(); 
             $containerLoan.find(".selected-items").text('');     
             $containerLoan.find(".placeholder-text").show();     
@@ -143,8 +145,8 @@
         });
 
            
-
-        function setLoanTypeSelection($container, value) {
+        //loan type id
+        function setLoanIdSelection($container, value) {
             $container.find(".selected-items").text(value);
             $container.find(".placeholder-text").hide();
             $container.find(".multiselect-dropdown").hide();
@@ -157,9 +159,9 @@
 
         }
 
-        DropdownAppendLoanType = function (loanTypesArray) {
+        DropdownAppendLoanId = function (loanTypesArray) {
             window.dropdownLoanTypes = loanTypesArray;           
-            const $container = $('[data-field="loanType"]');
+            const $container = $('[data-field="loanTypeId"]');
             const $optionContainer = $container.find(".multiselect-options");
             $optionContainer.empty();
 
@@ -169,7 +171,94 @@
                     .attr("data-value", loanId.loanIDs);
 
                 $option.on("click", function () {
-                    setLoanTypeSelection($container, loanId.loanIDs);
+                    setLoanIdSelection($container, loanId.loanIDs);
+                });
+
+                $optionContainer.append($option);
+
+            });
+        };
+
+        // Dropdown toggle
+        $('[data-field="loanTypeId"] .multiselect-input').on("click", function (e) {
+            const $container = $(this).closest('[data-field="loanTypeId"]');
+            const $dropdown = $container.find(".multiselect-dropdown");
+            const $arrow = $container.find(".multiselect-arrow");
+
+            $(".multiselect-dropdown").not($dropdown).hide();
+            $(".multiselect-arrow").not($arrow).removeClass("rotate");
+
+            $dropdown.toggle();
+            $arrow.toggleClass("rotate", $dropdown.is(":visible"));
+        });
+
+        // Outside click
+        $(document).on("click", function (e) {
+            if (!$(e.target).closest('[data-field="loanTypeId"]').length) {
+                $('[data-field="loanTypeId"] .multiselect-dropdown').hide();
+                $('[data-field="loanTypeId"] .multiselect-arrow').removeClass("rotate");
+            }
+        });
+
+        // Search functionality
+        $('[data-field="loanTypeId"] .multiselect-search input').on("input", function () {
+            const searchTerm = $(this).val().toLowerCase().trim();
+            const $container = $(this).closest('[data-field="loanTypeId"]');
+            const $optionContainer = $container.find(".multiselect-options");
+
+            const allLoanTypes = window.dropdownLoanTypes || [];
+
+            $optionContainer.empty();
+
+            const filtered = allLoanTypes.filter(id =>
+                id.toLowerCase().includes(searchTerm)
+            );
+
+            if (filtered.length === 0) {
+                $optionContainer.append('<div class="multiselect-option disabled">No data available</div>');
+            } else {
+                filtered.forEach(id => {
+                    const $option = $('<div class="multiselect-option"></div>')
+                        .text(id)
+                        .attr("data-value", id);
+
+                    $option.on("click", function () {
+                        setLoanIdSelection($container, id);
+                    });
+
+                    $optionContainer.append($option);
+                });
+            }
+        });
+
+        //loan type 
+        function setLoanTypeSelection($container, value) {
+            $container.find(".selected-items").text(value);
+            $container.find(".placeholder-text").hide();
+            $container.find(".multiselect-dropdown").hide();
+            $container.find(".multiselect-arrow").removeClass("rotate");
+
+            let companyId = $('[data-field="companyId"] .selected-items').attr("data-id");
+            const employeeId = $('[data-field="employeeId"] .selected-items').attr("data-value");
+            console.log(companyId, value);
+
+            loadLoanDetailsByEmployeeIdAndCompanyIdReport(companyId, null, value, null, null, null);
+
+        }
+
+        DropdownAppendLoanType  = function (loanTypesArray) {
+            window.dropdownLoanTypes = loanTypesArray;
+            const $container = $('[data-field="loanType"]');
+            const $optionContainer = $container.find(".multiselect-options");
+            $optionContainer.empty();
+
+            loanTypesArray.forEach((loanTypeId, index) => {
+                const $option = $('<div class="multiselect-option"></div>')
+                    .text(loanTypeId.loanType)
+                    .attr("data-value", loanTypeId.loanTypeId);
+
+                $option.on("click", function () {
+                    setLoanTypeSelection($container, loanTypeId.loanType);
                 });
 
                 $optionContainer.append($option);
@@ -231,6 +320,7 @@
 
 
 
+
         loadEmployeeByLoanIdAndCompanyIdReport = function (companyId = null, employeeId = null, loanId = null, dateFrom = null, dateTo = null) {
             $.ajax({
                 url: filterUrl,
@@ -264,15 +354,17 @@
             $container.find(".multiselect-arrow").removeClass("rotate");
 
             let companyId = $('[data-field="companyId"] .selected-items').attr("data-id") || '';
-            let loanId = $('[data-field="loanType"] .selected-items').text() || '';
-            const $containerLoan = $('[data-field="loanType"]');
+            let loanId = $('[data-field="loanTypeId"] .selected-items').text() || '';
+            const $containerLoan = $('[data-field="loanTypeId"]');
             $containerLoan.find(".multiselect-options").empty();
             $containerLoan.find(".selected-items").text('');
             $containerLoan.find(".placeholder-text").show();
 
             $containerLoan.find("#loanTypeId").val('');
-            dateFromPicker.clear();
-            toDatePicker.clear();
+            //dateFromPicker.clear();
+            //toDatePicker.clear();
+            if (dateFromPicker) dateFromPicker.clear();
+            if (toDatePicker) toDatePicker.clear();
             $("#showLoanDate").text("");
             $("#showloanTypeName").text("");
             $("#showloanAmount").text("");
@@ -364,8 +456,10 @@
             $("#showEmployeeName").text('');
             $("#showDepartmentName").text('');
             $("#showDesignationName").text(''); 
-            dateFromPicker.clear();
-            toDatePicker.clear();
+            //dateFromPicker.clear();
+            //toDatePicker.clear();
+            if (dateFromPicker) dateFromPicker.clear();
+            if (toDatePicker) toDatePicker.clear();
             $("#showLoanDate").text("");
             $("#showloanTypeName").text("");
             $("#showloanAmount").text("");
@@ -390,7 +484,7 @@
                         $("#showEmployeeName").text(empData[0].fullName ?? "");
                         $("#showDepartmentName").text(empData[0].departmentName ?? "");
                         $("#showDesignationName").text(empData[0].designationName ?? "");
-                        DropdownAppendLoanType(data.loanIDs);
+                        DropdownAppendLoanId(data.loanIDs);
                     }
                   
                 },
@@ -399,8 +493,14 @@
                 }
             });
         }      
+      
+        let startDateStr = null;
+        let endDateStr = null;
 
-        loadLoanDetailsByEmployeeIdAndCompanyIdReport = function (companyId = null, employeeId = null, loanId = null, dateFrom = null, dateTo = null) {
+        let dateFromPicker = null;
+        let toDatePicker = null;
+
+        function loadLoanDetailsByEmployeeIdAndCompanyIdReport(companyId = null, employeeId = null, loanId = null, dateFrom = null, dateTo = null) {
             $.ajax({
                 url: filterUrl,
                 type: "GET",
@@ -412,38 +512,53 @@
                     DateTo: dateTo
                 },
                 success: function (data) {
-                    //DropdownAppendEmployee(data.employees);
                     var loanData = data.loanIDs;
-                    if (!loanData || loanData.length>0) {
+                    if (loanData && loanData.length > 0) {
                         $("#showLoanDate").text(loanData[0].loanDate ?? "");
                         $("#showloanTypeName").text(loanData[0].loanType ?? "");
                         $("#showloanAmount").text(loanData[0].loanAmount ?? "");
                         $("#showInstStartEndDate").text(loanData[0].instStartEndDate ?? "");
                         $("#showNoOfInstallment").text(loanData[0].noOfInstallment ?? "");
+
+                        let [startDate, endDate] = loanData[0].instStartEndDate.split(" - ");
+                        startDateStr = startDate;
+                        endDateStr = endDate;
+
+                        // Destroy old pickers if they exist
+                        if (dateFromPicker) dateFromPicker.clear();
+                        if (toDatePicker) toDatePicker.clear();
+
+                        // Re-initialize flatpickr with new dates
+                        dateFromPicker = flatpickr("#dateFrom", {
+                            altInput: true,
+                            altFormat: "d/m/Y",
+                            dateFormat: "Y-m-d",
+                            allowInput: true,
+                            minDate: convertToYMD(startDateStr)
+                        });
+
+                        toDatePicker = flatpickr("#toDate", {
+                            altInput: true,
+                            altFormat: "d/m/Y",
+                            dateFormat: "Y-m-d",
+                            allowInput: true,
+                            maxDate: convertToYMD(endDateStr)
+                        });
                     }
-
-
                 },
                 error: function () {
                     alert("Error fetching data");
                 }
             });
-        }      
+        }
 
+        // Helper function to convert dd/mm/yyyy → yyyy-mm-dd
+        function convertToYMD(dateStr) {
+            if (!dateStr) return null;
+            const [day, month, year] = dateStr.split('/');
+            return `${year}-${month}-${day}`;
+        }
 
-        const dateFromPicker = flatpickr("#dateFrom", {
-            altInput: true,
-            altFormat: "d/m/Y",
-            dateFormat: "Y-m-d",
-            allowInput: true
-        });
-
-        const toDatePicker = flatpickr("#toDate", {
-            altInput: true,
-            altFormat: "d/m/Y",
-            dateFormat: "Y-m-d",
-            allowInput: true
-        });
 
 
         let isDownloadPdf = false;
@@ -453,7 +568,7 @@
         $(document).on('click', "#btnPreview", function () {
             isPreviewPdf = true;
             let companyId = $('[data-field="companyId"] .selected-items').attr("data-id");
-            const loanId = $('[data-field="loanType"] .selected-items').text();
+            const loanId = $('[data-field="loanTypeId"] .selected-items').text();
             const employeeId = $('[data-field="employeeId"] .selected-items').attr("data-value");
 
             let dateFrom = $("#dateFrom").val();
@@ -462,7 +577,7 @@
         })
         $(document).on('click', "#downloadReport", function () {
             let companyId = $('[data-field="companyId"] .selected-items').attr("data-id");
-            const loanId = $('[data-field="loanType"] .selected-items').text();
+            const loanId = $('[data-field="loanTypeId"] .selected-items').text();
             const employeeId = $('[data-field="employeeId"] .selected-items').attr("data-value");
             
             let dateFrom = $("#dateFrom").val();
@@ -1093,8 +1208,7 @@
         }
 
         init = function () {
-                loadEmployeeLoanReport();  
-         
+                loadEmployeeLoanReport();             
         }
         init();
     }

@@ -50,7 +50,8 @@ namespace GCTL.Service.EmployeeLoanInformationReport
                     LoanReports = new List<EmployeeLoanInformationReportVM>(),
                     Companies = new List<CompanyBasicInfoVM>(),
                     Employees = new List<EmployeeBasicInfoVM>(),
-                    LoanIDs = new List<LoanBasicInfoVm>()
+                    LoanIDs = new List<LoanBasicInfoVm>(),
+                    LoanTypes= new List<LoanTypeInfoVm>()
                 };
 
                 using var conn = new SqlConnection(configuration.GetConnectionString("ApplicationDbConnection"));
@@ -64,6 +65,7 @@ namespace GCTL.Service.EmployeeLoanInformationReport
                 cmd.Parameters.AddWithValue("@CompanyID", (object)filter.CompanyID ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@EmployeeID", (object)filter.EmployeeID ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@LoanID", (object)filter.LoanID ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@LoanTypeID", (object)filter.LoanTypeID ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@DateFrom", (object)filter.DateFrom ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@DateTo", (object)filter.DateTo ?? DBNull.Value);
                 using var reader = await cmd.ExecuteReaderAsync();
@@ -71,6 +73,7 @@ namespace GCTL.Service.EmployeeLoanInformationReport
                 var companySet = new Dictionary<string, CompanyBasicInfoVM>();
                 var employeeSet = new HashSet<string>();
                 var loanIdSet = new Dictionary<string, LoanBasicInfoVm>();
+                var loanTypeSet = new Dictionary<string, LoanTypeInfoVm>();
 
                 while (await reader.ReadAsync())
                 {
@@ -78,8 +81,10 @@ namespace GCTL.Service.EmployeeLoanInformationReport
                     string empId = reader["EmployeeID"].ToString();
                     string fullName = reader["FullName"].ToString();
                     string CompanyCode = reader["CompanyCode"].ToString();
-                    string companyName = reader["CompanyName"].ToString();                   
-                    
+                    string companyName = reader["CompanyName"].ToString();
+                    string loanTypeId = reader["LoanTypeID"]?.ToString()?.Trim();
+                    string loanTypeName = reader["LoanType"]?.ToString()?.Trim();
+
                     if (!companySet.ContainsKey(companyName))
                     {
                         companySet.Add(companyName, new CompanyBasicInfoVM
@@ -99,8 +104,26 @@ namespace GCTL.Service.EmployeeLoanInformationReport
                                 DepartmentName = reader["DepartmentName"].ToString(),
                                 DesignationName = reader["DesignationName"].ToString()
                             });
+                    }
+                   
+
+                    if (!string.IsNullOrEmpty(loanTypeId) && !string.IsNullOrEmpty(loanTypeName))
+                    {
+                        if (!loanTypeSet.ContainsKey(loanTypeId))
+                        {
+                            var loanTypeVm = new LoanTypeInfoVm
+                            {
+                                LoanTypeId = loanTypeId,
+                                LoanType = loanTypeName
+                            };
+
+                            loanTypeSet.Add(loanTypeId, loanTypeVm);
+                            response.LoanTypes.Add(loanTypeVm);
                         }
-                        if (!loanIdSet.ContainsKey(loanId))
+                    }
+
+
+                    if (!loanIdSet.ContainsKey(loanId))
                         {
                         loanIdSet.Add(loanId, new LoanBasicInfoVm
                         {
@@ -153,6 +176,7 @@ namespace GCTL.Service.EmployeeLoanInformationReport
                 response.LoanReports = loanDict.Values.ToList();
                     response.Companies = companySet.Values.ToList();
                     response.LoanIDs = loanIdSet.Values.ToList();
+                response.LoanTypes = loanTypeSet.Values.ToList();
                     return response;
                 
 

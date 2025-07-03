@@ -7686,11 +7686,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj",
+      "projectUniqueName": "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj",
       "projectName": "GCTL.Core",
-      "projectPath": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj",
+      "projectPath": "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj",
       "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-      "outputPath": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\obj\\",
+      "outputPath": "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

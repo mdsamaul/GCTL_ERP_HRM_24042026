@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\GCTL.Service.csproj": {}
+    "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\GCTL.Service.csproj": {}
   },
   "projects": {
-    "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj": {
+    "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj",
+        "projectUniqueName": "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj",
         "projectName": "GCTL.Core",
-        "projectPath": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj",
+        "projectPath": "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj",
         "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\obj\\",
+        "outputPath": "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -112,14 +112,14 @@
         }
       }
     },
-    "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj": {
+    "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj",
+        "projectUniqueName": "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj",
         "projectName": "GCTL.Data",
-        "projectPath": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj",
+        "projectPath": "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj",
         "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\obj\\",
+        "outputPath": "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -141,8 +141,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj": {
-                "projectPath": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj"
+              "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj": {
+                "projectPath": "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj"
               }
             }
           }
@@ -220,14 +220,14 @@
         }
       }
     },
-    "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\GCTL.Service.csproj": {
+    "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\GCTL.Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\GCTL.Service.csproj",
+        "projectUniqueName": "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\GCTL.Service.csproj",
         "projectName": "GCTL.Service",
-        "projectPath": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\GCTL.Service.csproj",
+        "projectPath": "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\GCTL.Service.csproj",
         "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\obj\\",
+        "outputPath": "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -249,8 +249,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj": {
-                "projectPath": "D:\\test\\GCTL_ERP_HRM_24042026\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj"
+              "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj": {
+                "projectPath": "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj"
               }
             }
           }
