@@ -50,11 +50,6 @@ namespace GCTL.UI.Core.Controllers
             return Json(newId);
         }
 
-        public async Task<IActionResult> GetById(decimal id)
-        {
-            var result = await entryService.GetByIdAsync(id);
-            return Json(new { data = result });
-        }
 
         public async Task<IActionResult> GetPaginatedEntries()
         {

@@ -19,6 +19,7 @@
             PaymentMode: ".paymentMode",
             PaymentReceivePaymentMode: ".paymentReceivePaymentMode",
             AmountWorningMessage: ".amountWorningMessage",
+
             DeductionHead: "#DeductionHead",
             LoanIdAutoGenerate: "#LoanIdAutoGenerate",
             LoanEntryBtn: ".js-loan-entry-report-save",
@@ -36,6 +37,7 @@
             PaymentCheckNo: ".paymentCheckNo",
             IfCheque: ".if_cheque",
             IfWairTransferThenHide: ".if_wair-transfer-then-hide",
+
             ClearAll: "#js-loan-entry-report-clear",
             CreateDate: ".createDate",
             UpdateDate: ".updateDate",

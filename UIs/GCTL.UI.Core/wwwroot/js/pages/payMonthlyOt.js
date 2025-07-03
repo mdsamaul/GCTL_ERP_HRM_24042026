@@ -249,7 +249,7 @@ function toggleFields() {
         }
     }
 }
-
+ 
 function getAllFilterVal() {
     const filterData = {
         CompanyCodes: toArray($("#companySelect").val()),

@@ -5,6 +5,17 @@
 	Model.PageTitle = "Service Not Confirmation Entry";
 }
 
+<style>
+    .form-label {
+        text-align: right;
+        min-width: 120px;
+        white-space: nowrap;
+        margin-bottom: 0;
+    }
+
+</style>
+
+
 <div class="container-fluid">
 	<partial name="_PageHeader" model="Model"></partial>
 </div>
@@ -16,24 +27,34 @@
                     <partial name="_Toolbars" model="new ToobarModel() { Title = Model.Breadcrumb, Code = Model.Code, Name = Model.Setup.Sncid }"></partial>
                 </div>
 
-
-
-                
-                <hr class="my-4" />
-                <div class="card-body">
-                    <div id="monthlyOtForm">
-                        <partial name="_Setup"></partial>
+                <div class="card-body p-0">
+                    <div id="serviceNotConfirmForm">
+                        <partial name="_Filter" />
                     </div>
 
                     @* <div>
                         <partial name="_ExcelFileUpload"></partial>
                     </div> *@
-                    <div class="col-md-12">
-                        <partial name="_Grid" />
-                    </div>
+                    
 
                 </div>
+            </div>
+            <div class="col-md-12">
+                <partial name="_Setup"></partial>
+            </div>
+            <div class="col-md-12">
+                <partial name="_Grid" />
             </div>
         </div>
 	</div>
 </section>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="~/js/pages/HrmServiceNotConfirm.js"></script>
+    <link href="~/lib/bootstrap-multiselect-master/dist/css/bootstrap-multiselect.min.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap-multiselect-master/dist/js/bootstrap-multiselect.min.js"></script>
+}

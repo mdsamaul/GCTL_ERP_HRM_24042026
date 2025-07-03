@@ -1,102 +1,40 @@
-﻿<div class="col-12">
-    <div class="row border border-white rounded-lg py-2">
-		<div class="col-md-6 row mb-3">
-				<div class="col-md-4 text-right" style="padding-right: 5px;">
-					<p class="mb-0">Company <span class="text-danger" style="font-size: 18px;">*</span></p>
-				</div>
-				<div class="col-md-6" style="padding-left: 0px;">
-					<select class="companySelect form-control">
-						@* <option value="">text</option> *@
-						@* <option value="">text</option> *@
-					</select>
+﻿<div class="card border-0 shadow-sm p-0">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h6 class="mb-0">
+            <i class="fa fa-list-alt me-2 px-3"></i>Service Not Confirmation List
+        </h6>
 
-				</div>
-				<div class="col-0 col-md-2"></div>
-				<div class="col-12">
-						<div class="col-2"></div>
-						<div class="col-10">
-							<hr class="w-100 text-right mb-1" />
-						</div>
-				</div>
-		</div>
-		<div class="col-md-6 mb-3"></div>
-		<div class="col-md-6 row mb-3">
-                <div class="col-md-4 text-right" style="padding-right: 0px;">
-                    <p class="mb-0">Employee ID<span class="text-danger" style="font-size: 18px;">*</span></p>
-                </div>
-                <div class="col-md-6" style="padding-left: 0px;">
-                    <select class="employeeSelect form-control">
-                        <option value="">--Select Employee--</option>
-                    </select>
-                </div>
-				<div class="col-md-2"></div>
-		</div>
-		<div class="col-md-6 row mb-3">
-				<div class="col-md-4 text-right" style="padding-right: 5px;">
-					<p class="mb-0">Name: </p>
-				</div>
-				<div class="col-md-6" style="padding-left: 0px;">
-				<input type="text" class="form-control-plaintext EmployeeName" readonly/>
-					@* <span class="EmployeeName"></span> *@
-				</div>
-				<div class="col-md-2"></div>
-		</div>
-		<div class="col-md-6 row mb-3">
-				<div class="col-md-4 text-right" style="padding-right: 5px;">
-					<p class="mb-0">Department: </p>
-				</div>
-				<div class="col-md-6" style="padding-left: 0px;">
-				<input type="text" class="form-control-plaintext EmployeeDepartment"  readonly />
-				</div>
-				<div class="col-md-2"></div>
-        </div>
-		<div class="col-md-6 row mb-3">
-                <div class="col-md-4 text-right" style="padding-right: 5px;">
-                    <p class="mb-0">Designation: </p>
-                </div>
-                <div class="col-md-6" style="padding-left: 0px;">
-				<input type="text" class="form-control-plaintext EmployeeDesignation" readonly />
-                </div>
-                <div class="col-md-2"></div>
-        </div>
-		<div class="col-md-6 row mb-3">
-				<div class="col-md-4 text-right" style="padding-right: 5px;">
-					<p class="mb-0">Gross Salary: </p>
-				</div>
-
-				<div class="col-md-6" style="padding-left: 0px;">
-					<span class="EmployeeGrossSalary"></span>
-				<input type="text" class="form-control-plaintext EmployeeGrossSalary" readonly />
-				</div>
-				<div class="col-md-2"></div>
-		</div>
-		<div class="col-md-6 row mb-3">
-				<div class="col-md-4 text-right" style="padding-right: 5px;">
-					<p class="mb-0">Joining Date: </p>
-				</div>
-				<div class="col-md-6" style="padding-left: 0px;">
-					<span class="EmployeeJoinDate"></span>
-				<input type="text" class="form-control-plaintext EmployeeJoinDate" readonly />
-				</div>
-				<div class="col-md-2"></div>
-		</div>
-		<div class="col-md-6 row mb-3">
-				<div class="col-md-4 text-right" style="padding-right: 5px;">
-					<p class="mb-0">Probation Period: </p>
-				</div>
-				<div class="col-md-6" style="padding-left: 0px;">
-				<input type="text" class="form-control-plaintext EmployeeProbationPeriod" readonly />
-				</div>
-				<div class="col-md-2"></div>
-		</div>
-		<div class="col-md-6 row mb-3">
-				<div class="col-md-4 text-right" style="padding-right: 5px;">
-					<p class="mb-0">End On: </p>
-				</div>
-				<div class="col-md-6" style="padding-left: 0px;">
-				<input type="text" class="form-control-plaintext EmployeeEndOn" readonly />
-				</div>
-				<div class="col-md-2"></div>
-		</div>
     </div>
+    <div class="card-body pt-3">
+        <div id="loadingOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(255,255,255,0.7); z-index:9999; text-align:center; padding-top:200px;">
+            <div class="spinner-border text-primary" role="status">
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table id="serviceNotConfirm-grid" class="table table-bordered table-striped table-hover align-middle mb-0">
+
+                <thead>
+                    <tr>
+                        <th class="text-center no-sort" style="width: 5%; padding-left: 0; padding-right: 0;">
+                            <label for="serviceNotConfirm-check-all">Select</label><br />
+                            <input type="checkbox" id="serviceNotConfirm-check-all">
+                        </th>
+                        <th class="text-center text-break">SNC ID</th>
+                        <th class="text-center text-break">Emp. ID</th>
+                        <th class="text-center text-break">Name</th>
+                        <th class="text-center text-break">Effective Date</th>
+                        <th class="text-center text-break">Due Payment Date</th>
+                        <th class="text-center text-break">Ref. Letter/ Ref. No</th>
+                        <th class="text-center text-break">Ref. Letter Date</th>
+                        <th class="text-center text-break">Remarks</th>
+                    </tr>
+                </thead>
+                <tbody id="serviceNotConfirm-grid-body">
+                    <!-- Data will be injected here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
