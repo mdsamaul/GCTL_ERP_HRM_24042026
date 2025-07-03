@@ -20,6 +20,7 @@ namespace GCTL.Core.ViewModels.EmployeeLoanInformationReport
         public string Reason { get; set; }
         public decimal TotalLoans { get; set; }
         public decimal LoanAmount { get; set; }
+        public decimal MonthlyDeduction { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string InstallmentDetails { get; set; }

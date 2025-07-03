@@ -34,8 +34,7 @@ namespace GCTL.UI.Core.Controllers
             var data = await employeeLoanInformationReportServices.GetLoanDetailsAsync(filter);
             return Json(data);
         }
-        // Fixed C# Controller Method
-        //[HttpPost("generate-excel")]
+       
         [HttpPost]
         public IActionResult GenerateExcel([FromBody] List<EmployeeLoanInformationReportVM> installmentData)
         {

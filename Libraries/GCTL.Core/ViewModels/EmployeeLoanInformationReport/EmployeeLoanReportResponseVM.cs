@@ -11,13 +11,23 @@ namespace GCTL.Core.ViewModels.EmployeeLoanInformationReport
         public List<EmployeeLoanInformationReportVM> LoanReports { get; set; }
         public List<CompanyBasicInfoVM> Companies { get; set; }
         public List<EmployeeBasicInfoVM> Employees { get; set; }
-        public List<string> LoanIDs { get; set; }
+        public List<LoanBasicInfoVm> LoanIDs { get; set; }
     }
 
     public class CompanyBasicInfoVM
     {
         public string CompanyCode { get; set; }
         public string CompanyName { get; set; }
+    }
+
+    public class LoanBasicInfoVm
+    {
+        public string LoanIDs { get; set; }
+        public string LoanDate { get; set; }
+        public string LoanType { get; set; }
+        public decimal LoanAmount { get; set; }
+        public string InstStartEndDate { get; set; }
+        public string NoOfInstallment { get; set; }
     }
 
 }

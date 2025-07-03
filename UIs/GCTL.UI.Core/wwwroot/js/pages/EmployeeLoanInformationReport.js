@@ -150,32 +150,26 @@
             $container.find(".multiselect-dropdown").hide();
             $container.find(".multiselect-arrow").removeClass("rotate");
 
-            let companyId = $('[data-field="companyId"] .selected-items').attr("data-id");
-            setTextClear();
-            const $containerEmployee = $('[data-field="employeeId"]');
-            $containerEmployee.find(".multiselect-options").empty();
-            $containerEmployee.find(".selected-items").text('');
-            $containerEmployee.find(".placeholder-text").show();
-            $containerEmployee.find("#employeeId").val(''); 
-            loadEmployeeByLoanIdAndCompanyIdReport(companyId, null, value, null, null);
-         
+            let companyId = $('[data-field="companyId"] .selected-items').attr("data-id");            
+            const employeeId = $('[data-field="employeeId"] .selected-items').attr("data-value");
+
+            loadLoanDetailsByEmployeeIdAndCompanyIdReport(companyId, employeeId, value, null, null, null);
 
         }
 
         DropdownAppendLoanType = function (loanTypesArray) {
-            window.dropdownLoanTypes = loanTypesArray;
-
+            window.dropdownLoanTypes = loanTypesArray;           
             const $container = $('[data-field="loanType"]');
             const $optionContainer = $container.find(".multiselect-options");
             $optionContainer.empty();
 
             loanTypesArray.forEach((loanId, index) => {
                 const $option = $('<div class="multiselect-option"></div>')
-                    .text(loanId)
-                    .attr("data-value", loanId);
+                    .text(loanId.loanIDs)
+                    .attr("data-value", loanId.loanIDs);
 
                 $option.on("click", function () {
-                    setLoanTypeSelection($container, loanId);
+                    setLoanTypeSelection($container, loanId.loanIDs);
                 });
 
                 $optionContainer.append($option);
@@ -271,12 +265,23 @@
 
             let companyId = $('[data-field="companyId"] .selected-items').attr("data-id") || '';
             let loanId = $('[data-field="loanType"] .selected-items').text() || '';
+            const $containerLoan = $('[data-field="loanType"]');
+            $containerLoan.find(".multiselect-options").empty();
+            $containerLoan.find(".selected-items").text('');
+            $containerLoan.find(".placeholder-text").show();
+
+            $containerLoan.find("#loanTypeId").val('');
             dateFromPicker.clear();
             toDatePicker.clear();
+            $("#showLoanDate").text("");
+            $("#showloanTypeName").text("");
+            $("#showloanAmount").text("");
+            $("#showInstStartEndDate").text("");
+            $("#showNoOfInstallment").text("");
 
 
             // Call the report loader
-            loadEmployeeDetailsByEmployeeIdLoanIdAndCompanyIdReport(companyId, empId, loanId, null, null);
+            loadEmployeeDetailsByEmployeeIdLoanIdAndCompanyIdReport(companyId, empId, null, null, null);
         }
 
 
@@ -361,6 +366,11 @@
             $("#showDesignationName").text(''); 
             dateFromPicker.clear();
             toDatePicker.clear();
+            $("#showLoanDate").text("");
+            $("#showloanTypeName").text("");
+            $("#showloanAmount").text("");
+            $("#showInstStartEndDate").text("");
+            $("#showNoOfInstallment").text("");
         }
 
         loadEmployeeDetailsByEmployeeIdLoanIdAndCompanyIdReport = function (companyId = null, employeeId = null, loanId = null, dateFrom = null, dateTo = null) {
@@ -375,19 +385,51 @@
                     DateTo: dateTo
                 },
                 success: function (data) {
-                    //DropdownAppendEmployee(data.employees);
                     var empData = data.employees;
-                    $("#showEmployeeName").text(empData[0].fullName??"");
-                    $("#showDepartmentName").text(empData[0].departmentName??"");
-                    $("#showDesignationName").text(empData[0].designationName ?? "");
-                    DropdownAppendLoanType(data.loanIDs);
-                    console.log(data);
+                    if (!empData || empData.length > 0) {
+                        $("#showEmployeeName").text(empData[0].fullName ?? "");
+                        $("#showDepartmentName").text(empData[0].departmentName ?? "");
+                        $("#showDesignationName").text(empData[0].designationName ?? "");
+                        DropdownAppendLoanType(data.loanIDs);
+                    }
+                  
                 },
                 error: function () {
                     alert("Error fetching data");
                 }
             });
         }      
+
+        loadLoanDetailsByEmployeeIdAndCompanyIdReport = function (companyId = null, employeeId = null, loanId = null, dateFrom = null, dateTo = null) {
+            $.ajax({
+                url: filterUrl,
+                type: "GET",
+                data: {
+                    CompanyID: companyId,
+                    EmployeeID: employeeId,
+                    LoanID: loanId,
+                    DateFrom: dateFrom,
+                    DateTo: dateTo
+                },
+                success: function (data) {
+                    //DropdownAppendEmployee(data.employees);
+                    var loanData = data.loanIDs;
+                    if (!loanData || loanData.length>0) {
+                        $("#showLoanDate").text(loanData[0].loanDate ?? "");
+                        $("#showloanTypeName").text(loanData[0].loanType ?? "");
+                        $("#showloanAmount").text(loanData[0].loanAmount ?? "");
+                        $("#showInstStartEndDate").text(loanData[0].instStartEndDate ?? "");
+                        $("#showNoOfInstallment").text(loanData[0].noOfInstallment ?? "");
+                    }
+
+
+                },
+                error: function () {
+                    alert("Error fetching data");
+                }
+            });
+        }      
+
 
         const dateFromPicker = flatpickr("#dateFrom", {
             altInput: true,
@@ -409,7 +451,6 @@
         let isDownloadWord = false;
         let isPreviewPdf = false;
         $(document).on('click', "#btnPreview", function () {
-            console.log("click preview");
             isPreviewPdf = true;
             let companyId = $('[data-field="companyId"] .selected-items').attr("data-id");
             const loanId = $('[data-field="loanType"] .selected-items').text();
@@ -427,7 +468,6 @@
             let dateFrom = $("#dateFrom").val();
             let toDate = $("#toDate").val();
 
-            console.log($("#reportText").val());
             var downloadText = $("#reportText").val();
             if (downloadText === "downloadPdf") {
                 isDownloadPdf = true;
@@ -501,6 +541,20 @@
         }
 
         // PDF Download button click handler
+        
+        FormateAmountEN = function (amount) {
+            if (amount >= 10000000) {
+                return (amount / 10000000).toFixed(1).replace(/\.0$/, '') + 'Cr';
+            } else if (amount >= 100000) {
+                return (amount / 100000).toFixed(1).replace(/\.0$/, '') + 'Lakh';
+            } else if (amount >= 1000) {
+                return (amount / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+            } else {
+                return amount + ' TK';
+            }
+        }
+
+
 
         GeneratePdf = function (installmentData) {
             const { jsPDF } = window.jspdf;
@@ -514,22 +568,17 @@
                 return;
             }
 
-            // 🛠️ Reusable function: full-width section title with border
             function drawSectionTitle(titleText) {
                 doc.setFontSize(14);
                 doc.setFont(undefined, 'normal');
-
-                let localMarginLeft = 10;
                 let paddingY = 4;
                 let rowHeight = 20;
-                let fullWidth = pageWidth - localMarginLeft * 2;
-
+                let fullWidth = pageWidth - marginLeft * 2;
                 let textWidth = doc.getTextWidth(titleText);
                 let textX = (pageWidth - textWidth) / 2;
                 let rectY = y - rowHeight + paddingY;
-
                 doc.setLineWidth(0.5);
-                doc.rect(localMarginLeft, rectY, fullWidth, rowHeight);
+                doc.rect(marginLeft, rectY, fullWidth, rowHeight);
                 doc.text(titleText, textX, y);
                 y += rowHeight + 15;
             }
@@ -540,7 +589,7 @@
                     y = 35;
                 }
 
-                // 🟦 Company Title
+                // Company Title
                 doc.setFontSize(18);
                 doc.setFont(undefined, 'bold');
                 let companyText = `${loan.companyName}`;
@@ -548,23 +597,51 @@
                 doc.text(companyText, (pageWidth - textWidth) / 2, y);
                 y += 25;
 
-                // 🟩 Section Title: Employee Loan Information
+                // Installment Details Text
+                let installmentDetailsText = `Installments of ${FormateAmountEN(loan.monthlyDeduction)} tk per month to be deposited to designated account.`;
+
                 drawSectionTitle("Employee Loan Information");
 
-                // 🟨 Employee Details
                 doc.setFontSize(11);
                 const centerX = pageWidth / 2;
                 const colonX = centerX;
                 const labelX = colonX - 2;
                 const valueX = colonX + 5;
 
+                // Updated drawKeyValue Function                
+
                 function drawKeyValue(label, value, yPos) {
-                    doc.text(label, labelX, yPos, { align: "right" });
-                    doc.text(":", colonX, yPos, { align: "center" });
-                    doc.text(value, valueX, yPos, { align: "left" });
+                    doc.setFont(undefined, 'normal');
+
+                    if (label === "Installment Details") {
+                        const paddingRight = 40;
+                        const maxWidth = pageWidth - colonX - paddingRight;  // Available width from colon to right margin
+
+                        const wrappedText = doc.splitTextToSize(value, maxWidth);
+
+                        // Draw label and colon
+                        doc.text(label, labelX, yPos, { align: "right" });
+                        doc.text(":", colonX, yPos, { align: "center" });
+
+                        // Draw wrapped value aligned to left
+                     
+                        wrappedText.forEach((line, i) => {
+                            const lineX = colonX + 5;           
+                            const lineY = yPos + (i * 12);     
+                            doc.text(line, lineX, lineY, { align: "left" });
+                        });
+
+                        y += wrappedText.length * 10; // Update y position
+                    } else {
+                        doc.text(label, labelX, yPos, { align: "right" });
+                        doc.text(":", colonX, yPos, { align: "center" });
+                        doc.text(value, valueX, yPos, { align: "left" });
+                        //y += 18;
+                    }
                 }
 
-                drawKeyValue("Employee ID", loan.employeeID.toString(), y-=10); y += 18;
+
+                drawKeyValue("Employee ID", loan.employeeID.toString(), y -= 10); y += 18;
                 drawKeyValue("Name", loan.fullName, y); y += 18;
                 drawKeyValue("Department", loan.departmentName, y); y += 18;
                 drawKeyValue("Designation", loan.designationName, y); y += 18;
@@ -573,14 +650,12 @@
                 drawKeyValue("Loan Amount", `BDT ${loan.loanAmount.toFixed(2)}`, y); y += 18;
                 drawKeyValue("Loan Disbursed Date", new Date(loan.startDate).toLocaleDateString(), y); y += 18;
                 drawKeyValue("Loan Repayment Method", loan.loanRepaymentMethod.toString(), y); y += 18;
-                drawKeyValue("Installment Details", loan.installmentDetails.toString(), y); y += 18;
+                drawKeyValue("Installment Details", installmentDetailsText, y); y += 8;
                 drawKeyValue("Loan Paidout Date", new Date(loan.endDate).toLocaleDateString(), y); y += 18;
                 drawKeyValue("Remarks", loan.remarks || "", y); y += 25;
 
-                // 🟦 Section Title: Loan Installment Details
                 drawSectionTitle("Loan Installment Details");
 
-                // 🎯 Total deposit calculation
                 let totalDeposit = 0;
                 let installmentRows = loan.installments.map(inst => {
                     totalDeposit += inst.deposit || 0;
@@ -594,7 +669,6 @@
                 });
                 y -= 10;
 
-                // ➕ Table with autoTable
                 doc.autoTable({
                     startY: y,
                     head: [['Installment No', 'Transaction Date', 'Installment Details (Cash/Cheque)', 'Deposit Amount', 'Outstanding Balance']],
@@ -629,7 +703,7 @@
                     }
                 });
 
-                // 🔢 Draw Total Deposit Summary
+                // Total Deposit Summary
                 let depositColumnIndex = 3;
                 let cellWidth = (pageWidth - marginLeft * 2) / 5;
                 let depositColumnX = marginLeft + depositColumnIndex * cellWidth;
@@ -639,7 +713,6 @@
                 doc.setFontSize(11);
                 doc.setFont(undefined, 'bold');
 
-                // Upper line
                 doc.setLineWidth(0.5);
                 doc.line(
                     depositColumnX + (cellWidth - doc.getTextWidth(valueText)) / 2,
@@ -670,27 +743,23 @@
 
                 y = textY + 15;
             });
-            console.log(isPreviewPdf);
+
             if (isPreviewPdf) {
-                console.log("test");
                 const pdfBlob = doc.output('blob');
                 const pdfUrl = URL.createObjectURL(pdfBlob);
-
                 const container = document.getElementById("pdfContainer");
-                container.innerHTML = ""; 
-
+                container.innerHTML = "";
                 const embed = document.createElement("embed");
                 embed.src = pdfUrl;
                 embed.type = "application/pdf";
                 embed.width = "100%";
                 embed.height = "100%";
-
                 container.appendChild(embed);
-            }
-            else if (isDownloadPdf) {
-            doc.save("Loan_Report.pdf");
+            } else if (isDownloadPdf) {
+                doc.save("Loan_Report.pdf");
             }
         }
+
 
 
 
@@ -967,8 +1036,7 @@
                 URL.revokeObjectURL(url);
 
             } catch (error) {
-                alert("Error generating Word document: " + error.message);
-                console.error("Word generation error:", error);
+                alert("Error generating Word document: " + error.message);                
             }
         }
 
@@ -1014,7 +1082,6 @@
                     }
                 },
                 error: function (xhr, status, error) {
-                    console.error('Error generating Excel:', error);
                     alert('Error generating Excel file: ' + (xhr.responseText || error));
 
                     // Hide loading indicator
@@ -1024,20 +1091,6 @@
                 }
             });
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         init = function () {
                 loadEmployeeLoanReport();  

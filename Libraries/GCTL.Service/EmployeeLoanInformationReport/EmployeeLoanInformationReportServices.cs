@@ -50,7 +50,7 @@ namespace GCTL.Service.EmployeeLoanInformationReport
                     LoanReports = new List<EmployeeLoanInformationReportVM>(),
                     Companies = new List<CompanyBasicInfoVM>(),
                     Employees = new List<EmployeeBasicInfoVM>(),
-                    LoanIDs = new List<string>()
+                    LoanIDs = new List<LoanBasicInfoVm>()
                 };
 
                 using var conn = new SqlConnection(configuration.GetConnectionString("ApplicationDbConnection"));
@@ -70,7 +70,7 @@ namespace GCTL.Service.EmployeeLoanInformationReport
                 var loanDict = new Dictionary<string, EmployeeLoanInformationReportVM>();
                 var companySet = new Dictionary<string, CompanyBasicInfoVM>();
                 var employeeSet = new HashSet<string>();
-                var loanIdSet = new HashSet<string>();
+                var loanIdSet = new Dictionary<string, LoanBasicInfoVm>();
 
                 while (await reader.ReadAsync())
                 {
@@ -100,9 +100,19 @@ namespace GCTL.Service.EmployeeLoanInformationReport
                                 DesignationName = reader["DesignationName"].ToString()
                             });
                         }
-                        if (!loanIdSet.Contains(loanId))
+                        if (!loanIdSet.ContainsKey(loanId))
                         {
-                            loanIdSet.Add(loanId);
+                        loanIdSet.Add(loanId, new LoanBasicInfoVm
+                        {
+                            LoanDate=Convert.ToDateTime(reader["LoanDate"]).ToString("dd/MM/yyy"),
+                            LoanType = reader["LoanType"].ToString(),
+                            LoanAmount = Convert.ToDecimal(reader["LoanAmount"]),
+                            LoanIDs = reader["LoanID"].ToString(),
+                            InstStartEndDate = Convert.ToDateTime(reader["StartDate"]).ToString("dd/MM/yyyy")
+                       + " - " +
+                       Convert.ToDateTime(reader["EndDate"]).ToString("dd/MM/yyyy"),
+                            NoOfInstallment = reader["NoOfInstallment"].ToString(),
+                        });
                         }
                         if (!loanDict.ContainsKey(loanId))
                         {
@@ -123,6 +133,7 @@ namespace GCTL.Service.EmployeeLoanInformationReport
                                 EndDate = Convert.ToDateTime(reader["EndDate"]?.ToString() ?? ""),
                                 InstallmentDetails = reader["Installment Details"]?.ToString(),
                                 LoanRepaymentMethod = reader["LoanRepaymentMethod"].ToString() ?? "",
+                                MonthlyDeduction = Convert.ToDecimal(reader["MonthlyDeduction"]),
                                 Installments = new List<InstallmentVM>()
                             };
                             loanDict.Add(loanId, loanVm);
@@ -141,7 +152,7 @@ namespace GCTL.Service.EmployeeLoanInformationReport
 
                 response.LoanReports = loanDict.Values.ToList();
                     response.Companies = companySet.Values.ToList();
-                    response.LoanIDs = loanIdSet.ToList();
+                    response.LoanIDs = loanIdSet.Values.ToList();
                     return response;
                 
 
