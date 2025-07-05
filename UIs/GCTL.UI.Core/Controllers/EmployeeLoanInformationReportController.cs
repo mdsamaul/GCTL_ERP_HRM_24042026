@@ -69,6 +69,48 @@ namespace GCTL.UI.Core.Controllers
             }
         }
 
+
+        //FormateAmountEN = function(amount)
+        //{
+        //    if (amount >= 10000000)
+        //    {
+        //        return (amount / 10000000).toFixed(1).replace(/\.0$/, '') + 'Cr';
+        //    }
+        //    else if (amount >= 100000)
+        //    {
+        //        return (amount / 100000).toFixed(1).replace(/\.0$/, '') + 'Lakh';
+        //    }
+        //    else if (amount >= 1000)
+        //    {
+        //        return (amount / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+        //    }
+        //    else
+        //    {
+        //        return amount + ' TK';
+        //    }
+        //}
+
+        private string CalculteAmount(decimal amount)
+        {
+            if (amount >= 10000000)
+            {
+                return (amount / 10000000M).ToString("0.#") + "Cr";
+            }
+            else if (amount >= 100000)
+            {
+                return (amount / 100000M).ToString("0.#") + "Lakh";
+            }
+            else if (amount >= 1000)
+            {
+                return (amount / 1000M).ToString("0.#") + "K";
+            }
+            else
+            {
+                return amount.ToString("0.#") + " TK";
+            }
+        }
+
+
         private void GenerateLoanSheet(ExcelWorksheet worksheet, EmployeeLoanInformationReportVM loan)
         {
             int currentRow = 1;
@@ -102,7 +144,8 @@ namespace GCTL.UI.Core.Controllers
             new { Label = "Loan Amount", Value = $"BDT {loan.LoanAmount:F2}" },
             new { Label = "Loan Disbursed Date", Value = loan.StartDate.ToShortDateString() },
             new { Label = "Loan Repayment Method", Value = loan.LoanRepaymentMethod ?? "" },
-            new { Label = "Installment Details", Value = loan.InstallmentDetails ?? "" },
+            //new { Label = "Installment Details", Value = loan.InstallmentDetails ?? "" },
+             new { Label = "Installment Details", Value = "Installments of " + CalculteAmount(loan.MonthlyDeduction) + " tk per month to be deposited to designated account." },
             new { Label = "Loan Paidout Date", Value = loan.EndDate.ToShortDateString() },
             new { Label = "Remarks", Value = loan.Remarks ?? "" }
         };
@@ -203,3 +246,5 @@ namespace GCTL.UI.Core.Controllers
 
     }
 }
+
+

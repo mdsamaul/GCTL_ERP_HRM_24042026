@@ -15649,11 +15649,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Project\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj",
+      "projectUniqueName": "D:\\Project\\New folder\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj",
       "projectName": "GCTL.UI.Core",
-      "projectPath": "D:\\Project\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj",
+      "projectPath": "D:\\Project\\New folder\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj",
       "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-      "outputPath": "D:\\Project\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\obj\\",
+      "outputPath": "D:\\Project\\New folder\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -15675,14 +15675,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj": {
-              "projectPath": "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj"
+            "D:\\Project\\New folder\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj": {
+              "projectPath": "D:\\Project\\New folder\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj"
             },
-            "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj": {
-              "projectPath": "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj"
+            "D:\\Project\\New folder\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj": {
+              "projectPath": "D:\\Project\\New folder\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj"
             },
-            "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\GCTL.Service.csproj": {
-              "projectPath": "D:\\Project\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\GCTL.Service.csproj"
+            "D:\\Project\\New folder\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\GCTL.Service.csproj": {
+              "projectPath": "D:\\Project\\New folder\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\GCTL.Service.csproj"
             }
           }
         }

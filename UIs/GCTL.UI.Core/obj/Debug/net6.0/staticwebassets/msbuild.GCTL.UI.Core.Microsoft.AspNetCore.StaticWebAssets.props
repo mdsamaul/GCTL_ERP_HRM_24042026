@@ -37686,8 +37686,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>8tpz8kw6x2</Fingerprint>
-      <Integrity>lDpkbU6uom+R/Cc0qHPzny8uDY0XZEAI791BHWCQstk=</Integrity>
+      <Fingerprint>mojtuf2wg7</Fingerprint>
+      <Integrity>5qKHDwUQu1IwEtNEd6l5pJN8CF83dhm6tmQVCe7/0QE=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\pages\EmployeeLoanInformationReport.js'))</OriginalItemSpec>

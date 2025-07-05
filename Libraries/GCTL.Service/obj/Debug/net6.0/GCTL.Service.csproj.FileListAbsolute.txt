@@ -442,3 +442,40 @@ D:\Project\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Se
 D:\Project\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\refint\GCTL.Service.dll
 D:\Project\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Service.pdb
 D:\Project\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\ref\GCTL.Service.dll
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-Black.ttf
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-BlackItalic.ttf
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-Bold.ttf
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-BoldItalic.ttf
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-ExtraBold.ttf
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-ExtraBoldItalic.ttf
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-ExtraLight.ttf
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-ExtraLightItalic.ttf
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-Italic.ttf
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-Light.ttf
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-LightItalic.ttf
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-Medium.ttf
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-MediumItalic.ttf
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-Regular.ttf
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-SemiBold.ttf
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-SemiBoldItalic.ttf
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-Thin.ttf
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-ThinItalic.ttf
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\OFL.txt
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\GCTL.Service.deps.json
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\GCTL.Service.dll
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\GCTL.Service.pdb
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\GCTL.Core.dll
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\GCTL.Data.dll
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\GCTL.Data.pdb
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\GCTL.Core.pdb
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Service.csproj.AssemblyReference.cache
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Service.GeneratedMSBuildEditorConfig.editorconfig
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Service.AssemblyInfoInputs.cache
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Service.AssemblyInfo.cs
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Service.csproj.CoreCompileInputs.cache
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Service.sourcelink.json
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Ser.D34A4490.Up2Date
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Service.dll
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\refint\GCTL.Service.dll
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Service.pdb
+D:\Project\New folder\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\ref\GCTL.Service.dll
