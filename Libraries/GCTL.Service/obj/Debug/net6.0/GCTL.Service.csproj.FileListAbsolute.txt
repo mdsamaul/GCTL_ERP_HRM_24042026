@@ -479,3 +479,40 @@ D:\Git\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\GCTL.Data.p
 D:\Git\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\GCTL.Core.pdb
 D:\Git\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Ser.D34A4490.Up2Date
 D:\Git\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\ref\GCTL.Service.dll
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-Black.ttf
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-BlackItalic.ttf
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-Bold.ttf
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-BoldItalic.ttf
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-ExtraBold.ttf
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-ExtraBoldItalic.ttf
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-ExtraLight.ttf
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-ExtraLightItalic.ttf
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-Italic.ttf
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-Light.ttf
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-LightItalic.ttf
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-Medium.ttf
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-MediumItalic.ttf
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-Regular.ttf
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-SemiBold.ttf
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-SemiBoldItalic.ttf
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-Thin.ttf
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\Lato-ThinItalic.ttf
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\LatoFont\OFL.txt
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\GCTL.Service.deps.json
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\GCTL.Service.dll
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\GCTL.Service.pdb
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\GCTL.Core.dll
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\GCTL.Data.dll
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\GCTL.Data.pdb
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\bin\Debug\net6.0\GCTL.Core.pdb
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Service.csproj.AssemblyReference.cache
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Service.GeneratedMSBuildEditorConfig.editorconfig
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Service.AssemblyInfoInputs.cache
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Service.AssemblyInfo.cs
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Service.csproj.CoreCompileInputs.cache
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Service.sourcelink.json
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Ser.D34A4490.Up2Date
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Service.dll
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\refint\GCTL.Service.dll
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\GCTL.Service.pdb
+D:\GCTL INFOSYS\04062025\GCTL_ERP_HRM_24042026\Libraries\GCTL.Service\obj\Debug\net6.0\ref\GCTL.Service.dll

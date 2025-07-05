@@ -1,4 +1,5 @@
-﻿let empDataTable = null;
+﻿
+let empDataTable = null;
 let filterChangeBound = false;
 let originalEmpId = null;
 let selectedOtIds = new Set();

@@ -8769,7 +8769,7 @@ namespace GCTL.Data.Models
 
             modelBuilder.Entity<HrmServiceNotConfirmationEntry>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(x=>x.Tc);
 
                 entity.ToTable("HRM_ServiceNotConfirmationEntry");
 

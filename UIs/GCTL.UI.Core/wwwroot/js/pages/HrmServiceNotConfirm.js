@@ -9,8 +9,8 @@ $(document).ready(function () {
     setupLoadingOverlay();
     initializeEventHandlers();
     loadAllFilterEmp();
-    //loadTableData();
-    //loadSNCId();
+    loadTableData();
+    loadSNCId();
     setupEnterKeyNavigation();
 })
 
@@ -240,6 +240,7 @@ function loadSNCId() {
         type: "GET",
         dataType: "json",
         success: function (data) {
+            console.log(data);
             if (data) {
                 $('#sncId').val(data);
             }
@@ -269,7 +270,7 @@ function displayGridData() {
         ajax: {
             url: '/HrmServiceNotConfirmationEntry/GetPaginatedEntries',
             type: 'POST',
-            // success: function (data) { console.log(data) }
+            success: function (data) { console.log(data) }
         },
         columns: [
             {
@@ -376,7 +377,7 @@ function handleFormSubmission() {
 
     const dataToSend = {
         EmployeeId: selectedEmp,
-        Sncid: $("#effectiveDate").val(),
+        Sncid: $("#sncId").val(),
         EffectiveDate: $("#effectiveDate").val(),
         DuePaymentDate: $("#duePaymentDate").val(),
         RefLetterNo: $("#refLetterNo").val(),
@@ -403,7 +404,8 @@ function handleFormSubmission() {
                 showNotification("Failed to update employee salary information.", "error");
             }
 
-        }
+        },
+        complete: hideLoading
     })
 }
 

@@ -94,10 +94,25 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
             throw new NotImplementedException();
         }
 
-        public Task<string> GenerateSNCIdAsync()
+        public async Task<string> GenerateSNCIdAsync()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var maxId = entryRepository.All()
+                    .AsEnumerable() // Switch to LINQ-to-Objects
+                    .Where(e => !string.IsNullOrEmpty(e.Sncid) && e.Sncid.All         (char.IsDigit))
+                    .Select(e => int.Parse(e.Sncid))
+                    .DefaultIfEmpty(0)
+                    .Max();
+
+                return (maxId + 1).ToString("D8");
+            }
+            catch
+            {
+                return "00000001";
+            }
         }
+
 
         public Task<HrmServiceNotConfirmViewModel> GetByIdAsync(decimal id)
         {
@@ -183,9 +198,72 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
             return result;
         }
 
-        public Task<(List<HrmServiceNotConfirmViewModel> Data, int TotalRecords)> GetPaginatedDataAsync(string searchValue, int page, int pageSize, string sortColumn, string sortDirection)
+        public async Task<(List<HrmServiceNotConfirmViewModel> Data, int TotalRecords)> GetPaginatedDataAsync(string searchValue, int page, int pageSize, string sortColumn, string sortDirection)
         {
-            throw new NotImplementedException();
+            var query = from e in entryRepository.All().AsNoTracking()
+                        join em in employeeRepository.All().AsNoTracking() on e.EmployeeId equals em.EmployeeId
+                        join ei in employeeOfficialInfoRepository.All().AsNoTracking() on em.EmployeeId equals ei.EmployeeId
+                        select new HrmServiceNotConfirmViewModel
+                        {
+                            Tc = e.Tc,
+                            Sncid = e.Sncid,
+                            EmployeeId = e.EmployeeId,
+                            EmployeeName = (em.FirstName ?? "") + (em.LastName != null && em.LastName != "" ? " " + em.LastName : ""),
+
+                            EffectiveDate = e.EffectiveDate.HasValue ? e.EffectiveDate.Value.Date : null,
+                            DuePaymentDate = e.DuePaymentDate.HasValue ? e.DuePaymentDate.Value.Date : null,
+                            RefLetterDate = e.RefLetterDate.HasValue ? e.RefLetterDate.Value.Date : null,
+                            RefLetterNo = e.RefLetterNo ?? "",
+                            Remarks = e.Remarks ?? ""
+                        };
+
+            var materializedQuery = await query.ToListAsync();
+
+            IEnumerable<HrmServiceNotConfirmViewModel> filterQuery = materializedQuery;
+
+            if (!string.IsNullOrWhiteSpace(searchValue))
+            {
+                filterQuery = filterQuery.Where(d =>
+                (d.EmployeeName?.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                 (d.EmployeeId?.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                 (d.Sncid?.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                 (d.EffectiveDate?.ToString().Contains(searchValue, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                 (d.DuePaymentDate?.ToString().Contains(searchValue, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                 (d.RefLetterNo?.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                 (d.RefLetterDate?.ToString().Contains(searchValue, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                 (d.Remarks?.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ?? false)
+                );
+            }
+
+            var totalRecords = filterQuery.Count();
+
+            if(!string.IsNullOrWhiteSpace(sortColumn) && !string.IsNullOrWhiteSpace(sortDirection))
+            {
+                filterQuery = sortColumn.ToLower() switch
+                {
+                    "sncid" => sortDirection.ToLower() == "asc" ? filterQuery.OrderBy(x => x.Sncid) : filterQuery.OrderByDescending(x => x.Sncid),
+                    "employeeid" => sortDirection.ToLower() == "asc" ? filterQuery.OrderBy(a => a.EmployeeId) : filterQuery.OrderByDescending(a => a.EmployeeId),
+                    "employeename" => sortDirection.ToLower() == "asc" ? filterQuery.OrderBy(a => a.EmployeeName) : filterQuery.OrderByDescending(a => a.EmployeeName),
+                    "effectivedate" => sortDirection.ToLower() == "asc" ?
+                    filterQuery.OrderBy(a => a.EffectiveDate) : filterQuery.OrderByDescending(a => a.EffectiveDate),
+                    "duepaymentdate" => sortDirection.ToLower() == "asc" ?
+                    filterQuery.OrderBy(a => a.DuePaymentDate) : filterQuery.OrderByDescending(a => a.DuePaymentDate),
+                    "refletterno" => sortDirection.ToLower() == "asc" ? filterQuery.OrderBy(a => a.RefLetterNo) : filterQuery.OrderByDescending(a => a.RefLetterNo),
+                    "refletterdate" => sortDirection.ToLower() == "asc" ? filterQuery.OrderBy(a => a.RefLetterDate) : filterQuery.OrderByDescending(a => a.RefLetterDate),
+                    "remarks" => sortDirection.ToLower() == "asc" ? filterQuery.OrderBy(a => a.Remarks) : filterQuery.OrderByDescending(a => a.Remarks),
+                    _ => filterQuery.OrderBy(a => a.Tc)
+                };
+            }
+            else
+            {
+                filterQuery = filterQuery.OrderBy(a => a.Tc);
+            }
+
+            var data = pageSize < 0
+                ? filterQuery.ToList()
+                : filterQuery.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            return (data, totalRecords);
         }
 
         public Task<List<HrmPayMonthViewModel>> GetPayMonthsAsync()
@@ -198,9 +276,39 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
             throw new NotImplementedException();
         }
 
-        public Task<bool> SaveAsync(HrmServiceNotConfirmViewModel model)
+        public async Task<bool> SaveAsync(HrmServiceNotConfirmViewModel model)
         {
-            throw new NotImplementedException();
+            if (model == null || model.EmployeeId == null)
+                return false;
+
+            try
+            {
+                var newId = await GenerateSNCIdAsync();
+
+                HrmServiceNotConfirmationEntry record = new HrmServiceNotConfirmationEntry
+                {
+                    Sncid = newId,
+                    EmployeeId = model.EmployeeId,
+                    EffectiveDate = model.EffectiveDate,
+                    DuePaymentDate = model.DuePaymentDate,
+                    RefLetterNo = model.RefLetterNo ?? "",  // "" if you don't want null
+                    RefLetterDate = model.RefLetterDate,
+                    Remarks = model.Remarks ?? "",
+                    Ldate = model.Ldate,
+                    Lip = model.Lip,
+                    Lmac = model.Lmac,
+                    Luser = model.Luser,
+                    CompanyCode = model.CompanyCode,
+                };
+
+                await entryRepository.AddAsync(record);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return false;
+            }
         }
     }
 }
