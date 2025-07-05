@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\GCTL.UI.Core.props" />
-</Project>
