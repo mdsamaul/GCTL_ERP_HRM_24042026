@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GCTL.UI.Core.ViewModels.PrintingStationeryPurchaseEntry;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GCTL.UI.Core.Controllers
 {
@@ -6,7 +7,10 @@ namespace GCTL.UI.Core.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            PrintingStationeryPurchaseEntryViewModel model = new PrintingStationeryPurchaseEntryViewModel() { 
+                PageUrl = Url.Action(nameof(Index))
+            };
+            return View(model);
         }
     }
 }

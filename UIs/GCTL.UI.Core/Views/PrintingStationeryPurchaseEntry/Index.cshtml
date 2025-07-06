@@ -1,1 +1,535 @@
-﻿<h2>Printing Stationery Purchase Entry</h2>
+﻿@model GCTL.UI.Core.ViewModels.PrintingStationeryPurchaseEntry.PrintingStationeryPurchaseEntryViewModel
+@{
+    Model.Breadcrumb = "PrintingStationeryPurchaseEntry";
+    Model.PageTitle = "Printing Stationery Purchase Entry";
+}
+
+<style>
+    .custom-fieldset {
+        position: relative; 
+        border: 2px solid #ddd; 
+        border-radius: 10px;
+        padding: 30px 20px 20px 20px; 
+        margin: 20px 0;
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.2);
+    }
+
+        .custom-fieldset legend {
+            position: absolute;
+            top: -14px;
+            left: 20px;
+            background-color: white; 
+            padding: 0 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #727272;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width:auto;
+        }
+
+        .custom-fieldset label {
+            display: block;
+            margin-top: 10px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .custom-fieldset input[type="text"],
+        .custom-fieldset input[type="email"],
+        .custom-fieldset input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            color: #000;
+        }
+
+        .custom-fieldset input[type="submit"] {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #fff;
+            border: 2px solid #333;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+            .custom-fieldset input[type="submit"]:hover {
+                background-color: #45a049;
+                border-color: #45a049;
+            }
+
+    #stickyHeader {
+        position: sticky;
+        top: 0;
+        z-index: 1050;
+        background: white;
+        padding: 10px 20px;
+        transition: all 0.3s ease-in-out;
+        box-shadow: none;
+    }
+
+        #stickyHeader.scrolled {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
+        }
+
+    .custom-col{
+        width:10vw;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="number"],
+    input[type="password"],
+    select,
+    textarea {
+        border: 1px solid #ccc !important; /* Light gray border */
+        border-radius: 4px;
+        padding: 6px 10px;
+        box-sizing: border-box;
+        outline: none;
+    }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #999 !important; /* Slightly darker gray when focused */
+            box-shadow: none;
+        }
+
+
+
+
+
+    .small-time-picker {
+        max-width: 100% !important;
+        padding: 2px;
+    }
+
+        .small-time-picker .flatpickr-time {
+            font-size: 12px;
+            padding: 2px;
+            justify-content: space-between;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .small-time-picker .numInputWrapper input {
+            font-size: 9px;
+            height: 14px;
+            width: 20px !important;
+            padding: 2px;
+        }
+
+        .small-time-picker .flatpickr-time-separator {
+            font-size: 12px;
+            padding: 0 2px;
+        }
+
+        .small-time-picker .flatpickr-am-pm {
+            font-size: 12px;
+            height: 14px;
+            width: 20px;
+            padding: 2px;
+        }
+
+        .small-time-picker .arrowUp,
+        .small-time-picker .arrowDown {
+            height: 6px;
+            width: 100%;
+        }
+
+        /* Optional: Reduce calendar padding */
+        .small-time-picker .flatpickr-calendar {
+            padding: 2px;
+        }
+</style>
+<!-- Content Header (Page header) -->
+<div class="container-fluid">
+    <partial name="_PageHeader" model="Model"></partial>
+</div>
+<div class="container-fluid">
+        <div id="stickyHeader" class="px-2 sticky-top rounded-bottom">
+            <partial name="_Toolbars" model="new ToobarModel(){Title=Model.Breadcrumb, Code=Model.Code , Name=Model.Setup.PurchaseOrderReceiveDetailsID}" />
+        </div>
+
+    <div class="card p-2 my-2">
+        <fieldset class="custom-fieldset">
+            <legend>Main Information</legend>
+            <div class="row">
+                <div class="col-12 col-md-4 " style="padding-left: 0px;">
+                    <div class="d-flex align-items-center">
+                        <div class="col-4  text-right" style="padding-right: 0px; white-space:nowrap; padding-left: 0px;">
+                            Purchase Order No <span class="text-danger">*</span>
+                        </div>
+                        <div class="col-8 " style="padding-left: 5px;">
+                            <input type="text" name="name" class="form-control-sm" value="" style="margin-top: 0px;">
+                        </div>
+                        <div class="col-1 "></div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 ">
+                    <div class="d-flex align-items-center">
+                        <div class="col-4  text-right" style="padding-right: 0px;">
+                            Date & Time <span class="text-danger">*</span>
+                        </div>
+                       @*  <div class="col-8 d-flex align-items-center" style="padding-left: 5px;">
+                            <div class="col-md-5  px-0">
+                                <input type="date" name="name" class="form-control-sm" value="" style="margin-top: 0px;">
+                            </div>
+                            <div class="col-md-7 px-0">
+                                <input type="time" name="name" class="form-control-sm w-100" value="" style="margin-top: 0px;">
+                            </div>
+                        </div> *@
+                        <div class="col-8 d-flex align-items-center" style="padding-left: 5px;">
+                            <div class="col-md-5 px-0">
+                                <input type="text" id="datePicker" class="form-control-sm w-100" style="margin-top: 0px;">
+                            </div>
+                            <div class="col-md-7 px-0">
+                                <input type="hidden" id="timePicker" class="form-control-sm w-100" style="margin-top: 0px;">
+                                <div id="inlineTimePicker" class="small-time-picker w-100"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4"></div>
+            </div>
+            <div class="row py-2">
+                <div class="col-12 col-md-4 ">
+                    <div class="d-flex align-items-center">
+                        <div class="col-4  text-right" style="padding-right: 0px;">
+                            Department
+                        </div>
+                        <div class="col-8 " style="padding-left: 5px;">
+                            <select class="form-control-sm w-100">
+                                <option value="">asdf</option>
+                            </select>
+                        </div>
+                        <div class="col-1 "></div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 ">
+                    <div class="d-flex align-items-center">
+                        <div class="col-4  text-right" style="padding-right: 0px;">
+                            Supplier
+                        </div>
+                        <div class="col-8" style="padding-left: 5px;">
+                            <select class="form-control-sm w-100">
+                                <option value="">asdf</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="d-flex align-items-center">
+                        <div class="col-4  text-right" style="padding-right: 0px; white-space:nowrap;">
+                            Supplier Address
+                        </div>
+                        <div class="col-8" style="padding-left: 5px;">
+                            <textarea rows="2" class="form-control-sm"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-4 ">
+                    <div class="d-flex align-items-center">
+                        <div class="col-4  text-right" style="padding-right: 0px;">
+                            Invoice No
+                        </div>
+                        <div class="col-8 " style="padding-left: 5px;">
+                            <input type="text" name="name" class="form-control-sm" value="" style="margin-top: 0px;">
+                        </div>
+                        <div class="col-1 "></div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 ">
+                    <div class="d-flex align-items-center">
+                        <div class="col-4  text-right" style="padding-right: 0px;">
+                            Invoice Date
+                        </div>
+                        <div class="col-8" style="padding-left: 5px;">
+                            <input type="date" name="name" class="form-control-sm" value="" style="margin-top: 0px;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="d-flex align-items-center">
+                        <div class="col-4  text-right" style="padding-right: 0px;">
+                            Invoice Value
+                        </div>
+                        <div class="col-8" style="padding-left: 5px;">
+                            <input type="date" name="name" class="form-control-sm" value="" style="margin-top: 0px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row py-2">
+                <div class="col-12 col-md-4 ">
+                    <div class="d-flex align-items-center">
+                        <div class="col-4  text-right" style="padding-right: 0px;">
+                            Challan No
+                        </div>
+                        <div class="col-8 " style="padding-left: 5px;">
+                            <input type="date" name="name" class="form-control-sm" value="" style="margin-top: 0px;">
+                        </div>
+                        <div class="col-1 "></div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 ">
+                    <div class="d-flex align-items-center">
+                        <div class="col-4  text-right" style="padding-right: 0px;">
+                            Challan Date
+                        </div>
+                        <div class="col-8" style="padding-left: 5px;">
+                            <input type="date" name="name" class="form-control-sm" value="" style="margin-top: 0px;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4"> </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-4 ">
+                    <div class="d-flex align-items-center">
+                        <div class="col-4  text-right" style="padding-right: 0px;">
+                            Purchased By
+                        </div>
+                        <div class="col-8 " style="padding-left: 5px;">
+                            <select class="form-control-sm w-100">
+                                <option value="">asdf</option>
+                            </select>
+                        </div>
+                        <div class="col-1 "></div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 ">
+                    <div class="d-flex align-items-center">
+                        <div class="col-4  text-right" style="padding-right: 0px;">
+                            Remarks
+                        </div>
+                        <div class="col-8" style="padding-left: 5px;">
+                            <textarea rows="2" class="form-control-sm"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4"> </div>
+            </div>
+        </fieldset>
+       <div class="container-fluid px-0">
+           <div class="card">
+                <div class="d-flex border">
+                    <div class="custom-col" style="padding-right: 0px;">
+                        <div class="d-flex justify-content-around align-items-center border" >
+                            <div><b style="white-space:nowrap;">Product Name</b></div> 
+                            <button class="btn btn-outline-dark rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 20px; height: 20px; font-size: 9px; line-height: 1;">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                        </div>
+                        <div>
+                            <select class="w-100 form-control-sm">
+                                <option>asdf</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="custom-col  px-0">
+                        <div class="d-flex justify-content-center align-items-center border">
+                            <div><b style="white-space:nowrap;">Decription</b></div>
+                        </div>
+                        <div>
+                            <input type="text" class="form-control-sm w-100" name="name" value=""readonly/>
+                        </div>
+                    </div>
+                    <div class="custom-col  px-0">
+                        <div class="d-flex justify-content-around align-items-center border">
+                            <div><b style="white-space:nowrap;">Brand</b></div>
+                            <button class="btn btn-outline-dark rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 20px; height: 20px; font-size: 9px; line-height: 1;">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <div>
+                            <select class="w-100 form-control-sm">
+                                <option>asdf</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="custom-col  px-0">
+                        <div class="d-flex justify-content-around align-items-center border">
+                            <div><b style="white-space:nowrap;">Model</b></div>
+                            <button class="btn btn-outline-dark rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 20px; height: 20px; font-size: 9px; line-height: 1;">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <div>
+                            <select class="w-100 form-control-sm">
+                                <option>asdf</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="custom-col  px-0">
+                        <div class="d-flex justify-content-around align-items-center border">
+                            <div><b style="white-space:nowrap;">Size</b></div>
+                            <button class="btn btn-outline-dark rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 20px; height: 20px; font-size: 9px; line-height: 1;">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <div>
+                            <select class="w-100 form-control-sm">
+                                <option>asdf</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="custom-col  px-0">
+                        <div class="d-flex justify-content-center align-items-center border">
+                            <div><b style="white-space:nowrap;">Warranty</b></div>                            
+                        </div>
+                        <div>
+                            <input type="number" class="form-control-sm w-100" name="name" value="" />
+                        </div>
+                    </div>
+                    <div class="custom-col  px-0">
+                        <div class="d-flex justify-content-around align-items-center border">
+                            <div><b style="white-space:nowrap;">Period</b></div>
+                            <button class="btn btn-outline-dark rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 20px; height: 20px; font-size: 9px; line-height: 1;">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <div>
+                            <select class="w-100 form-control-sm">
+                                <option>asdf</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="custom-col  px-0">
+                        <div class="d-flex justify-content-center align-items-center border">
+                            <div><b style="white-space:nowrap;">Qty</b></div>                            
+                        </div>
+                        <div>
+                            <input type="number" class="form-control-sm w-100" name="name" value="" />
+                        </div>
+                    </div>
+                    <div class="custom-col  px-0">
+                        <div class="d-flex justify-content-around align-items-center border">
+                            <div><b style="white-space:nowrap;">Unit</b></div>
+                            <button class="btn btn-outline-dark rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 20px; height: 20px; font-size: 9px; line-height: 1;">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <div>
+                            <select class="w-100 form-control-sm">
+                                <option>asdf</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="custom-col  px-0">
+                        <div class="d-flex justify-content-center align-items-center border">
+                            <div><b style="white-space:nowrap;">Unit Price</b></div>
+                            
+                        </div>
+                        <div>
+                            <select class="w-100 form-control-sm">
+                                <option>asdf</option>
+                            </select>
+                        </div>
+                        <div class="d-flex justify-content-end align-items-center text-right">
+                            <b style="padding-top:4px; font-weight:bolder;"> Total:</b>
+                        </div>
+                    </div>
+                    <div class="custom-col border px-0">
+                        <div class="d-flex justify-content-around align-items-center border">
+                            <div><b style="white-space:nowrap;">Total Price(BDT)</b></div>                            
+                        </div>
+                        <div>
+                           <input type="number" class="form-control-sm w-100" name="name" value="" />
+                        </div>
+                        <div class="text-right">
+                            <input type="number" class="form-control-sm w-100" name="name" value="" />
+                        </div>
+                    </div>                   
+                    <div class="custom-col border d-flex justify-content-center align-items-center  px-0">
+
+                        <div class="d-flex justify-content-center align-items-center gap-1">
+                                <div class="border">
+                                <button class="btn btn-outline-success rounded-md shadow d-flex justify-content-center align-items-center" style="width: 40px; height: 40px; font-size: 9px; line-height: 1;">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                </div>
+                                <div class="border">
+                                <button class="btn btn-outline-danger rounded-md shadow d-flex justify-content-center align-items-center" style="width: 40px; height: 40px; font-size: 9px; line-height: 1;">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="container-fluid row pt-4 pb-3">
+                    <hr style="height: 2px; background-color: #333; border: none;" />
+                    <div class="col-12 col-md-6 text-center">Create Date:31/11/2012</div>
+                    <div class="col-12 col-md-6 text-center">Last Update Date:31/11/2012</div>
+                    <hr style="height: 2px;background-color: #333;margin-top: 16px;" />
+                </div>
+           </div>
+       </div>
+    </div>
+
+</div>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<!-- jQuery (DataTables ) -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Multiselect CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/css/bootstrap-multiselect.min.css">
+    <!-- Bootstrap Multiselect JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/js/bootstrap-multiselect.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+    <!-- DataTable JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+
+    <!--flat picker-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- Load the plugin -->
+    <script src="~/js/pages/PrintingStationeryPurchaseEntry.js"></script>
+
+    <!-- Initialize the plugin -->
+    <script type="text/javascript">
+        $(function () {
+            $.patientTypes({
+                baseUrl: '@Url.Action("Index", "PrintingStationeryPurchaseEntry")',
+                load: function () {
+                    console.log("Custom load logic called from Razor view");
+                }
+            });
+        });
+            if (typeof pdfjsLib !== 'undefined') {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+        }
+    </script>
+}
