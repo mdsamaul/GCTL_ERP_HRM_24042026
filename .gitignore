@@ -1,25 +1,15 @@
-# Ignore Visual Studio related folders
-.vs/
-*.user
-*.suo
-
-# Ignore build results
+# Build folders
 bin/
 obj/
 
-# Ignore Rider IDE
-.idea/
-
-# Ignore user secrets
-**/secrets.json
-
-# Ignore logs
-*.log
-**/bin/
-**/obj/
-*.dll
-*.exe
-*.pdb
-*.cache
-*.log
+# Visual Studio cache files
 *.user
+*.suo
+*.cache
+
+# DLL and PDB files
+*.dll
+*.pdb
+
+# ASP.NET static assets
+*.staticwebassets.*
