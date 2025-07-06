@@ -2733,7 +2733,10 @@
           "itext7.bouncy-castle-fips-adapter": "9.0.0"
         },
         "runtime": {
-          "GCTL.Core.dll": {}
+          "GCTL.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

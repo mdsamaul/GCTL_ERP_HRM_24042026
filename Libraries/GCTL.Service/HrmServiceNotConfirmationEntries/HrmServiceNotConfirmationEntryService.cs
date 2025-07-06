@@ -1,4 +1,6 @@
-﻿using GCTL.Core.Data;
+﻿using DocumentFormat.OpenXml.Drawing;
+using GCTL.Core.Data;
+using GCTL.Core.ViewModels.Companies;
 using GCTL.Core.ViewModels.HrmPayMonths;
 using GCTL.Core.ViewModels.HrmServiceNotConfirmEntries;
 using GCTL.Data.Models;
@@ -24,6 +26,7 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
         private readonly IRepository<HrmDefEmpType> empTypeRepository;
         private readonly IRepository<HrmEisDefEmploymentNature> employmentNatureRepository;
         private readonly IRepository<HrmPayMonth> payMonthRepository;
+        private readonly IRepository<HrmSeparation> separationRepository;
 
         private readonly IRepository<HrmServiceNotConfirmationEntry> entryRepository;
 
@@ -39,7 +42,8 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
             IRepository<HrmDefEmployeeStatus> employeeStatusRepository,
             IRepository<HrmDefEmpType> empTypeRepository,
             IRepository<HrmEisDefEmploymentNature> employmentNatureRepository,
-            IRepository<HrmPayMonth> payMonthRepository) : base(entryRepository)
+            IRepository<HrmPayMonth> payMonthRepository,
+            IRepository<HrmSeparation> separationRepository) : base(entryRepository)
         {
             this.entryRepository = entryRepository;
             this.companyRepository = companyRepository;
@@ -53,6 +57,7 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
             this.payMonthRepository = payMonthRepository;
             this.employmentNatureRepository = employmentNatureRepository;
             this.employeeStatusRepository = employeeStatusRepository;
+            this.separationRepository = separationRepository;
         }
 
         public async Task<bool> BulkDeleteAsync(List<decimal> tcs)
@@ -84,9 +89,51 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
             }
         }
 
-        public Task<bool> EditAsync(HrmServiceNotConfirmViewModel model)
+        public async Task<bool> EditAsync(HrmServiceNotConfirmViewModel model)
         {
-            throw new NotImplementedException();
+            if (model == null || model.Tc == 0 || model.Sncid == null)
+            {
+                return false;
+            }
+
+            await entryRepository.BeginTransactionAsync();
+            try
+            {
+                var exRecord = await entryRepository.GetByIdAsync(model.Tc);
+
+                if (exRecord == null)
+                    return false;
+
+                exRecord.EmployeeId = model.EmployeeId;
+                exRecord.EffectiveDate = model.EffectiveDate;
+                exRecord.DuePaymentDate = model.DuePaymentDate;
+                exRecord.RefLetterNo = model.RefLetterNo ?? "";
+                exRecord.RefLetterDate = model.RefLetterDate;
+                exRecord.Remarks = model.Remarks ?? "";
+                exRecord.ModifyDate = model.ModifyDate;
+                exRecord.Lip = model.Lip;
+                exRecord.Lmac = model.Lmac;
+                exRecord.Luser = model.Luser;
+                exRecord.CompanyCode = model.CompanyCode;
+
+                await entryRepository.UpdateAsync(exRecord);
+
+                await entryRepository.CommitTransactionAsync();
+
+                return true;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                Console.WriteLine($"Database Update Error: {dbEx.Message}");
+                if (dbEx.InnerException != null) Console.WriteLine($"Inner Exception: {dbEx.InnerException.Message}");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"General Error: {ex.Message}");
+                if (ex.InnerException != null) Console.WriteLine($"Inner Exception: {ex.InnerException.Message}");
+                return false;
+            }
         }
 
         public Task<byte[]> GenerateExcelSampleAsync()
@@ -100,7 +147,7 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
             {
                 var maxId = entryRepository.All()
                     .AsEnumerable() // Switch to LINQ-to-Objects
-                    .Where(e => !string.IsNullOrEmpty(e.Sncid) && e.Sncid.All         (char.IsDigit))
+                    .Where(e => !string.IsNullOrEmpty(e.Sncid) && e.Sncid.All(char.IsDigit))
                     .Select(e => int.Parse(e.Sncid))
                     .DefaultIfEmpty(0)
                     .Max();
@@ -114,9 +161,133 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
         }
 
 
-        public Task<HrmServiceNotConfirmViewModel> GetByIdAsync(decimal id)
+        public async Task<HrmServiceNotConfirmViewModel> GetByIdAsync(decimal id)
         {
-            throw new NotImplementedException();
+            var service = await entryRepository.GetByIdAsync(id);
+            var emp = await employeeRepository.GetByIdAsync(service.EmployeeId);
+
+            if (service == null) return null;
+
+            var serviceModel = new HrmServiceNotConfirmViewModel
+            {
+                Tc = service.Tc,
+                Sncid = service.Sncid,
+                EmployeeId = service.EmployeeId,
+                Id = service.EmployeeId,
+                Code = service.EmployeeId,
+
+                Name = string.Join(" ", new[] { emp.FirstName, emp.LastName }.Where(n => !string.IsNullOrWhiteSpace(n))) + $" ({emp.EmployeeId})",
+
+                EffectiveDate = service.EffectiveDate.Value.Date,
+                DuePaymentDate = service.DuePaymentDate.Value.Date,
+                RefLetterDate = service.RefLetterDate.Value.Date,
+                RefLetterNo = service.RefLetterNo,
+                Remarks = service.Remarks
+            };
+            return serviceModel;
+        }
+
+        public async Task<EmployeeListItemViewModel> GetDataByEmpId(string selectedEmpId)
+        {
+            var result = new EmployeeListItemViewModel();
+
+            var query = from emp in employeeRepository.All().AsNoTracking()
+                        join e in employeeOfficialInfoRepository.All().AsNoTracking() on emp.EmployeeId equals e.EmployeeId
+                        join c in companyRepository.All().AsNoTracking() on e.CompanyCode equals c.CompanyCode
+                        join b in branchRepository.All().AsNoTracking() on e.BranchCode equals b.BranchCode into branchGroup
+                        from b in branchGroup.DefaultIfEmpty()
+                        join dep in departmentRepository.All().AsNoTracking()
+                        on e.DepartmentCode equals dep.DepartmentCode into departmentGroup
+                        from dep in departmentGroup.DefaultIfEmpty()
+                        join des in designationRepository.All().AsNoTracking() on e.DesignationCode equals des.DesignationCode into designationGroup
+                        from des in designationGroup.DefaultIfEmpty()
+                        join eType in empTypeRepository.All().AsNoTracking() on e.EmpTypeCode equals eType.EmpTypeCode into eTypeGroup
+                        from eType in eTypeGroup.DefaultIfEmpty()
+                        join eStatus in employeeStatusRepository.All().AsNoTracking() on e.EmployeeStatus equals eStatus.EmployeeStatusId into eStatusGroup
+                        from eStatus in eStatusGroup.DefaultIfEmpty()
+                        where e.EmployeeId == selectedEmpId
+                        select new
+                        {
+                            EmployeeId = e.EmployeeId,
+                            FirstName = emp.FirstName,
+                            LastName = emp.LastName,
+                            e.CompanyCode,
+                            CompanyName = c.CompanyName,
+                            BranchName = b.BranchName,
+                            DepartmentName = dep.DepartmentName,
+                            DesignationName = des.DesignationName,
+                            GrossSalary = e.GrossSalary,
+                            e.JoiningDate,
+                            ProbetionPeriod = "",
+                            EndDate = "",
+                            //ServiceLength =""
+                        };
+
+            var data = await query.FirstOrDefaultAsync();
+
+            if (data == null)
+                return null;
+
+            string serviceLength = "";
+            if (data.JoiningDate.HasValue)
+            {
+                serviceLength = CalculateDateLength(data.JoiningDate.Value, DateTime.Today);
+            }
+
+
+            return new EmployeeListItemViewModel
+            {
+                EmployeeId = data.EmployeeId,
+                Name = string.Join(" ", new[] { data.FirstName, data.LastName }.Where(n => !string.IsNullOrWhiteSpace(n))),
+                JoiningDate = data.JoiningDate.HasValue ? data.JoiningDate.Value.ToString("dd/MM/yyyy") : "",
+                DesignationName = data.DesignationName,
+                DepartmentName = data.DepartmentName,
+                GrossSalary = data.GrossSalary.ToString(),
+                ProbationPeriod = data.ProbetionPeriod,
+                EndOn = data.EndDate,
+                ServiceLength = serviceLength
+            };
+        }
+
+        private string CalculateDateLength(DateTime startDate, DateTime endDate)
+        {
+            if (startDate > endDate)
+                return "";
+
+            var years = endDate.Year - startDate.Year;
+            var months = endDate.Month - startDate.Month;
+            var days = endDate.Day - startDate.Day;
+
+            if (days < 0)
+            {
+                months--;
+                days += DateTime.DaysInMonth(endDate.AddMonths(-1).Year, endDate.AddMonths(-1).Month);
+            }
+
+            if (months < 0)
+            {
+                years--;
+                months += 12;
+            }
+
+            var parts = new List<string>();
+
+            if (years > 0)
+            {
+                parts.Add($"{years} {(years == 1 ? "year" : "years")}");
+            }
+
+            if (months > 0)
+            {
+                parts.Add($"{months} {(months == 1 ? "month" : "months")}");
+            }
+
+            if (days > 0)
+            {
+                parts.Add($"{days} {(days == 1 ? "day" : "days")}");
+            }
+
+            return string.Join(" ", parts);
         }
 
         public async Task<EmployeeFilterResultDto> GetFilterEmployeeAsync(EmployeeFilterViewModel model)
@@ -146,15 +317,7 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
                             FirstName = emp.FirstName,
                             LastName = emp.LastName,
                             e.CompanyCode,
-                            CompanyName = c.CompanyName,
-                            BranchName = b.BranchName,
-                            DepartmentName = dep.DepartmentName,
-                            DesignationName = des.DesignationName,
-                            GrossSalary = e.GrossSalary,
-                            e.JoiningDate,
-                            ProbetionPeriod = "",
-                            EndDate = "",
-                            ServiceLength = e.JoiningDate.HasValue ? (DateTime.Today.Year - e.JoiningDate.Value.Year) * 12 + DateTime.Today.Month - e.JoiningDate.Value.Month + " months and " + (DateTime.Today - e.JoiningDate.Value.AddMonths(((DateTime.Today.Year - e.JoiningDate.Value.Year) * 12 + DateTime.Today.Month - e.JoiningDate.Value.Month))).Days + " days" : ""
+                            CompanyName = c.CompanyName
                         };
 
             query = query.Where(x => x.CompanyCode == "001");
@@ -170,7 +333,7 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
             result.LookupData["companies"] = filteredData
                 .Where(x => x.CompanyCode != null && x.CompanyName != null)
                 .Select(x => new LookupItemDto { Code = x.CompanyCode, Name = x.CompanyName })
-                .Distinct()
+                .DistinctBy(x => new { x.Code, x.Name })
                 .ToList();
 
             result.LookupData["employees"] = filteredData
@@ -181,19 +344,6 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
                 })
                 .Distinct()
                 .ToList();
-
-            result.Employees = filteredData.Select(x => new EmployeeListItemViewModel
-            {
-                EmployeeId = x.EmployeeId,
-                Name = string.Join(" ", new[] { x.FirstName, x.LastName }.Where(n => !string.IsNullOrWhiteSpace(n))),
-                JoiningDate = x.JoiningDate.HasValue ? x.JoiningDate.Value.ToString("dd/MM/yyyy") : "",
-                DesignationName = x.DesignationName,
-                DepartmentName = x.DepartmentName,
-                GrossSalary = x.GrossSalary.ToString(),
-                ProbationPeriod = x.ProbetionPeriod,
-                EndOn = x.EndDate,
-                ServiceLength = x.ServiceLength
-            }).ToList();
 
             return result;
         }
@@ -276,22 +426,24 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
             throw new NotImplementedException();
         }
 
+
         public async Task<bool> SaveAsync(HrmServiceNotConfirmViewModel model)
         {
             if (model == null || model.EmployeeId == null)
                 return false;
 
+            await employeeOfficialInfoRepository.BeginTransactionAsync();
+
             try
             {
                 var newId = await GenerateSNCIdAsync();
-
                 HrmServiceNotConfirmationEntry record = new HrmServiceNotConfirmationEntry
                 {
                     Sncid = newId,
                     EmployeeId = model.EmployeeId,
                     EffectiveDate = model.EffectiveDate,
                     DuePaymentDate = model.DuePaymentDate,
-                    RefLetterNo = model.RefLetterNo ?? "",  // "" if you don't want null
+                    RefLetterNo = model.RefLetterNo ?? "",
                     RefLetterDate = model.RefLetterDate,
                     Remarks = model.Remarks ?? "",
                     Ldate = model.Ldate,
@@ -302,13 +454,76 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
                 };
 
                 await entryRepository.AddAsync(record);
+
+                string newSeparationId = await GenerateSeparationIdAsync();
+
+                HrmSeparation seprecord = new HrmSeparation
+                {
+                    SeparationId = newSeparationId,
+                    EmployeeId = model.EmployeeId,
+                    SeparationDate = model.EffectiveDate.HasValue ? model.EffectiveDate.Value : default,
+                    SeparationTypeId = "04",
+                    FinalPayment = 0,
+                    IsPaid = "Y",
+                    Remark = "",
+                    Ldate = model.Ldate,
+                    Lip = model.Lip,
+                    Lmac = model.Lmac,
+                    Luser = model.Luser,
+                    CompanyCode = model.CompanyCode,
+                    RefLetterNo = null,
+                    RefLetterDate = null
+                };
+
+                await separationRepository.AddAsync(seprecord);
+
+                var existingOfficialInfo = await employeeOfficialInfoRepository.All()
+                    .Where(e => e.EmployeeId == model.EmployeeId)
+                    .FirstOrDefaultAsync();
+
+                if (existingOfficialInfo == null)
+                {
+                    await employeeOfficialInfoRepository.RollbackTransactionAsync();
+                    return false;
+                }
+
+                //if (existingOfficialInfo.EmployeeStatus == "02")
+                //    return true;
+
+                existingOfficialInfo.EmployeeStatus = "02";
+                await employeeOfficialInfoRepository.UpdateAsync(existingOfficialInfo);
+
+                await employeeOfficialInfoRepository.CommitTransactionAsync();
+
                 return true;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
+                await employeeOfficialInfoRepository.RollbackTransactionAsync();
                 return false;
             }
+        }
+
+        private async Task<string> GenerateSeparationIdAsync()
+        {
+            string newId = "00000001";
+            try
+            {
+                var maxId = separationRepository.All()
+                    .AsEnumerable() // Switch to LINQ-to-Objects
+                    .Where(e => !string.IsNullOrEmpty(e.SeparationId) && e.SeparationId.All(char.IsDigit))
+                    .Select(e => int.Parse(e.SeparationId))
+                    .DefaultIfEmpty(0)
+                    .Max();
+
+                newId = (maxId + 1).ToString("D8");
+            }
+            catch (Exception ex)
+            {
+                newId = "00000001";
+            }
+            return newId;
         }
     }
 }

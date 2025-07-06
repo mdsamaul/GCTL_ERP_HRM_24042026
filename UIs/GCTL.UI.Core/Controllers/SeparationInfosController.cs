@@ -54,11 +54,11 @@ namespace GCTL.UI.Core.Controllers
 
         public async Task<IActionResult> Index(bool child = false)
         {
-            var hasPermission = await SeparationInfosService.PagePermissionAsync(LoginInfo.AccessCode);
-            if (!hasPermission)
-            {
-                return RedirectToAction("Login", "Accounts");
-            }
+            //var hasPermission = await SeparationInfosService.PagePermissionAsync(LoginInfo.AccessCode);
+            //if (!hasPermission)
+            //{
+            //    return RedirectToAction("Login", "Accounts");
+            //}
 
             var model = new SeparationInfosPageViewModel
             {
@@ -242,11 +242,11 @@ namespace GCTL.UI.Core.Controllers
                 return BadRequest(new { success = false, message = "No IDs provided for delete." });
             }
 
-            var hasPermission = await SeparationInfosService.DeletePermissionAsync(LoginInfo.AccessCode);
-            if (!hasPermission)
-            {
-                return Json(new { success = false, message = "You have no access." });
-            }
+            //var hasPermission = await SeparationInfosService.DeletePermissionAsync(LoginInfo.AccessCode);
+            //if (!hasPermission)
+            //{
+            //    return Json(new { success = false, message = "You have no access." });
+            //}
 
             bool success = await SeparationInfosService.DeleteTab(ids);
             if (success)

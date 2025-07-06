@@ -20,6 +20,6 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
         Task<bool> SaveAsync(HrmServiceNotConfirmViewModel model);
         Task<EmployeeFilterResultDto> GetFilterEmployeeAsync(EmployeeFilterViewModel model);
         Task<List<HrmPayMonthViewModel>> GetPayMonthsAsync();
-
+        Task<EmployeeListItemViewModel> GetDataByEmpId(string selectedEmpId);
     }
 }

@@ -38,6 +38,12 @@ namespace GCTL.UI.Core.Controllers
             return Json(data);
         }
 
+        public async Task<IActionResult> GetEmpData(string selectedEmpId)
+        {
+            var data = await entryService.GetDataByEmpId(selectedEmpId);
+            return Json(data);
+        }
+
         public async Task<IActionResult> getMonthDD()
         {
             var data = await entryService.GetPayMonthsAsync();
@@ -50,6 +56,11 @@ namespace GCTL.UI.Core.Controllers
             return Json(newId);
         }
 
+        public async Task<IActionResult> GetById(decimal id)
+        {
+            var result = await entryService.GetByIdAsync(id);
+            return Json(new { data = result });
+        }
 
         public async Task<IActionResult> GetPaginatedEntries()
         {
@@ -79,15 +90,30 @@ namespace GCTL.UI.Core.Controllers
 
         public async Task<IActionResult> SaveEntry([FromBody] HrmServiceNotConfirmViewModel model)
         {
-            model.ToAudit(LoginInfo, model.Tc>0);
-            var result = await entryService.SaveAsync(model);
+            if (model == null)
+                return NotFound();
 
-            string message = model.Tc>0 ? "Updated Successfully" : "Saved Successfully";
-            return Json(new
-             {
-                 success = result,
-                 message = message
-             });
+            model.ToAudit(LoginInfo, model.Tc>0);
+
+            if (model.Tc == 0)
+            {
+                var result = await entryService.SaveAsync(model);
+                return Json(new
+                {
+                    success = result,
+                    message = "Saved Successfully"
+                });
+            }
+            else
+            {
+                var result = await entryService.EditAsync(model);
+                return Json(new
+                {
+                    success = result,
+                    message = "Saved Successfully"
+                });
+            }
+
         }
 
         public async Task<IActionResult> DownloadExcel()
@@ -97,5 +123,25 @@ namespace GCTL.UI.Core.Controllers
             return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
         }
 
+        public async Task<IActionResult> BulkDelete([FromBody] HrmServiceNotConfirmViewModel model)
+        {
+            try
+            {
+                if (model.Tcs == null || !model.Tcs.Any() || model.Tcs.Count == 0)
+                    return Json(new { isSuccess = false, message = "No data is selected" });
+                var result = await entryService.BulkDeleteAsync(model.Tcs);
+
+                if (!result)
+                {
+                    return Json(new { isSuccess = false, message = "No Data is found to delete" });
+                }
+
+                return Json(new { isSuccess = false, message = $"Deleted {model.Tcs.Count} Data Successfully." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { isSuccess = false, message = ex.Message });
+            }
+        }
     }
 }

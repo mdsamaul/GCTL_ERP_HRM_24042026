@@ -16393,23 +16393,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Nahid\\.nuget\\packages\\": {},
+    "C:\\Users\\HP\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj",
+      "projectUniqueName": "D:\\Git\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj",
       "projectName": "GCTL.UI.Core",
-      "projectPath": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj",
-      "packagesPath": "C:\\Users\\Nahid\\.nuget\\packages\\",
-      "outputPath": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\obj\\",
+      "projectPath": "D:\\Git\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\GCTL.UI.Core.csproj",
+      "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
+      "outputPath": "D:\\Git\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Nahid\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -16425,14 +16425,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj": {
-              "projectPath": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj"
+            "D:\\Git\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj": {
+              "projectPath": "D:\\Git\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Core\\GCTL.Core.csproj"
             },
-            "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj": {
-              "projectPath": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj"
+            "D:\\Git\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj": {
+              "projectPath": "D:\\Git\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data\\GCTL.Data.csproj"
             },
-            "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\GCTL.Service.csproj": {
-              "projectPath": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\GCTL.Service.csproj"
+            "D:\\Git\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\GCTL.Service.csproj": {
+              "projectPath": "D:\\Git\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Service\\GCTL.Service.csproj"
             }
           }
         }
@@ -16446,7 +16446,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net6.0": {
@@ -16540,24 +16541,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[6.0.31, 6.0.31]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[6.0.31, 6.0.31]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[6.0.31, 6.0.31]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[6.0.31, 6.0.31]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -16566,7 +16549,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.206\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   },

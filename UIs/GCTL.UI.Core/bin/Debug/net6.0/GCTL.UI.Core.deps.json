@@ -4230,7 +4230,10 @@
           "itext7.bouncy-castle-fips-adapter": "9.1.0"
         },
         "runtime": {
-          "GCTL.Core.dll": {}
+          "GCTL.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "GCTL.Data/1.0.0": {
@@ -4247,7 +4250,10 @@
           "itext7.bouncy-castle-fips-adapter": "9.1.0"
         },
         "runtime": {
-          "GCTL.Data.dll": {}
+          "GCTL.Data.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "GCTL.Service/1.0.0": {
@@ -4263,7 +4269,10 @@
           "itext7.bouncy-castle-fips-adapter": "9.1.0"
         },
         "runtime": {
-          "GCTL.Service.dll": {}
+          "GCTL.Service.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "PXLibrary/1.0.0.0": {

@@ -3,8 +3,6 @@ let selectedEmpId = null;
 let selectedSNCId = new Set();
 let isEditMode = false;
 
-let empObj = [];
-
 $(document).ready(function () {
     setupLoadingOverlay();
     initializeEventHandlers();
@@ -12,7 +10,21 @@ $(document).ready(function () {
     loadTableData();
     loadSNCId();
     setupEnterKeyNavigation();
+    initializeSelect();
 })
+
+function initializeSelect() {
+    $('#employeeSelect').select2({
+        width: '100%',
+        placeholder: '--Select--',
+        allowClear: true
+    });
+
+    $('#companySelect').select2({
+        width: '100%',
+        allowClear: false
+    });
+}
 
 function setupLoadingOverlay() {
     console.log("Loading");
@@ -44,6 +56,7 @@ function setupLoadingOverlay() {
         `);
     }
 }
+
 function showLoading() {
     $('body').css('overflow', 'hidden');
     $("#loadingOverlay").fadeIn(200);
@@ -83,11 +96,9 @@ function initializeEventHandlers() {
         loadAllFilterEmp();
     });
 
-    $(".employeeSelect").on('change', function () {
+    $("#employeeSelect").on('change', function () {
         const selectedEmpId = $("#employeeSelect").val();
-        const empData = empObj.filter(e => e.employeeId === selectedEmpId);
-        console.log(empObj);
-        loadEmpInfo(empData[0]); 
+        loadEmpInfo(selectedEmpId); 
     });
 
 
@@ -118,6 +129,53 @@ function initializeEventHandlers() {
 
         updateSelectedSNCIds();
     });
+}
+
+function populateForm(id) {
+    $.ajax({
+        url: `/HrmServiceNotConfirmationEntry/GetById/${id}`,
+        type: "GET",
+        success: function (res) {
+            if (!res || !res.data) {
+                showNotification("Data not found", "error");
+                return;
+            }
+            try {
+               // populateSelect("#employeeSelect", res.data);
+
+                const data = res.data;
+                //clearForm();
+                console.log(data);
+
+                const $employeeSelect = $('#employeeSelect');
+                if ($employeeSelect.find(`option[value="${data.code}"]`).length === 0) {
+                    $employeeSelect.append(`<option value="${data.code}" selected>${data.name}</option>`);
+                }
+                $employeeSelect.prop('disabled', true);
+                isEditMode = true;
+
+                $('#employeeSelect').val(data.employeeId).trigger('change');
+                $('#Tc').val(data.tc);
+                $("#sncId").val(data.sncid);
+                const formatDate = dateStr => dateStr ? dateStr.split("T")[0] : "";
+
+                $("#effectiveDate").val(formatDate(data.effectiveDate));
+                $("#duePaymentDate").val(formatDate(data.duePaymentDate));
+                $("#refLetterDate").val(formatDate(data.refLetterDate));
+
+
+                $("#refLetterNo").val(data.refLetterNo);
+                //$("#refLetterDate").val(data.refLetterDate);
+                $("#remarks").val(data.remarks);
+            } catch (e) {
+                console.error("Error populating form:", e);
+                showNotification("Error loading record details", "error");
+            }
+        }, error: function (xhr, status, error) {
+            console.error("Error fetching record:", error);
+            showNotification("Failed to load record details", "error")
+        }
+    })
 }
 
 $(document).on('change', '#serviceNotConfirm-grid-body input[type="checkbox"]', function () {
@@ -158,7 +216,6 @@ function getAllFilterVal() {
 }
 
 function loadAllFilterEmp() {
-   // showLoading();
     const filterData = getAllFilterVal();
 
     $.ajax({
@@ -167,9 +224,9 @@ function loadAllFilterEmp() {
         contentType: "application/json",
         data: JSON.stringify(filterData),
         success: function (res) {
-            empObj = res.employees;
-            console.log(empObj);
             const data = res.lookupData;
+
+            console.log(data);
 
             if (data.companies?.length) {
                 populateSelect("#companySelect", data.companies)
@@ -181,37 +238,66 @@ function loadAllFilterEmp() {
 
             setupClearOnChangeEvents();
 
-            bindFilterChangeOnce();
+            //bindFilterChangeOnce();
         },
         complete: function () {
-           // hideLoading();
+
         },
         error: function (xhr, status, error) {
             console.error("Error loading filtered employees:", error);
-           // hideLoading();
         }
     });
 }
-function loadEmpInfo(res) {
-    if (res == null) { return; }
 
-    $(".EmployeeName").text(res.name);
-    $(".EmployeeDepartment").text(res.departmentName);
-    $(".EmployeeDesignation").text(res.designationName);
-    $(".EmployeeGrossSalary").text(res.grossSalary);
-    $(".EmployeeJoinDate").text(res.joiningDate);
-    $(".EmployeeProbationPeriod").text(res.probationPeriod);
-    $(".EmployeeEndOn").text(res.endOn);
-    $(".ServiceLength").text(res.serviceLength);
+
+function loadEmpInfo(selectedEmpId) {
+    if (!selectedEmpId || selectedEmpId.trim() === '' || selectedEmpId == null) {
+            clearEmployeeInfo();
+            return;
+    }
+    console.log(JSON.stringify({ selectedEmpId: selectedEmpId }))
+    $.ajax({
+        url: `/HrmServiceNotConfirmationEntry/GetEmpData`,
+        type: "GET",
+        contentType: "application/json",
+        data: { selectedEmpId: selectedEmpId }, 
+        success: function (res) {
+            if (res == null)
+                return;
+            $(".EmployeeName").text(res.name);
+            $(".EmployeeDepartment").text(res.departmentName);
+            $(".EmployeeDesignation").text(res.designationName);
+            $(".EmployeeGrossSalary").text(res.grossSalary);
+            $(".EmployeeJoinDate").text(res.joiningDate);
+            $(".EmployeeProbationPeriod").text(res.probationPeriod);
+            $(".EmployeeEndOn").text(res.endOn);
+            $(".ServiceLength").text(res.serviceLength);
+        },
+        error: function (xhr, status, error) {
+            console.error("Error loading filtered employees:", error);
+        }
+    })
 }
+
 function populateSelect(selectId, dataList) {
     const $select = $(selectId);
+
+    $select.empty();
+
+    if (selectId === "#employeeSelect") {
+        $select.append('<option value="">--Select--</option>');
+    }
+
     dataList.forEach(item => {
-        if (item.code && item.name && $select.find(`option[value="${item.code}"]`).length === 0) {
+        if (item.code && item.name) {
             $select.append(`<option value="${item.code}">${item.name}</option>`);
         }
     });
-    $select.multiselect('rebuild');
+    //dataList.forEach(item => {
+    //    if (item.code && item.name && $select.find(`option[value="${item.code}"]`).length === 0) {
+    //        $select.append(`<option value="${item.code}">${item.name}</option>`);
+    //    }
+    //});
 }
 function setupClearOnChangeEvents() {
     const clearMap = {
@@ -252,9 +338,7 @@ function loadSNCId() {
 }
 
 function loadTableData() {
-    //showLoading();
     displayGridData();
-    //hideLoading();
 }
 
 function displayGridData() {
@@ -269,8 +353,7 @@ function displayGridData() {
         serverSide: true,
         ajax: {
             url: '/HrmServiceNotConfirmationEntry/GetPaginatedEntries',
-            type: 'POST',
-            success: function (data) { console.log(data) }
+            type: 'POST'
         },
         columns: [
             {
@@ -282,7 +365,7 @@ function displayGridData() {
                 }
             },
             {
-                data: 'sncId',
+                data: 'sncid',
                 className: 'text-center',
                 render: function (data, type, row) {
                     return `<a href="#serviceNotConfirm-form" class="serviceNotConfirm-id-link" data-id="${row.tc}">${data}</a>`;
@@ -290,10 +373,34 @@ function displayGridData() {
             },
             { data: 'employeeId', className: 'text-center' },
             { data: 'employeeName', className: 'text-left' },
-            { data: 'effectiveDate', className: 'text-center' },
-            { data: 'duePaymentDate', className: 'text-center' },
+            {
+                data: 'effectiveDate',
+                className: 'text-center',
+                render: function (data, type, row) {
+                    if (!data) return '';
+                    const date = new Date(data);
+                    return date.toLocaleDateString("en-GB");
+                }
+            },
+            {
+                data: 'duePaymentDate',
+                className: 'text-center',
+                render: function (data, type, row) {
+                    if (!data) return '';
+                    const date = new Date(data);
+                    return date.toLocaleDateString("en-GB");
+                }
+            },
             { data: 'refLetterNo', className: 'text-center' },
-            { data: 'refLetterDate', className: 'text-center' },
+            {
+                data: 'refLetterDate',
+                className: 'text-center',
+                render: function (data, type, row) {
+                    if (!data) return '';
+                    const date = new Date(data);
+                    return date.toLocaleDateString("en-GB");
+                }
+            },
             { data: 'remarks', className: 'text-center' }
         ],
         autoWidth: false,
@@ -347,7 +454,7 @@ function displayGridData() {
         drawCallback: function () {
             $('#serviceNotConfirm-grid-body input[type="checkbox"]').each(function () {
                 const id = $(this).data('id');
-                $(this).prop('checked', selectedOtIds.has(id));
+                $(this).prop('checked', selectedSNCId.has(id));
             });
 
             const total = $('#serviceNotConfirm-grid-body input[type="checkbox"]').length;
@@ -358,11 +465,17 @@ function displayGridData() {
 }
 
 function validateForm() {
-    //const selectedCheck = $('#employee-filter-grid-body input[type="checkbox"]:checked');
-    //if (selectedCheck.length === 0) {
-    //    showNotification("Please select at least one employee.", "error");
-    //    return false;
-    //}
+    if (!$("#employeeSelect").val()) {
+        showNotification("Please select an employee", "warning");
+        $("#employeeSelect").focus();
+        return false;
+    }
+    if (!$("#effectiveDate").val()) {
+        showNotification("Please select an effective date", "warning");
+        $("#effectiveDate").focus();
+        return false;
+    }
+
     return true;
 }
 
@@ -376,13 +489,15 @@ function handleFormSubmission() {
 
 
     const dataToSend = {
+        Tc: $('#Tc').val() || 0,
+        CompanyCode: $("#companySelect").val(),
         EmployeeId: selectedEmp,
         Sncid: $("#sncId").val(),
         EffectiveDate: $("#effectiveDate").val(),
         DuePaymentDate: $("#duePaymentDate").val(),
         RefLetterNo: $("#refLetterNo").val(),
         RefLetterDate: $("#refLetterDate").val(),
-        Remarks: $("remarks").val()
+        Remarks: $("#remarks").val()
     };
 
     console.log('Data To Send : ', dataToSend);
@@ -393,13 +508,13 @@ function handleFormSubmission() {
         contentType: 'application/json',
         data: JSON.stringify(dataToSend),
         success: function (response) {
-
             if (response.success) {
+                clearForm();
                 showNotification("Employee salary information updated successfully!", "success");
-                empObj = [];
                 selectedEmpId=null;
                 
                 loadAllFilterEmp();
+                loadTableData();
             } else {
                 showNotification("Failed to update employee salary information.", "error");
             }
@@ -408,19 +523,46 @@ function handleFormSubmission() {
         complete: hideLoading
     })
 }
+function clearEmployeeInfo() {
+    const employeeFields = [
+        ".EmployeeName",
+        ".EmployeeDepartment",
+        ".EmployeeDesignation",
+        ".EmployeeGrossSalary",
+        ".EmployeeJoinDate",
+        ".EmployeeProbationPeriod",
+        ".EmployeeEndOn",
+        ".ServiceLength"
+    ];
 
+    employeeFields.forEach(field => {
+        $(field).text('');
+    });
+
+}
 function clearForm() {
+
+    if ($("#employeeSelect").is(":disabled")) {
+        
+        $("#employeeSelect").prop("disabled", false);
+    }
+
+    //loadAllFilterEmp();
+
     isEditMode = false;
-    $("#employeeSelect").val('');
+    $("#employeeSelect").val('').trigger('change');
+    loadAllFilterEmp();
+
+    $("#Tc").val('');
     $("#effectiveDate").val('');
     $("#effectiveDate").val('');
     $("#duePaymentDate").val('');
     $("#refLetterNo").val('');
     $("#refLetterDate").val('');
-    $("remarks").val('');
+    $("#remarks").val('');
     loadSNCId();
     loadTableData();
-    employees = [];
+    //employees = [];
 };
 
 
@@ -432,7 +574,7 @@ function handleBulkDelete() {
         return;
     }
 
-    if (!confirm(`Are you sure you want to delete ${selectedIds.length} selected monthly OT(s)?`)) {
+    if (!confirm(`Are you sure you want to delete ${selectedIds.length} selected Data(s)?`)) {
         return;
     }
 
@@ -442,7 +584,7 @@ function handleBulkDelete() {
         url: `/HrmServiceNotConfirmationEntry/BulkDelete`,
         type: "POST",
         contentType: "application/json",
-        data: JSON.stringify({ Tcs: selectedSNCId }),
+        data: JSON.stringify({ Tcs: selectedIds }),
         success: function (response) {
             selectedSNCId.clear();
             showNotification(response.message || "Successfully deleted", "success");

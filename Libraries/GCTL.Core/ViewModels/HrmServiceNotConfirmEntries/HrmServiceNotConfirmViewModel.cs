@@ -13,9 +13,11 @@ namespace GCTL.Core.ViewModels.HrmServiceNotConfirmEntries
         public string Sncid { get; set; }
         public string EmployeeId { get; set; }
         public string? EmployeeName { get; set; }
+        public string? Name { get; set; }
+        public string? Id { get; set; }
         public DateTime? EffectiveDate { get; set; }
         public DateTime? DuePaymentDate { get; set; }
-        public string RefLetterNo { get; set; }
+        public string? RefLetterNo { get; set; }
         public DateTime? RefLetterDate { get; set; }
         public string? Remarks { get; set; }
         public string? CompanyCode { get; set; }

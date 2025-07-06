@@ -8769,9 +8769,15 @@ namespace GCTL.Data.Models
 
             modelBuilder.Entity<HrmServiceNotConfirmationEntry>(entity =>
             {
-                entity.HasKey(x=>x.Tc);
+                entity.HasKey(e => e.Tc)
+                    .HasName("PK__HRM_Serv__3214E4082A9DEA40");
 
                 entity.ToTable("HRM_ServiceNotConfirmationEntry");
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
 
                 entity.Property(e => e.CompanyCode).HasMaxLength(50);
 
@@ -8812,11 +8818,6 @@ namespace GCTL.Data.Models
                     .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("SNCID");
-
-                entity.Property(e => e.Tc)
-                    .HasColumnType("numeric(18, 0)")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("TC");
 
                 entity.Property(e => e.UserEmployeeId)
                     .HasMaxLength(50)
