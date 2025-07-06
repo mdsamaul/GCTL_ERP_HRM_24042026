@@ -24,6 +24,17 @@ function initializeSelect() {
         width: '100%',
         allowClear: false
     });
+
+    $('#employeeSelect').on('select2:select', function (e) {
+        $(this).select2('close');$('#effectiveDate').focus();
+    });
+
+    $(document).on('keydown', '.select2-search__field', function (e) {
+        if (e.key === 'Enter') {
+            e.stopPropagation();
+            $('#effectiveDate').focus();
+        }
+    });
 }
 
 function setupLoadingOverlay() {
@@ -101,7 +112,6 @@ function initializeEventHandlers() {
         loadEmpInfo(selectedEmpId); 
     });
 
-
     $(".js-serviceNotConfirm-info-dec-clear").on('click', function () {
         clearForm();
     });
@@ -141,10 +151,7 @@ function populateForm(id) {
                 return;
             }
             try {
-               // populateSelect("#employeeSelect", res.data);
-
                 const data = res.data;
-                //clearForm();
                 console.log(data);
 
                 const $employeeSelect = $('#employeeSelect');
@@ -165,7 +172,6 @@ function populateForm(id) {
 
 
                 $("#refLetterNo").val(data.refLetterNo);
-                //$("#refLetterDate").val(data.refLetterDate);
                 $("#remarks").val(data.remarks);
             } catch (e) {
                 console.error("Error populating form:", e);
@@ -237,8 +243,6 @@ function loadAllFilterEmp() {
             }
 
             setupClearOnChangeEvents();
-
-            //bindFilterChangeOnce();
         },
         complete: function () {
 
@@ -293,11 +297,6 @@ function populateSelect(selectId, dataList) {
             $select.append(`<option value="${item.code}">${item.name}</option>`);
         }
     });
-    //dataList.forEach(item => {
-    //    if (item.code && item.name && $select.find(`option[value="${item.code}"]`).length === 0) {
-    //        $select.append(`<option value="${item.code}">${item.name}</option>`);
-    //    }
-    //});
 }
 function setupClearOnChangeEvents() {
     const clearMap = {
@@ -485,13 +484,10 @@ function handleFormSubmission() {
 
     showLoading();
 
-    const selectedEmp = $("#employeeSelect").val();
-
-
     const dataToSend = {
         Tc: $('#Tc').val() || 0,
         CompanyCode: $("#companySelect").val(),
-        EmployeeId: selectedEmp,
+        EmployeeId: selectedEmpIds,
         Sncid: $("#sncId").val(),
         EffectiveDate: $("#effectiveDate").val(),
         DuePaymentDate: $("#duePaymentDate").val(),
@@ -499,8 +495,6 @@ function handleFormSubmission() {
         RefLetterDate: $("#refLetterDate").val(),
         Remarks: $("#remarks").val()
     };
-
-    console.log('Data To Send : ', dataToSend);
 
     $.ajax({
         url: '/HrmServiceNotConfirmationEntry/SaveEntry',
@@ -538,7 +532,6 @@ function clearEmployeeInfo() {
     employeeFields.forEach(field => {
         $(field).text('');
     });
-
 }
 function clearForm() {
 
@@ -547,14 +540,11 @@ function clearForm() {
         $("#employeeSelect").prop("disabled", false);
     }
 
-    //loadAllFilterEmp();
-
     isEditMode = false;
     $("#employeeSelect").val('').trigger('change');
     loadAllFilterEmp();
 
     $("#Tc").val('');
-    $("#effectiveDate").val('');
     $("#effectiveDate").val('');
     $("#duePaymentDate").val('');
     $("#refLetterNo").val('');
@@ -562,10 +552,7 @@ function clearForm() {
     $("#remarks").val('');
     loadSNCId();
     loadTableData();
-    //employees = [];
 };
-
-
 function handleBulkDelete() {
     const selectedIds = Array.from(selectedSNCId);
 

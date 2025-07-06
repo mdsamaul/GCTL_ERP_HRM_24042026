@@ -297,13 +297,7 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
             var query = from emp in employeeRepository.All().AsNoTracking()
                         join e in employeeOfficialInfoRepository.All().AsNoTracking() on emp.EmployeeId equals e.EmployeeId
                         join c in companyRepository.All().AsNoTracking() on e.CompanyCode equals c.CompanyCode
-                        join b in branchRepository.All().AsNoTracking() on e.BranchCode equals b.BranchCode into branchGroup
-                        from b in branchGroup.DefaultIfEmpty()
-                        join dep in departmentRepository.All().AsNoTracking()
-                        on e.DepartmentCode equals dep.DepartmentCode into departmentGroup
-                        from dep in departmentGroup.DefaultIfEmpty()
-                        join des in designationRepository.All().AsNoTracking() on e.DesignationCode equals des.DesignationCode into designationGroup
-                        from des in designationGroup.DefaultIfEmpty()
+                        
                         join eType in empTypeRepository.All().AsNoTracking() on e.EmpTypeCode equals eType.EmpTypeCode into eTypeGroup
                         from eType in eTypeGroup.DefaultIfEmpty()
                         join eStatus in employeeStatusRepository.All().AsNoTracking() on e.EmployeeStatus equals eStatus.EmployeeStatusId into eStatusGroup

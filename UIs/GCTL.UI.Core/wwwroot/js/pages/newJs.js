@@ -1,62 +1,66 @@
 ﻿(function ($) {
     $.workingDayDeclaration = function (options) {
         const settings = $.extend({
-            baseUrl: "/HrmWorkingDayDeclaration",
+            baseUrl: "/HrmServiceNotConfirmationEntry",
             companySelect: "#companySelect",
-            branchSelect: "#branchSelect",
-            divisionSelect: "#divisionSelect",
-            departmentSelect: "#departmentSelect",
-            designationSelect: "#designationSelect",
             employeeSelect: "#employeeSelect",
-            activityStatusSelect: "#activityStatusSelect",
-            employeeStatusSelect: "#employeeStatus",
-            workingDayDateInput: "#WorkingDayDate",
-            remarksInput: "#Remarks",
+
+            empNameLabel: ".EmployeeName",
+            empDepartmentLabel: ".EmployeeDepartment",
+            empDesignationLabel: ".EmployeeDesignation",
+            empGrossSalaryLabel: ".EmployeeGrossSalary",
+            empJoinDateLabel: ".EmployeeJoinDate",
+            empProbationPeriodLabel: ".EmployeeProbationPeriod",
+            empEndOnLabel: ".EmployeeEndOn",
+            empServiceLengthLabel: ".ServiceLength",
+
             tcInput: "#Tc",
-            employeeGrid: "#employee-filter-grid",
-            employeeGridBody: "#employee-filter-grid-body",
-            workingDayGrid: "#workingday-declaration-grid",
-            workingDayGridBody: "#workingday-declaration-grid-body",
-            formContainer: "#workingday-declaration-form",
-            customSearch: "#custom-search",
-            saveButton: ".js-workingday-declaration-dec-save",
-            deleteButton: ".js-workingday-declaration-dec-delete-confirm",
-            clearButton: "#js-workingday-declaration-dec-clear",
-            employeeCheckAll: "#employee-check-all",
-            workingDayCheckAll: "#workingday-declaration-check-all",
-            load: () => console.log("Loading Working Day Declaration...")
-        }, options);
+            remarksInputInput: "#remarks",
+            effectiveDateInput: "#effectiveDate",
+            duePaymentDateInput: "#duePaymentDate",
+            refLetterNoInput: "#refLetterNo",
+            refLetterDateInput: "#refLetterDate",
+            
+            serviceNotConfirmGrid: "#serviceNotConfirm-grid",
+            serviceNotConfirmGridBody: "#serviceNotConfirm-grid-body",
+
+            formContainer: "#serviceNotConfirm-form",
+
+            saveButton: ".js-serviceNotConfirm-dec-save",
+            deleteButton: ".js-serviceNotConfirm-dec-delete-confirm",
+            clearButton: ".js-serviceNotConfirm-dec-clear",
+
+            checkAll: "#serviceNotConfirm-check-all",
+            load: () => console.log("Loading Service not confirmation...")
+        }, options);//
 
         const urls = {
             getFilterEmp: `${settings.baseUrl}/getFilterEmp`,
-            save: `${settings.baseUrl}/Save`,
+            getEmpData: `${settings.baseUrl}/GetEmpData`,
+            newId:`${settings.baseUrl}/GenerateNewId`,
+            save: `${settings.baseUrl}/SaveEntry`,
             getById: `${settings.baseUrl}/GetById`,
             bulkDelete: `${settings.baseUrl}/BulkDelete`,
-            getPaginatedData: `${settings.baseUrl}/GetPaginatedData`
-        };
+            getPaginatedData: `${settings.baseUrl}/GetPaginatedEntries`
+        };//
 
         // Plugin state
-        let employeeDataTable = null;
-        let filterChangeBound = false;
-        let originalEmployeeId = null;
-        let selectedWorkingDayIds = new Set();
-        let selectedEmployeeIds = new Set();
+        let selectedEmpId = null;
+        let selectedSNCId = new Set();
         let isEditMode = false;
-        let selectedDates = [];
-        let flatpickrInstance = null;
 
         // Utility functions
-        const toArray = val => val ? (Array.isArray(val) ? val : [val]) : [];
+        //const toArray = val => val ? (Array.isArray(val) ? val : [val]) : [];
 
         const showLoading = () => {
             $('body').css('overflow', 'hidden');
             $("#loadingOverlay").fadeIn(200);
-        };
+        };//
 
         const hideLoading = () => {
             $('body').css('overflow', '');
             $("#loadingOverlay").fadeOut(200);
-        };
+        };//
 
         const showNotification = (message, type) => {
             if (typeof toastr !== 'undefined') {
@@ -64,7 +68,7 @@
             } else {
                 alert(message);
             }
-        };
+        };//
 
         const setupLoadingOverlay = () => {
             if ($("#loadingOverlay").length === 0) {
@@ -91,72 +95,30 @@
                     </div>
                 `);
             }
-        };
+        };//
 
-        const initializeFlatpickr = (editMode) => {
-            if (flatpickrInstance) {
-                flatpickrInstance.destroy();
-                flatpickrInstance = null;
-            }
 
-            $(settings.workingDayDateInput).val('');
-            selectedDates = [];
+        const setupEnterKeyNavigation = () => {
+            if (!settings.formContainer.length) return;
 
-            flatpickrInstance = flatpickr(settings.workingDayDateInput, {
-                mode: editMode ? "single" : "multiple",
-                dateFormat: "d-m-Y",
-                onChange: function (dates, dateStr) {
-                    if (editMode) {
-                        selectedDates = dateStr ? [dateStr] : [];
-                    } else {
-                        selectedDates = dateStr ? dateStr.split(",") : [];
+            settings.formContainer.on('keydown', 'input, select, textarea, button, [tabindex]:not([tabindex="-1"])', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+
+                    const $focusable = settings.formContainer
+                        .find('input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button, [herf], [tabindex]:not([tabindex="-1"])')
+                        .filter(':visible');
+
+                    const index = $focusable.index(this);
+                    if (index > -1) {
+                        const $next = $focusable.eq(index + 1).length ?
+                            $focusable.eq(index + 1) : $focusable.eq(0);
+                        $next.focus();
                     }
-                    console.log({ selectedDates, editMode });
                 }
             });
-        };
+        }//
 
-        const initializeMultiselects = () => {
-            const nonSelectedTextMap = {
-                companySelect: 'Select Company',
-                branchSelect: 'Select Branch',
-                divisionSelect: 'Select Division',
-                departmentSelect: 'Select Department',
-                designationSelect: 'Select Designation',
-                employeeSelect: 'Select Employee',
-                activityStatusSelect: 'Select Status'
-            };
-
-            Object.keys(nonSelectedTextMap).forEach(function (id) {
-                const selector = $('#' + id);
-                selector.closest('div').css('margin', '1rem');
-                selector.multiselect({
-                    enableFiltering: true,
-                    includeSelectAllOption: true,
-                    selectAllText: 'Select All',
-                    nonSelectedText: nonSelectedTextMap[id],
-                    nSelectedText: 'Selected',
-                    allSelectedText: 'All Selected',
-                    filterPlaceholder: 'Search',
-                    buttonWidth: '100%',
-                    maxHeight: 350,
-                    maxWidth: 150,
-                    filterBehavior: 'text',
-                    enableCaseInsensitiveFiltering: true,
-                    buttonText: function (options, select) {
-                        if (options.length === 0) {
-                            return nonSelectedTextMap[id];
-                        }
-                        else if (options.length > 1) {
-                            return options.length + ' Selected';
-                        }
-                        else {
-                            return $(options[0]).text();
-                        }
-                    }
-                });
-            });
-        };
 
         const getAllFilterVal = () => ({
             CompanyCodes: toArray($(settings.companySelect).val()),
@@ -563,7 +525,7 @@
                 url: `${urls.getById}/${id}`,
                 type: "GET",
                 success: function (response) {
-                    console.log(response);
+                    //console.log(response);
                     if (!response || !response.data) {
                         showNotification("Invalid data format received", "error");
                         return;
@@ -574,49 +536,14 @@
                         clearForm();
 
                         isEditMode = true;
-                        initializeFlatpickr(isEditMode);
-                        $(settings.tcInput).val(data.tc);
 
-                        if (data.workingDayDate) {
-                            let dateToSet;
-
-                            if (data.workingDayDate.includes('-') && data.workingDayDate.split('-')[0].length <= 2) {
-                                dateToSet = data.workingDayDate;
-                            } else {
-                                const date = new Date(data.workingDayDate);
-                                const day = String(date.getDate()).padStart(2, '0');
-                                const month = String(date.getMonth() + 1).padStart(2, '0');
-                                const year = date.getFullYear();
-                                dateToSet = `${day}-${month}-${year}`;
-                            }
-
-                            if (flatpickrInstance) {
-                                flatpickrInstance.setDate(dateToSet, true, "d-m-Y");
-                            }
-
-                            selectedDates = [dateToSet];
-                            console.log({ selectedDates });
+                        if (settings.employeeSelect.find(`option[value="${data.code}".]`).length === 0) {
+                            settings.employeeSelect.append(`<option value="${data.code}" selected>${data.name}</option>`);
                         }
-
-                        $(settings.remarksInput).val(data.remarks);
-
-                        originalEmployeeId = String(data.employeeId);
-                        selectedEmployeeIds.clear();
-                        selectedEmployeeIds.add(originalEmployeeId);
-
-                        setTimeout(() => {
-                            filterEmployeeGridByEmployeeId(originalEmployeeId);
-                            $(`${settings.employeeGridBody} input[type="checkbox"]`).each(function () {
-                                const empId = $(this).closest('tr').find('td:nth-child(2)').text().trim();
-                                if (empId === originalEmployeeId) {
-                                    $(this).prop('checked', true).prop('disabled', true);
-                                } else {
-                                    $(this).prop('checked', false).prop('disabled', true);
-                                }
-                            });
-
-                            $(settings.employeeCheckAll).prop('disabled', true);
-                        }, 500);
+                        settings.employeeSelect.prop('disabled', true);
+                        settings.employeeSelect.val(data.employeeId).trigger('change');
+                        settings.tcInput.val(data.tc);
+                        settings.snc
 
                     } catch (e) {
                         console.error("Error populating form:", e);
@@ -629,44 +556,6 @@
                 }
             });
         };
-
-        const filterEmployeeGridByEmployeeId = (empId) => {
-            showLoading();
-
-            $(settings.branchSelect + ", " + settings.divisionSelect + ", " + settings.departmentSelect + ", " + settings.designationSelect).val(null).multiselect('refresh');
-            $(settings.employeeSelect).val(empId).multiselect('refresh');
-
-            const filterData = {
-                CompanyCodes: [],
-                BranchCodes: [],
-                DivisionCodes: [],
-                DepartmentCodes: [],
-                DesignationCodes: [],
-                EmployeeIDs: [empId],
-                EmployeeStatuses: toArray($(settings.activityStatusSelect).val()),
-            };
-
-            $.ajax({
-                url: urls.getFilterEmp,
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(filterData),
-                success: function (res) {
-                    loadTableData(res);
-
-                    setTimeout(function () {
-                        $(`${settings.employeeGridBody} input[type="checkbox"]`).prop('checked', true).prop('disabled', true);
-                    }, 100);
-                },
-                complete: hideLoading,
-                error: function (xhr, status, error) {
-                    console.error("Error filtering employee:", error);
-                    hideLoading();
-                    showNotification("Error filtering employee data", "error");
-                }
-            });
-        };
-
         const handleBulkDelete = () => {
             const selectedIds = Array.from(selectedWorkingDayIds);
 
@@ -728,7 +617,6 @@
         };
 
         const bindUIEvents = () => {
-            // Filter change events
             const filterSelectors = [
                 settings.companySelect,
                 settings.branchSelect,
@@ -744,19 +632,16 @@
                 loadAllFilterEmp();
             });
 
-            // Form button events
             $(settings.clearButton).on('click', clearForm);
             $(settings.saveButton).on('click', handleFormSubmission);
             $(settings.deleteButton).on('click', handleBulkDelete);
 
-            // Working day grid link clicks
             $(document).on("click", ".workingday-declaration-id-link", function () {
                 const id = $(this).data("id");
                 if (!id) return;
                 populateForm(id);
             });
 
-            // Checkbox events for working day grid
             $(settings.workingDayCheckAll).on('change', function () {
                 const isChecked = $(this).is(':checked');
                 $(`${settings.workingDayGridBody} input[type="checkbox"]`).prop('checked', isChecked);
@@ -786,12 +671,9 @@
                 $(settings.workingDayCheckAll).prop('checked', total > 0 && total === checked);
             });
 
-            // Employee grid checkbox events
             $(settings.employeeCheckAll).on('change', function () {
                 const isChecked = $(this).is(':checked');
                 const checkboxes = $(`${settings.employeeGridBody} input[type="checkbox"]`).not(':disabled');
-
-                /*checkboxes.prop('checked', isupdateSelectedEmployeeIds());*/
 
                 checkboxes.prop('checked', isChecked);
                 updateSelectedEmployeeIds();
@@ -802,14 +684,12 @@
                 updateSelectAllCheckboxState();
             });
 
-            // Custom search for employee grid
             $(settings.customSearch).on('keyup', function () {
                 if (employeeDataTable) {
                     employeeDataTable.search(this.value).draw();
                 }
             });
 
-            // Setup enter key navigation
             setupEnterKeyNavigation();
         };
 
@@ -821,20 +701,17 @@
             loadAllFilterEmp();
             loadWorkingDayData();
 
-            // Call the load function if provided
             if (typeof settings.load === 'function') {
                 settings.load();
             }
         };
 
-        // Public methods
         const publicMethods = {
             init: initializePlugin,
             clearForm: clearForm,
             loadData: loadAllFilterEmp,
             loadWorkingDayData: loadWorkingDayData,
             destroy: () => {
-                // Cleanup event handlers
                 $(filterSelectors).off('.loadFilter');
                 $(settings.clearButton).off('click');
                 $(settings.saveButton).off('click');
@@ -846,7 +723,6 @@
                 $(document).off('change', `${settings.workingDayGridBody} input[type="checkbox"]`);
                 $(document).off('change', `${settings.employeeGridBody} input[type="checkbox"]`);
 
-                // Destroy DataTables instances
                 if (employeeDataTable) {
                     employeeDataTable.destroy();
                     employeeDataTable = null;
@@ -856,13 +732,11 @@
                     $(settings.workingDayGrid).DataTable().destroy();
                 }
 
-                // Destroy Flatpickr instance
                 if (flatpickrInstance) {
                     flatpickrInstance.destroy();
                     flatpickrInstance = null;
                 }
 
-                // Clear state
                 selectedWorkingDayIds.clear();
                 selectedEmployeeIds.clear();
                 isEditMode = false;
@@ -877,14 +751,11 @@
             }
         };
 
-        // Initialize the plugin
         initializePlugin();
 
-        // Return public methods for chaining
         return publicMethods;
     };
 
-    // jQuery plugin wrapper
     $.fn.workingDayDeclaration = function (options) {
         return this.each(function () {
             if (!$.data(this, 'workingDayDeclaration')) {
