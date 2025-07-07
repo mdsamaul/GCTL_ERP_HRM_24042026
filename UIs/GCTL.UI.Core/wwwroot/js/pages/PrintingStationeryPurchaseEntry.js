@@ -55,6 +55,8 @@
             dateFormat: "h:i:S K",
             time_24hr: false,
             enableSeconds: true,
+            minuteIncrement: 1,
+            secondIncrement: 1,
             onChange: function (selectedDates, dateStr) {
                 document.getElementById("timePicker").value = dateStr;
             }
