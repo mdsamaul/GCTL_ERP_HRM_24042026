@@ -41,6 +41,7 @@ namespace GCTL.Data.Models
         public virtual DbSet<CoreMeasurementUnit> CoreMeasurementUnit { get; set; }
         public virtual DbSet<CoreMenuTab> CoreMenuTab { get; set; }
         public virtual DbSet<CoreMenuTab2> CoreMenuTab2 { get; set; }
+        public virtual DbSet<CorePeriodInfo> CorePeriodInfo { get; set; }
         public virtual DbSet<CoreUserInfo> CoreUserInfo { get; set; }
         public virtual DbSet<CustomerTypes> CustomerTypes { get; set; }
         public virtual DbSet<HmsAdmissionType> HmsAdmissionType { get; set; }
@@ -138,6 +139,7 @@ namespace GCTL.Data.Models
         public virtual DbSet<HrmDefOccupation> HrmDefOccupation { get; set; }
         public virtual DbSet<HrmDefPerformance> HrmDefPerformance { get; set; }
         public virtual DbSet<HrmDefPerformance2> HrmDefPerformance2 { get; set; }
+        public virtual DbSet<HrmDefProbationPeriodExtension> HrmDefProbationPeriodExtension { get; set; }
         public virtual DbSet<HrmDefRelationship> HrmDefRelationship { get; set; }
         public virtual DbSet<HrmDefReligion> HrmDefReligion { get; set; }
         public virtual DbSet<HrmDefSeparationType> HrmDefSeparationType { get; set; }
@@ -1351,6 +1353,52 @@ namespace GCTL.Data.Models
                     .HasMaxLength(250);
 
                 entity.Property(e => e.ViewName).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<CorePeriodInfo>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("Core_PeriodInfo");
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.PeriodInfoId)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.PeriodName)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.PeriodNameAdj)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.ShortName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
             });
 
             modelBuilder.Entity<CoreUserInfo>(entity =>
@@ -5910,6 +5958,71 @@ namespace GCTL.Data.Models
                 entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
 
                 entity.Property(e => e.PerformanceShortName).HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<HrmDefProbationPeriodExtension>(entity =>
+            {
+                entity.HasKey(e => e.Ppeid)
+                    .HasName("PK__HRM_Def___85852D5AA2C6D34D");
+
+                entity.ToTable("HRM_Def_ProbationPeriodExtension");
+
+                entity.Property(e => e.Ppeid)
+                    .HasMaxLength(50)
+                    .HasColumnName("PPEID");
+
+                entity.Property(e => e.AutoId)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.CompanyCode).HasMaxLength(50);
+
+                entity.Property(e => e.CurrentSalary).HasColumnType("numeric(18, 2)");
+
+                entity.Property(e => e.EmployeeId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.ExtendedPeriod).HasMaxLength(50);
+
+                entity.Property(e => e.ExtensionSalary).HasColumnType("numeric(18, 2)");
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.PeriodInfoId).HasMaxLength(50);
+
+                entity.Property(e => e.PreviousSalary).HasColumnType("numeric(18, 2)");
+
+                entity.Property(e => e.RefLetterDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RefLetterNo).HasMaxLength(50);
+
+                entity.Property(e => e.Remarks).HasMaxLength(500);
+
+                entity.Property(e => e.UserEmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("UserEmployeeID");
+
+                entity.Property(e => e.Wef)
+                    .HasColumnType("datetime")
+                    .HasColumnName("WEF");
             });
 
             modelBuilder.Entity<HrmDefRelationship>(entity =>

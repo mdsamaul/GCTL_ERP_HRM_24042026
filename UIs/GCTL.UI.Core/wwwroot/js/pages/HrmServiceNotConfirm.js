@@ -511,13 +511,13 @@ function handleFormSubmission() {
         success: function (response) {
             if (response.success) {
                 clearForm();
-                showNotification("Employee salary information updated successfully!", "success");
+                showNotification("Data updated successfully!", "success");
                 selectedEmpId =null;
                 
                 loadAllFilterEmp();
                 loadTableData();
             } else {
-                showNotification("Failed to update employee salary information.", "error");
+                showNotification("Failed to update data.", "error");
             }
     
         },
@@ -588,7 +588,7 @@ function handleBulkDelete() {
         },
         error: function (xhr, status, error) {
             console.error("Error details:", xhr.responseText);
-            showNotification("Error deleting Monthly OT records", "error");
+            showNotification("Error deleting records", "error");
         },
         complete: hideLoading
     });

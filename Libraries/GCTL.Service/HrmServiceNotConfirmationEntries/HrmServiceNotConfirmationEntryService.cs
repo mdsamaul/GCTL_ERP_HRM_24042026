@@ -28,6 +28,7 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
         private readonly IRepository<HrmEisDefEmploymentNature> employmentNatureRepository;
         private readonly IRepository<HrmPayMonth> payMonthRepository;
         private readonly IRepository<HrmSeparation> separationRepository;
+        private readonly IRepository<CorePeriodInfo> periodRepository;
 
         private readonly IRepository<HrmServiceNotConfirmationEntry> entryRepository;
 
@@ -44,7 +45,9 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
             IRepository<HrmDefEmpType> empTypeRepository,
             IRepository<HrmEisDefEmploymentNature> employmentNatureRepository,
             IRepository<HrmPayMonth> payMonthRepository,
-            IRepository<HrmSeparation> separationRepository) : base(entryRepository)
+            IRepository<HrmSeparation> separationRepository,
+            IRepository<CorePeriodInfo> periodRepository
+            ) : base(entryRepository)
         {
             this.entryRepository = entryRepository;
             this.companyRepository = companyRepository;
@@ -59,6 +62,7 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
             this.employmentNatureRepository = employmentNatureRepository;
             this.employeeStatusRepository = employeeStatusRepository;
             this.separationRepository = separationRepository;
+            this.periodRepository = periodRepository;
         }
 
         public async Task<bool> BulkDeleteAsync(List<decimal> tcs)
@@ -287,6 +291,8 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
                         from eType in eTypeGroup.DefaultIfEmpty()
                         join eStatus in employeeStatusRepository.All().AsNoTracking() on e.EmployeeStatus equals eStatus.EmployeeStatusId into eStatusGroup
                         from eStatus in eStatusGroup.DefaultIfEmpty()
+                        join periodInfo in periodRepository.All().AsNoTracking() on e.ProbationPeriodType equals periodInfo.PeriodInfoId into periodGroup
+                        from periodInfo in periodGroup.DefaultIfEmpty()
                         where e.EmployeeId == selectedEmpId
                         select new
                         {
@@ -305,6 +311,8 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
                             ProbetionPeriod = "",
                             EndDate = "",
                             //ServiceLength =""
+                            PeriodName = periodInfo.PeriodName,
+                            ShortName = periodInfo.ShortName
                         };
 
             var data = await query.FirstOrDefaultAsync();
@@ -313,9 +321,21 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
                 return null;
 
             string serviceLength = "";
+            string probetionPeriod = "";
+            DateTime? endDate = null;
+
             if (data.JoiningDate.HasValue)
             {
                 serviceLength = CalculateDateLength(data.JoiningDate.Value, DateTime.Today);
+
+                if(data.ProbationPeriod !=null && data.ProbationPeriodType != null)
+                {
+                    endDate = CalculateProbationEndDate(data.JoiningDate.Value, data.ProbationPeriod, data.ShortName);
+                    if(endDate != null)
+                        probetionPeriod = CalculateDateLength(data.JoiningDate.Value, endDate.Value);
+                }
+
+                //var probationEndDate = CalculateProbationEndDate(data.JoiningDate.Value, data.ProbationPeriod, data.ProbationPeriodType);
             }
 
 
@@ -327,10 +347,33 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
                 DesignationName = data.DesignationName,
                 DepartmentName = data.DepartmentName,
                 GrossSalary = data.GrossSalary.ToString(),
-                ProbationPeriod = data.ProbetionPeriod,
-                EndOn = data.EndDate,
+                ProbationPeriod = probetionPeriod,
+                EndOn = endDate.HasValue ? endDate.Value.ToString("dd/MM/yyyy") :"",
                 ServiceLength = serviceLength
             };
+        }
+
+        private DateTime? CalculateProbationEndDate(DateTime value, string probationPeriod, string probationPeriodType)
+        {
+            switch(probationPeriodType)
+            {
+                case "01": // Years
+                    return value.AddYears(int.Parse(probationPeriod));
+                case "02": // Half-Years
+                    return value.AddMonths(int.Parse(probationPeriod) * 6);
+                case "03": // Quarter-Years
+                    return value.AddMonths(int.Parse(probationPeriod) * 3);
+                case "04": // Months
+                    return value.AddMonths(int.Parse(probationPeriod));
+                case "05": // Weeks
+                    return value.AddDays(int.Parse(probationPeriod) * 7);
+                case "06": // Days
+                    return value.AddDays(int.Parse(probationPeriod));
+                default:
+                    return null;
+            }
+
+            throw new NotImplementedException();
         }
 
         private string CalculateDateLength(DateTime startDate, DateTime endDate)

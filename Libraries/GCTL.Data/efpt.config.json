@@ -107,6 +107,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Core_PeriodInfo]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Core_UserInfo]",
          "ObjectType": 0
       },
@@ -492,6 +496,10 @@
       },
       {
          "Name": "[dbo].[HRM_Def_Performance2]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HRM_Def_ProbationPeriodExtension]",
          "ObjectType": 0
       },
       {
