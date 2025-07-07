@@ -91,7 +91,11 @@ namespace GCTL.UI.Core.Controllers
         public async Task<IActionResult> SaveEntry([FromBody] HrmServiceNotConfirmViewModel model)
         {
             if (model == null)
-                return NotFound();
+                return Json(new
+                {
+                    success = false,
+                    message = "Saved Failed!"
+                });
 
             model.ToAudit(LoginInfo, model.Tc>0);
 
@@ -110,7 +114,7 @@ namespace GCTL.UI.Core.Controllers
                 return Json(new
                 {
                     success = result,
-                    message = "Saved Successfully"
+                    message = "Updated Successfully"
                 });
             }
 

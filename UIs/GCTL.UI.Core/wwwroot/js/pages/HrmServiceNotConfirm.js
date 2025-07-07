@@ -109,6 +109,7 @@ function initializeEventHandlers() {
 
     $("#employeeSelect").on('change', function () {
         const selectedEmpId = $("#employeeSelect").val();
+        //console.log(selectedEmpId);
         loadEmpInfo(selectedEmpId); 
     });
 
@@ -254,17 +255,17 @@ function loadAllFilterEmp() {
 }
 
 
-function loadEmpInfo(selectedEmpId) {
-    if (!selectedEmpId || selectedEmpId.trim() === '' || selectedEmpId == null) {
+function loadEmpInfo(id) {
+    if (!id || id.trim() === '' || id == null) {
             clearEmployeeInfo();
             return;
     }
-    console.log(JSON.stringify({ selectedEmpId: selectedEmpId }))
+    console.log(JSON.stringify({ selectedEmpId: id }))
     $.ajax({
         url: `/HrmServiceNotConfirmationEntry/GetEmpData`,
         type: "GET",
         contentType: "application/json",
-        data: { selectedEmpId: selectedEmpId }, 
+        data: { selectedEmpId: id }, 
         success: function (res) {
             if (res == null)
                 return;
@@ -276,6 +277,7 @@ function loadEmpInfo(selectedEmpId) {
             $(".EmployeeProbationPeriod").text(res.probationPeriod);
             $(".EmployeeEndOn").text(res.endOn);
             $(".ServiceLength").text(res.serviceLength);
+            selectedEmpId = res.employeeId;
         },
         error: function (xhr, status, error) {
             console.error("Error loading filtered employees:", error);
@@ -483,18 +485,23 @@ function handleFormSubmission() {
         return;
 
     showLoading();
+    console.log(selectedEmpId);
+
+    var payDate;
 
     const dataToSend = {
         Tc: $('#Tc').val() || 0,
         CompanyCode: $("#companySelect").val(),
-        EmployeeId: selectedEmpIds,
+        EmployeeId: selectedEmpId,
         Sncid: $("#sncId").val(),
         EffectiveDate: $("#effectiveDate").val(),
-        DuePaymentDate: $("#duePaymentDate").val(),
-        RefLetterNo: $("#refLetterNo").val(),
-        RefLetterDate: $("#refLetterDate").val(),
-        Remarks: $("#remarks").val()
+        DuePaymentDate: $("#duePaymentDate").val() || null,
+        RefLetterNo: $("#refLetterNo").val() || "",
+        RefLetterDate: $("#refLetterDate").val() || null,
+        Remarks: $("#remarks").val() || ""
     };
+
+    console.log(JSON.stringify(dataToSend));
 
     $.ajax({
         url: '/HrmServiceNotConfirmationEntry/SaveEntry',
@@ -505,14 +512,14 @@ function handleFormSubmission() {
             if (response.success) {
                 clearForm();
                 showNotification("Employee salary information updated successfully!", "success");
-                selectedEmpId=null;
+                selectedEmpId =null;
                 
                 loadAllFilterEmp();
                 loadTableData();
             } else {
                 showNotification("Failed to update employee salary information.", "error");
             }
-
+    
         },
         complete: hideLoading
     })

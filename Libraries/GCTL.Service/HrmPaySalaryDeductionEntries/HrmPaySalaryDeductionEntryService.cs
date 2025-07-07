@@ -1,15 +1,16 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Drawing;
+using GCTL.Core.Data;
+using GCTL.Core.ViewModels.HrmPayMonths;
+using GCTL.Core.ViewModels.HrmPaySalaryDeductionEntries;
+
+using GCTL.Data.Models;
+using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DocumentFormat.OpenXml.Drawing;
-using GCTL.Core.Data;
-using GCTL.Core.ViewModels.HrmPayMonths;
-using GCTL.Core.ViewModels.HrmPaySalaryDeductionEntries;
-using GCTL.Data.Models;
-using Microsoft.EntityFrameworkCore;
-using OfficeOpenXml;
 
 namespace GCTL.Service.HRM_PAY_SalaryDeductionEntry
 {
@@ -848,3 +849,6 @@ namespace GCTL.Service.HRM_PAY_SalaryDeductionEntry
         }
     }
 }
+
+
+

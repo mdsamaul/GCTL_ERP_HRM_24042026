@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Drawing;
+using DocumentFormat.OpenXml.InkML;
 using GCTL.Core.Data;
 using GCTL.Core.ViewModels.Companies;
 using GCTL.Core.ViewModels.HrmPayMonths;
@@ -62,9 +63,12 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
 
         public async Task<bool> BulkDeleteAsync(List<decimal> tcs)
         {
-            const int batchSize = 1000;
-            await entryRepository.BeginTransactionAsync();
+            if (tcs == null || !tcs.Any())
+                return false;
 
+            const int batchSize = 500;
+
+            await entryRepository.BeginTransactionAsync();
             try
             {
                 for (int i = 0; i < tcs.Count; i += batchSize)
@@ -75,17 +79,60 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
                         .AsNoTracking()
                         .ToListAsync();
 
-                    if (entries.Any())
-                        await entryRepository.DeleteRangeAsync(entries);
+                    if (!entries.Any()) continue;
+
+                    var employeeIds = entries.Select(e => e.EmployeeId).Distinct().ToList();
+                    var effectiveDates = entries.Select(e => e.EffectiveDate).Distinct().ToList();
+
+                    var separations = await separationRepository.All()
+                        .Where(s => employeeIds.Contains(s.EmployeeId) &&
+                                   effectiveDates.Contains(s.SeparationDate) &&
+                                   s.SeparationTypeId == "04")
+                        .ToListAsync();
+
+                    var officialInfos = await employeeOfficialInfoRepository.All()
+                        .Where(o => employeeIds.Contains(o.EmployeeId) && o.EmployeeStatus == "02")
+                        .ToListAsync();
+
+                    foreach (var entry in entries)
+                    {
+                        try
+                        {
+                            var existingOfficialInfo = officialInfos
+                                .Where(e => e.EmployeeId == entry.EmployeeId)
+                                .FirstOrDefault();
+
+                            if (existingOfficialInfo != null)
+                            {
+                                existingOfficialInfo.EmployeeStatus = "01";
+                                await employeeOfficialInfoRepository.UpdateAsync(existingOfficialInfo);
+                            }
+
+                            var separationsToDelete = separations
+                                .Where(s => s.EmployeeId == entry.EmployeeId && s.SeparationDate == entry.EffectiveDate)
+                                .ToList();
+
+                            if (separationsToDelete.Any())
+                            {
+                                await separationRepository.DeleteRangeAsync(separationsToDelete);
+                            }
+
+                            await entryRepository.DeleteAsync(entry.Tc);
+                        }
+                        catch (Exception)
+                        {
+                            continue;
+                        }
+                    }
                 }
 
                 await entryRepository.CommitTransactionAsync();
                 return true;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 await entryRepository.RollbackTransactionAsync();
-                return false; 
+                throw;
             }
         }
 
@@ -97,6 +144,7 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
             }
 
             await entryRepository.BeginTransactionAsync();
+
             try
             {
                 var exRecord = await entryRepository.GetByIdAsync(model.Tc);
@@ -118,6 +166,39 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
 
                 await entryRepository.UpdateAsync(exRecord);
 
+                var exSeparation = await separationRepository.All()
+                    .Where(s => s.EmployeeId == model.EmployeeId && s.SeparationTypeId == "04")
+                    .FirstOrDefaultAsync();
+
+                if (exSeparation != null)
+                {
+                    exSeparation.SeparationDate = model.EffectiveDate.HasValue ? model.EffectiveDate.Value : default;
+                    exSeparation.ModifyDate = model.ModifyDate;
+                    await separationRepository.UpdateAsync(exSeparation);
+                }
+                else
+                {
+                    string newSeparationId = await GenerateSeparationIdAsync();
+                    HrmSeparation seprecord = new HrmSeparation
+                    {
+                        SeparationId = newSeparationId,
+                        EmployeeId = model.EmployeeId,
+                        SeparationDate = model.EffectiveDate.HasValue ? model.EffectiveDate.Value : default,
+                        SeparationTypeId = "04",
+                        FinalPayment = 0,
+                        IsPaid = "Y",
+                        Remark = "",
+                        Ldate = model.Ldate,
+                        Lip = model.Lip,
+                        Lmac = model.Lmac,
+                        Luser = model.Luser,
+                        CompanyCode = model.CompanyCode,
+                        RefLetterNo = null,
+                        RefLetterDate = null
+                    };
+                    await separationRepository.AddAsync(seprecord);
+                }
+                
                 await entryRepository.CommitTransactionAsync();
 
                 return true;
@@ -179,8 +260,9 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
                 Name = string.Join(" ", new[] { emp.FirstName, emp.LastName }.Where(n => !string.IsNullOrWhiteSpace(n))) + $" ({emp.EmployeeId})",
 
                 EffectiveDate = service.EffectiveDate.Value.Date,
-                DuePaymentDate = service.DuePaymentDate.Value.Date,
-                RefLetterDate = service.RefLetterDate.Value.Date,
+
+                DuePaymentDate = service.DuePaymentDate.HasValue ? service.DuePaymentDate.Value.Date : null,
+                RefLetterDate = service.RefLetterDate.HasValue ? service.RefLetterDate.Value.Date : null,
                 RefLetterNo = service.RefLetterNo,
                 Remarks = service.Remarks
             };
@@ -218,6 +300,8 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
                             DesignationName = des.DesignationName,
                             GrossSalary = e.GrossSalary,
                             e.JoiningDate,
+                            e.ProbationPeriod,
+                            e.ProbationPeriodType,
                             ProbetionPeriod = "",
                             EndDate = "",
                             //ServiceLength =""
