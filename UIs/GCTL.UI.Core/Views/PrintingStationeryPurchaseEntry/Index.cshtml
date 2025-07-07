@@ -150,6 +150,10 @@
     margin: 0 1px !important;
 }
 
+    .numInput:hover, .flatpickr-am-pm:hover {
+    background:#fff !important;
+        border: none !important;
+}
 /* AM/PM toggle */
 .flatpickr-am-pm {
     font-size: 11px !important;
@@ -159,7 +163,7 @@
     margin-left: 4px;
     background: transparent !important;
     border: none !important;
-    border-left: 1px solid #ccc;
+    border-left:none #ccc;
     cursor: pointer;
     border-radius: 0 !important;
 }
@@ -176,14 +180,19 @@
 
 .numInputWrapper .arrowUp {
     top: 0;
-    border-bottom: 1px solid #ccc;
+        border-bottom: none !important;
 }
 
 .numInputWrapper .arrowDown {
     bottom: 0;
-    border-top: 1px solid #ccc;
+    border-top: none !important;
 }
 
+    .numInputWrapper .arrowUp:hover,
+        .numInputWrapper .arrowDown:hover {
+            border: none !important;
+       background:#fff!important;
+    }
     .flatpickr-time-separator {
         display: flex;
         align-items: center;
@@ -212,7 +221,14 @@
         }
 
         .timePickerContainer{
-            padding-bottom:1px!important;
+            padding-bottom:3px!important;
+        }
+
+        .customDateField{
+            padding-top: 0px !important;
+            padding-bottom: 0px!important;
+            padding-left: 0px !important;
+            padding-right: 0px !important;
         }
     }
 
@@ -236,7 +252,7 @@
                             Purchase Order No <span class="text-danger">*</span>
                         </div>
                         <div class="col-8 " style="padding-left: 5px;">
-                            <input type="text" name="name" class="form-control-sm" value="" style="margin-top: 0px;">
+                            <input type="text" name="name" class="form-control-sm customDateField" value="" style="margin-top: 0px;">
                         </div>
                         <div class="col-1 "></div>
                     </div>

@@ -4,6 +4,6 @@ namespace GCTL.UI.Core.ViewModels.ItemMasterInformation
 {
     public class ItemMasterInformationViewModel : BaseViewModel
     {
-        ItemMasterInformationSetupViewModel Setup { get; set; } = new ItemMasterInformationSetupViewModel();
+      public  ItemMasterInformationSetupViewModel Setup { get; set; } = new ItemMasterInformationSetupViewModel();
     }
 }

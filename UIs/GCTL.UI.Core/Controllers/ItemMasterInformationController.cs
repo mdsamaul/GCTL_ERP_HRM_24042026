@@ -1,4 +1,5 @@
-﻿using GCTL.UI.Core.ViewModels.ItemMasterInformation;
+﻿using GCTL.UI.Core.ViewModels.AdvanceLoanAdjustmentReport;
+using GCTL.UI.Core.ViewModels.ItemMasterInformation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GCTL.UI.Core.Controllers
@@ -13,5 +14,7 @@ namespace GCTL.UI.Core.Controllers
             };
             return View(model);
         }
+
+
     }
 }
