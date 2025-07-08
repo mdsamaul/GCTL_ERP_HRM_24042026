@@ -391,6 +391,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[HRM_Brand]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[HRM_Def_BankAndNomineeInfo]",
          "ObjectType": 0
       },
@@ -444,6 +448,10 @@
       },
       {
          "Name": "[dbo].[HRM_Def_ExamTitle]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HRM_Def_Floor]",
          "ObjectType": 0
       },
       {
@@ -583,6 +591,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[HRM_ItemMasterInformation]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[HRM_LeaveApplicationDays]",
          "ObjectType": 0
       },
@@ -639,11 +651,23 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[HRM_Size]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[INV_Catagory]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Inv_Def_Factory]",
          "ObjectType": 0
       },
       {
          "Name": "[dbo].[Inv_Def_Location]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Inv_Def_SupplierType]",
          "ObjectType": 0
       },
       {
@@ -684,6 +708,14 @@
       },
       {
          "Name": "[dbo].[RMG_Prod_Def_UnitType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_PurchaseOrderReceive]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_PurchaseOrderReceiveDetails]",
          "ObjectType": 0
       },
       {
@@ -797,6 +829,478 @@
       {
          "Name": "[dbo].[TransportMaterials]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CheckCommission]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[CheckDiscount]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[CheckPaymentByMrNo]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[CollectionReport]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[CollectionReportForUser]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[CommissionDetailsByDoctor]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[CommissionDetailsByReference]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[DoctorCommissionReport]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[DoctorCommissionSummary]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[DueCollectionReport]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[DueCollectionReportForUser]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[DueReceipts]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[EducationalInfoReportSP]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[EmployeeGeneralInfoReportSP]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[EmployeeLoanInformationReport]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[EmployeeReferenceInformationReportSP]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetAdvancePayPagedWithFilter]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetCompanyNamesBySearch]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetDiscountDetails]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetEmployeesByCompanyAdvanceLoanAdjustment]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetEmployeesByCompanyLoanAdjustment]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetLeaveReport100]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetOfficialInfo]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetTBDetailsData]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetTestRoomNo]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[PaidReceipts]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Prc_ExcuteCustomerOnChartOfAccount]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Prc_ExcuteInvoiceWaysCollection]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Prc_ExcuteReferencePersonOnChartOfAccount]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Prc_ExcuteVendorOnChartOfAccount]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Prc_Frm_TempAccountDetails]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Prc_GetAccessCode]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[prc_GetTestAmountBySubCatagory]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[prc_LederReportDateTimeF]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[prc_LederReportF]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Prc_Load_AcountHead]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Prc_Load_FourthAcountHead]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Prc_Load_ThirdAcountHead]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Prc_LoadGrid_Acc_SubSubsidiaryLedger]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Prc_LoadGridCompanyOpeningBalance]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Prc_Rpt_AccComLedgerFourthLayer]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Prc_Rpt_AccComLedgerThirdLayer]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[prc_TRGridFiler]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[prc_VSGridFiler]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Proc_DeleteVoucherByInvoice]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Proc_DeleteVoucherEntryFromDueCollection]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[proc_ExpenseReport]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Proc_getCustomerInvoiceDueList]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Proc_getOrderList]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Proc_getOrderListHeader]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[proc_GetPatientListForLabTestResult]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Proc_getTransportinfowithDriver]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Proc_getVendorList]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[proc_LabTestListNotInVoucher]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[proc_Select_CL_SCL_GGL_GLAndSLAllInfo]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Proc_VoucherEntryFromCommissionHistoryJV]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Proc_VoucherEntryFromCommissionPaymentPV]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Proc_VoucherEntryFromDueCollectionForLabTestDiscount]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Proc_VoucherEntryFromDueCollectionForLabTestRV]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Proc_VoucherEntryFromDueCollectionForPatientBillDiscount]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Proc_VoucherEntryFromDueCollectionForPatientBillRv]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Proc_VoucherEntryFromExpensePaymentPV]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Proc_VoucherEntryFromInPatientBill]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Proc_VoucherEntryFromIPBForRV]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Proc_VoucherEntryFromLabTest]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Proc_VoucherEntryFromLabTestForRV]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[ProcGetEployeeFilterDetails]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[ReferenceCommissionReport]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[ReferenceCommissionSummary]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_PatientInfo]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_BankReceiptVoucher]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_BeforePLTotalCompanyTaxExpense]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_BeforePLTotalDirectExpense]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_BeforePLTotalDirectorRemunOthersExpense]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_BeforePLTotalFinanceCost]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_BeforePLTotalGeneralAdminExpense]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_BeforePLTotalManpowercostExpense]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_BeforePLTotalOfficeOverheadExpense]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_BeforePLTotalOtherIncome]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_BeforePLTotalSales]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_BSNonCurrentAsset]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_BSTotalCapital]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_BSTotalCurrentAsset]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_BSTotalCurrentLiablities]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_BSTotalLongLiablities]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_Proc_DueList]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_Proc_InvoiceReport]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_Proc_OutPatientPrescriptionReport]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_PLTotalCompanyTaxExpense]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_PLTotalDirectExpense]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_PLTotalDirectorRemunOthersExpense]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_PLTotalFinanceCost]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_PLTotalGeneralAdminExpense]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_PLTotalInDirectExpense]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_PLTotalManpowercostExpense]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_PLTotalOfficeOverheadExpense]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_PLTotalOtherIncome]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_PLTotalSales]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_Proc_SalesCollection]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_Proc_SalesCollectionForUser]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_proc_TrialBalanceReportF2]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_ProReceiveAndPayment]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Rpt_ProReceiveAndPaymentWithOutOpening]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SalesReport]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SalesReportForUser]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_Backupdb]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SP_GetEmployeesByEmployeeIDs]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SP_HRM_AdvancePayFilterData]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SP_HRM_AdvancePayReport]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[VoucherEntryForCollectionReceivedbank]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[VoucherEntryForCollectionReceivedCash]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[VoucherEntryForTransportApproved]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[WorkingExperienceReportSP]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[fnNumberToWords]",
+         "ObjectType": 2
+      },
+      {
+         "Name": "[dbo].[SplitString]",
+         "ObjectType": 2
+      },
+      {
+         "Name": "[dbo].[SplitStrings]",
+         "ObjectType": 2
+      },
+      {
+         "Name": "[dbo].[STRING_AGG]",
+         "ObjectType": 2
+      },
+      {
+         "Name": "[dbo].[STRING_SPLIT]",
+         "ObjectType": 2
       }
    ],
    "UiHint": null,

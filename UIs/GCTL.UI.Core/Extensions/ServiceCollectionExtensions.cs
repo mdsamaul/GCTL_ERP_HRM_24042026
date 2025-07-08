@@ -113,6 +113,7 @@ using GCTL.Service.HRMPayrollLoan;
 using GCTL.Service.AdvanceLoanAdjustment;
 using GCTL.Service.AdvanceLoanAdjustmentReport;
 using GCTL.Service.EmployeeLoanInformationReport;
+using GCTL.Service.INV_Catagory;
 
 
 //using GCTL.Service.AccountReport;
@@ -193,6 +194,10 @@ services.AddScoped<IPFAssignEntryReportServices, PFAssignEntryReportServices>();
 services.AddScoped<IAdvanceLoanAdjustmentServices, AdvanceLoanAdjustmentServices>();
 services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
             services.AddScoped<IReportService, ReportService>();
+
+            services.AddScoped<IINV_CatagoryService, INV_CatagoryService>();
+
+
             
           
 

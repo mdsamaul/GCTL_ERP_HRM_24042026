@@ -7,21 +7,31 @@ namespace GCTL.Data.Models
 {
     public partial class SalesSupplier
     {
-        public int AutoId { get; set; }
+        public decimal AutoId { get; set; }
         public string SupplierId { get; set; }
         public string SupplierName { get; set; }
-        public string SupplierTypeId { get; set; }
         public string SupplierAddress { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+        public string ContactPerson { get; set; }
+        public string ContactPhone { get; set; }
+        public string ContactEmail { get; set; }
+        public string Luser { get; set; }
+        public DateTime? Ldate { get; set; }
+        public string Lip { get; set; }
+        public string Lmac { get; set; }
+        public DateTime? ModifyDate { get; set; }
+        public string UserInfoEmployeeId { get; set; }
+        public string CompanyCode { get; set; }
+        public string BinNo { get; set; }
+        public string VatRegNo { get; set; }
+        public string Tin { get; set; }
+        public decimal? OpeningBalance { get; set; }
         public string CountryId { get; set; }
         public string DistrictsId { get; set; }
         public string Place { get; set; }
-        public string Phone { get; set; }
         public string Fax { get; set; }
-        public string Email { get; set; }
         public string Url { get; set; }
-        public string Vat { get; set; }
-        public string Tin { get; set; }
-        public string Bin { get; set; }
         public string ContatPerson1 { get; set; }
         public string Designation1 { get; set; }
         public string Phone1 { get; set; }
@@ -30,23 +40,8 @@ namespace GCTL.Data.Models
         public string Designation2 { get; set; }
         public string Phone2 { get; set; }
         public string Email2 { get; set; }
-        public string ContatPerson3 { get; set; }
-        public string Designation3 { get; set; }
-        public string Phone3 { get; set; }
-        public string Email3 { get; set; }
-        public decimal? OpeningBalance { get; set; }
-        public DateTime? OpeningDate { get; set; }
-        public decimal? CreditLimit { get; set; }
-        public string Category { get; set; }
-        public string SalesPersonId { get; set; }
+        public string SupplierTypeId { get; set; }
         public string Remarks { get; set; }
-        public string Luser { get; set; }
-        public DateTime? Ldate { get; set; }
-        public string Lip { get; set; }
-        public string Lmac { get; set; }
-        public DateTime? ModifyDate { get; set; }
-        public string CompanyId { get; set; }
-        public string UserEmployeeId { get; set; }
-        public string SupplierProducts { get; set; }
+        public decimal? CreditLimit { get; set; }
     }
 }

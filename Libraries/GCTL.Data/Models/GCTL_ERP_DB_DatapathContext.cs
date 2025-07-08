@@ -112,6 +112,7 @@ namespace GCTL.Data.Models
         public virtual DbSet<HrmAtdManual> HrmAtdManual { get; set; }
         public virtual DbSet<HrmAtdShift> HrmAtdShift { get; set; }
         public virtual DbSet<HrmAttWorkingDayDeclaration> HrmAttWorkingDayDeclaration { get; set; }
+        public virtual DbSet<HrmBrand> HrmBrand { get; set; }
         public virtual DbSet<HrmDefBankAndNomineeInfo> HrmDefBankAndNomineeInfo { get; set; }
         public virtual DbSet<HrmDefBloodGroup> HrmDefBloodGroup { get; set; }
         public virtual DbSet<HrmDefBoardCountryName> HrmDefBoardCountryName { get; set; }
@@ -126,6 +127,7 @@ namespace GCTL.Data.Models
         public virtual DbSet<HrmDefEmployeeStatus> HrmDefEmployeeStatus { get; set; }
         public virtual DbSet<HrmDefExamGroupInfo> HrmDefExamGroupInfo { get; set; }
         public virtual DbSet<HrmDefExamTitle> HrmDefExamTitle { get; set; }
+        public virtual DbSet<HrmDefFloor> HrmDefFloor { get; set; }
         public virtual DbSet<HrmDefGrade> HrmDefGrade { get; set; }
         public virtual DbSet<HrmDefGradeType> HrmDefGradeType { get; set; }
         public virtual DbSet<HrmDefHolidayType> HrmDefHolidayType { get; set; }
@@ -160,6 +162,7 @@ namespace GCTL.Data.Models
         public virtual DbSet<HrmEmployeeReferenceInfo> HrmEmployeeReferenceInfo { get; set; }
         public virtual DbSet<HrmEmployeeWeekendDeclaration> HrmEmployeeWeekendDeclaration { get; set; }
         public virtual DbSet<HrmIncrement> HrmIncrement { get; set; }
+        public virtual DbSet<HrmItemMasterInformation> HrmItemMasterInformation { get; set; }
         public virtual DbSet<HrmLeaveApplicationDays> HrmLeaveApplicationDays { get; set; }
         public virtual DbSet<HrmLeaveApplicationEntry> HrmLeaveApplicationEntry { get; set; }
         public virtual DbSet<HrmNomineePhoto> HrmNomineePhoto { get; set; }
@@ -174,8 +177,11 @@ namespace GCTL.Data.Models
         public virtual DbSet<HrmPayrollPfassignEntry> HrmPayrollPfassignEntry { get; set; }
         public virtual DbSet<HrmRosterScheduleEntry> HrmRosterScheduleEntry { get; set; }
         public virtual DbSet<HrmSeparation> HrmSeparation { get; set; }
+        public virtual DbSet<HrmSize> HrmSize { get; set; }
+        public virtual DbSet<InvCatagory> InvCatagory { get; set; }
         public virtual DbSet<InvDefFactory> InvDefFactory { get; set; }
         public virtual DbSet<InvDefLocation> InvDefLocation { get; set; }
+        public virtual DbSet<InvDefSupplierType> InvDefSupplierType { get; set; }
         public virtual DbSet<InvDefWarehouse> InvDefWarehouse { get; set; }
         public virtual DbSet<InvSalesInvoiceInfo> InvSalesInvoiceInfo { get; set; }
         public virtual DbSet<InvSalesInvoiceInfoDetails> InvSalesInvoiceInfoDetails { get; set; }
@@ -186,6 +192,8 @@ namespace GCTL.Data.Models
         public virtual DbSet<PosTermsCondition> PosTermsCondition { get; set; }
         public virtual DbSet<PosTrType> PosTrType { get; set; }
         public virtual DbSet<RmgProdDefUnitType> RmgProdDefUnitType { get; set; }
+        public virtual DbSet<RmgPurchaseOrderReceive> RmgPurchaseOrderReceive { get; set; }
+        public virtual DbSet<RmgPurchaseOrderReceiveDetails> RmgPurchaseOrderReceiveDetails { get; set; }
         public virtual DbSet<SalesContactPerson> SalesContactPerson { get; set; }
         public virtual DbSet<SalesCustomer> SalesCustomer { get; set; }
         public virtual DbSet<SalesDefBankBranchInfo> SalesDefBankBranchInfo { get; set; }
@@ -1160,11 +1168,9 @@ namespace GCTL.Data.Models
 
             modelBuilder.Entity<CoreCountry>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.CountryCode);
 
                 entity.ToTable("Core_Country");
-
-                entity.Property(e => e.CountryCode).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.CountryId)
                     .IsRequired()
@@ -4726,6 +4732,51 @@ namespace GCTL.Data.Models
                 entity.Property(e => e.WorkingDayDate).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<HrmBrand>(entity =>
+            {
+                entity.HasKey(e => e.AutoId);
+
+                entity.ToTable("HRM_Brand");
+
+                entity.Property(e => e.AutoId)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("autoId");
+
+                entity.Property(e => e.BrandId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("BrandID");
+
+                entity.Property(e => e.CompanyCode)
+                    .IsRequired()
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ShortName).HasMaxLength(100);
+
+                entity.Property(e => e.UserInfoEmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("UserInfoEmployeeID");
+            });
+
             modelBuilder.Entity<HrmDefBankAndNomineeInfo>(entity =>
             {
                 entity.HasKey(e => e.BankAndNomineeId)
@@ -5386,6 +5437,53 @@ namespace GCTL.Data.Models
                     .HasColumnName("LUser");
 
                 entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.ShortName).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<HrmDefFloor>(entity =>
+            {
+                entity.HasKey(e => e.AutoId);
+
+                entity.ToTable("HRM_Def_Floor");
+
+                entity.Property(e => e.AutoId)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("autoId");
+
+                entity.Property(e => e.CompanyCode)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.EmployeeId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.FloorCode)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.FloorName).HasMaxLength(100);
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ShortName).HasMaxLength(50);
             });
@@ -7657,6 +7755,60 @@ namespace GCTL.Data.Models
                     .HasMaxLength(50);
             });
 
+            modelBuilder.Entity<HrmItemMasterInformation>(entity =>
+            {
+                entity.HasKey(e => e.AutoId);
+
+                entity.ToTable("HRM_ItemMasterInformation");
+
+                entity.Property(e => e.AutoId)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("autoId");
+
+                entity.Property(e => e.BrandId).HasColumnName("BrandID");
+
+                entity.Property(e => e.CatagoryId)
+                    .HasMaxLength(50)
+                    .HasColumnName("CatagoryID");
+
+                entity.Property(e => e.CompanyCode)
+                    .IsRequired()
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.ProductCode).HasMaxLength(50);
+
+                entity.Property(e => e.ProductName).HasMaxLength(200);
+
+                entity.Property(e => e.PurchaseCost).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.UnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("UnitID");
+
+                entity.Property(e => e.UserInfoEmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("UserInfoEmployeeID");
+            });
+
             modelBuilder.Entity<HrmLeaveApplicationDays>(entity =>
             {
                 entity.HasKey(e => e.AutoId)
@@ -8428,6 +8580,94 @@ namespace GCTL.Data.Models
                     .HasMaxLength(100);
             });
 
+            modelBuilder.Entity<HrmSize>(entity =>
+            {
+                entity.HasKey(e => e.AutoId);
+
+                entity.ToTable("HRM_Size");
+
+                entity.Property(e => e.AutoId)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("autoId");
+
+                entity.Property(e => e.CompanyCode)
+                    .IsRequired()
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.ShortName).HasMaxLength(100);
+
+                entity.Property(e => e.SizeId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("SizeID");
+
+                entity.Property(e => e.UserInfoEmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("UserInfoEmployeeID");
+            });
+
+            modelBuilder.Entity<InvCatagory>(entity =>
+            {
+                entity.HasKey(e => e.AutoId);
+
+                entity.ToTable("INV_Catagory");
+
+                entity.Property(e => e.AutoId)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("autoId");
+
+                entity.Property(e => e.CatagoryId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("CatagoryID");
+
+                entity.Property(e => e.CompanyCode).HasMaxLength(10);
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.ShortName).HasMaxLength(100);
+
+                entity.Property(e => e.UserInfoEmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("UserInfoEmployeeID");
+            });
+
             modelBuilder.Entity<InvDefFactory>(entity =>
             {
                 entity.HasKey(e => e.FactoryId)
@@ -8548,6 +8788,52 @@ namespace GCTL.Data.Models
                     .HasColumnName("LUser");
 
                 entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+            });
+
+            modelBuilder.Entity<InvDefSupplierType>(entity =>
+            {
+                entity.HasKey(e => e.AutoId);
+
+                entity.ToTable("Inv_Def_SupplierType");
+
+                entity.Property(e => e.AutoId)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("autoId");
+
+                entity.Property(e => e.CompanyCode).HasMaxLength(10);
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ShortName).HasMaxLength(100);
+
+                entity.Property(e => e.SupplierType)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.SupplierTypeId)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.UserInfoEmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("UserInfoEmployeeID");
             });
 
             modelBuilder.Entity<InvDefWarehouse>(entity =>
@@ -8978,15 +9264,11 @@ namespace GCTL.Data.Models
 
             modelBuilder.Entity<RmgProdDefUnitType>(entity =>
             {
-                entity.HasKey(e => e.UnitTypId)
-                    .HasName("PK__RMG_Prod__FA7636DD56B04C57");
+                entity.HasKey(e => e.Tc);
 
                 entity.ToTable("RMG_Prod_Def_UnitType");
 
-                entity.Property(e => e.UnitTypId)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("UnitTypID");
+                entity.Property(e => e.Tc).HasColumnName("TC");
 
                 entity.Property(e => e.Ldate)
                     .HasColumnType("smalldatetime")
@@ -9010,13 +9292,141 @@ namespace GCTL.Data.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Tc)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("TC");
+                entity.Property(e => e.UnitTypId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("UnitTypID");
 
                 entity.Property(e => e.UnitTypeName)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<RmgPurchaseOrderReceive>(entity =>
+            {
+                entity.HasKey(e => e.Tc);
+
+                entity.ToTable("RMG_PurchaseOrderReceive");
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
+
+                entity.Property(e => e.ChallanDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ChallanNo).HasMaxLength(50);
+
+                entity.Property(e => e.CompanyCode)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.DepartmentCode).HasMaxLength(50);
+
+                entity.Property(e => e.EmployeeIdReceiveBy)
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID_ReceiveBy");
+
+                entity.Property(e => e.InvoiceDate).HasColumnType("datetime");
+
+                entity.Property(e => e.InvoiceNo).HasMaxLength(50);
+
+                entity.Property(e => e.InvoiceValue).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.MainCompanyCode).HasMaxLength(50);
+
+                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PurchaseReceiveNo)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.ReceiveDate).HasColumnType("datetime");
+
+                entity.Property(e => e.SupplierId)
+                    .HasMaxLength(50)
+                    .HasColumnName("SupplierID");
+
+                entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.UserInfoEmployeeId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("UserInfoEmployeeID");
+            });
+
+            modelBuilder.Entity<RmgPurchaseOrderReceiveDetails>(entity =>
+            {
+                entity.HasKey(e => e.Tc)
+                    .HasName("PK__RMG_Purc__3214E4089BA8BAFE");
+
+                entity.ToTable("RMG_PurchaseOrderReceiveDetails");
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
+
+                entity.Property(e => e.BrandId)
+                    .HasMaxLength(50)
+                    .HasColumnName("BrandID");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModelId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ModelID");
+
+                entity.Property(e => e.ProductCode).HasMaxLength(50);
+
+                entity.Property(e => e.PurchaseOrderReceiveDetailsId)
+                    .HasMaxLength(50)
+                    .HasColumnName("PurchaseOrderReceiveDetailsID");
+
+                entity.Property(e => e.PurchaseReceiveNo)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.ReqQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.SizeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("SizeID");
+
+                entity.Property(e => e.Slno).HasColumnName("SLNO");
+
+                entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.UnitTypId)
+                    .HasMaxLength(50)
+                    .HasColumnName("UnitTypID");
+
+                entity.Property(e => e.WarrantyPeriod).HasMaxLength(50);
+
+                entity.Property(e => e.WarrentyTypeId)
+                    .HasMaxLength(10)
+                    .HasColumnName("WarrentyTypeID");
             });
 
             modelBuilder.Entity<SalesContactPerson>(entity =>
@@ -9990,32 +10400,30 @@ namespace GCTL.Data.Models
 
             modelBuilder.Entity<SalesSupplier>(entity =>
             {
-                entity.HasKey(e => e.SupplierId)
-                    .HasName("PK__Sales_Su__4BE6669458587F03");
+                entity.HasKey(e => e.AutoId);
 
                 entity.ToTable("Sales_Supplier");
 
-                entity.Property(e => e.SupplierId)
-                    .HasMaxLength(50)
-                    .HasColumnName("SupplierID");
+                entity.Property(e => e.AutoId)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("autoId");
 
-                entity.Property(e => e.AutoId).ValueGeneratedOnAdd();
+                entity.Property(e => e.BinNo).HasMaxLength(50);
 
-                entity.Property(e => e.Bin)
-                    .HasMaxLength(50)
-                    .HasColumnName("BIN");
+                entity.Property(e => e.CompanyCode)
+                    .IsRequired()
+                    .HasMaxLength(10);
 
-                entity.Property(e => e.Category).HasMaxLength(50);
+                entity.Property(e => e.ContactEmail).HasMaxLength(50);
 
-                entity.Property(e => e.CompanyId)
-                    .HasMaxLength(50)
-                    .HasColumnName("CompanyID");
+                entity.Property(e => e.ContactPerson).HasMaxLength(300);
+
+                entity.Property(e => e.ContactPhone).HasMaxLength(50);
 
                 entity.Property(e => e.ContatPerson1).HasMaxLength(50);
 
                 entity.Property(e => e.ContatPerson2).HasMaxLength(50);
-
-                entity.Property(e => e.ContatPerson3).HasMaxLength(50);
 
                 entity.Property(e => e.CountryId).HasMaxLength(50);
 
@@ -10027,19 +10435,15 @@ namespace GCTL.Data.Models
 
                 entity.Property(e => e.Designation2).HasMaxLength(50);
 
-                entity.Property(e => e.Designation3).HasMaxLength(50);
-
                 entity.Property(e => e.DistrictsId)
                     .HasMaxLength(100)
                     .HasColumnName("DistrictsID");
 
-                entity.Property(e => e.Email).HasMaxLength(50);
+                entity.Property(e => e.Email).HasMaxLength(100);
 
                 entity.Property(e => e.Email1).HasMaxLength(150);
 
                 entity.Property(e => e.Email2).HasMaxLength(150);
-
-                entity.Property(e => e.Email3).HasMaxLength(150);
 
                 entity.Property(e => e.Fax)
                     .HasMaxLength(150)
@@ -10050,22 +10454,20 @@ namespace GCTL.Data.Models
                     .HasColumnName("LDate");
 
                 entity.Property(e => e.Lip)
-                    .HasMaxLength(90)
+                    .HasMaxLength(50)
                     .HasColumnName("LIP");
 
                 entity.Property(e => e.Lmac)
-                    .HasMaxLength(150)
+                    .HasMaxLength(50)
                     .HasColumnName("LMAC");
 
                 entity.Property(e => e.Luser)
-                    .HasMaxLength(90)
+                    .HasMaxLength(50)
                     .HasColumnName("LUser");
 
-                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
 
                 entity.Property(e => e.OpeningBalance).HasColumnType("decimal(18, 2)");
-
-                entity.Property(e => e.OpeningDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Phone).HasMaxLength(50);
 
@@ -10077,40 +10479,30 @@ namespace GCTL.Data.Models
                     .HasMaxLength(50)
                     .HasColumnName("phone2");
 
-                entity.Property(e => e.Phone3)
-                    .HasMaxLength(50)
-                    .HasColumnName("phone3");
-
                 entity.Property(e => e.Place).HasMaxLength(100);
 
                 entity.Property(e => e.Remarks).HasMaxLength(200);
 
-                entity.Property(e => e.SalesPersonId)
+                entity.Property(e => e.SupplierId)
+                    .IsRequired()
                     .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("SalesPersonID");
+                    .HasColumnName("SupplierID");
 
-                entity.Property(e => e.SupplierName).HasMaxLength(100);
-
-                entity.Property(e => e.SupplierProducts).HasMaxLength(50);
+                entity.Property(e => e.SupplierName).HasMaxLength(300);
 
                 entity.Property(e => e.SupplierTypeId).HasMaxLength(50);
 
-                entity.Property(e => e.Tin)
-                    .HasMaxLength(50)
-                    .HasColumnName("TIN");
+                entity.Property(e => e.Tin).HasMaxLength(100);
 
                 entity.Property(e => e.Url)
                     .HasMaxLength(150)
                     .HasColumnName("URL");
 
-                entity.Property(e => e.UserEmployeeId)
+                entity.Property(e => e.UserInfoEmployeeId)
                     .HasMaxLength(50)
-                    .HasColumnName("UserEmployeeID");
+                    .HasColumnName("UserInfoEmployeeID");
 
-                entity.Property(e => e.Vat)
-                    .HasMaxLength(50)
-                    .HasColumnName("VAT");
+                entity.Property(e => e.VatRegNo).HasMaxLength(100);
             });
 
             modelBuilder.Entity<TbDefVendorInformation>(entity =>
@@ -10576,6 +10968,8 @@ namespace GCTL.Data.Models
                 entity.Property(e => e.Weight).HasColumnType("decimal(18, 2)");
             });
 
+            OnModelCreatingGeneratedProcedures(modelBuilder);
+            OnModelCreatingGeneratedFunctions(modelBuilder);
             OnModelCreatingPartial(modelBuilder);
         }
 
