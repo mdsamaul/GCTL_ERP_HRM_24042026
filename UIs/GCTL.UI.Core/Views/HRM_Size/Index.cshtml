@@ -1,0 +1,97 @@
+﻿
+@model GCTL.UI.Core.ViewModels.HRM_Size.HRM_SizeViewModel
+@{
+    Model.Breadcrumb = "SizeInfo";
+    Model.PageTitle = "Size Info";
+}
+
+<style>
+    #stickyHeader {
+        position: sticky;
+        top: 0px;
+        z-index: 1020;
+        min-height: 50px;
+        background: linear-gradient(to right, #fff, white);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transition: box-shadow 0.3s ease-in-out;
+        transition: all 0.5s ease-in-out;
+    }
+
+        #stickyHeader.scrolled {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            padding-top: 7px;
+            padding-bottom: 7px;
+        }
+
+    .SizeLeft {
+        width: 12vw;
+        padding-right: 5px;
+        white-space: nowrap;
+    }
+
+    .SizeRight {
+        width: 22vw;
+    }
+
+    input,
+    select,
+    textarea {
+        border: 1px solid #eee !important;
+    }
+</style>
+
+<div class="container-fluid">
+    <partial name="_PageHeader" model="Model"></partial>
+</div>
+
+<div class="container-fluid">
+    <div id="stickyHeader" class="card-header px-2 sticky-top rounded-bottom"
+         style="min-height: 50px; z-index: 1020;">
+        <partial name="_Toolbars" model="new ToobarModel(){Title=Model.Breadcrumb, Code=Model.Code , Name=Model.Setup.SizeID}" />
+    </div>
+    <div class="card my-3 py-3">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="d-flex align-items-center">
+                    <div class="SizeLeft text-right">Size ID <span class="text-danger">*</span></div>
+                    <div class="SizeRight">
+                        <input type="text" name="name" value="" class="form-control-sm" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6"> </div>
+        </div>
+        <div class="row py-2">
+            <div class="col-12 col-md-6">
+                <div class="d-flex align-items-center">
+                    <div class="SizeLeft text-right">Size Name <span class="text-danger">*</span></div>
+                    <div class="SizeRight">
+                        <input type="text" name="name" value="" class="form-control-sm" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="d-flex align-items-center">
+                    <div class="SizeLeft text-right">Short Name </div>
+                    <div class="SizeRight">
+                        <input type="text" name="name" value="" class="form-control-sm" />
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <div class="row py-2">
+            <div class="col-12 col-md-6">
+                <div class="d-flex justify-content-center align-items-center">
+                    Create Date:<span>31/12/2025</span>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="d-flex justify-content-center align-items-center">
+                    Last Update Date:<span>31/12/2025</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

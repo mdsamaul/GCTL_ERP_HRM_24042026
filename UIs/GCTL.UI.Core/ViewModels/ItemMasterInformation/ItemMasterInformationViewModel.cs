@@ -1,4 +1,5 @@
 ﻿using GCTL.Core.ViewModels;
+using GCTL.Core.ViewModels.ItemMasterInformation;
 
 namespace GCTL.UI.Core.ViewModels.ItemMasterInformation
 {
