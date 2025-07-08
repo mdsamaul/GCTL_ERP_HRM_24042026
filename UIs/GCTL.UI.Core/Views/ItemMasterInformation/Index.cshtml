@@ -31,6 +31,12 @@
     .productRight{
         width:22vw;
     }
+
+    input,
+    select,
+    textarea {
+        border: 1px solid #eee !important;
+    }
 </style>
 
 <div class="container-fluid">
@@ -52,9 +58,145 @@
                     </div>
                </div>
             </div>
-            <div class="col-12 col-md-6 " >asdf</div>
+            <div class="col-12 col-md-6">
+                <div class="d-flex align-items-center">
+                    <div class="productLeft text-right">Category </div>
+                    <div class="productRight">
+                        <select class="w-100 form-control-sm" asp-items="ViewBag.CategoryAll as SelectList">
+                          <option value="">Select Category</option>
+                      </select>
+                    </div>
+                    <div class="plusRightBtn">
+                        <button class="btn btn-outline-success rounded-md d-flex justify-content-center align-items-center" style="width: 31px; height: 31px; font-size: 9px; line-height: 1; margin-left:2px;">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row py-2">
+            <div class="col-12 col-md-6">
+                <div class="d-flex align-items-center">
+                    <div class="productLeft text-right">Product Name </div>
+                    <div class="productRight">
+                        <input type="text" name="name" value="" class="form-control-sm" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="d-flex align-items-center">
+                    <div class="productLeft text-right">Description </div>
+                    <div class="productRight">
+                        <input type="text" name="name" value="" class="form-control-sm" />
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        <div class="row py-2">
+            <div class="col-12 col-md-6">
+                <div class="d-flex align-items-center">
+                    <div class="productLeft text-right">Brand </div>
+                    <div class="productRight">
+                        <select class="w-100 form-control-sm" asp-items="ViewBag.BrandAll as SelectList">
+                            <option value="">Select Brand</option>
+                        </select>
+                    </div>
+                    <div class="plusRightBtn">
+                        <button class="btn btn-outline-success rounded-md d-flex justify-content-center align-items-center" style="width: 31px; height: 31px; font-size: 9px; line-height: 1; margin-left:2px;">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6"></div>
+        </div>
+        <div class="row py-2">
+            <div class="col-12 col-md-6">
+                <div class="d-flex align-items-center">
+                    <div class="productLeft text-right">UOM<span class="text-danger">*</span> </div>
+                    <div class="productRight">
+                        <select class="w-100 form-control-sm">
+                            <option value="">test</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="d-flex align-items-center">
+                    <div class="productLeft text-right">Purchase Cost </div>
+                    <div class="productRight">
+                        <input type="text" name="name" value="" class="form-control-sm" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row py-2">
+            <div class="col-12 col-md-6">
+                <div class="d-flex justify-content-center align-items-center">
+                   Create Date:<span>31/12/2025</span>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="d-flex justify-content-center align-items-center">
+                    Last Update Date:<span>31/12/2025</span>
+                </div>
+            </div>
         </div>
     </div>
 
     </div>
 
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<!-- jQuery (DataTables ) -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Multiselect CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/css/bootstrap-multiselect.min.css">
+    <!-- Bootstrap Multiselect JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/js/bootstrap-multiselect.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+    <!-- DataTable JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+
+    <!--flat picker-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- Load the plugin -->
+    <script src="~/js/pages/ItemMasterInformation.js"></script>
+
+    <!-- Initialize the plugin -->
+    <script type="text/javascript">
+        $(function () {
+            $.patientTypes({
+                baseUrl: '@Url.Action("Index", "ItemMasterInformation")',
+                load: function () {
+                    console.log("Custom load logic called from Razor view");
+                }
+            });
+        });
+            if (typeof pdfjsLib !== 'undefined') {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+        }
+    </script>
+}

@@ -181,11 +181,11 @@ namespace GCTL.Data.Models
                .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
             });
 
-            modelBuilder.Entity<RmgProdDefUnitType>(entity =>
-            {
-                entity.Property(p => p.Tc)
-               .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
-            });
+            //modelBuilder.Entity<RmgProdDefUnitType>(entity =>
+            //{
+            //    entity.Property(p => p.Tc)
+            //   .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
+            //});
 
             //modelBuilder.Entity<HrmEmployee>(entity =>
             //{
