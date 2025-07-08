@@ -31,6 +31,12 @@
     .productRight{
         width:22vw;
     }
+
+    input,
+    select,
+    textarea {
+        border: 1px solid #eee !important;
+    }
 </style>
 
 <div class="container-fluid">
@@ -52,7 +58,89 @@
                     </div>
                </div>
             </div>
-            <div class="col-12 col-md-6 " >asdf</div>
+            <div class="col-12 col-md-6">
+                <div class="d-flex align-items-center">
+                    <div class="productLeft text-right">Category </div>
+                    <div class="productRight">
+                        <select class="w-100 form-control-sm">
+                          <option value="">test</option>
+                      </select>
+                    </div>
+                    <div class="plusRightBtn">
+                        <button class="btn btn-outline-success rounded-md d-flex justify-content-center align-items-center" style="width: 31px; height: 31px; font-size: 9px; line-height: 1; margin-left:2px;">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row py-2">
+            <div class="col-12 col-md-6">
+                <div class="d-flex align-items-center">
+                    <div class="productLeft text-right">Product Name </div>
+                    <div class="productRight">
+                        <input type="text" name="name" value="" class="form-control-sm" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="d-flex align-items-center">
+                    <div class="productLeft text-right">Description </div>
+                    <div class="productRight">
+                        <input type="text" name="name" value="" class="form-control-sm" />
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        <div class="row py-2">
+            <div class="col-12 col-md-6">
+                <div class="d-flex align-items-center">
+                    <div class="productLeft text-right">Brand </div>
+                    <div class="productRight">
+                        <select class="w-100 form-control-sm">
+                            <option value="">test</option>
+                        </select>
+                    </div>
+                    <div class="plusRightBtn">
+                        <button class="btn btn-outline-success rounded-md d-flex justify-content-center align-items-center" style="width: 31px; height: 31px; font-size: 9px; line-height: 1; margin-left:2px;">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6"></div>
+        </div>
+        <div class="row py-2">
+            <div class="col-12 col-md-6">
+                <div class="d-flex align-items-center">
+                    <div class="productLeft text-right">UOM<span class="text-danger">*</span> </div>
+                    <div class="productRight">
+                        <select class="w-100 form-control-sm">
+                            <option value="">test</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="d-flex align-items-center">
+                    <div class="productLeft text-right">Purchase Cost </div>
+                    <div class="productRight">
+                        <input type="text" name="name" value="" class="form-control-sm" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row py-2">
+            <div class="col-12 col-md-6">
+                <div class="d-flex justify-content-center align-items-center">
+                   Create Date:<span>31/12/2025</span>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="d-flex justify-content-center align-items-center">
+                    Last Update Date:<span>31/12/2025</span>
+                </div>
+            </div>
         </div>
     </div>
 
