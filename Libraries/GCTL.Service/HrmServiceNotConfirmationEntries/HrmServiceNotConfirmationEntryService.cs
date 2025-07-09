@@ -293,7 +293,7 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
                         from eStatus in eStatusGroup.DefaultIfEmpty()
                         join periodInfo in periodRepository.All().AsNoTracking() on e.ProbationPeriodType equals periodInfo.PeriodInfoId into periodGroup
                         from periodInfo in periodGroup.DefaultIfEmpty()
-                        where e.EmployeeId == selectedEmpId
+                        where e.EmployeeId == selectedEmpId 
                         select new
                         {
                             EmployeeId = e.EmployeeId,
@@ -324,18 +324,16 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
             string probetionPeriod = "";
             DateTime? endDate = null;
 
-            if (data.JoiningDate.HasValue)
+            if (data.JoiningDate.HasValue && data.JoiningDate.Value != new DateTime(1900, 1, 1))
             {
                 serviceLength = CalculateDateLength(data.JoiningDate.Value, DateTime.Today);
 
                 if(data.ProbationPeriod !=null && data.ProbationPeriodType != null)
                 {
-                    endDate = CalculateProbationEndDate(data.JoiningDate.Value, data.ProbationPeriod, data.ShortName);
-                    if(endDate != null)
-                        probetionPeriod = CalculateDateLength(data.JoiningDate.Value, endDate.Value);
+                    endDate = CalculateProbationEndDate(data.JoiningDate.Value, data.ProbationPeriod, data.ProbationPeriodType);
+                        if(endDate != null)
+                        probetionPeriod = CalculateDateLengthInDays(data.JoiningDate.Value, endDate.Value);
                 }
-
-                //var probationEndDate = CalculateProbationEndDate(data.JoiningDate.Value, data.ProbationPeriod, data.ProbationPeriodType);
             }
 
 
@@ -347,6 +345,7 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
                 DesignationName = data.DesignationName,
                 DepartmentName = data.DepartmentName,
                 GrossSalary = data.GrossSalary.ToString(),
+                //Pro
                 ProbationPeriod = probetionPeriod,
                 EndOn = endDate.HasValue ? endDate.Value.ToString("dd/MM/yyyy") :"",
                 ServiceLength = serviceLength
@@ -375,46 +374,67 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
 
             throw new NotImplementedException();
         }
+        private string CalculateDateLengthInDays(DateTime startDate, DateTime endDate)
+        {
+            if (startDate <= endDate)
+            {
+                if (startDate == new DateTime(1900, 1, 1) || endDate == new DateTime(1900, 1, 1))
+                    return "";
 
+                var totalDays = (endDate - startDate).Days;
+                return $"{totalDays} {(totalDays == 1 ? "day" : "days")}";
+            }
+            else
+            {
+                return "";
+            }
+        }
         private string CalculateDateLength(DateTime startDate, DateTime endDate)
         {
-            if (startDate > endDate)
+            if (startDate <= endDate)
+            {
+                if (startDate == new DateTime(1900, 1, 1) || endDate == new DateTime(1900, 1, 1))
+                    return "";
+
+                var years = endDate.Year - startDate.Year;
+                var months = endDate.Month - startDate.Month;
+                var days = endDate.Day - startDate.Day;
+
+                if (days < 0)
+                {
+                    months--;
+                    days += DateTime.DaysInMonth(endDate.AddMonths(-1).Year, endDate.AddMonths(-1).Month);
+                }
+
+                if (months < 0)
+                {
+                    years--;
+                    months += 12;
+                }
+
+                var parts = new List<string>();
+
+                if (years > 0)
+                {
+                    parts.Add($"{years} {(years == 1 ? "year" : "years")}");
+                }
+
+                if (months > 0)
+                {
+                    parts.Add($"{months} {(months == 1 ? "month" : "months")}");
+                }
+
+                if (days > 0)
+                {
+                    parts.Add($"{days} {(days == 1 ? "day" : "days")}");
+                }
+    
+                return string.Join(" ", parts); 
+            }
+            else
+            {
                 return "";
-
-            var years = endDate.Year - startDate.Year;
-            var months = endDate.Month - startDate.Month;
-            var days = endDate.Day - startDate.Day;
-
-            if (days < 0)
-            {
-                months--;
-                days += DateTime.DaysInMonth(endDate.AddMonths(-1).Year, endDate.AddMonths(-1).Month);
             }
-
-            if (months < 0)
-            {
-                years--;
-                months += 12;
-            }
-
-            var parts = new List<string>();
-
-            if (years > 0)
-            {
-                parts.Add($"{years} {(years == 1 ? "year" : "years")}");
-            }
-
-            if (months > 0)
-            {
-                parts.Add($"{months} {(months == 1 ? "month" : "months")}");
-            }
-
-            if (days > 0)
-            {
-                parts.Add($"{days} {(days == 1 ? "day" : "days")}");
-            }
-
-            return string.Join(" ", parts);
         }
 
         public async Task<EmployeeFilterResultDto> GetFilterEmployeeAsync(EmployeeFilterViewModel model)
@@ -424,13 +444,14 @@ namespace GCTL.Service.HrmServiceNotConfirmationEntries
             var query = from emp in employeeRepository.All().AsNoTracking()
                         join e in employeeOfficialInfoRepository.All().AsNoTracking() on emp.EmployeeId equals e.EmployeeId
                         join c in companyRepository.All().AsNoTracking() on e.CompanyCode equals c.CompanyCode
-                        
+                        join des in designationRepository.All().AsNoTracking() on e.DesignationCode equals des.DesignationCode into designationGroup
+                        from des in designationGroup.DefaultIfEmpty()
                         join eType in empTypeRepository.All().AsNoTracking() on e.EmpTypeCode equals eType.EmpTypeCode into eTypeGroup
                         from eType in eTypeGroup.DefaultIfEmpty()
                         join eStatus in employeeStatusRepository.All().AsNoTracking() on e.EmployeeStatus equals eStatus.EmployeeStatusId into eStatusGroup
                         from eStatus in eStatusGroup.DefaultIfEmpty()
 
-                        where (e.EmployeeStatus.Equals("01") && e.EmpTypeCode.Equals("02"))
+                        where ((e.ConfirmeDate == null || e.ConfirmeDate == new DateTime(1900, 1, 1)) && e.EmployeeStatus.Equals("01") && e.EmpTypeCode.Equals("02"))
 
                         select new
                         {

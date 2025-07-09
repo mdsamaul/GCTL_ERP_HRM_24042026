@@ -1,4 +1,4 @@
-﻿using GCTL.Core.ViewModels.HrmPayDefDeductionTypes;
+﻿             using GCTL.Core.ViewModels.HrmPayDefDeductionTypes;
 using GCTL.Service.HrmPayDefDeductionTypes;
 using Microsoft.AspNetCore.Mvc;
 using GCTL.Core.Helpers;

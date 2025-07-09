@@ -13,7 +13,7 @@
             empType: "#empTypeSelect",
             empNature: "#empNatureSelect",
             empStatus: "#empStatusSelect",
-
+            
             joiningDateFrom: "#joiningDateFromSelect",
             joiningDateTo: "#joiningDateToSelect",
 
