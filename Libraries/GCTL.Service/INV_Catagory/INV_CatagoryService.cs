@@ -6,18 +6,22 @@ using System.Threading.Tasks;
 using GCTL.Core.Data;
 using GCTL.Core.ViewModels.INV_Catagory;
 using GCTL.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace GCTL.Service.INV_Catagory
 {
     public class INV_CatagoryService:AppService<InvCatagory>, IINV_CatagoryService
     {
         private readonly IRepository<InvCatagory> invCatRepo;
+        private readonly IRepository<CoreAccessCode> accessCodeRepository;
 
         public INV_CatagoryService(
-            IRepository<InvCatagory> invCatRepo
-            ):base(invCatRepo)
+            IRepository<InvCatagory> invCatRepo,
+            IRepository<CoreAccessCode> accessCodeRepository
+            ) :base(invCatRepo)
         {
             this.invCatRepo = invCatRepo;
+            this.accessCodeRepository = accessCodeRepository;
         }
 
         private readonly string CreateSuccess = "Data saved successfully.";
@@ -27,6 +31,43 @@ namespace GCTL.Service.INV_Catagory
         private readonly string DeleteSuccess = "Data deleted successfully.";
         private readonly string DeleteFailed = "Data deletion failed.";
         private readonly string DataExists = "Data already exists.";
+
+        #region Permission all type
+
+        public async Task<bool> PagePermissionAsync(string accessCode)
+
+        {
+
+            return await accessCodeRepository.All().AnyAsync(x => x.AccessCodeId == accessCode && x.Title == "Catagory Info" && x.TitleCheck);
+
+        }
+
+        public async Task<bool> SavePermissionAsync(string accessCode)
+
+        {
+
+            return await accessCodeRepository.All().AnyAsync(x => x.AccessCodeId == accessCode && x.Title == "Catagory Info" && x.CheckAdd);
+
+        }
+
+        public async Task<bool> UpdatePermissionAsync(string accessCode)
+
+        {
+
+            return await accessCodeRepository.All().AnyAsync(x => x.AccessCodeId == accessCode && x.Title == "Catagory Info" && x.CheckEdit);
+
+        }
+
+        public async Task<bool> DeletePermissionAsync(string accessCode)
+
+        {
+
+            return await accessCodeRepository.All().AnyAsync(x => x.AccessCodeId == accessCode && x.Title == "Catagory Info" && x.CheckDelete);
+
+        }
+
+        #endregion
+
         public async Task<List<INV_CatagorySetupViewModel>> GetAllAsync()
         {
             //await Task.Delay(100);
@@ -75,65 +116,72 @@ namespace GCTL.Service.INV_Catagory
 
         public async Task<(bool isSuccess, string message, object data)> CreateUpdateAsync(INV_CatagorySetupViewModel model)
         {
-            var entity = new InvCatagory
-            {
-                CatagoryId = model.CatagoryID,
-                CatagoryName = model.CatagoryName,
-                ShortName = model.ShortName,
-                CompanyCode = model.CompanyCode
-            };
             try
             {
-                await invCatRepo.AddAsync(entity);
-                return (true, CreateSuccess, entity);
+                if (model.AutoId == 0)
+                {
+                    var entity = new InvCatagory
+                    {
+                        CatagoryId = model.CatagoryID,
+                        CatagoryName = model.CatagoryName,
+                        ShortName = model.ShortName,
+                        CompanyCode = model.CompanyCode != null ? model.CompanyCode : "001",
+                        Luser = model.Luser,
+                        Lip = model.Lip,
+                        Ldate= model.Ldate,
+                        Lmac= model.Lmac,
+                        UserInfoEmployeeId= model.UserInfoEmployeeId,
+                    };
+
+                    await invCatRepo.AddAsync(entity);
+                    return (true, CreateSuccess, entity);
+                }
+
+                var exData = await invCatRepo.GetByIdAsync(model.AutoId);
+                if (exData != null)
+                {
+                    // Update existing data
+                    exData.CatagoryId = model.CatagoryID;
+                    exData.CatagoryName = model.CatagoryName;
+                    exData.ShortName = model.ShortName;
+                    exData.CompanyCode = model.CompanyCode!= null? model.CompanyCode:"001";
+                    exData.ModifyDate = model.ModifyDate;
+                    await invCatRepo.UpdateAsync(exData);
+                    return (true, UpdateSuccess, exData);
+                }
+
+                return (false, UpdateFailed, null);
             }
             catch (Exception)
             {
-
                 return (false, CreateFailed, null);
             }
-
-          
         }
 
-        public async Task<bool> UpdateAsync(INV_CatagorySetupViewModel model)
+        public async Task<(bool isSuccess, string message, object data)> DeleteAsync(List<string> ids)
         {
-            var entity = await invCatRepo.GetByIdAsync(model.AutoId);
-            if (entity == null) return false;
-
-            entity.CatagoryId = model.CatagoryID;
-            entity.CatagoryName = model.CatagoryName;
-            entity.ShortName = model.ShortName;
-            entity.CompanyCode = model.CompanyCode;
-
-            try
+            foreach (var id in ids)
             {
-                invCatRepo.Update(entity);
-                return true;
-            }
-            catch (Exception)
-            {
+               
+                try
+                {
+                    var entity = await invCatRepo.GetByIdAsync(decimal.Parse(id));
+                    if (entity == null)
+                    {
+                        continue;
+                    }
 
-                return false;
+                    await invCatRepo.DeleteAsync(entity);
+                }
+                catch (Exception)
+                {               
+                    return (true, DeleteFailed, null);
+                }
             }
+
+            return (true, DeleteSuccess, null);
         }
 
-        public async Task<bool> DeleteAsync(long id)
-        {
-            var entity = await invCatRepo.GetByIdAsync(id);
-            if (entity == null) return false;
-
-            try
-            {
-                await invCatRepo.DeleteAsync(entity);
-                return true;
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
-        }
         public async Task<string> AutoCatagoryIdAsync()
         {
             var catagoryList = (await invCatRepo.GetAllAsync()).ToList();

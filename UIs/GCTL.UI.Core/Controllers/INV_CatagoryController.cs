@@ -1,4 +1,5 @@
 ﻿using GCTL.Core.Data;
+using GCTL.Core.Helpers;
 using GCTL.Core.ViewModels.INV_Catagory;
 using GCTL.Service.INV_Catagory;
 using GCTL.UI.Core.ViewModels.INV_Catagory;
@@ -16,14 +17,34 @@ namespace GCTL.UI.Core.Controllers
         {
             this.InvCatagoryService = InvCatagoryService;
         }
-        public IActionResult Index()
+        //public IActionResult Index(bool isPartial)
+        //{
+
+        //    INV_CatagoryViewModel model = new INV_CatagoryViewModel() { 
+        //    PageUrl=Url.Action(nameof(Index))
+        //    };
+        //    if (isPartial) return PartialView(model);
+        //    return View(model);
+        //}
+
+        public IActionResult Index(bool isPartial)
         {
-            INV_CatagoryViewModel model = new INV_CatagoryViewModel() { 
-            PageUrl=Url.Action(nameof(Index))
+            Console.WriteLine($"Index called with isPartial: {isPartial}");
+
+            INV_CatagoryViewModel model = new INV_CatagoryViewModel()
+            {
+                PageUrl = Url.Action(nameof(Index))
             };
+
+            if (isPartial)
+            {
+                Console.WriteLine("Returning partial view");
+                return PartialView(model);
+            }
+
             return View(model);
         }
-              
+
         [HttpGet]
         public async Task<IActionResult> LoadData()
         {
@@ -51,23 +72,7 @@ namespace GCTL.UI.Core.Controllers
             }
            
         }
-        //[HttpPost]
-        //public async Task<IActionResult> Create(decimal? id)
-        //{
-        //    var model = new INV_CatagoryViewModel();
-
-        //    if (id != null && id > 0)
-        //    {
-        //        var data = await InvCatagoryService.GetByIdAsync(id.Value);
-        //        if (data != null)
-        //        {
-        //            model.Setup = data;
-        //        }
-        //    }
-
-        //    return View(model); // Create.cshtml
-        //}
-
+       
 
         [HttpPost]
         public async Task<IActionResult> CreateUpdate([FromBody] INV_CatagorySetupViewModel model)
@@ -76,8 +81,43 @@ namespace GCTL.UI.Core.Controllers
             {
                 return Json(new { isSuccess = false });
             }
-                var result = await InvCatagoryService.CreateUpdateAsync(model);
-            return Json(new { isSuccess = result.isSuccess, message = result.message, data = result.data });
+            try
+            {
+                model.ToAudit(LoginInfo);
+                if (model.AutoId == 0)
+                {
+                    bool hasParmision = await InvCatagoryService.SavePermissionAsync(LoginInfo.AccessCode);
+                    if (hasParmision)
+                    {
+                        var result = await InvCatagoryService.CreateUpdateAsync(model);
+                        return Json(new { isSuccess = result.isSuccess, message = result.message, data = result.data });
+                    }
+                    else
+                    {
+                        return Json(new { isSuccess = false, message = "You have no access.", noSavePermission = true });
+                    }
+                }
+                else
+                {
+                    var hasUpdatePermission = await InvCatagoryService.UpdatePermissionAsync(LoginInfo.AccessCode);
+                    if (hasUpdatePermission)
+                    {
+                        var result = await InvCatagoryService.CreateUpdateAsync(model);
+                        return Json(new { isSuccess = result.isSuccess, message = result.message, data = result.data });
+                    }
+                    else
+                    {
+                        return Json(new { isSuccess = false, message = "You have no access.", noUpdatePermission = true });
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                return Json(new { isSuccess = false, message = "Faild"});
+            }
+            
+               
         }
 
         [HttpGet]
@@ -87,21 +127,12 @@ namespace GCTL.UI.Core.Controllers
             return Json(new {result});
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Edit(INV_CatagorySetupViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        await InvCatagoryService.UpdateAsync(model);
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(model);
-        //}
-
-        public async Task<IActionResult> Delete(long id)
+        [HttpPost]
+        public async Task<IActionResult> deleteCatagory([FromBody] List<string> selectedIds)
         {
-            await InvCatagoryService.DeleteAsync(id);
-            return RedirectToAction("Index");
+           var result = await InvCatagoryService.DeleteAsync(selectedIds);
+            return Json(new {isSuccess = result.isSuccess, message= result.message, data = result });
         }
+
     }
 }
