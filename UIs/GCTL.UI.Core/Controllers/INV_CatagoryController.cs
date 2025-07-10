@@ -16,21 +16,10 @@ namespace GCTL.UI.Core.Controllers
             )
         {
             this.InvCatagoryService = InvCatagoryService;
-        }
-        //public IActionResult Index(bool isPartial)
-        //{
-
-        //    INV_CatagoryViewModel model = new INV_CatagoryViewModel() { 
-        //    PageUrl=Url.Action(nameof(Index))
-        //    };
-        //    if (isPartial) return PartialView(model);
-        //    return View(model);
-        //}
+        }      
 
         public IActionResult Index(bool isPartial)
-        {
-            Console.WriteLine($"Index called with isPartial: {isPartial}");
-
+        {            
             INV_CatagoryViewModel model = new INV_CatagoryViewModel()
             {
                 PageUrl = Url.Action(nameof(Index))
@@ -38,7 +27,6 @@ namespace GCTL.UI.Core.Controllers
 
             if (isPartial)
             {
-                Console.WriteLine("Returning partial view");
                 return PartialView(model);
             }
 
@@ -130,9 +118,23 @@ namespace GCTL.UI.Core.Controllers
         [HttpPost]
         public async Task<IActionResult> deleteCatagory([FromBody] List<string> selectedIds)
         {
-           var result = await InvCatagoryService.DeleteAsync(selectedIds);
-            return Json(new {isSuccess = result.isSuccess, message= result.message, data = result });
+            var hasUpdatePermission = await InvCatagoryService.DeletePermissionAsync(LoginInfo.AccessCode);
+            if (hasUpdatePermission)
+            {
+                var result = await InvCatagoryService.DeleteAsync(selectedIds);
+                return Json(new { isSuccess = result.isSuccess, message = result.message, data = result });
+            }
+            else
+            {
+                return Json(new { isSuccess = false, message = "You have no access.", noUpdatePermission = true });
+            }
+            
         }
-
+        [HttpPost]
+        public async Task<IActionResult> alreadyExist([FromBody] string CatagoryValue)
+        {
+            var result = await InvCatagoryService.AlreadyExistAsync(CatagoryValue);
+            return Json(new {isSuccess = result.isSuccess,message = result.message, data = result});
+        }
     }
 }

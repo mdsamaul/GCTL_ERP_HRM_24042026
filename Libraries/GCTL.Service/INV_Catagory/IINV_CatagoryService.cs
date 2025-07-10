@@ -20,5 +20,6 @@ namespace GCTL.Service.INV_Catagory
         Task<bool> SavePermissionAsync(string accessCode);
         Task<bool> UpdatePermissionAsync(string accessCode);
         Task<bool> DeletePermissionAsync(string accessCode);
+        Task<(bool isSuccess, string message, object data)> AlreadyExistAsync(string catagoryValue);
     }
 }

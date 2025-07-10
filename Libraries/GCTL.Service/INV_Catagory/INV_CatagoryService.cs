@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -103,7 +104,11 @@ namespace GCTL.Service.INV_Catagory
                     AutoId = entity.AutoId,
                     CatagoryID = entity.CatagoryId,
                     CatagoryName = entity.CatagoryName,
-                    ShortName = entity.ShortName
+                    ShortName = entity.ShortName,
+                    //Ldate= entity.Ldate.HasValue? entity.Ldate.Value.ToString("dd/MM/yyyy"):"",
+                    ShowCreateDate= entity.Ldate.HasValue ? entity.Ldate.Value.ToString("dd/MM/yyyy"):"",
+                   ShowModifyDate = entity.ModifyDate.HasValue? entity.ModifyDate.Value.ToString("dd/MM/yyyy") :"",
+                    ModifyDate = entity.ModifyDate
                 };
             }
             catch (Exception)
@@ -207,6 +212,10 @@ namespace GCTL.Service.INV_Catagory
             return newCatagoryId.ToString("D3"); 
         }
 
-
+        public async Task<(bool isSuccess, string message, object data)> AlreadyExistAsync(string catagoryValue)
+        {
+            bool Exists =  invCatRepo.All().Any(x => x.CatagoryName == catagoryValue);
+            return ( Exists,  DataExists, null);
+        }
     }
 }
