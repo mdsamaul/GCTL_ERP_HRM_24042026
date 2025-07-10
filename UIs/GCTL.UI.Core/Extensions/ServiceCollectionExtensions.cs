@@ -77,6 +77,7 @@ using GCTL.Service.HrmPayOthersAdjustmentReports;
 using GCTL.Service.HRMPayrollLoan;
 using GCTL.Service.HrmPaySalaryDeductionReports;
 using GCTL.Service.HrmServiceNotConfirmationEntries;
+using GCTL.Service.HrmServiceNotConfirmationReports;
 using GCTL.Service.HrmWorkingDayDeclarationReports;
 using GCTL.Service.HrmWorkingDayDeclarations;
 using GCTL.Service.JobTitles;
@@ -276,6 +277,7 @@ namespace GCTL.UI.Core.Extensions
             services.AddScoped<IHrmEmployeeSalaryInfoReportService, HrmEmployeeSalaryInfoReportService>();
             services.AddScoped<IAccFinancialYearService, AccFinancialYearService>();
             services.AddScoped<IHrmServiceNotConfirmationEntryService, HrmServiceNotConfirmationEntryService>();
+            services.AddScoped<IHrmServiceNotConfirmationReportService, HrmServiceNotConfirmationReportService>();
 
             //Samaul
             services.AddScoped<IEmployeeWeekendDeclarationService, EmployeeWeekendDeclarationService>();

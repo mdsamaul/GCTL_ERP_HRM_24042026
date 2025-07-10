@@ -952,6 +952,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtUGF5U2FsYXJ5RGVkdWN0aW9uXF9Ub29sYmFycy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmServiceBulkConfirmationEntry/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtU2VydmljZUJ1bGtDb25maXJtYXRpb25FbnRyeVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmServiceBulkConfirmationEntry/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtU2VydmljZUJ1bGtDb25maXJtYXRpb25FbnRyeVxfR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmServiceBulkConfirmationEntry/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtU2VydmljZUJ1bGtDb25maXJtYXRpb25FbnRyeVxfU2V0dXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmServiceBulkConfirmationEntry/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtU2VydmljZUJ1bGtDb25maXJtYXRpb25FbnRyeVxfVG9vbGJhcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/HrmServiceNotConfirmationEntry/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJtU2VydmljZU5vdENvbmZpcm1hdGlvbkVudHJ5XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
