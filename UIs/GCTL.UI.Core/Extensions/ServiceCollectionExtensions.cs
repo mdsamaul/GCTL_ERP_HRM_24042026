@@ -114,6 +114,8 @@ using GCTL.Service.AdvanceLoanAdjustment;
 using GCTL.Service.AdvanceLoanAdjustmentReport;
 using GCTL.Service.EmployeeLoanInformationReport;
 using GCTL.Service.INV_Catagory;
+using GCTL.Service.HRM_Brand;
+using GCTL.Service.ItemMasterInformation;
 
 
 //using GCTL.Service.AccountReport;
@@ -196,6 +198,8 @@ services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
             services.AddScoped<IReportService, ReportService>();
 
             services.AddScoped<IINV_CatagoryService, INV_CatagoryService>();
+            services.AddScoped<IHRM_BrandService, HRM_BrandService>();
+            services.AddScoped<IItemMasterInformationService, ItemMasterInformationService>();
 
 
             

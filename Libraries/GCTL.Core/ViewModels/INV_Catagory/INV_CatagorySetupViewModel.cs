@@ -13,5 +13,8 @@ namespace GCTL.Core.ViewModels.INV_Catagory
         public string CatagoryName { get; set; }
         public string ShortName { get; set; }        
         public string CompanyCode { get; set; }
+        public string ShowCreateDate { get; set; }
+        public string ShowModifyDate { get; set; }
+
     }
 }

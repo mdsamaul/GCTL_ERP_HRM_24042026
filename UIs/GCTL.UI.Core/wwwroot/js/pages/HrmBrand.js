@@ -1,26 +1,26 @@
 ﻿(function ($) {
-    $.INV_Catagory = function (options) {
+    $.HrmBrand = function (options) {
         var commonName = $.extend({
             baseUrl: "/",
-            ShortName: "#ShortName",
-            CatagoryName: "#CatagoryName",
-            CatagoryID: "#CatagoryID",
-            AutoId: "#AutoId",
+            ShortName: "#brandShortName",
+            BrandName: "#brandName",
+            BrandID: "#BrandID",
+            AutoId: "#Setup_AutoId",
             RowCheckbox: ".row-checkbox",
             SelectedAll: "#selectAll",
-            EditBrn:".btn-edit",
-            CatagorySaveBtn: ".js-inv-catagory-save",
-            DeleteBtn: "#js-inv-catagory-delete-confirm",
-            UpdateDate:".updateDate",
-            CreateDate:".createDate",
-            ClearBrn:"#js-catagory-clear",
+            EditBrn: ".btn-edit",
+            BrandSaveBtn: ".js-brand-save",
+            DeleteBtn: "#js-inv-Brand-delete-confirm",
+            UpdateDate: ".updateDate",
+            CreateDate: ".createDate",
+            ClearBrn: "#js-brand-clear",
         }, options);
 
-        var loadCategoryDataUrl = commonName.baseUrl + "/LoadData";
-        var autoCatagoryIdUrl = commonName.baseUrl + "/AutoCatagoryId";
+        var loadBrandDataUrl = commonName.baseUrl + "/LoadData";
+        var autoBrandIdUrl = commonName.baseUrl + "/AutoBrandId";
         var CreateUpdateUrl = commonName.baseUrl + "/CreateUpdate";
         var PopulatedDataForUpdateUrl = commonName.baseUrl + "/PopulatedDataForUpdate";
-        var deleteUrl = commonName.baseUrl + "/deleteCatagory";
+        var deleteUrl = commonName.baseUrl + "/deleteBrand";
         var alreadyExistUrl = commonName.baseUrl + "/alreadyExist";
 
         // Sticky header on scroll
@@ -56,55 +56,58 @@
                 title: message
             });
         }
-        autoCatagoryId = function () {
+        autoBrandId = function () {
             $.ajax({
-                url: autoCatagoryIdUrl,
+                url: autoBrandIdUrl,
                 type: "GET",
-                success: function (res) {                   
-                    $(commonName.CatagoryID).val(res.data);
+                success: function (res) {
+                    $(commonName.BrandID).val(res.data);
                 },
                 error: function (e) {
                 }
             });
         }
 
+        $(commonName.ClearBrn).on('click', function () {           
+            resetFrom();
+            autoBrandId();
+        })
         resetFrom = function () {
             $(commonName.AutoId).val(0);
-            $(commonName.CatagoryName).val('');
+            $(commonName.BrandName).val('');
             $(commonName.ShortName).val('');
+            $(commonName.CreateDate).text('');
+            $(commonName.UpdateDate).text('');
         }
-        $(commonName.ClearBrn).on('click', function () {
-            resetFrom();
-        })
         // get data from input
         getFromData = function () {
             var fromData = {
                 AutoId: $(commonName.AutoId).val(),
-                CatagoryID: $(commonName.CatagoryID).val(),
-                CatagoryName:$(commonName.CatagoryName).val(),
-                ShortName:$(commonName.ShortName).val(),
+                BrandID: $(commonName.BrandID).val(),
+                BrandName: $(commonName.BrandName).val(),
+                ShortName: $(commonName.ShortName).val(),
             };
             return fromData;
         }
         //exists 
-        $(commonName.CatagoryName).on('input', function () {
-          
-            let CatagoryValue = $(this).val();
-            
+        $(commonName.BrandName).on('input', function () {
+
+            let BrandValue = $(this).val();
+
             $.ajax({
                 url: alreadyExistUrl,
                 type: "POST",
                 contentType: 'application/json',
-                data: JSON.stringify(CatagoryValue),
+                data: JSON.stringify(BrandValue),
                 success: function (res) {
                     if (res.isSuccess) {
                         showToast('warning', res.message);
-                        $(commonName.CatagoryName).addClass('catagory-input');
-                        $(commonName.CatagorySaveBtn).prop('disabled', true);
+                        $(commonName.BrandName).addClass('Brand-input');
+                        $(commonName.BrandSaveBtn).prop('disabled', true);
                     } else {
-                        $(commonName.CatagoryName).removeClass('catagory-input');
-                        $(commonName.CatagorySaveBtn).prop('disabled', false);
-                        $(commonName.CatagorySaveBtn).css('border', 'none');
+                        $(commonName.BrandName).removeClass('Brand-input');
+                        $(commonName.BrandSaveBtn).prop('disabled', false);
+                        $(commonName.BrandSaveBtn).css('border', 'none');
 
                     }
                 }, error: function (e) {
@@ -113,22 +116,22 @@
         })
         //create and edit
         // Save Button Click
-        $(document).on('click', commonName.CatagorySaveBtn, function () {
+        $(document).on('click', commonName.BrandSaveBtn, function () {
             var fromData = getFromData();
-            if (fromData.CatagoryName == null || fromData.CatagoryName.trim() === '') {
-                $(commonName.CatagoryName).addClass('catagory-input');
-                $(commonName.CatagorySaveBtn).prop('disabled', true);
-                $(commonName.CatagoryName).focus();
+            if (fromData.BrandName == null || fromData.BrandName.trim() === '') {
+                $(commonName.BrandName).addClass('Brand-input');
+                $(commonName.BrandSaveBtn).prop('disabled', true);
+                $(commonName.BrandName).focus();
                 return;
             }
+            console.log(fromData);
 
-                  
             $.ajax({
                 url: CreateUpdateUrl,
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(fromData),
-                success: function (res) {                   
+                success: function (res) {
                     if (res.isSuccess) {
                         showToast("success", res.message);
                     } else {
@@ -140,25 +143,25 @@
                 },
                 complete: function () {
                     resetFrom();
-                    autoCatagoryId();
-                    loadCategoryData();
+                    autoBrandId();
+                    loadBrandData();
                 }
             });
         });
 
         // Reload DataTable Function
-        function loadCategoryData() {
+        function loadBrandData() {
             table.ajax.reload(null, false);
         }
 
-        var table = $('#categoryTable').DataTable({
-            "autoWidth": true, 
+        var table = $('#brandTable').DataTable({           
+            "autoWidth": true,
             "ajax": {
-                "url": loadCategoryDataUrl,
+                "url": loadBrandDataUrl,
                 "type": "GET",
                 "datatype": "json",
                 "dataSrc": function (json) {
-                    return json.data || [];
+                    return json.data || [];                    
                 },
                 "error": function (xhr, error, thrown) {
                     showToast("error", "Data loading failed: " + xhr.statusText);
@@ -173,12 +176,12 @@
                     "orderable": false
                 },
                 {
-                    "data": "catagoryID",
+                    "data": "brandID",
                     "render": function (data) {
                         return `<button class="btn btn-sm btn-link btn-edit" data-id=${data}>${data}</button>`;
                     }
                 },
-                { "data": "catagoryName" },
+                { "data": "brandName" },
                 { "data": "shortName" }
             ],
             "paging": true,
@@ -186,7 +189,7 @@
             "searching": true,
             "ordering": true,
             "responsive": true,
-            "autoWidth": true, 
+            "autoWidth": true,
             "language": {
                 "search": "Search....",
                 "lengthMenu": "Show _MENU_ entries per page",
@@ -208,18 +211,19 @@
                 url: `${PopulatedDataForUpdateUrl}?id=${id}`,
                 type: "GET",
                 success: function (res) {
+                    console.log(res);
                     selectedIds = [];
-                    selectedIds.push(res.result.autoId+'');
+                    selectedIds.push(res.result.autoId + '');
                     $(commonName.AutoId).val(res.result.autoId);
-                    $(commonName.CatagoryName).val(res.result.catagoryName);
+                    $(commonName.BrandName).val(res.result.brandName);
                     $(commonName.ShortName).val(res.result.shortName);
-                    $(commonName.CatagoryID).val(res.result.catagoryID);
+                    $(commonName.BrandID).val(res.result.brandID);
                     $(commonName.CreateDate).text(res.result.showCreateDate);
                     $(commonName.UpdateDate).text(res.result.showModifyDate);
                 },
                 error: function (e) {
                 }, complete: function () {
-                }           
+                }
             });
         });
 
@@ -251,14 +255,14 @@
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(selectedIds),
-                success: function (res) {                  
-                    showToast(res.isSuccess?"success":"error", res.message)
+                success: function (res) {
+                    showToast(res.isSuccess ? "success" : "error", res.message)
                 },
                 error: function (e) {
-                }, complete: function () {                  
-                        resetFrom();
-                        autoCatagoryId();
-                    loadCategoryData();
+                }, complete: function () {
+                    resetFrom();
+                    autoBrandId();
+                    loadBrandData();
                     $('#selectAll').prop('checked', false);
                     selectedIds = [];
                 }
@@ -266,12 +270,13 @@
         })
 
 
-        window.categoryModuleLoaded = true;
+        window.BrandModuleLoaded = true;
         // Initialize all functions
         var init = function () {
-            stHeader(); 
-            autoCatagoryId();
-            table;           
+            stHeader();
+            autoBrandId();
+            table;
+            
         };
         init();
 
