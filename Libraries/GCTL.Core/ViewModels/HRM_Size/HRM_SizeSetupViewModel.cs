@@ -8,16 +8,12 @@ namespace GCTL.Core.ViewModels.HRM_Size
 {
     public class HRM_SizeSetupViewModel :BaseViewModel
     {
-        public long AutoId { get; set; }
+        public decimal AutoId { get; set; }
         public string SizeID { get; set; }
         public string SizeName { get; set; }
-        public string ShortName { get; set; }
-        public string LUser { get; set; }
-        public DateTime? LDate { get; set; }
-        public string LIP { get; set; }
-        public string LMAC { get; set; }
-        public DateTime? ModifyDate { get; set; }
-        public string UserInfoEmployeeID { get; set; }
+        public string ShortName { get; set; }        
         public string CompanyCode { get; set; }
+        public string ShowCreateDate { get; set; }
+        public string ShowModifyDate { get; set; }
     }
 }

@@ -4,16 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GCTL.Core.ViewModels.INV_Catagory;
+using GCTL.Core.ViewModels.PrintingStationeryPurchaseEntry;
 
-namespace GCTL.Service.INV_Catagory
+namespace GCTL.Service.PrintingStationeryPurchaseEntry
 {
-    public interface IINV_CatagoryService
+    public interface IPrintingStationeryPurchaseEntryService
     {
-        Task<List<INV_CatagorySetupViewModel>> GetAllAsync();
-        Task<INV_CatagorySetupViewModel> GetByIdAsync(string id);
-        Task<(bool isSuccess, string message, object data)> CreateUpdateAsync(INV_CatagorySetupViewModel model);
+        Task<List<PrintingStationeryPurchaseEntrySetupViewModel>> GetAllAsync();
+        Task<PrintingStationeryPurchaseEntrySetupViewModel> GetByIdAsync(string id);
+        Task<(bool isSuccess, string message, object data)> CreateUpdateAsync(PrintingStationeryPurchaseEntrySetupViewModel model);
         Task<(bool isSuccess, string message, object data)> DeleteAsync(List<string> ids);
-        Task<string> AutoCatagoryIdAsync();
+        Task<string> AutoPrintingStationeryPurchaseIdAsync();
 
         Task<bool> PagePermissionAsync(string accessCode);
         Task<bool> SavePermissionAsync(string accessCode);

@@ -1,30 +1,29 @@
-﻿
-(function ($) {
-    $.patientTypes = function (options) {
+﻿(function ($) {
+    $.HRM_SizeJs = function (options) {
         var commonName = $.extend({
             baseUrl: "/",
-            CompanyMultiSelectInput: "#",
-            ShortName: "#ShortName",
-            CatagoryName: "#CatagoryName",
-            PurchaseOrderNo: "#purchaseOrderNo",
-            AutoId: "#AutoId",
+            SizeShortName: "#sizeShortName",
+            SizeName: "#sizeName",
+            SizeID: "#sizeId",
+            AutoId: "#Setup_AutoId",
             RowCheckbox: ".row-checkbox",
             SelectedAll: "#selectAll",
-            EditBrn: ".btn-edit",
-            CatagorySaveBtn: ".js-inv-catagory-save",
-            DeleteBtn: "#js-inv-catagory-delete-confirm",
+            EditBtn: ".btn-edit",
+            SizeSaveBtn: ".js-size-save",
+            DeleteBtn: "#js-size-delete-confirm",
             UpdateDate: ".updateDate",
             CreateDate: ".createDate",
-            ClearBrn: "#js-catagory-clear",
-           
+            ClearBtn: "#js-size-clear",
         }, options);
-        var filterUrl = commonName.baseUrl + "/GetFilterData";
-        var loadCategoryDataUrl = commonName.baseUrl + "/LoadData";
-        var AutoPrintingStationeryPurchaseIdUrl = commonName.baseUrl + "/AutoPrintingStationeryPurchaseId";
+
+        var loadSizeDataUrl = commonName.baseUrl + "/LoadData";
+        var autoSizeIDUrl = commonName.baseUrl + "/AutoSizeID";
         var CreateUpdateUrl = commonName.baseUrl + "/CreateUpdate";
         var PopulatedDataForUpdateUrl = commonName.baseUrl + "/PopulatedDataForUpdate";
-        var deleteUrl = commonName.baseUrl + "/deleteCatagory";
+        var deleteUrl = commonName.baseUrl + "/deleteSize";
         var alreadyExistUrl = commonName.baseUrl + "/alreadyExist";
+
+        // Sticky header on scroll
         function stHeader() {
             window.addEventListener('scroll', function () {
                 const header = document.getElementById('stickyHeader');
@@ -36,6 +35,7 @@
             });
         }
 
+        // SweetAlert toast message
         function showToast(iconType, message) {
             const Toast = Swal.mixin({
                 toast: true,
@@ -56,48 +56,12 @@
                 title: message
             });
         }
-
-      
-        datePiker = flatpickr(".datePicker", {
-            dateFormat: "Y-m-d",       
-            altInput: true,            
-            altFormat: "d/m/Y",       
-            defaultDate: new Date(),    
-            allowInput: true           
-        });
-
-        $('.searchable-select').select2({
-            placeholder: 'Select an option',
-            allowClear: false,
-            width: '100%'
-        });
-        
-
-        // Time picker
-        const timePicker = flatpickr("#inlineTimePicker", {
-            enableTime: true,
-            noCalendar: true,
-            inline: true,
-            defaultDate: new Date(),
-            dateFormat: "h:i:S K",
-            time_24hr: false,
-            enableSeconds: true,
-            minuteIncrement: 1,
-            secondIncrement: 1,
-            onChange: function (selectedDates, dateStr) {
-                document.getElementById("timePicker").value = dateStr;
-            }
-        });
-
-
-
-        AutoPrintingStationeryPurchaseId = function () {
+        autoSizeID = function () {
             $.ajax({
-                url: AutoPrintingStationeryPurchaseIdUrl,
+                url: autoSizeIDUrl,
                 type: "GET",
                 success: function (res) {
-                    console.log(res);
-                    $(commonName.PurchaseOrderNo).val(res.data);
+                    $(commonName.SizeID).val(res.data);
                 },
                 error: function (e) {
                 }
@@ -106,24 +70,27 @@
 
         resetFrom = function () {
             $(commonName.AutoId).val(0);
-            $(commonName.CatagoryName).val('');
-            $(commonName.ShortName).val('');
+            $(commonName.SizeName).val('');
+            $(commonName.SizeShortName).val('');
+            $(commonName.CreateDate).text('');
+            $(commonName.UpdateDate).text('');
         }
-        $(commonName.ClearBrn).on('click', function () {
+        $(commonName.ClearBtn).on('click', function () {
             resetFrom();
+            autoSizeID();
         })
         // get data from input
         getFromData = function () {
             var fromData = {
                 AutoId: $(commonName.AutoId).val(),
-                PurchaseOrderNo: $(commonName.PurchaseOrderNo).val(),
-                CatagoryName: $(commonName.CatagoryName).val(),
-                ShortName: $(commonName.ShortName).val(),
+                SizeID: $(commonName.SizeID).val(),
+                SizeName: $(commonName.SizeName).val(),
+                ShortName: $(commonName.SizeShortName).val(),
             };
             return fromData;
         }
         //exists 
-        $(commonName.CatagoryName).on('input', function () {
+        $(commonName.SizeName).on('input', function () {
 
             let CatagoryValue = $(this).val();
 
@@ -135,12 +102,13 @@
                 success: function (res) {
                     if (res.isSuccess) {
                         showToast('warning', res.message);
-                        $(commonName.CatagoryName).addClass('catagory-input');
-                        $(commonName.CatagorySaveBtn).prop('disabled', true);
+                        $(commonName.SizeName).addClass('catagory-input');
+                        $(commonName.SizeSaveBtn).prop('disabled', true);
+                        $(commonName.SizeSaveBtn).css('border', 'none');
                     } else {
-                        $(commonName.CatagoryName).removeClass('catagory-input');
-                        $(commonName.CatagorySaveBtn).prop('disabled', false);
-                        $(commonName.CatagorySaveBtn).css('border', 'none');
+                        $(commonName.SizeName).removeClass('catagory-input');
+                        $(commonName.SizeSaveBtn).prop('disabled', false);
+                        $(commonName.SizeSaveBtn).css('border', 'none');
 
                     }
                 }, error: function (e) {
@@ -149,12 +117,12 @@
         })
         //create and edit
         // Save Button Click
-        $(document).on('click', commonName.CatagorySaveBtn, function () {
+        $(document).on('click', commonName.SizeSaveBtn, function () {
             var fromData = getFromData();
-            if (fromData.CatagoryName == null || fromData.CatagoryName.trim() === '') {
-                $(commonName.CatagoryName).addClass('catagory-input');
-                $(commonName.CatagorySaveBtn).prop('disabled', true);
-                $(commonName.CatagoryName).focus();
+            if (fromData.SizeName == null || fromData.SizeName.trim() === '') {
+                $(commonName.SizeName).addClass('catagory-input');
+                $(commonName.SizeSaveBtn).prop('disabled', true);
+                $(commonName.SizeName).focus();
                 return;
             }
 
@@ -176,21 +144,21 @@
                 },
                 complete: function () {
                     resetFrom();
-                    AutoPrintingStationeryPurchaseId();
-                    loadCategoryData();
+                    autoSizeID();
+                    loadSizeData();
                 }
             });
         });
 
         // Reload DataTable Function
-        function loadCategoryData() {
+        function loadSizeData() {
             table.ajax.reload(null, false);
         }
 
-        var table = $('#printingStationTable').DataTable({
+        var table = $('#SizeTable').DataTable({            
             "autoWidth": true,
             "ajax": {
-                "url": loadCategoryDataUrl,
+                "url": loadSizeDataUrl,
                 "type": "GET",
                 "datatype": "json",
                 "dataSrc": function (json) {
@@ -209,12 +177,12 @@
                     "orderable": false
                 },
                 {
-                    "data": "PurchaseOrderNo",
+                    "data": "sizeID",
                     "render": function (data) {
                         return `<button class="btn btn-sm btn-link btn-edit" data-id=${data}>${data}</button>`;
                     }
                 },
-                { "data": "catagoryName" },
+                { "data": "sizeName" },
                 { "data": "shortName" }
             ],
             "paging": true,
@@ -238,7 +206,7 @@
         });
         let selectedIds = [];
         //edit
-        $(document).on('click', commonName.EditBrn, function () {
+        $(document).on('click', commonName.EditBtn, function () {
             let id = $(this).data('id');
             $.ajax({
                 url: `${PopulatedDataForUpdateUrl}?id=${id}`,
@@ -247,9 +215,9 @@
                     selectedIds = [];
                     selectedIds.push(res.result.autoId + '');
                     $(commonName.AutoId).val(res.result.autoId);
-                    $(commonName.CatagoryName).val(res.result.catagoryName);
-                    $(commonName.ShortName).val(res.result.shortName);
-                    $(commonName.PurchaseOrderNo).val(res.result.PurchaseOrderNo);
+                    $(commonName.SizeName).val(res.result.sizeName);
+                    $(commonName.SizeShortName).val(res.result.shortName);
+                    $(commonName.SizeID).val(res.result.sizeID);
                     $(commonName.CreateDate).text(res.result.showCreateDate);
                     $(commonName.UpdateDate).text(res.result.showModifyDate);
                 },
@@ -293,8 +261,8 @@
                 error: function (e) {
                 }, complete: function () {
                     resetFrom();
-                    AutoPrintingStationeryPurchaseId();
-                    loadCategoryData();
+                    autoSizeID();
+                    loadSizeData();
                     $('#selectAll').prop('checked', false);
                     selectedIds = [];
                 }
@@ -302,16 +270,14 @@
         })
 
 
-
-        window.categoryModuleLoaded = true;
+        window.SizeModuleLoaded = true;
+        // Initialize all functions
         var init = function () {
             stHeader();
-            datePiker;
-            timePicker;
-            AutoPrintingStationeryPurchaseId();
+            autoSizeID();
             table;
-            console.log("test");
         };
         init();
+
     };
 })(jQuery);

@@ -1,30 +1,30 @@
-﻿
-(function ($) {
-    $.patientTypes = function (options) {
+﻿(function ($) {
+    $.RmgProdDefUnitType = function (options) {
         var commonName = $.extend({
             baseUrl: "/",
-            CompanyMultiSelectInput: "#",
-            ShortName: "#ShortName",
-            CatagoryName: "#CatagoryName",
-            PurchaseOrderNo: "#purchaseOrderNo",
-            AutoId: "#AutoId",
+            ShortName: "#unitTypeShortName",
+            UnitTypeName: "#unitTypeName",
+            UnitTypeId: "#unitTypeId",
+            DecimalPlacesLeftValue: "#decimalPlacesLeftValue",
+            AutoId: "#Setup_TC",
             RowCheckbox: ".row-checkbox",
             SelectedAll: "#selectAll",
             EditBrn: ".btn-edit",
-            CatagorySaveBtn: ".js-inv-catagory-save",
-            DeleteBtn: "#js-inv-catagory-delete-confirm",
+            UnitTypeSaveBtn: ".js-unit-type-save",
+            DeleteBtn: "#js-unit-type-delete-confirm",
             UpdateDate: ".updateDate",
             CreateDate: ".createDate",
-            ClearBrn: "#js-catagory-clear",
-           
+            ClearBrn: "#js-unit-type-clear",
         }, options);
-        var filterUrl = commonName.baseUrl + "/GetFilterData";
+
         var loadCategoryDataUrl = commonName.baseUrl + "/LoadData";
-        var AutoPrintingStationeryPurchaseIdUrl = commonName.baseUrl + "/AutoPrintingStationeryPurchaseId";
+        var autoUnitTypeIdUrl = commonName.baseUrl + "/AutoUnitTypeId";
         var CreateUpdateUrl = commonName.baseUrl + "/CreateUpdate";
         var PopulatedDataForUpdateUrl = commonName.baseUrl + "/PopulatedDataForUpdate";
-        var deleteUrl = commonName.baseUrl + "/deleteCatagory";
+        var deleteUrl = commonName.baseUrl + "/deleteUnitType";
         var alreadyExistUrl = commonName.baseUrl + "/alreadyExist";
+
+        // Sticky header on scroll
         function stHeader() {
             window.addEventListener('scroll', function () {
                 const header = document.getElementById('stickyHeader');
@@ -36,6 +36,7 @@
             });
         }
 
+        // SweetAlert toast message
         function showToast(iconType, message) {
             const Toast = Swal.mixin({
                 toast: true,
@@ -56,48 +57,12 @@
                 title: message
             });
         }
-
-      
-        datePiker = flatpickr(".datePicker", {
-            dateFormat: "Y-m-d",       
-            altInput: true,            
-            altFormat: "d/m/Y",       
-            defaultDate: new Date(),    
-            allowInput: true           
-        });
-
-        $('.searchable-select').select2({
-            placeholder: 'Select an option',
-            allowClear: false,
-            width: '100%'
-        });
-        
-
-        // Time picker
-        const timePicker = flatpickr("#inlineTimePicker", {
-            enableTime: true,
-            noCalendar: true,
-            inline: true,
-            defaultDate: new Date(),
-            dateFormat: "h:i:S K",
-            time_24hr: false,
-            enableSeconds: true,
-            minuteIncrement: 1,
-            secondIncrement: 1,
-            onChange: function (selectedDates, dateStr) {
-                document.getElementById("timePicker").value = dateStr;
-            }
-        });
-
-
-
-        AutoPrintingStationeryPurchaseId = function () {
+        autoUnitTypeId = function () {
             $.ajax({
-                url: AutoPrintingStationeryPurchaseIdUrl,
+                url: autoUnitTypeIdUrl,
                 type: "GET",
                 success: function (res) {
-                    console.log(res);
-                    $(commonName.PurchaseOrderNo).val(res.data);
+                    $(commonName.UnitTypeId).val(res.data);
                 },
                 error: function (e) {
                 }
@@ -106,41 +71,62 @@
 
         resetFrom = function () {
             $(commonName.AutoId).val(0);
-            $(commonName.CatagoryName).val('');
+            $(commonName.UnitTypeName).val('');
             $(commonName.ShortName).val('');
+            $(commonName.DecimalPlacesLeftValue).val('');
+            $(commonName.CreateDate).text('');
+            $(commonName.UpdateDate).text('');
         }
         $(commonName.ClearBrn).on('click', function () {
             resetFrom();
+            autoUnitTypeId();
         })
         // get data from input
         getFromData = function () {
             var fromData = {
-                AutoId: $(commonName.AutoId).val(),
-                PurchaseOrderNo: $(commonName.PurchaseOrderNo).val(),
-                CatagoryName: $(commonName.CatagoryName).val(),
+                Tc: $(commonName.AutoId).val(),
+                UnitTypId: $(commonName.UnitTypeId).val(),
+                UnitTypeName: $(commonName.UnitTypeName).val(),
                 ShortName: $(commonName.ShortName).val(),
+                DecimalPlaces: $(commonName.DecimalPlacesLeftValue).val()||0,
             };
             return fromData;
         }
-        //exists 
-        $(commonName.CatagoryName).on('input', function () {
 
-            let CatagoryValue = $(this).val();
+        //Decimal Places
+        $(commonName.DecimalPlacesLeftValue).on('input', function () {
+            let valueDecimalPlaces = $(this).val();
+            console.log(valueDecimalPlaces);
+            if (valueDecimalPlaces < 0 || valueDecimalPlaces > 5) {
+                showToast('warning', "Value Invalid");
+                $(commonName.DecimalPlacesLeftValue).addClass('UnitType-input');
+                $(commonName.UnitTypeSaveBtn).prop('disabled', true);
+            } else {
+                $(commonName.DecimalPlacesLeftValue).removeClass('UnitType-input');
+                $(commonName.UnitTypeSaveBtn).prop('disabled', false);
+                $(commonName.UnitTypeSaveBtn).css('border', 'none');
+
+            }
+        })
+        //exists 
+        $(commonName.UnitTypeName).on('input', function () {
+
+            let UnitTypeValue = $(this).val();
 
             $.ajax({
                 url: alreadyExistUrl,
                 type: "POST",
                 contentType: 'application/json',
-                data: JSON.stringify(CatagoryValue),
+                data: JSON.stringify(UnitTypeValue),
                 success: function (res) {
                     if (res.isSuccess) {
                         showToast('warning', res.message);
-                        $(commonName.CatagoryName).addClass('catagory-input');
-                        $(commonName.CatagorySaveBtn).prop('disabled', true);
+                        $(commonName.UnitTypeName).addClass('UnitType-input');
+                        $(commonName.UnitTypeSaveBtn).prop('disabled', true);
                     } else {
-                        $(commonName.CatagoryName).removeClass('catagory-input');
-                        $(commonName.CatagorySaveBtn).prop('disabled', false);
-                        $(commonName.CatagorySaveBtn).css('border', 'none');
+                        $(commonName.UnitTypeName).removeClass('UnitType-input');
+                        $(commonName.UnitTypeSaveBtn).prop('disabled', false);
+                        $(commonName.UnitTypeSaveBtn).css('border', 'none');
 
                     }
                 }, error: function (e) {
@@ -149,12 +135,13 @@
         })
         //create and edit
         // Save Button Click
-        $(document).on('click', commonName.CatagorySaveBtn, function () {
+        $(document).on('click', commonName.UnitTypeSaveBtn, function () {
             var fromData = getFromData();
-            if (fromData.CatagoryName == null || fromData.CatagoryName.trim() === '') {
-                $(commonName.CatagoryName).addClass('catagory-input');
-                $(commonName.CatagorySaveBtn).prop('disabled', true);
-                $(commonName.CatagoryName).focus();
+            console.log(fromData);
+            if (fromData.UnitTypeName == null || fromData.UnitTypeName.trim() === '') {
+                $(commonName.UnitTypeName).addClass('UnitType-input');
+                $(commonName.UnitTypeSaveBtn).prop('disabled', true);
+                $(commonName.UnitTypeName).focus();
                 return;
             }
 
@@ -176,7 +163,7 @@
                 },
                 complete: function () {
                     resetFrom();
-                    AutoPrintingStationeryPurchaseId();
+                    autoUnitTypeId();
                     loadCategoryData();
                 }
             });
@@ -187,13 +174,14 @@
             table.ajax.reload(null, false);
         }
 
-        var table = $('#printingStationTable').DataTable({
+        var table = $('#unitTypeTable').DataTable({
             "autoWidth": true,
             "ajax": {
                 "url": loadCategoryDataUrl,
                 "type": "GET",
                 "datatype": "json",
                 "dataSrc": function (json) {
+                    console.log(json);
                     return json.data || [];
                 },
                 "error": function (xhr, error, thrown) {
@@ -202,20 +190,21 @@
             },
             "columns": [
                 {
-                    "data": "autoId",
+                    "data": "tc",
                     "render": function (data) {
                         return `<input type="checkbox" class="row-checkbox" value=${data} />`;
                     },
                     "orderable": false
                 },
                 {
-                    "data": "PurchaseOrderNo",
+                    "data": "unitTypId",
                     "render": function (data) {
                         return `<button class="btn btn-sm btn-link btn-edit" data-id=${data}>${data}</button>`;
                     }
                 },
-                { "data": "catagoryName" },
-                { "data": "shortName" }
+                { "data": "unitTypeName" },
+                { "data": "shortName" },
+                { "data": "decimalPlaces" }
             ],
             "paging": true,
             "pagingType": "full_numbers",
@@ -240,16 +229,19 @@
         //edit
         $(document).on('click', commonName.EditBrn, function () {
             let id = $(this).data('id');
+            console.log(id);
             $.ajax({
                 url: `${PopulatedDataForUpdateUrl}?id=${id}`,
                 type: "GET",
                 success: function (res) {
+                    console.log(res);
                     selectedIds = [];
-                    selectedIds.push(res.result.autoId + '');
-                    $(commonName.AutoId).val(res.result.autoId);
-                    $(commonName.CatagoryName).val(res.result.catagoryName);
+                    selectedIds.push(res.result.tc + '');
+                    $(commonName.AutoId).val(res.result.tc);
+                    $(commonName.UnitTypeName).val(res.result.unitTypeName);
                     $(commonName.ShortName).val(res.result.shortName);
-                    $(commonName.PurchaseOrderNo).val(res.result.PurchaseOrderNo);
+                    $(commonName.UnitTypeId).val(res.result.unitTypId);
+                    $(commonName.DecimalPlacesLeftValue).val(res.result.decimalPlaces);
                     $(commonName.CreateDate).text(res.result.showCreateDate);
                     $(commonName.UpdateDate).text(res.result.showModifyDate);
                 },
@@ -262,7 +254,7 @@
         //selected id        
 
         $(document).on('change', commonName.RowCheckbox, function () {
-            const id = $(this).val();
+            const id = $(this).val();        
             if ($(this).is(':checked')) {
                 if (!selectedIds.includes(id)) {
                     selectedIds.push(id);
@@ -282,6 +274,7 @@
             $(commonName.RowCheckbox).prop('checked', isChecked).trigger('change');
         })
         $(document).on('click', commonName.DeleteBtn, function () {
+            console.log(selectedIds);
             $.ajax({
                 url: deleteUrl,
                 type: "POST",
@@ -293,7 +286,7 @@
                 error: function (e) {
                 }, complete: function () {
                     resetFrom();
-                    AutoPrintingStationeryPurchaseId();
+                    autoUnitTypeId();
                     loadCategoryData();
                     $('#selectAll').prop('checked', false);
                     selectedIds = [];
@@ -302,16 +295,15 @@
         })
 
 
-
         window.categoryModuleLoaded = true;
+        // Initialize all functions
         var init = function () {
             stHeader();
-            datePiker;
-            timePicker;
-            AutoPrintingStationeryPurchaseId();
+            autoUnitTypeId();
             table;
             console.log("test");
         };
         init();
+
     };
 })(jQuery);

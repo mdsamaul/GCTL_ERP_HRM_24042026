@@ -150,21 +150,21 @@ namespace GCTL.UI.Core.Controllers
             return Json(new { result });
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> deleteBrand([FromBody] List<string> selectedIds)
-        //{
-        //    var hasUpdatePermission = await itemMasterInformationService.DeletePermissionAsync(LoginInfo.AccessCode);
-        //    if (hasUpdatePermission)
-        //    {
-        //        var result = await itemMasterInformationService.DeleteAsync(selectedIds);
-        //        return Json(new { isSuccess = result.isSuccess, message = result.message, data = result });
-        //    }
-        //    else
-        //    {
-        //        return Json(new { isSuccess = false, message = "You have no access.", noUpdatePermission = true });
-        //    }
+        [HttpPost]
+        public async Task<IActionResult> deleteProduct([FromBody] List<string> selectedIds)
+        {
+            var hasUpdatePermission = await itemMasterInformationService.DeletePermissionAsync(LoginInfo.AccessCode);
+            if (hasUpdatePermission)
+            {
+                var result = await itemMasterInformationService.DeleteAsync(selectedIds);
+                return Json(new { isSuccess = result.isSuccess, message = result.message, data = result });
+            }
+            else
+            {
+                return Json(new { isSuccess = false, message = "You have no access.", noUpdatePermission = true });
+            }
 
-        //}
+        }
         [HttpPost]
         public async Task<IActionResult> alreadyExist([FromBody] string BrandValue)
         {
