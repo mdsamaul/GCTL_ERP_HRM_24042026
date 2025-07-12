@@ -14,8 +14,8 @@ namespace GCTL.Service.ItemMasterInformation
         Task<List<ItemMasterInformationSetupViewModel>> GetAllAsync();
         Task<ItemMasterInformationSetupViewModel> GetByIdAsync(string id);
         Task<(bool isSuccess, string message, object data)> CreateUpdateAsync(ItemMasterInformationSetupViewModel model);
-        ////Task<bool> UpdateAsync(ItemModelSetupViewModel model);
-        //Task<(bool isSuccess, string message, object data)> DeleteAsync(List<string> ids);
+
+        Task<(bool isSuccess, string message, object data)> DeleteAsync(List<string> ids);
         Task<string> AutoProductIdAsync();
         Task<(bool isSuccess, string message, object data)> AlreadyExistAsync(string catagoryValue);
 

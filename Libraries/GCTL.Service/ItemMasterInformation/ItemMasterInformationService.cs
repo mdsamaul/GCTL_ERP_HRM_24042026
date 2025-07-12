@@ -189,29 +189,29 @@ namespace GCTL.Service.ItemMasterInformation
             }
         }
 
-        //public async Task<(bool isSuccess, string message, object data)> DeleteAsync(List<string> ids)
-        //{
-        //    foreach (var id in ids)
-        //    {
+        public async Task<(bool isSuccess, string message, object data)> DeleteAsync(List<string> ids)
+        {
+            foreach (var id in ids)
+            {
 
-        //        try
-        //        {
-        //            var entity = await itemRepo.GetByIdAsync(decimal.Parse(id));
-        //            if (entity == null)
-        //            {
-        //                continue;
-        //            }
+                try
+                {
+                    var entity = await itemRepo.GetByIdAsync(decimal.Parse(id));
+                    if (entity == null)
+                    {
+                        continue;
+                    }
 
-        //            await itemRepo.DeleteAsync(entity);
-        //        }
-        //        catch (Exception)
-        //        {
-        //            return (true, DeleteFailed, null);
-        //        }
-        //    }
+                    await itemRepo.DeleteAsync(entity);
+                }
+                catch (Exception)
+                {
+                    return (true, DeleteFailed, null);
+                }
+            }
 
-        //    return (true, DeleteSuccess, null);
-        //}
+            return (true, DeleteSuccess, null);
+        }
 
         public async Task<string> AutoProductIdAsync()
         {

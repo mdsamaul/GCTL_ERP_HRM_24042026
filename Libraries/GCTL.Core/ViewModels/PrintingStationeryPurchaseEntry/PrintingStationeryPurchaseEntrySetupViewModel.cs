@@ -8,21 +8,28 @@ namespace GCTL.Core.ViewModels.PrintingStationeryPurchaseEntry
 {
     public class PrintingStationeryPurchaseEntrySetupViewModel : BaseViewModel
     {
-        public long TC { get; set; }
-        public string? PurchaseOrderReceiveDetailsID { get; set; }
+        public decimal TC { get; set; }
+        public string? MainCompanyCode { get; set; }
         public string PurchaseReceiveNo { get; set; } = string.Empty;
-        public string? ProductCode { get; set; }
-        public string? Description { get; set; }
-        public string? BrandID { get; set; }
-        public string? ModelID { get; set; }
-        public string? SizeID { get; set; }
-        public string? WarrantyPeriod { get; set; }
-        public string? WarrentyTypeID { get; set; }
-        public decimal? ReqQty { get; set; }
-        public string? UnitTypID { get; set; }
-        public decimal? UnitPrice { get; set; }
-        public decimal? TotalPrice { get; set; }
+        public DateTime? ReceiveDate { get; set; }
+        public string? DepartmentCode { get; set; }
+        public string? SupplierID { get; set; }
+        public string? InvoiceNo { get; set; }
+        public DateTime? InvoiceDate { get; set; }
+        public decimal? InvoiceValue { get; set; }
+        public string? ChallanNo { get; set; }
+        public DateTime? ChallanDate { get; set; }
+        public string? EmployeeID_ReceiveBy { get; set; }
+        public string? Remarks { get; set; }
+        public decimal? TotalAmount { get; set; }
         public string? LUser { get; set; }
-        public int? SLNO { get; set; }
+        public DateTime? LDate { get; set; }
+        public string? LIP { get; set; }
+        public string? LMAC { get; set; }
+        public DateTime? ModifyDate { get; set; }
+        public string UserInfoEmployeeID { get; set; } = string.Empty;
+        public string CompanyCode { get; set; } = string.Empty;
+        public string ShowCreateDate { get; set; }
+        public string ShowModifyDate { get; set; }
     }
 }

@@ -21,7 +21,7 @@
             RowCheckbox: ".row-checkbox",
             SelectedAll: "#selectAll",
             EditBrn: ".btn-edit",
-            DeleteBtn: "#js-inv-Brand-delete-confirm",
+            DeleteBtn: "#js-Item-product-delete-confirm",
             UpdateDate: ".updateDate",
             CreateDate: ".createDate",
             ClearBrn: "#js-Product-clear",
@@ -191,7 +191,6 @@
                 url: autoProductIdUrl,
                 type: "GET",
                 success: function (res) {
-                    console.log(res)
                     $(commonName.ProductCode).val(res.data);
                 },
                 error: function (e) {
@@ -208,20 +207,17 @@
             $(commonName.ProductCode).val('');
             $(commonName.ProductName).val('');
             $(commonName.ProductDescription).val('');
-            $(commonName.UnitDropdownVale).val('').trigger('change'); // যদি Select2 হয়
+            $(commonName.UnitDropdownVale).val('').trigger('change');
             $(commonName.PurchaseCost).val('');
-            $(commonName.DropdownCategory).val('').trigger('change'); // যদি Dropdown হয়
-            $(commonName.DropdownBrand).val('').trigger('change'); // যদি Dropdown হয়
+            $(commonName.DropdownCategory).val('').trigger('change');
+            $(commonName.DropdownBrand).val('').trigger('change'); 
 
-            // অতিরিক্ত যদি থাকে
             $(commonName.ShortName).val('');
             $(commonName.CreateDate).text('');
             $(commonName.UpdateDate).text('');
 
-            // কোন validation class থাকলে তা সরানো
             $('.Product-input').removeClass('Product-input');
 
-            // Save বাটন আবার enable করা
             $(commonName.ProductSaveBtn).prop('disabled', false);
         };
 
@@ -267,7 +263,6 @@
         $(document).on('click', commonName.ProductSaveBtn, function () {
           
             var fromData = getFromData();
-            console.log(fromData);
             if (fromData.ProductName == null || fromData.ProductName.trim() === '') {
                 $(commonName.ProductName).addClass('Product-input');
                 $(commonName.ProductSaveBtn).prop('disabled', true);
@@ -310,7 +305,6 @@
                 "type": "GET",
                 "datatype": "json",
                 "dataSrc": function (json) {
-                    console.log(json);
                     return json.data || [];
                 },
                 "error": function (xhr, error, thrown) {
@@ -360,12 +354,10 @@
         //edit
         $(document).on('click', commonName.EditBrn, function () {
             let id = $(this).data('id');
-            console.log(id);
             $.ajax({
                 url: `${PopulatedDataForUpdateUrl}?id=${id}`,
                 type: "GET",
                 success: function (res) {
-                    console.log(res);
                     selectedIds = [];
                     selectedIds.push(res.result.autoId + '');
                     $(commonName.AutoId).val(res.result.autoId);
@@ -375,6 +367,7 @@
                     $(commonName.DropdownCategory).val(res.result.catagoryId);
                     $(commonName.UnitDropdownVale).val(res.result.unitID);
                     $(commonName.ProductDescription).val(res.result.description);
+                    $(commonName.PurchaseCost).val(res.result.purchaseCost);
                     $(commonName.CreateDate).text(res.result.showCreateDate);
                     $(commonName.UpdateDate).text(res.result.showModifyDate);
                 },

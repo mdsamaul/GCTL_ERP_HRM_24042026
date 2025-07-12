@@ -116,6 +116,9 @@ using GCTL.Service.EmployeeLoanInformationReport;
 using GCTL.Service.INV_Catagory;
 using GCTL.Service.HRM_Brand;
 using GCTL.Service.ItemMasterInformation;
+using GCTL.Service.HRM_Size;
+using GCTL.Service.RMG_Prod_Def_UnitType;
+using GCTL.Service.PrintingStationeryPurchaseEntry;
 
 
 //using GCTL.Service.AccountReport;
@@ -200,6 +203,9 @@ services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
             services.AddScoped<IINV_CatagoryService, INV_CatagoryService>();
             services.AddScoped<IHRM_BrandService, HRM_BrandService>();
             services.AddScoped<IItemMasterInformationService, ItemMasterInformationService>();
+            services.AddScoped<IHRM_SizeService, HRM_SizeService>();
+            services.AddScoped<IRMG_Prod_Def_UnitTypeService , RMG_Prod_Def_UnitTypeService>();
+            services.AddScoped<IPrintingStationeryPurchaseEntryService , PrintingStationeryPurchaseEntryService>();
 
 
             

@@ -106,7 +106,7 @@
 
     .flatpickr-calendar.inline {
         font-size: 12px !important;
-        max-width: 10vw !important;
+        max-width: 9.9vw !important;
         border: none !important;
         padding: 0 !important;
         margin: 0 !important;
@@ -126,6 +126,13 @@
     align-items: center;
 }
 
+    .flatpickr-monthDropdown-months{
+        border:none!important;
+    }
+
+    .numInputWrapper .cur-year {
+        border: none !important;
+    }
 /* Input wrapper */
 .numInputWrapper {
     position: relative;
@@ -150,10 +157,6 @@
     margin: 0 1px !important;
 }
 
-    .numInput:hover, .flatpickr-am-pm:hover {
-    background:#fff !important;
-        border: none !important;
-}
 /* AM/PM toggle */
 .flatpickr-am-pm {
     font-size: 11px !important;
@@ -204,7 +207,7 @@
     }
 
     .timePickerContainer {
-        padding-bottom: 5px !important;
+        padding-bottom: 0% !important;
     }
     
     @@media (max-width: 1400px) {
@@ -221,7 +224,7 @@
         }
 
         .timePickerContainer{
-            padding-bottom:3px!important;
+            padding-bottom:0% !important;
         }
 
         .customDateField{
@@ -232,6 +235,66 @@
         }
     }
 
+    .dataTables_wrapper .dataTables_filter input {
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: 4px 8px;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        padding: 2px 8px;
+        margin: 0 2px;
+        border-radius: 4px;
+        background-color: #f8f9fa;
+    }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background-color: #007bff;
+            color: white !important;
+        }
+
+    #printingStationTable tbody tr td {
+        padding: 2px 8px !important;
+        font-size: 14px;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        cursor: pointer !important;
+        padding: 5px 10px;
+        border-radius: 4px;
+        margin: 2px;
+        transition: background-color 0.3s;
+        border: 1px solid #eee;
+    }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background-color: #e2e8f0;
+            color: #000;
+        }
+
+    #printingStationTable td:first-child,
+    #printingStationTable th:first-child {
+        text-align: center;
+        vertical-align: middle;
+        width: 1%;
+        white-space: nowrap;
+    }
+
+        #printingStationTable td:first-child input[type="checkbox"] {
+            display: block;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+    input.printingStation-input {
+        border: 1px solid red !important;
+    }
+
+    .searchable-select{
+        box-sizing:border-box !important;
+        background:red !important;
+        width:100% !important;
+    }
 </style>
 <!-- Content Header (Page header) -->
 <div class="container-fluid">
@@ -239,9 +302,9 @@
 </div>
 <div class="container-fluid">
         <div id="stickyHeader" class="px-2 sticky-top rounded-bottom">
-            <partial name="_Toolbars" model="new ToobarModel(){Title=Model.Breadcrumb, Code=Model.Code , Name=Model.Setup.PurchaseOrderReceiveDetailsID}" />
+            <partial name="_Toolbars" model="new ToobarModel(){Title=Model.Breadcrumb, Code=Model.Code , Name=Model.Setup.PurchaseReceiveNo}" />
         </div>
-
+        <input type="text" asp-for="Setup.TC"/>
     <div class="card p-2 my-2">
         <fieldset class="custom-fieldset">
             <legend>Main Information</legend>
@@ -251,8 +314,8 @@
                         <div class="col-4  text-right" style="padding-right: 0px; white-space:nowrap; padding-left: 0px;">
                             Purchase Order No <span class="text-danger">*</span>
                         </div>
-                        <div class="col-8 " style="padding-left: 5px;">
-                            <input type="text" name="name" class="form-control-sm customDateField" value="" style="margin-top: 0px;">
+                        <div class="col-8 ">
+                            <input type="text" name="name" class="form-control-sm form-control w-100" id="purchaseOrderNo" value="" style="margin-top: 0px;" readonly>
                         </div>
                         <div class="col-1 "></div>
                     </div>
@@ -272,7 +335,7 @@
                         </div> *@
                         <div class="col-8 d-flex align-items-center" style="padding-left: 5px;">
                             <div class="col-md-5 px-0">
-                                <input type="text" id="datePicker" class="form-control-sm w-100" style="margin-top: 0px;">
+                                <input type="text" id="datePicker1" class="form-control-sm datePicker w-100" style="margin-top: 0px;">
                             </div>
                             <div class="col-md-7 timePickerContainer px-0">
                                 <input type="hidden" id="timePicker" class="form-control-sm w-100" style="margin-top: 0px;">
@@ -339,7 +402,7 @@
                             Invoice Date
                         </div>
                         <div class="col-8" style="padding-left: 5px;">
-                            <input type="date" name="name" class="form-control-sm" value="" style="margin-top: 0px;">
+                            <input type="date" name="name" class="form-control-sm datePicker" value="" style="margin-top: 0px;">
                         </div>
                     </div>
                 </div>
@@ -349,7 +412,7 @@
                             Invoice Value
                         </div>
                         <div class="col-8" style="padding-left: 5px;">
-                            <input type="date" name="name" class="form-control-sm" value="" style="margin-top: 0px;">
+                            <input type="date" name="name" class="form-control-sm datePicker" value="" style="margin-top: 0px;">
                         </div>
                     </div>
                 </div>
@@ -372,7 +435,7 @@
                             Challan Date
                         </div>
                         <div class="col-8" style="padding-left: 5px;">
-                            <input type="date" name="name" class="form-control-sm" value="" style="margin-top: 0px;">
+                            <input type="date" name="name" class="form-control-sm datePicker" value="" style="margin-top: 0px;">
                         </div>
                     </div>
                 </div>
@@ -416,8 +479,8 @@
                                 </button>
                         </div>
                         <div>
-                            <select class="w-100 form-control-sm">
-                                <option>asdf</option>
+                            <select class="w-100 form-control-sm searchable-select" asp-items="ViewBag.ProductList as SelectList">
+                                <option>Select Product</option>
                             </select>
                         </div>
                     </div>
@@ -437,8 +500,8 @@
                             </button>
                         </div>
                         <div>
-                            <select class="w-100 form-control-sm">
-                                <option>asdf</option>
+                            <select class="w-100 form-control-sm searchable-select" asp-items="ViewBag.BrandList as SelectList">
+                                <option>Select Brand</option>
                             </select>
                         </div>
                     </div>
@@ -450,7 +513,7 @@
                             </button>
                         </div>
                         <div>
-                            <select class="w-100 form-control-sm">
+                            <select class="w-100 form-control-sm searchable-select">
                                 <option>asdf</option>
                             </select>
                         </div>
@@ -463,8 +526,8 @@
                             </button>
                         </div>
                         <div>
-                            <select class="w-100 form-control-sm">
-                                <option>asdf</option>
+                            <select class="w-100 form-control-sm searchable-select" asp-items="ViewBag.SizeList as SelectList">
+                                <option>Select Size</option>
                             </select>
                         </div>
                     </div>
@@ -481,8 +544,8 @@
                             <div><b style="white-space:nowrap;">Period</b></div>
                         </div>
                         <div>
-                            <select class="w-100 form-control-sm">
-                                <option>asdf</option>
+                            <select class="w-100 form-control-sm searchable-select" asp-items="ViewBag.periodList as SelectList">
+                                <option>Select Period</option>
                             </select>
                         </div>
                     </div>
@@ -502,8 +565,8 @@
                             </button>
                         </div>
                         <div>
-                            <select class="w-100 form-control-sm">
-                                <option>asdf</option>
+                            <select class="w-100 form-control-sm searchable-select" asp-items="ViewBag.unitList as SelectList">
+                                <option>Select Unit</option>
                             </select>
                         </div>
                     </div>
@@ -513,9 +576,7 @@
                             
                         </div>
                         <div>
-                            <select class="w-100 form-control-sm">
-                                <option>asdf</option>
-                            </select>
+                            <input type="number" name="name" class="form-control-sm form-control" value="" />
                         </div>
                         <div class="d-flex justify-content-end align-items-center text-right">
                             <b style="padding-top:4px; font-weight:bolder;"> Total:</b>
