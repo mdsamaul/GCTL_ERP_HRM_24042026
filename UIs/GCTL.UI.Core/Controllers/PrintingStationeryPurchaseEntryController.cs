@@ -17,6 +17,7 @@ namespace GCTL.UI.Core.Controllers
         private readonly IRepository<HrmSize> sizeRepo;
         private readonly IRepository<HmsLtrvPeriod> periodRepo;//HMS_LTRV_Period
         private readonly IRepository<RmgProdDefUnitType> unitRepo;
+        private readonly IRepository<HrmDefDepartment> depRepo;
 
         public PrintingStationeryPurchaseEntryController(
             IPrintingStationeryPurchaseEntryService printingStationeryPurchaseEntryService,
@@ -24,7 +25,8 @@ namespace GCTL.UI.Core.Controllers
             IRepository<HrmBrand> brandRepo,
             IRepository<HrmSize> sizeRepo,
             IRepository<HmsLtrvPeriod> periodRepo,
-            IRepository<RmgProdDefUnitType> unitRepo//RMG_Prod_Def_UnitType
+            IRepository<RmgProdDefUnitType> unitRepo,
+            IRepository<HrmDefDepartment> depRepo
             )
         {
             this.printingStationeryPurchaseEntryService = printingStationeryPurchaseEntryService;
@@ -33,6 +35,7 @@ namespace GCTL.UI.Core.Controllers
             this.sizeRepo = sizeRepo;
             this.periodRepo = periodRepo;
             this.unitRepo = unitRepo;
+            this.depRepo = depRepo;
         }
         public IActionResult Index()
         {
@@ -41,6 +44,7 @@ namespace GCTL.UI.Core.Controllers
             ViewBag.SizeList = new SelectList(sizeRepo.All().Select(x => new { x.SizeId, x.SizeName }), "SizeId", "SizeName");
             ViewBag.periodList = new SelectList(periodRepo.All().Select(x=> new {x.PeriodId, x.PeriodName}), "PeriodId", "PeriodName");
             ViewBag.unitList = new SelectList(unitRepo.All().Select(x=> new {x.UnitTypId, x.UnitTypeName}), "UnitTypId", "UnitTypeName");
+            ViewBag.departmentList = new SelectList(depRepo.All().Select(x => new{ x.DepartmentCode, x.DepartmentName}), "DepartmentCode", "DepartmentName");
             PrintingStationeryPurchaseEntryViewModel model = new PrintingStationeryPurchaseEntryViewModel() { 
                 PageUrl = Url.Action(nameof(Index))
             };

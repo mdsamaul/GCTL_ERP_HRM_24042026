@@ -16,7 +16,20 @@
             UpdateDate: ".updateDate",
             CreateDate: ".createDate",
             ClearBrn: "#js-catagory-clear",
-           
+
+            ProductModalBtn: "#productModalBtn",
+            ProductPartialContainer: "#productPartialContainer",
+            ProductBrandModalBtn: "#productBrandModalBtn",
+            ProductBrandContainer: "#productBrandContainer",
+
+            ProductModelBtn:"#productModelBtn",
+            ProductModelContainer: "#productModelContainer",
+
+            ProductSizeModalBtn: "#productSizeModalBtn",
+            SizeModelContainer: "#sizeModelContainer",
+            ProductUnitModalBtn: "#productUnitBtn",
+            ProductUnitModelContainer: "#productUnitModelContainer",
+            AddmoreDetailsBtn:"#addmoreDetailsBtn",
         }, options);
         var filterUrl = commonName.baseUrl + "/GetFilterData";
         var loadCategoryDataUrl = commonName.baseUrl + "/LoadData";
@@ -25,6 +38,11 @@
         var PopulatedDataForUpdateUrl = commonName.baseUrl + "/PopulatedDataForUpdate";
         var deleteUrl = commonName.baseUrl + "/deleteCatagory";
         var alreadyExistUrl = commonName.baseUrl + "/alreadyExist";
+        var partialProductUrl = "/ItemMasterInformation/index?isPartial=true";
+        var partialBrandUrl = "/Brand/Index?isPartial=true";
+        var productModelUrl = "/ItemModel/Index?isPartial=true";
+        var productUnitModalUrl = "/RMG_Prod_Def_UnitType/Index?isPartial=true";
+        var productSizeModalUrl = "/HRM_Size/Index?isPartial=true";
         function stHeader() {
             window.addEventListener('scroll', function () {
                 const header = document.getElementById('stickyHeader');
@@ -89,7 +107,111 @@
             }
         });
 
+        //load partial page product
+        $(commonName.ProductModalBtn).on('click', function () {
+            $.ajax({
+                url: partialProductUrl,
+                type: "GET",
+                success: function (res) {
+                    $(commonName.ProductPartialContainer).html(res);
+                    if (typeof $.ItemMasterInformation == 'function') {
+                        var options = {
+                            baseUrl: '/ItemMasterInformation',
+                            isPartial: true,
+                        };
+                        $.ItemMasterInformation(options);
+                    }                    
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        });
+        //load brand
+        $(commonName.ProductBrandModalBtn).on('click', function () {
+            $.ajax({
+                url: partialBrandUrl,
+                type: "GET",
+                success: function (res) {
+                    $(commonName.ProductBrandContainer).html(res);
+                    if (typeof $.HrmBrand == 'function') {
+                        var options = {
+                            baseUrl: '/Brand',
+                            isPartial: true
+                        };
+                        $.HrmBrand(options);
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        })
+        //load model
+        $(commonName.ProductModelBtn).on('click', function () {
+            $.ajax({
+                url: productModelUrl,
+                type: "GET",
+                success: function (res) {
+                    $(commonName.ProductModelContainer).html(res);
+                    if (typeof $.ItemModel == 'function') {
+                        var options = {
+                            baseUrl: '/ItemModel',
+                            isPartial: true
+                        };
+                        $.ItemModel(options);
+                    }
+                }, error: function (e) {
+                    console.log(e)
+                }
+            })
+        })
+        //load modal size
+        $(commonName.ProductSizeModalBtn).on('click', function () {
+            $.ajax({
+                url: productSizeModalUrl,
+                type: "GET",
+                success: function (res) {
+                    $(commonName.SizeModelContainer).html(res);
+                    if (typeof $.HRM_SizeJs == 'function') {
+                        var options = {
+                            baseUrl: '/HRM_Size',
+                            isPartial: true
+                        }
+                        $.HRM_SizeJs(options)
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        })
 
+        //load modal unit
+        $(commonName.ProductUnitModalBtn).on('click', function () {
+            $.ajax({
+                url: productUnitModalUrl,
+                type: "GET",
+                success: function (res) {
+                    $(commonName.ProductUnitModelContainer).html(res);
+                    if (typeof $.RmgProdDefUnitType == 'function') {
+                        var options = {
+                            baseUrl: '/RMG_Prod_Def_UnitType',
+                            isPartial: true
+                        }
+                        $.RmgProdDefUnitType(options)
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        })
+
+        //add more 
+        $(commonName.AddmoreDetailsBtn).on('click', function () {
+            console.log("click test");
+        })
 
         AutoPrintingStationeryPurchaseId = function () {
             $.ajax({
