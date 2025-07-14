@@ -1,26 +1,26 @@
 ﻿(function ($) {
-    $.INV_Catagory = function (options) {
+    $.InvDefSupplierType = function (options) {
         var commonName = $.extend({
             baseUrl: "/",
-            ShortName: "#ShortName",
-            CatagoryName: "#CatagoryName",
-            CatagoryID: "#CatagoryID",
-            AutoId: "#AutoId",
+            ShortName: "#Setup_ShortName",
+            SupplierType: "#Setup_SupplierType",
+            SupplierTypeID: "#Setup_SupplierTypeId",
+            AutoId: "#Setup_AutoId",
             RowCheckbox: ".row-checkbox",
-            SelectedAll: "#selectAll",
-            EditBrn:".btn-edit",
-            CatagorySaveBtn: ".js-inv-catagory-save",
-            DeleteBtn: "#js-inv-catagory-delete-confirm",
-            UpdateDate:".updateDate",
-            CreateDate:".createDate",
-            ClearBrn:"#js-catagory-clear",
+            SelectedAll: "#selectAllSupplierTypeTable",
+            EditBrn: ".SupplierTypeEditBtn",
+            SupplierTypeSaveBtn: ".js-InvDefSupplierType-save",
+            DeleteBtn: "#js-InvDefSupplierType-delete-confirm",
+            UpdateDate: ".updateDate",
+            CreateDate: ".createDate",
+            ClearBrn: "#js-InvDefSupplierType-clear",
         }, options);
 
-        var loadCategoryDataUrl = commonName.baseUrl + "/LoadData";
-        var autoCatagoryIdUrl = commonName.baseUrl + "/AutoCatagoryId";
+        var loadSuplierTypeDataUrl = commonName.baseUrl + "/LoadData";
+        var autoSupplierTypeIdUrl = commonName.baseUrl + "/AutoSuplierTypeId";
         var CreateUpdateUrl = commonName.baseUrl + "/CreateUpdate";
         var PopulatedDataForUpdateUrl = commonName.baseUrl + "/PopulatedDataForUpdate";
-        var deleteUrl = commonName.baseUrl + "/deleteCatagory";
+        var deleteUrl = commonName.baseUrl + "/deleteSupplierType";
         var alreadyExistUrl = commonName.baseUrl + "/alreadyExist";
 
         // Sticky header on scroll
@@ -56,12 +56,12 @@
                 title: message
             });
         }
-        autoCatagoryId = function () {
+        autoSupplierTypeId = function () {
             $.ajax({
-                url: autoCatagoryIdUrl,
+                url: autoSupplierTypeIdUrl,
                 type: "GET",
-                success: function (res) {                   
-                    $(commonName.CatagoryID).val(res.data);
+                success: function (res) {
+                    $(commonName.SupplierTypeID).val(res.data);
                 },
                 error: function (e) {
                 }
@@ -70,9 +70,11 @@
 
         resetFrom = function () {
             $(commonName.AutoId).val(0);
-            $(commonName.CatagoryName).val('');
+            $(commonName.SupplierType).val('');
             $(commonName.ShortName).val('');
-            autoCatagoryId();
+            $(commonName.CreateDate).text('');
+            $(commonName.UpdateDate).text('');
+            autoSupplierTypeId();
         }
         $(commonName.ClearBrn).on('click', function () {
             resetFrom();
@@ -81,31 +83,29 @@
         getFromData = function () {
             var fromData = {
                 AutoId: $(commonName.AutoId).val(),
-                CatagoryID: $(commonName.CatagoryID).val(),
-                CatagoryName:$(commonName.CatagoryName).val(),
-                ShortName:$(commonName.ShortName).val(),
+                SupplierTypeID: $(commonName.SupplierTypeID).val(),
+                SupplierType: $(commonName.SupplierType).val(),
+                ShortName: $(commonName.ShortName).val(),
             };
             return fromData;
         }
         //exists 
-        $(commonName.CatagoryName).on('input', function () {
-          
-            let CatagoryValue = $(this).val();
-            
+        $(commonName.SupplierType).on('input', function () {
+            let SupplierTypeValue = $(this).val();   
             $.ajax({
                 url: alreadyExistUrl,
                 type: "POST",
                 contentType: 'application/json',
-                data: JSON.stringify(CatagoryValue),
+                data: JSON.stringify(SupplierTypeValue),
                 success: function (res) {
                     if (res.isSuccess) {
                         showToast('warning', res.message);
-                        $(commonName.CatagoryName).addClass('catagory-input');
-                        $(commonName.CatagorySaveBtn).prop('disabled', true);
+                        $(commonName.SupplierType).addClass('SupplierType-input');
+                        $(commonName.SupplierTypeSaveBtn).prop('disabled', true);
                     } else {
-                        $(commonName.CatagoryName).removeClass('catagory-input');
-                        $(commonName.CatagorySaveBtn).prop('disabled', false);
-                        $(commonName.CatagorySaveBtn).css('border', 'none');
+                        $(commonName.SupplierType).removeClass('SupplierType-input');
+                        $(commonName.SupplierTypeSaveBtn).prop('disabled', false);
+                        $(commonName.SupplierTypeSaveBtn).css('border', 'none');
 
                     }
                 }, error: function (e) {
@@ -114,22 +114,23 @@
         })
         //create and edit
         // Save Button Click
-        $(document).on('click', commonName.CatagorySaveBtn, function () {
+        $(document).on('click', commonName.SupplierTypeSaveBtn, function () {
+
             var fromData = getFromData();
-            if (fromData.CatagoryName == null || fromData.CatagoryName.trim() === '') {
-                $(commonName.CatagoryName).addClass('catagory-input');
-                $(commonName.CatagorySaveBtn).prop('disabled', true);
-                $(commonName.CatagoryName).focus();
+            if (fromData.SupplierType == null || fromData.SupplierType.trim() === '') {
+                $(commonName.SupplierType).addClass('SupplierType-input');
+                $(commonName.SupplierTypeSaveBtn).prop('disabled', true);
+                $(commonName.SupplierType).focus();
                 return;
             }
 
-                  
+
             $.ajax({
                 url: CreateUpdateUrl,
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(fromData),
-                success: function (res) {                   
+                success: function (res) {
                     if (res.isSuccess) {
                         showToast("success", res.message);
                     } else {
@@ -141,7 +142,7 @@
                 },
                 complete: function () {
                     resetFrom();
-                    autoCatagoryId();
+                    autoSupplierTypeId();
                     loadCategoryData();
                 }
             });
@@ -152,13 +153,14 @@
             table.ajax.reload(null, false);
         }
 
-        var table = $('#categoryTable').DataTable({
-            "autoWidth": true, 
+        var table = $('#SupplierTypeTable').DataTable({
+            "autoWidth": true,
             "ajax": {
-                "url": loadCategoryDataUrl,
+                "url": loadSuplierTypeDataUrl,
                 "type": "GET",
                 "datatype": "json",
                 "dataSrc": function (json) {
+                    console.log(json);
                     return json.data || [];
                 },
                 "error": function (xhr, error, thrown) {
@@ -174,12 +176,12 @@
                     "orderable": false
                 },
                 {
-                    "data": "catagoryID",
+                    "data": "supplierTypeId",
                     "render": function (data) {
-                        return `<button class="btn btn-sm btn-link btn-edit" data-id=${data}>${data}</button>`;
+                        return `<button class="btn btn-sm btn-link SupplierTypeEditBtn" data-id=${data}>${data}</button>`;
                     }
                 },
-                { "data": "catagoryName" },
+                { "data": "supplierType" },
                 { "data": "shortName" }
             ],
             "paging": true,
@@ -187,7 +189,7 @@
             "searching": true,
             "ordering": true,
             "responsive": true,
-            "autoWidth": true, 
+            "autoWidth": true,
             "language": {
                 "search": "Search....",
                 "lengthMenu": "Show _MENU_ entries per page",
@@ -209,18 +211,19 @@
                 url: `${PopulatedDataForUpdateUrl}?id=${id}`,
                 type: "GET",
                 success: function (res) {
+                    console.log(res);
                     selectedIds = [];
-                    selectedIds.push(res.result.autoId+'');
+                    selectedIds.push(res.result.autoId + '');
                     $(commonName.AutoId).val(res.result.autoId);
-                    $(commonName.CatagoryName).val(res.result.catagoryName);
+                    $(commonName.SupplierType).val(res.result.supplierType);
                     $(commonName.ShortName).val(res.result.shortName);
-                    $(commonName.CatagoryID).val(res.result.catagoryID);
+                    $(commonName.SupplierTypeID).val(res.result.supplierTypeId);
                     $(commonName.CreateDate).text(res.result.showCreateDate);
                     $(commonName.UpdateDate).text(res.result.showModifyDate);
                 },
                 error: function (e) {
                 }, complete: function () {
-                }           
+                }
             });
         });
 
@@ -252,13 +255,13 @@
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(selectedIds),
-                success: function (res) {                  
-                    showToast(res.isSuccess?"success":"error", res.message)
+                success: function (res) {
+                    showToast(res.isSuccess ? "success" : "error", res.message)
                 },
                 error: function (e) {
-                }, complete: function () {                  
-                        resetFrom();
-                        autoCatagoryId();
+                }, complete: function () {
+                    resetFrom();
+                    autoSupplierTypeId();
                     loadCategoryData();
                     $('#selectAll').prop('checked', false);
                     selectedIds = [];
@@ -270,8 +273,8 @@
         window.categoryModuleLoaded = true;
         // Initialize all functions
         var init = function () {
-            stHeader(); 
-            autoCatagoryId();
+            stHeader();
+            autoSupplierTypeId();
             table;           
         };
         init();

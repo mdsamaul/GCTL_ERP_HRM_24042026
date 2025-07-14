@@ -2,47 +2,57 @@
 using GCTL.Core.Data;
 using GCTL.Core.Helpers;
 using GCTL.Core.ViewModels.INV_Catagory;
-using GCTL.Core.ViewModels.ItemModel;
+using GCTL.Core.ViewModels.SalesSupplier;
 using GCTL.Data.Models;
-using GCTL.Service.ItemModelService;
-using GCTL.UI.Core.ViewModels.ItemModel;
+using GCTL.Service.SalesSupplierService;
+using GCTL.UI.Core.ViewModels.SalesSupplier;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GCTL.UI.Core.Controllers
 {
-    public class ItemModelController : BaseController
+    public class SalesSupplierController : BaseController
     {
-        private readonly IItemModelService itemModelService;
-        private readonly IRepository<HrmBrand> brandRepo;
+        private readonly IRepository<InvDefSupplierType> supplierTypeRepo;
+        private readonly IRepository<CoreCountry> countryRepo;
+        private readonly ISalesSupplierService salesSupplierRepo;
 
-        public ItemModelController(
-            IItemModelService itemModelService,
-            IRepository<HrmBrand> brandRepo
+        public SalesSupplierController(
+            IRepository<InvDefSupplierType> supplierTypeRepo,
+            IRepository<CoreCountry> countryRepo,
+            ISalesSupplierService salesSupplierRepo
             )
         {
-            this.itemModelService = itemModelService;
-            this.brandRepo = brandRepo;
+            this.supplierTypeRepo = supplierTypeRepo;
+            this.countryRepo = countryRepo;
+            this.salesSupplierRepo = salesSupplierRepo;
         }
         public IActionResult Index(bool isPartial)
         {
-            ViewBag.BrandList = new SelectList(brandRepo.All().Select(x=> new {x.BrandId, x.BrandName}), "BrandId", "BrandName");
-            ItemModelViewModel model = new ItemModelViewModel()
+            try
             {
-                PageUrl = Url.Action(nameof(Index))
-            };
-            if (isPartial)
-            {
-                return PartialView(model);
+                ViewBag.SupplirTypeList = new SelectList(supplierTypeRepo.All().Select(x => new { x.SupplierTypeId, x.SupplierType }), "SupplierTypeId", "SupplierType");
+                ViewBag.CountryAll = new SelectList(countryRepo.All().Select(d => new { d.CountryId, d.CountryName }), "CountryId", "CountryName");
+                SalesSupplierViewModel model = new SalesSupplierViewModel()
+                {
+                    PageUrl = Url.Action(nameof(Index))
+                };
+                if (isPartial) return PartialView(model);
+                return View(model);
             }
-            return View(model);
+            catch (Exception)
+            {
+
+                throw;
+            }            
         }
+
         [HttpGet]
         public async Task<IActionResult> LoadData()
         {
             try
             {
-                var data = await itemModelService.GetAllAsync();
+                var data = await salesSupplierRepo.GetAllAsync();
                 return Json(new { data });
             }
             catch (Exception ex)
@@ -51,11 +61,11 @@ namespace GCTL.UI.Core.Controllers
             }
         }
         [HttpGet]
-        public async Task<IActionResult> AutoItemModelId()
+        public async Task<IActionResult> AutoSupplierTypeId()
         {
             try
             {
-                var newCategoryId = await itemModelService.AutoItemIdAsync();
+                var newCategoryId = await salesSupplierRepo.AutoSalesSupplierIdAsync();
                 return Json(new { data = newCategoryId });
             }
             catch (Exception)
@@ -67,7 +77,7 @@ namespace GCTL.UI.Core.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateUpdate([FromBody] ItemModelSetupViewModel model)
+        public async Task<IActionResult> CreateUpdate([FromBody] SalesSupplierSetupViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -78,10 +88,10 @@ namespace GCTL.UI.Core.Controllers
                 model.ToAudit(LoginInfo);
                 if (model.AutoId == 0)
                 {
-                    bool hasParmision = await itemModelService.SavePermissionAsync(LoginInfo.AccessCode);
+                    bool hasParmision = await salesSupplierRepo.SavePermissionAsync(LoginInfo.AccessCode);
                     if (hasParmision)
                     {
-                        var result = await itemModelService.CreateUpdateAsync(model);
+                        var result = await salesSupplierRepo.CreateUpdateAsync(model);
                         return Json(new { isSuccess = result.isSuccess, message = result.message, data = result.data });
                     }
                     else
@@ -91,10 +101,10 @@ namespace GCTL.UI.Core.Controllers
                 }
                 else
                 {
-                    var hasUpdatePermission = await itemModelService.UpdatePermissionAsync(LoginInfo.AccessCode);
+                    var hasUpdatePermission = await salesSupplierRepo.UpdatePermissionAsync(LoginInfo.AccessCode);
                     if (hasUpdatePermission)
                     {
-                        var result = await itemModelService.CreateUpdateAsync(model);
+                        var result = await salesSupplierRepo.CreateUpdateAsync(model);
                         return Json(new { isSuccess = result.isSuccess, message = result.message, data = result.data });
                     }
                     else
@@ -115,17 +125,17 @@ namespace GCTL.UI.Core.Controllers
         [HttpGet]
         public async Task<IActionResult> PopulatedDataForUpdate(string id)
         {
-            var result = await itemModelService.GetByIdAsync(id);
+            var result = await salesSupplierRepo.GetByIdAsync(id);
             return Json(new { result });
         }
 
         [HttpPost]
-        public async Task<IActionResult> deleteCatagory([FromBody] List<string> selectedIds)
+        public async Task<IActionResult> deleteSupplierType([FromBody] List<string> selectedIds)
         {
-            var hasUpdatePermission = await itemModelService.DeletePermissionAsync(LoginInfo.AccessCode);
+            var hasUpdatePermission = await salesSupplierRepo.DeletePermissionAsync(LoginInfo.AccessCode);
             if (hasUpdatePermission)
             {
-                var result = await itemModelService.DeleteAsync(selectedIds);
+                var result = await salesSupplierRepo.DeleteAsync(selectedIds);
                 return Json(new { isSuccess = result.isSuccess, message = result.message, data = result });
             }
             else
@@ -137,8 +147,13 @@ namespace GCTL.UI.Core.Controllers
         [HttpPost]
         public async Task<IActionResult> alreadyExist([FromBody] string CatagoryValue)
         {
-            var result = await itemModelService.AlreadyExistAsync(CatagoryValue);
+            var result = await salesSupplierRepo.AlreadyExistAsync(CatagoryValue);
             return Json(new { isSuccess = result.isSuccess, message = result.message, data = result });
+        }
+        public async Task<IActionResult> CloseSupplierTypeModel()
+        {
+            var supplierTypeList =  supplierTypeRepo.All().Where(x => x.SupplierTypeId != null).OrderByDescending(x => x.AutoId).ToList();
+            return Json(supplierTypeList);
         }
     }
 }

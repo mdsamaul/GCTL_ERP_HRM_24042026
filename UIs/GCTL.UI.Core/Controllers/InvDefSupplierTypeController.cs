@@ -1,48 +1,38 @@
-﻿
-using GCTL.Core.Data;
-using GCTL.Core.Helpers;
+﻿using GCTL.Core.Helpers;
 using GCTL.Core.ViewModels.INV_Catagory;
-using GCTL.Core.ViewModels.ItemModel;
-using GCTL.Data.Models;
-using GCTL.Service.ItemModelService;
-using GCTL.UI.Core.ViewModels.ItemModel;
+using GCTL.Core.ViewModels.InvDefSupplierType;
+using GCTL.Service.InvDefSupplierTypes;
+using GCTL.UI.Core.ViewModels.InvDefSupplierType;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GCTL.UI.Core.Controllers
 {
-    public class ItemModelController : BaseController
+    public class InvDefSupplierTypeController : BaseController
     {
-        private readonly IItemModelService itemModelService;
-        private readonly IRepository<HrmBrand> brandRepo;
+        private readonly IInvDefSupplierTypeService suplierService;
 
-        public ItemModelController(
-            IItemModelService itemModelService,
-            IRepository<HrmBrand> brandRepo
+        public InvDefSupplierTypeController(
+            IInvDefSupplierTypeService suplierService
             )
         {
-            this.itemModelService = itemModelService;
-            this.brandRepo = brandRepo;
+            this.suplierService = suplierService;
         }
         public IActionResult Index(bool isPartial)
         {
-            ViewBag.BrandList = new SelectList(brandRepo.All().Select(x=> new {x.BrandId, x.BrandName}), "BrandId", "BrandName");
-            ItemModelViewModel model = new ItemModelViewModel()
+            InvDefSupplierTypeViewModel model = new InvDefSupplierTypeViewModel()
             {
                 PageUrl = Url.Action(nameof(Index))
             };
-            if (isPartial)
-            {
-                return PartialView(model);
-            }
+            if(isPartial) return PartialView(model);
             return View(model);
         }
+
         [HttpGet]
         public async Task<IActionResult> LoadData()
         {
             try
             {
-                var data = await itemModelService.GetAllAsync();
+                var data = await suplierService.GetAllAsync();
                 return Json(new { data });
             }
             catch (Exception ex)
@@ -51,11 +41,11 @@ namespace GCTL.UI.Core.Controllers
             }
         }
         [HttpGet]
-        public async Task<IActionResult> AutoItemModelId()
+        public async Task<IActionResult> AutoSuplierTypeId()
         {
             try
             {
-                var newCategoryId = await itemModelService.AutoItemIdAsync();
+                var newCategoryId = await suplierService.AutoSuplierTypeIdAsync();
                 return Json(new { data = newCategoryId });
             }
             catch (Exception)
@@ -67,7 +57,7 @@ namespace GCTL.UI.Core.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateUpdate([FromBody] ItemModelSetupViewModel model)
+        public async Task<IActionResult> CreateUpdate([FromBody] InvDefSupplierTypeSetupViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -78,10 +68,10 @@ namespace GCTL.UI.Core.Controllers
                 model.ToAudit(LoginInfo);
                 if (model.AutoId == 0)
                 {
-                    bool hasParmision = await itemModelService.SavePermissionAsync(LoginInfo.AccessCode);
+                    bool hasParmision = await suplierService.SavePermissionAsync(LoginInfo.AccessCode);
                     if (hasParmision)
                     {
-                        var result = await itemModelService.CreateUpdateAsync(model);
+                        var result = await suplierService.CreateUpdateAsync(model);
                         return Json(new { isSuccess = result.isSuccess, message = result.message, data = result.data });
                     }
                     else
@@ -91,10 +81,10 @@ namespace GCTL.UI.Core.Controllers
                 }
                 else
                 {
-                    var hasUpdatePermission = await itemModelService.UpdatePermissionAsync(LoginInfo.AccessCode);
+                    var hasUpdatePermission = await suplierService.UpdatePermissionAsync(LoginInfo.AccessCode);
                     if (hasUpdatePermission)
                     {
-                        var result = await itemModelService.CreateUpdateAsync(model);
+                        var result = await suplierService.CreateUpdateAsync(model);
                         return Json(new { isSuccess = result.isSuccess, message = result.message, data = result.data });
                     }
                     else
@@ -115,17 +105,17 @@ namespace GCTL.UI.Core.Controllers
         [HttpGet]
         public async Task<IActionResult> PopulatedDataForUpdate(string id)
         {
-            var result = await itemModelService.GetByIdAsync(id);
+            var result = await suplierService.GetByIdAsync(id);
             return Json(new { result });
         }
 
         [HttpPost]
-        public async Task<IActionResult> deleteCatagory([FromBody] List<string> selectedIds)
+        public async Task<IActionResult> deleteSupplierType([FromBody] List<string> selectedIds)
         {
-            var hasUpdatePermission = await itemModelService.DeletePermissionAsync(LoginInfo.AccessCode);
+            var hasUpdatePermission = await suplierService.DeletePermissionAsync(LoginInfo.AccessCode);
             if (hasUpdatePermission)
             {
-                var result = await itemModelService.DeleteAsync(selectedIds);
+                var result = await suplierService.DeleteAsync(selectedIds);
                 return Json(new { isSuccess = result.isSuccess, message = result.message, data = result });
             }
             else
@@ -137,7 +127,7 @@ namespace GCTL.UI.Core.Controllers
         [HttpPost]
         public async Task<IActionResult> alreadyExist([FromBody] string CatagoryValue)
         {
-            var result = await itemModelService.AlreadyExistAsync(CatagoryValue);
+            var result = await suplierService.AlreadyExistAsync(CatagoryValue);
             return Json(new { isSuccess = result.isSuccess, message = result.message, data = result });
         }
     }

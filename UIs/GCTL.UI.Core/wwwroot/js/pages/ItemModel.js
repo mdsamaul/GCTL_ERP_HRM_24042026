@@ -1,41 +1,30 @@
-﻿
-(function ($) {
+﻿(function ($) {
     $.ItemModel = function (options) {
         var commonName = $.extend({
             baseUrl: "/",
-            CompanyMultiSelectInput: "#",
-            ShortName: "#ShortName",
-            CatagoryName: "#CatagoryName",
-            PurchaseOrderNo: "#purchaseOrderNo",
+            ShortName: "#shortName",
+            ItemModelName: "#itemModelName",
+            ItemModelBrand: "#itemModelBrand",
+            ItemModelID: "#itemModelId",
             AutoId: "#AutoId",
             RowCheckbox: ".row-checkbox",
             SelectedAll: "#selectAll",
-            EditBrn: ".btn-edit",
-            CatagorySaveBtn: ".js-inv-catagory-save",
-            DeleteBtn: "#js-inv-catagory-delete-confirm",
+            EditBrn: ".model-btn-edit",
+            ItemModelSaveBtn: ".js-inv-ItemModel-save",
+            DeleteBtn: "#js-inv-ItemModel-delete-confirm",
             UpdateDate: ".updateDate",
             CreateDate: ".createDate",
-            ClearBrn: "#js-catagory-clear",
-
-            ProductModalBtn: "#productModalBtn",
-            ProductPartialContainer: "#productPartialContainer",
-            ProductBrandModalBtn: "#productBrandModalBtn",
-            ProductBrandContainer: "#productBrandContainer",
-
-            ProductModelBtn: "#productModelBtn",
-            ProductModelContainer: "#productModelContainer",
-
+            ClearBrn: "#js-ItemModel-clear",
         }, options);
-        var filterUrl = commonName.baseUrl + "/GetFilterData";
+
         var loadCategoryDataUrl = commonName.baseUrl + "/LoadData";
-        var AutoPrintingStationeryPurchaseIdUrl = commonName.baseUrl + "/AutoPrintingStationeryPurchaseId";
+        var autoItemModelIdUrl = commonName.baseUrl + "/AutoItemModelId";
         var CreateUpdateUrl = commonName.baseUrl + "/CreateUpdate";
         var PopulatedDataForUpdateUrl = commonName.baseUrl + "/PopulatedDataForUpdate";
-        var deleteUrl = commonName.baseUrl + "/deleteCatagory";
+        var deleteUrl = commonName.baseUrl + "/deleteItemModel";
         var alreadyExistUrl = commonName.baseUrl + "/alreadyExist";
-        var partialProductUrl = "/ItemMasterInformation/index?isPartial=true";
-        var partialBrandUrl = "/Brand/Index?isPartial=true";
-        var productModelUrl = "/ItemModel/Index?isPartial=true"
+
+        // Sticky header on scroll
         function stHeader() {
             window.addEventListener('scroll', function () {
                 const header = document.getElementById('stickyHeader');
@@ -47,6 +36,7 @@
             });
         }
 
+        // SweetAlert toast message
         function showToast(iconType, message) {
             const Toast = Swal.mixin({
                 toast: true,
@@ -67,102 +57,12 @@
                 title: message
             });
         }
-
-
-        datePiker = flatpickr(".datePicker", {
-            dateFormat: "Y-m-d",
-            altInput: true,
-            altFormat: "d/m/Y",
-            defaultDate: new Date(),
-            allowInput: true
-        });
-
-        $('.searchable-select').select2({
-            placeholder: 'Select an option',
-            allowClear: false,
-            width: '100%'
-        });
-
-
-        // Time picker
-        const timePicker = flatpickr("#inlineTimePicker", {
-            enableTime: true,
-            noCalendar: true,
-            inline: true,
-            defaultDate: new Date(),
-            dateFormat: "h:i:S K",
-            time_24hr: false,
-            enableSeconds: true,
-            minuteIncrement: 1,
-            secondIncrement: 1,
-            onChange: function (selectedDates, dateStr) {
-                document.getElementById("timePicker").value = dateStr;
-            }
-        });
-
-        //load partial page product
-        $(commonName.ProductModalBtn).on('click', function () {
+        autoItemModelId = function () {
             $.ajax({
-                url: partialProductUrl,
+                url: autoItemModelIdUrl,
                 type: "GET",
                 success: function (res) {
-                    $(commonName.ProductPartialContainer).html(res);
-                    if (typeof $.ItemMasterInformation == 'function') {
-                        var options = {
-                            baseUrl: '/ItemMasterInformation',
-                            isPartial: true,
-                        };
-                        $.ItemMasterInformation(options);
-                    }
-                },
-                error: function (e) {
-                    console.log(e);
-                }
-            });
-        });
-        //load brand
-        $(commonName.ProductBrandModalBtn).on('click', function () {
-            $.ajax({
-                url: partialBrandUrl,
-                type: "GET",
-                success: function (res) {
-                    $(commonName.ProductBrandContainer).html(res);
-                    if (typeof $.HrmBrand == 'function') {
-                        var options = {
-                            baseUrl: '/Brand',
-                            isPartial: true
-                        };
-                        $.HrmBrand(options);
-                    }
-                },
-                error: function (e) {
-                    console.log(e);
-                }
-            });
-        })
-        //load model
-        $(commonName.ProductModalBtn).on('click', function () {
-            $.ajax({
-                url: productModelUrl,
-                type: "GET",
-                success: function (res) {
-                    $(commonName.ProductModelContainer).html(res);
-                    if (typeof )
-                }, error: function (e) {
-                    console.log(e)
-                }
-            })
-        })
-
-
-
-        AutoPrintingStationeryPurchaseId = function () {
-            $.ajax({
-                url: AutoPrintingStationeryPurchaseIdUrl,
-                type: "GET",
-                success: function (res) {
-                    console.log(res);
-                    $(commonName.PurchaseOrderNo).val(res.data);
+                    $(commonName.ItemModelID).val(res.data);
                 },
                 error: function (e) {
                 }
@@ -171,8 +71,9 @@
 
         resetFrom = function () {
             $(commonName.AutoId).val(0);
-            $(commonName.CatagoryName).val('');
+            $(commonName.ItemModelName).val('');
             $(commonName.ShortName).val('');
+            autoItemModelId();
         }
         $(commonName.ClearBrn).on('click', function () {
             resetFrom();
@@ -181,31 +82,31 @@
         getFromData = function () {
             var fromData = {
                 AutoId: $(commonName.AutoId).val(),
-                PurchaseOrderNo: $(commonName.PurchaseOrderNo).val(),
-                CatagoryName: $(commonName.CatagoryName).val(),
+                ItemModelID: $(commonName.ItemModelID).val(),
+                ItemModelName: $(commonName.ItemModelName).val(),
                 ShortName: $(commonName.ShortName).val(),
             };
             return fromData;
         }
         //exists 
-        $(commonName.CatagoryName).on('input', function () {
+        $(commonName.ItemModelName).on('input', function () {
 
-            let CatagoryValue = $(this).val();
+            let ItemModelValue = $(this).val();
 
             $.ajax({
                 url: alreadyExistUrl,
                 type: "POST",
                 contentType: 'application/json',
-                data: JSON.stringify(CatagoryValue),
+                data: JSON.stringify(ItemModelValue),
                 success: function (res) {
                     if (res.isSuccess) {
                         showToast('warning', res.message);
-                        $(commonName.CatagoryName).addClass('catagory-input');
-                        $(commonName.CatagorySaveBtn).prop('disabled', true);
+                        $(commonName.ItemModelName).addClass('ItemModel-input');
+                        $(commonName.ItemModelSaveBtn).prop('disabled', true);
                     } else {
-                        $(commonName.CatagoryName).removeClass('catagory-input');
-                        $(commonName.CatagorySaveBtn).prop('disabled', false);
-                        $(commonName.CatagorySaveBtn).css('border', 'none');
+                        $(commonName.ItemModelName).removeClass('ItemModel-input');
+                        $(commonName.ItemModelSaveBtn).prop('disabled', false);
+                        $(commonName.ItemModelSaveBtn).css('border', 'none');
 
                     }
                 }, error: function (e) {
@@ -214,16 +115,16 @@
         })
         //create and edit
         // Save Button Click
-        $(document).on('click', commonName.CatagorySaveBtn, function () {
+        $(document).on('click', commonName.ItemModelSaveBtn, function () {
             var fromData = getFromData();
-            if (fromData.CatagoryName == null || fromData.CatagoryName.trim() === '') {
-                $(commonName.CatagoryName).addClass('catagory-input');
-                $(commonName.CatagorySaveBtn).prop('disabled', true);
-                $(commonName.CatagoryName).focus();
+            if (fromData.ItemModelName == null || fromData.ItemModelName.trim() === '') {
+                $(commonName.ItemModelName).addClass('ItemModel-input');
+                $(commonName.ItemModelSaveBtn).prop('disabled', true);
+                $(commonName.ItemModelName).focus();
                 return;
             }
 
-
+            console.log(fromData);
             $.ajax({
                 url: CreateUpdateUrl,
                 type: "POST",
@@ -241,7 +142,7 @@
                 },
                 complete: function () {
                     resetFrom();
-                    AutoPrintingStationeryPurchaseId();
+                    autoItemModelId();
                     loadCategoryData();
                 }
             });
@@ -252,13 +153,14 @@
             table.ajax.reload(null, false);
         }
 
-        var table = $('#printingStationTable').DataTable({
+        var table = $('#itemModelTable').DataTable({
             "autoWidth": true,
             "ajax": {
                 "url": loadCategoryDataUrl,
                 "type": "GET",
                 "datatype": "json",
                 "dataSrc": function (json) {
+                    console.log(json);
                     return json.data || [];
                 },
                 "error": function (xhr, error, thrown) {
@@ -274,13 +176,14 @@
                     "orderable": false
                 },
                 {
-                    "data": "PurchaseOrderNo",
+                    "data": "modelID",
                     "render": function (data) {
-                        return `<button class="btn btn-sm btn-link btn-edit" data-id=${data}>${data}</button>`;
+                        return `<button class="btn btn-sm btn-link model-btn-edit" data-id=${data}>${data}</button>`;
                     }
                 },
-                { "data": "catagoryName" },
-                { "data": "shortName" }
+                { "data": "modelName" },
+                { "data": "shortName" },
+                { "data": "brandName" }
             ],
             "paging": true,
             "pagingType": "full_numbers",
@@ -305,16 +208,18 @@
         //edit
         $(document).on('click', commonName.EditBrn, function () {
             let id = $(this).data('id');
+            console.log(id);
             $.ajax({
                 url: `${PopulatedDataForUpdateUrl}?id=${id}`,
                 type: "GET",
                 success: function (res) {
+                    console.log(res);
                     selectedIds = [];
                     selectedIds.push(res.result.autoId + '');
                     $(commonName.AutoId).val(res.result.autoId);
-                    $(commonName.CatagoryName).val(res.result.catagoryName);
+                    $(commonName.ItemModelName).val(res.result.modelName);
                     $(commonName.ShortName).val(res.result.shortName);
-                    $(commonName.PurchaseOrderNo).val(res.result.PurchaseOrderNo);
+                    $(commonName.ItemModelID).val(res.result.modelID); $(commonName.ItemModelBrand).val(res.result.brandID);
                     $(commonName.CreateDate).text(res.result.showCreateDate);
                     $(commonName.UpdateDate).text(res.result.showModifyDate);
                 },
@@ -358,7 +263,7 @@
                 error: function (e) {
                 }, complete: function () {
                     resetFrom();
-                    AutoPrintingStationeryPurchaseId();
+                    autoItemModelId();
                     loadCategoryData();
                     $('#selectAll').prop('checked', false);
                     selectedIds = [];
@@ -367,16 +272,15 @@
         })
 
 
-
         window.categoryModuleLoaded = true;
+        // Initialize all functions
         var init = function () {
             stHeader();
-            datePiker;
-            timePicker;
-            AutoPrintingStationeryPurchaseId();
+            autoItemModelId();
             table;
-            console.log("test");
+            console.log("tepppppppppppp");
         };
         init();
+
     };
 })(jQuery);

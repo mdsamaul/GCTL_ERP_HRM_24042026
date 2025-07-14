@@ -119,6 +119,9 @@ using GCTL.Service.ItemMasterInformation;
 using GCTL.Service.HRM_Size;
 using GCTL.Service.RMG_Prod_Def_UnitType;
 using GCTL.Service.PrintingStationeryPurchaseEntry;
+using GCTL.Service.InvDefSupplierTypes;
+using GCTL.Service.SalesSupplierService;
+using GCTL.Service.ItemModelService;
 
 
 //using GCTL.Service.AccountReport;
@@ -206,6 +209,9 @@ services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
             services.AddScoped<IHRM_SizeService, HRM_SizeService>();
             services.AddScoped<IRMG_Prod_Def_UnitTypeService , RMG_Prod_Def_UnitTypeService>();
             services.AddScoped<IPrintingStationeryPurchaseEntryService , PrintingStationeryPurchaseEntryService>();
+            services.AddScoped<IInvDefSupplierTypeService , InvDefSupplierTypeService>();
+            services.AddScoped<ISalesSupplierService , SalesSupplierServices>();
+            services.AddScoped<IItemModelService , ItemModelService>();
 
 
             
