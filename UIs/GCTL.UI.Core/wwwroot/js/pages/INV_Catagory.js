@@ -72,6 +72,7 @@
             $(commonName.AutoId).val(0);
             $(commonName.CatagoryName).val('');
             $(commonName.ShortName).val('');
+            autoCatagoryId();
         }
         $(commonName.ClearBrn).on('click', function () {
             resetFrom();

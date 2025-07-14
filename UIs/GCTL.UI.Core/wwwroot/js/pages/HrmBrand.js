@@ -8,7 +8,7 @@
             AutoId: "#Setup_AutoId",
             RowCheckbox: ".row-checkbox",
             SelectedAll: "#selectAll",
-            EditBrn: ".btn-edit",
+            EditBrn: ".brand-btn-edit",
             BrandSaveBtn: ".js-brand-save",
             DeleteBtn: "#js-inv-Brand-delete-confirm",
             UpdateDate: ".updateDate",
@@ -153,7 +153,9 @@
         function loadBrandData() {
             table.ajax.reload(null, false);
         }
-
+        if ($.fn.DataTable.isDataTable('#brandTable')) {
+            $('#brandTable').DataTable().destroy();
+        }
         var table = $('#brandTable').DataTable({           
             "autoWidth": true,
             "ajax": {
@@ -178,7 +180,7 @@
                 {
                     "data": "brandID",
                     "render": function (data) {
-                        return `<button class="btn btn-sm btn-link btn-edit" data-id=${data}>${data}</button>`;
+                        return `<button class="btn btn-sm btn-link brand-btn-edit" data-id=${data}>${data}</button>`;
                     }
                 },
                 { "data": "brandName" },
@@ -276,7 +278,6 @@
             stHeader();
             autoBrandId();
             table;
-            
         };
         init();
 

@@ -20,7 +20,7 @@
 
             RowCheckbox: ".row-checkbox",
             SelectedAll: "#selectAll",
-            EditBrn: ".btn-edit",
+            EditBrn: ".item-btn-edit",
             DeleteBtn: "#js-Item-product-delete-confirm",
             UpdateDate: ".updateDate",
             CreateDate: ".createDate",
@@ -67,52 +67,109 @@
                 title: message
             });
         }
-      
 
-      
-        $(commonName.CatagoryBtn).on('click', function () {            
+
+        $(document).ready(function () {
+            if ($('#catagoryModal').length === 0) {
+                const modalHtml = `
+        <div class="modal fade" id="catagoryModal" tabindex="-1" aria-labelledby="catagoryModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Category</h5>
+                        <button type="button" class="btn-close closeCatagoryModel" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="catagoryContainer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+                $('body').append(modalHtml);
+            }
+        });
+
+        // Button click handler
+        $(commonName.CatagoryBtn).on('click', function () {
             const $btn = $(this);
+        
             $.ajax({
                 url: '/INV_Catagory/Index?isPartial=true',
                 type: 'GET',
-                success: function (result) {                   
+                success: function (result) {
                     $('#catagoryContainer').html(result);
+                    $('#catagoryModal').modal('show'); // ✅ এই জায়গায় fix
                     if (typeof $.INV_Catagory === 'function') {
                         var options = {
                             baseUrl: '/INV_Catagory',
-                            isPartial: true,                            
+                            isPartial: true,
                         };
                         $.INV_Catagory(options);
-                    }                   
+                    }
                 },
                 error: function () {
                     alert("Failed to load category page");
-                    $btn.prop('disabled', false).text('Load Category');
-                }
+                }               
             });
         });
+
+
+        $(document).ready(function () {
+            if ($('#brandModal').length === 0) {
+                const modalHtml = `
+           <div class="modal fade" id="brandModal" tabindex="-1" aria-labelledby="brandModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Brand</h5>
+                            <button type="button" class="btn-close closeBrandModel" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="brandContainer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+                $('body').append(modalHtml);
+            }
+        });
+
+        
+        // Then simple click handler
         $(commonName.BrandBtn).on('click', function () {
+            if ($.fn.DataTable.isDataTable('#brandTable')) {
+                $('#brandTable').DataTable().destroy();
+            }
+            if ($.fn.DataTable.isDataTable('#ProductTable')) {
+                $('#ProductTable').DataTable().clear().destroy();
+            }
             const $btn = $(this);
+           
             $.ajax({
                 url: '/Brand/Index?isPartial=true',
                 type: 'GET',
-                success: function (result) {                   
+                success: function (result) {
+                    console.log("Loaded Brand View:", result);
                     $('#brandContainer').html(result);
+
+                    // Simple show - modal already exists
+                    $('#brandModal').modal('show');
+
+                    // Plugin initialize করুন
                     if (typeof $.HrmBrand === 'function') {
-                        var options = {
+                        $.HrmBrand({
                             baseUrl: '/Brand',
-                            isPartial: true,                            
-                        };
-                        $.HrmBrand(options);
-                    }                   
+                            isPartial: true
+                        });
+                    }
                 },
                 error: function () {
                     alert("Failed to load brand page");
-                    $btn.prop('disabled', false).text('Load Brand');
                 }
             });
         });
-       
 
         $(commonName.CloseCatagoryModel).on('click', function () {     
             $.ajax({
@@ -297,7 +354,9 @@
         function loadProductData() {
             table.ajax.reload(null, false);
         }
-
+        if ($.fn.DataTable.isDataTable('#ProductTable')) {
+            $('#ProductTable').DataTable().clear().destroy();
+        }
         var table = $('#ProductTable').DataTable({
             "autoWidth": true,
             "ajax": {
@@ -322,7 +381,7 @@
                 {
                     "data": "productCode",
                     "render": function (data) {
-                        return `<button class="btn btn-sm btn-link btn-edit" data-id=${data}>${data}</button>`;
+                        return `<button class="btn btn-sm btn-link item-btn-edit" data-id=${data}>${data}</button>`;
                     }
                 },
                 { "data": "productName" },
@@ -354,10 +413,12 @@
         //edit
         $(document).on('click', commonName.EditBrn, function () {
             let id = $(this).data('id');
+            console.log(id);
             $.ajax({
                 url: `${PopulatedDataForUpdateUrl}?id=${id}`,
                 type: "GET",
                 success: function (res) {
+                    console.log(res);
                     selectedIds = [];
                     selectedIds.push(res.result.autoId + '');
                     $(commonName.AutoId).val(res.result.autoId);

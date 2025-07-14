@@ -165,6 +165,7 @@ namespace GCTL.Data.Models
         public virtual DbSet<HrmItemMasterInformation> HrmItemMasterInformation { get; set; }
         public virtual DbSet<HrmLeaveApplicationDays> HrmLeaveApplicationDays { get; set; }
         public virtual DbSet<HrmLeaveApplicationEntry> HrmLeaveApplicationEntry { get; set; }
+        public virtual DbSet<HrmModel> HrmModel { get; set; }
         public virtual DbSet<HrmNomineePhoto> HrmNomineePhoto { get; set; }
         public virtual DbSet<HrmNomineeSignature> HrmNomineeSignature { get; set; }
         public virtual DbSet<HrmPayAdvancePay> HrmPayAdvancePay { get; set; }
@@ -7944,6 +7945,56 @@ namespace GCTL.Data.Models
                 entity.Property(e => e.SickLeaveFilePath).HasMaxLength(200);
 
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<HrmModel>(entity =>
+            {
+                entity.HasKey(e => e.AutoId)
+                    .HasName("PK__HRM_Mode__385EFE4845C27DDF");
+
+                entity.ToTable("HRM_Model");
+
+                entity.Property(e => e.AutoId)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("autoId");
+
+                entity.Property(e => e.BrandId)
+                    .HasMaxLength(50)
+                    .HasColumnName("BrandID");
+
+                entity.Property(e => e.CompanyCode)
+                    .IsRequired()
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModelId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("ModelID");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ShortName).HasMaxLength(100);
+
+                entity.Property(e => e.UserInfoEmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("UserInfoEmployeeID");
             });
 
             modelBuilder.Entity<HrmNomineePhoto>(entity =>

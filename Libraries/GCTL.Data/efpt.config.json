@@ -603,6 +603,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[HRM_Model]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[HRM_NomineePhoto]",
          "ObjectType": 0
       },
