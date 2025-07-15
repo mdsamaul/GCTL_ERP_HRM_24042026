@@ -6,15 +6,17 @@
             ItemModelName: "#itemModelName",
             ItemModelBrand: "#itemModelBrand",
             ItemModelID: "#itemModelId",
-            AutoId: "#AutoId",
+            AutoId: "#Setup_AutoId",
             RowCheckbox: ".row-checkbox",
-            SelectedAll: "#selectAll",
+            SelectedAll: "#selectAllSupplierTypeTable",
             EditBrn: ".model-btn-edit",
             ItemModelSaveBtn: ".js-inv-ItemModel-save",
             DeleteBtn: "#js-inv-ItemModel-delete-confirm",
             UpdateDate: ".updateDate",
             CreateDate: ".createDate",
             ClearBrn: "#js-ItemModel-clear",
+            ItemBrandBtn: "#itemBrandBtn",
+            ItemBrandContainer:"#itemBrandContainer",
         }, options);
 
         var loadCategoryDataUrl = commonName.baseUrl + "/LoadData";
@@ -23,7 +25,7 @@
         var PopulatedDataForUpdateUrl = commonName.baseUrl + "/PopulatedDataForUpdate";
         var deleteUrl = commonName.baseUrl + "/deleteItemModel";
         var alreadyExistUrl = commonName.baseUrl + "/alreadyExist";
-
+        var itemBranchUrl = "/Brand/Index?isPartial=true";
         // Sticky header on scroll
         function stHeader() {
             window.addEventListener('scroll', function () {
@@ -73,6 +75,7 @@
             $(commonName.AutoId).val(0);
             $(commonName.ItemModelName).val('');
             $(commonName.ShortName).val('');
+            $(commonName.ItemModelBrand).val(""),
             autoItemModelId();
         }
         $(commonName.ClearBrn).on('click', function () {
@@ -81,9 +84,10 @@
         // get data from input
         getFromData = function () {
             var fromData = {
-                AutoId: $(commonName.AutoId).val(),
-                ItemModelID: $(commonName.ItemModelID).val(),
-                ItemModelName: $(commonName.ItemModelName).val(),
+                AutoId: $(commonName.AutoId).val()||0,
+                ModelID: $(commonName.ItemModelID).val(),
+                BrandID: $(commonName.ItemModelBrand).val(),
+                ModelName: $(commonName.ItemModelName).val(),
                 ShortName: $(commonName.ShortName).val(),
             };
             return fromData;
@@ -101,10 +105,10 @@
                 success: function (res) {
                     if (res.isSuccess) {
                         showToast('warning', res.message);
-                        $(commonName.ItemModelName).addClass('ItemModel-input');
+                        $(commonName.ItemModelName).addClass('itemModel-input');
                         $(commonName.ItemModelSaveBtn).prop('disabled', true);
                     } else {
-                        $(commonName.ItemModelName).removeClass('ItemModel-input');
+                        $(commonName.ItemModelName).removeClass('itemModel-input');
                         $(commonName.ItemModelSaveBtn).prop('disabled', false);
                         $(commonName.ItemModelSaveBtn).css('border', 'none');
 
@@ -113,17 +117,47 @@
                 }
             });
         })
+
+        $(commonName.ItemModelBrand).on('input', function () {
+
+            let ItemModelValue = $(this).val();
+            console.log(ItemModelValue);
+            if (!ItemModelValue) {
+                showToast('warning', "Brand Requird");
+                $(commonName.ItemModelBrand).addClass('itemModel-input');
+                $(commonName.ItemModelSaveBtn).prop('disabled', true);
+            } else {
+                $(commonName.ItemModelBrand).removeClass('itemModel-input');
+                $(commonName.ItemModelSaveBtn).prop('disabled', false);
+                $(commonName.ItemModelSaveBtn).css('border', 'none');
+
+            }
+        })
+        $('.searchable-select').select2({
+            placeholder: 'Select an option',
+            allowClear: false,
+            width: '100%'
+        });
+
         //create and edit
         // Save Button Click
         $(document).on('click', commonName.ItemModelSaveBtn, function () {
             var fromData = getFromData();
-            if (fromData.ItemModelName == null || fromData.ItemModelName.trim() === '') {
-                $(commonName.ItemModelName).addClass('ItemModel-input');
+            if (fromData.ModelName == null || fromData.ModelName.trim() === '') {
+                $(commonName.ItemModelName).addClass('itemModel-input');
                 $(commonName.ItemModelSaveBtn).prop('disabled', true);
                 $(commonName.ItemModelName).focus();
                 return;
             }
 
+            if (fromData.BrandID == null || fromData.BrandID.trim() === '') {
+                
+                $(commonName.ItemModelSaveBtn).prop('disabled', true);
+                $(commonName.ItemModelBrand).select2(); 
+                $(commonName.ItemModelBrand).select2('open');
+                $(commonName.ItemModelBrand).addClass('itemModel-input');
+                return;
+            }
             console.log(fromData);
             $.ajax({
                 url: CreateUpdateUrl,
@@ -219,7 +253,8 @@
                     $(commonName.AutoId).val(res.result.autoId);
                     $(commonName.ItemModelName).val(res.result.modelName);
                     $(commonName.ShortName).val(res.result.shortName);
-                    $(commonName.ItemModelID).val(res.result.modelID); $(commonName.ItemModelBrand).val(res.result.brandID);
+                    $(commonName.ItemModelID).val(res.result.modelID);
+                    $(commonName.ItemModelBrand).val(res.result.brandID);
                     $(commonName.CreateDate).text(res.result.showCreateDate);
                     $(commonName.UpdateDate).text(res.result.showModifyDate);
                 },
@@ -271,6 +306,23 @@
             })
         })
 
+        $(commonName.ItemBrandBtn).on('click', function () {
+            $.ajax({
+                url: itemBranchUrl,
+                type: "GET",
+                success: function (res) {
+                    $(commonName.ItemBrandContainer).html(res);
+                    if (typeof $.HrmBrand === 'function') {
+                        $.HrmBrand({
+                            baseUrl: "/Brand",
+                            isPartial: true
+                        })
+                    }
+                }, error: function (e) {
+                    alert("Failed to load brand page");
+                }
+            });
+        })
 
         window.categoryModuleLoaded = true;
         // Initialize all functions
@@ -279,6 +331,7 @@
             autoItemModelId();
             table;
             console.log("tepppppppppppp");
+            console.log(loadCategoryDataUrl);
         };
         init();
 

@@ -37,7 +37,8 @@
             SupplierTypeCountryBtn:".supplierTypeCountryBtn",
             SupplierTypeContainer: "#supplierTypeContainer",
             SupplierCountryContainer: "#supplierCountryContainer",
-            ClosesupplierTypeModel:".closesupplierTypeModel",
+            ClosesupplierTypeModel: ".closesupplierTypeModel",
+
         }, options);
 
         var loadSalesSupplierDataUrl = commonName.baseUrl + "/LoadData";
@@ -48,7 +49,7 @@
         var alreadyExistUrl = commonName.baseUrl + "/alreadyExist";
 
         var supplierTypeUrl = "/InvDefSupplierType/Index?isPartial=true";
-        var CloseSupplierTypeModelUrl = commonName.baseUrl + "/CloseSupplierTypeModel";
+        var CloseSupplierTypeModelUrl = commonName.baseUrl + "/CloseSupplierType";
 
         // Sticky header on scroll
         function stHeader() {
@@ -411,7 +412,7 @@
             if ($('#supplierTypeModal').length === 0) {
                 const modalHtml = `
         <div class="modal fade" id="supplierTypeModal" tabindex="-1" aria-labelledby="supplierTypeModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-centered custom-salse-supp-modal modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="supplierTypeModalLabel">Supplier Type</h5>
@@ -447,7 +448,7 @@
                 }
             });
         })
-        $(commonName.ClosesupplierTypeModel).on('click', function () {
+        $(document).on('click', $(commonName.ClosesupplierTypeModel), function () {       
             $.ajax({
                 url: CloseSupplierTypeModelUrl,
                 type: "GET",
@@ -457,11 +458,14 @@
                         $(commonName.DropdownSupplierType).append(
                             $('<option></option>').val(item.supplierTypeId).text(item.supplierType)
                         );
-                    });                   
-                }, error: function (e) {
+                    });
+                },
+                error: function (e) {
+                    console.error("Error fetching supplier types:", e);
                 }
-            })
-        })
+            });
+        });
+
 
         window.SalesSupplierModuleLoaded = true;
         // Initialize all functions
@@ -469,6 +473,7 @@
             stHeader();
             autoSupplierTypeId();
             table;
+            console.log("test salse");
         };
         init();
 

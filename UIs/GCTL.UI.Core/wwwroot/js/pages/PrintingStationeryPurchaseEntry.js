@@ -29,7 +29,15 @@
             SizeModelContainer: "#sizeModelContainer",
             ProductUnitModalBtn: "#productUnitBtn",
             ProductUnitModelContainer: "#productUnitModelContainer",
-            AddmoreDetailsBtn:"#addmoreDetailsBtn",
+            AddmoreDetailsBtn: "#addmoreDetailsBtn",
+
+            SupplierModalBtn: "#supplierModalBtn",
+            SupplierContainer: "#supplierContainer",
+            SupplierListBtn: ".supplierListBtn",
+            SalesSuppAddress: "#salesSuppAddress",
+            ProductSelectId: "#productSelectId",
+            ProductDescription: "#productDescription",
+            BrandIdFromDropdown:"#brandIdFromDropdown",
         }, options);
         var filterUrl = commonName.baseUrl + "/GetFilterData";
         var loadCategoryDataUrl = commonName.baseUrl + "/LoadData";
@@ -43,6 +51,10 @@
         var productModelUrl = "/ItemModel/Index?isPartial=true";
         var productUnitModalUrl = "/RMG_Prod_Def_UnitType/Index?isPartial=true";
         var productSizeModalUrl = "/HRM_Size/Index?isPartial=true";
+        var SupplierModalUrl = "/SalesSupplier/Index?isPartial=true";
+        var supplierDetailsUrl = commonName.baseUrl + "/supplierIdDetails";
+        var productSelectIdDetailsUrl = commonName.baseUrl + "/productSelectIdDetails";
+        var brandIdDetailsonModelUrl = commonName.baseUrl + "/brandIdDetailsonModel";
         function stHeader() {
             window.addEventListener('scroll', function () {
                 const header = document.getElementById('stickyHeader');
@@ -109,11 +121,13 @@
 
         //load partial page product
         $(commonName.ProductModalBtn).on('click', function () {
+            console.log("click btn");
             $.ajax({
                 url: partialProductUrl,
                 type: "GET",
                 success: function (res) {
                     $(commonName.ProductPartialContainer).html(res);
+                    console.log(res);
                     if (typeof $.ItemMasterInformation == 'function') {
                         var options = {
                             baseUrl: '/ItemMasterInformation',
@@ -207,7 +221,81 @@
                 }
             });
         })
+        $(commonName.SupplierModalBtn).on('click', function () {
+            console.log("test supplier");
+            $.ajax({
+                url: SupplierModalUrl,
+                type: "GET",
+                success: function (res) {
+                    $(commonName.SupplierContainer).html(res);
+                    if (typeof $.SalesSupplier == 'function') {
+                        var options = {
+                            baseUrl: '/SalesSupplier',
+                            isPartial: true
+                        }
+                        $.SalesSupplier(options)
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        })
 
+        $(commonName.SupplierListBtn).on('change', function () {
+            console.log("asdfasdf", $(this).val());
+            var supplierId = $(this).val();
+            $.ajax({
+                url: supplierDetailsUrl,
+                type: "POST",
+                contentType: 'application/json',
+                data: JSON.stringify(supplierId),
+                success: function (res) {
+                    if (res.data != null) {
+                        $(commonName.SalesSuppAddress).val(res.data.supplierAddress);
+                    }
+                }, error: function (e) {
+                    console.log(e);
+                }
+            })
+        })
+        //produt id
+        $(commonName.ProductSelectId).on('change', function () {
+            var productId = $(this).val();
+            $.ajax({
+                url: productSelectIdDetailsUrl,
+                type: "POST",
+                contentType: 'application/json',
+                data: JSON.stringify(productId),
+                success: function (res) {
+                    if (res.data != null) {//todo
+                        console.log(res);
+                        $(commonName.ProductDescription).val(res.data.description);
+                    }
+                }, error: function (e) {
+                    console.log(e);
+                }
+            });
+        });
+        //brand 
+        $(commonName.BrandIdFromDropdown).on('change', function () {
+            var brandId = $(this).val();
+            console.log(brandId);
+            $.ajax({
+                url: brandIdDetailsonModelUrl,
+                type: "POST",
+                contentType: 'application/json',
+                data: JSON.stringify(brandId),
+                success: function (res) {
+                    if (res.data != null) {//todo
+                        console.log(res);
+                        $(commonName.ProductDescription).val(res.data.description);
+                    }
+                }, error: function (e) {
+                    console.log(e);
+                }
+            });
+        })
         //add more 
         $(commonName.AddmoreDetailsBtn).on('click', function () {
             console.log("click test");

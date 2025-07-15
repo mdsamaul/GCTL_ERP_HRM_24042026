@@ -18,6 +18,10 @@ namespace GCTL.UI.Core.Controllers
         private readonly IRepository<HmsLtrvPeriod> periodRepo;//HMS_LTRV_Period
         private readonly IRepository<RmgProdDefUnitType> unitRepo;
         private readonly IRepository<HrmDefDepartment> depRepo;
+        private readonly IRepository<HrmModel> modelRepo;
+        private readonly IRepository<SalesSupplier> supplier;
+        private readonly IRepository<HrmEmployee> empRepo;
+        private readonly IRepository<HrmEmployeeOfficialInfo> officialInfo;
 
         public PrintingStationeryPurchaseEntryController(
             IPrintingStationeryPurchaseEntryService printingStationeryPurchaseEntryService,
@@ -26,7 +30,11 @@ namespace GCTL.UI.Core.Controllers
             IRepository<HrmSize> sizeRepo,
             IRepository<HmsLtrvPeriod> periodRepo,
             IRepository<RmgProdDefUnitType> unitRepo,
-            IRepository<HrmDefDepartment> depRepo
+            IRepository<HrmDefDepartment> depRepo,
+            IRepository<HrmModel> modelRepo,
+            IRepository<SalesSupplier> supplier,
+            IRepository<HrmEmployee> empRepo,
+            IRepository<HrmEmployeeOfficialInfo> OfficialInfo
             )
         {
             this.printingStationeryPurchaseEntryService = printingStationeryPurchaseEntryService;
@@ -36,6 +44,10 @@ namespace GCTL.UI.Core.Controllers
             this.periodRepo = periodRepo;
             this.unitRepo = unitRepo;
             this.depRepo = depRepo;
+            this.modelRepo = modelRepo;
+            this.supplier = supplier;
+            this.empRepo = empRepo;
+            this.officialInfo = OfficialInfo;
         }
         public IActionResult Index()
         {
@@ -45,6 +57,19 @@ namespace GCTL.UI.Core.Controllers
             ViewBag.periodList = new SelectList(periodRepo.All().Select(x=> new {x.PeriodId, x.PeriodName}), "PeriodId", "PeriodName");
             ViewBag.unitList = new SelectList(unitRepo.All().Select(x=> new {x.UnitTypId, x.UnitTypeName}), "UnitTypId", "UnitTypeName");
             ViewBag.departmentList = new SelectList(depRepo.All().Select(x => new{ x.DepartmentCode, x.DepartmentName}), "DepartmentCode", "DepartmentName");
+            ViewBag.modelList = new SelectList(modelRepo.All().Select(x => new { x.ModelId, x.ModelName }), "ModelId", "ModelName");
+            ViewBag.SuppleirList = new SelectList(supplier.All().Select(x => new { x.SupplierId, x.SupplierName }), "SupplierId", "SupplierName");
+            var employeeList = (from emp in empRepo.All()
+                                join offi in officialInfo.All()
+                                on emp.EmployeeId equals offi.EmployeeId
+                                where offi.EmployeeStatus == "01"
+                                select new
+                                {
+                                    emp.EmployeeId,
+                                    FullName = emp.FirstName + " " + emp.LastName
+                                }).ToList();
+
+            ViewBag.EmployeeList = new SelectList(employeeList, "EmployeeId", "FullName");
             PrintingStationeryPurchaseEntryViewModel model = new PrintingStationeryPurchaseEntryViewModel() { 
                 PageUrl = Url.Action(nameof(Index))
             };
@@ -153,6 +178,25 @@ namespace GCTL.UI.Core.Controllers
         {
             var result = await printingStationeryPurchaseEntryService.AlreadyExistAsync(PrintingStationeryPurchaseValue);
             return Json(new { isSuccess = result.isSuccess, message = result.message, data = result });
+        }
+        [HttpPost]
+        public async Task<IActionResult> supplierIdDetails([FromBody] string supplierId)
+        {
+            var result = await printingStationeryPurchaseEntryService.getSupplierByIdAsync(supplierId);
+            return Json(new { data = result });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> productSelectIdDetails([FromBody] string productId)
+        {
+            var result = await printingStationeryPurchaseEntryService.productSelectIdDetailsAsync(productId);
+            return Json(new { data = result });
+        }
+        [HttpPost]
+        public async Task<IActionResult> brandIdDetailsonModel(string brandId)
+        {
+            var result = await printingStationeryPurchaseEntryService.brandIdAsync(brandId);
+            return Json(new { data = result });
         }
     }
 }

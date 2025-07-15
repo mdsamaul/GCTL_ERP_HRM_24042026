@@ -150,7 +150,8 @@ namespace GCTL.UI.Core.Controllers
             var result = await salesSupplierRepo.AlreadyExistAsync(CatagoryValue);
             return Json(new { isSuccess = result.isSuccess, message = result.message, data = result });
         }
-        public async Task<IActionResult> CloseSupplierTypeModel()
+        [HttpGet]
+        public async Task<IActionResult> CloseSupplierType()
         {
             var supplierTypeList =  supplierTypeRepo.All().Where(x => x.SupplierTypeId != null).OrderByDescending(x => x.AutoId).ToList();
             return Json(supplierTypeList);

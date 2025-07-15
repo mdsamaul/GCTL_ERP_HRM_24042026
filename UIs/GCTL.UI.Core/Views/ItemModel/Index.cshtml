@@ -89,8 +89,11 @@
             cursor: pointer;
         }
 
-    input.itemModel-input {
+    select.itemModel-input, input.itemModel-input {
         border: 1px solid red !important;
+    }
+    .custom-modal-item{
+        max-width:80vw!important;
     }
 
 </style>
@@ -107,22 +110,27 @@
     <div class="card my-3 py-3">
         <div class="row">
             <!-- Hidden field for AutoId in Edit -->
-            <input type="text" asp-for="Setup.AutoId" />
+            <input type="hidden" asp-for="Setup.AutoId" />
             <div class="col-12 col-md-6">
                 <div class="d-flex align-items-center">
                     <div class="ModelLeft text-right">Model ID <span class="text-danger">*</span></div>
                     <div class="ModelRight">
-                        <input type="text" name="name" id="itemModelId" value="" class="form-control-sm" />
+                        <input type="text" name="name" id="itemModelId" value="" class="form-control-sm form-control" readonly />
                     </div>
                 </div>
             </div>
             <div class="col-12 col-md-6">
                 <div class="d-flex align-items-center">
                     <div class="ModelLeft text-right">Brand <span class="text-danger">*</span></div>
-                    <div class="ModelRight">
-                        <select class="w-100 form-control-sm form-control" asp-items="ViewBag.BrandList as SelectList" id="itemModelBrand">
+                    <div class="ModelRight btn-group">
+                        <select class="form-control-sm form-control searchable-select" asp-items="ViewBag.BrandList as SelectList" id="itemModelBrand">
                             <option value="">Select Model</option>
                         </select>
+                        <button class="btn btn-outline-success rounded-md d-flex justify-content-center align-items-center" id="itemBrandBtn"
+                                style="width: 31px; height: 31px; font-size: 9px; line-height: 1; margin-left:2px;"
+                                data-bs-toggle="modal" data-bs-target="#itemBrandModal">
+                            <i class="fas fa-plus"></i>
+                        </button>
                     </div>
                 </div>             
             </div>
@@ -132,7 +140,7 @@
                 <div class="d-flex align-items-center">
                     <div class="ModelLeft text-right">Model Name <span class="text-danger">*</span></div>
                     <div class="ModelRight">
-                        <input type="text" name="name" id="itemModelName" value="" class="form-control-sm" />
+                        <input type="text" name="name" id="itemModelName" value="" class="form-control-sm form-control" />
                     </div>
                 </div>
             </div>
@@ -140,7 +148,7 @@
                 <div class="d-flex align-items-center">
                     <div class="ModelLeft text-right">Short Name </div>
                     <div class="ModelRight">
-                        <input type="text" id="shortName" name="name" value="" class="form-control-sm" />
+                        <input type="text" id="shortName" name="name" value="" class="form-control-sm form-control" />
                     </div>
                 </div>
             </div>
@@ -166,6 +174,24 @@
     </div>
 </div>
 
+
+<!-- Item Brand Modal -->
+<div class="modal fade" id="itemBrandModal" tabindex="-1" aria-labelledby="itemBrandModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered custom-modal-item modal-xl">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="itemBrandModalLabel">Brand</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div id="itemBrandContainer"></div>
+            </div>   
+        </div>
+    </div>
+</div>
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 <!-- jQuery (DataTables ) -->
@@ -180,14 +206,15 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <!-- Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- ✅ Bootstrap 5 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <!-- Bootstrap Multiselect CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/css/bootstrap-multiselect.min.css">
     <!-- Bootstrap Multiselect JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/js/bootstrap-multiselect.min.js"></script>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 
 
     <!-- DataTable JS -->
@@ -201,6 +228,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <!-- Load the plugin -->
+    <script src="~/js/pages/HrmBrand.js"></script>
     <script src="~/js/pages/ItemModel.js"></script>
 
     <!-- Initialize the plugin -->

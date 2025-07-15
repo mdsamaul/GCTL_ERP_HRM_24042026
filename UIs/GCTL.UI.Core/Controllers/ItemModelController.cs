@@ -120,7 +120,7 @@ namespace GCTL.UI.Core.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> deleteCatagory([FromBody] List<string> selectedIds)
+        public async Task<IActionResult> deleteItemModel([FromBody] List<string> selectedIds)
         {
             var hasUpdatePermission = await itemModelService.DeletePermissionAsync(LoginInfo.AccessCode);
             if (hasUpdatePermission)

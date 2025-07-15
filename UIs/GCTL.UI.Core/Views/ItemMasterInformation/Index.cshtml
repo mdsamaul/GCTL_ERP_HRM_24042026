@@ -93,6 +93,9 @@
         border: 1px solid red !important;
     }
 
+    .modal-custom-item-master{
+        max-width:80vw!important;
+    }
 </style>
 
 <div class="container-fluid">
@@ -100,7 +103,7 @@
 </div>
 
 <div class="container-fluid">
-    <div id="stickyHeader" class="card-header px-2 sticky-top rounded-bottom"
+    <div id="stickyHeader" class="card-header p-2 sticky-top rounded"
          style="min-height: 50px; z-index: 1020;">
         <partial name="_Toolbars" model="new ToobarModel(){Title=Model.Breadcrumb, Code=Model.Code , Name=Model.Setup.ProductCode}" />
     </div>
@@ -118,22 +121,26 @@
             <div class="col-12 col-md-6">
                 <div class="d-flex align-items-center">
                     <div class="productLeft text-right">Category </div>
-                    <div class="productRight">
+                   
+                    <div class="productRight btn-group">
                         <select class="w-100 form-control-sm dropdownCategory" asp-items="ViewBag.CategoryAll as SelectList">
                           <option value="">Select Category</option>
                       </select>
+                            <button class="btn btn-outline-success catagoryBtn rounded-md d-flex justify-content-center align-items-center"
+                                    style="width: 31px; height: 31px; font-size: 9px; line-height: 1; margin-left:2px;"
+                                    data-bs-toggle="modal" data-bs-target="#catagoryModal">
+                                <i class="fas fa-plus"></i>
+                            </button>
                     </div>
-                    <div class="plusRightBtn">
-                        @* <button class="btn btn-outline-success catagoryModalBtn rounded-md d-flex justify-content-center align-items-center" style="width: 31px; height: 31px; font-size: 9px; line-height: 1; margin-left:2px;"> *@
-                        @*     <i class="fas fa-plus"></i> *@
-                        @* </button> *@
+                   @*  <div class="plusRightBtn">                        
                         <!-- Trigger Button -->
                         <button class="btn btn-outline-success catagoryBtn rounded-md d-flex justify-content-center align-items-center"
                                 style="width: 31px; height: 31px; font-size: 9px; line-height: 1; margin-left:2px;"
                                 data-bs-toggle="modal" data-bs-target="#catagoryModal">
                             <i class="fas fa-plus"></i>
                         </button>
-                    </div>
+                    </div> *@
+                   
                 </div>
             </div>
         </div>
@@ -159,20 +166,24 @@
             <div class="col-12 col-md-6">
                 <div class="d-flex align-items-center">
                     <div class="productLeft text-right">Brand </div>
-                    <div class="productRight">
+                    <div class="productRight btn-group">
                         <select class="w-100 form-control-sm dropdownBrand" asp-items="ViewBag.BrandAll as SelectList">
                             <option value="">Select Brand</option>
                         </select>
-                    </div>
-                    <div class="plusRightBtn">
-                       @*  <button class="btn btn-outline-success rounded-md d-flex justify-content-center align-items-center" id="brandBtn" style="width: 31px; height: 31px; font-size: 9px; line-height: 1; margin-left:2px;">
-                            <i class="fas fa-plus"></i>
-                        </button> *@
                         <button class="btn btn-outline-success rounded-md d-flex justify-content-center align-items-center" id="brandBtn"
                                 style="width: 31px; height: 31px; font-size: 9px; line-height: 1; margin-left:2px;"
                                 data-bs-toggle="modal" data-bs-target="#brandModal">
                             <i class="fas fa-plus"></i>
                         </button>
+                    </div>
+
+                    <div class="plusRightBtn">
+                     
+                       @*  <button class="btn btn-outline-success rounded-md d-flex justify-content-center align-items-center" id="brandBtn"
+                                style="width: 31px; height: 31px; font-size: 9px; line-height: 1; margin-left:2px;"
+                                data-bs-toggle="modal" data-bs-target="#brandModal">
+                            <i class="fas fa-plus"></i>
+                        </button> *@
                     </div>
                 </div>
             </div>

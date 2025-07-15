@@ -5,7 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using GCTL.Core.Data;
 using GCTL.Core.ViewModels.INV_Catagory;
+using GCTL.Core.ViewModels.ItemMasterInformation;
+using GCTL.Core.ViewModels.ItemModel;
 using GCTL.Core.ViewModels.PrintingStationeryPurchaseEntry;
+using GCTL.Core.ViewModels.SalesSupplier;
 using GCTL.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,14 +18,23 @@ namespace GCTL.Service.PrintingStationeryPurchaseEntry
     {
         private readonly IRepository<RmgPurchaseOrderReceive> PurchaseOrderReceive;
         private readonly IRepository<CoreAccessCode> accessCodeRepository;
+        private readonly IRepository<SalesSupplier> salesSupRepo;
+        private readonly IRepository<HrmItemMasterInformation> productRepo;
+        private readonly IRepository<HrmModel> modelRepo;
 
         public PrintingStationeryPurchaseEntryService(
             IRepository<RmgPurchaseOrderReceive> PurchaseOrderReceive,
-            IRepository<CoreAccessCode> accessCodeRepository
+            IRepository<CoreAccessCode> accessCodeRepository,
+            IRepository<SalesSupplier> salesSupRepo,
+            IRepository<HrmItemMasterInformation> productRepo,
+            IRepository<HrmModel> modelRepo
             ) : base(PurchaseOrderReceive)
         {
             this.PurchaseOrderReceive = PurchaseOrderReceive;
             this.accessCodeRepository = accessCodeRepository;
+            this.salesSupRepo = salesSupRepo;
+            this.productRepo = productRepo;
+            this.modelRepo = modelRepo;
         }
 
         private readonly string CreateSuccess = "Data saved successfully.";
@@ -69,24 +81,7 @@ namespace GCTL.Service.PrintingStationeryPurchaseEntry
 
         #endregion
 
-        //public async Task<List<PrintingStationeryPurchaseEntrySetupViewModel>> GetAllAsync()
-        //{
-        //    //await Task.Delay(100);
-        //    try
-        //    {
-        //        return PurchaseOrderReceive.All().Select(c => new PrintingStationeryPurchaseEntrySetupViewModel
-        //        {
-        //            TC = c.Tc,
-
-        //        }).ToList();
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        throw;
-        //    }
-
-        //}
+       
         public async Task<List<PrintingStationeryPurchaseEntrySetupViewModel>> GetAllAsync()
         {
             try
@@ -293,6 +288,69 @@ namespace GCTL.Service.PrintingStationeryPurchaseEntry
         {
             bool Exists = PurchaseOrderReceive.All().Any(x => x.DepartmentCode == catagoryValue);
             return (Exists, DataExists, null);
+        }
+
+        public async Task<SalesSupplierSetupViewModel> getSupplierByIdAsync(string supplierId)
+        {
+            try
+            {
+                var suplier = salesSupRepo.All().Where(x => x.SupplierId == supplierId).FirstOrDefault();
+                if (suplier == null) return null;
+                var supplierData = new SalesSupplierSetupViewModel
+                {
+                    SupplierID = suplier.SupplierId,
+                    SupplierAddress = suplier.SupplierAddress
+                };
+                return supplierData;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public async Task<ItemMasterInformationSetupViewModel> productSelectIdDetailsAsync(string ProductCode)
+        {
+            try
+            {
+                var product = productRepo.All().Where(x => x.ProductCode == ProductCode).FirstOrDefault();
+                if (product == null) return null;
+                var supplierData = new ItemMasterInformationSetupViewModel
+                {
+                    ProductCode = product.ProductCode,
+                    ProductName = product.ProductName,
+                    Description = product.Description,
+                };
+                return supplierData;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<List<ItemModelSetupViewModel>> brandIdAsync(string brandId)
+        {
+            var listModel = await Task.Run(() =>
+                modelRepo.All()
+                .Where(x => x.BrandId == brandId)
+                .Select(x => new ItemModelSetupViewModel
+                {
+                    AutoId = x.AutoId,
+                    ModelID = x.ModelId,
+                    ModelName = x.ModelName,
+                    ShortName = x.ShortName,
+                    CompanyCode = x.CompanyCode,
+                    BrandID = x.BrandId,
+                    //BrandName = x.BrandId?, // যদি navigation property থাকে
+                    //ShowCreateDate = x.CreateDate?.ToString("yyyy-MM-dd"),
+                    //ShowModifyDate = x.ModifyDate?.ToString("yyyy-MM-dd")
+                })
+                .ToList()
+            );
+
+            return listModel;
         }
     }
 }
