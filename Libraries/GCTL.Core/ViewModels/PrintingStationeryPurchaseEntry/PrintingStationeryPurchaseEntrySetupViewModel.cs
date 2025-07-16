@@ -21,15 +21,10 @@ namespace GCTL.Core.ViewModels.PrintingStationeryPurchaseEntry
         public DateTime? ChallanDate { get; set; }
         public string? EmployeeID_ReceiveBy { get; set; }
         public string? Remarks { get; set; }
-        public decimal? TotalAmount { get; set; }
-        public string? LUser { get; set; }
-        public DateTime? LDate { get; set; }
-        public string? LIP { get; set; }
-        public string? LMAC { get; set; }
-        public DateTime? ModifyDate { get; set; }
-        public string UserInfoEmployeeID { get; set; } = string.Empty;
+        public decimal? TotalAmount { get; set; }        
         public string CompanyCode { get; set; } = string.Empty;
         public string ShowCreateDate { get; set; }
         public string ShowModifyDate { get; set; }
+        public List<PurchaseOrderReceiveDetailsDTO> purchaseOrderReceiveDetailsDTOs { get; set; }
     }
 }

@@ -133,11 +133,7 @@
 
             }
         })
-        $('.searchable-select').select2({
-            placeholder: 'Select an option',
-            allowClear: false,
-            width: '100%'
-        });
+       
 
         //create and edit
         // Save Button Click
@@ -254,7 +250,8 @@
                     $(commonName.ItemModelName).val(res.result.modelName);
                     $(commonName.ShortName).val(res.result.shortName);
                     $(commonName.ItemModelID).val(res.result.modelID);
-                    $(commonName.ItemModelBrand).val(res.result.brandID);
+                    //$(commonName.ItemModelBrand).val(res.result.brandID).trigger('change');
+                    $('#itemModelBrand').val(res.result.brandID).trigger('change');
                     $(commonName.CreateDate).text(res.result.showCreateDate);
                     $(commonName.UpdateDate).text(res.result.showModifyDate);
                 },
@@ -323,7 +320,11 @@
                 }
             });
         })
-
+        $('.searchable-select').select2({
+            placeholder: 'Select an option',
+            allowClear: false,
+            width: '100%'
+        });
         window.categoryModuleLoaded = true;
         // Initialize all functions
         var init = function () {

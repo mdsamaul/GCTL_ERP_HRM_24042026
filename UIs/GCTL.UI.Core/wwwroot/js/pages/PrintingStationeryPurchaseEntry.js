@@ -5,13 +5,21 @@
             baseUrl: "/",
             CompanyMultiSelectInput: "#",
             ShortName: "#ShortName",
-            CatagoryName: "#CatagoryName",
+            supplierName: "#supplierName",
             PurchaseOrderNo: "#purchaseOrderNo",
-            AutoId: "#AutoId",
+            StationaryDepartment: "#stationaryDepartment",
+            AutoId: "#Setup_TC",
+            InvoiceNo:"#stationeryInvoiceNo",
+            InvoiceDate:"#stationeryInvoiceDate",
+            InvoiceValue: "#stationeryInvoiceValue",
+            InvoiceChallanNo:"#stationeryInvoiceChallanNo",
+            InvoiceChallanDate:"#stationeryInvoiceChallanDate",
+            InvoicePurchaseBy:"#stationeryInvoicePurchaseBy",
+            StationeryRemarks:"#stationeryRemarks",
             RowCheckbox: ".row-checkbox",
             SelectedAll: "#selectAll",
             EditBrn: ".btn-edit",
-            CatagorySaveBtn: ".js-inv-catagory-save",
+            PrintStationerySaveBtn: ".js-Printing-Stationery-Purchase-Entry-save",
             DeleteBtn: "#js-inv-catagory-delete-confirm",
             UpdateDate: ".updateDate",
             CreateDate: ".createDate",
@@ -35,9 +43,16 @@
             SupplierContainer: "#supplierContainer",
             SupplierListBtn: ".supplierListBtn",
             SalesSuppAddress: "#salesSuppAddress",
-            ProductSelectId: "#productSelectId",
-            ProductDescription: "#productDescription",
-            BrandIdFromDropdown:"#brandIdFromDropdown",
+            ProductSelectId: ".productSelectId",
+            ProductDescription: ".productDescription",
+            BrandIdFromDropdown: ".brandIdFromDropdown",
+            ModelPopulateFromBrandId: ".modelPopulateFromBrandId",
+            UnitPriceOfProduct: ".unitPriceOfProduct",
+            QtyOfProduct: ".qtyOfProduct",
+            TotalPriceOfProductMulQty: ".totalPriceOfProductMulQty",
+            UnitOfProduct: ".unitOfProduct",
+            TotalPriceOfProductAddProductPrice: "#totalPriceOfProductAddProductPrice",
+            DetailsClear:"#delete-clear-row-btn",
         }, options);
         var filterUrl = commonName.baseUrl + "/GetFilterData";
         var loadCategoryDataUrl = commonName.baseUrl + "/LoadData";
@@ -55,6 +70,7 @@
         var supplierDetailsUrl = commonName.baseUrl + "/supplierIdDetails";
         var productSelectIdDetailsUrl = commonName.baseUrl + "/productSelectIdDetails";
         var brandIdDetailsonModelUrl = commonName.baseUrl + "/brandIdDetailsonModel";
+        var addMoreLoadProductUrl = commonName.baseUrl + "/addMoreLoadProduct";
         function stHeader() {
             window.addEventListener('scroll', function () {
                 const header = document.getElementById('stickyHeader');
@@ -260,46 +276,306 @@
             })
         })
         //produt id
-        $(commonName.ProductSelectId).on('change', function () {
+        $(document).on('change', '.ProductSelectId', function () {
             var productId = $(this).val();
+            var $row = $(this).closest('tr'); // শুধু এই row
+
             $.ajax({
                 url: productSelectIdDetailsUrl,
                 type: "POST",
                 contentType: 'application/json',
                 data: JSON.stringify(productId),
                 success: function (res) {
-                    if (res.data != null) {//todo
+                    if (res.data != null) {
                         console.log(res);
-                        $(commonName.ProductDescription).val(res.data.description);
+
+                        // Row scoped data binding
+                        $row.find('.ProductDescription').val(res.data.description);
+
+                        let $brandDropdown = $row.find('.BrandIdFromDropdown');
+                        $brandDropdown.empty().append('<option value="">Select Brand</option>');
+                        res.data.brandList.forEach(function (brand) {
+                            $brandDropdown.append(`<option value="${brand.brandID}">${brand.brandName}</option>`);
+                        });
+
+                        $row.find('.UnitPriceOfProduct').val(res.data.purchaseCost);
+                        $row.find('.QtyOfProduct').val(1);
+                        $row.find('.TotalPriceOfProductMulQty').val(res.data.purchaseCost);
+                        $row.find('.UnitOfProduct').val(res.data.unitID).trigger('change');
+                        $row.find('.ModelPopulateFromBrandId').empty();
+                        calculateGrandTotal(); // optional: if you want to update total
                     }
-                }, error: function (e) {
+                },
+                error: function (e) {
                     console.log(e);
                 }
             });
         });
+
         //brand 
-        $(commonName.BrandIdFromDropdown).on('change', function () {
+        $(document).on('change', '.BrandIdFromDropdown', function () {
             var brandId = $(this).val();
-            console.log(brandId);
+            var $row = $(this).closest('tr'); // ঐ row select
+
             $.ajax({
                 url: brandIdDetailsonModelUrl,
                 type: "POST",
                 contentType: 'application/json',
                 data: JSON.stringify(brandId),
                 success: function (res) {
-                    if (res.data != null) {//todo
+                    if (res.data != null) {
                         console.log(res);
-                        $(commonName.ProductDescription).val(res.data.description);
+
+                        let $modelDropdown = $row.find('.ModelPopulateFromBrandId');
+                        $modelDropdown.empty().append('<option value="">Select Model</option>');
+
+                        res.data.forEach(function (model) {
+                            $modelDropdown.append(`<option value="${model.modelID}">${model.modelName}</option>`);
+                        });
                     }
-                }, error: function (e) {
+                },
+                error: function (e) {
                     console.log(e);
                 }
             });
+        });
+        $(document).on('click', commonName.DetailsClear, function () {
+            let $targetRow = $(this).closest('tr');
+            clearRowFields($targetRow);
+        });
+
+
+        $(document).on('input', '.qtyOfProduct', function () {
+            let $row = $(this).closest('tr');
+            let qtyValue = parseFloat($(this).val()) || 0;
+            let unitPrice = parseFloat($row.find('.unitPriceOfProduct').val()) || 0;
+            let $totalPrice = $row.find('.totalPriceOfProductMulQty');
+
+            if (qtyValue > 0) {
+                let rowTotal = qtyValue * unitPrice;
+
+                $totalPrice.val(rowTotal.toFixed(2));
+
+                $(this).removeClass('printingStation-input');
+                $totalPrice.removeClass('printingStation-input');
+                $('#printStationerySaveBtn').prop('disabled', false);
+
+                calculateGrandTotal(); 
+            } else {
+                $(this).addClass('printingStation-input');
+                $totalPrice.addClass('printingStation-input');
+                $('#totalPriceOfProductAddProductPrice').addClass('printingStation-input');
+                $('#printStationerySaveBtn').prop('disabled', true);
+
+                $totalPrice.val(0);
+                $('#totalPriceOfProductAddProductPrice').val(0);
+                showToast("warning", "Quantity must be at least one or more.");
+            }
+        });
+
+        function calculateGrandTotal() {
+            let grandTotal = 0;
+            $('.totalPriceOfProductMulQty').each(function () {
+                let val = parseFloat($(this).val()) || 0;
+                grandTotal += val;
+            });
+
+            $('#totalPriceOfProductAddProductPrice').val(grandTotal.toFixed(2));
+        }
+
+
+        $(document).on('change','.totalPriceOfProductMulQty', function () {
+            var price = $(this).val();
+            console.log({price});
         })
-        //add more 
-        $(commonName.AddmoreDetailsBtn).on('click', function () {
-            console.log("click test");
-        })
+
+
+        function initializeSelect2() {
+            $('.searchable-select').select2({
+                width: '100%' 
+            });
+        }
+
+        $(document).on('click', '#addmoreDetailsBtn', function () {
+            $.ajax({
+                url: addMoreLoadProductUrl,
+                type: "GET",
+                success: function (res) {                  
+                    let productOptions = `<option>Select Product</option>`;
+                    res.productList.forEach(function (item) {
+                        productOptions += `<option value="${item.value}">${item.text}</option>`;
+                    });
+
+                    let sizeOptions = `<option>Select Size</option>`;
+                    res.sizeList.forEach(function (item) {
+                        sizeOptions += `<option value="${item.value}">${item.text}</option>`;
+                    });
+
+                    let periodOptions = `<option>Select Period</option>`;
+                    res.periodList.forEach(function (item) {
+                        periodOptions += `<option value="${item.value}">${item.text}</option>`;
+                    });
+
+                    let unitOptions = `<option>Select Unit</option>`;
+                    res.unitList.forEach(function (item) {
+                        unitOptions += `<option value="${item.value}">${item.text}</option>`;
+                    });
+
+                    let newRow = `
+<tr>
+    <td><select class="form-control-sm form-control searchable-select productSelectId">${productOptions}</select></td>
+    <td><input type="text" class="form-control-sm form-control productDescription" placeholder="Description"/></td>
+    <td><select class="form-control-sm form-control searchable-select brandIdFromDropdown"><option>Select Brand</option></select></td>
+    <td><select class="form-control-sm form-control searchable-select modelPopulateFromBrandId"><option>Select Model</option></select></td>
+    <td><select class="form-control-sm form-control searchable-select sizeSelect">${sizeOptions}</select></td>
+    <td><input type="number" class="form-control-sm form-control warrantyInput" placeholder="Warranty" /></td>
+    <td><select class="form-control-sm form-control searchable-select periodSelect">${periodOptions}</select></td>
+    <td><input type="number" class="form-control-sm form-control qtyOfProduct text-center" placeholder="Qty" /></td>
+    <td><select class="form-control-sm form-control searchable-select unitOfProduct">${unitOptions}</select></td>
+    <td><input type="number" class="form-control-sm form-control unitPriceOfProduct text-end" value="0" readonly /></td>
+    <td><input type="number" class="form-control-sm form-control totalPriceOfProductMulQty text-end mb-2" value="0" readonly /></td>
+    <td>
+        <div class="d-flex justify-content-center align-items-center">
+            <button class="btn btn-outline-danger rounded-md shadow d-flex justify-content-center align-items-center delete-row-btn" style="width: 30px; height: 30px; font-size: 9px;">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        </div>
+    </td>
+</tr>`;
+
+                    $('table tbody tr:last').before(newRow);
+
+                    // Reinitialize select2
+                    $('.searchable-select').select2({ width: '100%' });
+                }
+
+            });
+        });
+        $(document).on('change', '.productSelectId', function () {
+            let productId = $(this).val();
+            let $row = $(this).closest('tr'); 
+
+            $.ajax({
+                url: productSelectIdDetailsUrl,
+                type: "POST",
+                contentType: 'application/json',
+                data: JSON.stringify(productId),
+                success: function (res) {
+                    if (res.data != null) {
+                        console.log(res);
+
+                        // row scoped set
+                        $row.find('.productDescription').val(res.data.description);
+
+                        let brandDropdown = $row.find('.brandIdFromDropdown');
+                        brandDropdown.empty().append(`<option>Select Brand</option>`);
+                        res.data.brandList.forEach(function (brand) {
+                            brandDropdown.append(`<option value="${brand.brandID}">${brand.brandName}</option>`);
+                        });
+
+                        $row.find('.unitPriceOfProduct').val(res.data.purchaseCost);
+                        $row.find('.qtyOfProduct').val(1);
+                        $row.find('.totalPriceOfProductMulQty').val(res.data.purchaseCost);
+                        $row.find('.unitOfProduct').val(res.data.unitID).trigger('change');
+                        $row.find('.modelPopulateFromBrandId').empty();
+
+                        // Calculate grand total (total of all rows)
+                        calculateGrandTotal();
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        });
+
+        function calculateGrandTotal() {
+            let total = 0;
+            $('.totalPriceOfProductMulQty').each(function () {
+                let value = parseFloat($(this).val()) || 0;
+                total += value;
+            });
+            $('#totalPriceOfProductAddProductPrice').val(total);
+        }
+
+
+
+        $(document).on('click', '.delete-row-btn', function () {
+            $(this).closest('tr').remove();
+            calculateGrandTotal();
+        });
+
+
+
+
+
+    //    $(document).on('click', '#addmoreDetailsBtn', function () {
+           
+    //        let newRow = `
+    //    <tr>
+    //        <td>
+    //            <select class="form-control-sm form-control searchable-select">
+    //                <option>Select Product</option>
+    //                ${populateOptions(window.productList)}
+    //            </select>
+    //        </td>
+    //        <td><input type="text" class="form-control-sm form-control" placeholder="Description" /></td>
+    //        <td>
+    //            <select class="form-control-sm form-control searchable-select">
+    //                <option>Select Brand</option>
+    //                ${populateOptions(window.brandList)}
+    //            </select>
+    //        </td>
+    //        <td>
+    //            <select class="form-control-sm form-control searchable-select">
+    //                <option>Select Model</option>
+    //                ${populateOptions(window.modelList)}
+    //            </select>
+    //        </td>
+    //        <td>
+    //            <select class="form-control-sm form-control searchable-select">
+    //                <option>Select Size</option>
+    //                ${populateOptions(window.sizeList)}
+    //            </select>
+    //        </td>
+    //        <td><input type="number" class="form-control-sm form-control" placeholder="Warranty" /></td>
+    //        <td>
+    //            <select class="form-control-sm form-control searchable-select">
+    //                <option>Select Period</option>
+    //                ${populateOptions(window.periodList)}
+    //            </select>
+    //        </td>
+    //        <td><input type="number" class="form-control-sm form-control text-center" placeholder="Qty" /></td>
+    //        <td>
+    //            <select class="form-control-sm form-control searchable-select">
+    //                <option>Select Unit</option>
+    //                ${populateOptions(window.unitList)}
+    //            </select>
+    //        </td>
+    //        <td><input type="number" class="form-control-sm form-control text-end" value="0" readonly /></td>
+    //        <td><input type="number" class="form-control-sm form-control text-end mb-2" value="0" readonly /></td>
+    //        <td class="d-flex justify-content-center align-items-center gap-1">
+    //            <div class="d-flex gap-2">                   
+    //                <button class="btn btn-outline-danger rounded-md shadow d-flex justify-content-center align-items-center delete-row-btn" style="width: 30px; height: 30px; font-size: 9px;">
+    //                    <i class="fas fa-trash-alt"></i>
+    //                </button>
+    //            </div>
+    //        </td>
+    //    </tr>
+    //`;
+
+    //        $('.product-table tbody tr:last').before(newRow);
+
+    //        initializeSelect2(); // Call again after adding row
+    //    });
+        function populateOptions(dataList) {
+            if (!dataList) return '';
+            return dataList.map(item => `<option value="${item.value}">${item.text}</option>`).join('');
+        }
+
+        $(document).on('click', '.delete-row-btn', function () {
+            $(this).closest('tr').remove();
+        });
 
         AutoPrintingStationeryPurchaseId = function () {
             $.ajax({
@@ -316,80 +592,114 @@
 
         resetFrom = function () {
             $(commonName.AutoId).val(0);
-            $(commonName.CatagoryName).val('');
+            $(commonName.supplierName).val('');
             $(commonName.ShortName).val('');
         }
         $(commonName.ClearBrn).on('click', function () {
             resetFrom();
+            AutoPrintingStationeryPurchaseId();
         })
-        // get data from input
+        // get data from input //todo input
+        function formatDateTimeToSql(dateStr, timeStr) {
+            const dateTimeStr = dateStr + " " + timeStr;
+            const dt = new Date(dateTimeStr);
+
+            const pad = n => String(n).padStart(2, '0');
+            const year = dt.getFullYear();
+            const month = pad(dt.getMonth() + 1);
+            const day = pad(dt.getDate());
+
+            const hours = pad(dt.getHours());
+            const minutes = pad(dt.getMinutes());
+            const seconds = pad(dt.getSeconds());
+
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.000`;
+        }
+
+
         getFromData = function () {
+            const date = $("#datePicker1").val();
+            const time = $("#inlineTimePicker").val();
             var fromData = {
                 AutoId: $(commonName.AutoId).val(),
                 PurchaseOrderNo: $(commonName.PurchaseOrderNo).val(),
-                CatagoryName: $(commonName.CatagoryName).val(),
+                SupplierID: $(commonName.SupplierListBtn).val(),
                 ShortName: $(commonName.ShortName).val(),
+                ReceiveDate: formatDateTimeToSql(date, time), 
+                DepartmentCode: $(commonName.StationaryDepartment).val(),
+                InvoiceNo: $(commonName.InvoiceNo).val(),
+                InvoiceDate: $(commonName.InvoiceDate).val(),
+                InvoiceValue: $(commonName.InvoiceValue).val(),
+                ChallanNo: $(commonName.InvoiceChallanNo).val(),
+                ChallanDate: $(commonName.InvoiceChallanDate).val(),
+                EmployeeID_ReceiveBy: $(commonName.InvoicePurchaseBy).val(),
+                Remarks: $(commonName.StationeryRemarks).val(),
+                TotalAmount: $(commonName.TotalPriceOfProductAddProductPrice).val()
             };
             return fromData;
-        }
+        };
+
+
+
         //exists 
-        $(commonName.CatagoryName).on('input', function () {
+        //$(commonName.supplierName).on('input', function () {
 
-            let CatagoryValue = $(this).val();
+        //    let supplierValue = $(this).val();
+        //    console.log();
+        //    $.ajax({
+        //        url: alreadyExistUrl,
+        //        type: "POST",
+        //        contentType: 'application/json',
+        //        data: JSON.stringify(supplierValue),
+        //        success: function (res) {
+        //            if (res.isSuccess) {
+        //                showToast('warning', res.message);
+        //                $(commonName.supplierName).addClass('catagory-input');
+        //                $(commonName.PrintStationerySaveBtn).prop('disabled', true);
+        //            } else {
+        //                $(commonName.supplierName).removeClass('catagory-input');
+        //                $(commonName.PrintStationerySaveBtn).prop('disabled', false);
+        //                $(commonName.PrintStationerySaveBtn).css('border', 'none');
 
-            $.ajax({
-                url: alreadyExistUrl,
-                type: "POST",
-                contentType: 'application/json',
-                data: JSON.stringify(CatagoryValue),
-                success: function (res) {
-                    if (res.isSuccess) {
-                        showToast('warning', res.message);
-                        $(commonName.CatagoryName).addClass('catagory-input');
-                        $(commonName.CatagorySaveBtn).prop('disabled', true);
-                    } else {
-                        $(commonName.CatagoryName).removeClass('catagory-input');
-                        $(commonName.CatagorySaveBtn).prop('disabled', false);
-                        $(commonName.CatagorySaveBtn).css('border', 'none');
-
-                    }
-                }, error: function (e) {
-                }
-            });
-        })
+        //            }
+        //        }, error: function (e) {
+        //        }
+        //    });
+        //})
         //create and edit
         // Save Button Click
-        $(document).on('click', commonName.CatagorySaveBtn, function () {
+        $(document).on('click', commonName.PrintStationerySaveBtn, function () {
             var fromData = getFromData();
-            if (fromData.CatagoryName == null || fromData.CatagoryName.trim() === '') {
-                $(commonName.CatagoryName).addClass('catagory-input');
-                $(commonName.CatagorySaveBtn).prop('disabled', true);
-                $(commonName.CatagoryName).focus();
+            console.log(fromData);
+            if (fromData.supplierName == null || fromData.supplierName.trim() === '') {
+                $(commonName.supplierName).addClass('catagory-input');
+                $(commonName.PrintStationerySaveBtn).prop('disabled', true);
+                $(commonName.supplierName).focus();
                 return;
             }
 
 
-            $.ajax({
-                url: CreateUpdateUrl,
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(fromData),
-                success: function (res) {
-                    if (res.isSuccess) {
-                        showToast("success", res.message);
-                    } else {
-                        showToast("error", res.message);
-                    }
-                },
-                error: function (e) {
-                    showToast("error", res.message);
-                },
-                complete: function () {
-                    resetFrom();
-                    AutoPrintingStationeryPurchaseId();
-                    loadCategoryData();
-                }
-            });
+            //$.ajax({
+            //    url: CreateUpdateUrl,
+            //    type: "POST",
+            //    contentType: "application/json",
+            //    data: JSON.stringify(fromData),
+            //    success: function (res) {
+            //        if (res.isSuccess) {
+            //            showToast("success", res.message);
+            //        } else {
+            //            showToast("error", res.message);
+            //        }
+            //    },
+            //    error: function (e) {
+            //        showToast("error", res.message);
+            //    },
+            //    complete: function () {
+            //        resetFrom();
+            //        AutoPrintingStationeryPurchaseId();
+            //        loadCategoryData();
+            //    }
+            //});
         });
 
         // Reload DataTable Function
@@ -424,7 +734,7 @@
                         return `<button class="btn btn-sm btn-link btn-edit" data-id=${data}>${data}</button>`;
                     }
                 },
-                { "data": "catagoryName" },
+                { "data": "supplierName" },
                 { "data": "shortName" }
             ],
             "paging": true,
@@ -457,7 +767,7 @@
                     selectedIds = [];
                     selectedIds.push(res.result.autoId + '');
                     $(commonName.AutoId).val(res.result.autoId);
-                    $(commonName.CatagoryName).val(res.result.catagoryName);
+                    $(commonName.supplierName).val(res.result.supplierName);
                     $(commonName.ShortName).val(res.result.shortName);
                     $(commonName.PurchaseOrderNo).val(res.result.PurchaseOrderNo);
                     $(commonName.CreateDate).text(res.result.showCreateDate);

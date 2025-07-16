@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GCTL.Core.Data;
+using GCTL.Core.ViewModels.Brand;
 using GCTL.Core.ViewModels.INV_Catagory;
 using GCTL.Core.ViewModels.ItemMasterInformation;
 using GCTL.Core.ViewModels.ItemModel;
@@ -11,6 +12,7 @@ using GCTL.Core.ViewModels.PrintingStationeryPurchaseEntry;
 using GCTL.Core.ViewModels.SalesSupplier;
 using GCTL.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using QuestPDF.Infrastructure;
 
 namespace GCTL.Service.PrintingStationeryPurchaseEntry
 {
@@ -21,13 +23,15 @@ namespace GCTL.Service.PrintingStationeryPurchaseEntry
         private readonly IRepository<SalesSupplier> salesSupRepo;
         private readonly IRepository<HrmItemMasterInformation> productRepo;
         private readonly IRepository<HrmModel> modelRepo;
+        private readonly IRepository<HrmBrand> brandRepo;
 
         public PrintingStationeryPurchaseEntryService(
             IRepository<RmgPurchaseOrderReceive> PurchaseOrderReceive,
             IRepository<CoreAccessCode> accessCodeRepository,
             IRepository<SalesSupplier> salesSupRepo,
             IRepository<HrmItemMasterInformation> productRepo,
-            IRepository<HrmModel> modelRepo
+            IRepository<HrmModel> modelRepo,
+            IRepository<HrmBrand> brandRepo
             ) : base(PurchaseOrderReceive)
         {
             this.PurchaseOrderReceive = PurchaseOrderReceive;
@@ -35,6 +39,7 @@ namespace GCTL.Service.PrintingStationeryPurchaseEntry
             this.salesSupRepo = salesSupRepo;
             this.productRepo = productRepo;
             this.modelRepo = modelRepo;
+            this.brandRepo = brandRepo;
         }
 
         private readonly string CreateSuccess = "Data saved successfully.";
@@ -102,12 +107,12 @@ namespace GCTL.Service.PrintingStationeryPurchaseEntry
                     EmployeeID_ReceiveBy = c.EmployeeIdReceiveBy,
                     Remarks = c.Remarks,
                     TotalAmount = c.TotalAmount,
-                    LUser = c.Luser,
-                    LDate = c.Ldate,
-                    LIP = c.Lip,
-                    LMAC = c.Lmac,
+                    Luser = c.Luser,
+                    Ldate = c.Ldate,
+                    Lip = c.Lip,
+                    Lmac = c.Lmac,
                     ModifyDate = c.ModifyDate,
-                    UserInfoEmployeeID = c.UserInfoEmployeeId,
+                    UserInfoEmployeeId = c.UserInfoEmployeeId,
                     CompanyCode = c.CompanyCode
                 }).ToList();
             }
@@ -140,12 +145,12 @@ namespace GCTL.Service.PrintingStationeryPurchaseEntry
                     EmployeeID_ReceiveBy = entity.EmployeeIdReceiveBy,
                     Remarks = entity.Remarks,
                     TotalAmount = entity.TotalAmount,
-                    LUser = entity.Luser,
-                    LDate = entity.Ldate,
-                    LIP = entity.Lip,
-                    LMAC = entity.Lmac,
+                    Luser = entity.Luser,
+                    Ldate = entity.Ldate,
+                    Lip = entity.Lip,
+                    Lmac = entity.Lmac,
                     ModifyDate = entity.ModifyDate,
-                    UserInfoEmployeeID = entity.UserInfoEmployeeId,
+                    UserInfoEmployeeId = entity.UserInfoEmployeeId,
                     CompanyCode = entity.CompanyCode,
 
                     // Formatted string dates for UI display
@@ -181,11 +186,11 @@ namespace GCTL.Service.PrintingStationeryPurchaseEntry
                         EmployeeIdReceiveBy = model.EmployeeID_ReceiveBy,
                         Remarks = model.Remarks,
                         TotalAmount = model.TotalAmount,
-                        Luser = model.LUser,
+                        Luser = model.Luser,
                         Ldate = DateTime.Now,
-                        Lip = model.LIP,
-                        Lmac = model.LMAC,
-                        UserInfoEmployeeId = model.UserInfoEmployeeID,
+                        Lip = model.Lip,
+                        Lmac = model.Lmac,
+                        UserInfoEmployeeId = model.UserInfoEmployeeId,
                         CompanyCode = model.CompanyCode
                     };
 
@@ -209,11 +214,11 @@ namespace GCTL.Service.PrintingStationeryPurchaseEntry
                     exData.EmployeeIdReceiveBy = model.EmployeeID_ReceiveBy;
                     exData.Remarks = model.Remarks;
                     exData.TotalAmount = model.TotalAmount;
-                    exData.Luser = model.LUser;
+                    exData.Luser = model.Luser;
                     exData.ModifyDate = DateTime.Now;
-                    exData.Lip = model.LIP;
-                    exData.Lmac = model.LMAC;
-                    exData.UserInfoEmployeeId = model.UserInfoEmployeeID;
+                    exData.Lip = model.Lip;
+                    exData.Lmac = model.Lmac;
+                    exData.UserInfoEmployeeId = model.UserInfoEmployeeId;
                     exData.CompanyCode = model.CompanyCode;
 
                     await PurchaseOrderReceive.UpdateAsync(exData);
@@ -320,6 +325,13 @@ namespace GCTL.Service.PrintingStationeryPurchaseEntry
                     ProductCode = product.ProductCode,
                     ProductName = product.ProductName,
                     Description = product.Description,
+                    PurchaseCost = product.PurchaseCost,
+                    UnitID = product.UnitId,
+                    BrandList = brandRepo.All().Where(x => x.BrandId == product.BrandId).Select(x => new BrandSetupViewModel
+                    {
+                        BrandID = x.BrandId,
+                        BrandName = x.BrandName
+                    }).ToList()
                 };
                 return supplierData;
             }
@@ -339,13 +351,7 @@ namespace GCTL.Service.PrintingStationeryPurchaseEntry
                 {
                     AutoId = x.AutoId,
                     ModelID = x.ModelId,
-                    ModelName = x.ModelName,
-                    ShortName = x.ShortName,
-                    CompanyCode = x.CompanyCode,
-                    BrandID = x.BrandId,
-                    //BrandName = x.BrandId?, // যদি navigation property থাকে
-                    //ShowCreateDate = x.CreateDate?.ToString("yyyy-MM-dd"),
-                    //ShowModifyDate = x.ModifyDate?.ToString("yyyy-MM-dd")
+                    ModelName = x.ModelName
                 })
                 .ToList()
             );

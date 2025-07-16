@@ -193,10 +193,34 @@ namespace GCTL.UI.Core.Controllers
             return Json(new { data = result });
         }
         [HttpPost]
-        public async Task<IActionResult> brandIdDetailsonModel(string brandId)
+        public async Task<IActionResult> brandIdDetailsonModel([FromBody] string brandId)
         {
             var result = await printingStationeryPurchaseEntryService.brandIdAsync(brandId);
             return Json(new { data = result });
         }
+        [HttpGet]
+        public async Task<IActionResult> addMoreLoadProduct()
+        {
+            var sizeList = sizeRepo.All().Select(x => new { value = x.SizeId, text = x.SizeName }).ToList();
+            var periodList = periodRepo.All().Select(x => new { value = x.PeriodId, text = x.PeriodName }).ToList();
+            var unitList = unitRepo.All().Select(x => new { value = x.UnitTypId, text = x.UnitTypeName }).ToList();
+
+            var productList = productRepo.All()
+                .Select(x => new
+                {
+                    value = x.ProductCode,
+                    text = x.ProductName
+                }).ToList();
+
+            return Json(new
+            {
+                productList=productList,
+                sizeList=sizeList,
+                periodList=periodList,
+                unitList = unitList
+            });
+        }
+
+
     }
 }
