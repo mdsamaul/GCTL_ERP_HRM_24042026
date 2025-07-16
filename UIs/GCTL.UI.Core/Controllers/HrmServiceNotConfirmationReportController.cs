@@ -219,9 +219,107 @@ namespace GCTL.UI.Core.Controllers
                 {
                     "Sl No", "Employee ID", "Employee Name", "Joining Date", "Effective Date", "Due Payment Date", "Ref Letter No", "Ref Letter Date", "Remarks"
                 };
+
+                int[] columnWidths = new int[]
+                {
+                    526,
+                    1548,
+                    726,
+                    3254,
+                    3254,
+                    1148,
+                    1375,
+                    1375,
+                    1375,
+                };
+
+                var headerRow = new TableRow();
+
+                for(int i=0; i< headers.Length; i++)
+                {
+                    var borders = new TableCellBorders(
+                        new TopBorder() { Val = BorderValues.Single, Size = 4, Color = "D3D3D3" },
+                        new BottomBorder() { Val = BorderValues.Single, Size = 4, Color = "D3D3D3" },
+                        new LeftBorder() { Val = BorderValues.Single, Size = 4, Color = "D3D3D3" },
+                        new RightBorder() { Val = BorderValues.Single, Size = 4, Color = "D3D3D3" }
+                    );
+                    headerRow.Append(CreateCell(headers[i], columnWidths[i], bold: true, borders, centerAlign: true));
+                }
+
+                table.Append(headerRow);
+
+                int sn = 1;
+                
+                var orderedItems = item.OrderBy(x => x.EmployeeId).ToList();
+
+                foreach (var dataItem in orderedItems) 
+                {
+                    if(!string.IsNullOrWhiteSpace(dataItem.Code))
+                        uniqueEmployees.Add(dataItem.Code);
+
+                    var values = new[]
+                    {
+                        sn.ToString(),
+                        dataItem.Code??"",
+                        dataItem.Name??"",
+                        dataItem.JoiningDate ?? "",
+                        dataItem.EffectiveDate ?? "",
+                        dataItem.DuePaymentDate ?? "",
+                        dataItem.RefLetterNo ?? "",
+                        dataItem.RefLetterDate ?? "",
+                        dataItem.Remarks ?? ""
+                    };
+
+                    var dataRow = new TableRow();
+
+                    for(int i =0; i<values.Length; i++)
+                    {
+                        bool centerAlign = i != 2 && i != 3 && i != 4;
+                        //bool rightAlign = i == 6;
+
+                        var borders = new TableCellBorders(
+                            new TopBorder() { Val = BorderValues.Single, Size = 4, Color = "D3D3D3" },
+                            new BottomBorder() { Val = BorderValues.Single, Size = 4, Color = "D3D3D3" },
+                            new LeftBorder() { Val = BorderValues.Single, Size = 4, Color = "D3D3D3" },
+                            new RightBorder() { Val = BorderValues.Single, Size = 4, Color = "D3D3D3" }
+                        );
+
+                        dataRow.Append(CreateCell(values[i], columnWidths[i], false, borders, centerAlign));
+                    }
+
+                    table.Append(dataRow);
+                    sn++;
+                }
+
+                var totalRow = new TableRow();
             }
 
-            throw new NotImplementedException();
+            body.Append(new Paragraph(new Run()));
+            var summaryTable = new Table();
+            var summaryProps = new TableProperties(
+                new TableWidth() { Width = "15120", Type = TableWidthUnitValues.Dxa },
+                new TableBorders(
+                    new TopBorder() { Val = BorderValues.None },
+                    new BottomBorder() { Val = BorderValues.None },
+                    new LeftBorder() { Val = BorderValues.None },
+                    new RightBorder() { Val = BorderValues.None },
+                    new InsideHorizontalBorder() { Val = BorderValues.None },
+                    new InsideVerticalBorder() { Val = BorderValues.None }
+                )
+            );
+            summaryTable.Append(summaryProps);
+
+            var summaryRow = new TableRow();
+            summaryRow.Append(CreateCell($"Total Employees: {uniqueEmployees.Count}", 15120, bold: true, centerAlign: true));
+
+            body.Append(summaryTable);
+            body.Append(sectionProps);
+
+            mainPart.Document.Append(body);
+            mainPart.Document.Save();
+            document.Dispose();
+
+            return stream.ToArray();
         }
     }
 }

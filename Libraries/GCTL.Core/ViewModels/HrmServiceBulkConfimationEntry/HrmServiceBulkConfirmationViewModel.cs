@@ -10,6 +10,7 @@ namespace GCTL.Core.ViewModels.HrmServiceBulkConfimationEntry
     public class HrmServiceBulkConfirmationViewModel
     {
         public List<EmployeeListItemViewModel> confirmInfo { get; set; }
+        public string ConfirmeDate { get; set; }
     }
 
     public class LookupItemDto
@@ -31,7 +32,7 @@ namespace GCTL.Core.ViewModels.HrmServiceBulkConfimationEntry
         public List<string>? DepartmentCodes { get; set; }
         public List<string>? DesignationCodes { get; set; }
         public List<string>? EmployeeIDs { get; set; }
-        public List<string>? EmployeeStatuses { get; set; }
+        public List<string>? EmployeeTypes { get; set; }
         public string? ProbationEndDays { get; set; }
     }
 

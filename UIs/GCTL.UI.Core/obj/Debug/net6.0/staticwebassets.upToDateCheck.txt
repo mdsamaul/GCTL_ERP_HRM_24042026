@@ -2111,6 +2111,7 @@ wwwroot\js\pages\hrmDefInstitutes.js
 wwwroot\js\pages\hrmDefOccupations.js
 wwwroot\js\pages\hrmEmployee2.js
 wwwroot\js\pages\hrmEmployeeHolidayDeclaration.js
+wwwroot\js\pages\hrmEmpPPAlertReport.js
 wwwroot\js\pages\hrmEmpSalaryInfoEntry.js
 wwwroot\js\pages\hrmEmpSalaryInfoReport.js
 wwwroot\js\pages\hrmPayDefDeductionType.js

@@ -196,24 +196,37 @@
                     loadFilterEmp();
                 });
 
-                $(settings.joiningDateFrom + ',' + settings.joiningDateTo).on("change.loadFilter", function () {
-                    if (!isInitialLoad) {
+                //$(settings.joiningDateFrom + ',' + settings.joiningDateTo).on("change.loadFilter", function () {
+                //    if (!isInitialLoad) {
+                //        loadFilterEmp();
+                //    }
+                //});
+
+                $(settings.joiningDateFrom).on('input.loadFilter', function () {
+                    clearTimeout(window.yearInputTimeout);
+                    window.yearInputTimeout = setTimeout(() => {
+                        clearDependentDropdowns([
+                            settings.departmentIds,
+                            settings.designationIds,
+                            settings.employeeIds,
+                            //settings.typeIds,
+                        ]);
                         loadFilterEmp();
-                    }
+                    }, 300);
                 });
 
-                //$(settings.salaryYear).on('input.loadFilter', function () {
-                //    clearTimeout(window.yearInputTimeout);
-                //    window.yearInputTimeout = setTimeout(() => {
-                //        clearDependentDropdowns([
-                //            settings.departmentIds,
-                //            settings.designationIds,
-                //            settings.employeeIds,
-                //            //settings.typeIds,
-                //        ]);
-                //        loadFilterEmp();
-                //    }, 500);
-                //});
+                $(settings.joiningDateTo).on('input.loadFilter', function () {
+                    clearTimeout(window.yearInputTimeout);
+                    window.yearInputTimeout = setTimeout(() => {
+                        clearDependentDropdowns([
+                            settings.departmentIds,
+                            settings.designationIds,
+                            settings.employeeIds,
+                            //settings.typeIds,
+                        ]);
+                        loadFilterEmp();
+                    }, 300);
+                });
 
                 filterChangeBound = true;
             }

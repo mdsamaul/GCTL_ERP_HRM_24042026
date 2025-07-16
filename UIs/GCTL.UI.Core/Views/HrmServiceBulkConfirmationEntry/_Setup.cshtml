@@ -1,5 +1,39 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿
+<div class="col-xl-12 col-md-12 col-lg-12 col-sm-12 col-12 single-row-form mt-3">
+    <div class="row g-2">
+        <div class="col-equal pr-1">
+            <label for="companySelect" class="form-label mb-1 text-start">Company</label>
+            <select id="companySelect" class="form-select form-select-sm mx-auto"></select>
+        </div>
+        <div class="col-equal pr-1">
+            <label for="branchSelect" class="form-label mb-1 text-start">Branch</label>
+            <select id="branchSelect" class="form-select form-select-sm mx-auto" multiple="multiple"></select>
+        </div>
+        <div class="col-equal pr-1">
+            <label for="departmentSelect" class="form-label mb-1 text-start">Department</label>
+            <select id="departmentSelect" class="form-select form-select-sm mx-auto" multiple="multiple"></select>
+        </div>
+        <div class="col-equal pr-1">
+            <label for="designationSelect" class="form-label mb-1 text-start">Designation</label>
+            <select id="designationSelect" class="form-select form-select-sm mx-auto" multiple="multiple"></select>
+        </div>
+        <div class="col-equal pr-1">
+            <label for="empTypeSelect" class="form-label mb-1 text-start">Employee Type</label>
+            <select id="empTypeSelect" class="form-select form-select-sm mx-auto" multiple="multiple"></select>
+        </div>
+        
+        <div class="col-equal pr-1">
+            <label for="proPeriodSelect" class="form-label mb-1 text-start">Probation Period End Days</label>
+            <input type="text" id="proPeriodSelect" class="form-control form-control-sm mx-auto" multiple="multiple" />
+        </div>
+    </div>
+</div>
+<div class="col-xl-11 col-md-11 col-lg-11 col-sm-11 col-11 mt-5">
+    <div class="row align-items-center">
+        <label for="confirmSelect" class="col-2 text-right">Confirmation Date</label>
+        <div class="col-2">
+            <input type="text" id="confirmSelect" class="form-control form-control-sm mx-auto" />
+        </div>
+    </div>
+</div>
+

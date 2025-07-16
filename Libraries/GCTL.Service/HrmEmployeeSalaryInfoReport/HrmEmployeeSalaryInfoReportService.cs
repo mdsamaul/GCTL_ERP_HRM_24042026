@@ -548,13 +548,13 @@ namespace GCTL.Service.HrmEmployeeSalaryInfoReport
                 query = query.Where(x=> x.EmploymentNatureId != null && filter.EmpNatures.Contains(x.EmploymentNatureId));
 
             if (!string.IsNullOrWhiteSpace(filter.JoiningDateFrom) &&
-    DateTime.TryParseExact(filter.JoiningDateFrom, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var fromDate))
+    DateTime.TryParseExact(filter.JoiningDateFrom, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var fromDate))
             {
                 query = query.Where(x => x.JoiningDate.HasValue && x.JoiningDate.Value.Date >= fromDate.Date);
             }
 
             if (!string.IsNullOrWhiteSpace(filter.JoiningDateTo) &&
-                DateTime.TryParseExact(filter.JoiningDateTo, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var toDate))
+                DateTime.TryParseExact(filter.JoiningDateTo, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var toDate))
             {
                 query = query.Where(x => x.JoiningDate.HasValue && x.JoiningDate.Value.Date <= toDate.Date);
             }

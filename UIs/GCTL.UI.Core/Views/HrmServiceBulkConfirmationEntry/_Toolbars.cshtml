@@ -1,5 +1,28 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿
+@model ToobarModel
+<div class="row">
+	<div class="col-md-5">
+		<h6 class="page-title">Service Confirmation Entry (Bulk)</h6>
+	</div>
+	<div class="col-md-7">
+		<div class="btn-toolbar d-flex justify-content-end">
+			<div class="btn-group">
+				<button type="button" class="btn btn-default success-btn js-serviceConfirm-dec-save" id="submitButton" tabindex="6">
+					<i class="fa fa-save">&nbsp;</i> Save
+				</button>
+				<button type="button" class="btn btn-default danger-btn js-serviceConfirm-dec-delete-confirm">
+					<i class="fa fa-trash">&nbsp;</i> Delete
+				</button>
+				<button type="button" class="btn btn-default primary-btn js-serviceConfirm-dec-clear">
+					<i class="fa fa-eraser">&nbsp;</i> Clear
+				</button>
+				<button type="button" class="btn btn-default info-btn js-serviceConfirm-dec-print">
+					<i class="fa fa-print">&nbsp;</i> Print
+				</button>
+				<button type="button" class="btn btn-default warning-btn js-serviceConfirm-dec-favorite">
+					<i class="fa fa-star">&nbsp;</i> Favorite
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

@@ -29,15 +29,17 @@ namespace GCTL.Service.HrmServiceNotConfirmationReports
     {
         private readonly IRepository<HrmEmployee> employeeRepo;
         private readonly IRepository<HrmEmployeeOfficialInfo> empOffRepo;
-        public readonly IRepository<HrmServiceNotConfirmationEntry> sncRepo;
-        public readonly IRepository<CoreBranch> branchRepo;
-        public readonly IRepository<CoreCompany> companyRepo;
+        private readonly IRepository<HrmServiceNotConfirmationEntry> sncRepo;
+        private readonly IRepository<CoreBranch> branchRepo;
+        private readonly IRepository<CoreCompany> companyRepo;
+        private readonly IRepository<HrmDefDepartment> departmentRepo;
         public HrmServiceNotConfirmationReportService(
             IRepository<HrmServiceNotConfirmationEntry> sncRepo,
             IRepository<HrmEmployee> employeeRepo,
             IRepository<HrmEmployeeOfficialInfo> empOffRepo,
             IRepository<CoreBranch> branchRepo,
-            IRepository<CoreCompany> companyRepo)
+            IRepository<CoreCompany> companyRepo,
+            IRepository<HrmDefDepartment> departmentRepo)
             : base(sncRepo)
         {
             this.sncRepo = sncRepo;
@@ -45,6 +47,7 @@ namespace GCTL.Service.HrmServiceNotConfirmationReports
             this.empOffRepo = empOffRepo;
             this.branchRepo = branchRepo;
             this.companyRepo = companyRepo;
+            this.departmentRepo = departmentRepo;
         }
 
         public async Task<ReportFilterListViewModel> GetDataAsync(ReportFilterViewModel filter)
@@ -54,6 +57,8 @@ namespace GCTL.Service.HrmServiceNotConfirmationReports
                         join snc in sncRepo.All().AsNoTracking() on e.EmployeeId equals snc.EmployeeId
                         join b in branchRepo.All().AsNoTracking() on e.BranchCode equals b.BranchCode into branchGroup
                         from b in branchGroup.DefaultIfEmpty()
+                        join d in departmentRepo.All().AsNoTracking() on e.DepartmentCode equals d.DepartmentCode into depGroup
+                        from d in depGroup.DefaultIfEmpty()
                         join c in companyRepo.All().AsNoTracking() on e.CompanyCode equals c.CompanyCode into companyGroup
                         from c in companyGroup.DefaultIfEmpty()
 
@@ -63,7 +68,8 @@ namespace GCTL.Service.HrmServiceNotConfirmationReports
                             emp,
                             snc,
                             b,
-                            c
+                            c,
+                            d
                         };
 
             if (filter.CompanyCode?.Any() == true)
@@ -130,16 +136,19 @@ namespace GCTL.Service.HrmServiceNotConfirmationReports
             {
                 Companies = company,
                 Branches = allBranch,
+
                 EmployeeIds = query.Select(x => new ReportFilterResultViewModel
                 {
                     Code = x.e.EmployeeId,
-                    Name = x.e.EmployeeId
+                    Name = (x.emp.FirstName ?? "") + " " + (x.emp.LastName ?? "") + " " + $"({x.e.EmployeeId})"
                 }).Distinct().ToList(),
+
                 ServiceNotConfirms = await query.Select(x => new ReportFilterResultViewModel
                 {
                     Code = x.e.EmployeeId,
                     Name = (x.emp.FirstName ?? "") + " " + (x.emp.LastName ?? ""),
                     CompanyName = x.c.CompanyName,
+                    DepartmentName = x.d.DepartmentName,
                     EmployeeId = x.e.EmployeeId,
                     SncId = x.snc.Sncid,
                     JoiningDate = x.e.JoiningDate.HasValue ? x.e.JoiningDate.Value.ToString("yyyy-MM-dd") : null,
@@ -207,7 +216,7 @@ namespace GCTL.Service.HrmServiceNotConfirmationReports
 
             float[] columnWidths = new float[]
             {
-                3.8f, 9.4f, 3.8f, 19.8f, 19.8f, 7f, 8.4f, 8.4f, 8.4f
+                3.8f, 9.4f, 15.8f, 8.4f, 7f, 8.4f, 8.4f, 8.4f, 19.8f
             };
 
             string[] headers =
@@ -276,7 +285,7 @@ namespace GCTL.Service.HrmServiceNotConfirmationReports
                     {
                         TextAlignment alignment = i switch
                         {
-                            3 or 9 => TextAlignment.LEFT,
+                            2 or 8 => TextAlignment.LEFT,
                             _ => TextAlignment.CENTER
                         };
 
@@ -291,6 +300,8 @@ namespace GCTL.Service.HrmServiceNotConfirmationReports
 
                     sn++;
                 }
+
+                document.Add(table);
             }
 
             var summaryTable = new Table(new float[] { 1 });

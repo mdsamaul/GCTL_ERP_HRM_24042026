@@ -17,7 +17,7 @@
         <div class="row px-2 pr-3">
             <div class="col-md-12 pr-0">
                 <div class="w-100 headerToobar">
-                    <partial name="_Toolbars" model="new ToobarModel() { Title = Model.Breadcrumb, Code = Model.Code, }"></partial>
+                    <partial name="_Toolbar" model="new ToobarModel() { Title = Model.Breadcrumb, Code = Model.Code, }"></partial>
                 </div>
             </div>
         </div>
@@ -200,7 +200,7 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/pages/hrmEmpSalaryInfoReport.js"></script>
+    <script src="~/js/pages/hrmServiceNotConfirmReport.js"></script>
     <link href="~/lib/bootstrap-multiselect-master/dist/css/bootstrap-multiselect.min.css" rel="stylesheet" />
     <script src="~/lib/bootstrap-multiselect-master/dist/js/bootstrap-multiselect.min.js"></script>
 
@@ -209,7 +209,7 @@
 
     <script type="text/javascript">
         $(function () {
-            $.empSalaryInfoReport({
+            $.notConfirmReport({
                 baseUrl: '@Url.Action("Index", "HrmServiceNotConfirmationReport")',
                 load: function () {
                     console.log("Custom load logic called from Razor view");
