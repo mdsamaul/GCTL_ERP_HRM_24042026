@@ -69,18 +69,18 @@ namespace GCTL.Service.HrmEmployeePPAlertReports
             worksheet.Cells["A1"].Style.Font.Bold = true;
             worksheet.Cells["A1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
-            worksheet.Cells["A2:J1"].Merge = true;
-            worksheet.Cells["A2"].Value = "Service Not Confirmation Report";
+            worksheet.Cells["A2:J2"].Merge = true;
+            worksheet.Cells["A2"].Value = "Probational Period Alert Report";
             worksheet.Cells["A2"].Style.Font.Size = 16;
             worksheet.Cells["A2"].Style.Font.Bold = true;
             worksheet.Cells["A2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
-            int currentRow = 3;
+            int currentRow = 4;
             var groupData = data.GroupBy(x => x.DepartmentName ?? "Unknown Department").OrderBy(x => x.Key);
 
             foreach (var dep in groupData)
             {
-                worksheet.Cells[currentRow, 1, currentRow, 0].Merge = true;
+                worksheet.Cells[currentRow, 1, currentRow, 10].Merge = true;
                 worksheet.Cells[currentRow, 1].Value = $"Department: {dep.Key}";
                 worksheet.Cells[currentRow, 1].Style.Font.Bold = true;
                 worksheet.Cells[currentRow, 1].Style.Font.Size = 14;
@@ -91,6 +91,18 @@ namespace GCTL.Service.HrmEmployeePPAlertReports
                     "SN No","Employee ID", "Name", "Designation", "Department", "Gross Salary", "Joining Date", "Probation Period", "End on", "Service Length"
                 };
 
+
+                for (int i = 0; i < headers.Length; i++)
+                {
+                    var cell = worksheet.Cells[currentRow, i + 1];
+                    cell.Value = headers[i];
+                    cell.Style.Font.Bold = true;
+                    cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    cell.Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                }
+
+                currentRow++;
+
                 int sn = 1;
                 var uniqueEmp = new HashSet<string>();
 
@@ -99,6 +111,8 @@ namespace GCTL.Service.HrmEmployeePPAlertReports
                     if (!string.IsNullOrWhiteSpace(item.Code))
                         uniqueEmp.Add(item.Code);
 
+                    
+                    //currentRow++;
                     worksheet.Cells[currentRow, 1].Value = sn++;
                     worksheet.Cells[currentRow, 2].Value = item.Code;
                     worksheet.Cells[currentRow, 3].Value = item.Name;
@@ -125,11 +139,11 @@ namespace GCTL.Service.HrmEmployeePPAlertReports
                     }
 
                     currentRow++;
-                    sn++;
+                    //sn++;
                 }
                 currentRow += 2;
             }
-
+            worksheet.Cells.AutoFitColumns();
             return await package.GetAsByteArrayAsync();
         }
 
@@ -224,7 +238,7 @@ namespace GCTL.Service.HrmEmployeePPAlertReports
                 {
                     var headerCell = new Cell()
                         .Add(new Paragraph(header).SetFont(PdfFontFactory.CreateFont(StandardFonts.TIMES_BOLD))
-                        .SetFontSize(7)).SetTextAlignment(TextAlignment.CENTER)
+                        .SetFontSize(9)).SetTextAlignment(TextAlignment.CENTER)
                         .SetBorder(new iText.Layout.Borders.SolidBorder(ColorConstants.LIGHT_GRAY, 0.2f));
                     table.AddHeaderCell(headerCell);
                 }
@@ -255,7 +269,7 @@ namespace GCTL.Service.HrmEmployeePPAlertReports
                     for(int i=0; i<values.Length; i++)
                     {
                         var cell = new Cell()
-                            .Add(new Paragraph(values[i]).SetFont(regularFont).SetFontSize(7))
+                            .Add(new Paragraph(values[i]).SetFont(regularFont).SetFontSize(8))
                             .SetTextAlignment(TextAlignment.CENTER)
                             .SetBorder(new iText.Layout.Borders.SolidBorder(ColorConstants.LIGHT_GRAY, 0.2f));
                         if (i == 2) // Name column
@@ -371,7 +385,6 @@ namespace GCTL.Service.HrmEmployeePPAlertReports
             outputPdf.Close();
             return outputStream.ToArray();
         }
-
         public async Task<EmployeeFilterResultViewModel> GetDataAsync(EmployeeFilterViewModel filter)
         {
             var results = new EmployeeFilterResultViewModel();
@@ -393,55 +406,59 @@ namespace GCTL.Service.HrmEmployeePPAlertReports
             if (filter.CompanyCodes?.Any() == true)
                 query = query.Where(x => x.e.CompanyCode != null && filter.CompanyCodes.Contains(x.e.CompanyCode));
 
+            // FIX 1: Changed from x.e.CompanyCode to x.e.DepartmentCode
             if (filter.DepartmentCodes?.Any() == true)
-                query = query.Where(x => x.e.CompanyCode != null && filter.DepartmentCodes.Contains(x.e.DepartmentCode));
-            
-            if (filter.DesignationCodes?.Any() == true)
-                query = query.Where(x => x.e.CompanyCode != null && filter.DesignationCodes.Contains(x.e.DesignationCode));
+                query = query.Where(x => x.e.DepartmentCode != null && filter.DepartmentCodes.Contains(x.e.DepartmentCode));
 
-            if(filter.ProbationEndDays != null && int.TryParse(filter.ProbationEndDays, out int probationEndDays))
+            // FIX 2: Changed from x.e.CompanyCode to x.e.DesignationCode
+            if (filter.DesignationCodes?.Any() == true)
+                query = query.Where(x => x.e.DesignationCode != null && filter.DesignationCodes.Contains(x.e.DesignationCode));
+
+            if (filter.ProbationEndDays != null && int.TryParse(filter.ProbationEndDays, out int probationEndDays))
             {
-                
+                var cutoffDate = DateTime.Today.AddDays(-probationEndDays);
+
+                query = query.Where(x => (x.e.JoiningDate != null && x.e.JoiningDate != new DateTime(1900, 1, 1)) && x.e.JoiningDate.Value <= cutoffDate
+                );
             }
 
+            // FIX 3: Updated property names and date format handling
             if (!string.IsNullOrWhiteSpace(filter.DateFrom) &&
-                 DateTime.TryParseExact(filter.DateFrom, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var fromDate))
+                 DateTime.TryParseExact(filter.DateFrom, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var fromDate))
             {
                 query = query.Where(x => x.e.JoiningDate.HasValue && x.e.JoiningDate.Value.Date >= fromDate.Date);
             }
 
+            // FIX 4: Updated property name and consistent date format
             if (!string.IsNullOrWhiteSpace(filter.DateTo) &&
-                DateTime.TryParseExact(filter.DateTo, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var toDate))
+                DateTime.TryParseExact(filter.DateTo, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var toDate))
             {
                 query = query.Where(x => x.e.JoiningDate.HasValue && x.e.JoiningDate.Value.Date <= toDate.Date);
             }
 
-            //if (filter.EmployeeId?.Any() == true)
-            //query = query.Where(x => x.e.EmployeeId != null && filter.EmployeeId.Contains(x.e.EmployeeId));
-
             var allFilter = await query.ToListAsync();
-            var empIds = allFilter.Select(x=>x.e.EmployeeId).ToList();
+            var empIds = allFilter.Select(x => x.e.EmployeeId).ToList();
 
-            //var extData = await ppExtentionRepo.All().AsNoTracking()
-            //    .Where(x=>empIds.Contains(x.EmployeeId))
-            //    .OrderBy(x => x.EmployeeId)
-            //    .ThenByDescending(x => x.Ppeid)
-            //    .ToListAsync();
+            var extData = await ppExtentionRepo.All().AsNoTracking()
+                .Where(x => empIds.Contains(x.EmployeeId))
+                .OrderBy(x => x.EmployeeId)
+                .ThenByDescending(x => x.Ppeid)
+                .ToListAsync();
 
-            //var extensionsByEmp = extData
-            //    .GroupBy(x => x.EmployeeId)
-            //    .ToDictionary(g => g.Key, g => g.ToList());
+            var extensionsByEmp = extData
+                .GroupBy(x => x.EmployeeId)
+                .ToDictionary(g => g.Key, g => g.ToList());
 
-            //var latestExtDict = extensionsByEmp.ToDictionary(
-            //    kvp => kvp.Key,
-            //    kvp => kvp.Value.FirstOrDefault()
-            //);
+            var latestExtDict = extensionsByEmp.ToDictionary(
+                kvp => kvp.Key,
+                kvp => kvp.Value.FirstOrDefault()
+            );
 
-            var company = await companyRepo.All().Where(x=>x.CompanyCode == "001")
-                .Select(x=>new LookupItemDto 
+            var company = await companyRepo.All().Where(x => x.CompanyCode == "001")
+                .Select(x => new LookupItemDto
                 {
-                    Code = x.CompanyCode, 
-                    Name = x.CompanyName 
+                    Code = x.CompanyCode,
+                    Name = x.CompanyName
                 }).Distinct().ToListAsync();
 
             var branch = await branchRepo.All().Where(x => x.CompanyCode == "001" && x.BranchCode != null && x.BranchName != null)
@@ -451,19 +468,19 @@ namespace GCTL.Service.HrmEmployeePPAlertReports
                     Name = x.BranchName
                 }).Distinct().ToListAsync();
 
-            results.Employees = allFilter.Select(x => 
+            results.Employees = allFilter.Select(x =>
             {
                 string serviceLength = "";
                 string pPeriod = "";
-                //string ePeriod = "";
-                //DateTime? ePeriodEndOn = null;
+                string ePeriod = "";
+                DateTime? ePeriodEndOn = null;
                 DateTime? pPeriodEndOn = null;
 
-                //var latestExt = latestExtDict.ContainsKey(x.e.EmployeeId) ? latestExtDict[x.e.EmployeeId] : null;
+                var latestExt = latestExtDict.ContainsKey(x.e.EmployeeId) ? latestExtDict[x.e.EmployeeId] : null;
 
-                //var allExt = extensionsByEmp.ContainsKey(x.e.EmployeeId) ? extensionsByEmp[x.e.EmployeeId] : new List<HrmDefProbationPeriodExtension>();
+                var allExt = extensionsByEmp.ContainsKey(x.e.EmployeeId) ? extensionsByEmp[x.e.EmployeeId] : new List<HrmDefProbationPeriodExtension>();
 
-                if(x.e.JoiningDate.HasValue && x.e.JoiningDate.Value != new DateTime(1900, 1, 1))
+                if (x.e.JoiningDate.HasValue && x.e.JoiningDate.Value != new DateTime(1900, 1, 1))
                 {
                     serviceLength = CalculateDateLengthInDays(x.e.JoiningDate.Value, DateTime.Today);
 
@@ -475,57 +492,75 @@ namespace GCTL.Service.HrmEmployeePPAlertReports
                     }
                 }
 
-                //if (latestExt != null && latestExt.ExtendedPeriod != null) 
-                //{
-                //    DateTime? currentEndDate = pPeriodEndOn;
-                //    DateTime? finalExtensionEndDate = currentEndDate;
+                // FIX 5: Fixed extension calculation logic
+                if (latestExt != null && allExt.Any())
+                {
+                    DateTime? currentEndDate = pPeriodEndOn;
+                    DateTime? finalExtensionEndDate = currentEndDate;
 
-                //    foreach (var item in allExt)
-                //    {
-                //        if (item.ExtendedPeriod != null && !string.IsNullOrEmpty(item.PeriodInfoId) && finalExtensionEndDate.HasValue)
-                //        {
-                //            switch (item.PeriodInfoId)
-                //            {
-                //                case "01":
-                //                    finalExtensionEndDate = finalExtensionEndDate.Value.AddYears(int.Parse(item.ExtendedPeriod));
-                //                    break;
-                //                case "02":
-                //                    finalExtensionEndDate = finalExtensionEndDate.Value.AddMonths(int.Parse(item.ExtendedPeriod) * 6);
-                //                    break;
-                //                case "03":
-                //                    finalExtensionEndDate = finalExtensionEndDate.Value.AddMonths(int.Parse(item.ExtendedPeriod) * 3);
-                //                    break;
-                //                case "04":
-                //                    finalExtensionEndDate = finalExtensionEndDate.Value.AddMonths(int.Parse(item.ExtendedPeriod));
-                //                    break;
-                //                case "05":
-                //                    finalExtensionEndDate = finalExtensionEndDate.Value.AddDays(int.Parse(item.ExtendedPeriod) * 7);
-                //                    break;
-                //                case "06":
-                //                    finalExtensionEndDate = finalExtensionEndDate.Value.AddDays(int.Parse(item.ExtendedPeriod));
-                //                    break;
-                //            }
-                //        }
-                //    }
+                    // Process extensions in chronological order
+                    foreach (var item in allExt.OrderBy(ext => ext.Ppeid))
+                    {
+                        if (item.ExtendedPeriod != null && !string.IsNullOrEmpty(item.PeriodInfoId) && finalExtensionEndDate.HasValue)
+                        {
+                            if (int.TryParse(item.ExtendedPeriod, out int extendedPeriodValue))
+                            {
+                                switch (item.PeriodInfoId)
+                                {
+                                    case "01":
+                                        finalExtensionEndDate = finalExtensionEndDate.Value.AddYears(extendedPeriodValue);
+                                        break;
+                                    case "02":
+                                        finalExtensionEndDate = finalExtensionEndDate.Value.AddMonths(extendedPeriodValue * 6);
+                                        break;
+                                    case "03":
+                                        finalExtensionEndDate = finalExtensionEndDate.Value.AddMonths(extendedPeriodValue * 3);
+                                        break;
+                                    case "04":
+                                        finalExtensionEndDate = finalExtensionEndDate.Value.AddMonths(extendedPeriodValue);
+                                        break;
+                                    case "05":
+                                        finalExtensionEndDate = finalExtensionEndDate.Value.AddDays(extendedPeriodValue * 7);
+                                        break;
+                                    case "06":
+                                        finalExtensionEndDate = finalExtensionEndDate.Value.AddDays(extendedPeriodValue);
+                                        break;
+                                }
+                            }
+                        }
+                    }
 
-                //    if (finalExtensionEndDate.HasValue && currentEndDate.HasValue)
-                //    {
-                //        ePeriod = CalculateDateLengthInDays(currentEndDate.Value, finalExtensionEndDate.Value);
-                //        ePeriodEndOn = finalExtensionEndDate;
-                //    }
-                //}
+                    if (finalExtensionEndDate.HasValue && currentEndDate.HasValue)
+                    {
+                        ePeriod = CalculateDateLengthInDays(currentEndDate.Value, finalExtensionEndDate.Value);
+                        ePeriodEndOn = finalExtensionEndDate;
+                    }
+                }
+
+                // FIX 6: Calculate total probation period including extensions
+                string totalProbationPeriod = pPeriod;
+                DateTime? totalProbationEndDate = pPeriodEndOn;
+
+                if (ePeriodEndOn.HasValue)
+                {
+                    totalProbationEndDate = ePeriodEndOn;
+                    if (x.e.JoiningDate.HasValue)
+                    {
+                        totalProbationPeriod = CalculateDateLengthInDays(x.e.JoiningDate.Value, ePeriodEndOn.Value);
+                    }
+                }
 
                 return new HrmEmployeePPAlertReportViewModel
                 {
                     Code = x.e.EmployeeId,
                     Name = string.Join(" ", new[] { x.emp.FirstName, x.emp.LastName }.Where(n => !string.IsNullOrWhiteSpace(n))),
-                    DesingationName = x.des.DesignationName,
-                    DepartmentName = x.dep.DepartmentName,
-                    CompanyName = x.c.CompanyName,
-                    GrossSalary = x.e.GrossSalary.ToString("N2") ?? "",
+                    DesingationName = x.des?.DesignationName ?? "", // FIX 7: Fixed typo and added null check
+                    DepartmentName = x.dep?.DepartmentName ?? "", // FIX 8: Added null check
+                    CompanyName = x.c?.CompanyName ?? "", // FIX 9: Added null check
+                    GrossSalary = x.e.GrossSalary.ToString("N2") ?? "0.00", // FIX 10: Improved null handling
                     JoiningDate = x.e.JoiningDate.HasValue ? x.e.JoiningDate.Value.ToString("dd/MM/yyyy") : "",
-                    ProbationPeriod = pPeriod,
-                    ProbationPeriodEndOn = pPeriodEndOn.HasValue ? pPeriodEndOn.Value.ToString("dd/MM/yyyy") : "",
+                    ProbationPeriod = totalProbationPeriod, // FIX 11: Use total probation period
+                    ProbationPeriodEndOn = totalProbationEndDate.HasValue ? totalProbationEndDate.Value.ToString("dd/MM/yyyy") : "", // FIX 12: Use total end date
                     ServiceLength = serviceLength
                 };
 
@@ -536,13 +571,13 @@ namespace GCTL.Service.HrmEmployeePPAlertReports
             results.LookupData["branches"] = branch;
 
             results.LookupData["departments"] = allFilter
-                .Where(x => x.dep.DepartmentCode != null && x.dep.DepartmentName != null)
+                .Where(x => x.dep?.DepartmentCode != null && x.dep.DepartmentName != null)
                 .GroupBy(x => new { x.dep.DepartmentCode, x.dep.DepartmentName })
                 .Select(x => new LookupItemDto { Code = x.Key.DepartmentCode, Name = x.Key.DepartmentName })
                 .ToList();
 
             results.LookupData["designations"] = allFilter
-                .Where(x => x.des.DesignationCode != null && x.des.DesignationName != null)
+                .Where(x => x.des?.DesignationCode != null && x.des.DesignationName != null)
                 .GroupBy(x => new { x.des.DesignationCode, x.des.DesignationName })
                 .Select(x => new LookupItemDto { Code = x.Key.DesignationCode, Name = x.Key.DesignationName })
                 .ToList();
@@ -552,39 +587,36 @@ namespace GCTL.Service.HrmEmployeePPAlertReports
 
         private DateTime? CalculateProbationEndDate(DateTime? value, string probationPeriod, string probationPeriodType)
         {
-            if (value == null)
+            if (value == null || string.IsNullOrEmpty(probationPeriod) || !int.TryParse(probationPeriod, out int period))
                 return null;
 
             switch (probationPeriodType)
             {
                 case "01": // Years
-                    return value.Value.AddYears(int.Parse(probationPeriod));
+                    return value.Value.AddYears(period);
                 case "02": // Half-Years
-                    return value.Value.AddMonths(int.Parse(probationPeriod) * 6);
+                    return value.Value.AddMonths(period * 6);
                 case "03": // Quarter-Years
-                    return value.Value.AddMonths(int.Parse(probationPeriod) * 3);
+                    return value.Value.AddMonths(period * 3);
                 case "04": // Months
-                    return value.Value.AddMonths(int.Parse(probationPeriod));
+                    return value.Value.AddMonths(period);
                 case "05": // Weeks
-                    return value.Value.AddDays(int.Parse(probationPeriod) * 7);
+                    return value.Value.AddDays(period * 7);
                 case "06": // Days
-                    return value.Value.AddDays(int.Parse(probationPeriod));
+                    return value.Value.AddDays(period);
                 default:
                     return null;
             }
         }
 
-        private string CalculateDateLengthInDays(DateTime? startDate, DateTime? endDate)
+        private string CalculateDateLengthInDays(DateTime startDate, DateTime endDate)
         {
-            if (startDate == null || startDate == new DateTime(1900, 1, 1) || endDate == null)
+            if (startDate == new DateTime(1900, 1, 1) || endDate == new DateTime(1900, 1, 1))
                 return "";
 
             if (startDate <= endDate)
             {
-                if (startDate == new DateTime(1900, 1, 1) || endDate == new DateTime(1900, 1, 1))
-                    return "";
-
-                var totalDays = (endDate - startDate).Value.Days;
+                var totalDays = (endDate - startDate).Days;
                 return $"{totalDays} {(totalDays == 1 ? "day" : "days")}";
             }
             else
@@ -593,6 +625,44 @@ namespace GCTL.Service.HrmEmployeePPAlertReports
             }
         }
 
+        // FIX 13: Additional helper method for better date calculation
+        private string CalculateDateLengthDetailed(DateTime startDate, DateTime endDate)
+        {
+            if (startDate == new DateTime(1900, 1, 1) || endDate == new DateTime(1900, 1, 1))
+                return "";
+
+            if (startDate > endDate)
+                return "";
+
+            var years = endDate.Year - startDate.Year;
+            var months = endDate.Month - startDate.Month;
+            var days = endDate.Day - startDate.Day;
+
+            if (days < 0)
+            {
+                months--;
+                days += DateTime.DaysInMonth(startDate.Year, startDate.Month);
+            }
+
+            if (months < 0)
+            {
+                years--;
+                months += 12;
+            }
+
+            var parts = new List<string>();
+
+            if (years > 0)
+                parts.Add($"{years} {(years == 1 ? "year" : "years")}");
+
+            if (months > 0)
+                parts.Add($"{months} {(months == 1 ? "month" : "months")}");
+
+            if (days > 0)
+                parts.Add($"{days} {(days == 1 ? "day" : "days")}");
+
+            return parts.Any() ? string.Join(", ", parts) : "0 days";
+        }
     }
 }
 

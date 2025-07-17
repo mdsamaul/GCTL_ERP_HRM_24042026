@@ -176,7 +176,7 @@ namespace GCTL.UI.Core.Controllers
                     ),
                     new Run(new RunProperties(new Bold(), new RunFonts() { Ascii = "Times New Roman", HighAnsi = "Times New Roman" }, new FontSize() { Val = "28" }), new Text(data.Select(e => e.CompanyName).Distinct().FirstOrDefault())), // 14pt
                     new Run(new Break()),
-                    new Run(new RunProperties(new Bold(), new RunFonts() { Ascii = "Times New Roman", HighAnsi = "Times New Roman" }, new FontSize() { Val = "24" }), new Text("Employee Service Not Confirm Report")) // 12pt
+                    new Run(new RunProperties(new Bold(), new RunFonts() { Ascii = "Times New Roman", HighAnsi = "Times New Roman" }, new FontSize() { Val = "24" }), new Text("Employee Probational Period Alert Report")) // 12pt
                 )
             );
 
@@ -218,7 +218,7 @@ namespace GCTL.UI.Core.Controllers
                     "SN No", "Employee ID", "Name", "Designation", "Department", "Gross Salary", "Joining Date", "Probation Period", "End on", "Service Length"
                 };
 
-                int[] colWidths = new int[] { 526, 1548, 3254, 3254, 1148, 1375, 1375, 1375, 1375, 1375 };
+                int[] colWidths = new int[] { 526, 1548, 3254, 1375, 1375, 1375, 1375, 1575, 1375, 1375 };
 
                 var headerRow = new TableRow();
 
@@ -261,7 +261,7 @@ namespace GCTL.UI.Core.Controllers
 
                     for (int i = 0; i < values.Length; i++)
                     {
-                        bool centerAlign = i != 2 && i != 3 && i != 4;
+                        bool centerAlign = i != 2;
                         //bool rightAlign = i == 6;
 
                         var borders = new TableCellBorders(
@@ -277,9 +277,9 @@ namespace GCTL.UI.Core.Controllers
                     table.Append(row);
                     sn++;
                 }
-                var tableRow = new TableRow();
+               
+                body.Append(table);
             }
-
 
             body.Append(new Paragraph(new Run()));
             var summaryTable = new Table();

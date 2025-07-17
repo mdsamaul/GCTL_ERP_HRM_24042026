@@ -2,32 +2,32 @@
     <div class="row g-2">
         <div class="col-equal pr-1">
             <label for="companySelect" class="form-label label-consistent mb-1 text-start">Company</label>
-            <select id="companySelect" class="form-select form-element-consistent" multiple="multiple"></select>
+            <select id="companySelect" class="form-select form-control form-element-consistent" multiple="multiple"></select>
         </div>
         <div class="col-equal pr-1">
             <label for="departmentSelect" class="form-label label-consistent mb-1 text-start">Department</label>
-            <select id="departmentSelect" class="form-select form-element-consistent" multiple="multiple"></select>
+            <select id="departmentSelect" class="form-select form-control form-element-consistent" multiple="multiple"></select>
         </div>
         <div class="col-equal pr-1">
             <label for="designationSelect" class="form-label label-consistent mb-1 text-start">Designation</label>
-            <select id="designationSelect" class="form-select form-element-consistent" multiple="multiple"></select>
+            <select id="designationSelect" class="form-select form-control form-element-consistent" multiple="multiple"></select>
         </div>
 
         <div class="col-equal pr-1">
             <label for="joinDateFromSelect" class="form-label label-consistent mb-1 text-start">Date From</label>
-            <input type="date" id="joinDateFromSelect" class="form-control form-element-consistent" />
+            <input type="date" id="joinDateFromSelect" class="form-control-sm form-control form-element-consistent" />
         </div>
         <div class="col-equal pr-1">
             <label for="joinDateToSelect" class="form-label label-consistent mb-1 text-start">To</label>
-            <input type="date" id="joinDateToSelect" class="form-control form-element-consistent" />
+            <input type="date" id="joinDateToSelect" class="form-control-sm form-control form-element-consistent" />
         </div>
         <div class="col-equal pr-1">
-            <label for="ppEndDaysSelect" class="form-label label-consistent mb-1 text-start">Probation Period End Days</label>
-            <input type="text" id="ppEndDaysSelect" class="form-control form-element-consistent" />
+            <label for="ppEndDaysSelect" class="form-label label-consistent mb-1 text-start">End Days</label>
+            <input type="text" id="ppEndDaysSelect" class="form-control-sm form-control form-element-consistent" />
         </div>
         <div class="col-equal pr-1">
             <label for="exportFormatSelect" class="form-label label-consistent mb-1 text-start">Export Format</label>
-            <select id="exportFormatSelect" class="form-select form-element-consistent">
+            <select id="exportFormatSelect" class="form-control-sm form-control form-element-consistent">
                 <option value="pdf" selected>PDF</option>
                 <option value="word">Word</option>
                 <option value="excel">Excel</option>
@@ -36,8 +36,8 @@
         </div>
         <div class="col-equal">
             <label class="form-label label-consistent mb-1 text-start" style="visibility: hidden;">Action</label>
-            <button id="downloadBtn" class="btn btn-primary btn-consistent w-100">
-                <i class="bi bi-file-earmark-text me-1"></i> Generate Report
+            <button id="downloadBtn" class="btn btn-default btn-consistent w-100">
+                <i class="bi bi-file-earmark-text me-1"></i> Export
             </button>
         </div>
     </div>

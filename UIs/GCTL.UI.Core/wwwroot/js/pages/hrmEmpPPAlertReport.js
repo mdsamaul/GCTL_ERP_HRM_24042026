@@ -26,7 +26,7 @@
         let isInitialLoad = true;
         let filterChangeBound = false;
         let flatpickrInstance = {};
-
+        let empDataTable = null;
 
         const toArray = val => val ? (Array.isArray(val) ? val : [val]) : [];
         const showLoading = () => $("#customLoadingOverlay").css("display", "flex");
@@ -84,13 +84,8 @@
         const initializeMultiselects = () => {
             const selectors = [
                 [settings.companySelect, 'Company(s)'],
-                //[settings.branchIds, 'Branch(es)'],
                 [settings.departmentSelect, 'Department(s)'],
                 [settings.designationSelect, 'Designation(s)'],
-                //[settings.employeeIds, 'Employee(s)'],
-                //[settings.empNature, 'Employee Nature(s)'],
-                //[settings.empType, 'Employee Type(s)'],
-                //[settings.empStatus, 'Employee Status(s)']
             ];
 
             selectors.forEach(([selector, text]) => {
@@ -103,7 +98,6 @@
                     allSelectedText: 'All Selected',
                     filterPlaceholder: 'Search.......',
                     buttonWidth: '100%',
-                    maxHeight: 350,
                     enableClickableOptGroups: true,
                     numberDisplayed: 1,
                     enableCaseInsensitiveFiltering: true
@@ -111,14 +105,13 @@
             });
         };
 
-
         const getFilterValue = () => ({
             CompanyCodes: toArray($(settings.companySelect).val()),
             DepartmentCodes: toArray($(settings.departmentSelect).val()),
             DesignationCodes: toArray($(settings.designationSelect).val()),
 
-            JoiningDateFrom: $(settings.joiningDateFrom).val() || null,
-            JoiningDateTo: $(settings.joiningDateTo).val() || null,
+            DateFrom: $(settings.joiningDateFrom).val() || null,
+            DateTo: $(settings.joiningDateTo).val() || null,
 
             ProbationEndDays: $(settings.pEndDaysSelect).val() || null
         });
@@ -176,8 +169,6 @@
                         clearDependentDropdowns([
                             settings.departmentIds,
                             settings.designationIds,
-                            settings.employeeIds,
-                            //settings.typeIds,
                         ]);
                         loadFilterEmp();
                     }, 300);
@@ -188,9 +179,18 @@
                     window.yearInputTimeout = setTimeout(() => {
                         clearDependentDropdowns([
                             settings.departmentIds,
-                            settings.designationIds,
-                            settings.employeeIds,
-                            //settings.typeIds,
+                            settings.designationIds
+                        ]);
+                        loadFilterEmp();
+                    }, 300);
+                });
+
+                $(settings.pEndDaysSelect).on('input.loadFilter', function () {
+                    clearTimeout(window.yearInputTimeout);
+                    window.yearInputTimeout = setTimeout(() => {
+                        clearDependentDropdowns([
+                            settings.departmentIds,
+                            settings.designationIds
                         ]);
                         loadFilterEmp();
                     }, 300);
@@ -216,14 +216,17 @@
 
                     console.log(data);
 
-                    if (data.companies?.length)
-                        populateSelect(settings.companySelect, data.companies);
+                    if (data.lookupData.companies?.length)
+                        populateSelect(settings.companySelect, data.lookupData.companies);
 
-                    if (data.departments?.length)
-                        populateSelect(settings.departmentIds, data.departments);
+                    if (data.lookupData.departments?.length)
+                        populateSelect(settings.departmentSelect, data.lookupData.departments);
 
-                    if (data.designations?.length)
-                        populateSelect(settings.designationIds, data.designations);
+                    if (data.lookupData.designations?.length)
+                        populateSelect(settings.designationSelect, data.lookupData.designations);
+
+                    if (data.employees !== null)
+                        loadTableData(data);
 
                     setupCascadingClearEvents();
                     bindFilterChangeEvents();
@@ -233,7 +236,6 @@
                 }
             });
         };
-
 
         const exportReport = format => {
             showLoading();
@@ -304,6 +306,86 @@
             });
         };
 
+        const initializeEmpGrid = () => {
+            //showLoading();
+            setTimeout(function () {
+                if (empDataTable !== null) {
+                    empDataTable.destroy();
+                }
+                    
+                initializeDataTable();
+            }, 200);
+        }
+
+        const initializeDataTable = () => {
+            //try {
+                empDataTable = $(settings.employeeGrid).DataTable({
+                    paging: true,
+                    pageLength: 10,
+                    lengthMenu: [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
+                    lengthChange: true,
+                    info: true,
+                    autoWidth: false,
+                    responsive: true,
+                    fixedHeader: false,
+                    scrollX: true,
+                    //columnDefs: [
+                    //    {
+                    //        targets: [0, 12, 13],
+                    //        orderable: false,
+                    //        className: 'no-sort'
+                    //    }
+                    //],
+                    initComplete: function () {
+                        hideLoading();
+                        $(settings.customSearch).on('keyup', function () {
+                            empDataTable.search(this.value).draw();
+                        });
+
+                        $('.dataTables_filter input').css({
+                            'width': '250px',
+                            'padding': '6px 12px',
+                            'border': '1px solid #ddd',
+                            'border-radius': '4px',
+                        });
+                    }
+                });
+            //} catch (error) {
+            //    console.error('DataTable initialization error:', error);
+            //    hideLoading();
+            //}
+        }
+
+        const loadTableData = (res) => {
+            var tableItem = res.employees;
+
+            if($.fn.dataTable.isDataTable(settings.employeeGrid) && empDataTable !== null){
+                $(settings.employeeGrid).DataTable().destroy();
+                empDataTable = null;
+            }
+
+            var tableBody = $(settings.employeeGridBody);
+            tableBody.empty();
+
+            $.each(tableItem, function (index, employee) {
+                var row = $('<tr>');
+
+                row.append('<td class="text-center p-1">' + employee.code + '</td>');
+                row.append('<td class="p-1">' + employee.name + '</td>');
+                row.append('<td class="p-1">' + employee.departmentName + '</td>');
+                row.append('<td class="text-center p-1">' + employee.desingationName + '</td>');
+                row.append('<td class="text-center p-1">' + employee.grossSalary + '</td>');
+                row.append('<td class="text-center p-1">' + employee.joiningDate + '</td>');
+                row.append('<td class="text-center p-1">' + employee.probationPeriod + '</td>');
+                row.append('<td class="text-center p-1">' + employee.probationPeriodEndOn + '</td>');
+                row.append('<td class="text-center p-1">' + employee.serviceLength + '</td>');
+
+                tableBody.append(row);
+            });
+
+            initializeDataTable();
+        }
+
         const clearAllFilters = () => {
             //const filterSelectors = [
             //    settings.companySelect,
@@ -344,6 +426,7 @@
             setupLoadingOverlay();
             bindUIEvents();
             loadFilterEmp();
+            initializeEmpGrid();
         }
 
         init();

@@ -35,7 +35,6 @@
     }
 
     .single-row-form .label-container {
-        height: 3rem; /* Fixed container height to accommodate wrapped text */
         display: flex;
         align-items: center;
         justify-content: center;
@@ -46,7 +45,6 @@
     .single-row-form .form-label {
         margin: 0;
         font-size: 0.875rem;
-        line-height: 1.2;
         text-align: start;
         word-wrap: break-word;
         hyphens: auto;
@@ -71,40 +69,6 @@
         background-size: 10px 10px; /* Optional: scale arrow icons */
     }
 
-
-    @@media (max-width: 1366px) {
-        .single-row-form .label-container, .label-container, .label-container, .label-container {
-            height: 2.5rem;
-            min-height: 2.5rem;
-        }
-
-        .form-label {
-            font-size: 0.8rem !important;
-        }
-
-        .form-select-sm, .form-control-sm {
-            font-size: 0.7rem;
-            padding: 0.25rem 0.5rem;
-        }
-    }
-
-    @@media (max-width: 1024px) {
-        .single-row-form .label-container, .label-container, .label-container, .label-container {
-            height: 2rem;
-            min-height: 2rem;
-            padding: 0.25rem;
-        }
-
-        .form-label {
-            font-size: 0.7rem !important;
-            line-height: 1.1 !important;
-        }
-
-        .form-select-sm, .form-control-sm {
-            font-size: 0.65rem;
-            padding: 0.2rem 0.4rem;
-        }
-    }
 
     /* Utility for very long labels */
     .break-word {
@@ -146,13 +110,17 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/pages/hrmEmpPPAlertReport.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+    <script src="~/frontend/plugins/datatables/jquery.datatables.min.js"></script>
+
     <link href="~/lib/bootstrap-multiselect-master/dist/css/bootstrap-multiselect.min.css" rel="stylesheet" />
     <script src="~/lib/bootstrap-multiselect-master/dist/js/bootstrap-multiselect.min.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
+    <script src="~/js/pages/hrmEmpPPAlertReport.js"></script>
     <script type="text/javascript">
         $(function () {
             $.empPPAlertReport({

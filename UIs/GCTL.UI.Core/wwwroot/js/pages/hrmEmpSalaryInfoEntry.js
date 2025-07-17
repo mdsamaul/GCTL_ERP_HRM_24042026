@@ -304,7 +304,6 @@ function bindFilterChangeOnce() {
     }
 }
 
-
 function loadTableData(res) {
     var tableDataItem = res.employees;
 
