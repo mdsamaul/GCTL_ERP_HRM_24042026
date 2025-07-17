@@ -268,7 +268,9 @@
             background-color: #e2e8f0;
             color: #000;
         }
-
+        #printingStationTable th, td{
+            text-align:center!important;
+        }
     #printingStationTable td:first-child,
     #printingStationTable th:first-child {
         text-align: center;
@@ -471,7 +473,6 @@
                                 <input type="hidden" id="timePicker" class="form-control-sm w-100" style="margin-top: 0px;">
                                 <div id="inlineTimePicker" class="small-time-picker w-100"></div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -495,20 +496,10 @@
                     <div class="d-flex align-items-center">
                         <div class="col-4  text-right" style="padding-right: 0px;">
                             Supplier <span class="text-danger">*</span>
-                        </div>
-                        @* <div class="col-8 btn-group-sm d-flex align-items-center" style="padding-left: 5px;">
-                            <select class="form-control-sm w-100">
-                                <option value="">asdf</option>
-                            </select>
-                            <button class="btn btn-outline-dark rounded-circle shadow d-flex justify-content-center align-items-center" id="productModalBtn"
-                                    style="width: 20px; height: 20px; font-size: 9px; line-height: 1;"
-                                    data-bs-toggle="modal" data-bs-target="#productModal">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div> *@
+                        </div>                       
                         <div class="col-8 d-flex align-items-center" style="padding-left: 5px;">
                             <div class="btn-group w-100">
-                                <select class="form-select form-select-sm supplierListBtn" asp-items="ViewBag.SuppleirList as SelectList">
+                                <select class="form-select form-select-sm searchable-select supplierListBtn" asp-items="ViewBag.SuppleirList as SelectList">
                                     <option value="">Select Supplier</option>
                                 </select>                              
                                 <button class="btn btn-outline-success rounded-md d-flex justify-content-center align-items-center" id="supplierModalBtn"
@@ -683,11 +674,11 @@
                                 <th style="min-width: 6vw;">Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="dinamciDataAppend">
                             <tr>
                                 <td>
                                     <select class="form-control-sm form-control searchable-select productSelectId" asp-items="ViewBag.ProductList as SelectList">
-                                        <option>Select Product</option>
+                                        <option value="">Select Product</option>
                                     </select>
                                 </td>
                                 <td>
@@ -695,7 +686,7 @@
                                 </td>
                                 <td>
                                     <select class="form-control-sm form-control searchable-select brandIdFromDropdown">
-                                        <option>Select Brand</option>
+                                        <option value="">Select Brand</option>
                                     </select>
                                 </td>
                                 <td>
@@ -705,7 +696,7 @@
                                 </td>
                                 <td>
                                     <select class="form-control-sm form-control searchable-select sizeSelect" asp-items="ViewBag.SizeList as SelectList">
-                                        <option>Select Size</option>
+                                        <option value="">Select Size</option>
                                     </select>
                                 </td>
                                 <td>
@@ -713,7 +704,7 @@
                                 </td>
                                 <td>
                                     <select class="form-control-sm form-control searchable-select periodSelect" asp-items="ViewBag.periodList as SelectList">
-                                        <option>Select Period</option>
+                                        <option value="">Select Period</option>
                                     </select>
                                 </td>
                                 <td>
@@ -721,7 +712,7 @@
                                 </td>
                                 <td>
                                     <select class="form-control-sm form-control searchable-select unitOfProduct" asp-items="ViewBag.unitList as SelectList">
-                                        <option>Select Unit</option>
+                                        <option value ="">Select Unit</option>
                                     </select>
                                 </td>
                                 <td>
@@ -748,73 +739,6 @@
                                 </td>
                             </tr>
                         </tbody>
-
-
-                        @* <tbody>
-                            <tr>
-                                <td>
-                                    <select class="form-control-sm form-control searchable-select productSelectId" asp-items="ViewBag.ProductList as SelectList">
-                                        <option>Select Product</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control-sm form-control" id="productDescription" placeholder="Description" />
-                                </td>
-                                <td>
-                                    <select class="form-control-sm form-control searchable-select" id="brandIdFromDropdown">
-                                        <option>Select Brand</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="form-control-sm form-control searchable-select" id="modelPopulateFromBrandId">
-                                        <option value="">Select Model</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="form-control-sm form-control searchable-select" asp-items="ViewBag.SizeList as SelectList">
-                                        <option>Select Size</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <input type="number" class="form-control-sm form-control " placeholder="Warranty" />
-                                </td>
-                                <td>
-                                    <select class="form-control-sm form-control searchable-select" asp-items="ViewBag.periodList as SelectList">
-                                        <option>Select Period</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <input type="number" class="form-control-sm form-control  text-center" id="qtyOfProduct" placeholder="Qty" />
-                                </td>
-                                <td>
-                                    <select class="form-control-sm form-control searchable-select" id="unitOfProduct" asp-items="ViewBag.unitList as SelectList">
-                                        <option>Select Unit</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <input type="number" class="form-control-sm form-control  text-end" id="unitPriceOfProduct" value="0" readonly />
-                                </td>
-                                <td>
-                                    <input type="number" class="form-control-sm form-control text-end mb-2" id="totalPriceOfProductMulQty" value="0" readonly />
-                                </td>
-                                <td>
-                                    <div class="d-flex gap-2">                                     
-                                        <button class="btn btn-outline-success rounded-md shadow d-flex justify-content-center align-items-center" style="width: 30px; height: 30px; font-size: 9px; line-height: 1;" id="addmoreDetailsBtn">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                        <button class="btn btn-outline-danger rounded-md shadow d-flex justify-content-center align-items-center" style="width: 30px; height: 30px; font-size: 9px; line-height: 1;">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="10"><div class="total-label">Total:</div></td>
-                                <td>
-                                    <input type="number" class="form-control-sm form-control text-end" id="totalPriceOfProductAddProductPrice" value="0" readonly />
-                                </td>
-                            </tr>
-                        </tbody> *@
                     </table>
                 </div>
 
@@ -833,164 +757,17 @@
                 </div>
             </div>
         </div>
-
-
-       @* <div class="container-fluid px-0">
-           <div class="card">
-                <div class="d-flex border">
-                    <div class="custom-col" style="padding-right: 0px;">
-                        <div class="d-flex justify-content-around align-items-center border" >
-                            <div><b style="white-space:nowrap;">Product Name</b></div>                           
-                            <!-- Trigger Button -->
-                            <button class="btn btn-outline-dark rounded-circle shadow d-flex justify-content-center align-items-center" id="productModalBtn"
-                                    style="width: 20px; height: 20px; font-size: 9px; line-height: 1;"
-                                    data-bs-toggle="modal" data-bs-target="#productModal">
-                                <i class="fas fa-plus"></i>
-                            </button>                          
-                        </div>
-                        <div>
-                            <select class="form-control-sm form-control searchable-select" id="productSelectId" asp-items="ViewBag.ProductList as SelectList">
-                                <option>Select Product</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="custom-col  px-0">
-                        <div class="d-flex justify-content-center align-items-center border">
-                            <div><b style="white-space:nowrap;">Decription</b></div>
-                        </div>
-                        <div>
-                            <input type="text" class="form-control-sm form-control w-100" name="name" value="" id="productDescription" />
-                        </div>
-                    </div>
-                    <div class="custom-col  px-0">
-                        <div class="d-flex justify-content-around align-items-center border">
-                            <div><b style="white-space:nowrap;">Brand</b></div>
-                            <button class="btn btn-outline-dark rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 20px; height: 20px; font-size: 9px; line-height: 1;" data-bs-toggle="modal" data-bs-target="#productBrandModal" id="productBrandModalBtn">
-                                <i class="fas fa-plus"></i>                               
-                            </button>
-                        </div>
-                        <div>
-                         
-                            <select class="form-control-sm form-control searchable-select" id="brandIdFromDropdown">
-                                <option>Select Brand</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="custom-col  px-0">
-                        <div class="d-flex justify-content-around align-items-center border">
-                            <div><b style="white-space:nowrap;">Model</b></div>
-                                                      <button class="btn btn-outline-dark rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 20px; height: 20px; font-size: 9px; line-height: 1;" data-bs-toggle="modal" data-bs-target="#modelModal" id="productModelBtn">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                        <div>                          
-                            <select class="form-control-sm searchable-select form-control" id="modelPopulateFromBrandId" placeholder="Select Model">
-                                <option value="">Select Model</option>
-                            </select>
-
-                        </div>
-                    </div>
-                    <div class="custom-col  px-0">
-                        <div class="d-flex justify-content-around align-items-center border">
-                            <div><b style="white-space:nowrap;">Size</b></div>                         
-                            <button class="btn btn-outline-dark rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 20px; height: 20px; font-size: 9px; line-height: 1;" data-bs-toggle="modal" data-bs-target="#sizeModal" id="productSizeModalBtn">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                        <div>
-                            <select class="form-control-sm form-control searchable-select" asp-items="ViewBag.SizeList as SelectList">
-                                <option>Select Size</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="custom-col  px-0">
-                        <div class="d-flex justify-content-center align-items-center border">
-                            <div><b style="white-space:nowrap;">Warranty</b></div>                            
-                        </div>
-                        <div>
-                            <input type="number" class="form-control-sm w-100" name="name" value="" />
-                        </div>
-                    </div>
-                    <div class="custom-col  px-0">
-                        <div class="d-flex justify-content-around align-items-center border">
-                            <div><b style="white-space:nowrap;">Period</b></div>
-                        </div>
-                        <div>
-                            <select class="form-control-sm form-control searchable-select" asp-items="ViewBag.periodList as SelectList">
-                                <option>Select Period</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="custom-col  px-0">
-                        <div class="d-flex justify-content-center align-items-center border">
-                            <div><b style="white-space:nowrap;">Qty</b></div>                            
-                        </div>
-                        <div>
-                            <input type="number" class="form-control-sm w-100 text-center" name="name" id="qtyOfProduct" value="" />
-                        </div>
-                    </div>
-                    <div class="custom-col  px-0">
-                        <div class="d-flex justify-content-around align-items-center border">
-                            <div><b style="white-space:nowrap;">Unit</b></div>                          
-                            <button class="btn btn-outline-dark rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 20px; height: 20px; font-size: 9px; line-height: 1;" data-bs-toggle="modal" data-bs-target="#unitModal" id="productUnitBtn">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                        <div>
-                            <select class="form-control-sm form-control searchable-select" id="unitOfProduct" asp-items="ViewBag.unitList as SelectList">
-                                <option>Select Unit</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="custom-col  px-0">
-                        <div class="d-flex justify-content-center align-items-center border">
-                            <div><b style="white-space:nowrap;">Unit Price</b></div>
-                            
-                        </div>
-                        <div>
-                            <input type="number" name="name" class="form-control-sm text-right form-control" id="unitPriceOfProduct" value="0" readonly />
-                        </div>
-                        <div class="d-flex justify-content-end align-items-center text-right">
-                            <b style="padding-top:4px; font-weight:bolder;"> Total:</b>
-                        </div>
-                    </div>
-                    <div class="custom-col border px-0">
-                        <div class="d-flex justify-content-around align-items-center border">
-                            <div><b style="white-space:nowrap;">Total Price(BDT)</b></div>                            
-                        </div>
-                        <div>
-                            <input type="number" class="form-control-sm w-100 form-control text-right" id="totalPriceOfProductMulQty" name="name" value="0" readonly />
-                        </div>
-                        <div class="text-right">
-                            <input type="number" class="form-control-sm form-control w-100 text-right" name="name" id="totalPriceOfProductAddProductPrice" value="0" readonly />
-                        </div>
-                    </div>                   
-                    <div class="custom-col border d-flex justify-content-center align-items-center  px-0" style="width: 100px;">
-
-                        <div class="d-flex justify-content-center align-items-center gap-1">
-                                <div class="border">
-                                <button class="btn btn-outline-success rounded-md shadow d-flex justify-content-center align-items-center" style="width: 30px; height: 30px; font-size: 9px; line-height: 1;" id="addmoreDetailsBtn">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                                </div>
-                                <div class="border">
-                                <button class="btn btn-outline-danger rounded-md shadow d-flex justify-content-center align-items-center" style="width: 30px; height: 30px; font-size: 9px; line-height: 1;">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                                </div>
-                            </div>
-                    </div>
-                </div>
-                <div class="container-fluid row pt-4 pb-3">
-                    <hr style="height: 2px; background-color: #333; border: none;" />
-                    <div class="col-12 col-md-6 text-center">Create Date:31/11/2012</div>
-                    <div class="col-12 col-md-6 text-center">Last Update Date:31/11/2012</div>
-                    <hr style="height: 2px;background-color: #333;margin-top: 16px;" />
-                </div>
-           </div>
-       </div> *@
     </div>
 </div>
+
+
+<div class="container-fluid">
+    <div class="card p-2">
+        <partial name="_Grid"></partial>
+    </div>
+</div>
+
+
 <!-- Supplier Type & Country Modal -->
 <div class="modal fade" id="supplierModal" tabindex="-1" aria-labelledby="supplierModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-xl supplier-modal-custom-lg">
@@ -998,7 +775,7 @@
 
             <div class="modal-header">
                 <h5 class="modal-title" id="supplierModalLabel">Sales Supplier</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" id="supplierModalClose" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">

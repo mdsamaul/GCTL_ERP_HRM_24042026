@@ -75,6 +75,13 @@ namespace GCTL.UI.Core.Controllers
             };
             return View(model);
         }
+        [HttpGet]
+        public async Task<IActionResult> SupplierCloseList()
+        {
+            var result = supplier.All().Where(x => x.SupplierId != null).OrderByDescending(x => x.SupplierId).ToList();
+            return Json(new { data = result });
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> LoadData()
@@ -94,8 +101,8 @@ namespace GCTL.UI.Core.Controllers
         {
             try
             {
-                var newCategoryId = await printingStationeryPurchaseEntryService.AutoPrintingStationeryPurchaseIdAsync();
-                return Json(new { data = newCategoryId });
+                var newStationaryId = await printingStationeryPurchaseEntryService.AutoPrintingStationeryPurchaseIdAsync();
+                return Json(new { data = newStationaryId });
             }
             catch (Exception)
             {
@@ -120,7 +127,7 @@ namespace GCTL.UI.Core.Controllers
                     bool hasParmision = await printingStationeryPurchaseEntryService.SavePermissionAsync(LoginInfo.AccessCode);
                     if (hasParmision)
                     {
-                        var result = await printingStationeryPurchaseEntryService.CreateUpdateAsync(model);
+                        var result = await printingStationeryPurchaseEntryService.CreateUpdateAsync(model, LoginInfo.CompanyCode);
                         return Json(new { isSuccess = result.isSuccess, message = result.message, data = result.data });
                     }
                     else
@@ -133,7 +140,7 @@ namespace GCTL.UI.Core.Controllers
                     var hasUpdatePermission = await printingStationeryPurchaseEntryService.UpdatePermissionAsync(LoginInfo.AccessCode);
                     if (hasUpdatePermission)
                     {
-                        var result = await printingStationeryPurchaseEntryService.CreateUpdateAsync(model);
+                        var result = await printingStationeryPurchaseEntryService.CreateUpdateAsync(model, LoginInfo.CompanyCode);
                         return Json(new { isSuccess = result.isSuccess, message = result.message, data = result.data });
                     }
                     else
@@ -154,6 +161,14 @@ namespace GCTL.UI.Core.Controllers
         [HttpGet]
         public async Task<IActionResult> PopulatedDataForUpdate(string id)
         {
+            ViewBag.ProductList = new SelectList(productRepo.All().Select(x => new { x.ProductCode, x.ProductName }), "ProductCode", "ProductName");
+            ViewBag.BrandList = new SelectList(brandRepo.All().Select(x => new { x.BrandId, x.BrandName }), "BrandId", "BrandName");
+            ViewBag.SizeList = new SelectList(sizeRepo.All().Select(x => new { x.SizeId, x.SizeName }), "SizeId", "SizeName");
+            ViewBag.periodList = new SelectList(periodRepo.All().Select(x => new { x.PeriodId, x.PeriodName }), "PeriodId", "PeriodName");
+            ViewBag.unitList = new SelectList(unitRepo.All().Select(x => new { x.UnitTypId, x.UnitTypeName }), "UnitTypId", "UnitTypeName");
+            ViewBag.departmentList = new SelectList(depRepo.All().Select(x => new { x.DepartmentCode, x.DepartmentName }), "DepartmentCode", "DepartmentName");
+            ViewBag.modelList = new SelectList(modelRepo.All().Select(x => new { x.ModelId, x.ModelName }), "ModelId", "ModelName");
+            ViewBag.SuppleirList = new SelectList(supplier.All().Select(x => new { x.SupplierId, x.SupplierName }), "SupplierId", "SupplierName");
             var result = await printingStationeryPurchaseEntryService.GetByIdAsync(id);
             return Json(new { result });
         }

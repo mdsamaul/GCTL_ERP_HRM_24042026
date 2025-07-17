@@ -85,7 +85,6 @@
             });
         }
         $('.searchable-select').select2({
-            placeholder: 'Select an option',
             allowClear: false,
             width: '100%'
         });

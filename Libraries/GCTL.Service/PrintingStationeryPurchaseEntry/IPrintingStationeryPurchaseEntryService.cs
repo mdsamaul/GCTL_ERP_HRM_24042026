@@ -17,7 +17,7 @@ namespace GCTL.Service.PrintingStationeryPurchaseEntry
     {
         Task<List<PrintingStationeryPurchaseEntrySetupViewModel>> GetAllAsync();
         Task<PrintingStationeryPurchaseEntrySetupViewModel> GetByIdAsync(string id);
-        Task<(bool isSuccess, string message, object data)> CreateUpdateAsync(PrintingStationeryPurchaseEntrySetupViewModel model);
+        Task<(bool isSuccess, string message, object data)> CreateUpdateAsync(PrintingStationeryPurchaseEntrySetupViewModel model, string companyCode);
         Task<(bool isSuccess, string message, object data)> DeleteAsync(List<string> ids);
         Task<string> AutoPrintingStationeryPurchaseIdAsync();
 
