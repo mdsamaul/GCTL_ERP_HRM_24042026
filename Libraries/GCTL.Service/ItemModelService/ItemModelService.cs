@@ -42,7 +42,7 @@ namespace GCTL.Service.ItemModelService
 
         {
 
-            return await accessCodeRepository.All().AnyAsync(x => x.AccessCodeId == accessCode && x.Title == "Model" && x.TitleCheck);
+            return await accessCodeRepository.All().AnyAsync(x => x.AccessCodeId == accessCode && x.Title == "Item Model" && x.TitleCheck);
 
         }
 
@@ -50,7 +50,7 @@ namespace GCTL.Service.ItemModelService
 
         {
 
-            return await accessCodeRepository.All().AnyAsync(x => x.AccessCodeId == accessCode && x.Title == "Model" && x.CheckAdd);
+            return await accessCodeRepository.All().AnyAsync(x => x.AccessCodeId == accessCode && x.Title == "Item Model" && x.CheckAdd);
 
         }
 
@@ -58,7 +58,7 @@ namespace GCTL.Service.ItemModelService
 
         {
 
-            return await accessCodeRepository.All().AnyAsync(x => x.AccessCodeId == accessCode && x.Title == "Model" && x.CheckEdit);
+            return await accessCodeRepository.All().AnyAsync(x => x.AccessCodeId == accessCode && x.Title == "Item Model" && x.CheckEdit);
 
         }
 
@@ -66,7 +66,7 @@ namespace GCTL.Service.ItemModelService
 
         {
 
-            return await accessCodeRepository.All().AnyAsync(x => x.AccessCodeId == accessCode && x.Title == "Model" && x.CheckDelete);
+            return await accessCodeRepository.All().AnyAsync(x => x.AccessCodeId == accessCode && x.Title == "Item Model" && x.CheckDelete);
 
         }
 
@@ -97,8 +97,6 @@ namespace GCTL.Service.ItemModelService
 
         public async Task<ItemModelSetupViewModel> GetByIdAsync(string id)
         {
-
-
             try
             {
                 var entity = ItemModelRepo.All().Where(x => x.ModelId == id).FirstOrDefault();
@@ -216,7 +214,7 @@ namespace GCTL.Service.ItemModelService
                 newModelId = 1;
             }
 
-            return newModelId.ToString("D3");
+            return newModelId.ToString("D4");
         }
 
         public async Task<(bool isSuccess, string message, object data)> AlreadyExistAsync(string modelValue)

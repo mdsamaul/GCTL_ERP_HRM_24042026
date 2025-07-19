@@ -73,7 +73,7 @@
             if ($('#catagoryModal').length === 0) {
                 const modalHtml = `
         <div class="modal fade" id="catagoryModal" tabindex="-1" aria-labelledby="catagoryModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-            <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-dialog modal-dialog-centered modal-custom-item-master modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Category</h5>
@@ -119,7 +119,7 @@
             if ($('#brandModal').length === 0) {
                 const modalHtml = `
            <div class="modal fade" id="brandModal" tabindex="-1" aria-labelledby="brandModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-                <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-dialog modal-dialog-centered modal-custom-item-master modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Brand</h5>
@@ -171,7 +171,10 @@
             });
         });
 
-        $(commonName.CloseCatagoryModel).on('click', function () {     
+        $(commonName.CloseCatagoryModel).on('click', function () {  
+            $('.modal').modal('hide');
+            $('.modal-backdrop').remove(); 
+            $('body').removeClass('modal-open');
             $.ajax({
                 url: categoryListUrl,
                 type: "GET",
@@ -190,6 +193,9 @@
         })
 
         $(commonName.CloseBrandModel).on('click', function () {
+            $('.modal').modal('hide');
+            $('.modal-backdrop').remove();
+            $('body').removeClass('modal-open');
             $.ajax({
                 url: brandListUrl,
                 type: "GET",

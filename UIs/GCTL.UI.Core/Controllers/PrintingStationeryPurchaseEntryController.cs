@@ -18,6 +18,10 @@ namespace GCTL.UI.Core.Controllers
         private readonly IRepository<HmsLtrvPeriod> periodRepo;//HMS_LTRV_Period
         private readonly IRepository<RmgProdDefUnitType> unitRepo;
         private readonly IRepository<HrmDefDepartment> depRepo;
+        private readonly IRepository<HrmModel> modelRepo;
+        private readonly IRepository<SalesSupplier> supplier;
+        private readonly IRepository<HrmEmployee> empRepo;
+        private readonly IRepository<HrmEmployeeOfficialInfo> officialInfo;
 
         public PrintingStationeryPurchaseEntryController(
             IPrintingStationeryPurchaseEntryService printingStationeryPurchaseEntryService,
@@ -26,7 +30,11 @@ namespace GCTL.UI.Core.Controllers
             IRepository<HrmSize> sizeRepo,
             IRepository<HmsLtrvPeriod> periodRepo,
             IRepository<RmgProdDefUnitType> unitRepo,
-            IRepository<HrmDefDepartment> depRepo
+            IRepository<HrmDefDepartment> depRepo,
+            IRepository<HrmModel> modelRepo,
+            IRepository<SalesSupplier> supplier,
+            IRepository<HrmEmployee> empRepo,
+            IRepository<HrmEmployeeOfficialInfo> OfficialInfo
             )
         {
             this.printingStationeryPurchaseEntryService = printingStationeryPurchaseEntryService;
@@ -36,6 +44,10 @@ namespace GCTL.UI.Core.Controllers
             this.periodRepo = periodRepo;
             this.unitRepo = unitRepo;
             this.depRepo = depRepo;
+            this.modelRepo = modelRepo;
+            this.supplier = supplier;
+            this.empRepo = empRepo;
+            this.officialInfo = OfficialInfo;
         }
         public IActionResult Index()
         {
@@ -45,11 +57,31 @@ namespace GCTL.UI.Core.Controllers
             ViewBag.periodList = new SelectList(periodRepo.All().Select(x=> new {x.PeriodId, x.PeriodName}), "PeriodId", "PeriodName");
             ViewBag.unitList = new SelectList(unitRepo.All().Select(x=> new {x.UnitTypId, x.UnitTypeName}), "UnitTypId", "UnitTypeName");
             ViewBag.departmentList = new SelectList(depRepo.All().Select(x => new{ x.DepartmentCode, x.DepartmentName}), "DepartmentCode", "DepartmentName");
+            ViewBag.modelList = new SelectList(modelRepo.All().Select(x => new { x.ModelId, x.ModelName }), "ModelId", "ModelName");
+            ViewBag.SuppleirList = new SelectList(supplier.All().Select(x => new { x.SupplierId, x.SupplierName }), "SupplierId", "SupplierName");
+            var employeeList = (from emp in empRepo.All()
+                                join offi in officialInfo.All()
+                                on emp.EmployeeId equals offi.EmployeeId
+                                where offi.EmployeeStatus == "01"
+                                select new
+                                {
+                                    emp.EmployeeId,
+                                    FullName = emp.FirstName + " " + emp.LastName
+                                }).ToList();
+
+            ViewBag.EmployeeList = new SelectList(employeeList, "EmployeeId", "FullName");
             PrintingStationeryPurchaseEntryViewModel model = new PrintingStationeryPurchaseEntryViewModel() { 
                 PageUrl = Url.Action(nameof(Index))
             };
             return View(model);
         }
+        [HttpGet]
+        public async Task<IActionResult> SupplierCloseList()
+        {
+            var result = supplier.All().Where(x => x.SupplierId != null).OrderByDescending(x => x.SupplierId).ToList();
+            return Json(new { data = result });
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> LoadData()
@@ -69,8 +101,8 @@ namespace GCTL.UI.Core.Controllers
         {
             try
             {
-                var newCategoryId = await printingStationeryPurchaseEntryService.AutoPrintingStationeryPurchaseIdAsync();
-                return Json(new { data = newCategoryId });
+                var newStationaryId = await printingStationeryPurchaseEntryService.AutoPrintingStationeryPurchaseIdAsync();
+                return Json(new { data = newStationaryId });
             }
             catch (Exception)
             {
@@ -95,7 +127,7 @@ namespace GCTL.UI.Core.Controllers
                     bool hasParmision = await printingStationeryPurchaseEntryService.SavePermissionAsync(LoginInfo.AccessCode);
                     if (hasParmision)
                     {
-                        var result = await printingStationeryPurchaseEntryService.CreateUpdateAsync(model);
+                        var result = await printingStationeryPurchaseEntryService.CreateUpdateAsync(model, LoginInfo.CompanyCode);
                         return Json(new { isSuccess = result.isSuccess, message = result.message, data = result.data });
                     }
                     else
@@ -108,7 +140,7 @@ namespace GCTL.UI.Core.Controllers
                     var hasUpdatePermission = await printingStationeryPurchaseEntryService.UpdatePermissionAsync(LoginInfo.AccessCode);
                     if (hasUpdatePermission)
                     {
-                        var result = await printingStationeryPurchaseEntryService.CreateUpdateAsync(model);
+                        var result = await printingStationeryPurchaseEntryService.CreateUpdateAsync(model, LoginInfo.CompanyCode);
                         return Json(new { isSuccess = result.isSuccess, message = result.message, data = result.data });
                     }
                     else
@@ -129,6 +161,14 @@ namespace GCTL.UI.Core.Controllers
         [HttpGet]
         public async Task<IActionResult> PopulatedDataForUpdate(string id)
         {
+            ViewBag.ProductList = new SelectList(productRepo.All().Select(x => new { x.ProductCode, x.ProductName }), "ProductCode", "ProductName");
+            ViewBag.BrandList = new SelectList(brandRepo.All().Select(x => new { x.BrandId, x.BrandName }), "BrandId", "BrandName");
+            ViewBag.SizeList = new SelectList(sizeRepo.All().Select(x => new { x.SizeId, x.SizeName }), "SizeId", "SizeName");
+            ViewBag.periodList = new SelectList(periodRepo.All().Select(x => new { x.PeriodId, x.PeriodName }), "PeriodId", "PeriodName");
+            ViewBag.unitList = new SelectList(unitRepo.All().Select(x => new { x.UnitTypId, x.UnitTypeName }), "UnitTypId", "UnitTypeName");
+            ViewBag.departmentList = new SelectList(depRepo.All().Select(x => new { x.DepartmentCode, x.DepartmentName }), "DepartmentCode", "DepartmentName");
+            ViewBag.modelList = new SelectList(modelRepo.All().Select(x => new { x.ModelId, x.ModelName }), "ModelId", "ModelName");
+            ViewBag.SuppleirList = new SelectList(supplier.All().Select(x => new { x.SupplierId, x.SupplierName }), "SupplierId", "SupplierName");
             var result = await printingStationeryPurchaseEntryService.GetByIdAsync(id);
             return Json(new { result });
         }
@@ -154,5 +194,48 @@ namespace GCTL.UI.Core.Controllers
             var result = await printingStationeryPurchaseEntryService.AlreadyExistAsync(PrintingStationeryPurchaseValue);
             return Json(new { isSuccess = result.isSuccess, message = result.message, data = result });
         }
+        [HttpPost]
+        public async Task<IActionResult> supplierIdDetails([FromBody] string supplierId)
+        {
+            var result = await printingStationeryPurchaseEntryService.getSupplierByIdAsync(supplierId);
+            return Json(new { data = result });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> productSelectIdDetails([FromBody] string productId)
+        {
+            var result = await printingStationeryPurchaseEntryService.productSelectIdDetailsAsync(productId);
+            return Json(new { data = result });
+        }
+        [HttpPost]
+        public async Task<IActionResult> brandIdDetailsonModel([FromBody] string brandId)
+        {
+            var result = await printingStationeryPurchaseEntryService.brandIdAsync(brandId);
+            return Json(new { data = result });
+        }
+        [HttpGet]
+        public async Task<IActionResult> addMoreLoadProduct()
+        {
+            var sizeList = sizeRepo.All().Select(x => new { value = x.SizeId, text = x.SizeName }).ToList();
+            var periodList = periodRepo.All().Select(x => new { value = x.PeriodId, text = x.PeriodName }).ToList();
+            var unitList = unitRepo.All().Select(x => new { value = x.UnitTypId, text = x.UnitTypeName }).ToList();
+
+            var productList = productRepo.All()
+                .Select(x => new
+                {
+                    value = x.ProductCode,
+                    text = x.ProductName
+                }).ToList();
+
+            return Json(new
+            {
+                productList=productList,
+                sizeList=sizeList,
+                periodList=periodList,
+                unitList = unitList
+            });
+        }
+
+
     }
 }
