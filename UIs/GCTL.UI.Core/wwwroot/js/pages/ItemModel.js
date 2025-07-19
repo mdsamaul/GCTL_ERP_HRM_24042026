@@ -75,7 +75,7 @@
             $(commonName.AutoId).val(0);
             $(commonName.ItemModelName).val('');
             $(commonName.ShortName).val('');
-            $(commonName.ItemModelBrand).val(""),
+            $(commonName.ItemModelBrand).val('').trigger('change');
             autoItemModelId();
         }
         $(commonName.ClearBrn).on('click', function () {

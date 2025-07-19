@@ -431,10 +431,15 @@ namespace GCTL.Service.PrintingStationeryPurchaseEntry
         {
             foreach (var id in ids)
             {
-
                 try
                 {
+
                     var entity = await PurchaseOrderReceive.GetByIdAsync(decimal.Parse(id));
+                    var detailsEntity = purchaseOrderReceiveDetailsRepo.All().Where(x => x.PurchaseReceiveNo == entity.PurchaseReceiveNo).ToList();
+                    if(detailsEntity != null)
+                    {
+                        await purchaseOrderReceiveDetailsRepo.DeleteRangeAsync(detailsEntity);
+                    }
                     if (entity == null)
                     {
                         continue;

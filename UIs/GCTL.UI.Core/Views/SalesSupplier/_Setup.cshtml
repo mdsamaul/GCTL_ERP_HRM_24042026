@@ -26,7 +26,7 @@
         <div class="d-flex align-items-center">
             <div class="supplierTypeLeft text-right">Supplier Type </div>
             <div class="supplierTypeRight btn-group">
-                <select class="form-control-sm form-control dropdownSupplierType searchable-select" asp-items="ViewBag.SupplirTypeList as SelectList">
+                <select class="form-control-sm form-control dropdownSupplierType " asp-items="ViewBag.SupplirTypeList as SelectList">
                     <option value="">Select Supplier Type</option>
                 </select>
                 <button class="btn btn-outline-success supplierTypeBtn rounded-md d-flex justify-content-center align-items-center"
@@ -64,8 +64,8 @@
         <div class="d-flex align-items-center">
             <div class="supplierTypeLeft text-right">Country</div>
             <div class="supplierTypeRight btn-group">
-                <select class="form-control-sm form-control dropdownSupplierCountry searchable-select" asp-items="ViewBag.CountryAll as SelectList">
-                    <option value="">Select Supplier Type</option>
+                <select class="form-control-sm form-control dropdownSupplierCountry" asp-items="ViewBag.CountryAll as SelectList">
+                    <option value="">Select Country</option>
                 </select>
                 <button class="btn btn-outline-success supplierTypeCountryBtn rounded-md d-flex justify-content-center align-items-center"
                         style="width: 31px; height: 31px; font-size: 9px; line-height: 1; margin-left:2px;"
@@ -277,7 +277,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Country</h5>
-                <button type="button" class="btn-close closesupplierTypeModel" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close closeCompanyTypeModel" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <div id="supplierCountryContainer">

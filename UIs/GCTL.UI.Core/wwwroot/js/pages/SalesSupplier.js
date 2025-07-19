@@ -84,10 +84,7 @@
                 title: message
             });
         }
-        $('.searchable-select').select2({
-            allowClear: false,
-            width: '100%'
-        });
+       
         autoSupplierTypeId = function () {
             $.ajax({
                 url: autoSupplierTypeIdUrl,
@@ -284,8 +281,7 @@
                 {"data": "supplierType" },
                 { "data": "supplierName" },
                 { "data": "supplierAddress" },
-                { "data": "contactPerson" },
-                { "data": "contactPhone" }
+                { "data": "contactPerson" }
             ],
             "paging": true,
             "pagingType": "full_numbers",
@@ -447,12 +443,13 @@
                 }
             });
         })
-        $(document).on('click', $(commonName.ClosesupplierTypeModel), function () {       
+        $(document).on('click', '.closesupplierTypeModel', function () {
+            console.log("click test");
             $.ajax({
                 url: CloseSupplierTypeModelUrl,
                 type: "GET",
                 success: function (res) {
-                    $(commonName.DropdownSupplierType).empty();
+                    //$(commonName.DropdownSupplierType).empty();
                     res.forEach(function (item) {
                         $(commonName.DropdownSupplierType).append(
                             $('<option></option>').val(item.supplierTypeId).text(item.supplierType)

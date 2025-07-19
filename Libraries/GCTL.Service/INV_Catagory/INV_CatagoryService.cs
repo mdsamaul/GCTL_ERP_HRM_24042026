@@ -150,7 +150,7 @@ namespace GCTL.Service.INV_Catagory
                     exData.CatagoryName = model.CatagoryName;
                     exData.ShortName = model.ShortName;
                     exData.CompanyCode = model.CompanyCode!= null? model.CompanyCode:"001";
-                    exData.ModifyDate = model.ModifyDate;
+                    exData.ModifyDate = DateTime.Now;
                     await invCatRepo.UpdateAsync(exData);
                     return (true, UpdateSuccess, exData);
                 }

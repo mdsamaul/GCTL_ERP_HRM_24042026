@@ -6,6 +6,7 @@ using GCTL.Service.PrintingStationeryPurchaseEntry;
 using GCTL.UI.Core.ViewModels.PrintingStationeryPurchaseEntry;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace GCTL.UI.Core.Controllers
 {
@@ -235,7 +236,19 @@ namespace GCTL.UI.Core.Controllers
                 unitList = unitList
             });
         }
+        [HttpGet]
+        public  IActionResult productItemClose()
+            {
+            //var result = productRepo.All().Select(x => new { x.ProductCode, x.ProductName }).OrderByDescending(x=> x.ProductCode).ToList();
+            var result = productRepo.All().Where(x => x.AutoId != null).OrderByDescending(x => x.AutoId).ToList();
+                return Json(new {data=result});
+            }
 
-
+        [HttpGet]
+        public IActionResult BrandListClose()
+        {
+            var result = brandRepo.All().Where(x => x.AutoId != null).OrderByDescending(x => x.AutoId).ToListAsync();
+            return Json(new { data = result });
+        }
     }
 }
