@@ -920,14 +920,7 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 
-   @*  <script>
-        window.productList = @Html.Raw(Json.Serialize(ViewBag.ProductList));
-        window.brandList = @Html.Raw(Json.Serialize(ViewBag.BrandList));
-        window.modelList = @Html.Raw(Json.Serialize(ViewBag.modelList));
-        window.sizeList = @Html.Raw(Json.Serialize(ViewBag.SizeList));
-        window.periodList = @Html.Raw(Json.Serialize(ViewBag.periodList));
-        window.unitList = @Html.Raw(Json.Serialize(ViewBag.unitList));
-    </script> *@
+ 
     <!-- Flatpickr (Date picker, if used) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
@@ -942,6 +935,7 @@
     <script src="~/js/pages/HRM_Size.js"></script>
     <script src="~/js/pages/ItemModel.js"></script>
     <script src="~/js/pages/InvDefSupplierType.js"></script>
+    <script src="~/js/pages/Core_Country.js"></script>
     <script src="~/js/pages/PrintingStationeryPurchaseEntry.js"></script>
 
     <script type="text/javascript">

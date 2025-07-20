@@ -37,6 +37,7 @@
             SupplierTypeCountryBtn:".supplierTypeCountryBtn",
             SupplierTypeContainer: "#supplierTypeContainer",
             SupplierCountryContainer: "#supplierCountryContainer",
+            SupplierCountryContainer: "#supplierCountryContainer",
             ClosesupplierTypeModel: ".closesupplierTypeModel",
 
         }, options);
@@ -49,7 +50,9 @@
         var alreadyExistUrl = commonName.baseUrl + "/alreadyExist";
 
         var supplierTypeUrl = "/InvDefSupplierType/Index?isPartial=true";
+        var supplierCountryUrl = "/Core_Country/Index?isPartial=true";
         var CloseSupplierTypeModelUrl = commonName.baseUrl + "/CloseSupplierType";
+        var CloseCountryModelUrl = commonName.baseUrl + "/CloseCountryModel";
 
         // Sticky header on scroll
         function stHeader() {
@@ -425,6 +428,29 @@
         });
 
 
+        $(document).ready(function () {
+            if ($('#supplierTypeCountryModal').length === 0) {
+                const modalHtml = `
+        <div class="modal fade" id="supplierTypeCountryModal" tabindex="-1" aria-labelledby="supplierTypeModalCountryLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered custom-salse-supp-modal modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Country</h5>
+                <button type="button" class="btn-close closeCountryModel" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="supplierCountryContainer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        `;
+                $('body').append(modalHtml);
+            }
+        });
+
+
         $(commonName.SupplierTypeBtn).on('click', function () {
             $.ajax({
                 url: supplierTypeUrl,
@@ -443,8 +469,29 @@
                 }
             });
         })
-        $(document).on('click', '.closesupplierTypeModel', function () {
-            console.log("click test");
+        $(commonName.SupplierTypeCountryBtn).on('click', function () {
+          
+            $.ajax({
+                url: supplierCountryUrl,
+                type: "GET",
+                success: function (res) {
+                    $(commonName.SupplierCountryContainer).html(res);
+                    //$('#brandContainer').html(result);
+                    $("#supplierTypeCountryModal").modal('show');
+                    if (typeof $.Core_CountryJs == 'function') {
+                        $.Core_CountryJs({
+                            baseUrl: '/Core_Country',
+                            isPartial: true
+                        });
+                    }                  
+                }, error: function (e) {
+                }
+            });
+        })
+        $(document).on('click', '.closesupplierTypeModel', function () {       
+            $('.modal').modal('hide');
+            $('.modal-backdrop').remove();
+            $('body').removeClass('modal-open');  
             $.ajax({
                 url: CloseSupplierTypeModelUrl,
                 type: "GET",
@@ -457,9 +504,13 @@
                     });
                 },
                 error: function (e) {
-                    console.error("Error fetching supplier types:", e);
                 }
             });
+        });
+        $(document).on('click', '.closeCountryModel', function () {       
+            $('.modal').modal('hide');
+            $('.modal-backdrop').remove();
+            $('body').removeClass('modal-open');              
         });
 
 
@@ -469,7 +520,6 @@
             stHeader();
             autoSupplierTypeId();
             table;
-            console.log("test salse");
         };
         init();
 

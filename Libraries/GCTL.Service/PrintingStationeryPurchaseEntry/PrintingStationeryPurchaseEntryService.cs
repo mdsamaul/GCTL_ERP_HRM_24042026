@@ -119,7 +119,7 @@ namespace GCTL.Service.PrintingStationeryPurchaseEntry
                     MainCompanyCode = c.MainCompanyCode,
                     PurchaseReceiveNo = c.PurchaseReceiveNo,
                     ReceiveDate = c.ReceiveDate,
-                    ShowReceiveDate= c.ReceiveDate.HasValue? c.ReceiveDate.Value.ToString("dd/MM/yyyy  hh:mm tt"):"",
+                    ShowReceiveDate= c.ReceiveDate.HasValue? c.ReceiveDate.Value.ToString("dd/MM/yyyy  hh:mm:ss tt"):"",
                     DepartmentCode = c.DepartmentCode,
                     DepartmentName = depRepo.All().Where(x=>x.DepartmentCode== c.DepartmentCode).Select(x=>x.DepartmentName).FirstOrDefault(),
                     SupplierID = c.SupplierId,

@@ -122,6 +122,8 @@ using GCTL.Service.PrintingStationeryPurchaseEntry;
 using GCTL.Service.InvDefSupplierTypes;
 using GCTL.Service.SalesSupplierService;
 using GCTL.Service.ItemModelService;
+using GCTL.Service.HRM_Def_Floors;
+using GCTL.Service.Core_Countrys;
 
 
 //using GCTL.Service.AccountReport;
@@ -212,6 +214,8 @@ services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
             services.AddScoped<IInvDefSupplierTypeService , InvDefSupplierTypeService>();
             services.AddScoped<ISalesSupplierService , SalesSupplierServices>();
             services.AddScoped<IItemModelService , ItemModelService>();
+            services.AddScoped<IHRM_Def_FloorService , HRM_Def_FloorService>();
+            services.AddScoped<ICore_CountryService , Core_CountryService>();
 
 
             

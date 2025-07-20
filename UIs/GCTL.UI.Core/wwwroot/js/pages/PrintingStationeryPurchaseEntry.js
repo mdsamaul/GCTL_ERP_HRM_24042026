@@ -390,14 +390,7 @@
                 }
             });
         });
-        $(document).on('click', '.delete-clear-row-btn', function () {
-            let $targetRow = $(this).closest('tr');
-
-            $targetRow.find('input[type="text"], input[type="number"], textarea').val('');
-            $targetRow.find('select').val('').trigger('change');
-            $targetRow.find('.unitPriceOfProduct, .totalPriceOfProductMulQty').val(0);
-            calculateGrandTotal();
-        });
+        
 
 
 
@@ -506,7 +499,10 @@
     <td><input type="number" class="form-control-sm form-control unitPriceOfProduct text-end" value="0" readonly /></td>
     <td><input type="number" class="form-control-sm form-control totalPriceOfProductMulQty text-end mb-2" value="0" readonly /></td>
     <td>
-        <div class="d-flex justify-content-center align-items-center">
+        <div class="d-flex gap-2">
+         <button class="btn btn-outline-success rounded-md shadow d-flex justify-content-center align-items-center" id="addmoreDetailsBtn" style="width: 30px; height: 30px; font-size: 9px;">
+                        <i class="fas fa-plus"></i>
+                    </button>  
             <button class="btn btn-outline-danger rounded-md shadow d-flex justify-content-center align-items-center delete-row-btn" style="width: 30px; height: 30px; font-size: 9px;">
                 <i class="fas fa-trash-alt"></i>
             </button>
@@ -564,7 +560,7 @@
             <button class="btn btn-outline-success rounded-md shadow d-flex justify-content-center align-items-center" id="addmoreDetailsBtn" style="width: 30px; height: 30px; font-size: 9px; line-height: 1;">
                 <i class="fas fa-plus"></i>
             </button>
-            <button class="btn btn-outline-danger rounded-md shadow d-flex justify-content-center align-items-center delete-clear-row-btn" style="width: 30px; height: 30px; font-size: 9px; line-height: 1;">
+            <button class="btn btn-outline-danger rounded-md shadow d-flex justify-content-center align-items-center delete-row-btn" style="width: 30px; height: 30px; font-size: 9px; line-height: 1;">
                 <i class="fa fa-eraser">&nbsp;</i>
             </button>
         </div>
@@ -636,35 +632,40 @@
             });
             $('#totalPriceOfProductAddProductPrice').val(total);
         }
-
-
-        //$(document).on('click', '.delete-row-btn', function () {
-        //    $(this).closest('tr').remove();
-        //    calculateGrandTotal();
-        //});
-
         $(document).on('click', '.delete-row-btn', function () {
-            $(this).closest('tr').remove();
+            // আগে targeted row remove করবো
+            let $targetRow = $(this).closest('tr');
+            $targetRow.remove();
+
             calculateGrandTotal();
 
-            const firstDataRow = $('table #dinamciDataAppend tr.data-row').first();
+            const $tableBody = $('#dinamciDataAppend');
+            const $remainingRows = $tableBody.find('tr.data-row'); 
+            if ($remainingRows.length === 0) {
+                $.ajax({
+                    url: addMoreLoadProductUrl,
+                    type: "GET",
+                    success: function (res) {
+                     $("#dinamciDataAppend tr").empty();
+                     appendProductRow(res); 
+                    }
+                });
+            } else {
+                const $firstDataRow = $remainingRows.first();
+                const $actionCell = $firstDataRow.find('td').last();
 
-            if (firstDataRow.length) {
-                const actionCell = firstDataRow.find('td').last();
-
-                actionCell.html(`
+                $actionCell.html(`
             <div class="d-flex gap-2">
                 <button class="btn btn-outline-success rounded-md shadow d-flex justify-content-center align-items-center" id="addmoreDetailsBtn" style="width: 30px; height: 30px; font-size: 9px;">
                     <i class="fas fa-plus"></i>
                 </button>
                 <button class="btn btn-outline-danger rounded-md shadow d-flex justify-content-center align-items-center delete-row-btn" style="width: 30px; height: 30px; font-size: 9px;">
-                    <i class="fas fa-trash-alt"></i>
+                     <i class="fa fa-eraser">&nbsp;</i>
                 </button>
             </div>
         `);
             }
         });
-
 
        
 
@@ -877,8 +878,7 @@
         //create and edit
         // Save Button Click
         $(document).on('click', commonName.PrintStationerySaveBtn, function () {
-            var fromData = getFromData();           
-
+            var fromData = getFromData();
             if (!fromData.SupplierID || fromData.SupplierID.trim() === "") {
                 showToast("error", "Please select a supplier.");
                 $('.supplierListBtn').addClass('printingStation-input');
@@ -1067,6 +1067,16 @@
 
                     // Remove all existing detail rows before populate
                     $('table #dinamciDataAppend').empty();
+                    if (res.result.purchaseOrderReceiveDetailsDTOs.length === 0) {
+                     $.ajax({
+                            url: addMoreLoadProductUrl,
+                            type: "GET",
+                            success: function (res) {
+                                $("#dinamciDataAppend tr").empty();
+                                appendProductRow(res); // default row
+                            }
+                        });
+                    }
 
                     // Populate details
                     if (res.result.purchaseOrderReceiveDetailsDTOs && res.result.purchaseOrderReceiveDetailsDTOs.length > 0) {
@@ -1104,10 +1114,13 @@
                         <i class="fas fa-plus"></i>
                     </button>                   
                     <button class="btn btn-outline-danger rounded-md shadow d-flex justify-content-center align-items-center delete-row-btn" style="width: 30px; height: 30px; font-size: 9px;">
-                        <i class="fas fa-trash-alt"></i>
+                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </div>`
-                                    : `<div class="d-flex justify-content-center align-items-center">
+                                : `<div class="d-flex gap-2">
+                                     <button class="btn btn-outline-success rounded-md shadow d-flex justify-content-center align-items-center" id="addmoreDetailsBtn" style="width: 30px; height: 30px; font-size: 9px;">
+                        <i class="fas fa-plus"></i>
+                    </button>
                     <button class="btn btn-outline-danger rounded-md shadow d-flex justify-content-center align-items-center delete-row-btn" style="width: 30px; height: 30px; font-size: 9px;">
                         <i class="fas fa-trash-alt"></i>
                     </button>

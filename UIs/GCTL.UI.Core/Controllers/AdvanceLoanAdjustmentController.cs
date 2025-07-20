@@ -118,7 +118,6 @@ namespace GCTL.UI.Core.Controllers
             catch (Exception ex)
             {
                 // Log the full exception
-                Console.WriteLine($"Controller Error: {ex}");
 
                 return Json(new
                 {

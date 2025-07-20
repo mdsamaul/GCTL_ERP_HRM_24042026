@@ -16,7 +16,7 @@ namespace GCTL.UI.Core.Controllers
         private readonly IRepository<HrmItemMasterInformation> productRepo;
         private readonly IRepository<HrmBrand> brandRepo;
         private readonly IRepository<HrmSize> sizeRepo;
-        private readonly IRepository<HmsLtrvPeriod> periodRepo;//HMS_LTRV_Period
+        private readonly IRepository<HmsLtrvPeriod> periodRepo;
         private readonly IRepository<RmgProdDefUnitType> unitRepo;
         private readonly IRepository<HrmDefDepartment> depRepo;
         private readonly IRepository<HrmModel> modelRepo;
