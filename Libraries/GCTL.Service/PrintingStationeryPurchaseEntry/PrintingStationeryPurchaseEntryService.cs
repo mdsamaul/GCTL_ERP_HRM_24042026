@@ -410,8 +410,7 @@ namespace GCTL.Service.PrintingStationeryPurchaseEntry
 
                         // Bulk Insert
                         await purchaseOrderReceiveDetailsRepo.AddRangeAsync(detailsList);
-                        // 🔁 Optional: Update এর সময় পুরানো details delete করে নতুন গুলো insert করতে চাইলে এই অংশ যোগ করুন:
-                        //await purchaseOrderReceiveDetailsRepo.DeleteAsync(exData.PurchaseReceiveNo);
+                   
 
                         return (true, UpdateSuccess, exData);
                     }

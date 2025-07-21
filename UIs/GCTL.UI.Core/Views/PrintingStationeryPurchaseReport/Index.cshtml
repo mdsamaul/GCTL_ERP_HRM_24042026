@@ -4,458 +4,271 @@
     Model.Breadcrumb = "PrintingStationeryPurchaseReport";
     Model.PageTitle = "Printing & Stationery Purchase Report";
 }<style>
-     body {
-         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    .page-header {
+    color: black;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    text-align: center;
+    }
+
+     #stickyHeader {
+         position: sticky;
+         top: 0;
+         z-index: 1050;
+         background: white;
+         padding: 10px 20px;
+         transition: all 0.3s ease-in-out;
+         box-shadow: none;
      }
 
-     .page-header {
-         color: black;
-         margin-bottom: 30px;
-         border-radius: 12px;
-         text-align: center;
-     }
-
-     .card {
-         border-radius: 12px;
-         box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
-         border: none;
-         margin-bottom: 20px;
-     }
-
-     .card-header {
-         color: #000;
-         border-radius: 12px 12px 0 0 !important;
-     }
-
-     #productTable {
-         width: 100% !important;
-         border-collapse: separate;
-         border-spacing: 0;
-     }
-
-         #productTable tbody tr,
-         #productTable thead tr {
-             margin: 0; 
-             padding: 0; 
+         #stickyHeader.scrolled {
+             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
          }
 
-         #productTable tbody td,
-         #productTable thead th {
-             padding: 4px 6px !important;
-             margin: 0 !important;
-             vertical-align: middle; 
+     #productTable th{
+    white-space:nowrap;
+    text-align:center;
+    font-weight:bold;
+    }
+
+    .searchable-dropdown {
+    position: relative;
+    }
+
+    .dropdown-input {
+    background: white;
+    }
+
+    .dropdown-menu {
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 1050;
+    }
+
+    .dropdown-item:hover {
+    background-color: #f8f9fa;
+    }
+
+    .dropdown-item.active {
+    background-color: #007bff;
+    color: white;
+    }
+
+     .table-responsive {
+         -webkit-overflow-scrolling: auto!important;
+         overflow-x: unset !important;
+         overflow: unset !important;         
+     }
+
+    .no-results {
+    padding: 0.5rem 1rem;
+    color: #6c757d;
+    font-style: italic;
+    }
+
+    .search-icon {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+    pointer-events: none;
+    }
+
+    .dropdown-arrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s;
+    }
+
+    .dropdown-arrow.rotated {
+    transform: translateY(-50%) rotate(180deg);
+    }
+
+     .searchable-dropdown {
+         position: relative;
+     }
+
+         .searchable-dropdown.active {
+             z-index: 1051; 
          }
 
-
-         #productTable thead th {
-             color: #000;
-             font-weight: 600;
-             text-align: center;
-             vertical-align: middle;
-             border: 1px solid #dee2e6;
-             position: sticky;
-             top: 0;
-             z-index: 10;
-         }
-
-     .form-select, .form-control {
-         border: 2px solid #e9ecef;
-         border-radius: 8px;
-         font-size: 13px;
-         transition: all 0.3s ease;
+     .dropdown-menu {
          width: 100%;
-     }
-
-         .form-select:focus, .form-control:focus {
-             border-color: #007bff;
-             box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.15);
-             transform: translateY(-1px);
-         }
-
-     .btn-primary, .btn-secondary {
-         border: none;
-         border-radius: 8px;
-         font-weight: 500;
-         transition: all 0.3s ease;
-     }
-
-     .btn-primary {
-         color: white;
-     }
-
-     .btn-secondary {
-         color: white;
-     }
-
-         .btn-primary:hover, .btn-secondary:hover {
-             transform: translateY(-2px);
-         }
-
-     .date-input-wrapper {
-         position: relative;
-     }
-
-         .date-input-wrapper .fa-calendar {
-             position: absolute;
-             right: 10px;
-             top: 50%;
-             transform: translateY(-50%);
-             color: #6c757d;
-             pointer-events: none;
-         }
-
-     .dataTables_wrapper {
-     }
-
-         .dataTables_wrapper .dataTables_length,
-         .dataTables_wrapper .dataTables_filter {
-         }
-
-             .dataTables_wrapper .dataTables_length select,
-             .dataTables_wrapper .dataTables_filter input {
-                 border: 2px solid #e9ecef;
-                 border-radius: 8px;
-                 margin: 0 5px;
-             }
-
-         .dataTables_wrapper .dataTables_info {
-             color: #6c757d;
-             font-weight: 500;
-         }
-
-         .dataTables_wrapper .dataTables_paginate .paginate_button {
-             margin: 2px;
-             border-radius: 8px;
-             border: 2px solid #e9ecef;
-             transition: all 0.3s ease;
-         }
-
-             .dataTables_wrapper .dataTables_paginate .paginate_button:hover,
-             .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-                 background: #007bff;
-                 color: white !important;
-                 border-color: #007bff;
-                 transform: translateY(-1px);
-             }
-
-     @@media (max-width: 1399px) {
-         .form-select, .form-control {
-             font-size: 12px;
-         }
-
-         #productTable thead th {
-             font-size: 12px;
-         }
-
-         #productTable tbody td {
-         }
-     }
-
-     @@media (min-width: 1400px) {
-         .form-select, .form-control {
-             font-size: 14px;
-         }
-
-         #productTable thead th {
-             font-size: 14px;
-         }
-
-         #productTable tbody td {
-         }
-     }
-
-     .dataTables_scrollBody::-webkit-scrollbar {
-         height: 8px;
-     }
-
-     .dataTables_scrollBody::-webkit-scrollbar-track {
-         background: #f1f1f1;
-         border-radius: 10px;
-     }
-
-     .dataTables_scrollBody::-webkit-scrollbar-thumb {
-         background: #007bff;
-         border-radius: 10px;
-     }
-
-         .dataTables_scrollBody::-webkit-scrollbar-thumb:hover {
-             background: #0056b3;
-         }
-
-     .loading {
-         display: none;
-         position: fixed;
-         top: 50%;
-         left: 50%;
-         transform: translate(-50%, -50%);
-         z-index: 9999;
-     }
-
-     .spinner-border {
-         width: 3rem;
-         height: 3rem;
-     }
-
-     .select2-container--bootstrap-5 .select2-selection {
-         height: calc(1.5em + .75rem + 2px);
-         font-size: 1rem;
-         line-height: 1.5;
-         color: #495057;
-         background-color: transparent;
-         border: 1px solid #ced4da;
-         border-radius: .375rem;
-         display: flex;
-         align-items: center;
-         position: relative;
-     }
-
-     .select2-container--bootstrap-5 .select2-selection__arrow,
-     .select2-container--bootstrap-5 .select2-selection__clear {
+         max-height: 150px;
+         overflow-y: auto;
+         z-index: 1052; 
          position: absolute;
-         top: 50%;
-         transform: translateY(-50%);
-         cursor: pointer;
      }
 
-     .select2-container--bootstrap-5 .select2-selection__arrow {
-         right: 0.75rem;
+     #btnPreviewPdf, #downloadReport {
+         transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;         
+         min-height: 25px;
+         position: relative;
+         overflow: visible;
+         border:1px solid #eee!important;
+         white-space:nowrap;
      }
 
-     .select2-container--bootstrap-5 .select2-selection__clear {
-         right: 2rem;
-         color: #dc3545;
-         font-weight: bold;
-         display: inline-block !important;
+     .dateInput {
+         width: 10vw !important;
      }
+         #btnPreviewPdf:hover,
+         #downloadReport:hover {
+             background-color: rgba(173, 255, 47, 0.2) !important;
+             color: #1e90ff !important;
+             border-color: #1e90ff !important;
+             box-shadow: 0 4px 10px rgba(30, 144, 255, 0.5) !important;
+         }
 
-         .select2-container--bootstrap-5 .select2-selection__clear:hover {
-             color: #a71d2a;
+
+         #btnPreviewPdf i,
+         #btnPreviewPdf span,
+         #downloadReport i,
+         #downloadReport span {
+             transition: transform 0.3s ease;
+             display: inline-block;
+             transform: scale(1);
+             margin-right: 2px;
+         }
+
+         #btnPreviewPdf:hover i,
+         #downloadReport:hover i {
+             transform: scale(1.3);
          }
 </style>
 
 <div class="container-fluid">
-    <partial name="_PageHeader" model="Model"></partial>
+        <partial name="_PageHeader" model="Model"></partial>
 </div>
 
 <div class="container-fluid">
     <div id="stickyHeader" class="card-header px-2 sticky-top rounded-bottom"
-         style="min-height: 50px; z-index: 1020;">
+    style="min-height: 50px; z-index: 1020;">
         <partial name="_Toolbars" model="new ToobarModel(){Title=Model.Breadcrumb, Code=Model.Code , Name=Model.Setup.PurchaseReceiveNo, }" />
     </div>
-    <div class="my-3 py-3">
-        <div class="container-fluid">        
-
-            <!-- Main Card -->
+    <div>
+        <div class="container-fluid mt-3">
             <div class="card">
-                <div class="card-header">
-                    <h5 class="mb-0"><i class="fas fa-filter me-2"></i>Report Filters</h5>
+                <div class="card-header ">
+
+            <h5 class="mb-0">Filter By:</h5>
                 </div>
-                <div class="card-body">
-                    <!-- Filter Table -->
-                    <div class="table-responsive">
-                        <table id="productTable" class="table table-hover table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Category</th>
-                                    <th>Product</th>
-                                    <th>Brand</th>
-                                    <th>Model</th>
-                                    <th>Date From</th>
-                                    <th>Date To</th>
-                                    <th>Preview Format</th>
-                                    <th>Export Format</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <select class="form-select form-control form-control-sm select2" id="categorySelect">
-                                            <option value="">All Categories</option>
-                                            <option value="electronics">Electronics</option>
-                                            <option value="office_supplies">Office Supplies</option>
-                                            <option value="printing">Printing Materials</option>
-                                            <option value="stationery">Stationery</option>
-                                            <option value="furniture">Furniture</option>
-                                            <option value="software">Software</option>
-                                            <option value="medical_equipment">Medical Equipment</option>
-                                            <option value="cleaning_supplies">Cleaning Supplies</option>
-                                            <option value="safety_equipment">Safety Equipment</option>
-                                            <option value="networking">Networking Equipment</option>
-                                            <option value="audio_visual">Audio Visual</option>
-                                            <option value="books_literature">Books & Literature</option>
+                 <div class="card-body">
+
+            <div class="table-responsive">
+                        <table class="table table-bordered text-center" style="border:1px solid #eee !important;">
+                    <thead class="text-center ">
+                        <tr>
+                            <th style="width: 25vw;">Category</th>
+                            <th style="width: 25vw;">Product</th>
+                            <th style="width: 25vw;">Brand</th>
+                            <th style="width: 25vw;">Model</th>
+                            <th style="width: 15vw;">Date From</th>
+                            <th style="width: 15vw;">To</th>
+                            <th style="width: 10vw;"></th>
+                            <th style="width: 15vw;">Format</th>
+                            <th style="width: 10vw;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                        @* <select class="form-select searchable-select form-control form-control-sm" id="categoryDropdown" name="category" style="width: 100%;">
+                                    <option value="">Category...</option>
+                                            <option value="dhaka">dhaka</option>
+                                            <option value="chittagong">chittagong</option>
+                                </select> *@
+                                        <select class="form-select searchable-select form-control form-control-sm" id="categoryDropdown" name="category" style="width: 100%;">
+                                            <option value="">Category...</option>
                                         </select>
-                                    </td>
+                            </td>
+                            <td>
+                                        <select class="form-select searchable-select form-control form-control-sm" id="productDropdown" name="product" style="width: 100%;">
+                                            <option value="">Product...</option>
+                                    <option value="bangladesh">বাংলাদেশ</option>
+                                    <option value="india">ভারত</option>
+                                </select>
+                            </td>
+                            <td>
+                                        <select class="form-select searchable-select form-control form-control-sm" id="brandDropdown" name="brand" style="width: 100%;">
+                                            <option value="">Brand...</option>
+                                    <option value="bengali">বাংলা</option>
+                                    <option value="english">ইংরেজি</option>
+                                </select>
+                            </td>
+                            <td>
+                                        <select class="form-select searchable-select form-control form-control-sm" id="modelDropdown" name="model" style="width: 100%;">
+                                            <option value="">Model...</option>
+                                    <option value="dhaka_division">ঢাকা বিভাগ</option>
+                                    <option value="chittagong_division">চট্টগ্রাম বিভাগ</option>
+                                </select>
+                            </td>
+                            <td>
+                               <input type="text" name="name" class="dateInput form-control form-control-sm" id="formDate" value="" />
+                            </td>
+                            <td>
+                                        <input type="text" name="name" class="dateInput form-control form-control-sm" id="toDate" value="" />
+                            </td>
                                     <td>
-                                        <select class="form-select select2" id="productSelect">
-                                            <option value="">All Products</option>
-                                            <option value="laptop">Laptop</option>
-                                            <option value="desktop_computer">Desktop Computer</option>
-                                            <option value="printer">Printer</option>
-                                            <option value="scanner">Scanner</option>
-                                            <option value="monitor">Monitor</option>
-                                            <option value="keyboard">Keyboard</option>
-                                            <option value="mouse">Mouse</option>
-                                            <option value="paper">Paper</option>
-                                            <option value="ink_cartridge">Ink Cartridge</option>
-                                            <option value="toner">Toner</option>
-                                            <option value="pen">Pen</option>
-                                            <option value="pencil">Pencil</option>
-                                            <option value="notebook">Notebook</option>
-                                            <option value="stapler">Stapler</option>
-                                            <option value="chair">Office Chair</option>
-                                            <option value="desk">Desk</option>
-                                            <option value="filing_cabinet">Filing Cabinet</option>
-                                            <option value="projector">Projector</option>
-                                            <option value="whiteboard">Whiteboard</option>
+                                        <button id="btnPreviewPdf" class="btn btn-sm btn-outline-secondary common-btn px-4  form-control form-control-sm">
+                                            <i class="fas fa-eye preview-icon" title="Preview"></i> <span>Preview</span>
+                                        </button>
+                                    </td>
+                            <td>
+                                        <select class="form-select searchable-select form-control form-control-sm" id="formatDropdown" name="format" style="width: 100%;">
+                                            <option value="">Format...</option>
+                                            <option value="dhaka_division">ঢাকা বিভাগ</option>
+                                            <option value="chittagong_division">চট্টগ্রাম বিভাগ</option>
                                         </select>
-                                    </td>
-                                    <td>
-                                        <select class="form-select select2" id="brandSelect">
-                                            <option value="">All Brands</option>
-                                            <option value="hp">HP (Hewlett-Packard)</option>
-                                            <option value="canon">Canon</option>
-                                            <option value="epson">Epson</option>
-                                            <option value="dell">Dell Technologies</option>
-                                            <option value="lenovo">Lenovo</option>
-                                            <option value="samsung">Samsung</option>
-                                            <option value="brother">Brother</option>
-                                            <option value="lexmark">Lexmark</option>
-                                            <option value="xerox">Xerox</option>
-                                            <option value="microsoft">Microsoft</option>
-                                            <option value="apple">Apple</option>
-                                            <option value="asus">ASUS</option>
-                                            <option value="acer">Acer</option>
-                                            <option value="logitech">Logitech</option>
-                                            <option value="sony">Sony</option>
-                                            <option value="lg">LG Electronics</option>
-                                            <option value="philips">Philips</option>
-                                            <option value="panasonic">Panasonic</option>
-                                            <option value="ricoh">Ricoh</option>
-                                            <option value="sharp">Sharp</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select class="form-select select2" id="modelSelect">
-                                            <option value="">All Models</option>
-                                            <option value="model_x1">X1 Series</option>
-                                            <option value="model_x2">X2 Series</option>
-                                            <option value="model_x3">X3 Series</option>
-                                            <option value="model_pro">Pro Series</option>
-                                            <option value="model_pro_max">Pro Max Series</option>
-                                            <option value="model_elite">Elite Series</option>
-                                            <option value="model_elite_book">EliteBook Series</option>
-                                            <option value="model_basic">Basic Series</option>
-                                            <option value="model_standard">Standard Series</option>
-                                            <option value="model_premium">Premium Series</option>
-                                            <option value="model_enterprise">Enterprise Series</option>
-                                            <option value="model_home">Home Series</option>
-                                            <option value="model_office">Office Series</option>
-                                            <option value="model_gaming">Gaming Series</option>
-                                            <option value="model_workstation">Workstation Series</option>
-                                            <option value="model_compact">Compact Series</option>
-                                            <option value="model_portable">Portable Series</option>
-                                            <option value="model_heavy_duty">Heavy Duty Series</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <div class="date-input-wrapper">
-                                            <input type="text" class="form-control date-picker" id="dateFrom" placeholder="Start Date" readonly>
-                                            <i class="fas fa-calendar"></i>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="date-input-wrapper">
-                                            <input type="text" class="form-control date-picker" id="dateTo" placeholder="End Date" readonly>
-                                            <i class="fas fa-calendar"></i>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <select class="form-select" id="previewFormatSelect">
-                                            <option value="">Select Preview</option>
-                                            <option value="table">Table View</option>
-                                            <option value="card">Card View</option>
-                                            <option value="grid">Grid View</option>
-                                            <option value="chart">Chart View</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select class="form-select" id="exportFormatSelect">
-                                            <option value="">Export As</option>
-                                            <option value="pdf">PDF Document</option>
-                                            <option value="excel">Excel (.xlsx)</option>
-                                            <option value="csv">CSV File</option>
-                                            <option value="word">Word Document</option>
-                                            <option value="json">JSON Format</option>
-                                            <option value="xml">XML Format</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex gap-1">
-                                            <button class="btn btn-primary btn-sm" id="submitBtn" title="Generate Report">
-                                                <i class="fas fa-search me-1"></i>Search
-                                            </button>                                          
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>        
+                            </td>
+                            <td>
+                                        
+                                        <button id="downloadReport" class="btn btn-sm common-btn btn-outline-secondary form-control form-control-sm">
+                                            <i class="fas fa-file-export fa-export"></i> <span>Export Report</span>
+                                        </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>           
+            </div>           
+            </div>           
+        </div>
     </div>
 </div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap 5.3 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome 6.4 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-<!-- jQuery (DataTables ) -->
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
-
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <!-- Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
-    <!-- Bootstrap Multiselect CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/css/bootstrap-multiselect.min.css">
-    <!-- Bootstrap Multiselect JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/js/bootstrap-multiselect.min.js"></script>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-
-    <!-- DataTable JS -->
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
-
-    <!--flat picker-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
-
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- Bootstrap Bundle JS (with Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Load the plugin -->
+    <!-- Custom JS -->
     <script src="~/js/pages/PrintingStationeryPurchaseReport.js"></script>
 
-    <!-- Initialize the plugin -->
     <script type="text/javascript">
-        $(function () {
-            $.PrintingStationeryPurchaseReportJs({
-                baseUrl: '@Url.Action("Index", "PrintingStationeryPurchaseReport")',
-                load: function () {
-                    console.log("Custom load logic called from Razor view");
-                }
-            });
-        });
-            if (typeof pdfjsLib !== 'undefined') {
+        // Optional PDF.js config
+        if (typeof pdfjsLib !== 'undefined') {
             pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
         }
     </script>
 }
+

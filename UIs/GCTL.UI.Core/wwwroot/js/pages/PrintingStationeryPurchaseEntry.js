@@ -259,7 +259,7 @@
             });
         })
 
-        $(commonName.StationarySupplierModalClose).on('click', function () {
+        $(commonName.StationarySupplierModalClose).on('click', function () { //todo
             $.ajax({
                 url: SupplierCloseUrl,
                 type: "GET",
@@ -368,18 +368,19 @@
         });
 
         //brand 
-        $(document).on('change', '.BrandIdFromDropdown', function () {
+        $(document).on('change', '.brandIdFromDropdown ', function () {
             var brandId = $(this).val();
-            var $row = $(this).closest('tr'); 
-
+            var $row = $(this).closest('tr');
+            console.log(brandId);
             $.ajax({
                 url: brandIdDetailsonModelUrl,
                 type: "POST",
                 contentType: 'application/json',
                 data: JSON.stringify(brandId),
                 success: function (res) {
+                    console.log(res);
                     if (res.data != null) {
-                        let $modelDropdown = $row.find('.ModelPopulateFromBrandId');
+                        let $modelDropdown = $row.find('.modelPopulateFromBrandId');
                         $modelDropdown.empty().append('<option value="">Select Model</option>');
                         res.data.forEach(function (model) {
                             $modelDropdown.append(`<option value="${model.modelID}">${model.modelName}</option>`);

@@ -151,7 +151,6 @@
                 url: '/Brand/Index?isPartial=true',
                 type: 'GET',
                 success: function (result) {
-                    console.log("Loaded Brand View:", result);
                     $('#brandContainer').html(result);
 
                     // Simple show - modal already exists
@@ -192,7 +191,7 @@
             });
         })
 
-        $(commonName.CloseBrandModel).on('click', function () {
+        $(".closeBrandModel").on('click', function () {
             $('.modal').modal('hide');
             $('.modal-backdrop').remove();
             $('body').removeClass('modal-open');
@@ -419,12 +418,10 @@
         //edit
         $(document).on('click', commonName.EditBrn, function () {
             let id = $(this).data('id');
-            console.log(id);
             $.ajax({
                 url: `${PopulatedDataForUpdateUrl}?id=${id}`,
                 type: "GET",
                 success: function (res) {
-                    console.log(res);
                     selectedIds = [];
                     selectedIds.push(res.result.autoId + '');
                     $(commonName.AutoId).val(res.result.autoId);
