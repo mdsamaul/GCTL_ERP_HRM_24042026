@@ -16,7 +16,7 @@
             PurchaseCost: "#purchaseCost",
             AutoId: "#Setup_AutoId",
             ProductSaveBtn: ".js-Printing-Stationery-Purchase-save",
-
+            ProductItemPrintBtn:".js-Item-product-print",
 
             RowCheckbox: ".row-checkbox",
             SelectedAll: "#selectAll",
@@ -36,6 +36,7 @@
         var PopulatedDataForUpdateUrl = commonName.baseUrl + "/PopulatedDataForUpdate";
         var deleteUrl = commonName.baseUrl + "/deleteProduct";
         var alreadyExistUrl = commonName.baseUrl + "/alreadyExist";
+        var DownloadItemInformationReportUrl = commonName.baseUrl + "/DownloadItemInformationReport";
         function stHeader() {
             window.addEventListener('scroll', function () {
                 const header = document.getElementById('stickyHeader');
@@ -99,7 +100,7 @@
                 type: 'GET',
                 success: function (result) {
                     $('#catagoryContainer').html(result);
-                    $('#catagoryModal').modal('show'); // ✅ এই জায়গায় fix
+                    $('#catagoryModal').modal('show'); 
                     if (typeof $.INV_Catagory === 'function') {
                         var options = {
                             baseUrl: '/INV_Catagory',
@@ -138,13 +139,7 @@
 
         
         // Then simple click handler
-        $(commonName.BrandBtn).on('click', function () {
-            if ($.fn.DataTable.isDataTable('#brandTable')) {
-                $('#brandTable').DataTable().destroy();
-            }
-            if ($.fn.DataTable.isDataTable('#ProductTable')) {
-                $('#ProductTable').DataTable().clear().destroy();
-            }
+        $(commonName.BrandBtn).on('click', function () {           
             const $btn = $(this);
            
             $.ajax({
@@ -153,10 +148,8 @@
                 success: function (result) {
                     $('#brandContainer').html(result);
 
-                    // Simple show - modal already exists
                     $('#brandModal').modal('show');
 
-                    // Plugin initialize করুন
                     if (typeof $.HrmBrand === 'function') {
                         $.HrmBrand({
                             baseUrl: '/Brand',
@@ -210,10 +203,7 @@
                 }, error: function (error) {
                 }
             });
-        })
-
-
-       
+        })      
 
         // Sticky header on scroll
         function stHeader() {
@@ -414,6 +404,40 @@
                 }
             }
         });
+        $(document).on('click', commonName.ProductItemPrintBtn, function () {
+            $.ajax({
+                url: loadProductDataUrl,
+                type: "GET",
+                success: function (res) {
+                    downloadItemInfoExcel(res.data);
+                }
+            });
+        })//todo
+
+        function downloadItemInfoExcel(data) {
+            $.ajax({
+                url: DownloadItemInformationReportUrl,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                success: function (blob) {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = "ItemInformationReport.xlsx";
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                },
+                error: function () {
+                    alert("Failed to download report.");
+                }
+            });
+        }
+
         let selectedIds = [];
         //edit
         $(document).on('click', commonName.EditBrn, function () {

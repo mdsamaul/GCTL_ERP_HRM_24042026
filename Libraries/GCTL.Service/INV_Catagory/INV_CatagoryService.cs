@@ -105,7 +105,6 @@ namespace GCTL.Service.INV_Catagory
                     CatagoryID = entity.CatagoryId,
                     CatagoryName = entity.CatagoryName,
                     ShortName = entity.ShortName,
-                    //Ldate= entity.Ldate.HasValue? entity.Ldate.Value.ToString("dd/MM/yyyy"):"",
                     ShowCreateDate= entity.Ldate.HasValue ? entity.Ldate.Value.ToString("dd/MM/yyyy"):"",
                    ShowModifyDate = entity.ModifyDate.HasValue? entity.ModifyDate.Value.ToString("dd/MM/yyyy") :"",
                     ModifyDate = entity.ModifyDate

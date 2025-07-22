@@ -178,11 +178,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                        @* <select class="form-select searchable-select form-control form-control-sm" id="categoryDropdown" name="category" style="width: 100%;">
-                                    <option value="">Category...</option>
-                                            <option value="dhaka">dhaka</option>
-                                            <option value="chittagong">chittagong</option>
-                                </select> *@
+                                       
                                         <select class="form-select searchable-select form-control form-control-sm" id="categoryDropdown" name="category" style="width: 100%;">
                                             <option value="">Category...</option>
                                         </select>
@@ -190,22 +186,17 @@
                             <td>
                                         <select class="form-select searchable-select form-control form-control-sm" id="productDropdown" name="product" style="width: 100%;">
                                             <option value="">Product...</option>
-                                    <option value="bangladesh">বাংলাদেশ</option>
-                                    <option value="india">ভারত</option>
+                                   
                                 </select>
                             </td>
                             <td>
                                         <select class="form-select searchable-select form-control form-control-sm" id="brandDropdown" name="brand" style="width: 100%;">
                                             <option value="">Brand...</option>
-                                    <option value="bengali">বাংলা</option>
-                                    <option value="english">ইংরেজি</option>
                                 </select>
                             </td>
                             <td>
                                         <select class="form-select searchable-select form-control form-control-sm" id="modelDropdown" name="model" style="width: 100%;">
                                             <option value="">Model...</option>
-                                    <option value="dhaka_division">ঢাকা বিভাগ</option>
-                                    <option value="chittagong_division">চট্টগ্রাম বিভাগ</option>
                                 </select>
                             </td>
                             <td>
@@ -220,10 +211,10 @@
                                         </button>
                                     </td>
                             <td>
-                                        <select class="form-select searchable-select form-control form-control-sm" id="formatDropdown" name="format" style="width: 100%;">
-                                            <option value="">Format...</option>
-                                            <option value="dhaka_division">ঢাকা বিভাগ</option>
-                                            <option value="chittagong_division">চট্টগ্রাম বিভাগ</option>
+                                        <select class="form-control form-control-sm" id="formatDropdown" name="format" style="width: 100%;">
+                                            <option value="">~~Select Report~~</option>
+                                            <option value="pdf">PDF</option>
+                                            <option value="excel">Excel</option>
                                         </select>
                             </td>
                             <td>
@@ -237,7 +228,11 @@
                 </table>
             </div>           
             </div>           
-            </div>           
+            </div>
+            <div class="card">
+                <iframe id="pdfPreviewFrame" width="100%" height="800px" style="border: 1px solid #ccc;"></iframe>
+
+            </div>
         </div>
     </div>
 </div>
@@ -255,6 +250,9 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>

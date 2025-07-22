@@ -292,7 +292,6 @@
         //        success: function (res) {
         //            $(commonName.ProductSelectId).empty();
         //            res.data.map(function (product) {
-        //                console.log(product);
         //                $(commonName.ProductSelectId).append(`
         //            <option value="${product.productCode}">${product.productName}</option>
         //            `);
@@ -308,7 +307,6 @@
         //        type: "GET",
         //        success: function (res) {
         //            $(commonName.BrandIdFromDropdown).empty();
-        //            console.log(res);
         //            res.data.result.map(function (Brand) {
         //                $(commonName.BrandIdFromDropdown).append(`
         //            <option value="${Brand.brandId}">${Brand.brandName}</option>
@@ -371,14 +369,12 @@
         $(document).on('change', '.brandIdFromDropdown ', function () {
             var brandId = $(this).val();
             var $row = $(this).closest('tr');
-            console.log(brandId);
             $.ajax({
                 url: brandIdDetailsonModelUrl,
                 type: "POST",
                 contentType: 'application/json',
                 data: JSON.stringify(brandId),
                 success: function (res) {
-                    console.log(res);
                     if (res.data != null) {
                         let $modelDropdown = $row.find('.modelPopulateFromBrandId');
                         $modelDropdown.empty().append('<option value="">Select Model</option>');
@@ -634,7 +630,6 @@
             $('#totalPriceOfProductAddProductPrice').val(total);
         }
         $(document).on('click', '.delete-row-btn', function () {
-            // আগে targeted row remove করবো
             let $targetRow = $(this).closest('tr');
             $targetRow.remove();
 
@@ -698,7 +693,8 @@
             $(commonName.StationeryRemarks).val('');
             $(commonName.CompanyCode).val('');
             $(commonName.TotalPriceOfProductAddProductPrice).val('');
-
+            $(commonName.CreateDate).text('');
+            $(commonName.UpdateDate).text('');
             const today = new Date();
             const formattedDate = today.toISOString().split('T')[0];
 
@@ -836,7 +832,6 @@
         //$(commonName.supplierName).on('input', function () {
 
         //    let supplierValue = $(this).val();
-        //    console.log();
         //    $.ajax({
         //        url: alreadyExistUrl,
         //        type: "POST",
@@ -1196,6 +1191,45 @@
                 }
             })
         })
+
+        function closeAllModals(callback) {
+            $(".modal").modal('hide'); // Bootstrap modal close
+            setTimeout(() => {
+                if (typeof callback === 'function') {
+                    callback();
+                }
+            }, 300); 
+        }
+
+        $(document).on('click', ".closesupplierTypeModel", function () {
+            closeAllModals(() => {
+                $(commonName.SupplierModalBtn).trigger('click');
+            });
+        });
+
+        $(document).on('click', ".closeCountryModel", function () {
+            closeAllModals(() => {
+                $(commonName.SupplierModalBtn).trigger('click');
+            });
+        });
+
+        $(document).on('click', ".closeBrandModel", function () {
+            closeAllModals(() => {
+                $(commonName.ProductModalBtn).trigger('click');
+            });
+        });
+
+        $(document).on('click', ".closeCatagoryModel", function () {
+            closeAllModals(() => {
+                $(commonName.ProductModalBtn).trigger('click');
+            });
+        });
+
+        $(document).on('click', ".itemBrandModalLabelClose", function () {
+            closeAllModals(() => {
+                $(commonName.ProductModelBtn).trigger('click');
+            });
+        });
 
 
         window.categoryModuleLoaded = true;

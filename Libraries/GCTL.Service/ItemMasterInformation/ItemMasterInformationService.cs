@@ -96,6 +96,7 @@ namespace GCTL.Service.ItemMasterInformation
                     CatagoryName = cataRepo.All().Where(x=>x.CatagoryId == c.CatagoryId).Select(x=>x.CatagoryName).FirstOrDefault(),
                     UnitID = unitRepo.All().Where(x=>x.UnitTypId == c.UnitId).Select(x=>x.UnitTypeName).FirstOrDefault(),
                     PurchaseCost= c.PurchaseCost,
+                    Description=c.Description??""
                 }).ToList();
             }
             catch (Exception)

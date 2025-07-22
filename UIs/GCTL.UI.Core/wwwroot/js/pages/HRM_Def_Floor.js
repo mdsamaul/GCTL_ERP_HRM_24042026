@@ -91,7 +91,6 @@
         $(commonName.FloorName).on('input', function () {
 
             let FloorValue = $(this).val();
-            console.log(FloorValue);
             $.ajax({
                 url: alreadyExistUrl,
                 type: "POST",
@@ -116,7 +115,6 @@
         // Save Button Click
         $(document).on('click', commonName.FloorSaveBtn, function () {
             var fromData = getFromData();
-            console.log(fromData);
             if (fromData.FloorName == null || fromData.FloorName.trim() === '') {
                 $(commonName.FloorName).addClass('floor-input');
                 $(commonName.FloorSaveBtn).prop('disabled', true);
@@ -160,7 +158,6 @@
                 "type": "GET",
                 "datatype": "json",
                 "dataSrc": function (json) {
-                    console.log(json);
                     return json.data || [];
                 },
                 "error": function (xhr, error, thrown) {
@@ -211,7 +208,6 @@
                 url: `${PopulatedDataForUpdateUrl}?id=${id}`,
                 type: "GET",
                 success: function (res) {
-                    console.log(res);
                     selectedIds = [];
                     selectedIds.push(res.result.autoId + '');
                     $(commonName.AutoId).val(res.result.autoId);

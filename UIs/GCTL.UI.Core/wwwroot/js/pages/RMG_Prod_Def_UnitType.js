@@ -96,7 +96,6 @@
         //Decimal Places
         $(commonName.DecimalPlacesLeftValue).on('input', function () {
             let valueDecimalPlaces = $(this).val();
-            console.log(valueDecimalPlaces);
             if (valueDecimalPlaces < 0 || valueDecimalPlaces > 5) {
                 showToast('warning', "Value Invalid");
                 $(commonName.DecimalPlacesLeftValue).addClass('UnitType-input');
@@ -137,7 +136,6 @@
         // Save Button Click
         $(document).on('click', commonName.UnitTypeSaveBtn, function () {
             var fromData = getFromData();
-            console.log(fromData);
             if (fromData.UnitTypeName == null || fromData.UnitTypeName.trim() === '') {
                 $(commonName.UnitTypeName).addClass('UnitType-input');
                 $(commonName.UnitTypeSaveBtn).prop('disabled', true);
@@ -181,7 +179,6 @@
                 "type": "GET",
                 "datatype": "json",
                 "dataSrc": function (json) {
-                    console.log(json);
                     return json.data || [];
                 },
                 "error": function (xhr, error, thrown) {
@@ -229,12 +226,10 @@
         //edit
         $(document).on('click', commonName.EditBrn, function () {
             let id = $(this).data('id');
-            console.log(id);
             $.ajax({
                 url: `${PopulatedDataForUpdateUrl}?id=${id}`,
                 type: "GET",
                 success: function (res) {
-                    console.log(res);
                     selectedIds = [];
                     selectedIds.push(res.result.tc + '');
                     $(commonName.AutoId).val(res.result.tc);
@@ -274,7 +269,6 @@
             $(commonName.RowCheckbox).prop('checked', isChecked).trigger('change');
         })
         $(document).on('click', commonName.DeleteBtn, function () {
-            console.log(selectedIds);
             $.ajax({
                 url: deleteUrl,
                 type: "POST",
@@ -301,7 +295,6 @@
             stHeader();
             autoUnitTypeId();
             table;
-            console.log("test");
         };
         init();
 

@@ -2,7 +2,7 @@
     $.fn.PrintingStationeryPurchaseReportJs = function (options) {
         const settings = $.extend({
             noResultsText: 'No results found.',
-            multiSelect: true, // Enable multi-select by default
+            multiSelect: true,
             onSelect: function (values, texts) { }
         }, options);
 
@@ -11,7 +11,6 @@
             const selectId = $originalSelect.attr('id') || 'dropdown_' + Math.random().toString(36).substr(2, 9);
             const selectName = $originalSelect.attr('name') || '';
 
-            // Store selected values
             let selectedValues = [];
             let selectedTexts = [];
 
@@ -51,32 +50,25 @@
             let isOpen = false;
             let isSearchMode = false;
 
-            // Update display text based on selections
             function updateDisplayText() {
                 if (selectedTexts.length === 0) {
                     $dropdownInput.val('');
                     $dropdownInput.attr('placeholder', $originalSelect.find('option:first').text());
                 } else if (selectedTexts.length === 1) {
                     $dropdownInput.val(selectedTexts[0]);
-                } else if (selectedTexts.length === 1) {
-                    $dropdownInput.val(selectedTexts.join(', '));
                 } else {
                     $dropdownInput.val(selectedTexts.slice(0, 1).join(', ') + ` + ${selectedTexts.length - 1} items`);
                 }
                 isSearchMode = false;
             }
 
-            // Update hidden input with selected values
             function updateHiddenInput() {
                 $hiddenInput.val(selectedValues.join(','));
-                settings.onSelect(selectedValues, selectedTexts);
-
-                // Console log for debugging
-                console.log(`${selectId} Selected IDs:`, selectedValues);
-                console.log(`${selectId} Selected Texts:`, selectedTexts);
+                setTimeout(() => {
+                    settings.onSelect(selectedValues, selectedTexts);
+                }, 0);
             }
 
-            // Enter search mode
             function enterSearchMode() {
                 if (selectedTexts.length > 0) {
                     $dropdownInput.val('');
@@ -85,9 +77,9 @@
                 }
             }
 
-            // Updated input click/focus handler
             $dropdownInput.on('click', function (e) {
                 if (!isOpen) {
+                    isSearchMode = false;
                     openDropdown();
                 } else if (!isSearchMode && selectedTexts.length > 0) {
                     enterSearchMode();
@@ -96,6 +88,7 @@
 
             $dropdownInput.on('focus', function (e) {
                 if (!isOpen) {
+                    isSearchMode = false;
                     openDropdown();
                 }
             });
@@ -110,7 +103,6 @@
             });
 
             $dropdownInput.on('blur', function () {
-                // Restore display text when input loses focus
                 setTimeout(() => {
                     if (!isOpen && !isSearchMode) {
                         updateDisplayText();
@@ -126,28 +118,24 @@
                 }
             });
 
-            // Event delegation for dropdown items (handles dynamic content)
             $dropdownMenu.on('click', '.dropdown-item', function (e) {
                 e.preventDefault();
                 const value = $(this).data('value');
                 const text = $(this).find('span').text();
                 const checkbox = $(this).find('input[type="checkbox"]');
 
-                if (selectedValues.includes(value)) {
-                    // Remove from selection
-                    selectedValues = selectedValues.filter(v => v !== value);
+                if (selectedValues.includes(value.toString())) {
+                    selectedValues = selectedValues.filter(v => v.toString() !== value.toString());
                     selectedTexts = selectedTexts.filter(t => t !== text);
                     checkbox.prop('checked', false);
                 } else {
-                    // Add to selection
-                    selectedValues.push(value);
+                    selectedValues.push(value.toString());
                     selectedTexts.push(text);
                     checkbox.prop('checked', true);
                 }
 
                 updateHiddenInput();
 
-                // Keep dropdown open and maintain search functionality
                 setTimeout(() => {
                     if (isSearchMode) {
                         $dropdownInput.focus();
@@ -164,13 +152,11 @@
                 } else if (e.key === 'Tab') {
                     closeDropdown();
                 } else if (e.key === 'Backspace' && $(this).val() === '' && selectedTexts.length > 0 && isSearchMode) {
-                    // Remove last selected item when backspace is pressed on empty input
                     const removedValue = selectedValues.pop();
                     selectedTexts.pop();
 
-                    // Update checkbox state
                     $dropdownMenu.find('.dropdown-item').each(function () {
-                        if ($(this).data('value') == removedValue) {
+                        if ($(this).data('value').toString() === removedValue) {
                             $(this).find('input[type="checkbox"]').prop('checked', false);
                         }
                     });
@@ -181,7 +167,6 @@
                     }
                 }
             });
-
             function openDropdown() {
                 $('.searchable-dropdown .dropdown-menu').hide();
                 $('.searchable-dropdown .dropdown-arrow').removeClass('rotated');
@@ -190,10 +175,14 @@
                 $dropdownMenu.show();
                 $dropdownArrow.addClass('rotated');
                 $originalSelect.closest('.searchable-dropdown').addClass('active');
-                filterOptions($dropdownInput.val().toLowerCase());
+
+                if (!isSearchMode) {
+                    filterOptions('');
+                } else {
+                    filterOptions($dropdownInput.val().toLowerCase());
+                }
                 isOpen = true;
             }
-
             function closeDropdown() {
                 $dropdownMenu.hide();
                 $dropdownArrow.removeClass('rotated');
@@ -201,6 +190,10 @@
                 updateDisplayText();
                 isOpen = false;
                 isSearchMode = false;
+
+                if (selectedTexts.length === 0) {
+                    $dropdownInput.val('');
+                }
             }
 
             function filterOptions(searchTerm) {
@@ -209,9 +202,8 @@
                     const text = $(this).find('span').text().toLowerCase();
                     const value = $(this).data('value');
 
-                    // Update checkbox state based on current selections
                     const checkbox = $(this).find('input[type="checkbox"]');
-                    checkbox.prop('checked', selectedValues.includes(value));
+                    checkbox.prop('checked', selectedValues.includes(value.toString()));
 
                     if (text.includes(searchTerm)) {
                         $(this).parent().show();
@@ -234,17 +226,14 @@
                 }
             }
 
-            // Public method to get selected values
             $originalSelect[0].getSelectedValues = function () {
                 return selectedValues;
             };
 
-            // Public method to get selected texts
             $originalSelect[0].getSelectedTexts = function () {
                 return selectedTexts;
             };
 
-            // Public method to clear selections
             $originalSelect[0].clearSelections = function () {
                 selectedValues = [];
                 selectedTexts = [];
@@ -253,7 +242,6 @@
                 updateHiddenInput();
             };
 
-            // Public method to refresh dropdown items (for dynamic content)
             $originalSelect[0].refreshDropdown = function () {
                 $dropdownItems = $dropdownMenu.find('.dropdown-item');
                 filterOptions('');
@@ -262,49 +250,17 @@
     };
 
     function getSelectedIds(selector) {
-        return typeof $(selector)[0].getSelectedValues === 'function'
-            ? $(selector)[0].getSelectedValues()
+        const element = $(selector)[0];
+        return (element && typeof element.getSelectedValues === 'function')
+            ? element.getSelectedValues()
             : [];
-    }
-
-    const filterData = {
-        //CategoryIds: getSelectedIds('#categoryDropdown'),
-        CategoryIds: $('#categoryDropdown')[0].getSelectedValues ? $('#categoryDropdown')[0].getSelectedValues() : [],
-        ProductIds: getSelectedIds('#productDropdown'),
-        BrandIds: getSelectedIds('#brandDropdown'),
-        ModelIds: getSelectedIds('#modelDropdown'),
-        FromDate: $('#formDate').val() ? new Date($('#formDate').val()).toISOString() : null,
-        ToDate: $('#toDate').val() ? new Date($('#toDate').val()).toISOString() : null
-    };
-
-    function CategoryLoad() {
-        console.log("Loading categories...");
-        return $.ajax({
-            url: "/PrintingStationeryPurchaseReport/GetFilteredDropdowns",
-            type: "POST",
-            contentType: 'application/json',
-            data: JSON.stringify(filterData),
-            success: function (res) {
-                console.log("Dropdown data loaded:", res);
-
-                populateDropdown("#categoryDropdown", res.categoryIds);
-                populateDropdown("#productDropdown", res.productIds);
-                populateDropdown("#brandDropdown", res.brandIds);
-                populateDropdown("#modelDropdown", res.modelIds);
-            },
-            error: function (e) {
-                console.log("Error loading dropdowns:", e);
-            }
-        });
     }
 
     function populateDropdown(selector, items, defaultText = '-- Select --') {
         const $dropdown = $(selector);
 
-        // Clear and reset original select
         $dropdown.empty().append($('<option>').val('').text(defaultText));
 
-        // Populate with new items
         if (items && Array.isArray(items)) {
             items.forEach(item => {
                 if (item && item.id !== undefined && item.name !== undefined) {
@@ -313,16 +269,13 @@
             });
         }
 
-        // Update the custom dropdown menu if it exists
         const selectId = $dropdown.attr('id');
         const $dropdownMenu = $(`#${selectId}_menu`);
         const $dropdownInput = $(`#${selectId}_input`);
 
         if ($dropdownMenu.length && $dropdownInput.length) {
-            // Clear existing menu items
             $dropdownMenu.empty();
 
-            // Add new items to custom dropdown
             if (items && Array.isArray(items)) {
                 items.forEach(item => {
                     if (item && item.id !== undefined && item.name !== undefined) {
@@ -339,112 +292,341 @@
                 });
             }
 
-            // Clear any existing selections and refresh dropdown
             if (typeof $dropdown[0].clearSelections === 'function') {
                 $dropdown[0].clearSelections();
             }
 
-            // Refresh dropdown items
             if (typeof $dropdown[0].refreshDropdown === 'function') {
                 $dropdown[0].refreshDropdown();
             }
 
-            // Update placeholder
             $dropdownInput.attr('placeholder', defaultText);
             $dropdownInput.val('');
         }
     }
 
+    function loadFilteredDropdowns(filterData, updateDropdowns = []) {
+        return $.ajax({
+            url: "/PrintingStationeryPurchaseReport/GetFilteredDropdowns",
+            type: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify(filterData),
+            success: function (res) {
+                 updateDropdowns.forEach(dropdown => {
+                    switch (dropdown) {
+                        case 'category':
+                            populateDropdown("#categoryDropdown", res.categoryIds, "~~Select Category~~");
+                            break;
+                        case 'product':
+                            populateDropdown("#productDropdown", res.productIds, "~~Select Product~~");
+                            break;
+                        case 'brand':
+                            populateDropdown("#brandDropdown", res.brandIds, "~~Select Brand~~");
+                            break;
+                        case 'model':
+                            populateDropdown("#modelDropdown", res.modelIds, "~~Select Model~~");
+                            break;
+                    }
+                });
+            },
+            error: function (e) {
+            }
+        });
+    }
+
+    // Get current filter data
+    function getCurrentFilterData() {
+        return {
+            CategoryIds: getSelectedIds('#categoryDropdown'),
+            ProductIds: getSelectedIds('#productDropdown'),
+            BrandIds: getSelectedIds('#brandDropdown'),
+            ModelIds: getSelectedIds('#modelDropdown'),
+            FromDate: $('#formDate').val() ? new Date($('#formDate').val()).toISOString() : null,
+            ToDate: $('#toDate').val() ? new Date($('#toDate').val()).toISOString() : null
+        };
+    }
+
+    function CategoryLoad() {
+        const filterData = getCurrentFilterData();
+        return loadFilteredDropdowns(filterData, ['category', 'product', 'brand', 'model']);
+    }
+
     function initializeDropdowns() {
-        // Initialize multi-select dropdowns
         $('#categoryDropdown').PrintingStationeryPurchaseReportJs({
             onSelect: function (values, texts) {
-                console.log("Category - Selected Values:", values);
-                console.log("Category - Selected Texts:", texts);
+                const filterData = getCurrentFilterData();
+                loadFilteredDropdowns(filterData, ['product', 'brand', 'model']);
             }
         });
 
         $('#productDropdown').PrintingStationeryPurchaseReportJs({
             onSelect: function (values, texts) {
-                console.log("Product - Selected Values:", values);
-                console.log("Product - Selected Texts:", texts);
+                const filterData = getCurrentFilterData();
+                loadFilteredDropdowns(filterData, ['brand', 'model']);
             }
         });
 
         $('#brandDropdown').PrintingStationeryPurchaseReportJs({
             onSelect: function (values, texts) {
-                console.log("Brand - Selected Values:", values);
-                console.log("Brand - Selected Texts:", texts);
+                const filterData = getCurrentFilterData();
+                loadFilteredDropdowns(filterData, ['model']);
             }
         });
 
-        $('#modelDropdown').PrintingStationeryPurchaseReportJs({
-            onSelect: function (values, texts) {
-                console.log("Model - Selected Values:", values);
-                console.log("Model - Selected Texts:", texts);
-            }
-        });
-
-        $('#formatDropdown').PrintingStationeryPurchaseReportJs({
-            onSelect: function (values, texts) {
-                console.log("Format - Selected Values:", values);
-                console.log("Format - Selected Texts:", texts);
-            }
-        });
     }
 
+    function formatDateSubtitle(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-GB');
+    }
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        let formatted = date.toLocaleString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit', 
+            hour12: true
+        });
+        return formatted.replace(/am|pm/i, match => match.toUpperCase()); 
+    }
+
+    function formatDateTime(dateString) {
+        const date = new Date(dateString);
+        let formatted = date.toLocaleString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit', 
+            hour12: true
+        });
+        return formatted.replace(/am|pm/i, match => match.toUpperCase());
+    }
+
+    function generatePDFWithData(responseData, fromDate, toDate, isPdf) {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ unit: 'mm', format: 'a4' }); 
+        const fromDateFormatted = fromDate ? formatDateSubtitle(fromDate) : '';
+        const toDateFormatted = toDate ? formatDateSubtitle(toDate) : '';
+        const now = new Date();
+        const printDateTime = formatDateTime(now);
+        const pageWidth = doc.internal.pageSize.width;
+        const pageHeight = doc.internal.pageSize.height;
+        const margin = 5; 
+        doc.setFont('times', 'bold');
+        doc.setTextColor(0); 
+        doc.setFontSize(18);
+        doc.text('PRINTING & STATIONERY REPORT', pageWidth / 2, 25, { align: 'center' });
+        if (fromDate != null && toDate != null) {
+            doc.setFont('times', 'normal');
+            doc.setFontSize(12);
+            doc.text(`Date From: ${fromDateFormatted} to ${toDateFormatted}`, pageWidth / 2, 35, { align: 'center' });
+        }      
+
+        if (!responseData.data || responseData.data.length === 0) {
+            doc.setFontSize(14);
+            doc.text('No data found for the selected date range.', pageWidth / 2, 80, { align: 'center' });
+            doc.save(`Printing_Stationery_Report_${fromDateFormatted.replace(/\//g, '-')}_to_${toDateFormatted.replace(/\//g, '-')}.pdf`);
+            return;
+        }
+        const tableData = responseData.data.map(item => [
+            formatDate(item.receiveDate),
+            item.productName,
+            item.description || '',
+            item.brandName,
+            item.modelName,
+            item.sizeName,
+            item.warrantyPeriod,
+            item.periodName,
+            item.reqQty.toString(),
+            item.unitTypeName,
+            `${item.purchaseCost.toFixed(2)}`,
+            `${item.totalPrice.toFixed(2)}`
+        ]);
+
+        const grandTotal = responseData.data.reduce((sum, item) => sum + item.totalPrice, 0);
+
+        const headers = [
+            'Date',
+            'Product',
+            'Description',
+            'Brand',
+            'Model',
+            'Size',
+            'Warr.',
+            'Period',
+            'Qty',
+            'Unit',
+            'Unit Price',
+            'Total Price (BDT)'
+        ];
+        let startY = 30;
+        if (fromDate != null && toDate != null) {
+            startY = 40;
+        }
+        doc.autoTable({
+            head: [headers],
+            body: tableData,
+            startY: startY,
+      
+           
+            theme: 'grid',
+            styles: {
+                font: 'times',
+                fontSize: 8,
+                cellPadding: 2,
+                halign: 'left',
+                valign: 'middle',
+                textColor: 0,         
+                lineColor: [0, 0, 0],  
+                lineWidth: 0.2
+            },
+            headStyles: {
+                fillColor: false,      
+                textColor: 0,
+                fontStyle: 'bold',
+                lineColor: [0, 0, 0],
+                lineWidth: 0.2,
+                halign: 'center',     
+                valign: 'middle',     
+                fontSize: 8,
+            },
+            columnStyles: {
+                0: { cellWidth:'auto', halign: 'center' },                    
+                1: { cellWidth: 'auto', halign: 'left' },      
+                2: { cellWidth: 20 },                       
+                3: { cellWidth: 20, halign: 'center' },   
+                4: { cellWidth: 15, halign: 'center' },    
+                5: { cellWidth: 9, halign: 'center' },    
+                6: { cellWidth: 13, halign: 'center' },     
+                7: { cellWidth: 13, halign: 'center' },     
+                8: { cellWidth: 10, halign: 'center' },  
+                9: { cellWidth: 9, halign: 'center' },    
+                10: { cellWidth: 16, halign: 'right' },  
+                11: { cellWidth: 18, halign: 'right' }     
+            },
+            margin: { left: margin, right: margin },
+            didDrawPage: function (data) {
+                doc.setFont('times', 'normal');
+                doc.setFontSize(10);
+                doc.setTextColor(0);
+                doc.text(`Print DateTime: ${printDateTime}`, margin, pageHeight - 15);
+                const pageCount = doc.internal.getNumberOfPages();
+                const currentPage = doc.internal.getCurrentPageInfo().pageNumber;
+                doc.text(`Page ${currentPage} of ${pageCount}`, pageWidth - margin, pageHeight - 15, { align: 'right' });
+            }
+        });
+
+
+        const finalY = doc.lastAutoTable.finalY + 5;
+        doc.setFontSize(9);
+        doc.setFont('times', 'bold');
+        doc.setTextColor(0); 
+        doc.text('Total:', pageWidth - margin - 26, finalY);
+        doc.text(`${grandTotal.toFixed(2)}`, pageWidth - margin - 1, finalY, { align: 'right' });
+        if (isPdf) {
+            doc.save(`Printing_Stationery_Report.pdf`);
+        } else {
+            const blob = doc.output('blob');
+            const blobUrl = URL.createObjectURL(blob);
+            document.getElementById('pdfPreviewFrame').src = blobUrl;
+
+        }
+    }
+    
     $(document).ready(function () {
-        // First load data, then initialize plugins
         CategoryLoad().then(() => {
             initializeDropdowns();
         });
 
-        // Flatpickr initialization
         flatpickr(".dateInput", {
             dateFormat: "Y-m-d",
-            defaultDate: "2025-07-30",
+            defaultDate: new Date(),
             altInput: true,
             altFormat: "d/m/Y",
             allowInput: true,
         });
 
-        // Example: Get all selected values programmatically
         $(document).on('click', '#btnPreviewPdf', function () {
-            console.log({ filterData });
-            const filterDatas = {
-                //CategoryIds: getSelectedIds('#categoryDropdown'),
-                CategoryIds: $('#categoryDropdown')[0].getSelectedValues ? $('#categoryDropdown')[0].getSelectedValues() : [],
-                ProductIds: $('#productDropdown')[0].getSelectedValues ? $('#productDropdown')[0].getSelectedValues() : [],
-                BrandIds: $('#brandDropdown')[0].getSelectedValues ? $('#brandDropdown')[0].getSelectedValues() : [],
-                ModelIds: $('#modelDropdown')[0].getSelectedValues ? $('#modelDropdown')[0].getSelectedValues() : [],
-                FromDate: $('#formDate').val() || null,
-                ToDate: $('#toDate').val()|| null
-            };
-            console.log("=== All Selected Values ===");
-            console.log("Category:", $('#categoryDropdown')[0].getSelectedValues ? $('#categoryDropdown')[0].getSelectedValues() : []);
-            console.log("Product:", $('#productDropdown')[0].getSelectedValues ? $('#productDropdown')[0].getSelectedValues() : []);
-            console.log("Brand:", $('#brandDropdown')[0].getSelectedValues ? $('#brandDropdown')[0].getSelectedValues() : []);
-            console.log("Model:", $('#modelDropdown')[0].getSelectedValues ? $('#modelDropdown')[0].getSelectedValues() : []);
-            console.log("Format:", $('#formatDropdown')[0].getSelectedValues ? $('#formatDropdown')[0].getSelectedValues() : []);
+            const filterData = getCurrentFilterData();
 
-            console.log({ filterDatas});
             $.ajax({
                 url: "/PrintingStationeryPurchaseReport/CategoryLoadList",
                 type: "POST",
                 contentType: 'application/json',
-                data: JSON.stringify(filterDatas),
+                data: JSON.stringify(filterData),
                 success: function (res) {
-                    console.log("Dropdown data loaded:", res);
-
-                    //populateDropdown("#categoryDropdown", res.categoryIds);
-                    //populateDropdown("#productDropdown", res.productIds);
-                    //populateDropdown("#brandDropdown", res.brandIds);
-                    //populateDropdown("#modelDropdown", res.modelIds);
+                    generatePDFWithData(res, $("#formDate").val()|| null, $("#toDate").val()|| null, false);
                 },
                 error: function (e) {
-                    console.log("Error loading dropdowns:", e);
                 }
             });
+        });
+
+        $(document).on('click', '#downloadReport', function () {
+            var format = $("#formatDropdown").val();
+            if (format ==='pdf') {
+                const filterData = getCurrentFilterData();
+                $.ajax({
+                    url: "/PrintingStationeryPurchaseReport/CategoryLoadList",
+                    type: "POST",
+                    contentType: 'application/json',
+                    data: JSON.stringify(filterData),
+                    success: function (res) {
+                        generatePDFWithData(res, $("#formDate").val() || null, $("#toDate").val() || null, true);
+                    },
+                    error: function (e) {
+                    }
+                });
+            } else if (format === 'excel') {
+                const filterData = getCurrentFilterData();
+                $.ajax({
+                    url: "/PrintingStationeryPurchaseReport/ExportToExcel",
+                    type: "POST",
+                    contentType: 'application/json',
+                    data: JSON.stringify(filterData),
+                    xhrFields: {
+                        responseType: 'blob'
+                    },
+                    success: function (blob, status, xhr) {
+                        let disposition = xhr.getResponseHeader("Content-Disposition");
+                        let filename = "report.xlsx";
+
+                        if (disposition && disposition.indexOf("filename=") !== -1) {
+                            const match = disposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+                            if (match != null && match[1]) {
+                                filename = match[1].replace(/['"]/g, '');
+                            }
+                        }
+
+                        const link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = filename;
+                        link.click();
+                    },
+                    error: function (xhr, status, error) {
+                    }
+                });
+            } else {
+                const filterData = getCurrentFilterData();
+                $.ajax({
+                    url: "/PrintingStationeryPurchaseReport/CategoryLoadList",
+                    type: "POST",
+                    contentType: 'application/json',
+                    data: JSON.stringify(filterData),
+                    success: function (res) {
+                        generatePDFWithData(res, $("#formDate").val() || null, $("#toDate").val() || null, true);
+                    },
+                    error: function (e) {
+                    }
+                });
+            }
+            
         });
     });
 

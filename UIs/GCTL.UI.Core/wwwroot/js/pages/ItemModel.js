@@ -121,7 +121,6 @@
         $(commonName.ItemModelBrand).on('input', function () {
 
             let ItemModelValue = $(this).val();
-            console.log(ItemModelValue);
             if (!ItemModelValue) {
                 showToast('warning', "Brand Requird");
                 $(commonName.ItemModelBrand).addClass('itemModel-input');
@@ -154,7 +153,6 @@
                 $(commonName.ItemModelBrand).addClass('itemModel-input');
                 return;
             }
-            console.log(fromData);
             $.ajax({
                 url: CreateUpdateUrl,
                 type: "POST",
@@ -190,7 +188,6 @@
                 "type": "GET",
                 "datatype": "json",
                 "dataSrc": function (json) {
-                    console.log(json);
                     return json.data || [];
                 },
                 "error": function (xhr, error, thrown) {
@@ -238,12 +235,10 @@
         //edit
         $(document).on('click', commonName.EditBrn, function () {
             let id = $(this).data('id');
-            console.log(id);
             $.ajax({
                 url: `${PopulatedDataForUpdateUrl}?id=${id}`,
                 type: "GET",
                 success: function (res) {
-                    console.log(res);
                     selectedIds = [];
                     selectedIds.push(res.result.autoId + '');
                     $(commonName.AutoId).val(res.result.autoId);
@@ -303,6 +298,29 @@
             })
         })
 
+        $(document).ready(function () {
+            if ($('#itemBrandModal').length === 0) {
+                const modalHtml = `
+         <div class="modal fade" id="itemBrandModal" tabindex="-1" aria-labelledby="itemBrandModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered custom-modal-item modal-xl">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="itemBrandModalLabel">Brand</h5>
+                            <button type="button" class="btn-close itemBrandModalLabelClose" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div id="itemBrandContainer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+                $('body').append(modalHtml);
+            }
+        });
+
         $(commonName.ItemBrandBtn).on('click', function () {
             $.ajax({
                 url: itemBranchUrl,
@@ -331,8 +349,6 @@
             stHeader();
             autoItemModelId();
             table;
-            console.log("tepppppppppppp");
-            console.log(loadCategoryDataUrl);
         };
         init();
 

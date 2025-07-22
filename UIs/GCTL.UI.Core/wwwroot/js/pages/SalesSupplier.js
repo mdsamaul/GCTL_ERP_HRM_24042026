@@ -321,7 +321,7 @@
                     $(commonName.AutoId).val(res.result.autoId);
                     $(commonName.SupplierID).val(res.result.supplierID);
                     $(commonName.SupplierName).val(res.result.supplierName);
-                    $(commonName.ShortName).val(res.result.shortName); // if you have this field
+                    $(commonName.ShortName).val(res.result.shortName); 
                     $(commonName.SupplierAddress).val(res.result.supplierAddress);
                     $(commonName.Phone).val(res.result.phone);
                     $(commonName.Email).val(res.result.email);
