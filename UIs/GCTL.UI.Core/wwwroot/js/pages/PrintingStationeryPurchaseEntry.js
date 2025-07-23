@@ -347,7 +347,7 @@
                     if (res.data != null) {
                         $row.find('.ProductDescription').val(res.data.description);
                         let $brandDropdown = $row.find('.BrandIdFromDropdown');
-                        $brandDropdown.empty().append('<option value="">Select Brand</option>');
+                        $brandDropdown.empty().append('<option value="">Brand</option>');
                         res.data.brandList.forEach(function (brand) {
                             $brandDropdown.append(`<option value="${brand.brandID}">${brand.brandName}</option>`);
                         });
@@ -377,7 +377,7 @@
                 success: function (res) {
                     if (res.data != null) {
                         let $modelDropdown = $row.find('.modelPopulateFromBrandId');
-                        $modelDropdown.empty().append('<option value="">Select Model</option>');
+                        $modelDropdown.empty().append('<option value="">Model</option>');
                         res.data.forEach(function (model) {
                             $modelDropdown.append(`<option value="${model.modelID}">${model.modelName}</option>`);
                         });
@@ -462,22 +462,22 @@
                 url: addMoreLoadProductUrl,
                 type: "GET",
                 success: function (res) {                  
-                    let productOptions = `<option value="">Select Product</option>`;
+                    let productOptions = `<option value="">Product</option>`;
                     res.productList.forEach(function (item) {
                         productOptions += `<option value="${item.value}">${item.text}</option>`;
                     });
 
-                    let sizeOptions = `<option value="">Select Size</option>`;
+                    let sizeOptions = `<option value="">Size</option>`;
                     res.sizeList.forEach(function (item) {
                         sizeOptions += `<option value="${item.value}">${item.text}</option>`;
                     });
 
-                    let periodOptions = `<option value="">Select Period</option>`;
+                    let periodOptions = `<option value="">Period</option>`;
                     res.periodList.forEach(function (item) {
                         periodOptions += `<option value="${item.value}">${item.text}</option>`;
                     });
 
-                    let unitOptions = `<option value="">Select Unit</option>`;
+                    let unitOptions = `<option value="">Unit</option>`;
                     res.unitList.forEach(function (item) {
                         unitOptions += `<option value="${item.value}">${item.text}</option>`;
                     });
@@ -486,8 +486,8 @@
 <tr>
     <td><select class="form-control-sm form-control searchable-select productSelectId">${productOptions}</select></td>
     <td><input type="text" class="form-control-sm form-control productDescription" placeholder="Description"/></td>
-    <td><select class="form-control-sm form-control searchable-select brandIdFromDropdown"><option value="">Select Brand</option></select></td>
-    <td><select class="form-control-sm form-control searchable-select modelPopulateFromBrandId"><option value="">Select Model</option></select></td>
+    <td><select class="form-control-sm form-control searchable-select brandIdFromDropdown"><option value="">Brand</option></select></td>
+    <td><select class="form-control-sm form-control searchable-select modelPopulateFromBrandId"><option value="">Model</option></select></td>
     <td><select class="form-control-sm form-control searchable-select sizeSelect">${sizeOptions}</select></td>
     <td><input type="number" class="form-control-sm form-control warrantyInput" placeholder="Warranty" /></td>
     <td><select class="form-control-sm form-control searchable-select periodSelect">${periodOptions}</select></td>
@@ -519,22 +519,22 @@
         });
 
         function appendProductRow(resData) {
-            let productOptions = `<option value="">Select Product</option>`;
+            let productOptions = `<option value="">Product</option>`;
             resData.productList.forEach(function (item) {
                 productOptions += `<option value="${item.value}">${item.text}</option>`;
             });
 
-            let sizeOptions = `<option value="">Select Size</option>`;
+            let sizeOptions = `<option value="">Size</option>`;
             resData.sizeList.forEach(function (item) {
                 sizeOptions += `<option value="${item.value}">${item.text}</option>`;
             });
 
-            let periodOptions = `<option value="">Select Period</option>`;
+            let periodOptions = `<option value="">Period</option>`;
             resData.periodList.forEach(function (item) {
                 periodOptions += `<option value="${item.value}">${item.text}</option>`;
             });
 
-            let unitOptions = `<option value="">Select Unit</option>`;
+            let unitOptions = `<option value="">Unit</option>`;
             resData.unitList.forEach(function (item) {
                 unitOptions += `<option value="${item.value}">${item.text}</option>`;
             });
@@ -543,8 +543,8 @@
 <tr>
     <td><select class="form-control-sm form-control searchable-select productSelectId">${productOptions}</select></td>
     <td><input type="text" class="form-control-sm form-control productDescription" placeholder="Description"/></td>
-    <td><select class="form-control-sm form-control searchable-select brandIdFromDropdown"><option value="">Select Brand</option></select></td>
-    <td><select class="form-control-sm form-control searchable-select modelPopulateFromBrandId"><option value="">Select Model</option></select></td>
+    <td><select class="form-control-sm form-control searchable-select brandIdFromDropdown"><option value="">Brand</option></select></td>
+    <td><select class="form-control-sm form-control searchable-select modelPopulateFromBrandId"><option value="">Model</option></select></td>
     <td><select class="form-control-sm form-control searchable-select sizeSelect">${sizeOptions}</select></td>
     <td><input type="number" class="form-control-sm form-control warrantyInput" placeholder="Warranty" /></td>
     <td><select class="form-control-sm form-control searchable-select periodSelect">${periodOptions}</select></td>
@@ -600,7 +600,7 @@
                         $row.find('.productDescription').val(res.data.description);
 
                         let brandDropdown = $row.find('.brandIdFromDropdown');
-                        brandDropdown.empty().append(`<option value="">Select Brand</option>`);
+                        brandDropdown.empty().append(`<option value="">Brand</option>`);
                         res.data.brandList.forEach(function (brand) {
                             brandDropdown.append(`<option value="${brand.brandID}">${brand.brandName}</option>`);
                         });
@@ -609,7 +609,7 @@
                         $row.find('.qtyOfProduct').val(1);
                         $row.find('.totalPriceOfProductMulQty').val(res.data.purchaseCost);
                         $row.find('.unitOfProduct').val(res.data.unitID).trigger('change');
-                        $row.find('.modelPopulateFromBrandId').empty();
+                        $row.find('.modelPopulateFromBrandId').empty().append(`<option value="">Model</option>`);
 
                         // Calculate grand total (total of all rows)
                         calculateGrandTotal();

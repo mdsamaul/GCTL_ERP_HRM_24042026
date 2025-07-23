@@ -679,6 +679,18 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[INV_ProductIssueInformation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[INV_ProductIssueInformationDetails]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[INV_ProductIssueInformationDetailsTemp]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Inv_SalesInvoiceInfo]",
          "ObjectType": 0
       },
@@ -1100,6 +1112,10 @@
       },
       {
          "Name": "[dbo].[ProcGetEployeeFilterDetails]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[PROCPrintingAndStationeryReport]",
          "ObjectType": 1
       },
       {

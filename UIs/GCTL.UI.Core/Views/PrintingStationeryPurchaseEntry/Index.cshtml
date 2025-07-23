@@ -436,6 +436,28 @@
     }
 
     }
+    @@media (min-width: 79px) and (max-width: 1499px) {
+        #select2-azmm-container
+
+    {
+        width: 35px !important;
+    }
+
+    }
+
+    .select2-container--default .select2-selection--single {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .select-wrapper {
+        width: 100%;
+    }
+
+        .select-wrapper .select2-container {
+            width: 100% !important;
+        }
+
 </style>
 <!-- Content Header (Page header) -->
 <div class="container-fluid">
@@ -589,7 +611,7 @@
                         </div>
                         <div class="col-8 " style="padding-left: 5px;">
                             <select class="form-control-sm form-control searchable-select" id="stationeryInvoicePurchaseBy" asp-items="ViewBag.EmployeeList as SelectList">
-                                <option value="">Select </option>
+                                <option value=""></option>
                             </select>
                         </div>
                         <div class="col-1 "></div>
@@ -626,8 +648,8 @@
                                         </button>
                                     </div>
                                 </th>
-                                <th style="min-width: 7.5vw;">Description</th>
-                                <th style="min-width: 7.5vw;">
+                                <th style="min-width: 6vw;">Description</th>
+                                <th style="min-width: 9vw;">
                                     <div class="header-with-button">
                                         <span>Brand</span>
                                         <button class="btn btn-outline-dark rounded-circle shadow d-flex justify-content-center align-items-center"
@@ -671,7 +693,7 @@
                                     </div>
                                 </th>
                                 <th style="min-width: 6vw;">Unit Price</th>
-                                <th style="min-width: 7.5vw;">Total Price(BDT)</th>
+                                <th style="min-width: 6vw;">Total Price(BDT)</th>
                                 <th style="min-width: 6vw;">Actions</th>
                             </tr>
                         </thead>
@@ -679,7 +701,7 @@
                             <tr>
                                 <td>
                                     <select class="form-control-sm form-control searchable-select productSelectId" asp-items="ViewBag.ProductList as SelectList">
-                                        <option value="">Select Product</option>
+                                        <option value="">Product</option>
                                     </select>
                                 </td>
                                 <td>
@@ -687,17 +709,17 @@
                                 </td>
                                 <td>
                                     <select class="form-control-sm form-control searchable-select brandIdFromDropdown">
-                                        <option value="">Select Brand</option>
+                                        <option value="">Brand</option>
                                     </select>
                                 </td>
                                 <td>
                                     <select class="form-control-sm form-control searchable-select modelPopulateFromBrandId">
-                                        <option value="">Select Model</option>
+                                        <option value="">Model</option>
                                     </select>
                                 </td>
                                 <td>
                                     <select class="form-control-sm form-control searchable-select sizeSelect" asp-items="ViewBag.SizeList as SelectList">
-                                        <option value="">Select Size</option>
+                                        <option value="">Size</option>
                                     </select>
                                 </td>
                                 <td>
@@ -705,7 +727,7 @@
                                 </td>
                                 <td>
                                     <select class="form-control-sm form-control searchable-select periodSelect" asp-items="ViewBag.periodList as SelectList">
-                                        <option value="">Select Period</option>
+                                        <option value="">Period</option>
                                     </select>
                                 </td>
                                 <td>
@@ -713,7 +735,7 @@
                                 </td>
                                 <td>
                                     <select class="form-control-sm form-control searchable-select unitOfProduct" asp-items="ViewBag.unitList as SelectList">
-                                        <option value ="">Select Unit</option>
+                                        <option value ="">Unit</option>
                                     </select>
                                 </td>
                                 <td>

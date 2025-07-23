@@ -184,6 +184,9 @@ namespace GCTL.Data.Models
         public virtual DbSet<InvDefLocation> InvDefLocation { get; set; }
         public virtual DbSet<InvDefSupplierType> InvDefSupplierType { get; set; }
         public virtual DbSet<InvDefWarehouse> InvDefWarehouse { get; set; }
+        public virtual DbSet<InvProductIssueInformation> InvProductIssueInformation { get; set; }
+        public virtual DbSet<InvProductIssueInformationDetails> InvProductIssueInformationDetails { get; set; }
+        public virtual DbSet<InvProductIssueInformationDetailsTemp> InvProductIssueInformationDetailsTemp { get; set; }
         public virtual DbSet<InvSalesInvoiceInfo> InvSalesInvoiceInfo { get; set; }
         public virtual DbSet<InvSalesInvoiceInfoDetails> InvSalesInvoiceInfoDetails { get; set; }
         public virtual DbSet<Logs> Logs { get; set; }
@@ -1169,9 +1172,11 @@ namespace GCTL.Data.Models
 
             modelBuilder.Entity<CoreCountry>(entity =>
             {
-                entity.HasKey(e => e.CountryCode);
+                entity.HasNoKey();
 
                 entity.ToTable("Core_Country");
+
+                entity.Property(e => e.CountryCode).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.CountryId)
                     .IsRequired()
@@ -4735,7 +4740,7 @@ namespace GCTL.Data.Models
 
             modelBuilder.Entity<HrmBrand>(entity =>
             {
-                entity.HasKey(e => e.AutoId);
+                entity.HasNoKey();
 
                 entity.ToTable("HRM_Brand");
 
@@ -5444,7 +5449,7 @@ namespace GCTL.Data.Models
 
             modelBuilder.Entity<HrmDefFloor>(entity =>
             {
-                entity.HasKey(e => e.AutoId);
+                entity.HasNoKey();
 
                 entity.ToTable("HRM_Def_Floor");
 
@@ -7758,7 +7763,7 @@ namespace GCTL.Data.Models
 
             modelBuilder.Entity<HrmItemMasterInformation>(entity =>
             {
-                entity.HasKey(e => e.AutoId);
+                entity.HasNoKey();
 
                 entity.ToTable("HRM_ItemMasterInformation");
 
@@ -8633,7 +8638,7 @@ namespace GCTL.Data.Models
 
             modelBuilder.Entity<HrmSize>(entity =>
             {
-                entity.HasKey(e => e.AutoId);
+                entity.HasNoKey();
 
                 entity.ToTable("HRM_Size");
 
@@ -8678,7 +8683,7 @@ namespace GCTL.Data.Models
 
             modelBuilder.Entity<InvCatagory>(entity =>
             {
-                entity.HasKey(e => e.AutoId);
+                entity.HasNoKey();
 
                 entity.ToTable("INV_Catagory");
 
@@ -8843,7 +8848,7 @@ namespace GCTL.Data.Models
 
             modelBuilder.Entity<InvDefSupplierType>(entity =>
             {
-                entity.HasKey(e => e.AutoId);
+                entity.HasNoKey();
 
                 entity.ToTable("Inv_Def_SupplierType");
 
@@ -8952,6 +8957,164 @@ namespace GCTL.Data.Models
                 entity.Property(e => e.WarehouseName)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<InvProductIssueInformation>(entity =>
+            {
+                entity.HasKey(e => e.Tc)
+                    .HasName("PK__INV_Prod__3214E408A1439AEE");
+
+                entity.ToTable("INV_ProductIssueInformation");
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
+
+                entity.Property(e => e.CompanyCode)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.DepartmentCode).HasMaxLength(50);
+
+                entity.Property(e => e.EmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.FloorCode).HasMaxLength(50);
+
+                entity.Property(e => e.IssueDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IssueNo)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.IssuedBy).HasMaxLength(50);
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.MainCompanyCode).HasMaxLength(50);
+
+                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.UserInfoEmployeeId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("UserInfoEmployeeID");
+            });
+
+            modelBuilder.Entity<InvProductIssueInformationDetails>(entity =>
+            {
+                entity.HasKey(e => e.Tc)
+                    .HasName("PK__INV_Prod__3214E408C2C4964A");
+
+                entity.ToTable("INV_ProductIssueInformationDetails");
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
+
+                entity.Property(e => e.BrandId)
+                    .HasMaxLength(50)
+                    .HasColumnName("BrandID");
+
+                entity.Property(e => e.FloorCode).HasMaxLength(50);
+
+                entity.Property(e => e.IssueNo)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.IssueQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModelId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ModelID");
+
+                entity.Property(e => e.Pidid)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("PIDID");
+
+                entity.Property(e => e.ProductCode).HasMaxLength(50);
+
+                entity.Property(e => e.SizeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("SizeID");
+
+                entity.Property(e => e.StockQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.UnitTypId)
+                    .HasMaxLength(50)
+                    .HasColumnName("UnitTypID");
+            });
+
+            modelBuilder.Entity<InvProductIssueInformationDetailsTemp>(entity =>
+            {
+                entity.HasKey(e => e.Tc)
+                    .HasName("PK__INV_Prod__3214E40866F8C14B");
+
+                entity.ToTable("INV_ProductIssueInformationDetailsTemp");
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
+
+                entity.Property(e => e.BrandId)
+                    .HasMaxLength(50)
+                    .HasColumnName("BrandID");
+
+                entity.Property(e => e.FloorCode).HasMaxLength(50);
+
+                entity.Property(e => e.IssueNo)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.IssueQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModelId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ModelID");
+
+                entity.Property(e => e.Pidid)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("PIDID");
+
+                entity.Property(e => e.ProductCode).HasMaxLength(50);
+
+                entity.Property(e => e.SizeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("SizeID");
+
+                entity.Property(e => e.StockQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.UnitTypId)
+                    .HasMaxLength(50)
+                    .HasColumnName("UnitTypID");
             });
 
             modelBuilder.Entity<InvSalesInvoiceInfo>(entity =>
@@ -9315,11 +9478,9 @@ namespace GCTL.Data.Models
 
             modelBuilder.Entity<RmgProdDefUnitType>(entity =>
             {
-                entity.HasKey(e => e.Tc);
+                entity.HasNoKey();
 
                 entity.ToTable("RMG_Prod_Def_UnitType");
-
-                entity.Property(e => e.Tc).HasColumnName("TC");
 
                 entity.Property(e => e.Ldate)
                     .HasColumnType("smalldatetime")
@@ -9343,6 +9504,10 @@ namespace GCTL.Data.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Tc)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
+
                 entity.Property(e => e.UnitTypId)
                     .IsRequired()
                     .HasMaxLength(50)
@@ -9356,14 +9521,9 @@ namespace GCTL.Data.Models
 
             modelBuilder.Entity<RmgPurchaseOrderReceive>(entity =>
             {
-                entity.HasKey(e => e.Tc);
+                entity.HasNoKey();
 
                 entity.ToTable("RMG_PurchaseOrderReceive");
-
-                entity.Property(e => e.Tc)
-                    .HasColumnType("numeric(18, 0)")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("TC");
 
                 entity.Property(e => e.ChallanDate).HasColumnType("datetime");
 
@@ -9414,6 +9574,11 @@ namespace GCTL.Data.Models
                 entity.Property(e => e.SupplierId)
                     .HasMaxLength(50)
                     .HasColumnName("SupplierID");
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
 
                 entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 2)");
 
@@ -10451,7 +10616,7 @@ namespace GCTL.Data.Models
 
             modelBuilder.Entity<SalesSupplier>(entity =>
             {
-                entity.HasKey(e => e.AutoId);
+                entity.HasNoKey();
 
                 entity.ToTable("Sales_Supplier");
 

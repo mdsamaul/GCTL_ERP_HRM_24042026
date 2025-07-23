@@ -85,6 +85,7 @@ namespace GCTL.Data.Models
             modelBuilder.Entity<proc_LabTestListNotInVoucherResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<proc_Select_CL_SCL_GGL_GLAndSLAllInfoResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<ProcGetEployeeFilterDetailsResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<PROCPrintingAndStationeryReportResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<ReferenceCommissionReportResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<ReferenceCommissionSummaryResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<Rpt_PatientInfoResult>().HasNoKey().ToView(null);
@@ -3019,6 +3020,66 @@ namespace GCTL.Data.Models
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<ProcGetEployeeFilterDetailsResult>("EXEC @returnValue = [dbo].[ProcGetEployeeFilterDetails] @CompanyCode = @CompanyCode, @BranchCode = @BranchCode, @DivisionCode = @DivisionCode, @DepartmentCode = @DepartmentCode, @DesignationCode = @DesignationCode, @EmployeeID = @EmployeeID, @EmployeeStatus = @EmployeeStatus", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<PROCPrintingAndStationeryReportResult>> PROCPrintingAndStationeryReportAsync(string CatagoryID, string ProductID, string BrandID, string ModelID, DateOnly? FromDate, DateOnly? ToDate, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "CatagoryID",
+                    Size = -1,
+                    Value = CatagoryID ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "ProductID",
+                    Size = -1,
+                    Value = ProductID ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "BrandID",
+                    Size = -1,
+                    Value = BrandID ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "ModelID",
+                    Size = -1,
+                    Value = ModelID ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "FromDate",
+                    Value = FromDate ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Date,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "ToDate",
+                    Value = ToDate ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Date,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<PROCPrintingAndStationeryReportResult>("EXEC @returnValue = [dbo].[PROCPrintingAndStationeryReport] @CatagoryID = @CatagoryID, @ProductID = @ProductID, @BrandID = @BrandID, @ModelID = @ModelID, @FromDate = @FromDate, @ToDate = @ToDate", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
