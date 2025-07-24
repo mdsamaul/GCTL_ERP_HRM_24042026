@@ -95,7 +95,7 @@ namespace GCTL.Service.HrmPayMonthlyOtEntries
 
         public async Task<bool> EditAsync(HrmPayMonthlyOtEntryViewModel model)
         {
-            if (model == null || model.Tc == 0 || model.Id == null)
+            if (model == null || model.Tc == 0 || model.MonthlyOtid == null)
             {
                 return false;
             }

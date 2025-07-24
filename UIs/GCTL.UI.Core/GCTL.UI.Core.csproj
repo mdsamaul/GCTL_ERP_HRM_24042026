@@ -669,6 +669,7 @@
 
   <ItemGroup>
     <Folder Include="Pages\" />
+    <Folder Include="wwwroot\NoticeDocument\" />
   </ItemGroup>
 
   <ItemGroup>

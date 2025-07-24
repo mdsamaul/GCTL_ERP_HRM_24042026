@@ -1,5 +1,6 @@
 ﻿using GCTL.Core.Configurations;
 using GCTL.Core.Data;
+using GCTL.Core.ViewModels.Email;
 using GCTL.Data;
 using GCTL.Data.Models;
 using GCTL.Service.AccFinancialYears;
@@ -86,6 +87,7 @@ using GCTL.Service.JobTitles;
 using GCTL.Service.LeaveTypes;
 using GCTL.Service.Loggers;
 using GCTL.Service.LogsLoggers;
+using GCTL.Service.ManageNoticeEntries;
 using GCTL.Service.ManualEarnLeaveEntry;
 using GCTL.Service.Nationalitys;
 using GCTL.Service.PaymentModes;
@@ -282,6 +284,8 @@ namespace GCTL.UI.Core.Extensions
             services.AddScoped<IHrmServiceNotConfirmationReportService, HrmServiceNotConfirmationReportService>();
             services.AddScoped<IHrmServiceBulkConfirmationEntryService, HrmServiceBulkConfirmationEntryService>();
             services.AddScoped<IHrmEmployeePPAlertReportService, HrmEmployeePPAlertReportService>();
+            services.AddScoped<IManageNoticeService, ManageNoticeService>();
+
 
             //Samaul
             services.AddScoped<IEmployeeWeekendDeclarationService, EmployeeWeekendDeclarationService>();
@@ -342,6 +346,9 @@ namespace GCTL.UI.Core.Extensions
 
             services.Configure<SMSSetting>(configuration.GetSection("SMSSetting"));
             services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<SMSSetting>>().Value);
+
+            services.Configure<EmailSettings>(configuration.GetSection("Email"));
+            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<EmailSettings>>().Value);
         }
     }
 }

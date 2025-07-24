@@ -1,12 +1,16 @@
-﻿<style>
+﻿@{
+    Model.Breadcrumb = "HrmEmployeePPAlertReport";
+}
+
+<style>
     .multiselect-option input[type="radio"] {
         display: none !important;
     }
 
     #downloadBtn:hover {
-        background-color: #ffffe6 !important; /* Light green color */
-        border-color: #28a745 !important; /* Light green border */
-        color: green !important; /* Change text color to white for better contrast */
+        background-color: #ffffe6 !important; 
+        border-color: #28a745 !important;
+        color: green !important;
     }
 
     .card-header {
@@ -63,21 +67,17 @@
     table.dataTable thead > tr > th.sorting,
     table.dataTable thead > tr > th.sorting_asc,
     table.dataTable thead > tr > th.sorting_desc {
-        padding-right: 4px; /* Adjust as needed */
+        padding-right: 4px;
         background-position: right center;
         background-repeat: no-repeat;
-        background-size: 10px 10px; /* Optional: scale arrow icons */
+        background-size: 10px 10px;
     }
 
-
-    /* Utility for very long labels */
     .break-word {
         word-break: break-word;
         overflow-wrap: break-word;
     }
 </style>
-
-
 
 <partial name="_PageHeader" model="Model"></partial>
 <section class="content-fluid">

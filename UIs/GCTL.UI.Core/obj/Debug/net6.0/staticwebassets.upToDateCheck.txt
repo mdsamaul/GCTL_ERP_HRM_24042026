@@ -2130,6 +2130,7 @@ wwwroot\js\pages\labTestResults.js
 wwwroot\js\pages\labTests.js
 wwwroot\js\pages\leaveType.js
 wwwroot\js\pages\logs.js
+wwwroot\js\pages\manageNotice.js
 wwwroot\js\pages\ManualEarnLeaveEntry.js
 wwwroot\js\pages\measurementUnits.js
 wwwroot\js\pages\medicineCategories.js
@@ -2273,6 +2274,7 @@ wwwroot\lib\jquery-validation\LICENSE.md
 wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js
 wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js
 wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt
+wwwroot\NoticeDocument\0021_20f577dc-e338-48fe-adf9-71c352593a34.jpg
 wwwroot\PDFViewer\balanceSheetStatement.pdf
 wwwroot\PDFViewer\CashbookReport.pdf
 wwwroot\PDFViewer\Collections.pdf

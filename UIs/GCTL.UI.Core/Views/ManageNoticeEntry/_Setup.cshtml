@@ -1,0 +1,97 @@
+﻿
+<style>
+    .form-label {
+        text-align: right;
+    }
+
+    .form-group-row {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 1rem;
+    }
+
+        .form-group-row label {
+            min-width: 120px;
+            white-space: nowrap;
+            margin-bottom: 0;
+        }
+
+        .form-group-row .form-control,
+        .form-group-row select {
+            flex: 1;
+            min-width: 0;
+        }
+</style>
+
+
+<div class="card mb-4 border-0 shadow-sm">
+    <div class="card-body">
+        <form id="notice-form">
+            <input type="text" id="Tc" hidden />
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="NoticeId" class="form-label">Notice Id:</label>
+                        <input type="text" id="NoticeId" class="form-control" style="margin-left: 10px;" required readonly />
+                    </div>
+                </div>
+                <div class="col-md-8"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="NoticeTitle" class="form-label">Notice Title:</label>
+                        <input type="text" id="NoticeTitle" name="NoticeTitle" class="form-control" style="margin-left: 10px;" />
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="Status" class="form-label pe-2">Active?</label>
+                        <input type="checkbox" id="Status" class="form-control-sm" tabindex="3" style="margin-left:10px;" />
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="NoticeDesc" class="form-label" style="align-self: flex-start">Details:</label>
+                        <textarea id="NoticeDesc" class="form-control" style="margin-left: 10px; height: 105px; resize:none"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="PriorityLevel" class="form-label">Priority Level:</label>
+                        
+                        <select id="PriorityLevel" class="form-control" style="margin-left: 10px;">
+                            <option value="0">Normal</option>
+                            <option value="1">Important</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="fileUpload" class="form-label" >File Upload</label>
+                        <input type="file" class="form-control" id="fileUpload" style="margin-left: 10px;" />
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-default success-btn" id="sendMail">
+                        Send Email
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

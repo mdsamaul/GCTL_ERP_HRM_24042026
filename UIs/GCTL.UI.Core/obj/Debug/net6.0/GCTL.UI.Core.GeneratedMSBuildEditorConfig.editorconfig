@@ -1104,6 +1104,26 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFjaGluZURhdGFcX0dyaWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/ManageNoticeEntry/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlTm90aWNlRW50cnlcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/ManageNoticeEntry/_Grid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlTm90aWNlRW50cnlcX0dyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/ManageNoticeEntry/_noticeGrid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlTm90aWNlRW50cnlcX25vdGljZUdyaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/ManageNoticeEntry/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlTm90aWNlRW50cnlcX1NldHVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/ManageNoticeEntry/_Toolbars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlTm90aWNlRW50cnlcX1Rvb2xiYXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Git/GCTL_ERP_HRM_24042026/UIs/GCTL.UI.Core/Views/ManualEarnLeaveEntry/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFudWFsRWFybkxlYXZlRW50cnlcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

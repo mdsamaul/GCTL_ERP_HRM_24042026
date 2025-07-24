@@ -88,7 +88,7 @@ namespace GCTL.Service.HrmEmployeePPAlertReports
 
                 string[] headers = new string[]
                 {
-                    "SN No","Employee ID", "Name", "Designation", "Department", "Gross Salary", "Joining Date", "Probation Period", "End on", "Service Length"
+                    "SN","Employee ID", "Name", "Designation", "Department", "Gross Salary", "Joining Date", "Probation Period", "End on", "Service Length"
                 };
 
 
@@ -117,7 +117,7 @@ namespace GCTL.Service.HrmEmployeePPAlertReports
                     worksheet.Cells[currentRow, 2].Value = item.Code;
                     worksheet.Cells[currentRow, 3].Value = item.Name;
                     worksheet.Cells[currentRow, 4].Value = item.DesingationName;
-                    worksheet.Cells[currentRow, 5].Value = item.DepartmentName;
+                    worksheet.Cells[currentRow, 5].Value = item.BranchName;
                     worksheet.Cells[currentRow, 6].Value = item.GrossSalary;
                     worksheet.Cells[currentRow, 7].Value = item.JoiningDate;
                     worksheet.Cells[currentRow, 8].Value = item.ProbationPeriod;
@@ -205,7 +205,7 @@ namespace GCTL.Service.HrmEmployeePPAlertReports
 
             string[] headers = new string[]
             {
-                "Sl No", "Employee ID", "Name", "Designation", "Department", "Gross Salary", "Joining Date", "Probation Period", "End on", "Service Length"
+                "SN", "Employee ID", "Name", "Designation", "Branch", "Gross Salary", "Joining Date", "Probation Period", "End on", "Service Length"
             };
 
 
@@ -258,7 +258,7 @@ namespace GCTL.Service.HrmEmployeePPAlertReports
                         item.Code ?? "",
                         item.Name ?? "",
                         item.DesingationName ?? "",
-                        item.DepartmentName ?? "",
+                        item.BranchName ?? "",
                         item.GrossSalary ?? "",
                         item.JoiningDate ?? "",
                         item.ProbationPeriod ?? "",
@@ -557,10 +557,11 @@ namespace GCTL.Service.HrmEmployeePPAlertReports
                     DesingationName = x.des?.DesignationName ?? "", // FIX 7: Fixed typo and added null check
                     DepartmentName = x.dep?.DepartmentName ?? "", // FIX 8: Added null check
                     CompanyName = x.c?.CompanyName ?? "", // FIX 9: Added null check
-                    GrossSalary = x.e.GrossSalary.ToString("N2") ?? "0.00", // FIX 10: Improved null handling
+                    GrossSalary = (x.e.GrossSalary == 0.00m ? "0" : x.e.GrossSalary.ToString("N2")), // FIX 10: Improved null handling
                     JoiningDate = x.e.JoiningDate.HasValue ? x.e.JoiningDate.Value.ToString("dd/MM/yyyy") : "",
                     ProbationPeriod = totalProbationPeriod, // FIX 11: Use total probation period
                     ProbationPeriodEndOn = totalProbationEndDate.HasValue ? totalProbationEndDate.Value.ToString("dd/MM/yyyy") : "", // FIX 12: Use total end date
+                    BranchName = x.b.BranchName,
                     ServiceLength = serviceLength
                 };
 

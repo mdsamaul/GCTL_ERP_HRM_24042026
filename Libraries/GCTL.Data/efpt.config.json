@@ -107,6 +107,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Core_Notice]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Core_PeriodInfo]",
          "ObjectType": 0
       },
@@ -700,6 +704,10 @@
       },
       {
          "Name": "[dbo].[Logs]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NoticeDocumentFile]",
          "ObjectType": 0
       },
       {

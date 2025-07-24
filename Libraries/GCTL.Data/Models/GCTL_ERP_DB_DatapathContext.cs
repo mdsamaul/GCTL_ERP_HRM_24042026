@@ -41,6 +41,7 @@ namespace GCTL.Data.Models
         public virtual DbSet<CoreMeasurementUnit> CoreMeasurementUnit { get; set; }
         public virtual DbSet<CoreMenuTab> CoreMenuTab { get; set; }
         public virtual DbSet<CoreMenuTab2> CoreMenuTab2 { get; set; }
+        public virtual DbSet<CoreNotice> CoreNotice { get; set; }
         public virtual DbSet<CorePeriodInfo> CorePeriodInfo { get; set; }
         public virtual DbSet<CoreUserInfo> CoreUserInfo { get; set; }
         public virtual DbSet<CustomerTypes> CustomerTypes { get; set; }
@@ -190,6 +191,7 @@ namespace GCTL.Data.Models
         public virtual DbSet<InvSalesInvoiceInfo> InvSalesInvoiceInfo { get; set; }
         public virtual DbSet<InvSalesInvoiceInfoDetails> InvSalesInvoiceInfoDetails { get; set; }
         public virtual DbSet<Logs> Logs { get; set; }
+        public virtual DbSet<NoticeDocumentFile> NoticeDocumentFile { get; set; }
         public virtual DbSet<PaymentReceive> PaymentReceive { get; set; }
         public virtual DbSet<PaymentReceiveDetails> PaymentReceiveDetails { get; set; }
         public virtual DbSet<PosPaymentType> PosPaymentType { get; set; }
@@ -1353,6 +1355,44 @@ namespace GCTL.Data.Models
                     .HasMaxLength(250);
 
                 entity.Property(e => e.ViewName).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<CoreNotice>(entity =>
+            {
+                entity.HasKey(e => e.Tc)
+                    .HasName("PK__Core_Not__3214E468253F3307");
+
+                entity.ToTable("Core_Notice");
+
+                entity.Property(e => e.EntryDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(150)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(250)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(100)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.NoticeId)
+                    .HasMaxLength(20)
+                    .HasColumnName("NoticeID");
+
+                entity.Property(e => e.NoticeTitle).HasMaxLength(500);
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
             });
 
             modelBuilder.Entity<CorePeriodInfo>(entity =>
@@ -9263,6 +9303,21 @@ namespace GCTL.Data.Models
             modelBuilder.Entity<Logs>(entity =>
             {
                 entity.Property(e => e.TimeStamp).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<NoticeDocumentFile>(entity =>
+            {
+                entity.HasKey(e => e.Tc)
+                    .HasName("PK__NoticeDo__3214E468CB139FD4");
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.NoticeId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("NoticeID");
             });
 
             modelBuilder.Entity<PaymentReceive>(entity =>

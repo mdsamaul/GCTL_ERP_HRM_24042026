@@ -14,6 +14,8 @@ namespace GCTL.Core.ViewModels.HrmEmployeePPAlertReports
         public string? DesingationName { get; set; }
         public string? DepartmentCode { get; set; }
         public string? DepartmentName { get; set; }
+        public string? BranchName { get; set; }
+
         public string? GrossSalary { get; set; }
         public string? JoiningDate { get; set; }
         public string? ProbationPeriod { get; set; }

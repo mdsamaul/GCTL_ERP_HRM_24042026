@@ -215,7 +215,7 @@ namespace GCTL.UI.Core.Controllers
 
                 string[] headers = new string[]
                 {
-                    "SN No", "Employee ID", "Name", "Designation", "Department", "Gross Salary", "Joining Date", "Probation Period", "End on", "Service Length"
+                    "SN", "Employee ID", "Name", "Designation", "Branch", "Gross Salary", "Joining Date", "Probation Period", "End on", "Service Length"
                 };
 
                 int[] colWidths = new int[] { 526, 1548, 3254, 1375, 1375, 1375, 1375, 1575, 1375, 1375 };
@@ -249,8 +249,8 @@ namespace GCTL.UI.Core.Controllers
                         item.Code?? "",
                         item.Name ?? "",
                         item.DesingationName ?? "",
-                        item.DepartmentName ?? "",
-                        item.GrossSalary ?? "0.00",
+                        item.BranchName ?? "",
+                        item.GrossSalary ?? "0",
                         item.JoiningDate ?? "",
                         item.ProbationPeriod ?? "",
                         item.ProbationPeriodEndOn ?? "",
