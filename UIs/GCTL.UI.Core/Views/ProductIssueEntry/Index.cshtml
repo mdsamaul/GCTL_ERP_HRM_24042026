@@ -268,29 +268,13 @@
 
 
 
-    #printingStationTable th, td {
-        text-align: center !important;
-    }
 
-        #printingStationTable td:first-child,
-        #printingStationTable th:first-child {
-            text-align: center;
-            vertical-align: middle;
-            width: 1%;
-            white-space: nowrap;
-        }
-
-            #printingStationTable td:first-child input[type="checkbox"] {
-                display: block;
-                margin: 0 auto;
-                cursor: pointer;
-            }
-
-    .printingStation-input {
+    .product-issue-input {
         border: 1px solid red !important;
     }
 
-    .js-Printing-Stationery-Purchase-Entry-save {
+
+    .js-product-issue-Entry-save {
         border: 0px !important;
     }
     /* Nested Modal Styles */
@@ -311,23 +295,9 @@
         z-index: 1051 !important;
     }
 
-    /* For brand modal specifically when nested */
-    #brandModal.nested-modal {
-        z-index: 1060 !important;
-    }
-
-        #brandModal.nested-modal + .modal-backdrop,
-        .modal-backdrop.nested-backdrop {
-            z-index: 1059 !important;
-        }
-
 
     .supplier-modal-custom-lg {
         max-width: 80vw !important; /* larger than modal-xl */
-    }
-
-    .modal-custom-lg {
-        max-width: 80vw !important;
     }
 
 
@@ -519,7 +489,7 @@
                             Issued By <span class="text-danger">*</span>
                         </div>
                         <div class="col-8 " style="padding-left: 5px;">
-                            <select class="form-control-sm form-control searchable-select" id="stationeryInvoicePurchaseBy" asp-items="ViewBag.EmployeeList as SelectList">
+                            <select class="form-control-sm form-control searchable-select" id="productIssueBy" asp-items="ViewBag.EmployeeList as SelectList">
                                 <option value="">Select </option>
                             </select>
                         </div>
@@ -532,14 +502,14 @@
                             Remarks
                         </div>
                         <div class="col-8" style="padding-left: 5px;">
-                            <textarea rows="2" id="stationeryRemarks" class="form-control-sm form-control"></textarea>
+                            <textarea rows="2" id="Remarks" class="form-control-sm form-control"></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 col-md-4"> </div>
             </div>
         </fieldset>
-
+        <input type="text" name="name" value="0"  id="detailsTcId"/>
         <div class="container-fluid px-0">
             <div class="card">
                 <div class="table-responsive">
@@ -563,7 +533,7 @@
                                         </button>
                                     </div>
                                 </th>
-                                <th style="width: 4vw;"></th>
+                                <th style="width: 3vw;"></th>
                             </tr>
                         </thead>
                         <tbody id="dinamciDataAppend">
@@ -600,14 +570,14 @@
                                     <input type="number" class="form-control-sm form-control purchaseIssueQtyOfIssue" />
                                 </td>
                                 <td>
-                                    <select class="form-control-sm form-control searchable-select purchaseIssueFloor" asp-items="ViewBag.unitList as SelectList">
+                                    <select class="form-control-sm form-control searchable-select purchaseIssueFloor" asp-items="ViewBag.FloorList as SelectList">
                                         <option value="">Select Floor</option>
                                     </select>
                                 </td>                               
-                                <td>
-                                    <div class="d-flex justify-content-center align-items-center gap-2">
+                                <td style="width:3vw;">
+                                    <div class="d-flex justify-content-center align-items-center gap-2" style="white-space:nowrap;">
                                         <button class="btn btn-outline-dark rounded-md shadow d-flex justify-content-center align-items-center" id="purchaseIssueAddmoreDetailsBtn" style="width: auto; height: 30px; font-size: 9px; line-height: 1;">
-                                            <i class="fas fa-plus"></i> Add New
+                                            <i class="fas fa-plus"></i> <span class="ps-2"> Add New</span>
                                         </button>
                                        @*  <button class="btn btn-outline-danger rounded-md shadow d-flex justify-content-center align-items-center purchaseIssueDeleteDetailsBtn" style="width: 30px; height: 30px; font-size: 9px; line-height: 1;">
                                             <i class="fa fa-eraser">&nbsp;</i>

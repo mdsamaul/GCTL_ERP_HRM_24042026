@@ -11,6 +11,7 @@ using GCTL.Core.ViewModels.ProductIssueEntry;
 using GCTL.Core.ViewModels.SalesSupplier;
 using GCTL.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace GCTL.Service.ProductIssueEntrys
 {
@@ -31,8 +32,9 @@ namespace GCTL.Service.ProductIssueEntrys
     private readonly IRepository<HrmSize> sizeRepo;
     private readonly IRepository<HmsLtrvPeriod> periodRepo;
     private readonly IRepository<RmgProdDefUnitType> unitRepo;
+        private readonly IRepository<HrmDefFloor> floorRepo;
 
-    public ProductIssueEntryService(
+        public ProductIssueEntryService(
         IRepository<InvProductIssueInformation> ProductIssueInformation,
         IRepository<CoreAccessCode> accessCodeRepository,
         IRepository<SalesSupplier> salesSupRepo,
@@ -47,7 +49,8 @@ namespace GCTL.Service.ProductIssueEntrys
         IRepository<CoreCompany> comRepo,
         IRepository<HrmSize> sizeRepo,
         IRepository<HmsLtrvPeriod> periodRepo,
-        IRepository<RmgProdDefUnitType> unitRepo
+        IRepository<RmgProdDefUnitType> unitRepo,
+        IRepository<HrmDefFloor> floorRepo
         ) : base(ProductIssueInformation)
     {
         this.ProductIssueInformation = ProductIssueInformation;
@@ -65,7 +68,8 @@ namespace GCTL.Service.ProductIssueEntrys
         this.sizeRepo = sizeRepo;
         this.periodRepo = periodRepo;
         this.unitRepo = unitRepo;
-    }
+            this.floorRepo = floorRepo;
+        }
 
     private readonly string CreateSuccess = "Data saved successfully.";
     private readonly string CreateFailed = "Data insertion failed.";
@@ -118,17 +122,18 @@ namespace GCTL.Service.ProductIssueEntrys
         {
             return ProductIssueInformation.All().Select(c => new ProductIssueEntrySetupViewModel
             {
-               
+               TC = c.Tc,
+               IssueNo= c.IssueNo,
+               IssueDate= c.IssueDate,
+              ShowIssueDate = c.IssueDate.HasValue?c.IssueDate.Value.ToString("dd/MM/yyyy HH:mm:ss"):"",
+              DepartmentCode= depRepo.All().Where(x=> c.DepartmentCode == x.DepartmentCode).Select(w=> w.DepartmentName).FirstOrDefault(),
+              EmployeeID = empRepo.All().Where(w=> w.EmployeeId == c.EmployeeId).Select(w=> w.FirstName+" "+ w.LastName).FirstOrDefault(),
+              IssuedBy = empRepo.All().Where(w => w.EmployeeId == c.IssuedBy).Select(w => w.FirstName + " " + w.LastName).FirstOrDefault(),
                 Remarks = c.Remarks,
                 Luser = c.Luser,
-                Ldate = c.Ldate,
-                Lip = c.Lip,
-                Lmac = c.Lmac,
-                ModifyDate = c.ModifyDate,
-                UserInfoEmployeeId = c.UserInfoEmployeeId,
-                CompanyCode = comRepo.All().Where(x => x.CompanyCode == c.CompanyCode).Select(x => x.CompanyName).FirstOrDefault(),
+                CompanyCode = comRepo.All().Where(x => x.CompanyCode == c.CompanyCode).Select(x => x.CompanyName).FirstOrDefault(),             
 
-              
+
             }).ToList();
         }
         catch (Exception)
@@ -176,152 +181,104 @@ namespace GCTL.Service.ProductIssueEntrys
         }
         catch (Exception ex)
         {
-            // Optional: log ex here
             throw;
         }
     }
 
 
-
-    public async Task<(bool isSuccess, string message, object data)> CreateUpdateAsync(ProductIssueEntrySetupViewModel model, string companyCode)
-    {
-        try
+        public async Task<(bool isSuccess, string message, object data)> CreateUpdateAsync(ProductIssueEntrySetupViewModel model, string companyCode)
         {
-            if (model.TC == 0) // Create
+            try
             {
-                if (model.Details == null || model.Details.Count == 0)
+                if (model.TC == 0) // Create
                 {
-                    return (false, CreateFailed, null);
-                }
+                    var details = productIssueInformationDetailTempRepo.All()
+                        .Where(x => x.IssueNo == model.IssueNo)
+                        .ToList();
 
-                // Main Entity Create
-                var entity = new InvProductIssueInformation
-                {
-                    Tc = model.TC,
-                };
-
-
-                    await ProductIssueInformation.AddAsync(entity); // Save main entity
-
-                // Get last inserted PurchaseOrderReceiveDetailsId
-                var lastDetail = purchaseOrderReceiveDetailsRepo.All()
-                                        .OrderByDescending(x => x.PurchaseOrderReceiveDetailsId)
-                                        .FirstOrDefault();
-
-                int nextId = 1;
-                if (lastDetail != null && int.TryParse(lastDetail.PurchaseOrderReceiveDetailsId, out int lastId))
-                {
-                    nextId = lastId + 1;
-                }
-
-                // Map details list
-                List<RmgPurchaseOrderReceiveDetails> detailsList = new List<RmgPurchaseOrderReceiveDetails>();
-
-                foreach (var item in model.Details)
-                {
-                    var detail = new RmgPurchaseOrderReceiveDetails
+                    if (details == null || details.Count == 0)
                     {
-                        PurchaseOrderReceiveDetailsId = nextId.ToString("D3"),
-                       
-                        BrandId = item.BrandID ?? "",
-                        ModelId = item.ModelID ?? "",
-                        SizeId = item.SizeID ?? "",
-                      
-                        UnitTypId = item.UnitTypID ?? "",
-                      
-                        Luser = model.Luser ?? "",
+                        return (false, CreateFailed, null);
+                    }
+
+                    var mEntity = new InvProductIssueInformation
+                    {
+                        IssueNo = model.IssueNo,
+                        IssueDate = model.IssueDate,
+                        DepartmentCode = model.DepartmentCode,
+                        EmployeeId = model.EmployeeID,
+                        IssuedBy = model.IssuedBy,
+                        Remarks = model.Remarks,
+                        Luser = model.Luser,
+                        Ldate = model.Ldate,
+                        Lip = model.Lip,
+                        Lmac = model.Lmac,
+                        CompanyCode = companyCode,
+                        UserInfoEmployeeId = model.UserInfoEmployeeId,
+                        FloorCode = model.FloorCode
                     };
+                    await ProductIssueInformation.AddAsync(mEntity);
 
-                    detailsList.Add(detail);
-                    nextId++;
+                    // Convert Temp data to actual Detail data
+                    var convertedDetails = details.Select(temp => new InvProductIssueInformationDetails
+                    {
+                        Pidid = temp.Pidid,
+                        IssueNo = temp.IssueNo,
+                        ProductCode = temp.ProductCode,
+                        BrandId = temp.BrandId,
+                        ModelId = temp.ModelId,
+                        SizeId = temp.SizeId,
+                        UnitTypId = temp.UnitTypId,
+                        StockQty = temp.StockQty,
+                        IssueQty = temp.IssueQty,
+                        FloorCode = temp.FloorCode,
+                        Luser = temp.Luser,
+                       
+                    }).ToList();
+
+                    await productIssueInformationDetailRepo.AddRangeAsync(convertedDetails);
+                    await productIssueInformationDetailTempRepo.DeleteRangeAsync(details);
+
+                
+
+                    return (true, CreateSuccess, mEntity);
                 }
-
-                // Bulk Insert
-                await purchaseOrderReceiveDetailsRepo.AddRangeAsync(detailsList);
-
-                return (true, CreateSuccess, entity);
-            }
-            else // Update
-            {
-                var exData = await ProductIssueInformation.GetByIdAsync(model.TC);
-                if (exData != null)
+                else // Update
                 {
-                    exData.MainCompanyCode = model.MainCompanyCode;
-                 
+                    var exData = await ProductIssueInformation.GetByIdAsync(model.TC);
+                    if (exData == null)
+                    {
+                        return (false, UpdateFailed, null);
+                    }
+
+                    exData.IssueDate = model.IssueDate;
+                    exData.DepartmentCode = model.DepartmentCode;
+                    exData.EmployeeId = model.EmployeeID;
+                    exData.IssuedBy = model.IssuedBy;
+                    exData.Remarks = model.Remarks;
                     exData.Luser = model.Luser;
-                    exData.ModifyDate = DateTime.Now;
+                    exData.Ldate = model.Ldate;
                     exData.Lip = model.Lip;
                     exData.Lmac = model.Lmac;
-                    exData.UserInfoEmployeeId = model.UserInfoEmployeeId;
                     exData.CompanyCode = companyCode;
+                    exData.UserInfoEmployeeId = model.UserInfoEmployeeId;
+                    exData.FloorCode = model.FloorCode;
 
-                    await ProductIssueInformation.UpdateAsync(exData);
-
-                    var detailstList = productIssueInformationDetailRepo.All().Where(x => x.IssueNo == exData.IssueNo).ToList();
-                    await productIssueInformationDetailRepo.DeleteRangeAsync(detailstList);
-                    //if (item != null || item.TC != null)
-                    //{
-                    //    var details = await purchaseOrderReceiveDetailsRepo.GetByIdAsync(item.TC);
-                    //    if (details == null)
-                    //    {
-                    //        continue;
-                    //    }
-                    //    else
-                    //    {
-                    //        await purchaseOrderReceiveDetailsRepo.DeleteAsync(details);
-                    //    }
-                    //}
-
-
-
-
-                    // Get last inserted PurchaseOrderReceiveDetailsId
-                    var lastDetail = purchaseOrderReceiveDetailsRepo.All()
-                                            .OrderByDescending(x => x.PurchaseOrderReceiveDetailsId)
-                                            .FirstOrDefault();
-
-                    int nextId = 1;
-                    if (lastDetail != null && int.TryParse(lastDetail.PurchaseOrderReceiveDetailsId, out int lastId))
-                    {
-                        nextId = lastId + 1;
-                    }
-
-                    // Map details list
-                    List<RmgPurchaseOrderReceiveDetails> detailsList = new List<RmgPurchaseOrderReceiveDetails>();
-
-                    foreach (var item in model.Details)
-                    {
-
-                        var detail = new RmgPurchaseOrderReceiveDetails
-                        {
-                            PurchaseOrderReceiveDetailsId = nextId.ToString("D3"),
-                          
-                            Luser = model.Luser ?? "",
-                        };
-
-                        detailsList.Add(detail);
-                        nextId++;
-                    }
-
-                    // Bulk Insert
-                    await purchaseOrderReceiveDetailsRepo.AddRangeAsync(detailsList);
-
-
+                    ProductIssueInformation.Update(exData);
+                  
                     return (true, UpdateSuccess, exData);
                 }
-
-                return (false, UpdateFailed, null);
+            }
+            catch (Exception ex)
+            {
+                // Optional: Log the exception message here
+                return (false, "An error occurred: " + ex.Message, null);
             }
         }
-        catch (Exception ex)
-        {
-            return (false, CreateFailed, null);
-        }
-    }
 
 
 
-    public async Task<(bool isSuccess, string message, object data)> DeleteAsync(List<string> ids)
+        public async Task<(bool isSuccess, string message, object data)> DeleteAsync(List<string> ids)
     {
         foreach (var id in ids)
         {
@@ -350,7 +307,7 @@ namespace GCTL.Service.ProductIssueEntrys
         return (true, DeleteSuccess, null);
     }
 
-    public async Task<string> AutoProductIssueEntryIdAsync()
+    public async Task<string> AutoProdutIssueIdAsync()
     {
         var currentYearShort = DateTime.Now.Year.ToString(); // "22"
         var prefix = $"PI_{currentYearShort}_";
@@ -387,10 +344,161 @@ namespace GCTL.Service.ProductIssueEntrys
         return (Exists, DataExists, null);
     }
 
-
-        public Task<(bool isSuccess, string message, object data)> CreateUpdateDetailsAsync(ProductIssueInformationDetailViewModel model, string companyCode)
+        public async Task<(bool isSuccess, string message, object data)> PurchaseIssueAddmoreCreateEditDetailsAsync(ProductIssueInformationDetailViewModel model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (model == null || string.IsNullOrWhiteSpace(model.ProductCode) || string.IsNullOrWhiteSpace(model.IssueNo))
+                {
+                    return (false, CreateFailed, null);
+                }
+
+                if (productIssueInformationDetailRepo == null || productIssueInformationDetailTempRepo == null)
+                {
+                    return (false, "Required repository is null.", null);
+                }
+
+                if (model.TC == 0)
+                {
+                    // Create New
+                    var lastRecord = productIssueInformationDetailTempRepo.All()
+                                          .OrderByDescending(x => x.Tc)
+                                          .FirstOrDefault();
+
+                    int nextId = 1;
+                    string lastPid = lastRecord?.Pidid;
+
+                    if (!string.IsNullOrWhiteSpace(lastPid) && int.TryParse(lastPid, out int lastId))
+                    {
+                        nextId = lastId + 1;
+                    }
+
+                    var entity = new InvProductIssueInformationDetailsTemp
+                    {
+                        Pidid = nextId.ToString("D3"),
+                        IssueNo = model.IssueNo,
+                        ProductCode = model.ProductCode,
+                        BrandId = model.BrandID,
+                        ModelId = model.ModelID,
+                        SizeId = model.SizeID,
+                        UnitTypId = model.UnitTypID,
+                        StockQty = model.StockQty,
+                        IssueQty = model.IssueQty,
+                        FloorCode = model.FloorCode,
+                        Luser = model.Luser
+                    };
+
+                    await productIssueInformationDetailTempRepo.AddAsync(entity);
+                    return (true, CreateSuccess, entity);
+                }
+                else
+                {
+                    // Edit Existing
+                    var exEntity = await productIssueInformationDetailTempRepo.GetByIdAsync(model.TC);
+                    if (exEntity == null)
+                    {
+                        return (false, UpdateFailed, null);
+                    }
+
+                    exEntity.ProductCode = model.ProductCode;
+                    exEntity.BrandId = model.BrandID;
+                    exEntity.ModelId = model.ModelID;
+                    exEntity.SizeId = model.SizeID;
+                    exEntity.UnitTypId = model.UnitTypID;
+                    exEntity.StockQty = model.StockQty;
+                    exEntity.IssueQty = model.IssueQty;
+                    exEntity.FloorCode = model.FloorCode;
+                    exEntity.Luser = model.Luser;
+
+                    await productIssueInformationDetailTempRepo.UpdateAsync(exEntity);
+                    return (true, UpdateSuccess, exEntity);
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, $"Exception occurred: {ex.Message}", null);
+            }
         }
+
+        public Task<List<ProductIssueInformationDetailViewModel>> LoadTempDataAsync()
+        {
+            try
+            {
+                return productIssueInformationDetailTempRepo.All()
+                    .Select(x => new ProductIssueInformationDetailViewModel
+                    {
+                        TC = x.Tc,
+                        PIDID = x.Pidid,
+                        IssueNo = x.IssueNo,
+                        ProductCode = x.ProductCode,
+                        ProductName = productRepo.All().Where(w => w.ProductCode == x.ProductCode).Select(p => p.ProductName).FirstOrDefault(),
+                        BrandID = x.BrandId,
+                        BrandName = brandRepo.All().Where(w=>w.BrandId == x.BrandId).Select(b=> b.BrandName).FirstOrDefault(),
+                        ModelID = x.ModelId,
+                        ModelName = modelRepo.All().Where(w=> w.ModelId == x.ModelId).Select(m=>m.ModelName).FirstOrDefault(),
+                        SizeID = x.SizeId,
+                        SizeName = sizeRepo.All().Where(w=>w.SizeId == x.SizeId).Select(s=> s.SizeName).FirstOrDefault(),
+                        UnitTypID = x.UnitTypId,
+                        UnitTypName = unitRepo.All().Where(w=> w.UnitTypId == x.UnitTypId).Select(u => u.UnitTypeName).FirstOrDefault(),
+                        StockQty = x.StockQty,
+                        IssueQty = x.IssueQty,
+                        FloorCode = x.FloorCode,
+                        FloorName = floorRepo.All().Where(w=> w.FloorCode == x.FloorCode).Select(f=> f.FloorName).FirstOrDefault(),
+                        Description = productRepo.All().Where(w=> w.ProductCode == x.ProductCode).Select(p=> p.Description).FirstOrDefault(),
+                        Luser = x.Luser
+                    }).ToListAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
+        }
+        public async Task<(bool isSuccess, object data)> detailsEditByIdAsync(decimal id)
+        {
+            try
+            {
+                if (id == 0)
+                    return (false, UpdateFailed);
+
+                var detailsItem = await productIssueInformationDetailTempRepo.GetByIdAsync(id);
+
+                if (detailsItem == null)
+                    return (false, UpdateFailed);
+
+
+                return (true, detailsItem);
+            }
+            catch (Exception ex)
+            {
+                // Optional: log the error
+                return (false, $"Error: {ex.Message}");
+            }
+        }
+
+        public async Task<(bool isSuccess, object data)> detailsDeleteByIdAsync(decimal id)
+        {
+            try
+            {
+                if (id == 0)
+                    return (false, DeleteFailed);
+
+                var detailsItem = await productIssueInformationDetailTempRepo.GetByIdAsync(id);
+
+                if (detailsItem == null)
+                    return (false, DeleteFailed);
+
+                await productIssueInformationDetailTempRepo.DeleteAsync(detailsItem);
+
+                return (true, DeleteSuccess);
+            }
+            catch (Exception ex)
+            {
+                // Optional: log the error
+                return (false, $"Error: {ex.Message}");
+            }
+        }
+       
     }
 }

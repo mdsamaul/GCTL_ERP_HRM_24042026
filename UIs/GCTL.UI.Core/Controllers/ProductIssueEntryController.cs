@@ -28,6 +28,7 @@ namespace GCTL.UI.Core.Controllers
         private readonly IRepository<SalesSupplier> supplier;
         private readonly IRepository<HrmEmployee> empRepo;
         private readonly IRepository<HrmEmployeeOfficialInfo> officialInfo;
+        private readonly IRepository<HrmDefFloor> floorRepo;
 
         public ProductIssueEntryController(
            IProductIssueEntryService productIssueEntryService,
@@ -40,7 +41,8 @@ namespace GCTL.UI.Core.Controllers
             IRepository<HrmModel> modelRepo,
             IRepository<SalesSupplier> supplier,
             IRepository<HrmEmployee> empRepo,
-            IRepository<HrmEmployeeOfficialInfo> OfficialInfo
+            IRepository<HrmEmployeeOfficialInfo> OfficialInfo,
+            IRepository<HrmDefFloor> floorRepo
             )
         {
             this.productIssueEntryService = productIssueEntryService;
@@ -54,6 +56,7 @@ namespace GCTL.UI.Core.Controllers
             this.supplier = supplier;
             this.empRepo = empRepo;
             this.officialInfo = OfficialInfo;
+            this.floorRepo = floorRepo;
         }
         public IActionResult Index()
         {
@@ -65,6 +68,7 @@ namespace GCTL.UI.Core.Controllers
             ViewBag.departmentList = new SelectList(depRepo.All().Select(x => new { x.DepartmentCode, x.DepartmentName }), "DepartmentCode", "DepartmentName");
             ViewBag.modelList = new SelectList(modelRepo.All().Select(x => new { x.ModelId, x.ModelName }), "ModelId", "ModelName");
             ViewBag.SuppleirList = new SelectList(supplier.All().Select(x => new { x.SupplierId, x.SupplierName }), "SupplierId", "SupplierName");
+            ViewBag.FloorList = new SelectList(floorRepo.All().Select(x => new { x.FloorCode, x.FloorName }), "FloorCode", "FloorName");
             var employeeList = (from emp in empRepo.All()
                                 join offi in officialInfo.All()
                                 on emp.EmployeeId equals offi.EmployeeId
@@ -83,13 +87,7 @@ namespace GCTL.UI.Core.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> SupplierCloseList()
-        {
-            var result = supplier.All().Where(x => x.SupplierId != null).OrderByDescending(x => x.SupplierId).ToList();
-            return Json(new { data = result });
-        }
-
+    
 
         [HttpGet]
         public async Task<IActionResult> LoadData()
@@ -105,11 +103,11 @@ namespace GCTL.UI.Core.Controllers
             }
         }
         [HttpGet]
-        public async Task<IActionResult> AutoPrintingStationeryPurchaseId()
+        public async Task<IActionResult> AutoProdutIssueId()
         {
             try
             {
-                var newIssueId = await productIssueEntryService.AutoProductIssueEntryIdAsync();
+                var newIssueId = await productIssueEntryService.AutoProdutIssueIdAsync();
                 return Json(new { data = newIssueId });
             }
             catch (Exception)
@@ -121,7 +119,7 @@ namespace GCTL.UI.Core.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateUpdate([FromBody] ProductIssueEntrySetupViewModel model)
+        public async Task<IActionResult> CreateEditProductIssue([FromBody] ProductIssueEntrySetupViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -202,42 +200,66 @@ namespace GCTL.UI.Core.Controllers
             var result = await productIssueEntryService.AlreadyExistAsync(PrintingStationeryPurchaseValue);
             return Json(new { isSuccess = result.isSuccess, message = result.message, data = result });
         }
-       
-        [HttpGet]
-        public async Task<IActionResult> addMoreLoadProduct()
+        [HttpPost]
+        public async Task<IActionResult> SelectBrandByProductId([FromBody] string productId)
         {
-            var sizeList = sizeRepo.All().Select(x => new { value = x.SizeId, text = x.SizeName }).ToList();
-            var periodList = periodRepo.All().Select(x => new { value = x.PeriodId, text = x.PeriodName }).ToList();
-            var unitList = unitRepo.All().Select(x => new { value = x.UnitTypId, text = x.UnitTypeName }).ToList();
+            var BrandList = (from p in productRepo.All().Where(x => x.ProductCode == productId)
+                             join b in brandRepo.All()
+                             on p.BrandId equals b.BrandId
+                             select new
+                             {
+                                 b.BrandId,
+                                 b.BrandName
+                             }).Distinct().ToList();
 
-            var productList = productRepo.All()
-                .Select(x => new
-                {
-                    value = x.ProductCode,
-                    text = x.ProductName
-                }).ToList();
-
-            return Json(new
-            {
-                productList = productList,
-                sizeList = sizeList,
-                periodList = periodList,
-                unitList = unitList
-            });
+            return Json(new { BrandList });
         }
-        [HttpGet]
-        public IActionResult productItemClose()
+        [HttpPost]
+        public async Task<IActionResult> SelectModalByBrandId([FromBody] string brandId)
         {
-            //var result = productRepo.All().Select(x => new { x.ProductCode, x.ProductName }).OrderByDescending(x=> x.ProductCode).ToList();
-            var result = productRepo.All().Where(x => x.AutoId != null).OrderByDescending(x => x.AutoId).ToList();
+            var ModelList = (from m in modelRepo.All()
+                             join b in brandRepo.All().Where(x => x.BrandId == brandId)
+                             on m.BrandId equals b.BrandId
+                             select new
+                             {
+                                 m.ModelId,
+                                 m.ModelName
+                             }).Distinct().ToList();
+
+            return Json(new { ModelList });
+        }
+        public async Task<IActionResult> PurchaseIssueAddmoreCreateEditDetails([FromBody] ProductIssueInformationDetailViewModel model)
+        {
+            model.ToAudit(LoginInfo);
+            var result = await productIssueEntryService.PurchaseIssueAddmoreCreateEditDetailsAsync(model);
+            return Json(new {isSuccess= result.isSuccess, message = result.message, data = result.data });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> LoadTempData()
+        {
+            var resutl = await productIssueEntryService.LoadTempDataAsync();
+            return Json(new { data = resutl });
+        }
+        [HttpPost]
+        public async Task<IActionResult> detailsDeleteById([FromBody] decimal id)
+        {
+            var result = await productIssueEntryService.detailsDeleteByIdAsync(id);
             return Json(new { data = result });
         }
-
-        [HttpGet]
-        public IActionResult BrandListClose()
+        [HttpPost]
+        public async Task<IActionResult> detailsEditById([FromBody] decimal id)
         {
-            var result = brandRepo.All().Where(x => x.AutoId != null).OrderByDescending(x => x.AutoId).ToListAsync();
-            return Json(new { data = result });
+            var result = await productIssueEntryService.detailsEditByIdAsync(id);
+            return Json(new { isSuccess = result.isSuccess, data = result.data });
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> CreateEditProductIssue([FromBody] ProductIssueEntrySetupViewModel model)
+        //{
+        //    model.ToAudit(LoginInfo);
+        //    var result = await productIssueEntryService.CreateUpdateAsync(model, LoginInfo.CompanyCode);
+        //    return Json(new { isSuccess = result.isSuccess, message = result.message, data = result.data });
+        //}
     }
 }
