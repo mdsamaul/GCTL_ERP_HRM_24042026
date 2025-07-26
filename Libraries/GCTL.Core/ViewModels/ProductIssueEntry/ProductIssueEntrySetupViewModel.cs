@@ -19,6 +19,8 @@ namespace GCTL.Core.ViewModels.ProductIssueEntry
         public string? Remarks { get; set; }  
         public string? CompanyCode { get; set; }
         public string? FloorCode { get; set; }
+        public string? ShowCreateDate { get; set; }
+        public string? ShowModifyDate { get; set; }
 
         // Details list: INV_ProductIssueInformationDetails
         public List<ProductIssueInformationDetailViewModel>? Details { get; set; } = new();

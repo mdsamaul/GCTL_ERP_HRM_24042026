@@ -259,7 +259,7 @@
             });
         })
 
-        $(commonName.StationarySupplierModalClose).on('click', function () { //todo
+        $(commonName.StationarySupplierModalClose).on('click', function () {
             $.ajax({
                 url: SupplierCloseUrl,
                 type: "GET",
@@ -875,6 +875,7 @@
         // Save Button Click
         $(document).on('click', commonName.PrintStationerySaveBtn, function () {
             var fromData = getFromData();
+            console.log(fromData);
             if (!fromData.SupplierID || fromData.SupplierID.trim() === "") {
                 showToast("error", "Please select a supplier.");
                 $('.supplierListBtn').addClass('printingStation-input');
@@ -1183,11 +1184,13 @@
                 },
                 error: function (e) {
                 }, complete: function () {
-                     resetForm();
+                    resetForm();
                     AutoPrintingStationeryPurchaseId();
                     loadCategoryData();
                     $('#selectAll').prop('checked', false);
                     selectedIds = [];
+                    dataList.length = 0; 
+                    $('table #dinamciDataAppend tr').not('.total-row').remove();
                 }
             })
         })

@@ -6,9 +6,9 @@
             PurchaseIssueNo: "#purchaseIssueNo",           
             AutoId: "#Setup_TC",
            
-            RowCheckbox: ".row-checkbox",
-            SelectedAll: "#selectAll",
-            EditBtn: ".stationary-btn-edit",
+            RowDetailsCheckbox: ".row-details-checkbox",
+            SelectDetailsAll: "#selectDetailsAll",
+            EditPopulateBtn: ".issue-details-btn-edit",
             ProductIssueSaveEditBtn: ".js-product-issue-Entry-save",
             DeleteBtn: "#js-product-issue-delete-confirm",
             UpdateDate: ".updateDate",
@@ -31,13 +31,10 @@
             PurchaseIssueQtyOfIssue: ".purchaseIssueQtyOfIssue",
             PurchaseIssueFloor: ".purchaseIssueFloor",
             DetailsDeleteBtn:".delete-issue-details-row-btn",
-            DetailsEdit:".details-btn-edit",
+            DetailsEdit:".details-temp-btn-edit",
             DetailsTcId:"#detailsTcId",
             //create detais 
             PurchaseIssueAddmoreDetailsBtn:"#purchaseIssueAddmoreDetailsBtn",
-
-
-
             ProductItemCloseBtn: "#productItemCloseBtn",
             CloseProductBrandModel: ".closeProductBrandModel",
         }, options);
@@ -48,6 +45,8 @@
         var SelectBrandByProductIdUrl = commonName.baseUrl + "/SelectBrandByProductId";
         var SelectModalByBrandIdUrl = commonName.baseUrl + "/SelectModalByBrandId";
 
+        var deleteUrl = commonName.baseUrl + "/deleteIssue";
+
         var PurchaseIssueAddmoreDetailsCreateEditUrl = commonName.baseUrl + "/PurchaseIssueAddmoreCreateEditDetails";
 
         var productUnitModalUrl = "/RMG_Prod_Def_UnitType/Index?isPartial=true";
@@ -55,6 +54,7 @@
         var detailsEditByIdUrl = commonName.baseUrl + "/detailsEditById";
 
         var CreateEditProductIssueUrl = commonName.baseUrl + "/CreateEditProductIssue";
+        var EditPopulateIssueIdUrl = commonName.baseUrl +"/EditPopulateIssueid"
         function stHeader() {
             window.addEventListener('scroll', function () {
                 const header = document.getElementById('stickyHeader');
@@ -106,13 +106,6 @@
         }
 
 
-
-        //$('.searchable-select').select2({
-        //    allowClear: false,
-        //    width: '100%'
-        //});
-
-
         $('.searchable-select').select2({
                 width: '100%',
                 language: {
@@ -128,12 +121,12 @@
 
 
         // Time picker
-        timePicker = function () {
+        timePicker = function (isTime) {
             flatpickr("#purchaseIssueInlineTimePicker", {
                 enableTime: true,
                 noCalendar: true,
                 inline: true,
-                defaultDate: new Date(),
+                defaultDate: isTime || new Date(),
                 dateFormat: "h:i:S K",
                 time_24hr: false,
                 enableSeconds: true,
@@ -169,8 +162,7 @@
                 url: AutoProdutIssueIdUrl,
                 type: "GET",
                 success: function (res) {
-                    console.log(res);
-                    $(commonName.PurchaseIssueNo).val(res.data);
+                    $(commonName.PurchaseIssueNo).val(res.data);                       
                 },
                 error: function (e) {
                     showToast('error', 'Error fetching Auto ID');
@@ -197,7 +189,6 @@
                     $(commonName.ModelPopulateFromBrandId).empty().append(`<option value="">Select Model</option>`);
                 },
                 error: function (e) {
-                    console.log(e);
                 }
             });
         });
@@ -210,8 +201,7 @@
                 type: "POST",
                 contentType: 'application/json',
                 data: JSON.stringify(brandId),
-                success: function (res) {
-                    console.log(res);
+                success: function (res) {                    
                     const $modelSelect = $(commonName.ModelPopulateFromBrandId);
                     $modelSelect.empty().append('<option value="">Select Model</option>');
                     res.modelList.forEach(b => {
@@ -219,7 +209,6 @@
                     });
                 },
                 error: function (e) {
-                    console.log(e);
                 }
             });
         });
@@ -258,7 +247,6 @@
         //details brn
         $(document).on('click', commonName.PurchaseIssueAddmoreDetailsBtn, function () {
             var fromData = detailtIssueData();
-            console.log(fromData);
             $.ajax({
                 url: PurchaseIssueAddmoreDetailsCreateEditUrl,
                 type: "POST",
@@ -269,12 +257,11 @@
                         resetDetailIssueForm();
                         loadTempIssueData();
                     }
-                    showToast('success', res.message);
+                    //showToast('success', res.message);
                 }, error: function (e) {
-                    console.log(e)
+                    
                 }
             });
-
         })
 
         function loadTempIssueData() {
@@ -287,7 +274,6 @@
                 "type": "GET",
                 "datatype": "json",
                 "dataSrc": function (json) {
-                    console.log(json);
                     return json.data || [];
                 },
                 "error": function (xhr, error, thrown) {
@@ -299,7 +285,7 @@
                     "data": "tc",
                     "render": function (data, type, row, meta) {
                         const serial = (meta.row + 1).toString().padStart(3, '0');
-                        return `<button class="btn btn-sm btn-link details-btn-edit" data-id=${data}>${serial}</button>`;
+                        return `<button class="btn btn-sm btn-link details-temp-btn-edit" data-id=${data}>${serial}</button>`;
                     },
                     "orderable": false
                 },
@@ -356,7 +342,6 @@
             $(commonName.PurchaseIssueAddmoreDetailsBtn).html('<i class="fas fa-sync-alt"></i> <spam class="ps-2">Update</span>');
 
             const id = $(this).data('id');
-            console.log("Clicked Row ID:", id);
             $.ajax({
                 url: detailsEditByIdUrl,
                 type: "POST",
@@ -406,9 +391,7 @@
                         $(commonName.PurchaseIssueFloor).val(res.data.floorCode).trigger('change');
                     }
                 }
-                , error: function (e) {
-                    console.log(e);
-                }
+                , error: function (e) {}
             });
         });
 
@@ -416,7 +399,6 @@
 
         $(document).on('click', commonName.DetailsDeleteBtn, function () {
             const id = $(this).data('id');
-            console.log("Clicked Row ID:", id);
             $.ajax({
                 url: detailsDeleteByIdUrl,
                 type: "POST",
@@ -424,9 +406,7 @@
                 data: JSON.stringify(id),
                 success: function (res) {
                     loadTempIssueData();
-                }, error: function (e) {
-                    console.log(e);
-                }
+                }, error: function (e) {}
             });
         })
         
@@ -523,7 +503,25 @@
             $(commonName.PurchaseIssueEmployeeBtn).val('').trigger('change');
             $(commonName.ProductIssueBy).val('').trigger('change');
             $(commonName.Remarks).val('');
+            $(commonName.PurchaseIssueStockQty).val('');
+            $(commonName.PurchaseIssueQtyOfIssue).val('');
+            $(commonName.DetailsTcId).val(0);
+            $(commonName.ProductSelectId).val('').trigger('change');
+            $(commonName.BrandIdFromDropdown).val('').trigger('change');
+            $(commonName.ModelPopulateFromBrandId).val('').trigger('change');
+            $(commonName.SizeSelect).val('').trigger('change');
+            $(commonName.PurchaseIssueSelectUnit).val('').trigger('change');
+            $(commonName.PurchaseIssueFloor).val('').trigger('change');
+            AutoProdutIssueId();
+            $(commonName.CreateDate).text("");
+            $(commonName.UpdateDate).text("");
         }
+        $(document).on('click', commonName.ClearBrn , function () {
+            ResetMasterIssueForm();
+            setTimeout(function () {
+            loadTempIssueData();
+            },50);
+        })
 
         $(document).on('input', commonName.PurchaseIssueNo, function () {
             var issueNo = $(this).val();
@@ -548,7 +546,6 @@
 
         $(document).on('click', commonName.ProductIssueSaveEditBtn, function () {
             var fromData = MasterIssueData();
-            console.log(fromData);
             if (!fromData) return; 
 
             if (fromData.IssueNo == "" || fromData.IssueNo == 0 || fromData.IssueNo == null) {
@@ -582,8 +579,57 @@
                 },
             })
         })
+        //select all
+        let selectedIds = [];
+        //added pid checkbox //todo
+        $(document).on('click', commonName.RowDetailsCheckbox, function () {           
+            const id = $(this).val();
+            if ($(this).is(':checked')) {
+                if (!selectedIds.includes(id)) {
+                    selectedIds.push(id);
+                }
+            } else {
+                selectedIds = selectedIds.filter(item => item != id);
+            }
+            let totalCheckboxes = $(commonName.RowDetailsCheckbox).length;
+            let totalChecked = $(commonName.RowDetailsCheckbox + ":checked").length;
+            $(commonName.SelectDetailsAll).prop('checked', totalChecked === totalCheckboxes);
+        })
+        //select All
+        $(document).on('change', commonName.SelectDetailsAll, function () {
+            const isChecked = $(this).is(':checked');
+            selectedIds = [];
+            $(commonName.RowDetailsCheckbox).each(function () {
+                const id = $(this).val().toString();
+                $(this).prop('checked', isChecked);
+                if (isChecked) {
+                    selectedIds.push(id);
+                }
+            });
+        })
 
-
+        $(document).on('click', commonName.DeleteBtn, function () {
+            $.ajax({
+                url: deleteUrl,
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(selectedIds),
+                success: function (res) {
+                    showToast(res.isSuccess ? "success" : "error", res.message)
+                },
+                error: function (e) {
+                }, complete: function () {
+                    //resetForm();
+                    loadMasterIssueData();
+                    AutoProdutIssueId();
+                    resetDetailIssueForm();
+                    loadTempIssueData();
+                    ResetMasterIssueForm();
+                    $(commonName.SelectDetailsAll).prop('checked', false);
+                    selectedIds = [];
+                }
+            })
+        })
 
         function loadMasterIssueData() {
             tableContainer.ajax.reload(null, false);
@@ -595,7 +641,6 @@
                 "type": "GET",
                 "datatype": "json",
                 "dataSrc": function (json) {
-                    console.log(json);
                     return json.data || [];
                 },
                 "error": function (xhr, error, thrown) {
@@ -606,35 +651,51 @@
                 {
                     "data": "tc",
                     "render": function (data) {
-                        return `<input type="checkbox" class="row-checkbox" value=${data} />`;
+                        return `<input type="checkbox" class="row-details-checkbox" value=${data} />`;
                     },
                     "orderable": false
                 },
                 {
-                    "data": "purchaseReceiveNo",
-                    "render": function (data) {
-                        return `<button class="btn btn-sm btn-link stationary-btn-edit" data-id=${data}>${data}</button>`;
+                    "data": "issueNo",                    
+                    "render": function (data, type, rows) {
+                        return `<button class="btn btn-sm btn-link issue-details-btn-edit" data-id=${rows.tc}>${data}</button>`;
                     }
                 },
                 {
-                    "data": "showReceiveDate",
+                    "data": "showIssueDate",
                 },
-                { "data": "departmentName" },
-                { "data": "supplierName" },
-                { "data": "invoiceNo" },
-                {
-                    "data": "totalAmount",
-                    "render": function (data, type, row) {
-                        return data != null ? data : row.invoiceValue || 0;
-                    }
-                },
-                { "data": "employeeID_ReceiveBy" },
+                { "data": "departmentCode" },
+                { "data": "employeeID" },
+                { "data": "issuedBy" },             
+                { "data": "remarks" },
+                { "data": "luser" },
                 { "data": "companyCode" }
             ],
             "columnDefs": [
+              
+                {
+                    "targets": 0,
+                    "width": "65px",
+                    "className": "text-center"
+                },
+                {
+                    "targets": 1,
+                    "width": "auto",
+                    "className": "text-center"
+                },
                 {
                     "targets": 2,
-                    "width": "auto"
+                    "width": "auto",
+                    "className": "text-center"
+                },
+                {
+                    "targets": 7,
+                    "width": "auto",
+                    "className": "text-center"
+                },{
+                    "targets": 8,
+                    "width": "auto",
+                    "className": "text-center"
                 }
             ],
             "paging": true,
@@ -656,14 +717,42 @@
                 }
             }
         });
+
+        $(document).on('click', commonName.EditPopulateBtn, function () {
+            const issueId = $(this).data('id');
+            $.ajax({
+                url: EditPopulateIssueIdUrl,//todo
+                type: "POST",
+                contentType: 'application/json',
+                data: JSON.stringify(issueId),
+                success: function (res) {
+                    selectedIds = [];
+                    selectedIds.push(res.data.tc + '');                
+                    $(commonName.AutoId).val(res.data.tc);
+                    $(commonName.PurchaseIssueNo).val(res.data.issueNo);
+                    timePicker(res.data.issueDate.split('T')[1]);
+                    datePiker(".datePicker", res.data.issueDate.split('T')[0]);
+                    $(commonName.PurchaseIssueDepartment).val(res.data.departmentCode).trigger('change');
+                    $(commonName.ProductIssueBy).val(res.data.issuedBy).trigger('change');
+                    $(commonName.PurchaseIssueEmployeeBtn).val(res.data.employeeID).trigger('change');
+                    $(commonName.Remarks).val(res.data.remarks);
+                    $(commonName.CreateDate).text(res.data.showCreateDate);
+                    $(commonName.UpdateDate).text(res.data.showModifyDate);
+                    loadTempIssueData();
+                }, error: function (e) {                    
+                }
+            });
+        })
+
+
         window.categoryModuleLoaded = true;
         var init = function () {
             stHeader();
             datePiker(".datePicker");
             timePicker();
-            AutoProdutIssueId();
+            AutoProdutIssueId();          
             tableContainer;
-            tableTempContainer;
+            tableTempContainer;          
         };
         init();
     };

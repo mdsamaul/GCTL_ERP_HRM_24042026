@@ -409,6 +409,10 @@
         padding-right: 0px !important;
     }
 
+    #productIssueTable thead th {
+        text-align: center;
+        vertical-align: middle;
+    }
 </style>
 <!-- Content Header (Page header) -->
 <div class="container-fluid">
@@ -418,7 +422,7 @@
     <div id="stickyHeader" class="px-2 sticky-top rounded">
         <partial name="_Toolbars" model="new ToobarModel(){Title=Model.Breadcrumb, Code=Model.Code , Name=Model.Setup.IssueNo}" />
     </div>
-    <input type="text" asp-for="Setup.TC" />
+    <input type="hidden" asp-for="Setup.TC" />
     <div class="card p-2 my-2">
         <fieldset class="custom-fieldset">
             <legend>Main Information</legend>
@@ -509,7 +513,7 @@
                 <div class="col-12 col-md-4"> </div>
             </div>
         </fieldset>
-        <input type="text" name="name" value="0"  id="detailsTcId"/>
+        <input type="hidden" name="name" value="0"  id="detailsTcId"/>
         <div class="container-fluid px-0">
             <div class="card">
                 <div class="table-responsive">

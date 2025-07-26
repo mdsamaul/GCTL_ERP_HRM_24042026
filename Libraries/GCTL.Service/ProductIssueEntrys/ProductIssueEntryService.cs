@@ -125,8 +125,8 @@ namespace GCTL.Service.ProductIssueEntrys
                TC = c.Tc,
                IssueNo= c.IssueNo,
                IssueDate= c.IssueDate,
-              ShowIssueDate = c.IssueDate.HasValue?c.IssueDate.Value.ToString("dd/MM/yyyy HH:mm:ss"):"",
-              DepartmentCode= depRepo.All().Where(x=> c.DepartmentCode == x.DepartmentCode).Select(w=> w.DepartmentName).FirstOrDefault(),
+                ShowIssueDate = c.IssueDate.HasValue ? c.IssueDate.Value.ToString("dd/MM/yyyy hh:mm:ss tt") : "",
+              DepartmentCode = depRepo.All().Where(x=> c.DepartmentCode == x.DepartmentCode).Select(w=> w.DepartmentName).FirstOrDefault(),
               EmployeeID = empRepo.All().Where(w=> w.EmployeeId == c.EmployeeId).Select(w=> w.FirstName+" "+ w.LastName).FirstOrDefault(),
               IssuedBy = empRepo.All().Where(w => w.EmployeeId == c.IssuedBy).Select(w => w.FirstName + " " + w.LastName).FirstOrDefault(),
                 Remarks = c.Remarks,
@@ -190,13 +190,14 @@ namespace GCTL.Service.ProductIssueEntrys
         {
             try
             {
+                var tempDetails = productIssueInformationDetailTempRepo.All()
+                       .Where(x => x.IssueNo == model.IssueNo)
+                       .ToList();
+
                 if (model.TC == 0) // Create
                 {
-                    var details = productIssueInformationDetailTempRepo.All()
-                        .Where(x => x.IssueNo == model.IssueNo)
-                        .ToList();
-
-                    if (details == null || details.Count == 0)
+                   
+                    if (tempDetails == null || tempDetails.Count == 0)
                     {
                         return (false, CreateFailed, null);
                     }
@@ -220,7 +221,7 @@ namespace GCTL.Service.ProductIssueEntrys
                     await ProductIssueInformation.AddAsync(mEntity);
 
                     // Convert Temp data to actual Detail data
-                    var convertedDetails = details.Select(temp => new InvProductIssueInformationDetails
+                    var convertedDetails = tempDetails.Select(temp => new InvProductIssueInformationDetails
                     {
                         Pidid = temp.Pidid,
                         IssueNo = temp.IssueNo,
@@ -237,7 +238,7 @@ namespace GCTL.Service.ProductIssueEntrys
                     }).ToList();
 
                     await productIssueInformationDetailRepo.AddRangeAsync(convertedDetails);
-                    await productIssueInformationDetailTempRepo.DeleteRangeAsync(details);
+                    await productIssueInformationDetailTempRepo.DeleteRangeAsync(tempDetails);
 
                 
 
@@ -246,6 +247,7 @@ namespace GCTL.Service.ProductIssueEntrys
                 else // Update
                 {
                     var exData = await ProductIssueInformation.GetByIdAsync(model.TC);
+                   
                     if (exData == null)
                     {
                         return (false, UpdateFailed, null);
@@ -263,9 +265,35 @@ namespace GCTL.Service.ProductIssueEntrys
                     exData.CompanyCode = companyCode;
                     exData.UserInfoEmployeeId = model.UserInfoEmployeeId;
                     exData.FloorCode = model.FloorCode;
+                    exData.ModifyDate = DateTime.Now;
 
                     ProductIssueInformation.Update(exData);
                   
+                    var detailsList = productIssueInformationDetailRepo.All().Where(x => x.IssueNo == model.IssueNo).ToList();
+                    if (detailsList != null)
+                    {
+                    await productIssueInformationDetailRepo.DeleteRangeAsync(detailsList);
+                    }
+                    foreach (var temp in tempDetails)
+                    {                        
+                            var newDetail = new InvProductIssueInformationDetails
+                            {
+                                Pidid = temp.Pidid,
+                                IssueNo = temp.IssueNo,
+                                ProductCode = temp.ProductCode,
+                                BrandId = temp.BrandId,
+                                ModelId = temp.ModelId,
+                                SizeId = temp.SizeId,
+                                UnitTypId = temp.UnitTypId,
+                                StockQty = temp.StockQty,
+                                IssueQty = temp.IssueQty,
+                                FloorCode = temp.FloorCode,
+                                Luser = temp.Luser,
+                            };
+                            await productIssueInformationDetailRepo.AddAsync(newDetail);
+                    }
+
+                    await productIssueInformationDetailTempRepo.DeleteRangeAsync(tempDetails);
                     return (true, UpdateSuccess, exData);
                 }
             }
@@ -309,7 +337,7 @@ namespace GCTL.Service.ProductIssueEntrys
 
     public async Task<string> AutoProdutIssueIdAsync()
     {
-        var currentYearShort = DateTime.Now.Year.ToString(); // "22"
+        var currentYearShort = DateTime.Now.Year.ToString();
         var prefix = $"PI_{currentYearShort}_";
 
         var productIssueList = (await ProductIssueInformation.GetAllAsync()).ToList();
@@ -334,8 +362,12 @@ namespace GCTL.Service.ProductIssueEntrys
                 }
             }
         }
-
-        return $"{prefix}{newIdNumber.ToString("D6")}";
+            var exIssueData = productIssueInformationDetailTempRepo.All().ToList();
+            if (exIssueData != null)
+            {
+                await productIssueInformationDetailTempRepo.DeleteRangeAsync(exIssueData);
+            }
+            return $"{prefix}{newIdNumber.ToString("D6")}";
     }
 
     public async Task<(bool isSuccess, string message, object data)> AlreadyExistAsync(string productIssueValue)
@@ -360,13 +392,21 @@ namespace GCTL.Service.ProductIssueEntrys
 
                 if (model.TC == 0)
                 {
-                    // Create New
-                    var lastRecord = productIssueInformationDetailTempRepo.All()
+                    // Create New                  
+                    var lastRecord = productIssueInformationDetailRepo.All()
                                           .OrderByDescending(x => x.Tc)
                                           .FirstOrDefault();
-
-                    int nextId = 1;
-                    string lastPid = lastRecord?.Pidid;
+                    int nextId = 1;                   
+                    string nextDetailsId = lastRecord?.Pidid;
+                    if (!string.IsNullOrWhiteSpace(nextDetailsId) && int.TryParse(nextDetailsId, out int dLastId))
+                    {
+                        nextId = dLastId + 1;
+                    }
+                    var lastTempRecord = productIssueInformationDetailTempRepo.All()
+                                          .OrderByDescending(x => x.Tc)
+                                          .FirstOrDefault();
+                   
+                    string lastPid = lastTempRecord?.Pidid;
 
                     if (!string.IsNullOrWhiteSpace(lastPid) && int.TryParse(lastPid, out int lastId))
                     {
@@ -499,6 +539,86 @@ namespace GCTL.Service.ProductIssueEntrys
                 return (false, $"Error: {ex.Message}");
             }
         }
-       
+
+        public async Task<ProductIssueEntrySetupViewModel> EditPopulateIssueidAsync(decimal issueId)
+        {
+            try
+            {
+                var exIssueData = productIssueInformationDetailTempRepo.All();
+                if (exIssueData != null)
+                {
+                    await productIssueInformationDetailTempRepo.DeleteRangeAsync(exIssueData);
+                }
+                var issueData = await ProductIssueInformation.GetByIdAsync(issueId);
+                if (issueData == null)
+                    return null;
+
+                var detailsList = productIssueInformationDetailRepo
+                    .All()
+                    .Where(x => x.IssueNo == issueData.IssueNo)
+                    .ToList();
+
+                List<InvProductIssueInformationDetailsTemp> detailsTempList = new();
+
+                if (detailsList?.Any() == true)
+                {
+                    detailsTempList = detailsList.Select(temp => new InvProductIssueInformationDetailsTemp
+                    {
+                        Pidid = temp.Pidid,
+                        IssueNo = temp.IssueNo,
+                        ProductCode = temp.ProductCode,
+                        BrandId = temp.BrandId,
+                        ModelId = temp.ModelId,
+                        SizeId = temp.SizeId,
+                        UnitTypId = temp.UnitTypId,
+                        StockQty = temp.StockQty,
+                        IssueQty = temp.IssueQty,
+                        FloorCode = temp.FloorCode,
+                        Luser = temp.Luser,
+                    }).ToList();
+
+                    await productIssueInformationDetailTempRepo.AddRangeAsync(detailsTempList);
+
+                    // Only delete from original table if intended
+                 //await productIssueInformationDetailRepo.DeleteRangeAsync(detailsList);
+                }
+
+                var issueDetailsData = new ProductIssueEntrySetupViewModel
+                {
+                    
+                    IssueNo = issueData.IssueNo,
+                    IssueDate = issueData.IssueDate,
+                    FloorCode = issueData.FloorCode,
+                    IssuedBy = issueData.IssuedBy,
+                    Remarks = issueData.Remarks,
+                    TC = issueData.Tc,
+                    DepartmentCode=issueData.DepartmentCode,
+                    EmployeeID=issueData.EmployeeId,
+                    ShowCreateDate=issueData.Ldate.HasValue?issueData.Ldate.Value.ToString("dd/MM/yyyy"):"",
+                    ShowModifyDate=issueData.ModifyDate.HasValue?issueData.ModifyDate.Value.ToString("dd/MM/yyyy"):"",
+                    Details = detailsTempList.Select(x => new ProductIssueInformationDetailViewModel
+                    {
+                        PIDID = x.Pidid,
+                        IssueNo = x.IssueNo,
+                        ProductCode = x.ProductCode,
+                        BrandID = x.BrandId,
+                        ModelID = x.ModelId,
+                        SizeID = x.SizeId,
+                        UnitTypID = x.UnitTypId,
+                        StockQty = x.StockQty,
+                        IssueQty = x.IssueQty,
+                        FloorCode = x.FloorCode,
+                        Luser = x.Luser
+                    }).ToList()
+                };
+
+                return issueDetailsData;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }

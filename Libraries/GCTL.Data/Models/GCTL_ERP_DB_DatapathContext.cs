@@ -9521,9 +9521,14 @@ namespace GCTL.Data.Models
 
             modelBuilder.Entity<RmgPurchaseOrderReceive>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Tc);
 
                 entity.ToTable("RMG_PurchaseOrderReceive");
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
 
                 entity.Property(e => e.ChallanDate).HasColumnType("datetime");
 
@@ -9574,11 +9579,6 @@ namespace GCTL.Data.Models
                 entity.Property(e => e.SupplierId)
                     .HasMaxLength(50)
                     .HasColumnName("SupplierID");
-
-                entity.Property(e => e.Tc)
-                    .HasColumnType("numeric(18, 0)")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("TC");
 
                 entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 2)");
 

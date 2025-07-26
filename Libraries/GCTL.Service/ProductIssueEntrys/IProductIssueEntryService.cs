@@ -28,5 +28,6 @@ namespace GCTL.Service.ProductIssueEntrys
         Task<List<ProductIssueInformationDetailViewModel>> LoadTempDataAsync();
         Task<(bool isSuccess, object data)> detailsDeleteByIdAsync(decimal id);
         Task<(bool isSuccess, object data)> detailsEditByIdAsync(decimal id);
+        Task<ProductIssueEntrySetupViewModel> EditPopulateIssueidAsync(decimal issueId);
     }
 }

@@ -180,7 +180,7 @@ namespace GCTL.UI.Core.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> deletePrintingStationeryPurchase([FromBody] List<string> selectedIds)
+        public async Task<IActionResult> deleteIssue([FromBody] List<string> selectedIds)
         {
             var hasUpdatePermission = await productIssueEntryService.DeletePermissionAsync(LoginInfo.AccessCode);
             if (hasUpdatePermission)
@@ -254,12 +254,11 @@ namespace GCTL.UI.Core.Controllers
             return Json(new { isSuccess = result.isSuccess, data = result.data });
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> CreateEditProductIssue([FromBody] ProductIssueEntrySetupViewModel model)
-        //{
-        //    model.ToAudit(LoginInfo);
-        //    var result = await productIssueEntryService.CreateUpdateAsync(model, LoginInfo.CompanyCode);
-        //    return Json(new { isSuccess = result.isSuccess, message = result.message, data = result.data });
-        //}
+        [HttpPost]
+        public async Task<IActionResult> EditPopulateIssueid([FromBody] decimal issueId)
+        {
+            var result = await productIssueEntryService.EditPopulateIssueidAsync(issueId);
+            return Json(new {data = result});
+        }
     }
 }
