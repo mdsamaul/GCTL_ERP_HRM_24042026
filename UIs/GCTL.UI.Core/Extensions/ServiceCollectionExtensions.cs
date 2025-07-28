@@ -127,6 +127,7 @@ using GCTL.Service.Core_Countrys;
 using GCTL.Service.PrintingStationeryPurchaseReportService;
 using GCTL.Service.ProductIssueEntrys;
 using GCTL.Service.ProductIssueReports;
+using GCTL.Service.ProductStockHistoryReport;
 
 
 //using GCTL.Service.AccountReport;
@@ -224,6 +225,7 @@ services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
 
             services.AddScoped<IProductIssueEntryService , ProductIssueEntryService>();
             services.AddScoped<IProductIssueReportService , ProductIssueReportService>();
+            services.AddScoped<IProductStockHistoryReportService , ProductStockHistoryReportService>();
 
 
             
