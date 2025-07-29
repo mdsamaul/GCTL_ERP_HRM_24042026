@@ -151,7 +151,7 @@ namespace GCTL.UI.Core.Controllers
                 // Footer: Print DateTime
                 var footerRow = totalRow + 2;
                 ws.Cells[footerRow, 1, footerRow, 14].Merge = true;
-                ws.Cells[footerRow, 1].Value = $"Print DateTime: {DateTime.Now:dd/MM/yyyy hh:mm tt}";
+                ws.Cells[footerRow, 1].Value = $"Print Datetime: {DateTime.Now:dd/MM/yyyy hh:mm tt}";
                 ws.Cells[footerRow, 1].Style.Font.Size = 10;
                 ws.Cells[footerRow, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
 

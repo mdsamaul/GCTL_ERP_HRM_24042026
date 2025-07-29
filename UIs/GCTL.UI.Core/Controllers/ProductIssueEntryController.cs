@@ -29,6 +29,7 @@ namespace GCTL.UI.Core.Controllers
         private readonly IRepository<HrmEmployee> empRepo;
         private readonly IRepository<HrmEmployeeOfficialInfo> officialInfo;
         private readonly IRepository<HrmDefFloor> floorRepo;
+        private readonly IRepository<RmgPurchaseOrderReceiveDetails> productDetailsRepo;
 
         public ProductIssueEntryController(
            IProductIssueEntryService productIssueEntryService,
@@ -42,7 +43,8 @@ namespace GCTL.UI.Core.Controllers
             IRepository<SalesSupplier> supplier,
             IRepository<HrmEmployee> empRepo,
             IRepository<HrmEmployeeOfficialInfo> OfficialInfo,
-            IRepository<HrmDefFloor> floorRepo
+            IRepository<HrmDefFloor> floorRepo,
+            IRepository<RmgPurchaseOrderReceiveDetails> productDetailsRepo
             )
         {
             this.productIssueEntryService = productIssueEntryService;
@@ -57,6 +59,7 @@ namespace GCTL.UI.Core.Controllers
             this.empRepo = empRepo;
             this.officialInfo = OfficialInfo;
             this.floorRepo = floorRepo;
+            this.productDetailsRepo = productDetailsRepo;
         }
         public IActionResult Index()
         {
@@ -87,7 +90,7 @@ namespace GCTL.UI.Core.Controllers
             return View(model);
         }
 
-    
+
 
         [HttpGet]
         public async Task<IActionResult> LoadData()
@@ -203,16 +206,32 @@ namespace GCTL.UI.Core.Controllers
         [HttpPost]
         public async Task<IActionResult> SelectBrandByProductId([FromBody] string productId)
         {
-            var BrandList = (from p in productRepo.All().Where(x => x.ProductCode == productId)
-                             join b in brandRepo.All()
-                             on p.BrandId equals b.BrandId
-                             select new
+            var Results = (from p in productRepo.All().Where(x => x.ProductCode == productId)
+                             join b in brandRepo.All() on p.BrandId equals b.BrandId
+                             join ut in unitRepo.All() on p.UnitId equals ut.UnitTypId
+                             join pd in productDetailsRepo.All() on p.ProductCode equals pd.ProductCode
+                             join s in sizeRepo.All() on pd.SizeId equals s.SizeId
+                             group pd by new
                              {
                                  b.BrandId,
-                                 b.BrandName
+                                 b.BrandName,
+                                 ut.UnitTypId,
+                                 ut.UnitTypeName,
+                                 s.SizeId,
+                                 s.SizeName
+                             }into g
+                             select new
+                             {
+                                 g.Key.BrandId,
+                                 g.Key.BrandName,
+                                 g.Key.UnitTypId,
+                                 g.Key.UnitTypeName,
+                                 g.Key.SizeId,
+                                 g.Key.SizeName,
+                                 TotalReqQty = g.Sum(x=> x.ReqQty)
                              }).Distinct().ToList();
 
-            return Json(new { BrandList });
+            return Json(new { Results });
         }
         [HttpPost]
         public async Task<IActionResult> SelectModalByBrandId([FromBody] string brandId)
@@ -232,7 +251,7 @@ namespace GCTL.UI.Core.Controllers
         {
             model.ToAudit(LoginInfo);
             var result = await productIssueEntryService.PurchaseIssueAddmoreCreateEditDetailsAsync(model);
-            return Json(new {isSuccess= result.isSuccess, message = result.message, data = result.data });
+            return Json(new { isSuccess = result.isSuccess, message = result.message, data = result.data });
         }
 
         [HttpGet]
@@ -258,7 +277,7 @@ namespace GCTL.UI.Core.Controllers
         public async Task<IActionResult> EditPopulateIssueid([FromBody] decimal issueId)
         {
             var result = await productIssueEntryService.EditPopulateIssueidAsync(issueId);
-            return Json(new {data = result});
+            return Json(new { data = result });
         }
     }
 }

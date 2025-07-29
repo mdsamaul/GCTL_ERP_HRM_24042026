@@ -78,7 +78,7 @@
         }
 
 
-    input[type="text"],
+ /* input[type="text"], */
     input[type="email"],
     input[type="date"],
     input[type="number"],
@@ -90,7 +90,7 @@
         padding: 6px 10px;
         box-sizing: border-box;
         outline: none;
-    }
+    } 
 
         input:focus,
         select:focus,
@@ -269,9 +269,18 @@
 
 
 
-    .product-issue-input {
+ /*    input[type="text"], .product-issue-input {
         border: 1px solid red !important;
-    }
+    } */
+
+        input[type="text"]:focus,
+        .product-issue-input:focus,
+    .product-issue-input,
+        .select2-container--default .select2-selection--single.product-issue-input:focus,
+        .select2-container--default .select2-selection--single.product-issue-input {
+            border: 1px solid red !important;
+            box-shadow: none !important;
+        }
 
 
     .js-product-issue-Entry-save {
@@ -413,6 +422,8 @@
         text-align: center;
         vertical-align: middle;
     }
+       
+    
 </style>
 <!-- Content Header (Page header) -->
 <div class="container-fluid">
@@ -568,10 +579,10 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="number" class="form-control-sm form-control purchaseIssueStockQty" />
+                                    <input type="number" class="form-control-sm form-control text-center purchaseIssueStockQty" />
                                 </td>
                                 <td>
-                                    <input type="number" class="form-control-sm form-control purchaseIssueQtyOfIssue" />
+                                    <input type="number" class="form-control-sm form-control text-center purchaseIssueQtyOfIssue" />
                                 </td>
                                 <td>
                                     <select class="form-control-sm form-control searchable-select purchaseIssueFloor" asp-items="ViewBag.FloorList as SelectList">

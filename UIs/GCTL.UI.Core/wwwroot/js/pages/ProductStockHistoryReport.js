@@ -441,22 +441,26 @@
             alert("No data found for the selected date range.");
             return;
         }
+        const formatNumber = (val, decimals = 0) =>
+            val != null && !isNaN(val) ? Number(val).toFixed(decimals) : '0'.padEnd(decimals ? decimals + 2 : 1, '0');
+
         const tableData = responseData.data.map(item => [
-            item.productCode,
-            item.productName,
+            item.productCode || '',
+            item.productName || '',
             item.description || '',
-            item.brandName,
-            item.modelName,
-            item.sizeName,
-            item.unitName,
-            item.unitPrice,
-            item.openingQty,
-            item.receivedQty,
-            item.stockQty,
-            item.issuedQty,
-            item.balanceQty,
-            `${item.stockValue.toFixed(2)}`
+            item.brandName || '',
+            item.modelName || '',
+            item.sizeName || '',
+            item.unitName || '',
+            formatNumber(item.unitPrice, 2),
+            formatNumber(item.openingQty),
+            formatNumber(item.receivedQty),
+            formatNumber(item.stockQty),
+            formatNumber(item.issuedQty),
+            formatNumber(item.balanceQty),
+            formatNumber(item.stockValue, 2)
         ]);
+
 
         const grandTotal = responseData.data.reduce((sum, item) => sum + item.stockValue, 0);
 
@@ -528,7 +532,7 @@
                 doc.setFont('times', 'normal');
                 doc.setFontSize(10);
                 doc.setTextColor(0);
-                doc.text(`Print DateTime: ${printDateTime}`, margin, pageHeight - 15);
+                doc.text(`Print Datetime: ${printDateTime}`, margin, pageHeight - 15);
                 const pageCount = doc.internal.getNumberOfPages();
                 const currentPage = doc.internal.getCurrentPageInfo().pageNumber;
                 doc.text(`Page ${currentPage} of ${pageCount}`, pageWidth - margin, pageHeight - 15, { align: 'right' });

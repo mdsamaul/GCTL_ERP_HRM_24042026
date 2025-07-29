@@ -3,9 +3,9 @@
     $.ProductIssueEntryJs = function (options) {
         var commonName = $.extend({
             baseUrl: "/",
-            PurchaseIssueNo: "#purchaseIssueNo",           
+            PurchaseIssueNo: "#purchaseIssueNo",
             AutoId: "#Setup_TC",
-           
+
             RowDetailsCheckbox: ".row-details-checkbox",
             SelectDetailsAll: "#selectDetailsAll",
             EditPopulateBtn: ".issue-details-btn-edit",
@@ -15,30 +15,30 @@
             CreateDate: ".createDate",
             ClearBrn: "#js-product-issue-clear",
             //master
-            PurchaseIssueDepartment:"#purchaseIssueDepartment",
-            PurchaseIssueEmployeeBtn:".purchaseIssueEmployeeBtn",
-            ProductIssueBy:"#productIssueBy",
-            Remarks:"#Remarks",
+            PurchaseIssueDepartment: "#purchaseIssueDepartment",
+            PurchaseIssueEmployeeBtn: ".purchaseIssueEmployeeBtn",
+            ProductIssueBy: "#productIssueBy",
+            Remarks: "#Remarks",
 
 
             //details
-            ProductSelectId:".productSelectId",
+            ProductSelectId: ".productSelectId",
             BrandIdFromDropdown: ".brandIdFromDropdown ",
             ModelPopulateFromBrandId: ".modelPopulateFromBrandId ",
             SizeSelect: ".sizeSelect",
-            PurchaseIssueSelectUnit:".purchaseIssueSelectUnit",
+            PurchaseIssueSelectUnit: ".purchaseIssueSelectUnit",
             PurchaseIssueStockQty: ".purchaseIssueStockQty",
             PurchaseIssueQtyOfIssue: ".purchaseIssueQtyOfIssue",
             PurchaseIssueFloor: ".purchaseIssueFloor",
-            DetailsDeleteBtn:".delete-issue-details-row-btn",
-            DetailsEdit:".details-temp-btn-edit",
-            DetailsTcId:"#detailsTcId",
+            DetailsDeleteBtn: ".delete-issue-details-row-btn",
+            DetailsEdit: ".details-temp-btn-edit",
+            DetailsTcId: "#detailsTcId",
             //create detais 
-            PurchaseIssueAddmoreDetailsBtn:"#purchaseIssueAddmoreDetailsBtn",
+            PurchaseIssueAddmoreDetailsBtn: "#purchaseIssueAddmoreDetailsBtn",
             ProductItemCloseBtn: "#productItemCloseBtn",
             CloseProductBrandModel: ".closeProductBrandModel",
         }, options);
-     
+
         var loadProductIssueTableDataUrl = commonName.baseUrl + "/LoadData";
         var loadTempProductIssueTableDataUrl = commonName.baseUrl + "/LoadTempData";
         var AutoProdutIssueIdUrl = commonName.baseUrl + "/AutoProdutIssueId";
@@ -54,7 +54,7 @@
         var detailsEditByIdUrl = commonName.baseUrl + "/detailsEditById";
 
         var CreateEditProductIssueUrl = commonName.baseUrl + "/CreateEditProductIssue";
-        var EditPopulateIssueIdUrl = commonName.baseUrl +"/EditPopulateIssueid"
+        var EditPopulateIssueIdUrl = commonName.baseUrl + "/EditPopulateIssueid"
         function stHeader() {
             window.addEventListener('scroll', function () {
                 const header = document.getElementById('stickyHeader');
@@ -107,17 +107,17 @@
 
 
         $('.searchable-select').select2({
-                width: '100%',
-                language: {
-                    noResults: function () {
+            width: '100%',
+            language: {
+                noResults: function () {
 
-                    }
-                },
-                escapeMarkup: function (markup) {
-                    return markup;
                 }
-            });
-      
+            },
+            escapeMarkup: function (markup) {
+                return markup;
+            }
+        });
+
 
 
         // Time picker
@@ -156,13 +156,13 @@
                 }
             });
         })
-       
+
         AutoProdutIssueId = function () {
             $.ajax({
                 url: AutoProdutIssueIdUrl,
                 type: "GET",
                 success: function (res) {
-                    $(commonName.PurchaseIssueNo).val(res.data);                       
+                    $(commonName.PurchaseIssueNo).val(res.data);
                 },
                 error: function (e) {
                     showToast('error', 'Error fetching Auto ID');
@@ -170,8 +170,90 @@
             });
         }
 
+        $(document).on('input', commonName.PurchaseIssueStockQty, function () {
+            var $input = $(this);
+            var valueQty = $input.val();
+            var productId = $(commonName.ProductSelectId).val();
+           
+            $.ajax({
+                url: SelectBrandByProductIdUrl,
+                type: "POST",
+                contentType: 'application/json',
+                data: JSON.stringify(productId),
+                success: function (res) {
+                    if (res.results && res.results.length > 0) {
+                        res.results.forEach(b => {
+                            if (b.totalReqQty < valueQty) {
+                                $(commonName.PurchaseIssueAddmoreDetailsBtn).prop('disabled', true);
+                                $(commonName.PurchaseIssueQtyOfIssue).prop('disabled', true);
+                                showToast("warning", `Available quantity (${b.totalReqQty}) is less than entered quantity (${valueQty})`);
+                                $input.addClass('product-issue-input');
 
+                                if ($input.hasClass('select2-hidden-accessible')) {
+                                    $input.next('.select2-container')
+                                        .find('.select2-selection')
+                                        .addClass('product-issue-input');
+                                }
+                            } else {
+                                $input.removeClass('product-issue-input');
+                                $(commonName.PurchaseIssueAddmoreDetailsBtn).prop('disabled', false);                               
+                                $(commonName.PurchaseIssueQtyOfIssue).prop('disabled', false);                         
+                                if ($input.hasClass('select2-hidden-accessible')) {
+                                    $input.next('.select2-container')
+                                        .find('.select2-selection')
+                                        .removeClass('product-issue-input');
+                                }
+                            }
+                        });
+                    }
+                },
+                error: function (e) {
+                }
+            });
 
+        });
+        $(document).on('input', commonName.PurchaseIssueQtyOfIssue, function () {
+            var $input = $(this);
+            var valueQty = $input.val();
+            var productId = $(commonName.ProductSelectId).val();
+
+            $.ajax({
+                url: SelectBrandByProductIdUrl,
+                type: "POST",
+                contentType: 'application/json',
+                data: JSON.stringify(productId),
+                success: function (res) {
+                    if (res.results && res.results.length > 0) {
+                        res.results.forEach(b => {
+                            if (b.totalReqQty < valueQty) {
+                                $(commonName.PurchaseIssueAddmoreDetailsBtn).prop('disabled', true);
+                                showToast("warning", `Available quantity (${b.totalReqQty}) is less than Issue quantity (${valueQty})`);
+                                $input.addClass('product-issue-input');
+                                if ($input.hasClass('select2-hidden-accessible')) {
+                                    $input.next('.select2-container')
+                                        .find('.select2-selection')
+                                        .addClass('product-issue-input');
+                                }
+                            } else {
+                                $input.removeClass('product-issue-input');
+                                $(commonName.PurchaseIssueAddmoreDetailsBtn).prop('disabled', false);
+                                if ($input.hasClass('select2-hidden-accessible')) {
+                                    $input.next('.select2-container')
+                                        .find('.select2-selection')
+                                        .removeClass('product-issue-input');
+                                }
+                            }
+                        });
+                    }
+                },
+                error: function (e) {
+                }
+            });
+
+        });
+
+        let PurchaseIssueAddmore = true;
+        
         $(document).on('change', commonName.ProductSelectId, function () {
             let productId = $(this).val();
 
@@ -179,19 +261,50 @@
                 url: SelectBrandByProductIdUrl,
                 type: "POST",
                 contentType: 'application/json',
-                data: JSON.stringify(productId), // ← Send raw string
+                data: JSON.stringify(productId),
                 success: function (res) {
                     const $brandSelect = $(commonName.BrandIdFromDropdown);
+                    const $sizeSelect = $(commonName.SizeSelect);
+                    const $unitInput = $(commonName.PurchaseIssueSelectUnit);
+                    const $stockQty = $(commonName.PurchaseIssueStockQty);
+                    const $addMoreBtn = $(commonName.PurchaseIssueAddmoreDetailsBtn);
+                    const $modelSelect = $(commonName.ModelPopulateFromBrandId);
+
+                    // Clear previous data
                     $brandSelect.empty().append('<option value="">Select Brand</option>');
-                    res.brandList.forEach(b => {
+                    $sizeSelect.empty().append('<option value="">Select Size</option>');
+                    $modelSelect.empty().append('<option value="">Select Model</option>');
+                    $stockQty.prop('placeholder', '');
+                   
+                    if (!res.results || res.results.length === 0) {
+
+                        if (PurchaseIssueAddmore) {
+                            $(commonName.PurchaseIssueStockQty).prop('disabled', true);
+                            $(commonName.PurchaseIssueQtyOfIssue).prop('disabled', true);
+                            showToast("info", "No purchase available for this product!");
+                        }                       
+                        $addMoreBtn.prop('disabled', true);
+                        return;
+                    }
+                    PurchaseIssueAddmore = true;
+                    // Enable AddMore button
+                    $addMoreBtn.prop('disabled', false);
+                    $(commonName.PurchaseIssueStockQty).prop('disabled', false);
+                    $(commonName.PurchaseIssueQtyOfIssue).prop('disabled', false);
+                    // Populate dropdowns and placeholder
+                    res.results.forEach(b => {
                         $brandSelect.append(`<option value="${b.brandId}">${b.brandName}</option>`);
+                        $sizeSelect.append(`<option value="${b.sizeId}">${b.sizeName}</option>`);
+                        $unitInput.val(b.unitTypId).trigger('change');
+                        $stockQty.prop('placeholder', b.totalReqQty);
                     });
-                    $(commonName.ModelPopulateFromBrandId).empty().append(`<option value="">Select Model</option>`);
                 },
                 error: function (e) {
+                    showToast("error", "Error occurred while fetching product details.");
                 }
             });
         });
+
 
         $(document).on('change', commonName.BrandIdFromDropdown, function () {
             let brandId = $(this).val();
@@ -201,7 +314,7 @@
                 type: "POST",
                 contentType: 'application/json',
                 data: JSON.stringify(brandId),
-                success: function (res) {                    
+                success: function (res) {
                     const $modelSelect = $(commonName.ModelPopulateFromBrandId);
                     $modelSelect.empty().append('<option value="">Select Model</option>');
                     res.modelList.forEach(b => {
@@ -222,13 +335,14 @@
                 ModelID: $(commonName.ModelPopulateFromBrandId).val(),
                 SizeID: $(commonName.SizeSelect).val(),
                 UnitTypID: $(commonName.PurchaseIssueSelectUnit).val(),
-                StockQty: $(commonName.PurchaseIssueStockQty).val()||0,
-                IssueQty: $(commonName.PurchaseIssueQtyOfIssue).val()||0,
+                StockQty: $(commonName.PurchaseIssueStockQty).val() || 0,
+                IssueQty: $(commonName.PurchaseIssueQtyOfIssue).val() || 0,
                 FloorCode: $(commonName.PurchaseIssueFloor).val()
             };
             return fromData;
         }
         function resetDetailIssueForm() {
+            PurchaseIssueAddmore = false;
             $(commonName.DetailsTcId).val(0);
             $(commonName.ProductSelectId).val('').trigger('change');
             $(commonName.BrandIdFromDropdown).val('').trigger('change');
@@ -239,14 +353,27 @@
             $(commonName.PurchaseIssueQtyOfIssue).val('');
             $(commonName.PurchaseIssueFloor).val('').trigger('change');
             $(commonName.PurchaseIssueAddmoreDetailsBtn)
-                .removeClass('btn-outline-warning') 
+                .removeClass('btn-outline-warning')
                 .addClass('btn-outline-dark')
-                .html('<i class="fas fa-plus"></i> <span class="ps-2">Add New</span>');
+                .html('<i class="fas fa-plus"></i> <span class="ps-2">Add New</span>');           
         }
 
         //details brn
         $(document).on('click', commonName.PurchaseIssueAddmoreDetailsBtn, function () {
             var fromData = detailtIssueData();
+            if (fromData.ProductCode == "" || fromData.ProductCode == null) {
+                $(commonName.ProductSelectId).select2('open');
+                return;
+            }
+
+            if (fromData.StockQty == null || fromData.StockQty == 0) {
+                $(commonName.PurchaseIssueStockQty).focus().addClass('product-issue-input');
+                return
+            }
+            if (fromData.IssueQty == null || fromData.IssueQty == 0) {
+                $(commonName.PurchaseIssueQtyOfIssue).focus().addClass('product-issue-input');
+                return
+            }
             $.ajax({
                 url: PurchaseIssueAddmoreDetailsCreateEditUrl,
                 type: "POST",
@@ -254,12 +381,17 @@
                 data: JSON.stringify(fromData),
                 success: function (res) {
                     if (res.isSuccess) {
+                        PurchaseIssueAddmore = false;
                         resetDetailIssueForm();
                         loadTempIssueData();
+                        //PurchaseIssueAddmore = true;
+                        $(commonName.PurchaseIssueAddmoreDetailsBtn).prop('disabled', true);
+                        $(commonName.PurchaseIssueStockQty).prop('disabled', true);
+                        $(commonName.PurchaseIssueQtyOfIssue).prop('disabled', true);
                     }
                     //showToast('success', res.message);
                 }, error: function (e) {
-                    
+
                 }
             });
         })
@@ -289,11 +421,11 @@
                     },
                     "orderable": false
                 },
-                {"data": "productName"},
-                {"data": "description"},
+                { "data": "productName" },
+                { "data": "description" },
                 { "data": "brandName" },
                 { "data": "modelName" },
-                { "data": "sizeName" },               
+                { "data": "sizeName" },
                 { "data": "unitTypName" },
                 { "data": "stockQty" },
                 { "data": "issueQty" },
@@ -314,7 +446,7 @@
                 },
                 {
                     "targets": -1,
-                    "className":"d-flex justify-content-center align-items-center"
+                    "className": "d-flex justify-content-center align-items-center"
                 }
             ], "createdRow": function (row, data, dataIndex) {
                 $(row).find('td, th').css({
@@ -328,15 +460,15 @@
             "ordering": true,
             "responsive": true,
             "autoWidth": true,
-            "info": false, 
+            "info": false,
             "language": {
                 "search": "Search....",
                 "lengthMenu": "Show _MENU_ entries per page",
                 "zeroRecords": "No data found",
-                              
+
             }
         });
-       
+
 
         $(document).on('click', commonName.DetailsEdit, function () {
             $(commonName.PurchaseIssueAddmoreDetailsBtn).html('<i class="fas fa-sync-alt"></i> <spam class="ps-2">Update</span>');
@@ -361,7 +493,7 @@
                             success: function (brandRes) {
                                 const $brandSelect = $(commonName.BrandIdFromDropdown);
                                 $brandSelect.empty().append('<option value="">Select Brand</option>');
-                                brandRes.brandList.forEach(b => {
+                                brandRes.results.forEach(b => {
                                     $brandSelect.append(`<option value="${b.brandId}">${b.brandName}</option>`);
                                 });
                                 $brandSelect.val(res.data.brandId);
@@ -391,7 +523,7 @@
                         $(commonName.PurchaseIssueFloor).val(res.data.floorCode).trigger('change');
                     }
                 }
-                , error: function (e) {}
+                , error: function (e) { }
             });
         });
 
@@ -406,10 +538,10 @@
                 data: JSON.stringify(id),
                 success: function (res) {
                     loadTempIssueData();
-                }, error: function (e) {}
+                }, error: function (e) { }
             });
         })
-        
+
 
 
 
@@ -417,10 +549,10 @@
             const dateHiddenInput = document.getElementById("purchaseIssueDatePicker");
             let dateInput = document.getElementById("purchaseIssueDateInput");
             if (!dateInput) {
-                dateInput = document.getElementById("purchaseIssueDatePicker"); 
+                dateInput = document.getElementById("purchaseIssueDatePicker");
             }
             if (!dateInput) {
-                dateInput = document.querySelector('input[type="text"][data-input]'); 
+                dateInput = document.querySelector('input[type="text"][data-input]');
             }
             if (!dateInput) {
                 dateInput = document.querySelector('.flatpickr-input');
@@ -448,10 +580,10 @@
                         dateInput.focus();
                     }
                 } else if (dateHiddenInput && dateHiddenInput._flatpickr) {
-                  
+
                     dateHiddenInput._flatpickr.open();
                 } else {
-                    
+
                     const allFlatpickrInputs = document.querySelectorAll('.flatpickr-input');
 
                     if (allFlatpickrInputs.length > 0) {
@@ -464,10 +596,10 @@
                 return;
             }
 
-            if (!issueTime) {              
+            if (!issueTime) {
                 if (timeInput && timeInput._flatpickr) {
                     timeInput._flatpickr.open();
-                } 
+                }
                 return;
             }
 
@@ -476,7 +608,7 @@
             let isoDateTime = "";
 
             if (!isNaN(parsedDate.getTime())) {
-                parsedDate.setHours(parsedDate.getHours() + 6); 
+                parsedDate.setHours(parsedDate.getHours() + 6);
                 isoDateTime = parsedDate.toISOString().slice(0, 19);
             } else {
                 return;
@@ -495,6 +627,7 @@
             return fromData;
         };
         function ResetMasterIssueForm() {
+            PurchaseIssueAddmore = false;
             datePiker(".datePicker");
             timePicker();
             $(commonName.AutoId).val(0);
@@ -515,17 +648,18 @@
             AutoProdutIssueId();
             $(commonName.CreateDate).text("");
             $(commonName.UpdateDate).text("");
+            
         }
-        $(document).on('click', commonName.ClearBrn , function () {
+        $(document).on('click', commonName.ClearBrn, function () {
             ResetMasterIssueForm();
             setTimeout(function () {
-            loadTempIssueData();
-            },50);
+                loadTempIssueData();
+            }, 50);
         })
 
         $(document).on('input', commonName.PurchaseIssueNo, function () {
             var issueNo = $(this).val();
-            if (!issueNo) {  
+            if (!issueNo) {
                 $(commonName.ProductIssueSaveEditBtn).prop('disabled', true);
                 return;
             } else {
@@ -534,7 +668,7 @@
         })
         $(document).on('input', commonName.ProductIssueBy, function () {
             var issueBy = $(this).val();
-            if (!issueBy) {  
+            if (!issueBy) {
                 $(commonName.ProductIssueSaveEditBtn).prop('disabled', true);
                 $(commonName.PurchaseIssueNo).addClass("product-issue-input");
                 return;
@@ -546,7 +680,7 @@
 
         $(document).on('click', commonName.ProductIssueSaveEditBtn, function () {
             var fromData = MasterIssueData();
-            if (!fromData) return; 
+            if (!fromData) return;
 
             if (fromData.IssueNo == "" || fromData.IssueNo == 0 || fromData.IssueNo == null) {
                 $(commonName.PurchaseIssueNo).addClass("product-issue-input");
@@ -567,13 +701,15 @@
                 data: JSON.stringify(fromData),
                 success: function (res) {
                     if (res.isSuccess) {
+                        PurchaseIssueAddmore = false;
                         showToast('success', res.message);
-                        loadMasterIssueData();                       
+                        loadMasterIssueData();
                         AutoProdutIssueId();
                         resetDetailIssueForm();
                         loadTempIssueData();
                         ResetMasterIssueForm();
                     } else {
+                        $(commonName.ProductSelectId).select2('open');
                         showToast('error', res.message);
                     }
                 },
@@ -582,7 +718,7 @@
         //select all
         let selectedIds = [];
         //added pid checkbox //todo
-        $(document).on('click', commonName.RowDetailsCheckbox, function () {           
+        $(document).on('click', commonName.RowDetailsCheckbox, function () {
             const id = $(this).val();
             if ($(this).is(':checked')) {
                 if (!selectedIds.includes(id)) {
@@ -656,7 +792,7 @@
                     "orderable": false
                 },
                 {
-                    "data": "issueNo",                    
+                    "data": "issueNo",
                     "render": function (data, type, rows) {
                         return `<button class="btn btn-sm btn-link issue-details-btn-edit" data-id=${rows.tc}>${data}</button>`;
                     }
@@ -666,13 +802,13 @@
                 },
                 { "data": "departmentCode" },
                 { "data": "employeeID" },
-                { "data": "issuedBy" },             
+                { "data": "issuedBy" },
                 { "data": "remarks" },
                 { "data": "luser" },
                 { "data": "companyCode" }
             ],
             "columnDefs": [
-              
+
                 {
                     "targets": 0,
                     "width": "65px",
@@ -692,7 +828,7 @@
                     "targets": 7,
                     "width": "auto",
                     "className": "text-center"
-                },{
+                }, {
                     "targets": 8,
                     "width": "auto",
                     "className": "text-center"
@@ -727,7 +863,7 @@
                 data: JSON.stringify(issueId),
                 success: function (res) {
                     selectedIds = [];
-                    selectedIds.push(res.data.tc + '');                
+                    selectedIds.push(res.data.tc + '');
                     $(commonName.AutoId).val(res.data.tc);
                     $(commonName.PurchaseIssueNo).val(res.data.issueNo);
                     timePicker(res.data.issueDate.split('T')[1]);
@@ -739,7 +875,7 @@
                     $(commonName.CreateDate).text(res.data.showCreateDate);
                     $(commonName.UpdateDate).text(res.data.showModifyDate);
                     loadTempIssueData();
-                }, error: function (e) {                    
+                }, error: function (e) {
                 }
             });
         })
@@ -750,9 +886,9 @@
             stHeader();
             datePiker(".datePicker");
             timePicker();
-            AutoProdutIssueId();          
+            AutoProdutIssueId();
             tableContainer;
-            tableTempContainer;          
+            tableTempContainer;
         };
         init();
     };
