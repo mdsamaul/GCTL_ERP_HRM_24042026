@@ -524,7 +524,7 @@
                 9: { cellWidth:15, halign: 'center' },
                 10: { cellWidth:15, halign: 'center' },
                 11: { cellWidth:15, halign: 'center' },
-                12: { cellWidth: 20, halign: 'right' },
+                12: { cellWidth: 20, halign: 'center' },
                 13: { cellWidth: 20, halign: 'right' }
             },
             margin: { left: margin, right: margin },

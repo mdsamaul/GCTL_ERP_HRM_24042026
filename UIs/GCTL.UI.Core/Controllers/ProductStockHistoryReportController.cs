@@ -118,21 +118,27 @@ namespace GCTL.UI.Core.Controllers
                     ws.Cells[row, 6].Value = item.SizeName;
                     ws.Cells[row, 7].Value = item.UnitName;
                     ws.Cells[row, 8].Value = item.UnitPrice;
-                    ws.Cells[row, 9].Value = item.OpeningQty;
-                    ws.Cells[row, 10].Value = item.ReceivedQty;
-                    ws.Cells[row, 11].Value = item.StockQty;
-                    ws.Cells[row, 12].Value = item.IssuedQty;
-                    ws.Cells[row, 13].Value = item.BalanceQty;
+                    ws.Cells[row, 9].Value = decimal.TryParse(item.OpeningQty, out var openingQty) ? (openingQty % 1 == 0 ? (int)openingQty : openingQty) : (object)null;
+                    ws.Cells[row, 10].Value = decimal.TryParse(item.ReceivedQty, out var receivedQty) ? (receivedQty % 1 == 0 ? (int)receivedQty : receivedQty) : (object)null;
+                    ws.Cells[row, 11].Value = decimal.TryParse(item.StockQty, out var stockQty) ? (stockQty % 1 == 0 ? (int)stockQty : stockQty) : (object)null;
+                    ws.Cells[row, 12].Value = decimal.TryParse(item.IssuedQty, out var issuedQty) ? (issuedQty % 1 == 0 ? (int)issuedQty : issuedQty) : (object)null;
+                    ws.Cells[row, 13].Value = decimal.TryParse(item.BalanceQty, out var balanceQty) ? (balanceQty % 1 == 0 ? (int)balanceQty : balanceQty) : (object)null;
+
+
                     ws.Cells[row, 14].Value = item.StockValue;
 
                     totalStockValue += (decimal)item.StockValue;
 
-                    for (int col = 1; col <= 14; col++)
+                    for (int col = 1; col < 14; col++)
                     {
                         ws.Cells[row, col].Style.Border.BorderAround(ExcelBorderStyle.Thin);
                         ws.Cells[row, col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                         ws.Cells[row, col].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                     }
+
+                    ws.Cells[row, 14].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                    ws.Cells[row, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    ws.Cells[row, 14].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                 }
 
                 // Total Row

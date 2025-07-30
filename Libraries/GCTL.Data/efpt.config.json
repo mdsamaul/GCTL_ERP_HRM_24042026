@@ -947,6 +947,14 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[INV_ProductIssueReport_Filter]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[INV_StockReport_Filter]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[PaidReceipts]",
          "ObjectType": 1
       },

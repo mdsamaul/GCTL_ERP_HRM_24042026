@@ -30,6 +30,7 @@ namespace GCTL.UI.Core.Controllers
         private readonly IRepository<HrmEmployeeOfficialInfo> officialInfo;
         private readonly IRepository<HrmDefFloor> floorRepo;
         private readonly IRepository<RmgPurchaseOrderReceiveDetails> productDetailsRepo;
+        private readonly IRepository<InvProductIssueInformationDetails> productIssueInformationDetailsRepo;
 
         public ProductIssueEntryController(
            IProductIssueEntryService productIssueEntryService,
@@ -44,7 +45,8 @@ namespace GCTL.UI.Core.Controllers
             IRepository<HrmEmployee> empRepo,
             IRepository<HrmEmployeeOfficialInfo> OfficialInfo,
             IRepository<HrmDefFloor> floorRepo,
-            IRepository<RmgPurchaseOrderReceiveDetails> productDetailsRepo
+            IRepository<RmgPurchaseOrderReceiveDetails> productDetailsRepo,
+            IRepository<InvProductIssueInformationDetails> productIssueInformationDetailsRepo
             )
         {
             this.productIssueEntryService = productIssueEntryService;
@@ -60,6 +62,7 @@ namespace GCTL.UI.Core.Controllers
             this.officialInfo = OfficialInfo;
             this.floorRepo = floorRepo;
             this.productDetailsRepo = productDetailsRepo;
+            this.productIssueInformationDetailsRepo = productIssueInformationDetailsRepo;
         }
         public IActionResult Index()
         {
@@ -203,36 +206,91 @@ namespace GCTL.UI.Core.Controllers
             var result = await productIssueEntryService.AlreadyExistAsync(PrintingStationeryPurchaseValue);
             return Json(new { isSuccess = result.isSuccess, message = result.message, data = result });
         }
+      
         [HttpPost]
         public async Task<IActionResult> SelectBrandByProductId([FromBody] string productId)
         {
-            var Results = (from p in productRepo.All().Where(x => x.ProductCode == productId)
-                             join b in brandRepo.All() on p.BrandId equals b.BrandId
-                             join ut in unitRepo.All() on p.UnitId equals ut.UnitTypId
-                             join pd in productDetailsRepo.All() on p.ProductCode equals pd.ProductCode
-                             join s in sizeRepo.All() on pd.SizeId equals s.SizeId
-                             group pd by new
-                             {
-                                 b.BrandId,
-                                 b.BrandName,
-                                 ut.UnitTypId,
-                                 ut.UnitTypeName,
-                                 s.SizeId,
-                                 s.SizeName
-                             }into g
-                             select new
-                             {
-                                 g.Key.BrandId,
-                                 g.Key.BrandName,
-                                 g.Key.UnitTypId,
-                                 g.Key.UnitTypeName,
-                                 g.Key.SizeId,
-                                 g.Key.SizeName,
-                                 TotalReqQty = g.Sum(x=> x.ReqQty)
-                             }).Distinct().ToList();
+            try
+            {
+                if (string.IsNullOrWhiteSpace(productId))
+                {
+                    return Json(new
+                    {
+                        isSuccess = false,
+                        productStatus = false,
+                        message = "Invalid product ID",
+                        TotalQty = 0,
+                        Results = new List<object>()
+                    });
+                }
 
-            return Json(new { Results });
+                var isPurchaseExists = productDetailsRepo.All().Any(x => x.ProductCode == productId);
+                if (!isPurchaseExists)
+                {
+                    return Json(new
+                    {
+                        isSuccess = false,
+                        productStatus = true,
+                        message = "No purchase found for this product.",
+                        TotalQty = 0,
+                        Results = new List<object>()
+                    });
+                }
+
+                var totalReqQty = productDetailsRepo.All()
+                                    .Where(p => p.ProductCode == productId)
+                                    .Sum(x => (decimal?)x.ReqQty) ?? 0;
+
+                var totalIssueQty = productIssueInformationDetailsRepo.All()
+                                       .Where(i => i.ProductCode == productId)
+                                       .Sum(x => (decimal?)x.IssueQty) ?? 0;
+
+                var totalQty = totalReqQty - totalIssueQty;
+
+                var results = (from p in productRepo.All().Where(x => x.ProductCode == productId)
+                               join b in brandRepo.All() on p.BrandId equals b.BrandId
+                               join ut in unitRepo.All() on p.UnitId equals ut.UnitTypId
+                               join pd in productDetailsRepo.All() on p.ProductCode equals pd.ProductCode
+                               join s in sizeRepo.All() on pd.SizeId equals s.SizeId
+                               group pd by new
+                               {
+                                   b.BrandId,
+                                   b.BrandName,
+                                   ut.UnitTypId,
+                                   ut.UnitTypeName,
+                                   s.SizeId,
+                                   s.SizeName
+                               } into g
+                               select new
+                               {
+                                   g.Key.BrandId,
+                                   g.Key.BrandName,
+                                   g.Key.UnitTypId,
+                                   g.Key.UnitTypeName,
+                                   g.Key.SizeId,
+                                   g.Key.SizeName,
+                                   TotalReqQty = g.Sum(x => x.ReqQty)
+                               }).Distinct().ToList();
+
+                return Json(new
+                {
+                    isSuccess = true,
+                    TotalQty = totalQty,
+                    Results = results
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    isSuccess = false,
+                    Message = "Error occurred while processing.",
+                    Exception = ex.Message
+                });
+            }
         }
+
+
         [HttpPost]
         public async Task<IActionResult> SelectModalByBrandId([FromBody] string brandId)
         {

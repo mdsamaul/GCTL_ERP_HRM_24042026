@@ -8638,7 +8638,7 @@ namespace GCTL.Data.Models
 
             modelBuilder.Entity<HrmSize>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.AutoId);
 
                 entity.ToTable("HRM_Size");
 

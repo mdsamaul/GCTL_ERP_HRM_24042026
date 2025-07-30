@@ -515,7 +515,7 @@
                 doc.setFont('times', 'normal');
                 doc.setFontSize(10);
                 doc.setTextColor(0);
-                doc.text(`Print DateTime: ${printDateTime}`, margin, pageHeight - 15);
+                doc.text(`Print Datetime: ${printDateTime}`, margin, pageHeight - 15);
                 const pageCount = doc.internal.getNumberOfPages();
                 const currentPage = doc.internal.getCurrentPageInfo().pageNumber;
                 doc.text(`Page ${currentPage} of ${pageCount}`, pageWidth - margin, pageHeight - 15, { align: 'right' });

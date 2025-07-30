@@ -170,48 +170,6 @@
             });
         }
 
-        $(document).on('input', commonName.PurchaseIssueStockQty, function () {
-            var $input = $(this);
-            var valueQty = $input.val();
-            var productId = $(commonName.ProductSelectId).val();
-           
-            $.ajax({
-                url: SelectBrandByProductIdUrl,
-                type: "POST",
-                contentType: 'application/json',
-                data: JSON.stringify(productId),
-                success: function (res) {
-                    if (res.results && res.results.length > 0) {
-                        res.results.forEach(b => {
-                            if (b.totalReqQty < valueQty) {
-                                $(commonName.PurchaseIssueAddmoreDetailsBtn).prop('disabled', true);
-                                $(commonName.PurchaseIssueQtyOfIssue).prop('disabled', true);
-                                showToast("warning", `Available quantity (${b.totalReqQty}) is less than entered quantity (${valueQty})`);
-                                $input.addClass('product-issue-input');
-
-                                if ($input.hasClass('select2-hidden-accessible')) {
-                                    $input.next('.select2-container')
-                                        .find('.select2-selection')
-                                        .addClass('product-issue-input');
-                                }
-                            } else {
-                                $input.removeClass('product-issue-input');
-                                $(commonName.PurchaseIssueAddmoreDetailsBtn).prop('disabled', false);                               
-                                $(commonName.PurchaseIssueQtyOfIssue).prop('disabled', false);                         
-                                if ($input.hasClass('select2-hidden-accessible')) {
-                                    $input.next('.select2-container')
-                                        .find('.select2-selection')
-                                        .removeClass('product-issue-input');
-                                }
-                            }
-                        });
-                    }
-                },
-                error: function (e) {
-                }
-            });
-
-        });
         $(document).on('input', commonName.PurchaseIssueQtyOfIssue, function () {
             var $input = $(this);
             var valueQty = $input.val();
@@ -222,29 +180,25 @@
                 type: "POST",
                 contentType: 'application/json',
                 data: JSON.stringify(productId),
-                success: function (res) {
-                    if (res.results && res.results.length > 0) {
-                        res.results.forEach(b => {
-                            if (b.totalReqQty < valueQty) {
-                                $(commonName.PurchaseIssueAddmoreDetailsBtn).prop('disabled', true);
-                                showToast("warning", `Available quantity (${b.totalReqQty}) is less than Issue quantity (${valueQty})`);
-                                $input.addClass('product-issue-input');
-                                if ($input.hasClass('select2-hidden-accessible')) {
-                                    $input.next('.select2-container')
-                                        .find('.select2-selection')
-                                        .addClass('product-issue-input');
-                                }
-                            } else {
-                                $input.removeClass('product-issue-input');
-                                $(commonName.PurchaseIssueAddmoreDetailsBtn).prop('disabled', false);
-                                if ($input.hasClass('select2-hidden-accessible')) {
-                                    $input.next('.select2-container')
-                                        .find('.select2-selection')
-                                        .removeClass('product-issue-input');
-                                }
-                            }
-                        });
-                    }
+                success: function (res) {                   
+                    if (res.isSuccess && res.totalQty < valueQty) {
+                        $(commonName.PurchaseIssueAddmoreDetailsBtn).prop('disabled', true);
+                        showToast("warning", `Available quantity (${res.totalQty}) is less than Issue quantity (${valueQty})`);
+                        $input.addClass('product-issue-input');
+                        if ($input.hasClass('select2-hidden-accessible')) {
+                            $input.next('.select2-container')
+                                .find('.select2-selection')
+                                .addClass('product-issue-input');
+                        }
+                    } else {
+                        $input.removeClass('product-issue-input');
+                        $(commonName.PurchaseIssueAddmoreDetailsBtn).prop('disabled', false);
+                        if ($input.hasClass('select2-hidden-accessible')) {
+                            $input.next('.select2-container')
+                                .find('.select2-selection')
+                                .removeClass('product-issue-input');
+                        }
+                    }                    
                 },
                 error: function (e) {
                 }
@@ -252,58 +206,55 @@
 
         });
 
-        let PurchaseIssueAddmore = true;
-        
+       
         $(document).on('change', commonName.ProductSelectId, function () {
             let productId = $(this).val();
-
             $.ajax({
                 url: SelectBrandByProductIdUrl,
                 type: "POST",
                 contentType: 'application/json',
                 data: JSON.stringify(productId),
                 success: function (res) {
-                    const $brandSelect = $(commonName.BrandIdFromDropdown);
-                    const $sizeSelect = $(commonName.SizeSelect);
-                    const $unitInput = $(commonName.PurchaseIssueSelectUnit);
-                    const $stockQty = $(commonName.PurchaseIssueStockQty);
-                    const $addMoreBtn = $(commonName.PurchaseIssueAddmoreDetailsBtn);
-                    const $modelSelect = $(commonName.ModelPopulateFromBrandId);
+                    if (res.isSuccess) {
+                        const $brandSelect = $(commonName.BrandIdFromDropdown);
+                        const $sizeSelect = $(commonName.SizeSelect);
+                        const $unitInput = $(commonName.PurchaseIssueSelectUnit);
+                        const $stockQty = $(commonName.PurchaseIssueStockQty);
+                        const $addMoreBtn = $(commonName.PurchaseIssueAddmoreDetailsBtn);
+                        const $modelSelect = $(commonName.ModelPopulateFromBrandId);
+                        const $qtyInput = $(commonName.PurchaseIssueQtyOfIssue);
 
-                    // Clear previous data
-                    $brandSelect.empty().append('<option value="">Select Brand</option>');
-                    $sizeSelect.empty().append('<option value="">Select Size</option>');
-                    $modelSelect.empty().append('<option value="">Select Model</option>');
-                    $stockQty.prop('placeholder', '');
-                   
-                    if (!res.results || res.results.length === 0) {
+                        // Clear previous values
+                        $brandSelect.empty().append('<option value="">Select Brand</option>');
+                        $sizeSelect.empty().append('<option value="">Select Size</option>');
+                        $modelSelect.empty().append('<option value="">Select Model</option>');
+                        $unitInput.val('');
+                      
+                        $qtyInput.prop('disabled', false);
+                        $addMoreBtn.prop('disabled', false);
 
-                        if (PurchaseIssueAddmore) {
-                            $(commonName.PurchaseIssueStockQty).prop('disabled', true);
-                            $(commonName.PurchaseIssueQtyOfIssue).prop('disabled', true);
-                            showToast("info", "No purchase available for this product!");
-                        }                       
-                        $addMoreBtn.prop('disabled', true);
-                        return;
+                        res.results.forEach(b => {
+                            $brandSelect.append(`<option value="${b.brandId}">${b.brandName}</option>`);
+                            $sizeSelect.append(`<option value="${b.sizeId}">${b.sizeName}</option>`);
+                            $unitInput.val(b.unitTypId).trigger('change');
+                        });
+
+                        $stockQty.val(res.totalQty);
+                    } else {
+                        if (res.productStatus) {
+                            showToast("info", "No purchase available for this product!");  
+                        }                                            
+                        $(commonName.PurchaseIssueQtyOfIssue).prop('disabled', true);
+                        $(commonName.PurchaseIssueAddmoreDetailsBtn).prop('disabled', true);
+                            return;                      
                     }
-                    PurchaseIssueAddmore = true;
-                    // Enable AddMore button
-                    $addMoreBtn.prop('disabled', false);
-                    $(commonName.PurchaseIssueStockQty).prop('disabled', false);
-                    $(commonName.PurchaseIssueQtyOfIssue).prop('disabled', false);
-                    // Populate dropdowns and placeholder
-                    res.results.forEach(b => {
-                        $brandSelect.append(`<option value="${b.brandId}">${b.brandName}</option>`);
-                        $sizeSelect.append(`<option value="${b.sizeId}">${b.sizeName}</option>`);
-                        $unitInput.val(b.unitTypId).trigger('change');
-                        $stockQty.prop('placeholder', b.totalReqQty);
-                    });
                 },
-                error: function (e) {
+                error: function () {
                     showToast("error", "Error occurred while fetching product details.");
                 }
             });
         });
+
 
 
         $(document).on('change', commonName.BrandIdFromDropdown, function () {
@@ -342,7 +293,6 @@
             return fromData;
         }
         function resetDetailIssueForm() {
-            PurchaseIssueAddmore = false;
             $(commonName.DetailsTcId).val(0);
             $(commonName.ProductSelectId).val('').trigger('change');
             $(commonName.BrandIdFromDropdown).val('').trigger('change');
@@ -381,12 +331,10 @@
                 data: JSON.stringify(fromData),
                 success: function (res) {
                     if (res.isSuccess) {
-                        PurchaseIssueAddmore = false;
                         resetDetailIssueForm();
                         loadTempIssueData();
-                        //PurchaseIssueAddmore = true;
                         $(commonName.PurchaseIssueAddmoreDetailsBtn).prop('disabled', true);
-                        $(commonName.PurchaseIssueStockQty).prop('disabled', true);
+                        //$(commonName.PurchaseIssueStockQty).prop('disabled', true);
                         $(commonName.PurchaseIssueQtyOfIssue).prop('disabled', true);
                     }
                     //showToast('success', res.message);
@@ -627,7 +575,6 @@
             return fromData;
         };
         function ResetMasterIssueForm() {
-            PurchaseIssueAddmore = false;
             datePiker(".datePicker");
             timePicker();
             $(commonName.AutoId).val(0);
@@ -701,7 +648,6 @@
                 data: JSON.stringify(fromData),
                 success: function (res) {
                     if (res.isSuccess) {
-                        PurchaseIssueAddmore = false;
                         showToast('success', res.message);
                         loadMasterIssueData();
                         AutoProdutIssueId();
@@ -857,7 +803,7 @@
         $(document).on('click', commonName.EditPopulateBtn, function () {
             const issueId = $(this).data('id');
             $.ajax({
-                url: EditPopulateIssueIdUrl,//todo
+                url: EditPopulateIssueIdUrl,
                 type: "POST",
                 contentType: 'application/json',
                 data: JSON.stringify(issueId),
