@@ -182,8 +182,8 @@
                 data: JSON.stringify(productId),
                 success: function (res) {                   
                     if (res.isSuccess && res.totalQty < valueQty) {
-                        $(commonName.PurchaseIssueAddmoreDetailsBtn).prop('disabled', true);
-                        showToast("warning", `Available quantity (${res.totalQty}) is less than Issue quantity (${valueQty})`);
+                        $(commonName.PurchaseIssueAddmoreDetailsBtn).prop('disabled', true);                       
+                        showToast("warning", `You can Issue Max (${res.totalQty})`);
                         $input.addClass('product-issue-input');
                         if ($input.hasClass('select2-hidden-accessible')) {
                             $input.next('.select2-container')
