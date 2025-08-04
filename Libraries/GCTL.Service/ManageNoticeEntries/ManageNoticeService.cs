@@ -504,31 +504,29 @@ namespace GCTL.Service.ManageNoticeEntries
                 //var emailTasks = new List<Task>();
 
                 var request = new List<EmailDataDto>();
-
-                foreach (var emp in employee)
+                var empWithValidEmails = employee.Where(emp=> !string.IsNullOrEmpty(emp.Email)).ToList();
+                
+                foreach (var emp in empWithValidEmails)
                 {
-                    if (string.IsNullOrEmpty(emp.Email))
-                        continue;
-
                     var empName = string.Join(" ", new[] { emp.FirstName, emp.LastName }.Where(n => !string.IsNullOrWhiteSpace(n)));
 
-                    foreach(var notice in notices)
+                    foreach (var notice in notices)
                     {
                         var emailBody = CreateEmailBody(notice.e, empName);
-
                         string attachmentPath = null;
                         string attachmentName = null;
 
-                        if (!string.IsNullOrEmpty(notice.n.ImgType))
+                        if (notice.n != null && !string.IsNullOrEmpty(notice.n.ImgType))
                         {
                             attachmentPath = Path.Combine(hostEnvironment.ContentRootPath, "wwwroot", "NoticeDocument", notice.n.ImgType);
                             attachmentName = notice.n.ImgType;
+                        }
 
-                            if (!File.Exists(attachmentPath))
-                            {
-                                attachmentPath = null;
-                                attachmentName = null;
-                            }
+
+                        if (!File.Exists(attachmentPath))
+                        {
+                            attachmentPath = null;
+                            attachmentName = null;
                         }
 
                         request.Add(new EmailDataDto
@@ -541,11 +539,36 @@ namespace GCTL.Service.ManageNoticeEntries
                         });
                     }
                 }
-                Console.WriteLine(request);
+                if (!request.Any())
+                    return false;
 
+                const int batchSize = 85; // Adjust batch size as needed
+                int totalEmails = request.Count;
+                int processedEmails = 0;
+
+                for (int i = 0; i < totalEmails; i += batchSize)
+                {
+                    var batch = request.Skip(i).Take(batchSize).ToList();
+
+                    try
+                    {
+                        await emailService.SendBatchEmailsAsync(batch);
+
+                        //Delay for 5 second between batches
+                        //Task.Delay(5000).Wait();
+
+                        processedEmails += batch.Count;
+                        Console.WriteLine($"Sent {processedEmails}/{totalEmails} emails.");
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error sending batch emails: {ex.Message}");
+                    }
+                }
                 //await Task.WhenAll(emailTasks);
 
-                await emailService.SendBatchEmailsAsync(request);
+                //await emailService.SendBatchEmailsAsync(request);
                 return true;
             }
             catch (Exception ex)

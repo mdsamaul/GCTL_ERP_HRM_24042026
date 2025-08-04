@@ -250,7 +250,7 @@ function toggleFields() {
         }
     }
 }
- 
+
 function getAllFilterVal() {
     const filterData = {
         CompanyCodes: toArray($("#companySelect").val()),
@@ -396,9 +396,9 @@ function initializeDataTable() {
     empDataTable = $("#employee-filter-grid").DataTable({
         paging: true,
         pageLength: 10,
-        lengthMenu: [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000,"All"]],
+        lengthMenu: [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
         lengthChange: true,
-       // scrollY: "400px",
+        // scrollY: "400px",
         info: true,
         autoWidth: false,
         responsive: true,
@@ -687,7 +687,7 @@ function handleFormSubmission() {
         Tc: $('#Tc').val() || 0,
         MonthlyOtid: $('#MonthlyOtid').val(),
         Ot: parseFloat($('#Ot').val()),
-        Otamount: parseFloat($('#Amount').val())||0,
+        Otamount: parseFloat($('#Amount').val()) || 0,
         Remarks: $(`#remarks`).val(),
         CompanyCode: $("#companySelect").val(),
         EmployeeIds: EmployeeIds
@@ -936,7 +936,7 @@ function filterEmployeeGridByEmployeeId(empId) {
         url: `/HrmPayMonthlyOtEntry/getFilterEmp`,
         type: "POST",
         contentType: "application/json",
-        data:JSON.stringify(filterData),
+        data: JSON.stringify(filterData),
         success: function (res) {
             loadTableData(res);
             //hideLoading();

@@ -2114,6 +2114,7 @@ wwwroot\js\pages\hrmEmployeeHolidayDeclaration.js
 wwwroot\js\pages\hrmEmpPPAlertReport.js
 wwwroot\js\pages\hrmEmpSalaryInfoEntry.js
 wwwroot\js\pages\hrmEmpSalaryInfoReport.js
+wwwroot\js\pages\hrmHomeOfficeRequest.js
 wwwroot\js\pages\hrmPayDefDeductionType.js
 wwwroot\js\pages\HRMPayrollLoan.js
 wwwroot\js\pages\hrmServiceConfirmBulkEntry.js
@@ -2275,6 +2276,10 @@ wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js
 wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js
 wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt
 wwwroot\NoticeDocument\0021_20f577dc-e338-48fe-adf9-71c352593a34.jpg
+wwwroot\NoticeDocument\0022_cb01294c-d492-49d4-91e8-df7f3e3ae5cb.jpg
+wwwroot\NoticeDocument\0023_dee37c30-0dc3-4315-a89e-f85805b7e5f4.jpg
+wwwroot\NoticeDocument\0024_0ace24b5-cb56-49c6-a778-f5225248b10d.jpg
+wwwroot\NoticeDocument\0025_1630ef41-9e8e-4d95-a25a-efcda1d200cc.pdf
 wwwroot\PDFViewer\balanceSheetStatement.pdf
 wwwroot\PDFViewer\CashbookReport.pdf
 wwwroot\PDFViewer\Collections.pdf

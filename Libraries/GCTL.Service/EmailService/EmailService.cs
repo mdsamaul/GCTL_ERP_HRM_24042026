@@ -22,7 +22,7 @@ namespace GCTL.Service.EmailService
         public EmailService(IOptions<EmailSettings> emailSettings, IHostEnvironment hostEnvironment)
         {
             _emailSettings = emailSettings.Value;
-            _semaphore = new SemaphoreSlim(5);
+            _semaphore = new SemaphoreSlim(10);
             this.hostEnvironment = hostEnvironment;
         }
 
@@ -47,68 +47,92 @@ namespace GCTL.Service.EmailService
             }
         }
 
-        public async Task SendSingleEmailAsync(string to, string subject, string body,string attachmentPath = null, string attachmentname = null)
+        public async Task<bool> SendSingleEmailAsync(string to, string subject, string body, string attachmentPath = null, string attachmentname = null)
         {
-            using (var client = new SmtpClient(_emailSettings.Host, _emailSettings.Port))
+            await _semaphore.WaitAsync();
+            try
             {
+                using var client = new SmtpClient(_emailSettings.Host, _emailSettings.Port);
                 client.Credentials = new NetworkCredential(_emailSettings.UserName, _emailSettings.Password);
                 client.EnableSsl = _emailSettings.EnableSsl;
+                client.Timeout = 15000;
 
-                var mailMessage = new MailMessage
+                using var mailMessage = new MailMessage
                 {
                     From = new MailAddress(_emailSettings.MailFrom),
                     Subject = subject,
                     Body = body,
                     IsBodyHtml = true
                 };
-
                 mailMessage.To.Add(to);
 
-               
-                if (!string.IsNullOrEmpty(attachmentPath) && File.Exists(attachmentPath)) 
-                { 
+                if (!string.IsNullOrEmpty(attachmentPath) && File.Exists(attachmentPath))
+                {
                     var attachment = new Attachment(attachmentPath);
-                    
-                    attachment.Name = attachmentname;   
-
+                    if (!string.IsNullOrEmpty(attachmentname))
+                        attachment.Name = attachmentname;
                     mailMessage.Attachments.Add(attachment);
                 }
 
                 await client.SendMailAsync(mailMessage);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                _semaphore.Release();
             }
         }
 
         public async Task SendBatchEmailsAsync(List<EmailDataDto> request, int batchSize = 10, int delayBetweenBatches = 1000)
         {
+            var results = new List<EmailResult>();
             var batches = request
                 .Select((email, index) => new { email, index })
                 .GroupBy(x => x.index / batchSize)
                 .Select(group => group.Select(x => x.email).ToList())
                 .ToList();
+            var startTime = DateTime.Now;
 
-            foreach (var batch in batches) 
+            foreach (var (batch, batchIndex) in batches.Select((b, i) => (b, i)))
             {
                 var batchTasks = batch.Select(async request =>
                 {
                     try
                     {
-                        
+
                         await SendSingleEmailAsync(request.To, request.Subject, request.Body, request.AttachmentPath, request.AttachmentName);
                         return new EmailResult { Email = request.To, isSuccess = true };
                     }
                     catch (Exception ex)
                     {
-                        return new EmailResult { Email=request.To, isSuccess = false, Error = ex.Message };
+                        return new EmailResult { Email = request.To, isSuccess = false, Error = ex.Message };
                     }
                 });
 
-                await Task.WhenAll(batchTasks);
+                var batchResults = await Task.WhenAll(batchTasks);
+                results.AddRange(batchResults);
 
-                if (delayBetweenBatches > 0) 
+                var successCount = batchResults.Count(r => r.isSuccess);
+                var failedCount = batchResults.Count(r => !r.isSuccess);
+
+
+
+                if (batchIndex < batches.Count - 1 && delayBetweenBatches > 0)
                 {
                     await Task.Delay(delayBetweenBatches);
                 }
             }
+
+            var totalSuccess = results.Count(r => r.isSuccess);
+            var totalFailed = results.Count(r => !r.isSuccess);
+            var elapsed = DateTime.Now - startTime;
+            
+            Console.WriteLine($"Email batch completed in {elapsed.TotalMinutes:F1} minutes: {totalSuccess} sent, {totalFailed} failed");
+
         }
 
         //public async Task<bool> SendBulkEmailsAsync(List<EmailDataDto> emails)
@@ -282,6 +306,6 @@ namespace GCTL.Service.EmailService
         </html>";
         }
 
-        
+
     }
 }

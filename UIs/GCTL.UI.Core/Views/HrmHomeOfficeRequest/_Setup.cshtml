@@ -1,0 +1,89 @@
+﻿<style>
+    .form-label {
+        text-align: right;
+    }
+
+    .form-group-row {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 1rem;
+    }
+
+        .form-group-row label {
+            min-width: 120px;
+            white-space: nowrap;
+            margin-bottom: 0;
+        }
+
+        .form-group-row .form-control,
+        .form-group-row select {
+            flex: 1;
+            min-width: 0;
+        }
+
+</style>
+
+<div class="card mb-4 border-1 rounded-lg shadow-sm">
+    <div class="card-body">
+        <form id="homeOffRequest-form" class="mt-4">
+            <input type="text" id="Tc" hidden />
+            <input type="text" id="EmployeeId" hidden />
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="hrEmpId" class="form-label col-md-5">Head Of Department:</label>
+                        <select id="hrEmpId" class="form-control col-md-7" style="margin-left: 10px;">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-6"></div>
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="requestDate" class="form-label col-md-5"> Request Date:<span class="text-danger">*</span></label>
+                        <input type="text" id="requestDate" name="requestDate" class="form-control col-md-7" readonly/>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="dateFrom" class="form-label col-md-5"> Date From:</label>
+                        <input type="text" id="dateFrom" class="form-control col-md-7" />
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <div class="form-group-row">
+                        <label for="dateTo" class="form-label col-md-5"> Date To: </label>
+                        <input type="text" id="dateTo" class="form-control col-md-7" />
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="d-flex align-items-start gap-2 mb-3">
+                        <label for="reason" class="form-label col-md-2">Reason:</label>
+                        <textarea id="reason" class="form-control flex-grow-1" rows="3" placeholder="Enter reason here" tabindex="5"></textarea>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+        <div class="row mb-3">
+            <div class="col-md-10"></div>
+            <div class="col-md-2 d-flex justify-content-center">
+                <button type="button" class="btn btn-default success-btn rounded-pill pt-2 pb-2 js-homeOffRequest-dec-save" id="submitButton" tabindex="3">
+                    <i class="fa fa-save">&nbsp;</i> Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

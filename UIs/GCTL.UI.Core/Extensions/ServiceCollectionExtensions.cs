@@ -70,6 +70,7 @@ using GCTL.Service.HrmEmployeePPAlertReports;
 using GCTL.Service.HrmEmployees2;
 using GCTL.Service.HrmEmployeeSalaryInfoEntry;
 using GCTL.Service.HrmEmployeeSalaryInfoReport;
+using GCTL.Service.HrmHomeOfficeRequests;
 using GCTL.Service.HrmPayDefBenefitTypes;
 using GCTL.Service.HrmPayDefDeductionTypes;
 using GCTL.Service.HrmPayMonthlyOtEntries;
@@ -285,7 +286,7 @@ namespace GCTL.UI.Core.Extensions
             services.AddScoped<IHrmServiceBulkConfirmationEntryService, HrmServiceBulkConfirmationEntryService>();
             services.AddScoped<IHrmEmployeePPAlertReportService, HrmEmployeePPAlertReportService>();
             services.AddScoped<IManageNoticeService, ManageNoticeService>();
-
+            services.AddScoped<IHrmHomeOfficeRequestService, HrmHomeOfficeRequestService>();
 
             //Samaul
             services.AddScoped<IEmployeeWeekendDeclarationService, EmployeeWeekendDeclarationService>();

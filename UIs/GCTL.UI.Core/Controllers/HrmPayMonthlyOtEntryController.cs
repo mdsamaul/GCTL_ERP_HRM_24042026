@@ -42,7 +42,7 @@ namespace GCTL.UI.Core.Controllers
             return View();
         }
 
-       public async Task<IActionResult> getFilterEmp([FromBody] EmployeeFilterViewModel model)
+        public async Task<IActionResult> getFilterEmp([FromBody] EmployeeFilterViewModel model)
         {
             var data=await entryService.GetFilterEmployeeAsync(model);
             return Json(data);

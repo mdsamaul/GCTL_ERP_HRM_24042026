@@ -165,6 +165,7 @@ namespace GCTL.Data.Models
         public virtual DbSet<HrmEmployeeQualification> HrmEmployeeQualification { get; set; }
         public virtual DbSet<HrmEmployeeReferenceInfo> HrmEmployeeReferenceInfo { get; set; }
         public virtual DbSet<HrmEmployeeWeekendDeclaration> HrmEmployeeWeekendDeclaration { get; set; }
+        public virtual DbSet<HrmHomeOfficeRequest> HrmHomeOfficeRequest { get; set; }
         public virtual DbSet<HrmIncrement> HrmIncrement { get; set; }
         public virtual DbSet<HrmLeaveApplicationDays> HrmLeaveApplicationDays { get; set; }
         public virtual DbSet<HrmLeaveApplicationEntry> HrmLeaveApplicationEntry { get; set; }
@@ -7862,6 +7863,75 @@ namespace GCTL.Data.Models
                 entity.Property(e => e.Remark)
                     .IsRequired()
                     .HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<HrmHomeOfficeRequest>(entity =>
+            {
+                entity.HasKey(e => e.Tc)
+                    .HasName("PK__HRM_Home__3214E4086737D15C");
+
+                entity.ToTable("HRM_HomeOfficeRequest");
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
+
+                entity.Property(e => e.ApprovalDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.ApprovalStatus).HasMaxLength(50);
+
+                entity.Property(e => e.ApprovedBy).HasMaxLength(50);
+
+                entity.Property(e => e.CompanyCode)
+                    .IsRequired()
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.EmployeeId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.EndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EntryBy)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Horid)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("HORID");
+
+                entity.Property(e => e.HremployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("HREmployeeID");
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.Reason).HasMaxLength(500);
+
+                entity.Property(e => e.Remarks).HasMaxLength(500);
+
+                entity.Property(e => e.RequestDate).HasColumnType("datetime");
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<HrmIncrement>(entity =>
