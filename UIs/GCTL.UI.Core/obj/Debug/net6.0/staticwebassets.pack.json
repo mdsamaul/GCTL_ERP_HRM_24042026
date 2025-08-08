@@ -7929,6 +7929,26 @@
       "PackagePath": "staticwebassets\\FrontEnd\\plugins\\umd\\popper.min.js"
     },
     {
+      "Id": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\NoticeDocument\\0021_20f577dc-e338-48fe-adf9-71c352593a34.jpg",
+      "PackagePath": "staticwebassets\\NoticeDocument\\0021_20f577dc-e338-48fe-adf9-71c352593a34.jpg"
+    },
+    {
+      "Id": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\NoticeDocument\\0022_cb01294c-d492-49d4-91e8-df7f3e3ae5cb.jpg",
+      "PackagePath": "staticwebassets\\NoticeDocument\\0022_cb01294c-d492-49d4-91e8-df7f3e3ae5cb.jpg"
+    },
+    {
+      "Id": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\NoticeDocument\\0023_dee37c30-0dc3-4315-a89e-f85805b7e5f4.jpg",
+      "PackagePath": "staticwebassets\\NoticeDocument\\0023_dee37c30-0dc3-4315-a89e-f85805b7e5f4.jpg"
+    },
+    {
+      "Id": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\NoticeDocument\\0024_0ace24b5-cb56-49c6-a778-f5225248b10d.jpg",
+      "PackagePath": "staticwebassets\\NoticeDocument\\0024_0ace24b5-cb56-49c6-a778-f5225248b10d.jpg"
+    },
+    {
+      "Id": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\NoticeDocument\\0025_1630ef41-9e8e-4d95-a25a-efcda1d200cc.pdf",
+      "PackagePath": "staticwebassets\\NoticeDocument\\0025_1630ef41-9e8e-4d95-a25a-efcda1d200cc.pdf"
+    },
+    {
       "Id": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\PDFViewer\\CashbookReport.pdf",
       "PackagePath": "staticwebassets\\PDFViewer\\CashbookReport.pdf"
     },
@@ -9641,10 +9661,6 @@
       "PackagePath": "staticwebassets\\js\\pages\\HrApproval.js"
     },
     {
-      "Id": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\HrmServiceNotConfirm.js",
-      "PackagePath": "staticwebassets\\js\\pages\\HrmServiceNotConfirm.js"
-    },
-    {
       "Id": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\ManualEarnLeaveEntry.js",
       "PackagePath": "staticwebassets\\js\\pages\\ManualEarnLeaveEntry.js"
     },
@@ -9885,6 +9901,10 @@
       "PackagePath": "staticwebassets\\js\\pages\\hrmDefOccupations.js"
     },
     {
+      "Id": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\hrmEmpPPAlertReport.js",
+      "PackagePath": "staticwebassets\\js\\pages\\hrmEmpPPAlertReport.js"
+    },
+    {
       "Id": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\hrmEmpSalaryInfoEntry.js",
       "PackagePath": "staticwebassets\\js\\pages\\hrmEmpSalaryInfoEntry.js"
     },
@@ -9901,8 +9921,24 @@
       "PackagePath": "staticwebassets\\js\\pages\\hrmEmployeeHolidayDeclaration.js"
     },
     {
+      "Id": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\hrmHomeOfficeRequest.js",
+      "PackagePath": "staticwebassets\\js\\pages\\hrmHomeOfficeRequest.js"
+    },
+    {
       "Id": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\hrmPayDefDeductionType.js",
       "PackagePath": "staticwebassets\\js\\pages\\hrmPayDefDeductionType.js"
+    },
+    {
+      "Id": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\hrmServiceConfirmBulkEntry.js",
+      "PackagePath": "staticwebassets\\js\\pages\\hrmServiceConfirmBulkEntry.js"
+    },
+    {
+      "Id": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\hrmServiceNotConfirmEntry.js",
+      "PackagePath": "staticwebassets\\js\\pages\\hrmServiceNotConfirmEntry.js"
+    },
+    {
+      "Id": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\hrmServiceNotConfirmReport.js",
+      "PackagePath": "staticwebassets\\js\\pages\\hrmServiceNotConfirmReport.js"
     },
     {
       "Id": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\hrmWorkingDayDeclaration.js",
@@ -9947,6 +9983,10 @@
     {
       "Id": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\logs.js",
       "PackagePath": "staticwebassets\\js\\pages\\logs.js"
+    },
+    {
+      "Id": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\manageNotice.js",
+      "PackagePath": "staticwebassets\\js\\pages\\manageNotice.js"
     },
     {
       "Id": "D:\\GCTL INFOSYS\\04062025\\GCTL_ERP_HRM_24042026\\UIs\\GCTL.UI.Core\\wwwroot\\js\\pages\\measurementUnits.js",

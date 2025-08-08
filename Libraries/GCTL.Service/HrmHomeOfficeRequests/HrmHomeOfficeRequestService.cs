@@ -139,6 +139,7 @@ namespace GCTL.Service.HrmHomeOfficeRequests
             var viewModel = new HrmHomeOfficeRequestSetupViewModel()
             {
                 Tc = entry.Tc,
+                Horid = entry.Horid,
                 EmployeeId = entry.EmployeeId,
                 HremployeeId = entry.HremployeeId,
                 RequestDate = entry.RequestDate,
@@ -377,6 +378,34 @@ namespace GCTL.Service.HrmHomeOfficeRequests
                 return false;
             }
             
+        }
+
+        public async Task<bool> HasDuplicate(string empId, DateTime? startDate, DateTime? endDate, string? hodId = null)
+        {
+            if (string.IsNullOrEmpty(empId))
+                return false;
+
+            try
+            {
+                var query = entryRepository.All()
+                    .Where(x => x.EmployeeId == empId);
+
+                if (!string.IsNullOrEmpty(hodId))
+                {
+                    query = query.Where(x => x.Horid != hodId);
+                }
+
+                var hasDuplicate = await query
+                    .AnyAsync(x => (startDate >= x.StartDate && startDate <= x.EndDate) ||
+                                  (endDate >= x.StartDate && endDate <= x.EndDate) ||    
+                                  (startDate <= x.StartDate && endDate >= x.EndDate));   
+
+                return hasDuplicate;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

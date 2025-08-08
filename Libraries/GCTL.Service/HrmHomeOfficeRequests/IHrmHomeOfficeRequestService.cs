@@ -17,6 +17,6 @@ namespace GCTL.Service.HrmHomeOfficeRequests
         Task<EmployeeListItemViewModel> GetDataByEmpId(string selectedEmpId);
         Task<List<LookupItemDto>> GetHodAsync();
         Task<EmployeeFilterResultDto> GetFilterEmployeeAsync(EmployeeFilterViewModel model);
-
+        Task<bool> HasDuplicate(string empId, DateTime? startDate, DateTime? endDate, string? hodId = null);
     }
 }

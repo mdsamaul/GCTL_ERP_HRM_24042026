@@ -101,6 +101,17 @@ namespace GCTL.UI.Core.Controllers
                     message = "Saved Failed!"
                 });
 
+            bool duplicate = await entryService.HasDuplicate(model.EmployeeId, model.StartDate, model.EndDate, model.Horid);
+
+            if (duplicate)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Duplicate record found!"
+                });
+            }
+
             model.ToAudit(LoginInfo, model.Tc > 0);
 
             if (model.Tc == 0)

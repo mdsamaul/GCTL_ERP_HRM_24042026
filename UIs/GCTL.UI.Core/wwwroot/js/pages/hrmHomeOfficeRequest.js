@@ -213,6 +213,7 @@ function populateForm(id) {
 
                 $('#employeeSelect').val(data.employeeId).trigger('change');
                 $('#Tc').val(data.tc);
+                $('#HodId').val(data.horid);
                 $('#hrEmpId').val(data.hremployeeId).trigger('change'); 
                 //const formatDate = dateStr => dateStr ? dateStr.split("T")[0] : "";
                 if (requestDatePickr && data.requestDate) {
@@ -555,6 +556,7 @@ function handleFormSubmission() {
 
     const dataToSend = {
         Tc: parseInt($('#Tc').val()) || 0,
+        Horid: $('#HodId').val(),
         CompanyCode: $('#companySelect').val(),
         EmployeeId: selectedEmpId,
         HremployeeId: $('#hrEmpId').val(),
@@ -574,12 +576,12 @@ function handleFormSubmission() {
         success: function (response) {
             if (response.success) {
                 clearForm();
-                showNotification('Data updated successfully!', 'success');
+                showNotification(response.message, 'success');
                 selectedEmpId = null;
                 loadAllFilterEmp();
                 loadTableData();
             } else {
-                showNotification('Failed to update data.', 'error');
+                showNotification(response.message, 'error');
             }
         },
         complete: hideLoading
@@ -607,6 +609,7 @@ function clearForm() {
     $('#hrEmpId').val('').trigger('change');
     $('#companySelect').val('').trigger('change');
     $('#Tc').val(0);
+    $('#HodId').val('');
     $('#requestDate').val('');
     $('#reason').val(''); 
     if (requestDatePickr) {
