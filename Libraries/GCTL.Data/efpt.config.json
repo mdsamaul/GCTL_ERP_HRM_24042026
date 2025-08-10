@@ -659,6 +659,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[HRM_TransportAssignEntry]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[INV_Catagory]",
          "ObjectType": 0
       },
@@ -799,11 +803,23 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Sales_Def_TransportExpenseHead]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Sales_Def_TransportRate]",
          "ObjectType": 0
       },
       {
          "Name": "[dbo].[Sales_Def_TransportType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Sales_Def_Vehicle]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Sales_Def_VehicleType]",
          "ObjectType": 0
       },
       {

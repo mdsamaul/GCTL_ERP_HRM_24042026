@@ -20,7 +20,8 @@
             ProductIssueBy: "#productIssueBy",
             Remarks: "#Remarks",
 
-
+            purchaseIssueFloorModalBtn: "#purchaseIssueFloorBtn",
+            ProductUnitModelContainer:"#productUnitModelContainer",
             //details
             ProductSelectId: ".productSelectId",
             BrandIdFromDropdown: ".brandIdFromDropdown ",
@@ -49,7 +50,7 @@
 
         var PurchaseIssueAddmoreDetailsCreateEditUrl = commonName.baseUrl + "/PurchaseIssueAddmoreCreateEditDetails";
 
-        var productUnitModalUrl = "/RMG_Prod_Def_UnitType/Index?isPartial=true";
+        var productUnitModalUrl = "/HRM_Def_Floor/Index?isPartial=true";
         var detailsDeleteByIdUrl = commonName.baseUrl + "/detailsDeleteById";
         var detailsEditByIdUrl = commonName.baseUrl + "/detailsEditById";
 
@@ -138,18 +139,18 @@
             });
         }
         //load modal unit
-        $(commonName.ProductUnitModalBtn).on('click', function () {
+        $(commonName.purchaseIssueFloorModalBtn).on('click', function () {
             $.ajax({
                 url: productUnitModalUrl,
                 type: "GET",
                 success: function (res) {
                     $(commonName.ProductUnitModelContainer).html(res);
-                    if (typeof $.RmgProdDefUnitType == 'function') {
+                    if (typeof $.HRM_Def_FloorJs == 'function') {
                         var options = {
-                            baseUrl: '/RMG_Prod_Def_UnitType',
+                            baseUrl: '/HRM_Def_Floor',
                             isPartial: true
                         }
-                        $.RmgProdDefUnitType(options)
+                        $.HRM_Def_FloorJs(options)
                     }
                 },
                 error: function (e) {

@@ -128,6 +128,10 @@ using GCTL.Service.PrintingStationeryPurchaseReportService;
 using GCTL.Service.ProductIssueEntrys;
 using GCTL.Service.ProductIssueReports;
 using GCTL.Service.ProductStockHistoryReport;
+using GCTL.Service.SalesDefVehicleTypeService;
+using GCTL.Service.SalesDefTransportExpenseHeadService;
+using GCTL.Service.SalesDefVehicleService;
+using GCTL.Service.HRMTransportAssignEntryService;
 
 
 //using GCTL.Service.AccountReport;
@@ -226,6 +230,10 @@ services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
             services.AddScoped<IProductIssueEntryService , ProductIssueEntryService>();
             services.AddScoped<IProductIssueReportService , ProductIssueReportService>();
             services.AddScoped<IProductStockHistoryReportService , ProductStockHistoryReportService>();
+            services.AddScoped<ISalesDefVehicleTypeService , SalesDefVehicleTypeServices>();
+            services.AddScoped<ISalesDefTransportExpenseHead , SalesDefTransportExpenseHeads>();
+            services.AddScoped<ISalesDefVehicleService , SalesDefVehicleService>();
+            services.AddScoped<IHRMTransportAssignEntryService , HRMTransportAssignEntryService>();
 
 
             

@@ -16,12 +16,16 @@ namespace GCTL.UI.Core.Controllers
         {
             this.hRM_Def_FloorService = hRM_Def_FloorService;
         }
-        public IActionResult Index()
+        public IActionResult Index(bool isPartial)
         {
             HRM_Def_FloorViewModel model = new HRM_Def_FloorViewModel()
             {
                 PageUrl= Url.Action(nameof(Index))
             };
+            if (isPartial)
+            {
+                return PartialView(model);
+            }
             return View(model);
         }
         [HttpGet]
