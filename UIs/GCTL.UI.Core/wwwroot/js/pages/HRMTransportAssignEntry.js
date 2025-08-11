@@ -67,7 +67,7 @@
         }
 
         $('.searchable-select').select2({
-            placeholder: 'Select an option',
+            //placeholder: 'Select an option',
             allowClear: false,
             width: '100%'
         });
@@ -86,15 +86,12 @@
 
         $(commonName.DriverSelectEmpId).on('change', function () {
             var selectedValue = $(this).val();
-            console.log("Selected Employee ID:", selectedValue);
             $.ajax({
                 url: LoadEmpDetailsUrl,
                 type: "POST",
                 contentType:'application/json',
                 data: JSON.stringify(selectedValue ),
-                success: function (res) {
-                    console.log("Employee Details:", res);
-                   
+                success: function (res) {                   
                         $(commonName.DEmpName).text(res.data?.empName);
                         $(commonName.DEmpDepartment).text(res.data?.department);
                         $(commonName.DEmpDesignation).text(res.data?.designation);
@@ -102,7 +99,6 @@
                    
                    
                 }, error: function (e) {
-                    console.log(e.message);
                 }
             })
         })
@@ -120,19 +116,25 @@
 
         resetFrom = function () {
             $(commonName.AutoId).val(0);
-            $(commonName.TransportAssignEntryId).val(''); 
-            $(commonName.DriverSelectEmpId).val(null).trigger('change'); 
-            $(commonName.TransportNoId).val('');
-            $(commonName.TransportTypeId).val('');
-            $(commonName.EffectiveDate).val(''); 
+            $(commonName.TransportAssignEntryId).val('');             
             $(commonName.Active).prop('checked', false);
             $(commonName.TransportUser).val('');
-            $(commonName.CreateDate).text('');
-            $(commonName.UpdateDate).text('');
+            $(commonName.DriverSelectEmpId).val('').trigger('change');
+            $(commonName.TransportNoId).val("").trigger('change');
+            $(commonName.TransportTypeId).val("").trigger('change');
+            $(commonName.UserSelectEmpId).val("").trigger('change');           
+            $(commonName.DEmpName).text("");
+            $(commonName.DEmpPhone).text("");
+            $(commonName.DEmpDesignation).text("");
+            $(commonName.DEmpDepartment).text("");
+            $(commonName.CreateDate).text("");
+            $(commonName.UpdateDate).text("");
+
 
             if (typeof effectiveDatePicker !== 'undefined') {
-                effectiveDatePicker.clear();
+                effectiveDatePicker.setDate("today", true);
             }
+
 
             autoTransportAssignEntryId();
         }
@@ -164,7 +166,6 @@
         // Save Button Click
         $(document).on('click', commonName.VehicleTypeSaveBtn, function () {
             var fromData = getFromData();
-            console.log(fromData);
             if (fromData.EmployeeID == null || fromData.EmployeeID.trim() === '') {               
                 $(commonName.VehicleTypeSaveBtn).prop('disabled', true);
                 $(commonName.DriverSelectEmpId).select2('open');
@@ -186,9 +187,6 @@
                 return;
             }
         
-
-            console.log(fromData);
-
             $.ajax({
                 url: CreateUpdateUrl,
                 type: "POST",
@@ -225,7 +223,6 @@
                 "type": "GET",
                 "datatype": "json",
                 "dataSrc": function (json) {
-                    console.log(json);
                     return json.data || [];
                 },
                 "error": function (xhr, error, thrown) {
@@ -277,18 +274,23 @@
         $(document).on('click', commonName.EditBrn, function () {
             let id = $(this).data('id');
 
-            console.log(id);
             $.ajax({
                 url: `${PopulatedDataForUpdateUrl}?id=${id}`,
                 type: "GET",
                 success: function (res) {
-                    console.log(res);
                     selectedIds = [];
                     selectedIds.push(res.result.autoId + '');
                     $(commonName.AutoId).val(res.result.autoId);
                     $(commonName.DriverSelectEmpId).val(res.result.employeeID).trigger('change');
-                    $(commonName.TransportTypeId).val(res.result.TransportTypeId);
-                    $(commonName.TransportAssignEntryId).val(res.result.TransportAssignEntryId);
+                    $(commonName.TransportAssignEntryId).val(res.result.taid);
+                    $(commonName.TransportNoId).val(res.result.transportNoId).trigger('change');
+                    $(commonName.TransportTypeId).val(res.result.transportTypeId).trigger('change');
+                    $(commonName.UserSelectEmpId).val(res.result.transportUser).trigger('change');
+                    if (res.result.effectiveDate) {
+                        effectiveDatePicker.setDate(res.result.effectiveDate);
+                    }
+                    //$(commonName.Active).prop('checked',res.result.active);
+                    $(commonName.Active).prop('checked', res.result.active === true || res.result.active === "true");
                     $(commonName.CreateDate).text(res.result.showCreateDate);
                     $(commonName.UpdateDate).text(res.result.showModifyDate);
                 },
@@ -321,7 +323,6 @@
             $(commonName.RowCheckbox).prop('checked', isChecked).trigger('change');
         })
         $(document).on('click', commonName.DeleteBtn, function () {
-            console.log(selectedIds);
             $.ajax({
                 url: deleteUrl,
                 type: "POST",
@@ -348,7 +349,6 @@
             stHeader();
             autoTransportAssignEntryId();
             table;
-            console.log("SalesDefVehicleTypeJs module loaded successfully.");
         };
         init();
 

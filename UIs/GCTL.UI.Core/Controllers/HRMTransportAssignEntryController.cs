@@ -133,7 +133,7 @@ namespace GCTL.UI.Core.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> deleteTransport([FromBody] List<int> selectedIds)
+        public async Task<IActionResult> deleteTransport([FromBody] List<decimal> selectedIds)
         {
             var hasUpdatePermission = await transportAssignService.DeletePermissionAsync(LoginInfo.AccessCode);
             if (hasUpdatePermission)

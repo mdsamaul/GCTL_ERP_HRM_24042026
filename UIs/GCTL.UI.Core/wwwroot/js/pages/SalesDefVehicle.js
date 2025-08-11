@@ -279,8 +279,8 @@
                     $(commonName.AutoId).val(res.result.tc);
                     $(commonName.VehicleID).val(res.result.vehicleID);
                     $(commonName.VehicleNo).val(res.result.vehicleNo);
-                    $(commonName.CompanySelectValue).val(res.result.companyCode);
-                    $(commonName.CloaseLoadedTransportTypelistSelectContainer).val(res.result.vehicleTypeID);
+                    $(commonName.CompanySelectValue).val(res.result.companyCode).trigger('change');
+                    $(commonName.CloaseLoadedTransportTypelistSelectContainer).val(res.result.vehicleTypeID).trigger('change');
                     $(commonName.CreateDate).text(res.result.showCreateDate);
                     $(commonName.UpdateDate).text(res.result.showModifyDate);
                 },

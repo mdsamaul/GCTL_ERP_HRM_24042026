@@ -13,7 +13,7 @@ namespace GCTL.Service.HRMTransportAssignEntryService
         Task<List<HRMTransportAssignEntrySetupViewModel>> GetAllAsync();
         Task<HRMTransportAssignEntrySetupViewModel> GetByIdAsync(string id);
         Task<(bool isSuccess, string message, object data)> CreateUpdateAsync(HRMTransportAssignEntrySetupViewModel model, string companyCode, string employeeId);
-        Task<(bool isSuccess, string message, object data)> DeleteAsync(List<int> ids);
+        Task<(bool isSuccess, string message, object data)> DeleteAsync(List<decimal> ids);
         Task<string> AutoIdAsync();
 
         Task<bool> PagePermissionAsync(string accessCode);

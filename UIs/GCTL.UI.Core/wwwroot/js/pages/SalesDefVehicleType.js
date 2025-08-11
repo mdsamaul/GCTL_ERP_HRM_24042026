@@ -125,8 +125,6 @@
                 return;
             }
 
-            console.log(fromData);
-
             $.ajax({
                 url: CreateUpdateUrl,
                 type: "POST",
@@ -210,12 +208,10 @@
         $(document).on('click', commonName.EditBrn, function () {
             let id = $(this).data('id');
 
-            console.log(id);
             $.ajax({
                 url: `${PopulatedDataForUpdateUrl}?id=${id}`,
                 type: "GET",
                 success: function (res) {
-                    console.log(res);
                     selectedIds = [];
                     selectedIds.push(res.result.tc + '');
                     $(commonName.AutoId).val(res.result.tc);
@@ -254,7 +250,6 @@
             $(commonName.RowCheckbox).prop('checked', isChecked).trigger('change');
         })
         $(document).on('click', commonName.DeleteBtn, function () {
-            console.log(selectedIds);
             $.ajax({
                 url: deleteUrl,
                 type: "POST",
@@ -281,7 +276,6 @@
             stHeader();
             autoVehicleTypeId();
             table;
-            console.log("SalesDefVehicleTypeJs module loaded successfully.");
         };
         init();
 

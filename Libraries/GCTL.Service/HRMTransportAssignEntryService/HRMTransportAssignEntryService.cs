@@ -191,7 +191,8 @@ namespace GCTL.Service.HRMTransportAssignEntryService
                     exData.Active = model.Active;
                     exData.CompanyCode = companyCode;
                     exData.TransportUser = model.TransportUser;
-
+                    exData.EmployeeId = model.EmployeeID;
+                    exData.EntryUserEmployeeId = employeeId;
 
                     exData.ModifyDate = DateTime.Now;
                     await transportAssignRepo.UpdateAsync(exData);
@@ -206,7 +207,7 @@ namespace GCTL.Service.HRMTransportAssignEntryService
             }
         }
 
-        public async Task<(bool isSuccess, string message, object data)> DeleteAsync(List<int> ids)
+        public async Task<(bool isSuccess, string message, object data)> DeleteAsync(List<decimal> ids)
         {
             foreach (var id in ids)
             {
@@ -277,8 +278,8 @@ namespace GCTL.Service.HRMTransportAssignEntryService
                              {
                                  EmpId = ep.EmployeeId,
                                  EmpName = ep.FirstName + " " + ep.LastName,
-                                 Department = dp.DepartmentName,
-                                 Designation = desi.DesignationName,
+                                 Department = dp.DepartmentName??"",
+                                 Designation = desi.DesignationName??"",
                                  Phone = ep.Telephone ?? ""
                              };
                 return await queary.FirstOrDefaultAsync();

@@ -61,7 +61,6 @@
                 url: autoTransportExpenseIdUrl,
                 type: "GET",
                 success: function (res) {
-                    console.log(res);
                     $(commonName.TransportExpenseID).val(res.data);
                 },
                 error: function (e) {
@@ -126,8 +125,6 @@
                 return;
             }
 
-            console.log(fromData);
-
             $.ajax({
                 url: CreateUpdateUrl,
                 type: "POST",
@@ -163,7 +160,6 @@
                 "type": "GET",
                 "datatype": "json",
                 "dataSrc": function (json) {
-                    console.log(json);
                     return json.data || [];
                 },
                 "error": function (xhr, error, thrown) {
@@ -211,12 +207,10 @@
         $(document).on('click', commonName.EditBrn, function () {
             let id = $(this).data('id');
 
-            console.log(id);
             $.ajax({
                 url: `${PopulatedDataForUpdateUrl}?id=${id}`,
                 type: "GET",
                 success: function (res) {
-                    console.log(res);
                     selectedIds = [];
                     selectedIds.push(res.result.tc + '');
                     $(commonName.AutoId).val(res.result.tc);
@@ -255,7 +249,6 @@
             $(commonName.RowCheckbox).prop('checked', isChecked).trigger('change');
         })
         $(document).on('click', commonName.DeleteBtn, function () {
-            console.log(selectedIds);
             $.ajax({
                 url: deleteUrl,
                 type: "POST",
@@ -282,7 +275,6 @@
             stHeader();
             autoTransportExpenseId();
             table;
-            console.log("SalesDefTransportExpenseJs module loaded successfully.");
         };
         init();
 
