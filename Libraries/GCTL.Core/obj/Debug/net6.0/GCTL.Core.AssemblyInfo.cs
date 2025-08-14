@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GCTL.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f941c6ebe882502bf0e2e6599aa8125a39ed65d5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e21fd955fa85ad888dd091f147759ea7ad0b5bcd")]
 [assembly: System.Reflection.AssemblyProductAttribute("GCTL.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GCTL.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

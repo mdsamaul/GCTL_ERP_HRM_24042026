@@ -17,21 +17,37 @@ namespace GCTL.UI.Core.Controllers
         private readonly IRepository<HrmEmployee> empRepo;
         private readonly IRepository<SalesDefVehicle> transportRepo;
         private readonly IRepository<SalesDefVehicleType> transportTypeRepo;
+        private readonly IRepository<HrmEmployeeOfficialInfo> offEmpRepo;
+        private readonly IRepository<HrmDefDesignation> desiRepo;
 
         public HRMTransportAssignEntryController(
             IHRMTransportAssignEntryService transportAssignService,
             IRepository<HrmEmployee> empRepo,
            IRepository<SalesDefVehicle> transportRepo,
-           IRepository<SalesDefVehicleType> transportTypeRepo
+           IRepository<SalesDefVehicleType> transportTypeRepo,
+           IRepository<HrmEmployeeOfficialInfo> offEmpRepo,
+           IRepository<HrmDefDesignation> desiRepo
             )
         {
             this.transportAssignService = transportAssignService;
             this.empRepo = empRepo;
             this.transportRepo = transportRepo;
             this.transportTypeRepo = transportTypeRepo;
+            this.offEmpRepo = offEmpRepo;
+            this.desiRepo = desiRepo;
         }
         public IActionResult Index()
         {
+            var Emplists = from emp in empRepo.All()
+                          join offEmp in offEmpRepo.All() on emp.EmployeeId equals offEmp.EmployeeId
+                          join desi in desiRepo.All() on offEmp.DesignationCode equals desi.DesignationCode
+                          where offEmp.EmployeeStatus == "01" && desi.DesignationName == "Driver" && emp.CompanyCode == LoginInfo.CompanyCode 
+                          select new
+                          {
+                              emp.EmployeeId,
+                              fullName = emp.FirstName + " " + emp.LastName,                              
+                          };
+            //ViewBag.EmpDriverList = new SelectList(empRepo.All().Where(x=> x.EmployeeId == ( offEmpRepo.All().Where(e=> e.EmployeeId== x.EmployeeId))).Select(x=> new {x.EmployeeId, fullName = x.FirstName +" "+x.LastName }), "EmployeeId", "fullName");
             ViewBag.EmpList = new SelectList(empRepo.All().Select(x=> new {x.EmployeeId, fullName = x.FirstName +" "+x.LastName }), "EmployeeId", "fullName");
             ViewBag.TransportList = new SelectList(transportRepo.All().Select(x=> new {x.VehicleId, x.VehicleNo}), "VehicleId", "VehicleNo");
             ViewBag.TransportTypeList = new SelectList(transportTypeRepo.All().Select(x=> new {x.VehicleTypeId, x.VehicleType}), "VehicleTypeId", "VehicleType");

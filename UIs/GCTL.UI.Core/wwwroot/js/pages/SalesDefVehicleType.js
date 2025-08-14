@@ -114,6 +114,8 @@
                 }
             });
         })
+
+        
         //create and edit
         // Save Button Click
         $(document).on('click', commonName.VehicleTypeSaveBtn, function () {
