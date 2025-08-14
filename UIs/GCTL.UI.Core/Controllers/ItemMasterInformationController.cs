@@ -12,6 +12,8 @@ using GCTL.UI.Core.ViewModels.INV_Catagory;
 using GCTL.UI.Core.ViewModels.ItemMasterInformation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using OfficeOpenXml.Style;
+using OfficeOpenXml;
 
 namespace GCTL.UI.Core.Controllers
 {
@@ -170,6 +172,72 @@ namespace GCTL.UI.Core.Controllers
         {
             var result = await itemMasterInformationService.AlreadyExistAsync(BrandValue);
             return Json(new { isSuccess = result.isSuccess, message = result.message, data = result });
+        }
+        [HttpPost]
+        public IActionResult DownloadItemInformationReport([FromBody] List<ItemMasterInformationSetupViewModel> items)
+        {
+            try
+            {
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using var package = new ExcelPackage();
+            var ws = package.Workbook.Worksheets.Add("Item Info");
+
+            int row = 1;
+
+            // Title row
+            ws.Cells[row, 1, row, 6].Merge = true;
+            ws.Cells[row, 1].Value = "Item Information Report";
+            ws.Cells[row, 1].Style.Font.Size = 16;
+            ws.Cells[row, 1].Style.Font.Bold = true;
+            ws.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Cells[row, 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            row++;
+
+            // Header row
+            var headers = new[] { "Product Code", "Product Name", "Discription", "Brand", "UOM", "Purchase Cost" };
+            for (int col = 1; col <= headers.Length; col++)
+            {
+                ws.Cells[row, col].Value = headers[col - 1];
+                ws.Cells[row, col].Style.Font.Bold = true;
+                ws.Cells[row, col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells[row, col].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                ws.Cells[row, col].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+            }
+
+            row++;
+
+            // Data rows
+            foreach (var item in items)
+            {
+                ws.Cells[row, 1].Value = item.ProductCode;
+                ws.Cells[row, 2].Value = item.ProductName;
+                ws.Cells[row, 3].Value = item.Description;
+                ws.Cells[row, 4].Value = item.BrandName;
+                ws.Cells[row, 5].Value = item.UnitID;
+                ws.Cells[row, 6].Value = item.PurchaseCost;
+
+                for (int col = 1; col <= 6; col++)
+                {
+                    ws.Cells[row, col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    ws.Cells[row, col].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    ws.Cells[row, col].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                }
+
+                row++;
+            }
+
+            ws.Cells.AutoFitColumns();
+
+            var excelData = package.GetAsByteArray();
+            return File(excelData, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ItemInformationReport.xlsx");
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
     }

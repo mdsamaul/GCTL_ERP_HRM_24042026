@@ -103,8 +103,8 @@
 </div>
 
 <div class="container-fluid">
-    <div id="stickyHeader" class="card-header px-2 sticky-top rounded-bottom"
-         style="min-height: 50px; z-index: 1020;">
+    <div id="stickyHeader" class="card-header px-2 sticky-top rounded"
+         style="min-height: 50px; line-height:50px; z-index: 1020;">
         <partial name="_Toolbars" model="new ToobarModel(){Title=Model.Breadcrumb, Code=Model.Code , Name=Model.Setup.ModelID}" />
     </div>
     <div class="card my-3 py-3">
@@ -176,7 +176,7 @@
 
 
 <!-- Item Brand Modal -->
-<div class="modal fade" id="itemBrandModal" tabindex="-1" aria-labelledby="itemBrandModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+@* <div class="modal fade" id="itemBrandModal" tabindex="-1" aria-labelledby="itemBrandModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered custom-modal-item modal-xl">
         <div class="modal-content">
 
@@ -190,7 +190,7 @@
             </div>   
         </div>
     </div>
-</div>
+</div> *@
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">

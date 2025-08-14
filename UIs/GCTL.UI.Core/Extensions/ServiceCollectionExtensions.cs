@@ -122,6 +122,16 @@ using GCTL.Service.PrintingStationeryPurchaseEntry;
 using GCTL.Service.InvDefSupplierTypes;
 using GCTL.Service.SalesSupplierService;
 using GCTL.Service.ItemModelService;
+using GCTL.Service.HRM_Def_Floors;
+using GCTL.Service.Core_Countrys;
+using GCTL.Service.PrintingStationeryPurchaseReportService;
+using GCTL.Service.ProductIssueEntrys;
+using GCTL.Service.ProductIssueReports;
+using GCTL.Service.ProductStockHistoryReport;
+using GCTL.Service.SalesDefVehicleTypeService;
+using GCTL.Service.SalesDefTransportExpenseHeadService;
+using GCTL.Service.SalesDefVehicleService;
+using GCTL.Service.HRMTransportAssignEntryService;
 
 
 //using GCTL.Service.AccountReport;
@@ -212,6 +222,25 @@ services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
             services.AddScoped<IInvDefSupplierTypeService , InvDefSupplierTypeService>();
             services.AddScoped<ISalesSupplierService , SalesSupplierServices>();
             services.AddScoped<IItemModelService , ItemModelService>();
+            services.AddScoped<IHRM_Def_FloorService , HRM_Def_FloorService>();
+            services.AddScoped<ICore_CountryService , Core_CountryService>();
+            services.AddScoped<IPrintingStationeryPurchaseReportService , PrintingStationeryPurchaseReportService>();
+
+
+            services.AddScoped<IProductIssueEntryService , ProductIssueEntryService>();
+            services.AddScoped<IProductIssueReportService , ProductIssueReportService>();
+            services.AddScoped<IProductStockHistoryReportService , ProductStockHistoryReportService>();
+            services.AddScoped<ISalesDefVehicleTypeService , SalesDefVehicleTypeServices>();
+            services.AddScoped<ISalesDefTransportExpenseHead , SalesDefTransportExpenseHeads>();
+            services.AddScoped<ISalesDefVehicleService , SalesDefVehicleService>();
+            services.AddScoped<IHRMTransportAssignEntryService , HRMTransportAssignEntryService>();
+
+
+            
+
+
+
+
 
 
             

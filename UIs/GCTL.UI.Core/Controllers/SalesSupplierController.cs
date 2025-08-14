@@ -156,5 +156,11 @@ namespace GCTL.UI.Core.Controllers
             var supplierTypeList =  supplierTypeRepo.All().Where(x => x.SupplierTypeId != null).OrderByDescending(x => x.AutoId).ToList();
             return Json(supplierTypeList);
         }
+        [HttpGet]
+        public async Task<IActionResult> CloseCountryModel()
+        {
+            var result = countryRepo.All().ToList();
+            return Json(new {result});
+        }
     }
 }

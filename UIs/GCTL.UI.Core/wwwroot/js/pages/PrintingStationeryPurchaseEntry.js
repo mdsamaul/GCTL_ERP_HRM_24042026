@@ -20,10 +20,10 @@
             SelectedAll: "#selectAll",
             EditBtn: ".stationary-btn-edit",
             PrintStationerySaveBtn: ".js-Printing-Stationery-Purchase-Entry-save",
-            DeleteBtn: "#js-inv-catagory-delete-confirm",
+            DeleteBtn: "#js-Printing-Stationery-Purchase-delete-confirm",
             UpdateDate: ".updateDate",
             CreateDate: ".createDate",
-            ClearBrn: "#js-catagory-clear",
+            ClearBrn: "#js-Printing-Stationery-Purchase-clear",
 
             ProductModalBtn: "#productModalBtn",
             ProductPartialContainer: "#productPartialContainer",
@@ -53,15 +53,17 @@
             UnitOfProduct: ".unitOfProduct",
             TotalPriceOfProductAddProductPrice: "#totalPriceOfProductAddProductPrice",
             DetailsClear: ".delete-clear-row-btn",
-            SupplierModalClose:"#supplierModalClose",
+            StationarySupplierModalClose: "#stationarySupplierModalClose",
+
+            ProductItemCloseBtn: "#productItemCloseBtn",
+            CloseProductBrandModel:".closeProductBrandModel",
         }, options);
         var filterUrl = commonName.baseUrl + "/GetFilterData";
         var loadCategoryDataUrl = commonName.baseUrl + "/LoadData";
         var AutoPrintingStationeryPurchaseIdUrl = commonName.baseUrl + "/AutoPrintingStationeryPurchaseId";
         var CreateUpdateUrl = commonName.baseUrl + "/CreateUpdate";
         var PopulatedDataForUpdateUrl = commonName.baseUrl + "/PopulatedDataForUpdate";
-        var deleteUrl = commonName.baseUrl + "/deleteCatagory";
-        var alreadyExistUrl = commonName.baseUrl + "/alreadyExist";
+        var deleteUrl = commonName.baseUrl + "/deletePrintingStationeryPurchase";
         var partialProductUrl = "/ItemMasterInformation/index?isPartial=true";
         var partialBrandUrl = "/Brand/Index?isPartial=true";
         var productModelUrl = "/ItemModel/Index?isPartial=true";
@@ -72,7 +74,9 @@
         var productSelectIdDetailsUrl = commonName.baseUrl + "/productSelectIdDetails";
         var brandIdDetailsonModelUrl = commonName.baseUrl + "/brandIdDetailsonModel";
         var addMoreLoadProductUrl = commonName.baseUrl + "/addMoreLoadProduct";
-        var SupplierCloseUrl = commonName.baseUrl +"/SupplierCloseList"
+        var SupplierCloseUrl = commonName.baseUrl + "/SupplierCloseList";
+        //var productItemCloseUrl = commonName.baseUrl + "/productItemClose";
+        //var CloseProductBrandListUrl = commonName.baseUrl + "/BrandListClose";
         function stHeader() {
             window.addEventListener('scroll', function () {
                 const header = document.getElementById('stickyHeader');
@@ -106,22 +110,14 @@
         }
 
       
-        //datePiker = flatpickr(".datePicker", {
-        //    dateFormat: "Y-m-d",
-        //    altInput: true,
-        //    altFormat: "d/m/Y",
-        //    defaultDate: new Date(),
-        //    allowInput: true
-        //});
-
         function datePiker(selector, inputDate = null) {
             const parsedDate = inputDate ? new Date(inputDate) : new Date();
 
             flatpickr(selector, {
-                dateFormat: "Y-m-d",         // value format (submit হবে এই ফরম্যাটে)
-                altInput: true,              // user input visible হবে নিচের format এ
-                altFormat: "d/m/Y",          // user UI-তে দেখবে dd/mm/yyyy
-                defaultDate: parsedDate,     // যদি তারিখ থাকে সেট করো, না থাকলে today
+                dateFormat: "Y-m-d",        
+                altInput: true,              
+                altFormat: "d/m/Y",          
+                defaultDate: parsedDate,     
                 allowInput: true
             });
         }
@@ -131,7 +127,7 @@
             allowClear: false,
             width: '100%'
         });
-        
+  
 
         // Time picker
         const timePicker = flatpickr("#inlineTimePicker", {
@@ -151,13 +147,11 @@
 
         //load partial page product
         $(commonName.ProductModalBtn).on('click', function () {
-            console.log("click btn");
             $.ajax({
                 url: partialProductUrl,
                 type: "GET",
                 success: function (res) {
                     $(commonName.ProductPartialContainer).html(res);
-                    console.log(res);
                     if (typeof $.ItemMasterInformation == 'function') {
                         var options = {
                             baseUrl: '/ItemMasterInformation',
@@ -167,7 +161,6 @@
                     }                    
                 },
                 error: function (e) {
-                    console.log(e);
                 }
             });
         });
@@ -187,7 +180,6 @@
                     }
                 },
                 error: function (e) {
-                    console.log(e);
                 }
             });
         })
@@ -206,7 +198,6 @@
                         $.ItemModel(options);
                     }
                 }, error: function (e) {
-                    console.log(e)
                 }
             })
         })
@@ -226,7 +217,6 @@
                     }
                 },
                 error: function (e) {
-                    console.log(e);
                 }
             });
         })
@@ -247,12 +237,10 @@
                     }
                 },
                 error: function (e) {
-                    console.log(e);
                 }
             });
         })
         $(commonName.SupplierModalBtn).on('click', function () {
-            console.log("test supplier");
             $.ajax({
                 url: SupplierModalUrl,
                 type: "GET",
@@ -267,21 +255,17 @@
                     }
                 },
                 error: function (e) {
-                    console.log(e);
                 }
             });
         })
 
-        $(commonName.SupplierModalClose).on('click', function () {
+        $(commonName.StationarySupplierModalClose).on('click', function () {
             $.ajax({
                 url: SupplierCloseUrl,
                 type: "GET",
                 success: function (res) {
-                    console.log(res);
-
                     if (res.data && Array.isArray(res.data)) {
                         $(commonName.SupplierListBtn).empty();
-
                         res.data.forEach(function (supplier) {
                             $(commonName.SupplierListBtn).append(`
                         <option value="${supplier.supplierId}">${supplier.supplierName}</option>
@@ -296,15 +280,46 @@
                     }
                 },
                 error: function (e) {
-                    console.log("Error loading suppliers:", e);
                 }
             });
         });
 
+        //close 
+        //$(commonName.ProductItemCloseBtn).on('click', function () {
+        //    $.ajax({
+        //        url: productItemCloseUrl,
+        //        type: "GET",
+        //        success: function (res) {
+        //            $(commonName.ProductSelectId).empty();
+        //            res.data.map(function (product) {
+        //                $(commonName.ProductSelectId).append(`
+        //            <option value="${product.productCode}">${product.productName}</option>
+        //            `);
+        //            })
+                  
+
+        //        }
+        //    });
+        //})
+        //$(commonName.CloseProductBrandModel).on('click', function () {
+        //    $.ajax({
+        //        url: CloseProductBrandListUrl,
+        //        type: "GET",
+        //        success: function (res) {
+        //            $(commonName.BrandIdFromDropdown).empty();
+        //            res.data.result.map(function (Brand) {
+        //                $(commonName.BrandIdFromDropdown).append(`
+        //            <option value="${Brand.brandId}">${Brand.brandName}</option>
+        //            `);
+        //            })
+                  
+
+        //        }
+        //    });
+        //})
 
 
         $(commonName.SupplierListBtn).on('change', function () {
-            console.log("asdfasdf", $(this).val());
             var supplierId = $(this).val();
             $.ajax({
                 url: supplierDetailsUrl,
@@ -316,15 +331,13 @@
                         $(commonName.SalesSuppAddress).val(res.data.supplierAddress);
                     }
                 }, error: function (e) {
-                    console.log(e);
                 }
             })
         })
         //produt id
         $(document).on('change', '.ProductSelectId', function () {
             var productId = $(this).val();
-            var $row = $(this).closest('tr'); // শুধু এই row
-
+            var $row = $(this).closest('tr'); 
             $.ajax({
                 url: productSelectIdDetailsUrl,
                 type: "POST",
@@ -332,13 +345,9 @@
                 data: JSON.stringify(productId),
                 success: function (res) {
                     if (res.data != null) {
-                        console.log(res);
-
-                        // Row scoped data binding
                         $row.find('.ProductDescription').val(res.data.description);
-
                         let $brandDropdown = $row.find('.BrandIdFromDropdown');
-                        $brandDropdown.empty().append('<option value="">Select Brand</option>');
+                        $brandDropdown.empty().append('<option value="">Brand</option>');
                         res.data.brandList.forEach(function (brand) {
                             $brandDropdown.append(`<option value="${brand.brandID}">${brand.brandName}</option>`);
                         });
@@ -348,20 +357,18 @@
                         $row.find('.TotalPriceOfProductMulQty').val(res.data.purchaseCost);
                         $row.find('.UnitOfProduct').val(res.data.unitID).trigger('change');
                         $row.find('.ModelPopulateFromBrandId').empty();
-                        calculateGrandTotal(); // optional: if you want to update total
+                        calculateGrandTotal(); 
                     }
                 },
                 error: function (e) {
-                    console.log(e);
                 }
             });
         });
 
         //brand 
-        $(document).on('change', '.BrandIdFromDropdown', function () {
+        $(document).on('change', '.brandIdFromDropdown ', function () {
             var brandId = $(this).val();
-            var $row = $(this).closest('tr'); // ঐ row select
-
+            var $row = $(this).closest('tr');
             $.ajax({
                 url: brandIdDetailsonModelUrl,
                 type: "POST",
@@ -369,29 +376,18 @@
                 data: JSON.stringify(brandId),
                 success: function (res) {
                     if (res.data != null) {
-                        console.log(res);
-
-                        let $modelDropdown = $row.find('.ModelPopulateFromBrandId');
-                        $modelDropdown.empty().append('<option value="">Select Model</option>');
-
+                        let $modelDropdown = $row.find('.modelPopulateFromBrandId');
+                        $modelDropdown.empty().append('<option value="">Model</option>');
                         res.data.forEach(function (model) {
                             $modelDropdown.append(`<option value="${model.modelID}">${model.modelName}</option>`);
                         });
                     }
                 },
                 error: function (e) {
-                    console.log(e);
                 }
             });
         });
-        $(document).on('click', '.delete-clear-row-btn', function () {
-            let $targetRow = $(this).closest('tr');
-
-            $targetRow.find('input[type="text"], input[type="number"], textarea').val('');
-            $targetRow.find('select').val('').trigger('change');
-            $targetRow.find('.unitPriceOfProduct, .totalPriceOfProductMulQty').val(0);
-            calculateGrandTotal();
-        });
+        
 
 
 
@@ -466,22 +462,22 @@
                 url: addMoreLoadProductUrl,
                 type: "GET",
                 success: function (res) {                  
-                    let productOptions = `<option value="">Select Product</option>`;
+                    let productOptions = `<option value="">Product</option>`;
                     res.productList.forEach(function (item) {
                         productOptions += `<option value="${item.value}">${item.text}</option>`;
                     });
 
-                    let sizeOptions = `<option value="">Select Size</option>`;
+                    let sizeOptions = `<option value="">Size</option>`;
                     res.sizeList.forEach(function (item) {
                         sizeOptions += `<option value="${item.value}">${item.text}</option>`;
                     });
 
-                    let periodOptions = `<option value="">Select Period</option>`;
+                    let periodOptions = `<option value="">Period</option>`;
                     res.periodList.forEach(function (item) {
                         periodOptions += `<option value="${item.value}">${item.text}</option>`;
                     });
 
-                    let unitOptions = `<option value="">Select Unit</option>`;
+                    let unitOptions = `<option value="">Unit</option>`;
                     res.unitList.forEach(function (item) {
                         unitOptions += `<option value="${item.value}">${item.text}</option>`;
                     });
@@ -490,8 +486,8 @@
 <tr>
     <td><select class="form-control-sm form-control searchable-select productSelectId">${productOptions}</select></td>
     <td><input type="text" class="form-control-sm form-control productDescription" placeholder="Description"/></td>
-    <td><select class="form-control-sm form-control searchable-select brandIdFromDropdown"><option value="">Select Brand</option></select></td>
-    <td><select class="form-control-sm form-control searchable-select modelPopulateFromBrandId"><option value="">Select Model</option></select></td>
+    <td><select class="form-control-sm form-control searchable-select brandIdFromDropdown"><option value="">Brand</option></select></td>
+    <td><select class="form-control-sm form-control searchable-select modelPopulateFromBrandId"><option value="">Model</option></select></td>
     <td><select class="form-control-sm form-control searchable-select sizeSelect">${sizeOptions}</select></td>
     <td><input type="number" class="form-control-sm form-control warrantyInput" placeholder="Warranty" /></td>
     <td><select class="form-control-sm form-control searchable-select periodSelect">${periodOptions}</select></td>
@@ -500,7 +496,10 @@
     <td><input type="number" class="form-control-sm form-control unitPriceOfProduct text-end" value="0" readonly /></td>
     <td><input type="number" class="form-control-sm form-control totalPriceOfProductMulQty text-end mb-2" value="0" readonly /></td>
     <td>
-        <div class="d-flex justify-content-center align-items-center">
+        <div class="d-flex gap-2">
+         <button class="btn btn-outline-success rounded-md shadow d-flex justify-content-center align-items-center" id="addmoreDetailsBtn" style="width: 30px; height: 30px; font-size: 9px;">
+                        <i class="fas fa-plus"></i>
+                    </button>  
             <button class="btn btn-outline-danger rounded-md shadow d-flex justify-content-center align-items-center delete-row-btn" style="width: 30px; height: 30px; font-size: 9px;">
                 <i class="fas fa-trash-alt"></i>
             </button>
@@ -512,10 +511,77 @@
 
                     // Reinitialize select2
                     $('.searchable-select').select2({ width: '100%' });
+                    //appendProductRow(res);
+
                 }
 
             });
         });
+
+        function appendProductRow(resData) {
+            let productOptions = `<option value="">Product</option>`;
+            resData.productList.forEach(function (item) {
+                productOptions += `<option value="${item.value}">${item.text}</option>`;
+            });
+
+            let sizeOptions = `<option value="">Size</option>`;
+            resData.sizeList.forEach(function (item) {
+                sizeOptions += `<option value="${item.value}">${item.text}</option>`;
+            });
+
+            let periodOptions = `<option value="">Period</option>`;
+            resData.periodList.forEach(function (item) {
+                periodOptions += `<option value="${item.value}">${item.text}</option>`;
+            });
+
+            let unitOptions = `<option value="">Unit</option>`;
+            resData.unitList.forEach(function (item) {
+                unitOptions += `<option value="${item.value}">${item.text}</option>`;
+            });
+
+            let newRow = `
+<tr>
+    <td><select class="form-control-sm form-control searchable-select productSelectId">${productOptions}</select></td>
+    <td><input type="text" class="form-control-sm form-control productDescription" placeholder="Description"/></td>
+    <td><select class="form-control-sm form-control searchable-select brandIdFromDropdown"><option value="">Brand</option></select></td>
+    <td><select class="form-control-sm form-control searchable-select modelPopulateFromBrandId"><option value="">Model</option></select></td>
+    <td><select class="form-control-sm form-control searchable-select sizeSelect">${sizeOptions}</select></td>
+    <td><input type="number" class="form-control-sm form-control warrantyInput" placeholder="Warranty" /></td>
+    <td><select class="form-control-sm form-control searchable-select periodSelect">${periodOptions}</select></td>
+    <td><input type="number" class="form-control-sm form-control qtyOfProduct text-center" placeholder="Qty" /></td>
+    <td><select class="form-control-sm form-control searchable-select unitOfProduct">${unitOptions}</select></td>
+    <td><input type="number" class="form-control-sm form-control unitPriceOfProduct text-end" value="0" readonly /></td>
+    <td><input type="number" class="form-control-sm form-control totalPriceOfProductMulQty text-end mb-2" value="0" readonly /></td>
+    <td>
+        <div class="d-flex gap-2">
+            <button class="btn btn-outline-success rounded-md shadow d-flex justify-content-center align-items-center" id="addmoreDetailsBtn" style="width: 30px; height: 30px; font-size: 9px; line-height: 1;">
+                <i class="fas fa-plus"></i>
+            </button>
+            <button class="btn btn-outline-danger rounded-md shadow d-flex justify-content-center align-items-center delete-row-btn" style="width: 30px; height: 30px; font-size: 9px; line-height: 1;">
+                <i class="fa fa-eraser">&nbsp;</i>
+            </button>
+        </div>
+    </td>
+</tr>
+`;
+
+            // Append row BEFORE total-row if exists, otherwise just append
+            let $table = $('#dinamciDataAppend');
+            let $totalRow = $table.find('.total-row');
+            $table.append(newRow);
+            // Then append total-row
+            let totalRow = `
+<tr class="total-row">
+    <td colspan="10"><div class="total-label">Total:</div></td>
+    <td>
+        <input type="number" class="form-control-sm form-control text-end" value="0" id="totalPriceOfProductAddProductPrice" readonly />
+    </td>
+</tr>`;
+            $table.append(totalRow);
+            $('.searchable-select').select2({ width: '100%' });
+        }
+
+
 
 
         $(document).on('change', '.productSelectId', function () {
@@ -529,13 +595,12 @@
                 data: JSON.stringify(productId),
                 success: function (res) {
                     if (res.data != null) {
-                        console.log(res);
 
                         // row scoped set
                         $row.find('.productDescription').val(res.data.description);
 
                         let brandDropdown = $row.find('.brandIdFromDropdown');
-                        brandDropdown.empty().append(`<option value="">Select Brand</option>`);
+                        brandDropdown.empty().append(`<option value="">Brand</option>`);
                         res.data.brandList.forEach(function (brand) {
                             brandDropdown.append(`<option value="${brand.brandID}">${brand.brandName}</option>`);
                         });
@@ -544,14 +609,14 @@
                         $row.find('.qtyOfProduct').val(1);
                         $row.find('.totalPriceOfProductMulQty').val(res.data.purchaseCost);
                         $row.find('.unitOfProduct').val(res.data.unitID).trigger('change');
-                        $row.find('.modelPopulateFromBrandId').empty();
+                        $row.find('.modelPopulateFromBrandId').empty().append(`<option value="">Model</option>`);
 
                         // Calculate grand total (total of all rows)
                         calculateGrandTotal();
                     }
                 },
                 error: function (e) {
-                    console.log(e);
+                   
                 }
             });
         });
@@ -564,11 +629,38 @@
             });
             $('#totalPriceOfProductAddProductPrice').val(total);
         }
-
-
         $(document).on('click', '.delete-row-btn', function () {
-            $(this).closest('tr').remove();
+            let $targetRow = $(this).closest('tr');
+            $targetRow.remove();
+
             calculateGrandTotal();
+
+            const $tableBody = $('#dinamciDataAppend');
+            const $remainingRows = $tableBody.find('tr.data-row'); 
+            if ($remainingRows.length === 0) {
+                $.ajax({
+                    url: addMoreLoadProductUrl,
+                    type: "GET",
+                    success: function (res) {
+                     $("#dinamciDataAppend tr").empty();
+                     appendProductRow(res); 
+                    }
+                });
+            } else {
+                const $firstDataRow = $remainingRows.first();
+                const $actionCell = $firstDataRow.find('td').last();
+
+                $actionCell.html(`
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-success rounded-md shadow d-flex justify-content-center align-items-center" id="addmoreDetailsBtn" style="width: 30px; height: 30px; font-size: 9px;">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <button class="btn btn-outline-danger rounded-md shadow d-flex justify-content-center align-items-center delete-row-btn" style="width: 30px; height: 30px; font-size: 9px;">
+                     <i class="fa fa-eraser">&nbsp;</i>
+                </button>
+            </div>
+        `);
+            }
         });
 
        
@@ -578,7 +670,6 @@
                 url: AutoPrintingStationeryPurchaseIdUrl,
                 type: "GET",
                 success: function (res) {
-                    console.log(res);
                     $(commonName.PurchaseOrderNo).val(res.data);
                 },
                 error: function (e) {
@@ -586,16 +677,52 @@
             });
         }
 
-        resetFrom = function () {
+
+        resetForm = function () {
+            // Reset all input fields
             $(commonName.AutoId).val(0);
-            $(commonName.supplierName).val('');
-            $(commonName.ShortName).val('');
+            $(commonName.MainCompanyCode).val('');
+            $(commonName.PurchaseOrderNo).val('');
+            $(commonName.SupplierListBtn).val('').trigger('change');
+            $(commonName.SalesSuppAddress).val('');
+            $(commonName.StationaryDepartment).val('').trigger('change');
+            $(commonName.InvoiceNo).val('');
+            $(commonName.InvoiceValue).val('');
+            $(commonName.InvoiceChallanNo).val('');
+            $(commonName.InvoicePurchaseBy).val('');
+            $(commonName.StationeryRemarks).val('');
+            $(commonName.CompanyCode).val('');
+            $(commonName.TotalPriceOfProductAddProductPrice).val('');
+            $(commonName.CreateDate).text('');
+            $(commonName.UpdateDate).text('');
+            const today = new Date();
+            const formattedDate = today.toISOString().split('T')[0];
+
+            datePiker("#datePicker1", formattedDate);
+            datePiker($(commonName.InvoiceDate), formattedDate);
+            datePiker($(commonName.InvoiceChallanDate), formattedDate);
+
+            // === Re-initialize time picker with current time ===
+            if ($("#inlineTimePicker")[0]?._flatpickr) {
+                $("#inlineTimePicker")[0]._flatpickr.setDate(today, true);
+            }
+            $.ajax({
+                url: addMoreLoadProductUrl,
+                type: "GET",
+                success: function (res) {
+                    $("#dinamciDataAppend tr").empty();
+                    appendProductRow(res); // default row
+                }
+            });
         }
+
+
         $(commonName.ClearBrn).on('click', function () {
-            resetFrom();
-            AutoPrintingStationeryPurchaseId();
-        })
-       
+            resetForm();
+            AutoPrintingStationeryPurchaseId(); 
+        });
+
+
         function formatDateTimeToSql(dateStr, timeStr) {
             if (timeStr.includes('AM') || timeStr.includes('PM')) {
                 timeStr = convertTo24Hour(timeStr);
@@ -645,13 +772,25 @@
 
             return `${hours.padStart(2, '0')}:${minutes}:${seconds}`;
         }
-
-
-
         getFromData = function () {
             listOfProdut(); 
                 const date = $("#datePicker1").val();
-                const time = $("#inlineTimePicker").val();
+            const time = $("#inlineTimePicker").val();
+            if (!date || !time || isNaN(Date.parse(`${date} ${time}`))) {
+                showToast("error", "Please select a valid Receive Date and Time.");
+
+                const flatpickrInstance = $("#datePicker1")[0]._flatpickr;
+                if (flatpickrInstance) {
+                    flatpickrInstance.open();
+                }
+
+                $("#datePicker1").addClass("printingStation-input"); 
+                $(commonName.PrintStationerySaveBtn).prop('disabled', true);
+                return;
+            }
+
+            $("#datePicker1").removeClass("printingStation-input");
+
             const fromData = {
                 TC: parseInt($(commonName.AutoId).val()) || 0,
                 MainCompanyCode: $(commonName.MainCompanyCode).val() || null,
@@ -685,18 +824,14 @@
                 purchaseOrderReceiveDetailsDTOs: dataList
             };
 
-            // Debug log
-            console.log("Final fromData object:", fromData);
-
             return fromData;
         };
 
 
-        //exists 
+        //exists
         //$(commonName.supplierName).on('input', function () {
 
         //    let supplierValue = $(this).val();
-        //    console.log();
         //    $.ajax({
         //        url: alreadyExistUrl,
         //        type: "POST",
@@ -717,17 +852,69 @@
         //        }
         //    });
         //})
+
+        $(document).on('change','#datePicker1', function () {
+            $(commonName.receiveDate).removeClass('printingStation-input');
+            $(commonName.supplierName).removeClass('printingStation-input');
+            $(commonName.PrintStationerySaveBtn).prop('disabled', false);
+
+        })
+
+        $(document).on('change', commonName.SupplierListBtn, function () {
+            $(commonName.receiveDate).removeClass('printingStation-input');
+            $(commonName.supplierName).removeClass('printingStation-input');
+            $(commonName.PrintStationerySaveBtn).prop('disabled', false);
+
+        })
+        $(document).on('change', commonName.ProductSelectId, function () {
+            $(commonName.receiveDate).removeClass('printingStation-input');
+            $(commonName.supplierName).removeClass('printingStation-input');
+            $(commonName.PrintStationerySaveBtn).prop('disabled', false);
+        })
         //create and edit
         // Save Button Click
         $(document).on('click', commonName.PrintStationerySaveBtn, function () {
             var fromData = getFromData();
             console.log(fromData);
-            //if (fromData.supplierName == null || fromData.supplierName.trim() === '') {
-            //    $(commonName.supplierName).addClass('catagory-input');
-            //    $(commonName.PrintStationerySaveBtn).prop('disabled', true);
-            //    $(commonName.supplierName).focus();
-            //    return;
-            //}
+            if (!fromData.SupplierID || fromData.SupplierID.trim() === "") {
+                showToast("error", "Please select a supplier.");
+                $('.supplierListBtn').addClass('printingStation-input');
+                $('.supplierListBtn').select2('open');
+                $(commonName.PrintStationerySaveBtn).prop('disabled', true);
+                return;
+            }
+
+            var dataListDetails = fromData.purchaseOrderReceiveDetailsDTOs;
+
+            // Step: Product Validation
+            if (!dataListDetails || dataListDetails.length === 0) {
+                showToast("error", "Please add at least one product.");
+                $(commonName.PrintStationerySaveBtn).prop('disabled', true);
+                return;
+            }
+
+            $('.productSelectId').removeClass('printingStation-input');
+
+            for (let i = 0; i < dataListDetails.length; i++) {
+                const product = dataListDetails[i];
+
+                if (!product.ProductCode || product.ProductCode.trim() === "") {
+                    showToast("error", `Product selection missing in row ${i + 1}`);
+                    const $productSelect = $('.productSelectId').eq(i);
+
+                    $productSelect.addClass('printingStation-input');
+
+                    if ($productSelect.hasClass("select2-hidden-accessible")) {
+                        $productSelect.select2('open');
+                    } else {
+                        $productSelect.focus();
+                    }
+
+                    $(commonName.PrintStationerySaveBtn).prop('disabled', true);
+                    return;
+                }
+            }
+
 
 
             $.ajax({
@@ -746,9 +933,12 @@
                     showToast("error", res.message);
                 },
                 complete: function () {
-                    resetFrom();
+                    resetForm();
                     AutoPrintingStationeryPurchaseId();
                     loadCategoryData();
+                    dataList.length = 0; 
+
+                    $('table #dinamciDataAppend tr').not('.total-row').remove();
                 }
             });
         });
@@ -764,7 +954,6 @@
                 "type": "GET",
                 "datatype": "json",
                 "dataSrc": function (json) {
-                    console.log(json);
                     return json.data || [];
                 },
                 "error": function (xhr, error, thrown) {
@@ -834,12 +1023,8 @@
                 url: `${PopulatedDataForUpdateUrl}?id=${id}`,
                 type: "GET",
                 success: function (res) {
-                    console.log(res);
-
                     selectedIds = [];
-                    selectedIds.push(res.result.tc + '');
-
-                    
+                    selectedIds.push(res.result.tc + '');                    
                     // Master form populate
                     $(commonName.AutoId).val(res.result.tc);
                     $(commonName.MainCompanyCode).val(res.result.mainCompanyCode);
@@ -847,10 +1032,10 @@
                     $(commonName.SupplierListBtn).val(res.result.supplierID).trigger("change");
                     $(commonName.StationaryDepartment).val(res.result.departmentCode);
                     $(commonName.InvoiceNo).val(res.result.invoiceNo);
-                
+                    $(commonName.CreateDate).text(res.result.showCreateDate);
+                    $(commonName.UpdateDate).text(res.result.showModifyDate);
                     if (res.result.receiveDate) {
                         const dateTimeParts = res.result.receiveDate.split("T"); 
-                        console.log(dateTimeParts);
                         datePiker("#datePicker1", dateTimeParts[0]);
                         const [hour, minute] = dateTimeParts[1].split(":");
                         const formattedTime = `${hour}:${minute}`;
@@ -861,21 +1046,17 @@
                         }
                     }
 
- //todo
-                   
-                    //$(commonName.InvoiceDate).val(res.result.invoiceDate ? res.result.invoiceDate.split("T")[0] : '');
                     if (res.result.invoiceDate) {
                         let InvoiceDate = res.result.invoiceDate.split("T")[0];
-                        $(commonName.InvoiceDate).flatpickr().setDate(InvoiceDate, true);
+                        datePiker($(commonName.InvoiceDate), InvoiceDate);
                     }
                     $(commonName.InvoiceValue).val(res.result.invoiceValue);
                     $(commonName.InvoiceChallanNo).val(res.result.challanNo);
                     if (res.result.challanDate) {
                         let challanDate = res.result.challanDate.split("T")[0];
-                        $(commonName.InvoiceChallanDate).flatpickr().setDate(challanDate, true);
+                        datePiker($(commonName.InvoiceChallanDate), challanDate);
                     }
 
-                    //$(commonName.InvoiceChallanDate).val(res.result.challanDate ? res.result.challanDate.split("T")[0] : '');
                     $(commonName.InvoicePurchaseBy).val(res.result.employeeID_ReceiveBy);
                     $(commonName.StationeryRemarks).val(res.result.remarks);
                     $(commonName.CompanyCode).val(res.result.companyCode);
@@ -883,6 +1064,16 @@
 
                     // Remove all existing detail rows before populate
                     $('table #dinamciDataAppend').empty();
+                    if (res.result.purchaseOrderReceiveDetailsDTOs.length === 0) {
+                     $.ajax({
+                            url: addMoreLoadProductUrl,
+                            type: "GET",
+                            success: function (res) {
+                                $("#dinamciDataAppend tr").empty();
+                                appendProductRow(res); // default row
+                            }
+                        });
+                    }
 
                     // Populate details
                     if (res.result.purchaseOrderReceiveDetailsDTOs && res.result.purchaseOrderReceiveDetailsDTOs.length > 0) {
@@ -918,12 +1109,15 @@
                                     ? `<div class="d-flex gap-2">
                     <button class="btn btn-outline-success rounded-md shadow d-flex justify-content-center align-items-center" id="addmoreDetailsBtn" style="width: 30px; height: 30px; font-size: 9px;">
                         <i class="fas fa-plus"></i>
-                    </button>
-                    <button class="btn btn-outline-danger rounded-md shadow d-flex justify-content-center align-items-center delete-clear-row-btn" style="width: 30px; height: 30px; font-size: 9px;">
-                        <i class="fas fa-trash-alt"></i>
+                    </button>                   
+                    <button class="btn btn-outline-danger rounded-md shadow d-flex justify-content-center align-items-center delete-row-btn" style="width: 30px; height: 30px; font-size: 9px;">
+                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </div>`
-                                    : `<div class="d-flex justify-content-center align-items-center">
+                                : `<div class="d-flex gap-2">
+                                     <button class="btn btn-outline-success rounded-md shadow d-flex justify-content-center align-items-center" id="addmoreDetailsBtn" style="width: 30px; height: 30px; font-size: 9px;">
+                        <i class="fas fa-plus"></i>
+                    </button>
                     <button class="btn btn-outline-danger rounded-md shadow d-flex justify-content-center align-items-center delete-row-btn" style="width: 30px; height: 30px; font-size: 9px;">
                         <i class="fas fa-trash-alt"></i>
                     </button>
@@ -979,6 +1173,7 @@
             $(commonName.RowCheckbox).prop('checked', isChecked).trigger('change');
         })
         $(document).on('click', commonName.DeleteBtn, function () {
+
             $.ajax({
                 url: deleteUrl,
                 type: "POST",
@@ -989,15 +1184,55 @@
                 },
                 error: function (e) {
                 }, complete: function () {
-                    resetFrom();
+                    resetForm();
                     AutoPrintingStationeryPurchaseId();
                     loadCategoryData();
                     $('#selectAll').prop('checked', false);
                     selectedIds = [];
+                    dataList.length = 0; 
+                    $('table #dinamciDataAppend tr').not('.total-row').remove();
                 }
             })
         })
 
+        function closeAllModals(callback) {
+            $(".modal").modal('hide'); // Bootstrap modal close
+            setTimeout(() => {
+                if (typeof callback === 'function') {
+                    callback();
+                }
+            }, 300); 
+        }
+
+        $(document).on('click', ".closesupplierTypeModel", function () {
+            closeAllModals(() => {
+                $(commonName.SupplierModalBtn).trigger('click');
+            });
+        });
+
+        $(document).on('click', ".closeCountryModel", function () {
+            closeAllModals(() => {
+                $(commonName.SupplierModalBtn).trigger('click');
+            });
+        });
+
+        $(document).on('click', ".closeBrandModel", function () {
+            closeAllModals(() => {
+                $(commonName.ProductModalBtn).trigger('click');
+            });
+        });
+
+        $(document).on('click', ".closeCatagoryModel", function () {
+            closeAllModals(() => {
+                $(commonName.ProductModalBtn).trigger('click');
+            });
+        });
+
+        $(document).on('click', ".itemBrandModalLabelClose", function () {
+            closeAllModals(() => {
+                $(commonName.ProductModelBtn).trigger('click');
+            });
+        });
 
 
         window.categoryModuleLoaded = true;
@@ -1007,7 +1242,6 @@
             timePicker;
             AutoPrintingStationeryPurchaseId();
             tableContainer;
-            console.log("test");
         };
         init();
     };

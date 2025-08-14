@@ -119,7 +119,7 @@ namespace GCTL.Service.PrintingStationeryPurchaseEntry
                     MainCompanyCode = c.MainCompanyCode,
                     PurchaseReceiveNo = c.PurchaseReceiveNo,
                     ReceiveDate = c.ReceiveDate,
-                    ShowReceiveDate= c.ReceiveDate.HasValue? c.ReceiveDate.Value.ToString("dd/MM/yyyy  hh:mm tt"):"",
+                    ShowReceiveDate= c.ReceiveDate.HasValue? c.ReceiveDate.Value.ToString("dd/MM/yyyy  hh:mm:ss tt"):"",
                     DepartmentCode = c.DepartmentCode,
                     DepartmentName = depRepo.All().Where(x=>x.DepartmentCode== c.DepartmentCode).Select(x=>x.DepartmentName).FirstOrDefault(),
                     SupplierID = c.SupplierId,
@@ -410,8 +410,7 @@ namespace GCTL.Service.PrintingStationeryPurchaseEntry
 
                         // Bulk Insert
                         await purchaseOrderReceiveDetailsRepo.AddRangeAsync(detailsList);
-                        // 🔁 Optional: Update এর সময় পুরানো details delete করে নতুন গুলো insert করতে চাইলে এই অংশ যোগ করুন:
-                        //await purchaseOrderReceiveDetailsRepo.DeleteAsync(exData.PurchaseReceiveNo);
+                   
 
                         return (true, UpdateSuccess, exData);
                     }
@@ -431,10 +430,15 @@ namespace GCTL.Service.PrintingStationeryPurchaseEntry
         {
             foreach (var id in ids)
             {
-
                 try
                 {
+
                     var entity = await PurchaseOrderReceive.GetByIdAsync(decimal.Parse(id));
+                    var detailsEntity = purchaseOrderReceiveDetailsRepo.All().Where(x => x.PurchaseReceiveNo == entity.PurchaseReceiveNo).ToList();
+                    if(detailsEntity != null)
+                    {
+                        await purchaseOrderReceiveDetailsRepo.DeleteRangeAsync(detailsEntity);
+                    }
                     if (entity == null)
                     {
                         continue;

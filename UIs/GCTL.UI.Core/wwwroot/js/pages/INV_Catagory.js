@@ -209,6 +209,7 @@
                 url: `${PopulatedDataForUpdateUrl}?id=${id}`,
                 type: "GET",
                 success: function (res) {
+                    console.log(res);
                     selectedIds = [];
                     selectedIds.push(res.result.autoId+'');
                     $(commonName.AutoId).val(res.result.autoId);

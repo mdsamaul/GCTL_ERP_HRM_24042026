@@ -105,7 +105,6 @@ namespace GCTL.Service.INV_Catagory
                     CatagoryID = entity.CatagoryId,
                     CatagoryName = entity.CatagoryName,
                     ShortName = entity.ShortName,
-                    //Ldate= entity.Ldate.HasValue? entity.Ldate.Value.ToString("dd/MM/yyyy"):"",
                     ShowCreateDate= entity.Ldate.HasValue ? entity.Ldate.Value.ToString("dd/MM/yyyy"):"",
                    ShowModifyDate = entity.ModifyDate.HasValue? entity.ModifyDate.Value.ToString("dd/MM/yyyy") :"",
                     ModifyDate = entity.ModifyDate
@@ -150,7 +149,7 @@ namespace GCTL.Service.INV_Catagory
                     exData.CatagoryName = model.CatagoryName;
                     exData.ShortName = model.ShortName;
                     exData.CompanyCode = model.CompanyCode!= null? model.CompanyCode:"001";
-                    exData.ModifyDate = model.ModifyDate;
+                    exData.ModifyDate = DateTime.Now;
                     await invCatRepo.UpdateAsync(exData);
                     return (true, UpdateSuccess, exData);
                 }

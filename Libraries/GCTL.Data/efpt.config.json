@@ -659,6 +659,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[HRM_TransportAssignEntry]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[INV_Catagory]",
          "ObjectType": 0
       },
@@ -676,6 +680,18 @@
       },
       {
          "Name": "[dbo].[Inv_Def_Warehouse]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[INV_ProductIssueInformation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[INV_ProductIssueInformationDetails]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[INV_ProductIssueInformationDetailsTemp]",
          "ObjectType": 0
       },
       {
@@ -787,11 +803,23 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Sales_Def_TransportExpenseHead]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Sales_Def_TransportRate]",
          "ObjectType": 0
       },
       {
          "Name": "[dbo].[Sales_Def_TransportType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Sales_Def_Vehicle]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Sales_Def_VehicleType]",
          "ObjectType": 0
       },
       {
@@ -932,6 +960,14 @@
       },
       {
          "Name": "[dbo].[GetTestRoomNo]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[INV_ProductIssueReport_Filter]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[INV_StockReport_Filter]",
          "ObjectType": 1
       },
       {
@@ -1100,6 +1136,10 @@
       },
       {
          "Name": "[dbo].[ProcGetEployeeFilterDetails]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[PROCPrintingAndStationeryReport]",
          "ObjectType": 1
       },
       {

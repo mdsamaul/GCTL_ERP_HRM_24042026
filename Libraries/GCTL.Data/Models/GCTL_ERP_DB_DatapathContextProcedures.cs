@@ -60,6 +60,8 @@ namespace GCTL.Data.Models
             modelBuilder.Entity<GetOfficialInfoResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetTBDetailsDataResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetTestRoomNoResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<INV_ProductIssueReport_FilterResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<INV_StockReport_FilterResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<PaidReceiptsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<Prc_Frm_TempAccountDetailsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<Prc_GetAccessCodeResult>().HasNoKey().ToView(null);
@@ -85,6 +87,7 @@ namespace GCTL.Data.Models
             modelBuilder.Entity<proc_LabTestListNotInVoucherResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<proc_Select_CL_SCL_GGL_GLAndSLAllInfoResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<ProcGetEployeeFilterDetailsResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<PROCPrintingAndStationeryReportResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<ReferenceCommissionReportResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<ReferenceCommissionSummaryResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<Rpt_PatientInfoResult>().HasNoKey().ToView(null);
@@ -1637,6 +1640,147 @@ namespace GCTL.Data.Models
             return _;
         }
 
+        public virtual async Task<List<INV_ProductIssueReport_FilterResult>> INV_ProductIssueReport_FilterAsync(DateOnly? FromDate, DateOnly? ToDate, string ProductCodes, string CategoryIds, string BrandIds, string ModelIds, string DepartmentCodes, string EmployeeIds, string FloorIds, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "FromDate",
+                    Value = FromDate ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Date,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "ToDate",
+                    Value = ToDate ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Date,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "ProductCodes",
+                    Size = -1,
+                    Value = ProductCodes ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "CategoryIds",
+                    Size = -1,
+                    Value = CategoryIds ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "BrandIds",
+                    Size = -1,
+                    Value = BrandIds ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "ModelIds",
+                    Size = -1,
+                    Value = ModelIds ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "DepartmentCodes",
+                    Size = -1,
+                    Value = DepartmentCodes ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "EmployeeIds",
+                    Size = -1,
+                    Value = EmployeeIds ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "FloorIds",
+                    Size = -1,
+                    Value = FloorIds ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<INV_ProductIssueReport_FilterResult>("EXEC @returnValue = [dbo].[INV_ProductIssueReport_Filter] @FromDate = @FromDate, @ToDate = @ToDate, @ProductCodes = @ProductCodes, @CategoryIds = @CategoryIds, @BrandIds = @BrandIds, @ModelIds = @ModelIds, @DepartmentCodes = @DepartmentCodes, @EmployeeIds = @EmployeeIds, @FloorIds = @FloorIds", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<INV_StockReport_FilterResult>> INV_StockReport_FilterAsync(DateOnly? FromDate, DateOnly? ToDate, string ProductCode, string CategoryId, string BrandId, string ModelId, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "FromDate",
+                    Value = FromDate ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Date,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "ToDate",
+                    Value = ToDate ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Date,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "ProductCode",
+                    Size = -1,
+                    Value = ProductCode ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "CategoryId",
+                    Size = -1,
+                    Value = CategoryId ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "BrandId",
+                    Size = -1,
+                    Value = BrandId ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "ModelId",
+                    Size = -1,
+                    Value = ModelId ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<INV_StockReport_FilterResult>("EXEC @returnValue = [dbo].[INV_StockReport_Filter] @FromDate = @FromDate, @ToDate = @ToDate, @ProductCode = @ProductCode, @CategoryId = @CategoryId, @BrandId = @BrandId, @ModelId = @ModelId", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
         public virtual async Task<List<PaidReceiptsResult>> PaidReceiptsAsync(string BillTypeId, string PatientTypeId, DateTime? FromDate, DateTime? ToDate, string DoctorId, string ReferenceId, string Role, string LUser, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
@@ -3019,6 +3163,66 @@ namespace GCTL.Data.Models
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<ProcGetEployeeFilterDetailsResult>("EXEC @returnValue = [dbo].[ProcGetEployeeFilterDetails] @CompanyCode = @CompanyCode, @BranchCode = @BranchCode, @DivisionCode = @DivisionCode, @DepartmentCode = @DepartmentCode, @DesignationCode = @DesignationCode, @EmployeeID = @EmployeeID, @EmployeeStatus = @EmployeeStatus", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<PROCPrintingAndStationeryReportResult>> PROCPrintingAndStationeryReportAsync(string CatagoryID, string ProductID, string BrandID, string ModelID, DateOnly? FromDate, DateOnly? ToDate, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "CatagoryID",
+                    Size = -1,
+                    Value = CatagoryID ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "ProductID",
+                    Size = -1,
+                    Value = ProductID ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "BrandID",
+                    Size = -1,
+                    Value = BrandID ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "ModelID",
+                    Size = -1,
+                    Value = ModelID ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "FromDate",
+                    Value = FromDate ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Date,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "ToDate",
+                    Value = ToDate ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Date,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<PROCPrintingAndStationeryReportResult>("EXEC @returnValue = [dbo].[PROCPrintingAndStationeryReport] @CatagoryID = @CatagoryID, @ProductID = @ProductID, @BrandID = @BrandID, @ModelID = @ModelID, @FromDate = @FromDate, @ToDate = @ToDate", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
