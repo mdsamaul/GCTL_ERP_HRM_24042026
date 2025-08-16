@@ -104,7 +104,7 @@ namespace GCTL.Service.HRMTransportAssignEntryService
                     ShowEffectiveDate = c.EffectiveDate.HasValue? c.EffectiveDate.Value.ToString("dd/MM/yyyy"):"",
                     Active = c.Active,
                     CompanyCode = c.CompanyCode,
-                    TransportUser = c.TransportUser,
+                    TransportUser =  empRepo.All().Where(x=> x.EmployeeId == c.TransportUser).Select(x => x.FirstName + " " + x.LastName).ToList(),
                     ShowTransportUser = empRepo.All().Where(x=> x.EmployeeId == c.TransportTypeId).Select(x=> x.FirstName +" "+ x.LastName).FirstOrDefault(),
                     EmployeeID = c.EmployeeId,
                     ShowEmployeeID = empRepo.All().Where(x => x.EmployeeId == c.EmployeeId).Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
@@ -136,7 +136,7 @@ namespace GCTL.Service.HRMTransportAssignEntryService
                     TransportTypeId = entity.TransportTypeId,
                     EffectiveDate = entity.EffectiveDate,
                     ShowEffectiveDate = entity.EffectiveDate.HasValue ? entity.EffectiveDate.Value.ToString("dd/MM/yyyy") : null,
-                    TransportUser = entity.TransportUser,
+                    TransportUser = empRepo.All().Where(x => x.EmployeeId == entity.TransportUser).Select(x => x.EmployeeId).ToList(),
                     Active = entity.Active,
                     CompanyCode = entity.CompanyCode,
                     
@@ -152,60 +152,85 @@ namespace GCTL.Service.HRMTransportAssignEntryService
 
         }
 
-        public async Task<(bool isSuccess, string message, object data)> CreateUpdateAsync(HRMTransportAssignEntrySetupViewModel model, string companyCode, string employeeId)
+     public async Task<(bool isSuccess, string message, object data)> CreateUpdateAsync(
+    HRMTransportAssignEntrySetupViewModel model,
+    string companyCode,
+    string employeeId)
         {
             try
             {
-                if (model.AutoId == 0)
+                if (model.AutoId == 0) 
                 {
-                    var entity = new HrmTransportAssignEntry
+                    if (model.TransportUser != null && model.TransportUser.Count > 0)
                     {
-                        Taid = model.TAID,
-                        TransportNoId = model.TransportNoId,
-                        TransportTypeId = model.TransportTypeId,
-                        EffectiveDate = model.EffectiveDate.HasValue ? model.EffectiveDate.Value : (DateTime?)null,
-                        EmployeeId = model.EmployeeID,
-                        EntryUserEmployeeId = employeeId,
-                        Active = model.Active,
-                        CompanyCode = companyCode,
-                        TransportUser = model.TransportUser,
-                        Luser = model.Luser,
-                        Lip = model.Lip,
-                        Ldate = model.Ldate,
-                        Lmac = model.Lmac,
-                    };
-                   
+                        var lastEntity = await transportAssignRepo.GetAllAsync();
 
-                    await transportAssignRepo.AddAsync(entity);
-                    return (true, CreateSuccess, entity);
+                        int nextTaid = lastEntity.Any()
+                            ? lastEntity.Max(x => Convert.ToInt32(x.Taid))
+                            : 0;
+
+                        var createdEntities = new List<HrmTransportAssignEntry>();
+
+                        foreach (var item in model.TransportUser)
+                        {
+                            nextTaid++; 
+
+                            var entity = new HrmTransportAssignEntry
+                            {
+                                Taid = nextTaid.ToString("D8"),
+
+                                TransportNoId = model.TransportNoId,
+                                TransportTypeId = model.TransportTypeId,
+                                EffectiveDate = model.EffectiveDate,
+                                EmployeeId = model.EmployeeID,
+                                EntryUserEmployeeId = employeeId,
+                                Active = model.Active,
+                                CompanyCode = companyCode,
+                                TransportUser = item,
+                                Luser = model.Luser,
+                                Lip = model.Lip,
+                                Ldate = model.Ldate,
+                                Lmac = model.Lmac,
+                            };
+
+                            await transportAssignRepo.AddAsync(entity);
+                            createdEntities.Add(entity);
+                        }
+
+
+                        return (true, CreateSuccess, createdEntities);
+                    }
+
+                    return (false, "No TransportUser found to insert.", null);
                 }
-
-                var exData = await transportAssignRepo.GetByIdAsync(model.AutoId);
-                if (exData != null)
+                else // Update
                 {
-                    // Update existing data
-                   exData.Taid = model.TAID;
-                    exData.TransportNoId = model.TransportNoId;
-                    exData.TransportTypeId = model.TransportTypeId;
-                    exData.EffectiveDate = model.EffectiveDate.HasValue ? model.EffectiveDate.Value : (DateTime?)null;
-                    exData.Active = model.Active;
-                    exData.CompanyCode = companyCode;
-                    exData.TransportUser = model.TransportUser;
-                    exData.EmployeeId = model.EmployeeID;
-                    exData.EntryUserEmployeeId = employeeId;
+                    var exData = await transportAssignRepo.GetByIdAsync(model.AutoId);
+                    if (exData != null)
+                    {
+                        exData.Taid = model.TAID; 
+                        exData.TransportNoId = model.TransportNoId;
+                        exData.TransportTypeId = model.TransportTypeId;
+                        exData.EffectiveDate = model.EffectiveDate;
+                        exData.Active = model.Active;
+                        exData.CompanyCode = companyCode;
+                        exData.EmployeeId = model.EmployeeID;
+                        exData.EntryUserEmployeeId = employeeId;
+                        exData.ModifyDate = DateTime.Now;
 
-                    exData.ModifyDate = DateTime.Now;
-                    await transportAssignRepo.UpdateAsync(exData);
-                    return (true, UpdateSuccess, exData);
+                        await transportAssignRepo.UpdateAsync(exData);
+                        return (true, UpdateSuccess, exData);
+                    }
+
+                    return (false, UpdateFailed, null);
                 }
-
-                return (false, UpdateFailed, null);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return (false, CreateFailed, null);
             }
         }
+
 
         public async Task<(bool isSuccess, string message, object data)> DeleteAsync(List<decimal> ids)
         {

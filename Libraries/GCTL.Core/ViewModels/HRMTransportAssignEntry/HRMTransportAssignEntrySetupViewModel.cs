@@ -24,7 +24,7 @@ namespace GCTL.Core.ViewModels.HRMTransportAssignEntry
         
         public string? CompanyCode { get; set; }
         public string? EntryUserEmployeeID { get; set; }
-        public string? TransportUser { get; set; }
+        public List<string>? TransportUser { get; set; }
         public string? ShowTransportUser { get; set; }
     }
 }

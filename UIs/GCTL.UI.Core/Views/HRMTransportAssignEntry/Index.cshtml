@@ -94,8 +94,32 @@
     input.VehicleType-input {
         border: 1px solid red !important;
     }
+    /* Multiselect dropdown text left-align */
+    .multiselect{
+        display: flex;
+        align-items: center !important;
+        justify-content: space-between;
+    }
+    /* রেডিও আইকন লুকানো এবং টেক্সট অ্যালাইনমেন্ট (আগের মতোই) */
+    .multiselect-container li input[type="radio"] {
+        display: none;
+    }
 
-</style>
+    .multiselect-container li:not(.multiselect-group) a label {
+        padding-left: 10px;
+    }
+
+    /* নতুন এবং উন্নত হোভার ইফেক্ট (সম্পূর্ণ সারির জন্য) */
+    .multiselect-container > li  {
+        /* এই লাইনটি নিশ্চিত করে যে হোভার ইফেক্টের ট্রানজিশন মসৃণ হবে */
+        transition: background-color 0.2s ease-in-out;
+    }
+
+        
+.multiselect-container > li:hover{      
+        background : #eee;
+    }
+    </style>
 
 <div class="container-fluid">
     <partial name="_PageHeader" model="Model"></partial>
@@ -113,7 +137,7 @@
                 <div class="d-flex align-items-center">
                     <div class="transportLeft text-right">Driver. <span class="text-danger">*</span></div>
                     <div class="transportRight">
-                        <select class="form-control-sm form-control form-select-sm form-select searchable-select" id="DriverSelectEmpId" asp-items="ViewBag.EmpList as SelectList">
+                        <select class="form-control-sm form-control form-select-sm form-select searchable-select" id="DriverSelectEmpId" asp-items="ViewBag.EmpDriverList as SelectList">
                             <option value="">--Select Employee--</option>
                         </select>
                     </div>
@@ -187,44 +211,61 @@
     </div>
 </div>
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-<!-- jQuery (DataTables ) -->
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
 
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <!-- Font Awesome 6 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+
+    <!-- jQuery (load first) -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Bootstrap Multiselect (WORKING VERSION) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
 
     <!-- DataTable JS -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
-    <!-- Flatpickr CSS (Default White Theme) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
-    <!-- Flatpickr JS -->
+    <!-- Flatpickr CSS and JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-    <!-- Load the plugin -->
+    <!-- Your custom script (load AFTER all dependencies) -->
     <script src="~/js/pages/HRMTransportAssignEntry.js"></script>
 
-    <!-- Initialize the plugin -->
+    <!-- Initialize with proper checking -->
     <script type="text/javascript">
-        $(function () {
-        $.HRMTransportAssignEntryJs({
-            baseUrl: '@Url.Action("Index", "HRMTransportAssignEntry")',
-                load: function () {
-                    console.log("Custom load logic called from Razor view");
+        $(document).ready(function() {
+            console.log('jQuery version:', $.fn.jquery);
+            console.log('Multiselect available:', typeof $.fn.multiselect);
+
+            // Wait a bit for all scripts to load
+            setTimeout(function() {
+                if (typeof $.fn.multiselect !== 'undefined') {
+                    console.log('Multiselect plugin loaded successfully');
+                    $.HRMTransportAssignEntryJs({
+                        baseUrl: '@Url.Action("Index", "HRMTransportAssignEntry")',
+                        load: function () {
+                            console.log("Custom load logic called from Razor view");
+                        }
+                    });
+                } else {
+                    console.error('Bootstrap Multiselect plugin failed to load!');
+                    alert('Error: Bootstrap Multiselect plugin failed to load. Please refresh the page.');
                 }
-            });
+            }, 500);
         });
-            if (typeof pdfjsLib !== 'undefined') {
+
+        if (typeof pdfjsLib !== 'undefined') {
             pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
         }
     </script>

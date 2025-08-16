@@ -31,9 +31,13 @@
             <div class="transportLeft text-right">Transport Type</div>
             <div class="transportRight">
                 @* <input asp-for="TransportTypeId" class="form-control-sm form-control" /> *@
-                <select asp-for="TransportTypeId" asp-items="ViewBag.TransportTypeList as SelectList" class="form-control-sm form-control form-select-sm form-select searchable-select">
+                <select asp-for="TransportTypeId"
+                        asp-items="ViewBag.TransportTypeList as SelectList"
+                        class="form-control-sm form-control form-select-sm form-select searchable-select"
+                        disabled>
                     <option value="">--Select Transport No--</option>
                 </select>
+
             </div>
         </div>
     </div>
@@ -45,8 +49,7 @@
         <div class="d-flex align-items-center">
             <div class="transportLeft text-right">User <span class="text-danger">*</span></div>
             <div class="transportRight">
-                <select asp-for="TransportUser" class="form-control-sm form-control form-select-sm form-select searchable-select" id="UserSelectEmpId" asp-items="ViewBag.EmpList as SelectList">
-                    <option value="">--Select Employee--</option>
+                <select asp-for="TransportUser" class="form-control-sm form-control form-select-sm form-select searchable-select" id="UserSelectEmpId" asp-items="ViewBag.EmpList as SelectList" multiple>               
                 </select>
             </div>
         </div>

@@ -4,7 +4,7 @@
             baseUrl: "/",
             TransportTypeId: "#TransportTypeId",
             TransportNoId: "#TransportNoId",
-            UserSelectEmpId: "#UserSelectEmpId",
+            DriverSelectEmpId: "#DriverSelectEmpId",
             EffectiveDate: "#EffectiveDate",
             TransportUser: "#UserSelectEmpId",
             Active: "#Active",
@@ -18,7 +18,7 @@
             UpdateDate: ".updateDate",
             CreateDate: ".createDate",
             ClearBrn: "#js-transport-entry-assign-clear",
-            DriverSelectEmpId: "#DriverSelectEmpId",
+            //DriverSelectEmpId: "#DriverSelectEmpId",
             DEmpName:"#DEmpName",
             DEmpDesignation:"#DEmpDesignation",
             DEmpDepartment:"#DEmpDepartment",
@@ -32,6 +32,7 @@
         var deleteUrl = commonName.baseUrl + "/deleteTransport";
         var alreadyExistUrl = commonName.baseUrl + "/alreadyExist";
         var LoadEmpDetailsUrl = commonName.baseUrl + "/GetEmpDetailsId"; 
+        var transportTypeUrl = commonName.baseUrl + "/transportTypeGetByTransportNo"; 
         // Sticky header on scroll
         function stHeader() {
             window.addEventListener('scroll', function () {
@@ -66,11 +67,180 @@
             });
         }
 
-        $('.searchable-select').select2({
-            //placeholder: 'Select an option',
-            allowClear: false,
-            width: '100%'
+        //$('.searchable-select').select2({
+        //    //placeholder: 'Select an option',
+        //    allowClear: false,
+        //    width: '100%'
+        //});
+
+        //function UserSelectEmpMultiselect() {
+        //    $('#DriverSelectEmpId').multiselect({
+        //        includeSelectAllOption: true,       // Select All checkbox
+        //        enableFiltering: true,              // Search box
+        //        enableCaseInsensitiveFiltering: true,
+        //        buttonWidth: '100%',                // Dropdown width
+        //        maxHeight: 300,                     // Scroll height
+        //        nonSelectedText: '--Select Employee--',
+        //        allSelectedText: 'All Employees Selected',
+        //        nSelectedText: 'Employees Selected'
+        //    });
+        //}
+        $(document).ready(function () {
+            // Wait a bit for multiselect to render buttons
+            setTimeout(function () {
+                // Clear filter button icon replace
+                $('.multiselect-clear-filter i').removeClass('glyphicon glyphicon-remove-circle')
+                    .addClass('fa fa-times-circle'); // Font Awesome icon
+            }, 200);
         });
+
+        //function UserSelectEmpMultiselect() {
+        //    // Check if multiselect plugin is available
+        //    if (typeof $.fn.multiselect === 'undefined') {
+        //        console.error('Bootstrap Multiselect plugin is not loaded!');
+        //        return;
+        //    }
+        //    try {
+
+        //        // Initialize Transport User multiselect if element exists
+        //        if ($(commonName.DriverSelectEmpId).length) {
+        //            $(commonName.DriverSelectEmpId).multiselect({
+        //                includeSelectAllOption: true,
+        //                selectAllText: 'Select All Users',
+        //                enableFiltering: true,
+        //                enableCaseInsensitiveFiltering: true,
+        //                filterPlaceholder: 'Search users...',
+        //                buttonWidth: '100%',
+        //                maxHeight: 300,
+        //                nonSelectedText: '--Select Users--',
+        //                allSelectedText: 'All Users Selected',
+        //                nSelectedText: ' users selected',
+        //                buttonClass: 'btn btn-outline-secondary'
+        //            });
+        //        }
+
+        //        console.log('Multiselect initialized successfully');
+        //    } catch (error) {
+        //        console.error('Error initializing multiselect:', error);
+        //    }
+        //}
+        let UserEmplist = [];
+        function DriverSelectEmpId() {
+            var $dropdown = $('#DriverSelectEmpId');
+            if ($dropdown.length && typeof $.fn.multiselect !== 'undefined') {
+                if (!$dropdown.data('multiselect')) { // যদি আগে initialized না হয়
+                    $dropdown.multiselect({
+                        enableFiltering: true,
+                        enableCaseInsensitiveFiltering: true,
+                        filterPlaceholder: 'Search for an employee...',
+                        buttonWidth: '100%',
+                        maxHeight: 300,
+                        nonSelectedText: '--Select Employee--',
+                        buttonClass: 'btn btn-outline-secondary text-start',
+                        onChange: function (option, checked) {
+                            let selectedValue = $dropdown.val();
+                            console.log('Selected Employee ID:', selectedValue);
+                        }
+                    });
+                    console.log('Driver multiselect initialized');
+                }
+            }
+        }
+        function TransportNoList() {
+            var $dropdown = $(commonName.TransportNoId);
+            if ($dropdown.length && typeof $.fn.multiselect !== 'undefined') {
+                if (!$dropdown.data('multiselect')) { // যদি আগে initialized না হয়
+                    $dropdown.multiselect({
+                        enableFiltering: true,
+                        enableCaseInsensitiveFiltering: true,
+                        filterPlaceholder: 'Search for an employee...',
+                        buttonWidth: '100%',
+                        maxHeight: 300,
+                        nonSelectedText: '--Select Employee--',
+                        buttonClass: 'btn btn-outline-secondary text-start',
+                        onChange: function (option, checked) {
+                            let selectedValue = $dropdown.val();
+                            console.log('Selected Employee ID:', selectedValue);
+                        }
+                    });
+                    console.log('Driver multiselect initialized');
+                }
+            }
+        }
+
+        function UserSelectEmpMultiselect() {
+            if (typeof $.fn.multiselect === 'undefined') {
+                console.error('Bootstrap Multiselect plugin is not loaded!');
+                return;
+            }
+
+            try {
+                if ($('#UserSelectEmpId').length) {
+                    $('#UserSelectEmpId').multiselect({
+                        includeSelectAllOption: true,
+                        selectAllText: 'Select All Users',
+                        enableFiltering: true,
+                        enableCaseInsensitiveFiltering: true,
+                        filterPlaceholder: 'Search users...',
+                        buttonWidth: '100%',
+                        maxHeight: 300,
+                        nonSelectedText: '--Select Users--',
+                        allSelectedText: 'All Users Selected',
+                        nSelectedText: ' users selected',
+                        buttonClass: 'btn btn-outline-secondary',
+
+                        // onChange event
+                        onChange: function (option, checked) {
+                            let value = option.val(); // single value
+                            console.log('Option ID:', value, 'Checked:', checked);
+
+                            if (checked) {
+                                if (!UserEmplist.includes(value)) {
+                                    UserEmplist.push(value);
+                                }
+                            } else {
+                                UserEmplist = UserEmplist.filter(id => id !== value);
+                            }
+
+                            console.log('Updated UserEmplist:', UserEmplist);
+                        }
+                    });
+                }
+
+                console.log('Multiselect initialized successfully');
+            } catch (error) {
+                console.error('Error initializing multiselect:', error);
+            }
+        }
+
+
+
+   
+        //function loadEmployeeDetails(empId) {
+        //    $.ajax({
+        //        url: LoadEmpDetailsUrl,
+        //        type: "POST",
+        //        contentType: 'application/json',
+        //        data: JSON.stringify(empId),
+        //        success: function (res) {
+        //            $(commonName.DEmpName).text(res.data?.empName);
+        //            $(commonName.DEmpDepartment).text(res.data?.department);
+        //            $(commonName.DEmpDesignation).text(res.data?.designation);
+        //            $(commonName.DEmpPhone).text(res.data?.phone);
+        //        },
+        //        error: function (e) {
+        //            console.error('Error loading employee details:', e);
+        //        }
+        //    });
+        //}
+
+        //function clearEmployeeDetails() {
+        //    $(commonName.DEmpName).text("");
+        //    $(commonName.DEmpDepartment).text("");
+        //    $(commonName.DEmpDesignation).text("");
+        //    $(commonName.DEmpPhone).text("");
+        //}
+
         const effectiveDatePicker = flatpickr("input[name='EffectiveDate']", {
             altInput: true,
             altFormat: "d/m/Y",
@@ -114,15 +284,69 @@
             });
         }
 
+        //resetFrom = function () {
+        //    $(commonName.AutoId).val(0);
+        //    $(commonName.TransportAssignEntryId).val('');
+        //    $(commonName.Active).prop('checked', false);
+        //    $(commonName.TransportUser).val('');
+        //    $(commonName.DriverSelectEmpId).val('').trigger('change');
+        //    $(commonName.TransportNoId).val("").trigger('change');
+        //    $(commonName.TransportTypeId).val("").trigger('change');
+        //    $(commonName.DriverSelectEmpId).val("").trigger('change');
+
+        //    UserEmplist = [];
+        //    if ($('#DriverSelectEmpId').length) {
+        //        $('#DriverSelectEmpId').multiselect('deselectAll', false);
+        //        $('#DriverSelectEmpId').multiselect('updateButtonText');
+        //    }
+
+        //    $(commonName.DEmpName).text("");
+        //    $(commonName.DEmpPhone).text("");
+        //    $(commonName.DEmpDesignation).text("");
+        //    $(commonName.DEmpDepartment).text("");
+        //    $(commonName.CreateDate).text("");
+        //    $(commonName.UpdateDate).text("");
+
+
+        //    if (typeof effectiveDatePicker !== 'undefined') {
+        //        effectiveDatePicker.setDate("today", true);
+        //    }
+
+
+        //    autoTransportAssignEntryId();
+        //}
+
         resetFrom = function () {
             $(commonName.AutoId).val(0);
-            $(commonName.TransportAssignEntryId).val('');             
+            $(commonName.TransportAssignEntryId).val('');
             $(commonName.Active).prop('checked', false);
-            $(commonName.TransportUser).val('');
-            $(commonName.DriverSelectEmpId).val('').trigger('change');
-            $(commonName.TransportNoId).val("").trigger('change');
-            $(commonName.TransportTypeId).val("").trigger('change');
-            $(commonName.UserSelectEmpId).val("").trigger('change');           
+            //$(commonName.TransportUser).val('');
+
+            // Regular select dropdowns
+            $(commonName.TransportNoId).val('').trigger('change');
+            $(commonName.TransportTypeId).val('').trigger('change');
+
+            // Reset multiselects
+            UserEmplist = [];
+
+            // UserSelectEmpId reset
+            if ($('#UserSelectEmpId').length && $('#UserSelectEmpId').data('multiselect')) {
+                $('#UserSelectEmpId').multiselect('deselectAll', false);
+                $('#UserSelectEmpId').multiselect('refresh');
+            }
+
+            // DriverSelectEmpId reset  
+            $('#DriverSelectEmpId').val('');  // Empty string
+            if ($('#DriverSelectEmpId').data('multiselect')) {
+                $('#DriverSelectEmpId').multiselect('rebuild');
+            }
+            $(commonName.TransportNoId).val('');  // Empty string
+            if ($(commonName.TransportNoId).data('multiselect')) {
+                $(commonName.TransportNoId).multiselect('rebuild');
+            }
+
+
+            // Clear employee details
             $(commonName.DEmpName).text("");
             $(commonName.DEmpPhone).text("");
             $(commonName.DEmpDesignation).text("");
@@ -130,11 +354,10 @@
             $(commonName.CreateDate).text("");
             $(commonName.UpdateDate).text("");
 
-
+            // Reset date picker
             if (typeof effectiveDatePicker !== 'undefined') {
                 effectiveDatePicker.setDate("today", true);
             }
-
 
             autoTransportAssignEntryId();
         }
@@ -151,12 +374,12 @@
                 TransportTypeId: $(commonName.TransportTypeId).val(),
                 EffectiveDate: $(commonName.EffectiveDate).val(),
                 Active: $(commonName.Active).prop("checked") ? "true" : "false",
-                TransportUser: $(commonName.TransportUser).val(),
+                TransportUser: UserEmplist,
             };
             return fromData;
         }
         //exists 
-        $([commonName.DriverSelectEmpId, commonName.UserSelectEmpId, commonName.TransportNoId].join(',')).on('change', function () {
+        $([commonName.DriverSelectEmpId, commonName.TransportUser, commonName.TransportNoId].join(',')).on('change', function () {
             $(commonName.VehicleTypeSaveBtn).prop('disabled', false);
         });
 
@@ -166,19 +389,71 @@
         // Save Button Click
         $(document).on('click', commonName.VehicleTypeSaveBtn, function () {
             var fromData = getFromData();
-            if (fromData.EmployeeID == null || fromData.EmployeeID.trim() === '') {               
+            console.log(fromData);
+
+            if (!fromData.EmployeeID || fromData.EmployeeID.trim() === '') {
                 $(commonName.VehicleTypeSaveBtn).prop('disabled', true);
-                $(commonName.DriverSelectEmpId).select2('open');
+
+                var $dropdown = $('#DriverSelectEmpId');
+
+                if ($dropdown.length && $dropdown.data('multiselect')) {
+                    var $button = $dropdown.siblings('.btn-group').find('button.multiselect');
+
+                    if ($button.length) {
+                        $button.focus();
+                        setTimeout(function () {
+                            $button.click();
+                        }, 50);
+                    }
+                } else {
+                    console.warn('Driver multiselect not ready yet');
+                }
+
                 return;
             }
+
+
+
             if (fromData.TransportNoId == null || fromData.TransportNoId.trim() === '') {               
                 $(commonName.VehicleTypeSaveBtn).prop('disabled', true);
-                $(commonName.TransportNoId).select2('open');
+                //$(commonName.TransportNoId).select2('open');
+
+                var $dropdown = $(commonName.TransportNoId);
+
+                if ($dropdown.length && $dropdown.data('multiselect')) {
+                    var $button = $dropdown.siblings('.btn-group').find('button.multiselect');
+
+                    if ($button.length) {
+                        $button.focus();
+                        setTimeout(function () {
+                            $button.click();
+                        }, 50);
+                    }
+                } else {
+                    console.warn('Driver multiselect not ready yet');
+                }
+
                 return;
             }
-            if (fromData.TransportUser == null || fromData.TransportUser.trim() === '') {               
+            if (fromData.TransportUser == null || fromData.TransportUser.length === 0) {               
                 $(commonName.VehicleTypeSaveBtn).prop('disabled', true);
-                $(commonName.UserSelectEmpId).select2('open');
+                //$(commonName.DriverSelectEmpId).select2('open');
+
+                var $dropdown = $("#UserSelectEmpId");
+
+                if ($dropdown.length && $dropdown.data('multiselect')) {
+                    var $button = $dropdown.siblings('.btn-group').find('button.multiselect');
+
+                    if ($button.length) {
+                        $button.focus();
+                        setTimeout(function () {
+                            $button.click();
+                        }, 50);
+                    }
+                } else {
+                    console.warn('Driver multiselect not ready yet');
+                }
+
                 return;
             }
             if (!fromData.EffectiveDate || fromData.EffectiveDate.trim() === '' || !isValidDate(fromData.EffectiveDate)) {
@@ -278,14 +553,31 @@
                 url: `${PopulatedDataForUpdateUrl}?id=${id}`,
                 type: "GET",
                 success: function (res) {
+                    console.log(res);
                     selectedIds = [];
                     selectedIds.push(res.result.autoId + '');
                     $(commonName.AutoId).val(res.result.autoId);
-                    $(commonName.DriverSelectEmpId).val(res.result.employeeID).trigger('change');
+                    //$(commonName.DriverSelectEmpId).val(res.result.employeeID).trigger('change');
                     $(commonName.TransportAssignEntryId).val(res.result.taid);
-                    $(commonName.TransportNoId).val(res.result.transportNoId).trigger('change');
+                    //$(commonName.TransportNoId).val(res.result.transportNoId).trigger('change');
                     $(commonName.TransportTypeId).val(res.result.transportTypeId).trigger('change');
-                    $(commonName.UserSelectEmpId).val(res.result.transportUser).trigger('change');
+
+                    $(commonName.DriverSelectEmpId).val(res.result.employeeID);
+                    if ($(commonName.DriverSelectEmpId).data('multiselect')) {
+                        $(commonName.DriverSelectEmpId).multiselect('rebuild');
+                        $(commonName.DriverSelectEmpId).change(); 
+                    }
+                    $(commonName.TransportNoId).val(res.result.transportNoId);
+                    if ($(commonName.TransportNoId).data('multiselect')) {
+                        $(commonName.TransportNoId).multiselect('rebuild');
+                        $(commonName.TransportNoId).change(); 
+                    }
+                    $(commonName.TransportUser).val(res.result.transportUser);
+                    if ($(commonName.TransportUser).data('multiselect')) {
+                        $(commonName.TransportUser).multiselect('rebuild');
+                        $(commonName.TransportUser).change(); 
+                    }
+
                     if (res.result.effectiveDate) {
                         effectiveDatePicker.setDate(res.result.effectiveDate);
                     }
@@ -299,7 +591,29 @@
                 }
             });
         });
-
+        $(document).on('change', commonName.TransportNoId, function () {
+            console.log($(this).val());
+            var transportNoId = $(this).val();
+            $.ajax({
+                url: transportTypeUrl,
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify( transportNoId),
+                success: function (res) {
+                    console.log(res);
+                    if (res.data.length >0) {
+                        $(commonName.TransportTypeId).val(res.data[0].vehicleTypeId);
+                        if ($(commonName.TransportTypeId).data('multiselect')) {
+                            $(commonName.TransportTypeId).multiselect('rebuild');
+                            $(commonName.TransportTypeId).change();
+                        }
+                    }
+                   
+                }, error: function (e) {
+                    console.log(e);
+                }
+            });
+        })
         //selected id        
 
         $(document).on('change', commonName.RowCheckbox, function () {
@@ -348,6 +662,16 @@
         var init = function () {
             stHeader();
             autoTransportAssignEntryId();
+            setTimeout(function () {
+                UserSelectEmpMultiselect();
+            }, 100);
+            setTimeout(function () {
+                DriverSelectEmpId();
+            }, 100);
+
+            setTimeout(function () {
+                TransportNoList();
+            }, 100);
             table;
         };
         init();
