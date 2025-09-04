@@ -4,7 +4,8 @@
             baseUrl: "/",
             TransportTypeId: "#TransportTypeId",
             TransportNoId: "#TransportNoId",
-            UserSelectEmpId: "#UserSelectEmpId",
+            HelperId: "#HelperId",
+            DriverSelectEmpId: "#DriverSelectEmpId",
             EffectiveDate: "#EffectiveDate",
             TransportUser: "#UserSelectEmpId",
             Active: "#Active",
@@ -18,7 +19,6 @@
             UpdateDate: ".updateDate",
             CreateDate: ".createDate",
             ClearBrn: "#js-transport-entry-assign-clear",
-            DriverSelectEmpId: "#DriverSelectEmpId",
             DEmpName:"#DEmpName",
             DEmpDesignation:"#DEmpDesignation",
             DEmpDepartment:"#DEmpDepartment",
@@ -32,6 +32,7 @@
         var deleteUrl = commonName.baseUrl + "/deleteTransport";
         var alreadyExistUrl = commonName.baseUrl + "/alreadyExist";
         var LoadEmpDetailsUrl = commonName.baseUrl + "/GetEmpDetailsId"; 
+        var transportTypeUrl = commonName.baseUrl + "/transportTypeGetByTransportNo"; 
         // Sticky header on scroll
         function stHeader() {
             window.addEventListener('scroll', function () {
@@ -66,11 +67,129 @@
             });
         }
 
-        $('.searchable-select').select2({
-            //placeholder: 'Select an option',
-            allowClear: false,
-            width: '100%'
+      
+        $(document).ready(function () {
+            setTimeout(function () {
+                $('.multiselect-clear-filter i').removeClass('glyphicon glyphicon-remove-circle')
+                    .addClass('fa fa-times-circle');
+            }, 200);
         });
+
+        let UserEmplist = [];
+        function DriverSelectEmpId() {
+            var $dropdown = $('#DriverSelectEmpId');
+            if ($dropdown.length && typeof $.fn.multiselect !== 'undefined') {
+                if (!$dropdown.data('multiselect')) { 
+                    $dropdown.multiselect({
+                        enableFiltering: true,
+                        enableCaseInsensitiveFiltering: true,
+                        filterPlaceholder: 'Search for an employee...',
+                        buttonWidth: '100%',
+                        maxHeight: 300,
+                        nonSelectedText: '--Select Employee--',
+                        buttonClass: 'btn btn-outline-secondary text-start',
+                        onChange: function (option, checked) {
+                            let selectedValue = $dropdown.val();
+                        }
+                    });
+                }
+            }
+        }
+        function TransportNoList() {
+            var $dropdown = $(commonName.TransportNoId);
+            if ($dropdown.length && typeof $.fn.multiselect !== 'undefined') {
+                if (!$dropdown.data('multiselect')) { 
+                    $dropdown.multiselect({
+                        enableFiltering: true,
+                        enableCaseInsensitiveFiltering: true,
+                        filterPlaceholder: 'Search for an employee...',
+                        buttonWidth: '100%',
+                        maxHeight: 300,
+                        nonSelectedText: '--Select Employee--',
+                        buttonClass: 'btn btn-outline-secondary text-start',
+                        onChange: function (option, checked) {
+                            let selectedValue = $dropdown.val();
+                          
+                        }
+                    });
+                }
+            }
+        }
+
+        function DriverHelperSelectEmpMultiselect() {
+            var $dropdown = $(commonName.HelperId);
+            if ($dropdown.length && typeof $.fn.multiselect !== 'undefined') {
+                if (!$dropdown.data('multiselect')) {
+                    $dropdown.multiselect({
+                        enableFiltering: true,
+                        enableCaseInsensitiveFiltering: true,
+                        filterPlaceholder: 'Search for an employee...',
+                        buttonWidth: '100%',
+                        maxHeight: 300,
+                        nonSelectedText: '--Select Employee--',
+                        buttonClass: 'btn btn-outline-secondary text-start',
+                        onChange: function (option, checked) {
+                            let selectedValue = $dropdown.val();
+
+                        }
+                    });
+                }
+            }
+        }
+
+
+        function UserSelectEmpMultiselect() {
+            if (typeof $.fn.multiselect === 'undefined') {
+                return;
+            }
+
+            try {
+                if ($('#UserSelectEmpId').length) {
+                    $('#UserSelectEmpId').multiselect({
+                        includeSelectAllOption: true,
+                        selectAllText: 'Select All Users',
+                        enableFiltering: true,
+                        enableCaseInsensitiveFiltering: true,
+                        filterPlaceholder: 'Search users...',
+                        buttonWidth: '100%',
+                        maxHeight: 300,
+                        nonSelectedText: '--Select Users--',
+                        allSelectedText: 'All Users Selected',
+                        nSelectedText: ' users selected',
+                        buttonClass: 'btn btn-outline-secondary',
+
+                        onChange: function (option, checked) {
+                            let value = option.val();
+
+                            if (checked) {
+                                if (!UserEmplist.includes(value)) {
+                                    UserEmplist.push(value);
+                                }
+                            } else {
+                                UserEmplist = UserEmplist.filter(id => id !== value);
+                            }
+                        },
+
+                        onSelectAll: function () {
+                            UserEmplist = $('#UserSelectEmpId option').map(function () {
+                                return $(this).val();
+                            }).get();
+                        },
+
+                        onDeselectAll: function () {
+                            UserEmplist = [];
+                        }
+                    });
+                }
+
+            } catch (error) {
+            }
+        }
+
+
+
+
+
         const effectiveDatePicker = flatpickr("input[name='EffectiveDate']", {
             altInput: true,
             altFormat: "d/m/Y",
@@ -95,8 +214,7 @@
                         $(commonName.DEmpName).text(res.data?.empName);
                         $(commonName.DEmpDepartment).text(res.data?.department);
                         $(commonName.DEmpDesignation).text(res.data?.designation);
-                        $(commonName.DEmpPhone).text(res.data?.phone);
-                   
+                        $(commonName.DEmpPhone).text(res.data?.phone);                  
                    
                 }, error: function (e) {
                 }
@@ -116,13 +234,36 @@
 
         resetFrom = function () {
             $(commonName.AutoId).val(0);
-            $(commonName.TransportAssignEntryId).val('');             
+            $(commonName.TransportAssignEntryId).val('');
             $(commonName.Active).prop('checked', false);
-            $(commonName.TransportUser).val('');
-            $(commonName.DriverSelectEmpId).val('').trigger('change');
-            $(commonName.TransportNoId).val("").trigger('change');
-            $(commonName.TransportTypeId).val("").trigger('change');
-            $(commonName.UserSelectEmpId).val("").trigger('change');           
+          
+            $(commonName.TransportNoId).val('').trigger('change');
+            $(commonName.HelperId).val('').trigger('change');
+            $(commonName.TransportTypeId).val('').trigger('change');
+
+            UserEmplist = [];
+
+            if ($('#UserSelectEmpId').length && $('#UserSelectEmpId').data('multiselect')) {
+                $('#UserSelectEmpId').multiselect('deselectAll', false);
+                $('#UserSelectEmpId').multiselect('refresh');
+            }
+
+            // DriverSelectEmpId reset  
+            $('#DriverSelectEmpId').val(''); 
+            if ($('#DriverSelectEmpId').data('multiselect')) {
+                $('#DriverSelectEmpId').multiselect('rebuild');
+            }
+            $(commonName.TransportNoId).val('');
+            if ($(commonName.TransportNoId).data('multiselect')) {
+                $(commonName.TransportNoId).multiselect('rebuild');
+            }
+            $(commonName.HelperId).val('');
+            if ($(commonName.HelperId).data('multiselect')) {
+                $(commonName.HelperId).multiselect('rebuild');
+            }
+
+
+            // Clear employee details
             $(commonName.DEmpName).text("");
             $(commonName.DEmpPhone).text("");
             $(commonName.DEmpDesignation).text("");
@@ -130,11 +271,10 @@
             $(commonName.CreateDate).text("");
             $(commonName.UpdateDate).text("");
 
-
+            // Reset date picker
             if (typeof effectiveDatePicker !== 'undefined') {
                 effectiveDatePicker.setDate("today", true);
             }
-
 
             autoTransportAssignEntryId();
         }
@@ -148,15 +288,16 @@
                 TAID: $(commonName.TransportAssignEntryId).val(),
                 EmployeeID: $(commonName.DriverSelectEmpId).val(),
                 TransportNoId: $(commonName.TransportNoId).val(),
+                HelperId: $(commonName.HelperId).val(),
                 TransportTypeId: $(commonName.TransportTypeId).val(),
                 EffectiveDate: $(commonName.EffectiveDate).val(),
                 Active: $(commonName.Active).prop("checked") ? "true" : "false",
-                TransportUser: $(commonName.TransportUser).val(),
+                TransportUser: UserEmplist,
             };
             return fromData;
         }
         //exists 
-        $([commonName.DriverSelectEmpId, commonName.UserSelectEmpId, commonName.TransportNoId].join(',')).on('change', function () {
+        $([commonName.DriverSelectEmpId, commonName.TransportUser, commonName.TransportNoId].join(',')).on('change', function () {
             $(commonName.VehicleTypeSaveBtn).prop('disabled', false);
         });
 
@@ -166,19 +307,59 @@
         // Save Button Click
         $(document).on('click', commonName.VehicleTypeSaveBtn, function () {
             var fromData = getFromData();
-            if (fromData.EmployeeID == null || fromData.EmployeeID.trim() === '') {               
+            if (!fromData.EmployeeID || fromData.EmployeeID.trim() === '') {
                 $(commonName.VehicleTypeSaveBtn).prop('disabled', true);
-                $(commonName.DriverSelectEmpId).select2('open');
+
+                var $dropdown = $('#DriverSelectEmpId');
+
+                if ($dropdown.length && $dropdown.data('multiselect')) {
+                    var $button = $dropdown.siblings('.btn-group').find('button.multiselect');
+
+                    if ($button.length) {
+                        $button.focus();
+                        setTimeout(function () {
+                            $button.click();
+                        }, 50);
+                    }
+                }
                 return;
             }
+
+
+
             if (fromData.TransportNoId == null || fromData.TransportNoId.trim() === '') {               
                 $(commonName.VehicleTypeSaveBtn).prop('disabled', true);
-                $(commonName.TransportNoId).select2('open');
+              
+                var $dropdown = $(commonName.TransportNoId);
+
+                if ($dropdown.length && $dropdown.data('multiselect')) {
+                    var $button = $dropdown.siblings('.btn-group').find('button.multiselect');
+
+                    if ($button.length) {
+                        $button.focus();
+                        setTimeout(function () {
+                            $button.click();
+                        }, 50);
+                    }
+                }
+
                 return;
             }
-            if (fromData.TransportUser == null || fromData.TransportUser.trim() === '') {               
+            if (fromData.TransportUser == null || fromData.TransportUser.length === 0) {               
                 $(commonName.VehicleTypeSaveBtn).prop('disabled', true);
-                $(commonName.UserSelectEmpId).select2('open');
+
+                var $dropdown = $("#UserSelectEmpId");
+
+                if ($dropdown.length && $dropdown.data('multiselect')) {
+                    var $button = $dropdown.siblings('.btn-group').find('button.multiselect');
+
+                    if ($button.length) {
+                        $button.focus();
+                        setTimeout(function () {
+                            $button.click();
+                        }, 50);
+                    }
+                } 
                 return;
             }
             if (!fromData.EffectiveDate || fromData.EffectiveDate.trim() === '' || !isValidDate(fromData.EffectiveDate)) {
@@ -256,6 +437,8 @@
             "ordering": true,
             "responsive": true,
             "autoWidth": true,
+            "lengthMenu": [[5, 10, 50, 100, -1], [5, 10, 50, 100, "All"]],
+            "pageLength": 10,
             "language": {
                 "search": "Search....",
                 "lengthMenu": "Show _MENU_ entries per page",
@@ -281,15 +464,28 @@
                     selectedIds = [];
                     selectedIds.push(res.result.autoId + '');
                     $(commonName.AutoId).val(res.result.autoId);
-                    $(commonName.DriverSelectEmpId).val(res.result.employeeID).trigger('change');
                     $(commonName.TransportAssignEntryId).val(res.result.taid);
-                    $(commonName.TransportNoId).val(res.result.transportNoId).trigger('change');
                     $(commonName.TransportTypeId).val(res.result.transportTypeId).trigger('change');
-                    $(commonName.UserSelectEmpId).val(res.result.transportUser).trigger('change');
+
+                    $(commonName.DriverSelectEmpId).val(res.result.employeeID);
+                    if ($(commonName.DriverSelectEmpId).data('multiselect')) {
+                        $(commonName.DriverSelectEmpId).multiselect('rebuild');
+                        $(commonName.DriverSelectEmpId).change(); 
+                    }
+                    $(commonName.TransportNoId).val(res.result.transportNoId);
+                    if ($(commonName.TransportNoId).data('multiselect')) {
+                        $(commonName.TransportNoId).multiselect('rebuild');
+                        $(commonName.TransportNoId).change(); 
+                    }
+                    $(commonName.TransportUser).val(res.result.transportUser);
+                    if ($(commonName.TransportUser).data('multiselect')) {
+                        $(commonName.TransportUser).multiselect('rebuild');
+                        $(commonName.TransportUser).change(); 
+                    }
+                    $(commonName.HelperId).val(res.result.helperId).multiselect('rebuild');
                     if (res.result.effectiveDate) {
                         effectiveDatePicker.setDate(res.result.effectiveDate);
                     }
-                    //$(commonName.Active).prop('checked',res.result.active);
                     $(commonName.Active).prop('checked', res.result.active === true || res.result.active === "true");
                     $(commonName.CreateDate).text(res.result.showCreateDate);
                     $(commonName.UpdateDate).text(res.result.showModifyDate);
@@ -299,7 +495,24 @@
                 }
             });
         });
-
+        $(document).on('change', commonName.TransportNoId, function () {
+            var transportNoId = $(this).val();
+            $.ajax({
+                url: transportTypeUrl,
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify( transportNoId),
+                success: function (res) {
+                    if (res.data.length >0) {
+                        $(commonName.TransportTypeId).val(res.data[0].vehicleTypeId);
+                        if ($(commonName.TransportTypeId).data('multiselect')) {
+                            $(commonName.TransportTypeId).multiselect('rebuild');
+                            $(commonName.TransportTypeId).change();
+                        }
+                    }                   
+                }
+            });
+        })
         //selected id        
 
         $(document).on('change', commonName.RowCheckbox, function () {
@@ -348,6 +561,17 @@
         var init = function () {
             stHeader();
             autoTransportAssignEntryId();
+            setTimeout(function () {
+                UserSelectEmpMultiselect();
+                DriverHelperSelectEmpMultiselect();
+            }, 100);
+            setTimeout(function () {
+                DriverSelectEmpId();
+            }, 100);
+
+            setTimeout(function () {
+                TransportNoList();
+            }, 100);
             table;
         };
         init();

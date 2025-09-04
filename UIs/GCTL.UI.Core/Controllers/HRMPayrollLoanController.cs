@@ -195,7 +195,21 @@ namespace GCTL.UI.Core.Controllers
             var result = await hRMPayrollLoanService.deletePaymentReceiveAsync(autoIds);
             return Json(new {result.isSuccess, result.message });
         }
+        [HttpPost]
+        public async Task<IActionResult> ValidPaymentAmount([FromBody] PaymentAmountRequest requestData)
+        {
+            try
+            {
+                var result = await hRMPayrollLoanService.ValidPaymentAmountAsync(requestData);
+                return Json(new {isSuccess = result.isSuccess, message = result.message });
+            }
+            catch (Exception)
+            {
 
-       
+                throw;
+            }
+        }
+
+
     }
 }

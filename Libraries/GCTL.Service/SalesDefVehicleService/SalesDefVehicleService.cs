@@ -92,6 +92,7 @@ namespace GCTL.Service.SalesDefVehicleService
                         .FirstOrDefault(),
                     VehicleNo = c.VehicleNo,
                     CompanyCode = c.CompanyCode,
+                    TransportCapacity = c.TransportCapacity,
                     CompanyName = comRepo.All()
                         .Where(x => x.CompanyCode == c.CompanyCode)
                         .Select(x => x.CompanyName)
@@ -121,6 +122,7 @@ namespace GCTL.Service.SalesDefVehicleService
                     VehicleTypeID = entity.VehicleTypeId,
                     VehicleID = entity.VehicleId,
                     VehicleNo = entity.VehicleNo,
+                    TransportCapacity= entity.TransportCapacity,
                     CompanyCode = entity.CompanyCode,
                     ShowCreateDate = entity.Ldate.HasValue ? entity.Ldate.Value.ToString("dd/MM/yyyy") : "",
                     ShowModifyDate = entity.ModifyDate.HasValue ? entity.ModifyDate.Value.ToString("dd/MM/yyyy") : "",
@@ -145,6 +147,7 @@ namespace GCTL.Service.SalesDefVehicleService
                         VehicleTypeId = model.VehicleTypeID,
                         VehicleNo = model.VehicleNo,
                         VehicleId = model.VehicleID,
+                        TransportCapacity = model.TransportCapacity,
                         CompanyCode = companyCode,
                         Luser = model.Luser,
                         Lip = model.Lip,
@@ -163,6 +166,7 @@ namespace GCTL.Service.SalesDefVehicleService
                     exData.VehicleTypeId = model.VehicleTypeID;
                     exData.VehicleNo = model.VehicleNo;
                     exData.VehicleId = model.VehicleID;
+                    exData.TransportCapacity = model.TransportCapacity;
                     exData.CompanyCode = companyCode;
                     exData.ModifyDate = DateTime.Now;
                     await transportInfoRepo.UpdateAsync(exData);

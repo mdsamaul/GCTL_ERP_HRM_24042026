@@ -38,17 +38,20 @@ namespace GCTL.UI.Core.Controllers
         }
         public IActionResult Index()
         {
-            var Emplists = from emp in empRepo.All()
-                          join offEmp in offEmpRepo.All() on emp.EmployeeId equals offEmp.EmployeeId
-                          join desi in desiRepo.All() on offEmp.DesignationCode equals desi.DesignationCode
-                          where offEmp.EmployeeStatus == "01" && desi.DesignationName == "Driver" && emp.CompanyCode == LoginInfo.CompanyCode 
-                          select new
-                          {
-                              emp.EmployeeId,
-                              fullName = emp.FirstName + " " + emp.LastName,                              
-                          };
-            //ViewBag.EmpDriverList = new SelectList(empRepo.All().Where(x=> x.EmployeeId == ( offEmpRepo.All().Where(e=> e.EmployeeId== x.EmployeeId))).Select(x=> new {x.EmployeeId, fullName = x.FirstName +" "+x.LastName }), "EmployeeId", "fullName");
-            ViewBag.EmpList = new SelectList(empRepo.All().Select(x=> new {x.EmployeeId, fullName = x.FirstName +" "+x.LastName }), "EmployeeId", "fullName");
+            var empDriverList = (from emp in empRepo.All()
+                                 join offEmp in offEmpRepo.All() on emp.EmployeeId equals offEmp.EmployeeId
+                                 join desi in desiRepo.All() on offEmp.DesignationCode equals desi.DesignationCode
+                                 where offEmp.EmployeeStatus == "01" && desi.DesignationName == "Driver" && emp.CompanyCode == LoginInfo.CompanyCode
+                                 select new EmployeeDriverSelectVM
+                                 {
+                                     EmployeeId = emp.EmployeeId,
+                                     FullName = emp.FirstName + " " + emp.LastName +" ( "+emp.EmployeeId+" )" 
+                                 }).ToList();
+
+            ViewBag.EmpDriverList = new SelectList(empDriverList, "EmployeeId", "FullName");
+
+
+            ViewBag.EmpList = new SelectList(empRepo.All().Select(x=> new {x.EmployeeId, fullName = x.FirstName +" "+x.LastName + " ( " + x.EmployeeId + " )" }), "EmployeeId", "fullName");
             ViewBag.TransportList = new SelectList(transportRepo.All().Select(x=> new {x.VehicleId, x.VehicleNo}), "VehicleId", "VehicleNo");
             ViewBag.TransportTypeList = new SelectList(transportTypeRepo.All().Select(x=> new {x.VehicleTypeId, x.VehicleType}), "VehicleTypeId", "VehicleType");
 
@@ -169,5 +172,22 @@ namespace GCTL.UI.Core.Controllers
             var result = await transportAssignService.AlreadyExistAsync(TransportValue);
             return Json(new { isSuccess = result.isSuccess, message = result.message, data = result });
         }
+        [HttpPost]
+        public async Task<IActionResult> transportTypeGetByTransportNo([FromBody] string transportNoId)
+        {
+            var result = from tr in transportRepo.All()
+                         join tt in transportTypeRepo.All() on tr.VehicleTypeId equals tt.VehicleTypeId
+                         where tr.VehicleId == transportNoId
+                         select new
+                         {
+                             tt.VehicleTypeId,
+                             tt.VehicleType
+                         };
+            return Json(new {data = result});
+
+
+        }
+
+
     }
 }

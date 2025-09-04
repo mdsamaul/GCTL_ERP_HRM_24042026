@@ -877,6 +877,10 @@
                 "serverSide": true,
                 "responsive": true,
                 "pageLength": 10,
+                ordering: true,
+                columnDefs: [
+                    { orderable: false, targets: [0] } 
+                ],
                 "scrollY": "600px",
                 "scrollCollapse": true,
                 "lengthMenu": [[5, 10, 25, 50, 100,1000], [5, 10, 25, 50, 100, 1000]],
@@ -977,10 +981,6 @@
                         }
                     },
                     {
-                        "data": "loanID",
-                        "title": "Loan ID",
-                    },
-                    {
                         "data": "employeeID",
                         "title": "Employee ID",                        
                     },
@@ -989,17 +989,22 @@
                         "title": "Name",
                         "width": "15%",
                         "render": function (data) {
-                            return data || 'N/A';
+                            return data || '';
                         }
-                    },
-                    {
+                    }, {
                         "data": "designationName",
                         "title": "Designation",
                         "width": "12%",
                         "render": function (data) {
-                            return data || 'N/A';
+                            return data || '';
                         }
                     },
+                    {
+                        "data": "loanID",
+                        "title": "Loan ID",
+                    },
+                    
+                   
                     {
                         "data": "advanceAmount",
                         "title": "Loan Amount",
@@ -1014,21 +1019,20 @@
                             
                         }
                     },
-
-                    {
+                     {
                         "data": "noOfPaymentInstallment",
                         "title": "No. Of Inst(s)",
                         "width": "8%",
                         "render": function (data) {
-                            return data || 'N/A';
+                            return data || '';
                         }
-                    },
+                    },                   
                     {
                         "data": "monthlyDeduction",
                         "title": "Monthly Deduction",
                         "width": "10%",
                         "render": function (data) {
-                            if (data == null || data === '') return 'N/A';
+                            if (data == null || data === '') return '';
                             const amount = parseFloat(data) || 0;
                             return  amount.toLocaleString('en-US', {
                                 minimumFractionDigits: 0,
@@ -1041,7 +1045,7 @@
                         "title": "Salary Month",
                         "width": "8%",
                         "render": function (data) {
-                            return data || 'N/A';
+                            return data || '';
                         }
                     },
                     {
@@ -1049,13 +1053,13 @@
                         "title": "Salary Year",
                         "width": "8%",
                         "render": function (data) {
-                            return data || 'N/A';
+                            return data || '';
                         }
                     }
                 ],
-                "order": [[1, "desc"]], // Order by ID column
+                "order": [[1, "desc"]],
                 "drawCallback": function (settings) {
-                    $('[title]').tooltip(); // Tooltip reinit if needed
+                    $('[title]').tooltip();
                 },
                 "initComplete": function () {
                     $('#advancePayTable_filter input[type="search"]').attr('placeholder', 'Search Here..');
@@ -1213,5 +1217,5 @@
             GridAdvanceLoan();           
         };
         init();
-    };
+    }; advancePayTable
 })(jQuery);
