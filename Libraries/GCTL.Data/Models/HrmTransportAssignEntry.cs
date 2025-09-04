@@ -11,6 +11,7 @@ namespace GCTL.Data.Models
         public string Taid { get; set; }
         public string EmployeeId { get; set; }
         public string TransportNoId { get; set; }
+        public string HelperId { get; set; }
         public string TransportTypeId { get; set; }
         public DateTime? EffectiveDate { get; set; }
         public string Active { get; set; }

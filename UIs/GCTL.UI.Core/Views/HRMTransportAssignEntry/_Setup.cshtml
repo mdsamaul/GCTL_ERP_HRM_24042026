@@ -18,7 +18,6 @@
         <div class="d-flex align-items-center">
             <div class="transportLeft text-right">Transport No. <span class="text-danger">*</span></div>
             <div class="transportRight">
-                @* <input asp-for="TransportNoId" class="form-control-sm form-control" /> *@
                 <select asp-for="TransportNoId" asp-items=" ViewBag.TransportList as SelectList" class="form-control-sm form-control form-select-sm form-select searchable-select">
                     <option value="">--Select Transport No--</option>
                 </select>
@@ -47,9 +46,10 @@
 <div class="row py-2">
     <div class="col-12 col-md-6">
         <div class="d-flex align-items-center">
-            <div class="transportLeft text-right">User <span class="text-danger">*</span></div>
+            <div class="transportLeft text-right">Helper Name</div>
             <div class="transportRight">
-                <select asp-for="TransportUser" class="form-control-sm form-control form-select-sm form-select searchable-select" id="UserSelectEmpId" asp-items="ViewBag.EmpList as SelectList" multiple>               
+                <select asp-for="HelperId" class="form-control-sm form-control form-select-sm form-select searchable-select" asp-items="ViewBag.EmpList as SelectList">
+                    <option value="">--Select Helper--</option>
                 </select>
             </div>
         </div>
@@ -57,25 +57,32 @@
 
     <div class="col-12 col-md-6">
         <div class="d-flex align-items-center">
-            <div class="transportLeft text-right">Effective Date <span class="text-danger">*</span></div>
+            <div class="transportLeft text-right">User <span class="text-danger">*</span></div>
             <div class="transportRight">
-                <input asp-for="EffectiveDate" class="form-control-sm form-control" />
+                <select asp-for="TransportUser" class="form-control-sm form-control form-select-sm form-select searchable-select" id="UserSelectEmpId" asp-items="ViewBag.EmpList as SelectList" multiple>
+                </select>
             </div>
         </div>
     </div>
 </div>
+
+
+
 <div class="row py-2">
     <div class="col-12 col-md-6">
-        <div class="d-flex align-items-center">
-            <div class="transportLeft text-right">Active</div>
-            <div class="transportRight">
-                @* <input asp-for="Active" checked class="form-control-sm form-control" /> *@
-                <input type="checkbox" asp-for="Active" name="name" value="" />
+            <div class="d-flex align-items-center">
+          
+                <div class="transportLeft text-right">Effective Date <span class="text-danger">*</span></div>
+                <div class="transportRight">
+                    <input asp-for="EffectiveDate" class="form-control-sm form-control" />
+                </div>
             </div>
-        </div>
     </div>
     <div class="col-12 col-md-6">
-        
+        <div class="d-flex align-items-center">
+        <div class="transportLeft text-right">Active</div>
+        <input type="checkbox" asp-for="Active" name="name" value="" />
+    </div>
     </div>
 </div>
 

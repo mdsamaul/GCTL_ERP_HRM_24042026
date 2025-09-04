@@ -19,6 +19,8 @@ namespace GCTL.Core.ViewModels.HRMPayrollLoan
         public DateTime? EndDate { get; set; }
         public string? EndShowDate { get; set; }
         public decimal? LoanAmount { get; set; }
+        public decimal? paymentLoanAmount { get; set; }
+        public DateTime? paymentLoanDate { get; set; }
         public string NoOfInstallment { get; set; }
         public decimal? MonthlyDeduction { get; set; }
         public string PayHeadNameId { get; set; }
@@ -38,6 +40,8 @@ namespace GCTL.Core.ViewModels.HRMPayrollLoan
         public string ShowJoiningDate { get; set; }
         public string showCreateDate { get; set; }
         public string showModifyDate { get; set; }
-       
+        public string? Message { get; set; }
+        public Boolean IsComplete { get; set; }
+
     }
 }

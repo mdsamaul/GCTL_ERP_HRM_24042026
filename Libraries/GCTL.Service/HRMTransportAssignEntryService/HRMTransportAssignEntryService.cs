@@ -97,6 +97,7 @@ namespace GCTL.Service.HRMTransportAssignEntryService
                 {
                     AutoId = c.AutoId,
                     TAID = c.Taid,
+                    HelperId = c.HelperId,
                    TransportNoId = c.TransportNoId,
                    ShowTransportNoId = transportRepo.All().Where(x=> x.VehicleId== c.TransportNoId).Select(c=> c.VehicleNo).FirstOrDefault(),
                     TransportTypeId = c.TransportTypeId,
@@ -131,6 +132,7 @@ namespace GCTL.Service.HRMTransportAssignEntryService
                 {
                     AutoId = entity.AutoId,
                     EmployeeID = entity.EmployeeId,
+                    HelperId = entity.HelperId,
                     TAID = entity.Taid,
                     TransportNoId = entity.TransportNoId,
                     TransportTypeId = entity.TransportTypeId,
@@ -178,7 +180,7 @@ namespace GCTL.Service.HRMTransportAssignEntryService
                             var entity = new HrmTransportAssignEntry
                             {
                                 Taid = nextTaid.ToString("D8"),
-
+                                HelperId=model.HelperId,
                                 TransportNoId = model.TransportNoId,
                                 TransportTypeId = model.TransportTypeId,
                                 EffectiveDate = model.EffectiveDate,
@@ -209,6 +211,7 @@ namespace GCTL.Service.HRMTransportAssignEntryService
                     if (exData != null)
                     {
                         exData.Taid = model.TAID; 
+                        exData.HelperId = model.HelperId;
                         exData.TransportNoId = model.TransportNoId;
                         exData.TransportTypeId = model.TransportTypeId;
                         exData.EffectiveDate = model.EffectiveDate;

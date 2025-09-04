@@ -31,6 +31,7 @@ namespace GCTL.Core.ViewModels.SalesDefVehicle
         public decimal? StorageSize { get; set; }
         public string? StorageUnitID { get; set; }
         public decimal? WeightLoadCapacity { get; set; }
+        public decimal? TransportCapacity { get; set; }
         public string? CapacityUnitID { get; set; }
         public decimal? TransportLength { get; set; }
         public decimal? TransportWidth { get; set; }

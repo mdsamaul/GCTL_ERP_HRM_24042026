@@ -663,6 +663,18 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[HRM_TransportExpenseDetails]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HRM_TransportExpenseDetailsTemp]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HRM_TransportExpenseEntry]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[INV_Catagory]",
          "ObjectType": 0
       },

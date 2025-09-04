@@ -28,5 +28,6 @@ namespace GCTL.Service.HRMPayrollLoan
         Task<(bool isSuccess, string message)> deletePaymentReceiveAsync(List<decimal> autoIds);
         Task<HRMPayrollLoanSetupViewModel> getLoanIdAsync(string loanId);
         Task<HrmPayrollPaymentReceiveDto> getPaymentReceiveByIdAsync(string paymentId);
+        Task<(bool isSuccess, string message)> ValidPaymentAmountAsync(PaymentAmountRequest requestData);
     }
 }
