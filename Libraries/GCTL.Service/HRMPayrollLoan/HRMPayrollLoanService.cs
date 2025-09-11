@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.Drawing;
+﻿using AutoMapper.QueryableExtensions;
+using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Wordprocessing;
 using GCTL.Core.Data;
 using GCTL.Core.ViewModels.Companies;
@@ -584,7 +585,7 @@ namespace GCTL.Service.HRMPayrollLoan
                     loanData.BankId = modelData.BankId;
                     loanData.BankAccount = modelData.BankAccount;
                     loanData.Remarks = modelData.Remarks;
-                loanData.ReasonOfLoanTaken = modelData.ReasonOfLoanTaken;
+                    loanData.ReasonOfLoanTaken = modelData.ReasonOfLoanTaken;
                     loanData.CompanyCode = modelData.CompanyCode;
                 loanData.ModifyDate = modelData.Ldate;
                 await payrollLoanRepo.UpdateAsync(loanData);
@@ -715,6 +716,7 @@ namespace GCTL.Service.HRMPayrollLoan
                              payHeadId = lon.PayHeadNameId ??"",
                              createDate= lon.Ldate.HasValue ? lon.Ldate.Value.ToString("dd/MM/yyyy"):"",
                              updateDate= lon.ModifyDate.HasValue ? lon.ModifyDate.Value.ToString("dd/MM/yyyy"):"",
+                             reasonOfLoanTaken= lon.ReasonOfLoanTaken??"",
                          };
 
             var loanDataList = queary.Select(x => new HRMPayrollLoanSetupViewModel
@@ -748,6 +750,7 @@ namespace GCTL.Service.HRMPayrollLoan
                 PayHeadNameId = x.payHeadId,
                 showCreateDate = x.createDate,
                 showModifyDate = x.updateDate,
+                ReasonOfLoanTaken=x.reasonOfLoanTaken,
             }).ToList();
 
             return loanDataList.OrderBy(x=>x.AutoId).ToList();
@@ -800,25 +803,51 @@ namespace GCTL.Service.HRMPayrollLoan
 
         public async Task<HRMPayrollLoanSetupViewModel> getLoanIdAsync(string loanId)
         {
-            var LoanData= payrollLoanRepo.All().Where(x => x.LoanId == loanId).FirstOrDefault();
-            //var LoanData = await payrollLoanRepo.GetByIdAsync(loanId);
-            if (LoanData == null)
-                return null;
-
-            // Manual mapping
-            var result = new HRMPayrollLoanSetupViewModel
+            try
             {
-                LoanId = LoanData.LoanId,
-                EmployeeId = LoanData.EmployeeId,
-                LoanAmount = LoanData.LoanAmount,
-                NoOfInstallment = LoanData.NoOfInstallment,
-                MonthlyDeduction = LoanData.MonthlyDeduction,
-                ShowLoanDate = LoanData.LoanDate.HasValue? LoanData.LoanDate.Value.ToString("dd/MM/yyyy"):"",
-                LoanTypeName= payTypeRepo.All().Where(x=> x.LoanTypeId ==LoanData.LoanTypeId).Select(x=> x.LoanType).FirstOrDefault()?.ToString(),
-                StartShowDate= LoanData.StartDate.HasValue? LoanData.StartDate.Value.ToString("dd/MM/yyyy"):"",
-                EndShowDate = LoanData.EndDate.HasValue? LoanData.EndDate.Value.ToString("dd/MM/yyyy"):"",
-            };
-            return result;
+                var LoanData = payrollLoanRepo.All().Where(x => x.LoanId == loanId).FirstOrDefault();
+                //var LoanData = await payrollLoanRepo.GetByIdAsync(loanId);
+                if (LoanData == null)
+                    return null;
+
+                var paymentDataList = await paymentRepo.All().Where(x => x.LoanId == loanId).ToListAsync();
+                var paymentDataLast = await paymentRepo.All().Where(x => x.LoanId == loanId).OrderByDescending(x => x.PaymentDate).LastOrDefaultAsync();
+
+                int totalPaymentAmount = 0;
+                int remaingPaymentAmount = Convert.ToInt32(LoanData.MonthlyDeduction);
+                foreach (var item in paymentDataList)
+                {
+                    totalPaymentAmount += Convert.ToInt32(item.PaymentAmount);
+                }
+
+                if (totalPaymentAmount + LoanData.MonthlyDeduction > LoanData.LoanAmount)
+                {
+                    remaingPaymentAmount = Convert.ToInt32(LoanData.LoanAmount) - totalPaymentAmount;
+                }
+
+                // Manual mapping
+                var result = new HRMPayrollLoanSetupViewModel
+                {
+                    LoanId = LoanData.LoanId,
+                    EmployeeId = LoanData.EmployeeId,
+                    LoanAmount = LoanData.LoanAmount,
+                    NoOfInstallment = LoanData.NoOfInstallment,
+                    MonthlyDeduction = LoanData.MonthlyDeduction,
+                    ShowLoanDate = LoanData.LoanDate.HasValue ? LoanData.LoanDate.Value.ToString("dd/MM/yyyy") : "",
+                    LoanTypeName = payTypeRepo.All().Where(x => x.LoanTypeId == LoanData.LoanTypeId).Select(x => x.LoanType).FirstOrDefault()?.ToString(),
+                    StartShowDate = LoanData.StartDate.HasValue ? LoanData.StartDate.Value.ToString("dd/MM/yyyy") : "",
+                    EndShowDate = LoanData.EndDate.HasValue ? LoanData.EndDate.Value.ToString("dd/MM/yyyy") : "",
+                    paymentLoanAmount = remaingPaymentAmount,
+                    paymentLoanDate = paymentDataLast.PaymentDate
+                };
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
         }
 
 

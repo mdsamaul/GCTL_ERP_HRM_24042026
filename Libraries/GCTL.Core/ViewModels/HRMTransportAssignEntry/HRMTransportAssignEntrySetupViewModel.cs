@@ -15,6 +15,7 @@ namespace GCTL.Core.ViewModels.HRMTransportAssignEntry
         public string? TransportNoId { get; set; }
         public string? ShowTransportNoId { get; set; }
         public string? TransportTypeId { get; set; }
+        public string HelperId { get; set; }
         public string? ShowTransportTypeId { get; set; }
         public DateTime? EffectiveDate { get; set; }
         public string? ShowEffectiveDate { get; set; }

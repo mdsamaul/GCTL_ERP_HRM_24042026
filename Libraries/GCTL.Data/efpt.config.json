@@ -627,6 +627,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[HRM_PAY_MonthlyTaxDepositEntry]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[HRM_PAY_PayHeadName]",
          "ObjectType": 0
       },
@@ -660,6 +664,18 @@
       },
       {
          "Name": "[dbo].[HRM_TransportAssignEntry]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HRM_TransportExpenseDetails]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HRM_TransportExpenseDetailsTemp]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HRM_TransportExpenseEntry]",
          "ObjectType": 0
       },
       {
@@ -971,6 +987,10 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[MonthlyTransportExpenseDetailsReport]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[PaidReceipts]",
          "ObjectType": 1
       },
@@ -1132,6 +1152,10 @@
       },
       {
          "Name": "[dbo].[Proc_VoucherEntryFromLabTestForRV]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[ProcGetEmpTaxChallanEntry]",
          "ObjectType": 1
       },
       {
@@ -1308,6 +1332,10 @@
       },
       {
          "Name": "[dbo].[SP_HRM_AdvancePayReport]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[USP_TransportExpenseReport]",
          "ObjectType": 1
       },
       {

@@ -33,5 +33,6 @@ namespace GCTL.Data.Models
         public decimal AdvancePayCode { get; set; }
         public DateTime? LDate { get; set; }
         public DateTime? ModifyDate { get; set; }
+        public string LoanStatus { get; set; }
     }
 }

@@ -31,5 +31,6 @@ namespace GCTL.Data.Models
         public DateTime? ModifyDate { get; set; }
         public string CompanyCode { get; set; }
         public string ReasonOfLoanTaken { get; set; }
+        public string LoanStatus { get; set; }
     }
 }

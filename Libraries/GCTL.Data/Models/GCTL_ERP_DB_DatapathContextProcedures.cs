@@ -62,6 +62,7 @@ namespace GCTL.Data.Models
             modelBuilder.Entity<GetTestRoomNoResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<INV_ProductIssueReport_FilterResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<INV_StockReport_FilterResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<MonthlyTransportExpenseDetailsReportResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<PaidReceiptsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<Prc_Frm_TempAccountDetailsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<Prc_GetAccessCodeResult>().HasNoKey().ToView(null);
@@ -86,6 +87,7 @@ namespace GCTL.Data.Models
             modelBuilder.Entity<Proc_getVendorListResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<proc_LabTestListNotInVoucherResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<proc_Select_CL_SCL_GGL_GLAndSLAllInfoResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ProcGetEmpTaxChallanEntryResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<ProcGetEployeeFilterDetailsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<PROCPrintingAndStationeryReportResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<ReferenceCommissionReportResult>().HasNoKey().ToView(null);
@@ -129,6 +131,7 @@ namespace GCTL.Data.Models
             modelBuilder.Entity<SP_GetEmployeesByEmployeeIDsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<SP_HRM_AdvancePayFilterDataResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<SP_HRM_AdvancePayReportResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<USP_TransportExpenseReportResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<VoucherEntryForCollectionReceivedbankResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<VoucherEntryForCollectionReceivedCashResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<VoucherEntryForTransportApprovedResult>().HasNoKey().ToView(null);
@@ -1781,6 +1784,71 @@ namespace GCTL.Data.Models
             return _;
         }
 
+        public virtual async Task<List<MonthlyTransportExpenseDetailsReportResult>> MonthlyTransportExpenseDetailsReportAsync(string TransportTypeIDs, string TransportNos, string Drivers, DateOnly? FromDate, DateOnly? ToDate, int? Month, int? Year, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "TransportTypeIDs",
+                    Size = -1,
+                    Value = TransportTypeIDs ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "TransportNos",
+                    Size = -1,
+                    Value = TransportNos ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "Drivers",
+                    Size = -1,
+                    Value = Drivers ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "FromDate",
+                    Value = FromDate ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Date,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "ToDate",
+                    Value = ToDate ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Date,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "Month",
+                    Value = Month ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "Year",
+                    Value = Year ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<MonthlyTransportExpenseDetailsReportResult>("EXEC @returnValue = [dbo].[MonthlyTransportExpenseDetailsReport] @TransportTypeIDs = @TransportTypeIDs, @TransportNos = @TransportNos, @Drivers = @Drivers, @FromDate = @FromDate, @ToDate = @ToDate, @Month = @Month, @Year = @Year", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
         public virtual async Task<List<PaidReceiptsResult>> PaidReceiptsAsync(string BillTypeId, string PatientTypeId, DateTime? FromDate, DateTime? ToDate, string DoctorId, string ReferenceId, string Role, string LUser, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
@@ -3094,6 +3162,61 @@ namespace GCTL.Data.Models
                 parameterreturnValue,
             };
             var _ = await _context.Database.ExecuteSqlRawAsync("EXEC @returnValue = [dbo].[Proc_VoucherEntryFromLabTestForRV] @LabTestNo = @LabTestNo", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<ProcGetEmpTaxChallanEntryResult>> ProcGetEmpTaxChallanEntryAsync(string CompanyIds, string EmployeeIds, string BranchCodes, string DesignationCodes, string DepartmentCodes, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "CompanyIds",
+                    Size = -1,
+                    Value = CompanyIds ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "EmployeeIds",
+                    Size = -1,
+                    Value = EmployeeIds ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "BranchCodes",
+                    Size = -1,
+                    Value = BranchCodes ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "DesignationCodes",
+                    Size = -1,
+                    Value = DesignationCodes ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "DepartmentCodes",
+                    Size = -1,
+                    Value = DepartmentCodes ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<ProcGetEmpTaxChallanEntryResult>("EXEC @returnValue = [dbo].[ProcGetEmpTaxChallanEntry] @CompanyIds = @CompanyIds, @EmployeeIds = @EmployeeIds, @BranchCodes = @BranchCodes, @DesignationCodes = @DesignationCodes, @DepartmentCodes = @DepartmentCodes", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
@@ -4962,6 +5085,71 @@ namespace GCTL.Data.Models
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<SP_HRM_AdvancePayReportResult>("EXEC @returnValue = [dbo].[SP_HRM_AdvancePayReport] @CompanyCodes = @CompanyCodes, @BranchCodes = @BranchCodes, @DepartmentCodes = @DepartmentCodes, @DesignationCodes = @DesignationCodes, @EmployeeIDs = @EmployeeIDs, @PayHeadIDs = @PayHeadIDs, @MonthIDs = @MonthIDs, @YearIDs = @YearIDs", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<USP_TransportExpenseReportResult>> USP_TransportExpenseReportAsync(string TransportTypeIDs, string TransportNos, string Drivers, DateTime? FromDate, DateTime? ToDate, int? Month, int? Year, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "TransportTypeIDs",
+                    Size = -1,
+                    Value = TransportTypeIDs ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "TransportNos",
+                    Size = -1,
+                    Value = TransportNos ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "Drivers",
+                    Size = -1,
+                    Value = Drivers ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "FromDate",
+                    Value = FromDate ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.DateTime,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "ToDate",
+                    Value = ToDate ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.DateTime,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "Month",
+                    Value = Month ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "Year",
+                    Value = Year ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<USP_TransportExpenseReportResult>("EXEC @returnValue = [dbo].[USP_TransportExpenseReport] @TransportTypeIDs = @TransportTypeIDs, @TransportNos = @TransportNos, @Drivers = @Drivers, @FromDate = @FromDate, @ToDate = @ToDate, @Month = @Month, @Year = @Year", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 

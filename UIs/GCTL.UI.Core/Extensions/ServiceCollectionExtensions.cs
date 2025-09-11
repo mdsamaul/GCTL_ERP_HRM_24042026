@@ -132,6 +132,10 @@ using GCTL.Service.SalesDefVehicleTypeService;
 using GCTL.Service.SalesDefTransportExpenseHeadService;
 using GCTL.Service.SalesDefVehicleService;
 using GCTL.Service.HRMTransportAssignEntryService;
+using GCTL.Service.HRMTransportExpenseEntryService;
+using GCTL.Service.TransportExpenseStatementReportService;
+using GCTL.Service.MonthlyTransportExpenseDetailsReportService;
+using GCTL.Service.TaxChallanEntryService;
 
 
 //using GCTL.Service.AccountReport;
@@ -234,6 +238,11 @@ services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
             services.AddScoped<ISalesDefTransportExpenseHead , SalesDefTransportExpenseHeads>();
             services.AddScoped<ISalesDefVehicleService , SalesDefVehicleService>();
             services.AddScoped<IHRMTransportAssignEntryService , HRMTransportAssignEntryService>();
+            services.AddScoped<IHRMTransportExpenseEntryServicec , HRMTransportExpenseEntryServicec>();
+            services.AddScoped<ITransportExpenseStatementReportServices, TransportExpenseStatementReportServices>();
+            services.AddScoped<IMonthlyTransportExpenseDetailsReportService, MonthlyTransportExpenseDetailsReportServices>();
+
+            services.AddScoped<ITaxChallanEntryService, TaxChallanEntryServices>();
 
 
             

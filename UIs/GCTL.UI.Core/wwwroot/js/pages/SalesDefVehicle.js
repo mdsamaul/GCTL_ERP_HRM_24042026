@@ -3,6 +3,7 @@
         var commonName = $.extend({
             baseUrl: "/",
             VehicleNo: "#VehicleNo",
+            TransportCapacity: "#TransportCapacity",
             VehicleID: "#VehicleID",
             AutoId: "#TC",
             RowCheckbox: ".row-checkbox",
@@ -111,6 +112,7 @@
         resetFrom = function () {
             $(commonName.AutoId).val(0);
             $(commonName.VehicleNo).val('');
+            $(commonName.TransportCapacity).val('');
             $(commonName.CloaseLoadedTransportTypelistSelectContainer).val('').trigger('change');
             $(commonName.ShortName).val('');
             $(commonName.CreateDate).text('');
@@ -129,6 +131,7 @@
                 VehicleID: $(commonName.VehicleID).val(),
                 VehicleTypeID: $(commonName.CloaseLoadedTransportTypelistSelectContainer).val(),
                 VehicleNo: $(commonName.VehicleNo).val(),
+                TransportCapacity: $(commonName.TransportCapacity).val(),
             };
             return fromData;
         }
@@ -244,6 +247,7 @@
                 },
                 {"data": "vehicleNo" },
                 {"data": "vehicleTypeName" },
+                {"data": "transportCapacity"},
                 {"data": "companyName" }
             ],
             "paging": true,

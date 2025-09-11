@@ -552,6 +552,7 @@
                 url: GetPaymentReceiveByIdUrl + "?paymentId=" + encodeURIComponent(row.paymentId),
                 type: "GET",
                 success: function (res) {
+                    console.log(res);
                     $(settings.PaymentReceiveAutoId).val(res.data.autoId);
                     $(settings.PaymentBankAccount).val(res.data.bankAccount);
                     $(settings.PaymentCheckNo).val(res.data.chequeNo);
@@ -806,7 +807,7 @@
             }
         });
         $(document).on('change', settings.EndDate, function () {
-           
+            
             var startDateStr = $(settings.InstStartDate).val(); 
             var endDateStr = $(settings.EndDate).val();         
           
@@ -847,6 +848,7 @@
         });
 
         $(document).on('input', settings.InstStartDate, function () {
+            ;
             var startDateStr = $(settings.InstStartDate).val(); 
             var endDateStr = $(settings.EndDate).val();         
 
@@ -869,8 +871,8 @@
             var yearDiff = endDate.getFullYear() - startDate.getFullYear();
             var monthDiff = endDate.getMonth() - startDate.getMonth();
 
-            var totalMonths = yearDiff * 12 + monthDiff+1;
-
+            var totalMonths = yearDiff * 12 + (monthDiff + 1);
+            console.log(totalMonths);
 
             if (totalMonths < 0) {
                 return;
@@ -889,6 +891,7 @@
 
 
         $(document).on('input', settings.LoanAmount, function () {
+            ;
             var totalMonth = $(settings.NoOfInstallment).val();          
             if (totalMonth == 0) {
                 $(settings.MonthlyDeduction).val($(settings.LoanAmount).val());
@@ -1228,6 +1231,7 @@
         }
 
         $("#loan-data-grid tbody").on('click', 'td:nth-child(2)', function () {
+            //debugger
             var loanRow = LoanTable.row(this).data();
             selectedLoanId = [];
             selectedLoanId.push(loanRow.autoId);
@@ -1242,9 +1246,12 @@
                 $(settings.IfCheque).fadeOut(500);
             }           
 
+            console.log(loanRow);
+
             
             $(settings.CreateDate).text(loanRow.showCreateDate);
             $(settings.UpdateDate).text(loanRow.showModifyDate);
+            $(settings.ReasonOfLoanTaken).val(loanRow.reasonOfLoanTaken);
 
             $(settings.PaymentType).multiselect('select', loanRow.loanTypeId);
             $(settings.EmployeeIds).multiselect('select', loanRow.employeeId);
@@ -1459,6 +1466,7 @@
                 url: getLoanIdUrl + "?loanId=" + encodeURIComponent(loanId),
                 type: "GET",
                 success: function (res) {
+                    console.log(res);
                     var loanData = res.data;
                     $(settings.LoanDateShow).text(loanData.showLoanDate);
                     $(settings.LoanType).text(loanData.loanTypeName);

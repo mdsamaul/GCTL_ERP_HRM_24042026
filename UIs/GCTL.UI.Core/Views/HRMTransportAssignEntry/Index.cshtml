@@ -94,31 +94,77 @@
     input.VehicleType-input {
         border: 1px solid red !important;
     }
-    /* Multiselect dropdown text left-align */
-    .multiselect{
-        display: flex;
+
+    .multiselect {
+        display: flex !important;
         align-items: center !important;
-        justify-content: space-between;
-    }
-    /* রেডিও আইকন লুকানো এবং টেক্সট অ্যালাইনমেন্ট (আগের মতোই) */
-    .multiselect-container li input[type="radio"] {
-        display: none;
-    }
-
-    .multiselect-container li:not(.multiselect-group) a label {
-        padding-left: 10px;
+        justify-content: space-between !important;
+        padding: 6px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        background-color: #fff;
+        cursor: pointer;
+        border: 1px solid #eee !important;
     }
 
-    /* নতুন এবং উন্নত হোভার ইফেক্ট (সম্পূর্ণ সারির জন্য) */
-    .multiselect-container > li  {
-        /* এই লাইনটি নিশ্চিত করে যে হোভার ইফেক্টের ট্রানজিশন মসৃণ হবে */
-        transition: background-color 0.2s ease-in-out;
+    .multiselect-container .input-group {
+        flex-wrap: nowrap !important;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin: 5px 10px;
+        padding: 2px 6px;
     }
 
-        
-.multiselect-container > li:hover{      
-        background : #eee;
+    .multiselect-container {
+        width: 100% !important;
+        max-height: 300px;
+        overflow-y: auto;
     }
+
+        .multiselect-container li input[type="radio"] {
+            display: none;
+        }
+
+        .multiselect-container li:not(.multiselect-group) a label {
+            padding-left: 10px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+        }
+
+        .multiselect-container > li {
+            transition: background-color 0.2s ease-in-out;
+        }
+
+            .multiselect-container > li:hover {
+                background: #f5f5f5;
+            }
+
+
+        .multiselect-container li a {
+            display: block !important;
+            width: 100%;
+            padding: 6px 12px;
+            color: #333;
+            text-decoration: none;
+        }
+
+            .multiselect-container li a:hover {
+                background-color: #e9ecef;
+                color: #000;
+            }
+
+    /* Hide checkboxes inside multiselect dropdown */
+    #DriverNameSelectEmpId + .btn-group .multiselect-container input[type="checkbox"] {
+        display: none !important;
+    }
+
+    /* Remove extra padding caused by checkbox */
+    #DriverNameSelectEmpId + .btn-group .multiselect-container .form-check-label {
+        padding-left: 0 !important;
+    }
+
+
     </style>
 
 <div class="container-fluid">
@@ -126,7 +172,7 @@
 </div>
 
 <div class="container-fluid">
-    <div id="stickyHeader" class="card-header px-2 sticky-top rounded-bottom"
+    <div id="stickyHeader" class="card-header px-2 sticky-top rounded"
          style="min-height: 50px; z-index: 1020;">
         <partial name="_Toolbars" model="new ToobarModel(){Title=Model.Breadcrumb, Code=Model.Code , Name=Model.Setup.TAID }" />
     </div>

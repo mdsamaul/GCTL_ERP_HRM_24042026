@@ -26,6 +26,7 @@ namespace GCTL.Data.Models
         public decimal? StorageSize { get; set; }
         public string StorageUnitId { get; set; }
         public decimal? WeightLoadCapacity { get; set; }
+        public decimal? TransportCapacity { get; set; }
         public string CapacityUnitId { get; set; }
         public decimal? TransportLength { get; set; }
         public decimal? TransportWidth { get; set; }

@@ -1,0 +1,127 @@
+﻿using DocumentFormat.OpenXml.Drawing.Charts;
+using GCTL.Core.Data;
+using GCTL.Core.Helpers;
+using GCTL.Core.ViewModels.TaxChallanEntry;
+using GCTL.Data.Models;
+using GCTL.Service.PrintingStationeryPurchaseEntry;
+using GCTL.Service.TaxChallanEntryService;
+using GCTL.UI.Core.ViewModels.TaxChallanEntry;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+
+namespace GCTL.UI.Core.Controllers
+{
+    public class TaxChallanEntryController : BaseController
+    {
+        private readonly ITaxChallanEntryService taxChallanEntryService;
+        private readonly IRepository<HrmPayMonth> monthRepo;
+        private readonly IRepository<SalesDefBankInfo> bankRepo;
+
+        public TaxChallanEntryController(
+            ITaxChallanEntryService taxChallanEntryService,
+            IRepository<HrmPayMonth> monthRepo,
+            IRepository<SalesDefBankInfo> bankRepo
+            )
+        {
+            this.taxChallanEntryService = taxChallanEntryService;
+            this.monthRepo = monthRepo;
+            this.bankRepo = bankRepo;
+        }
+        public IActionResult Index()
+        {
+            
+            ViewBag.MonthList = new SelectList(monthRepo.All().Select(x => new { x.MonthId, x.MonthName }),"MonthId", "MonthName", DateTime.Now.Month.ToString());
+            ViewBag.BankList = new SelectList(bankRepo.All().Select(x => new { x.BankId , x.BankName}), "BankId", "BankName");
+            EmployeeTaxChallanViewModel model = new EmployeeTaxChallanViewModel()
+            {
+                PageUrl= Url.Action(nameof(Index))
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetFilterDropdownData([FromBody] EmployeeTaxChallanFilterViewModel filterData)
+        {
+            var result = await taxChallanEntryService.EmployeeTaxChallanDropdownList(filterData);
+            return Json(result);
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetBankDetails([FromBody] string bankId)
+        {
+            var result = await taxChallanEntryService.GetBankDetails(bankId);
+            return Json(result);
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetBankBranchAddress([FromBody] string branchId)
+        {
+            var result = await taxChallanEntryService.GetBankBranchAddressAsync(branchId);
+            return Json(result);
+        }
+        [HttpGet]
+        public async Task<IActionResult> TaxDipositAutoId()
+        {
+            var autoId = await taxChallanEntryService.TaxDipositAutoIdAsync();
+            return Json(autoId);
+        }
+
+        public async Task<IActionResult> TaxChallanSaveEdit([FromBody] HrmPayMonthlyTaxDepositEntryDto fromData)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return Json(new { isSuccess = false });
+            }
+            try
+            {
+                fromData.ToAudit(LoginInfo);
+                if (fromData.TaxDepositCode == 0)
+                {
+                    bool hasParmision = await taxChallanEntryService.SavePermissionAsync(LoginInfo.AccessCode);
+                    if (hasParmision)
+                    {
+                        var result = await taxChallanEntryService.TaxChallanSaveEditAsync(fromData, LoginInfo.CompanyCode);
+                       
+                        return Json(new { isSuccess = result.isSuccess, message = result.message, data = result });
+                    }
+                    else
+                    {
+                        return Json(new { isSuccess = false, message = "You have no access.", noSavePermission = true });
+                    }
+                }
+                else
+                {
+                    var hasUpdatePermission = await taxChallanEntryService.UpdatePermissionAsync(LoginInfo.AccessCode);
+                    if (hasUpdatePermission)
+                    {
+                        var result = await taxChallanEntryService.TaxChallanSaveEditAsync(fromData , LoginInfo.CompanyCode);
+                        return Json(new { isSuccess = result.isSuccess, message = result.message, data = result });
+                    }
+                    else
+                    {
+                        return Json(new { isSuccess = false, message = "You have no access.", noUpdatePermission = true });
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                return Json(new { isSuccess = false, message = "Faild" });
+            }
+            
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetchallanEntryGrid()
+        {
+            var result = await taxChallanEntryService.GetchallanEntryGridAsync();
+            return Json(result);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteTaxChallanEntryGrid([FromBody] List<string> selectedIds)
+        {
+            var result = await taxChallanEntryService.DeleteTaxChallanEntryGridAsync(selectedIds);
+            return Json(result);
+        }
+    }
+}
