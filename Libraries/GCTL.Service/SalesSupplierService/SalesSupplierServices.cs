@@ -107,7 +107,7 @@ namespace GCTL.Service.SalesSupplierService
                         Phone2 = c.Phone2,
                         Email2 = c.Email2,
                         SupplierTypeId = c.SupplierTypeId,
-                        SupplierType=supTypeRepo.All().Where(x=>x.SupplierTypeId== c.SupplierTypeId).Select(x=>x.SupplierType).FirstOrDefault(),
+                        //SupplierType=supTypeRepo.All().Where(x=>x.SupplierTypeId== c.SupplierTypeId).Select(x=>x.SupplierType).FirstOrDefault(),
                         Remarks = c.Remarks,
                         CreditLimit = c.CreditLimit
                     }).ToList()

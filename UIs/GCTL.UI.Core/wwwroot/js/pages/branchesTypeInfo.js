@@ -178,7 +178,6 @@
                                 text: item.name
                             }));
                         });
-                        console.log("Test", lastCode);
                         $(target).val(lastCode);
                         //alert(`${$(target).val(lastCode)}`);
 

@@ -96,44 +96,13 @@
         .searchable-dropdown.active {
             z-index: 1051;
         }
-
-    /*   #btnPreviewPdf, #downloadReport {
-                     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-                     min-height: 25px;
-                     position: relative;
-                     overflow: visible;
-                     border: 1px solid #eee !important;
-                     white-space: nowrap;
-                 } */
+          
 
     .dateInput {
         width: 10vw !important;
     }
 
-    /* #btnPreviewPdf:hover,
-                 #downloadReport:hover {
-                     background-color: rgba(173, 255, 47, 0.2) !important;
-                     color: #1e90ff !important;
-                     border-color: #1e90ff !important;
-                     box-shadow: 0 4px 10px rgba(30, 144, 255, 0.5) !important;
-                 }
-
-
-
-                 #btnPreviewPdf i,
-                 #btnPreviewPdf span,
-                 #downloadReport i,
-                 #downloadReport span {
-                     transition: transform 0.3s ease;
-                     display: inline-block;
-                     transform: scale(1);
-                     margin-right: 2px;
-                 }
-
-                 #btnPreviewPdf:hover i,
-                 #downloadReport:hover i {
-                     transform: scale(1.3);
-                 } */
+  
 
     /* CSS for show/hide functionality */
     .dateFilterHide {
@@ -189,6 +158,13 @@
         border: 1px solid #eee !important;
     }
 
+    .dataTables_processing {
+        background: transparent !important;
+        color: #333d8a !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
 </style>
 
 <div class="container-fluid">
@@ -217,6 +193,7 @@
                                     <th style="width: 25vw; border:0px; padding: 5px 0px 0px 10px;">Branch</th>
                                     <th style="width: 25vw; border:0px; padding: 5px 0px 0px 10px;">Department</th>
                                     <th style="width: 25vw; border:0px; padding: 5px 0px 0px 10px;">Designation</th>
+                                    <th style="width: 25vw; border:0px; padding: 5px 0px 0px 10px;">Active Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -241,6 +218,13 @@
                                     <td class="border-0">
                                         <select class="form-select  form-select-sm searchable-select form-control form-control-sm" id="taxChallanDesignationDropdown" name="designation" style="width: 100%;">
                                             <option value="">Designation...</option>
+                                        </select>
+                                    </td>
+                                    <td class="border-0">
+                                        <select class="form-select  form-select-sm searchable-select form-control form-control-sm" id="taxChallanEmployeeStatusDropdown" name="activeStatus" style="width: 100%;">
+                                            <option value="01">Active</option>
+                                            <option value="02">InActive</option>
+                                            <option value="">All</option>
                                         </select>
                                     </td>
 
@@ -325,7 +309,7 @@
                         <div class="d-flex align-items-center">
                             <div class="taxChallanLeft text-right">Challan Amount <span class="text-danger">*</span></div>
                             <div class="taxChallanRight">
-                                <input asp-for="Setup.ChallanAmount" class="form-control-sm form-control" />
+                                <input asp-for="Setup.ChallanAmount" type="number" class="form-control-sm form-control" />
                             </div>
                         </div>
                     </div>
@@ -335,12 +319,11 @@
                 <div class="row">
                     <div class="col-12 col-md-6">
                         <div class="d-flex align-items-center">
-                            <div class="taxChallanLeft text-right">Bank</div>
+                            <div class="taxChallanLeft text-right">Bank<span class="text-danger">*</span></div>
                             <div class="taxChallanRight">
                                 <select asp-items="ViewBag.BankList as SelectList" asp-for="Setup.BankId" class="form-control-sm form-control">
                                     <option value="">--Select Bank--</option>
                                 </select>
-                                @* <input asp-for="Setup.BankId" class="form-control-sm form-control"  /> *@
                             </div>
                         </div>
                     </div>
@@ -348,8 +331,7 @@
                         <div class="d-flex align-items-center">
                             <div class="taxChallanLeft text-right">Branch </div>
                             <div class="taxChallanRight">
-                                <select asp-for="Setup.BankBranchId" class="form-control-sm form-control"></select>
-                                @* <input asp-for="Setup.BankBranchId" class="form-control-sm form-control" /> *@
+                                <select asp-for="Setup.BankBranchId" class="form-control-sm form-control"></select>                               
                             </div>
                         </div>
                     </div>

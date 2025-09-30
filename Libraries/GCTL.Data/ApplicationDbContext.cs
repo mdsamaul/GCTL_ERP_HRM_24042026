@@ -175,11 +175,11 @@ namespace GCTL.Data.Models
                .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
             });
 
-            modelBuilder.Entity<CaDefCurrency>(entity =>
-            {
-                entity.Property(p => p.Tc)
-               .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
-            });
+            //modelBuilder.Entity<CaDefCurrency>(entity =>
+            //{
+            //    entity.Property(p => p.Tc)
+            //   .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
+            //});
 
             //modelBuilder.Entity<RmgProdDefUnitType>(entity =>
             //{

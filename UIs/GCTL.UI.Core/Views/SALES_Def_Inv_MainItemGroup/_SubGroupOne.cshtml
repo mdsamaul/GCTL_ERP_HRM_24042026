@@ -1,0 +1,81 @@
+﻿@model GCTL.UI.Core.ViewModels.SalesDefInvMainItem.SalesDefInvMainItemDto
+
+<div class="card mx-3">
+    <div class="card m-3">
+        <div class="row container-fluid mx-auto py-2 g-3">          
+            <!-- MainItemID -->
+            <div class="col-12 col-md-3">
+                <div class="input-group  d-flex jusify-content-center align-items-center">
+                    <div class="col-12 col-md-4 p-0 text-right text-nowrap">Main Group Id<span class="text-danger px-1">*</span></div>
+                    <div class="col-12 p-0  col-md-8">
+                        <input type="text" id="SubGroupMainItemID"  readonly class="form-control form-control-sm" placeholder="Enter Main Item ID" aria-label="MainItemID">
+                    </div>
+                </div>
+            </div>
+
+            <!-- MainItemName -->
+            <div class="col-12 col-md-4">
+                <div class="input-group  d-flex jusify-content-center align-items-center">
+                    <div class="col-12 col-md-4 p-0 text-right  text-nowrap">Group Name<span class="text-danger px-1">*</span></div>
+                    <div class="col-12 p-0  col-md-8">
+                        <select class="form-select form-select-sm searchable-select main-group-item-dropdown" asp-items="ViewBag.MainGroup as SelectList" id="SubGroupMainItemName">
+                            <option value="">Group Name</option>
+                        </select>
+                        @* <input type="text" asp-for="MainSetup.MainItemName" class="form-control form-control-sm" placeholder="Enter Main Item Name" aria-label="MainItemName"> *@
+                    </div>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="col-12 col-md-4 ml-auto" style="padding-right: 5px;">
+                <div class="form-floating d-flex justify-content-end align-items-center">
+                    <div class="col-12 col-md-4 text-right p-0">
+                        <label for="floatingTextarea">Description </label>
+                    </div>
+                    <div class="col-12 col-md-11 ml-1 p-0">
+                        <textarea id="SubGroupDescription" readonly class="form-control form-control-sm" placeholder="Leave a description here" rows="1"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row container-fluid mx-auto py-2 g-3">
+        <input type="hidden" asp-for="SubItem.TC" class="form-control form-control-sm" value="0">
+        <!-- MainItemID -->
+        <div class="col-12 col-md-6">
+            <div class="input-group  d-flex jusify-content-center align-items-center">
+                <div class="col-12 col-md-4 p-0 text-right  text-nowrap">Sub Group Id<span class="text-danger px-1">*</span></div>
+                <div class="col-12 p-0  col-md-8">
+                    <input type="text" asp-for="SubItem.SubItemID" readonly class="form-control form-control-sm" placeholder="Enter Main Item ID" aria-label="MainItemID">
+                </div>
+            </div>
+        </div>
+
+        <!-- MainItemName -->
+        <div class="col-12 col-md-6">
+            <div class="input-group  d-flex jusify-content-center align-items-center">
+                <div class="col-12 col-md-2 p-0 text-right  text-nowrap">Sub Group Name<span class="text-danger px-1">*</span></div>
+                <div class="col-12 p-0  col-md-8">
+                    <input type="text" asp-for="SubItem.SubItemName" class="form-control form-control-sm" placeholder="Enter Main Item Name" aria-label="MainItemName">
+                </div>
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="col-12 col-md-10 mx-auto mt-0" style="padding-right: 5px;">
+            <div class="form-floating d-flex justify-content-end align-items-center">
+                <div class="col-12 col-md-1 text-right p-0">
+                    <label for="floatingTextarea">Description</label>
+                </div>
+                <div class="col-12 col-md-11 pl-2 pl-lg-3" style="padding: 5px;">
+                    <textarea asp-for="SubItem.Description" class="form-control form-control-sm" placeholder="Leave a description here" rows="1"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <partial name="_ShowingDate"></partial>
+</div>
+<div class="card mx-3 mb-2">
+    <partial name="_GridSubGroup"></partial>
+</div>

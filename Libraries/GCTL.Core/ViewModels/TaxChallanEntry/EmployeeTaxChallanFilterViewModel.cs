@@ -13,6 +13,7 @@ namespace GCTL.Core.ViewModels.TaxChallanEntry
         public List<string> DesignationCodes { get; set; } = new List<string>();
         public List<string> DepartmentCodes { get; set; } = new List<string>();
         public List<string> BranchCodes { get; set; } = new List<string>();
+        public string ActiveStatus { get; set; }
         
     }
 }

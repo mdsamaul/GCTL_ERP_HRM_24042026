@@ -30,12 +30,12 @@ namespace GCTL.UI.Core.Controllers
         }
         public IActionResult Index()
         {
-            
-            ViewBag.MonthList = new SelectList(monthRepo.All().Select(x => new { x.MonthId, x.MonthName }),"MonthId", "MonthName", DateTime.Now.Month.ToString());
-            ViewBag.BankList = new SelectList(bankRepo.All().Select(x => new { x.BankId , x.BankName}), "BankId", "BankName");
+
+            ViewBag.MonthList = new SelectList(monthRepo.All().Select(x => new { x.MonthId, x.MonthName }), "MonthId", "MonthName", DateTime.Now.Month.ToString());
+            ViewBag.BankList = new SelectList(bankRepo.All().Select(x => new { x.BankId, x.BankName }), "BankId", "BankName");
             EmployeeTaxChallanViewModel model = new EmployeeTaxChallanViewModel()
             {
-                PageUrl= Url.Action(nameof(Index))
+                PageUrl = Url.Action(nameof(Index))
             };
             return View(model);
         }
@@ -81,7 +81,7 @@ namespace GCTL.UI.Core.Controllers
                     if (hasParmision)
                     {
                         var result = await taxChallanEntryService.TaxChallanSaveEditAsync(fromData, LoginInfo.CompanyCode);
-                       
+
                         return Json(new { isSuccess = result.isSuccess, message = result.message, data = result });
                     }
                     else
@@ -94,7 +94,7 @@ namespace GCTL.UI.Core.Controllers
                     var hasUpdatePermission = await taxChallanEntryService.UpdatePermissionAsync(LoginInfo.AccessCode);
                     if (hasUpdatePermission)
                     {
-                        var result = await taxChallanEntryService.TaxChallanSaveEditAsync(fromData , LoginInfo.CompanyCode);
+                        var result = await taxChallanEntryService.TaxChallanSaveEditAsync(fromData, LoginInfo.CompanyCode);
                         return Json(new { isSuccess = result.isSuccess, message = result.message, data = result });
                     }
                     else
@@ -108,19 +108,57 @@ namespace GCTL.UI.Core.Controllers
 
                 return Json(new { isSuccess = false, message = "Faild" });
             }
-            
+
+        }    
+
+        [HttpPost]
+        public async Task<IActionResult> GetchallanEntryGrid([FromBody] DataTableRequest request)
+        {
+            try
+            {
+                if (request == null)
+                {
+                    return BadRequest("Invalid request data");
+                }
+
+                var result = await taxChallanEntryService.GetchallanEntryGridServerSideAsync(request);
+
+                return Json(new
+                {
+                    draw = request.Draw,
+                    recordsTotal = result.TotalRecords,
+                    recordsFiltered = result.FilteredRecords,
+                    data = result.Data
+                });
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                return Json(new
+                {
+                    draw = request?.Draw ?? 0,
+                    recordsTotal = 0,
+                    recordsFiltered = 0,
+                    data = new List<object>(),
+                    error = "An error occurred while loading data"
+                });
+            }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetchallanEntryGrid()
-        {
-            var result = await taxChallanEntryService.GetchallanEntryGridAsync();
-            return Json(result);
-        }
+
+
+
         [HttpPost]
         public async Task<IActionResult> DeleteTaxChallanEntryGrid([FromBody] List<string> selectedIds)
         {
             var result = await taxChallanEntryService.DeleteTaxChallanEntryGridAsync(selectedIds);
+            return Json(new { isSuccess = result.isSuccess, message = result.message, data = result.data });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> FinancialYearGet()
+        {
+            var result = await taxChallanEntryService.FinancialYearGetAsync();
             return Json(result);
         }
     }

@@ -8,11 +8,12 @@ namespace GCTL.Core.ViewModels.TaxChallanEntry
 {
     public class HrmPayMonthlyTaxDepositEntryDto: BaseViewModel
     {
-        public decimal? TaxDepositCode { get; set; }
+        public decimal TaxDepositCode { get; set; } = 0m;
         public string? TaxDepositId { get; set; }
         public string? EmployeeId { get; set; }
         public string? EmpName { get; set; }
         public string? FinancialCodeNo { get; set; }
+        public string? ShowFinancialCodeNo { get; set; }
         public decimal? TaxDepositAmount { get; set; }
         public string? SalaryMonth { get; set; }
         public string? SalaryMonthName { get; set; }

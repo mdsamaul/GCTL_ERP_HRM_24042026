@@ -7,7 +7,7 @@ namespace GCTL.Data.Models
 {
     public partial class SalesDefPaymentTerms
     {
-        public int AutoId { get; set; }
+        public int Tc { get; set; }
         public string PaymentTermsId { get; set; }
         public string PaymentTermsName { get; set; }
         public string Percentise { get; set; }

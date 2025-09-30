@@ -1,4 +1,6 @@
-﻿using GCTL.Core.ViewModels.TaxChallanEntry;
+﻿using DocumentFormat.OpenXml.Math;
+using GCTL.Core.ViewModels.TaxChallanEntry;
+using GCTL.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +20,9 @@ namespace GCTL.Service.TaxChallanEntryService
         Task<bool> SavePermissionAsync(string accessCode);
         Task<bool> UpdatePermissionAsync(string accessCode);
         Task<bool> DeletePermissionAsync(string accessCode);
-        Task<List<HrmPayMonthlyTaxDepositEntryDto>> GetchallanEntryGridAsync();
-        Task<(bool isSuccess, string message, object)> DeleteTaxChallanEntryGridAsync(List<string> selectedIds);
+        //Task<List<HrmPayMonthlyTaxDepositEntryDto>> GetchallanEntryGridAsync();
+        Task<(bool isSuccess, string message, object data)> DeleteTaxChallanEntryGridAsync(List<string> selectedIds);
+        Task<List<AccFinancialYear>> FinancialYearGetAsync();
+        Task<(List<HrmPayMonthlyTaxDepositEntryDto> Data, int TotalRecords, int FilteredRecords)> GetchallanEntryGridServerSideAsync(DataTableRequest request);
     }
 }

@@ -31,7 +31,7 @@ namespace GCTL.UI.Core.Controllers
         {
             try
             {
-                ViewBag.SupplirTypeList = new SelectList(supplierTypeRepo.All().Select(x => new { x.SupplierTypeId, x.SupplierType }), "SupplierTypeId", "SupplierType");
+                ViewBag.SupplirTypeList = new SelectList(supplierTypeRepo.All().Select(x => new { x.SupplierTypeId, x.SupplierTypeName }), "SupplierTypeId", "SupplierTypeName");
                 ViewBag.CountryAll = new SelectList(countryRepo.All().Select(d => new { d.CountryId, d.CountryName }), "CountryId", "CountryName");
                 SalesSupplierViewModel model = new SalesSupplierViewModel()
                 {
@@ -153,7 +153,7 @@ namespace GCTL.UI.Core.Controllers
         [HttpGet]
         public async Task<IActionResult> CloseSupplierType()
         {
-            var supplierTypeList =  supplierTypeRepo.All().Where(x => x.SupplierTypeId != null).OrderByDescending(x => x.AutoId).ToList();
+            var supplierTypeList =  supplierTypeRepo.All().Where(x => x.SupplierTypeId != null).OrderByDescending(x => x.SupplierTypeId).ToList();
             return Json(supplierTypeList);
         }
         [HttpGet]

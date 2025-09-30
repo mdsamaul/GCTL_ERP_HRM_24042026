@@ -9,9 +9,15 @@ namespace GCTL.Data.Models
     {
         public int WarehouseCode { get; set; }
         public string WarehouseId { get; set; }
-        public string CustomerId { get; set; }
         public string WarehouseName { get; set; }
         public string WarehouseAddess { get; set; }
+        public string WhTypeId { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string ZipCode { get; set; }
+        public string CountryId { get; set; }
+        public string Area { get; set; }
+        public string Remarks { get; set; }
         public string ContactPerson { get; set; }
         public string Designation { get; set; }
         public string ContactPersonPhone { get; set; }
@@ -21,7 +27,5 @@ namespace GCTL.Data.Models
         public string Lip { get; set; }
         public string Lmac { get; set; }
         public DateTime? ModifyDate { get; set; }
-        public string CompanyCode { get; set; }
-        public string LocationType { get; set; }
     }
 }

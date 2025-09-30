@@ -1,141 +1,134 @@
-﻿using GCTL.Core.Data;
+﻿using GCTL.Core.Configurations;
+using GCTL.Core.Data;
 using GCTL.Data;
 using GCTL.Data.Models;
+using GCTL.Service.AdmissionTypes;
+using GCTL.Service.AdvanceLoanAdjustment;
+using GCTL.Service.AdvanceLoanAdjustmentReport;
+using GCTL.Service.BloodGroups;
+//using GCTL.Service.HrmDefBankAndNomineeInfos;
+using GCTL.Service.Branches;
+//using GCTL.Service.EmployeeOfficialInfo;
+using GCTL.Service.BranchesTypeInfo;
 using GCTL.Service.Common;
 using GCTL.Service.Companies;
-
-using GCTL.Service.UnitTypes;
-using GCTL.Service.Users;
-using Microsoft.EntityFrameworkCore;
+//using GCTL.Service.HrmEmployeeFamilys;
+//using GCTL.Service.HrmEmployeeQualifications;
+//using GCTL.Service.HrmEmployeeDocumentInfos;
+using GCTL.Service.CompanyInfos;
+using GCTL.Service.Core_Countrys;
+using GCTL.Service.CoreBranches;
 using GCTL.Service.Currencies;
-using GCTL.Service.PaymentModes;
+using GCTL.Service.DeliveryPeriods;
+using GCTL.Service.Departments;
+using GCTL.Service.Designations;
+using GCTL.Service.Districts;
 //using GCTL.Service.PaymentTypes;
 using GCTL.Service.Doctors;
 using GCTL.Service.DoctorTypes;
-using GCTL.Service.Specialities;
-using GCTL.Service.Qualifications;
-using GCTL.Service.Shifts;
-using GCTL.Service.BloodGroups;
-using GCTL.Service.Religions;
-using GCTL.Service.Relation;
-using GCTL.Service.Designations;
-using GCTL.Service.Departments;
-
-//using GCTL.Service.ReferencePersons;
-
-using GCTL.Service.Reports;
-using GCTL.Core.Configurations;
-using Microsoft.Extensions.Options;
-
-using GCTL.Service.LogsLoggers;
-using GCTL.Service.Loggers;
-
-using GCTL.Service.AdmissionTypes;
-
-using GCTL.Service.Units;
-
-using GCTL.Service.People;
-using GCTL.Service.Periods;
-
-using GCTL.Service.DeliveryPeriods;
-using Microsoft.AspNetCore.Http.Features;
-using GCTL.Service.Surnames;
-
 using GCTL.Service.DoctorWorkingPalace;
-using GCTL.Service.LeaveTypes;
-using GCTL.Service.HrmAtdShifts;
-using GCTL.Service.HRMCompanyWeekEnds;
+using GCTL.Service.EmailService;
+//using GCTL.Service.EducationalInfoReport;
+using GCTL.Service.EmployeeGeneralInfoReport;
+using GCTL.Service.EmployeeLoanInformationReport;
+using GCTL.Service.Employees;
+using GCTL.Service.EmployeeWeekendDeclaration;
+using GCTL.Service.EmployeeWeekendDeclarationReport;
+//using GCTL.Service.EmployeeReferenceInfos;
+using GCTL.Service.ExperianceInfos;
+using GCTL.Service.FileHandle;
+using GCTL.Service.Grades;
 using GCTL.Service.HolidayTypes;
-using GCTL.Service.HrmAtdHolidays;
-using GCTL.Service.HRMAttWorkingDayDeclarations;
+using GCTL.Service.HRM_Brand;
+using GCTL.Service.HRM_Def_Floors;
+using GCTL.Service.HRM_Size;
 using GCTL.Service.HRMATDAttendanceTypes;
-using GCTL.Service.HrmDefEmpTypes;
-using GCTL.Service.HrmEmployees2;
+using GCTL.Service.HrmAtdHolidays;
+//using GCTL.Service.ManualAttendances;
+//using GCTL.Service.ManualAttendanceBulks;
+using GCTL.Service.HrmAtdMachineDatas;
+using GCTL.Service.HrmAtdShifts;
+using GCTL.Service.HRMAttWorkingDayDeclarations;
+using GCTL.Service.HRMCompanyWeekEnds;
+using GCTL.Service.HRMDefBoardCountryNames;
 //using GCTL.Service.BankInformations;
 //using GCTL.Service.BankBranchInformations;
 //using GCTL.Service.CoreBankAccountInformations;
 //using GCTL.Service.HrmEmployeeAdditionalInfos;
 using GCTL.Service.HrmDefDegrees;
-using GCTL.Service.HRMDefBoardCountryNames;
-using GCTL.Service.HRMDefExamTitles;
-using GCTL.Service.HrmDefInstitutes;
+using GCTL.Service.HrmDefEmpTypes;
 //using GCTL.Service.HrmEmployeeEducations;
 using GCTL.Service.HrmDefExamGroupInfos;
-//using GCTL.Service.EmployeeOfficialInfo;
-using GCTL.Service.BranchesTypeInfo;
-using GCTL.Service.Districts;
-//using GCTL.Service.EmployeeContactInfos;
-using GCTL.Service.Relationships;
-using GCTL.Service.HrmDefPerformances;
-using GCTL.Service.PerformancesType;
-using GCTL.Service.HrmDefSeparationTypes;
-using GCTL.Service.JobTitles;
+using GCTL.Service.HRMDefExamTitles;
 using GCTL.Service.HrmDefGradeTypes;
-using GCTL.Service.Grades;
+using GCTL.Service.HrmDefInstitutes;
 using GCTL.Service.HrmDefOccupations;
-//using GCTL.Service.HrmEmployeeFamilys;
-//using GCTL.Service.HrmEmployeeQualifications;
-//using GCTL.Service.HrmEmployeeDocumentInfos;
-using GCTL.Service.CompanyInfos;
-//using GCTL.Service.EmployeeReferenceInfos;
-using GCTL.Service.ExperianceInfos;
-using GCTL.Service.Nationalitys;
-using GCTL.Service.SeparationInfos;
-//using GCTL.Service.ManualAttendances;
-//using GCTL.Service.ManualAttendanceBulks;
-using GCTL.Service.HrmAtdMachineDatas;
-//using GCTL.Service.HrmDefBankAndNomineeInfos;
-using GCTL.Service.Branches;
-using GCTL.Service.CoreBranches;
-using GCTL.Service.EmailService;
-using GCTL.Service.FileHandle;
+using GCTL.Service.HrmDefPerformances;
+using GCTL.Service.HrmDefSeparationTypes;
 //using GCTL.Service.HrmLeaveApplicationEntrys;
 //using GCTL.Service.IncrementService;
 //using GCTL.Service.LeaveAppDay;
 using GCTL.Service.HrmEmployeeOfficialInfoServe;
-using GCTL.Service.Employees;
-//using GCTL.Service.EducationalInfoReport;
-using GCTL.Service.EmployeeGeneralInfoReport;
+using GCTL.Service.HrmEmployees2;
+using GCTL.Service.HRMPayrollLoan;
+using GCTL.Service.HRMTransportAssignEntryService;
+using GCTL.Service.HRMTransportExpenseEntryService;
+using GCTL.Service.INV_Catagory;
+using GCTL.Service.InvDefSupplierTypes;
+using GCTL.Service.ItemMasterInformation;
+using GCTL.Service.ItemModelService;
+using GCTL.Service.JobTitles;
+using GCTL.Service.LeaveTypes;
+using GCTL.Service.Loggers;
+using GCTL.Service.LogsLoggers;
+using GCTL.Service.ManualEarnLeaveEntry;
+using GCTL.Service.MonthlyTransportExpenseDetailsReportService;
+using GCTL.Service.Nationalitys;
+using GCTL.Service.PaymentModes;
+using GCTL.Service.People;
+using GCTL.Service.PerformancesType;
+using GCTL.Service.Periods;
+using GCTL.Service.PFAssignEntry;
+using GCTL.Service.PFAssignEntryReport;
+using GCTL.Service.PrintingStationeryPurchaseEntry;
+using GCTL.Service.PrintingStationeryPurchaseReportService;
+using GCTL.Service.ProductIssueEntrys;
+using GCTL.Service.ProductIssueReports;
+using GCTL.Service.ProductStockHistoryReport;
+using GCTL.Service.Qualifications;
+using GCTL.Service.Relation;
+//using GCTL.Service.EmployeeContactInfos;
+using GCTL.Service.Relationships;
+using GCTL.Service.Religions;
+//using GCTL.Service.ReferencePersons;
+
+using GCTL.Service.Reports;
+using GCTL.Service.RMG_Prod_Def_UnitType;
+using GCTL.Service.RosterScheduleApproval;
+using GCTL.Service.RosterScheduleEntry;
+using GCTL.Service.RosterScheduleReport;
+using GCTL.Service.SALES_Def_Inv_MainItemGroupService;
+using GCTL.Service.SalesDefTransportExpenseHeadService;
+using GCTL.Service.SalesDefVehicleService;
+using GCTL.Service.SalesDefVehicleTypeService;
+using GCTL.Service.SalesSupplierService;
+using GCTL.Service.SeparationInfos;
 //using GCTL.Service.EmployeeReferenceInformationReport;
 //using GCTL.Service.WorkingExperienceReport;
 //using GCTL.Service.TaxAdjustmentEntry;
 //using GCTL.Service.Reposition;
 using GCTL.Service.SeparationTypes;
-using GCTL.Service.EmployeeWeekendDeclaration;
-using GCTL.Service.ManualEarnLeaveEntry;
-using GCTL.Service.PFAssignEntry;
-using GCTL.Service.RosterScheduleApproval;
-using GCTL.Service.RosterScheduleEntry;
-using GCTL.Service.RosterScheduleReport;
-using GCTL.Service.EmployeeWeekendDeclarationReport;
-using GCTL.Service.PFAssignEntryReport;
-using GCTL.Service.HRMPayrollLoan;
-using GCTL.Service.AdvanceLoanAdjustment;
-using GCTL.Service.AdvanceLoanAdjustmentReport;
-using GCTL.Service.EmployeeLoanInformationReport;
-using GCTL.Service.INV_Catagory;
-using GCTL.Service.HRM_Brand;
-using GCTL.Service.ItemMasterInformation;
-using GCTL.Service.HRM_Size;
-using GCTL.Service.RMG_Prod_Def_UnitType;
-using GCTL.Service.PrintingStationeryPurchaseEntry;
-using GCTL.Service.InvDefSupplierTypes;
-using GCTL.Service.SalesSupplierService;
-using GCTL.Service.ItemModelService;
-using GCTL.Service.HRM_Def_Floors;
-using GCTL.Service.Core_Countrys;
-using GCTL.Service.PrintingStationeryPurchaseReportService;
-using GCTL.Service.ProductIssueEntrys;
-using GCTL.Service.ProductIssueReports;
-using GCTL.Service.ProductStockHistoryReport;
-using GCTL.Service.SalesDefVehicleTypeService;
-using GCTL.Service.SalesDefTransportExpenseHeadService;
-using GCTL.Service.SalesDefVehicleService;
-using GCTL.Service.HRMTransportAssignEntryService;
-using GCTL.Service.HRMTransportExpenseEntryService;
-using GCTL.Service.TransportExpenseStatementReportService;
-using GCTL.Service.MonthlyTransportExpenseDetailsReportService;
+using GCTL.Service.Shifts;
+using GCTL.Service.Specialities;
+using GCTL.Service.Surnames;
 using GCTL.Service.TaxChallanEntryService;
+using GCTL.Service.TransportExpenseStatementReportService;
+using GCTL.Service.Units;
+using GCTL.Service.UnitTypes;
+using GCTL.Service.Users;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 
 //using GCTL.Service.AccountReport;
@@ -145,7 +138,7 @@ using GCTL.Service.TaxChallanEntryService;
 namespace GCTL.UI.Core.Extensions
 {
     public static class ServiceCollectionExtensions
-    {      
+    {
         public static void ConfigureContext(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<GCTL_ERP_DB_DatapathContext>(x =>
@@ -171,8 +164,8 @@ namespace GCTL.UI.Core.Extensions
             services.AddScoped<IUnitTypeService, UnitTypeService>();
             services.AddScoped<ICurrencyService, CurrencyService>();
             services.AddScoped<IPaymentModeService, PaymentModeService>();
-            
-           
+
+
 
 
 
@@ -181,13 +174,13 @@ namespace GCTL.UI.Core.Extensions
             services.AddScoped<IQualificationService, QualificationService>();
             services.AddScoped<IShiftService, ShiftService>();
             services.AddScoped<IDoctorService, DoctorService>();
-            
+
 
             //services.AddScoped<IReferencePersonService, ReferencePersonService>();
 
 
             services.AddScoped<IAdmissionTypeService, AdmissionTypeService>();
-      
+
             services.AddScoped<ISurnameService, SurnameService>();
 
 
@@ -195,65 +188,66 @@ namespace GCTL.UI.Core.Extensions
             services.AddScoped<IPeriodService, PeriodService>();
             services.AddScoped<IUnitService, UnitService>();
             services.AddScoped<IMeasurementUnitService, MeasurementUnitService>();
-        
+
             services.AddScoped<IDeliveryPeriodService, DeliveryPeriodService>();
 
             //services.AddScoped<IAccountReportService, AccountReportService>();
 
-          
+
             //samaul
 
-services.AddScoped<IEmployeeWeekendDeclarationService, EmployeeWeekendDeclarationService>(); 
-services.AddScoped<IAdvanceLoanAdjustmentReportServices, AdvanceLoanAdjustmentReportServices>(); 
-services.AddScoped<IEmployeeLoanInformationReportServices, EmployeeLoanInformationReportServices>(); 
-services.AddScoped<IManualEarnLeaveEntryService, ManualEarnLeaveEntryService>();
-services.AddScoped<IPFAssignEntryService, PFAssignEntryService>(); 
-services.AddScoped<IRosterScheduleEntryService, RosterScheduleEntryService>(); 
-services.AddScoped<IRosterScheduleApprovalService, RosterScheduleApprovalService>();
-services.AddScoped<IRosterScheduleReportServices, RosterScheduleReportServices>();
-services.AddScoped<IEmployeeWeekendDeclarationReportServices, EmployeeWeekendDeclarationReportServices>();
-services.AddScoped<IPFAssignEntryReportServices, PFAssignEntryReportServices>();
-services.AddScoped<IAdvanceLoanAdjustmentServices, AdvanceLoanAdjustmentServices>();
-services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
+            services.AddScoped<IEmployeeWeekendDeclarationService, EmployeeWeekendDeclarationService>();
+            services.AddScoped<IAdvanceLoanAdjustmentReportServices, AdvanceLoanAdjustmentReportServices>();
+            services.AddScoped<IEmployeeLoanInformationReportServices, EmployeeLoanInformationReportServices>();
+            services.AddScoped<IManualEarnLeaveEntryService, ManualEarnLeaveEntryService>();
+            services.AddScoped<IPFAssignEntryService, PFAssignEntryService>();
+            services.AddScoped<IRosterScheduleEntryService, RosterScheduleEntryService>();
+            services.AddScoped<IRosterScheduleApprovalService, RosterScheduleApprovalService>();
+            services.AddScoped<IRosterScheduleReportServices, RosterScheduleReportServices>();
+            services.AddScoped<IEmployeeWeekendDeclarationReportServices, EmployeeWeekendDeclarationReportServices>();
+            services.AddScoped<IPFAssignEntryReportServices, PFAssignEntryReportServices>();
+            services.AddScoped<IAdvanceLoanAdjustmentServices, AdvanceLoanAdjustmentServices>();
+            services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
             services.AddScoped<IReportService, ReportService>();
 
             services.AddScoped<IINV_CatagoryService, INV_CatagoryService>();
             services.AddScoped<IHRM_BrandService, HRM_BrandService>();
             services.AddScoped<IItemMasterInformationService, ItemMasterInformationService>();
             services.AddScoped<IHRM_SizeService, HRM_SizeService>();
-            services.AddScoped<IRMG_Prod_Def_UnitTypeService , RMG_Prod_Def_UnitTypeService>();
-            services.AddScoped<IPrintingStationeryPurchaseEntryService , PrintingStationeryPurchaseEntryService>();
-            services.AddScoped<IInvDefSupplierTypeService , InvDefSupplierTypeService>();
-            services.AddScoped<ISalesSupplierService , SalesSupplierServices>();
-            services.AddScoped<IItemModelService , ItemModelService>();
-            services.AddScoped<IHRM_Def_FloorService , HRM_Def_FloorService>();
-            services.AddScoped<ICore_CountryService , Core_CountryService>();
-            services.AddScoped<IPrintingStationeryPurchaseReportService , PrintingStationeryPurchaseReportService>();
+            services.AddScoped<IRMG_Prod_Def_UnitTypeService, RMG_Prod_Def_UnitTypeService>();
+            services.AddScoped<IPrintingStationeryPurchaseEntryService, PrintingStationeryPurchaseEntryService>();
+            services.AddScoped<IInvDefSupplierTypeService, InvDefSupplierTypeService>();
+            services.AddScoped<ISalesSupplierService, SalesSupplierServices>();
+            services.AddScoped<IItemModelService, ItemModelService>();
+            services.AddScoped<IHRM_Def_FloorService, HRM_Def_FloorService>();
+            services.AddScoped<ICore_CountryService, Core_CountryService>();
+            services.AddScoped<IPrintingStationeryPurchaseReportService, PrintingStationeryPurchaseReportService>();
 
 
-            services.AddScoped<IProductIssueEntryService , ProductIssueEntryService>();
-            services.AddScoped<IProductIssueReportService , ProductIssueReportService>();
-            services.AddScoped<IProductStockHistoryReportService , ProductStockHistoryReportService>();
-            services.AddScoped<ISalesDefVehicleTypeService , SalesDefVehicleTypeServices>();
-            services.AddScoped<ISalesDefTransportExpenseHead , SalesDefTransportExpenseHeads>();
-            services.AddScoped<ISalesDefVehicleService , SalesDefVehicleService>();
-            services.AddScoped<IHRMTransportAssignEntryService , HRMTransportAssignEntryService>();
-            services.AddScoped<IHRMTransportExpenseEntryServicec , HRMTransportExpenseEntryServicec>();
+            services.AddScoped<IProductIssueEntryService, ProductIssueEntryService>();
+            services.AddScoped<IProductIssueReportService, ProductIssueReportService>();
+            services.AddScoped<IProductStockHistoryReportService, ProductStockHistoryReportService>();
+            services.AddScoped<ISalesDefVehicleTypeService, SalesDefVehicleTypeServices>();
+            services.AddScoped<ISalesDefTransportExpenseHead, SalesDefTransportExpenseHeads>();
+            services.AddScoped<ISalesDefVehicleService, SalesDefVehicleService>();
+            services.AddScoped<IHRMTransportAssignEntryService, HRMTransportAssignEntryService>();
+            services.AddScoped<IHRMTransportExpenseEntryServicec, HRMTransportExpenseEntryServicec>();
             services.AddScoped<ITransportExpenseStatementReportServices, TransportExpenseStatementReportServices>();
             services.AddScoped<IMonthlyTransportExpenseDetailsReportService, MonthlyTransportExpenseDetailsReportServices>();
 
             services.AddScoped<ITaxChallanEntryService, TaxChallanEntryServices>();
-
-
-            
-
+            services.AddScoped<ISALES_Def_Inv_MainItemGroup, SALES_Def_Inv_MainItemGroup>();
 
 
 
 
 
-            
-          
+
+
+
+
+
+
 
             services.AddScoped<ILogService, LogService>();
 
@@ -273,7 +267,7 @@ services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
             //services.AddScoped<IHrmEmployeeAdditionalInfosService, HrmEmployeeAdditionalInfosService>();
             services.AddScoped<IHrmDefDegreesService, HrmDefDegreesService>();
             services.AddScoped<IHRMDefBoardCountryNamesService, HRMDefBoardCountryNamesService>();
-            services.AddScoped<IHRMDefExamTitlesService,HRMDefExamTitlesService>();
+            services.AddScoped<IHRMDefExamTitlesService, HRMDefExamTitlesService>();
             services.AddScoped<IHrmDefInstitutesService, HrmDefInstitutesService>();
             //services.AddScoped<IHrmEmployeeEducationsService, HrmEmployeeEducationsService>();
             services.AddScoped<IHrmDefExamGroupInfosService, HrmDefExamGroupInfosService>();
@@ -281,9 +275,9 @@ services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
             services.AddScoped<IDistrictsService, DistrictsService>();
             //services.AddScoped<IEmployeeContactInfoService,  EmployeeContactInfoService>();
             services.AddScoped<IRelationshipsService, RelationshipsService>();
-            services.AddScoped<IHrmDefPerformanceService,  HrmDefPerformanceService>();
+            services.AddScoped<IHrmDefPerformanceService, HrmDefPerformanceService>();
             services.AddScoped<IHrmPerformancesTypeService, HrmPerformancesTypeService>();
-            services.AddScoped<IHrmDefSeparationTypeService,  HrmDefSeparationTypeService>();
+            services.AddScoped<IHrmDefSeparationTypeService, HrmDefSeparationTypeService>();
             services.AddScoped<IJobTitleService, JobTitleService>();
             //services.AddScoped<IHrmEmployeeFamilysService, HrmEmployeeFamilysService>();
             //services.AddScoped<IEmployeeOfficialInfoService, EmployeeOfficialInfoService>();
@@ -317,36 +311,36 @@ services.AddScoped<IHRMPayrollLoanService, HRMPayrollLoanService>();
             services.AddScoped<IEmailService, EmailService>();
             //services.AddScoped<ILeaveEmailService, LeaveEmailService>();
             //services.AddScoped<IIncrementService, IncrementService>();
-			//services.AddScoped<ITaxAdjustmentEntryService, TaxAdjustmentEntryService>();
-			//services.AddScoped<IRepositionService, RepositionService>();
-			//services.AddScoped<IRepostionExcelService, RepostionExcelService>();
+            //services.AddScoped<ITaxAdjustmentEntryService, TaxAdjustmentEntryService>();
+            //services.AddScoped<IRepositionService, RepositionService>();
+            //services.AddScoped<IRepostionExcelService, RepostionExcelService>();
 
 
 
 
 
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-		
-			
-			
-			
-			services.AddScoped<ISeparationTypesService, SeparationTypesService>();
 
 
 
 
-			//with TKey reposotory for Test 
 
-			services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepositoryTest<,>));
+
+
+
+
+
+
+
+
+
+            services.AddScoped<ISeparationTypesService, SeparationTypesService>();
+
+
+
+
+            //with TKey reposotory for Test 
+
+            services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepositoryTest<,>));
 
 
 

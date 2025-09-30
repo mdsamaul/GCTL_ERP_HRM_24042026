@@ -1,49 +1,40 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-using GCTL.Service.BloodGroups;
-using GCTL.Service.Departments;
-using GCTL.Service.Designations;
-using GCTL.Service.Doctors;
-using GCTL.Service.DoctorTypes;
-
-
-using GCTL.Service.PaymentModes;
-using GCTL.Service.Qualifications;
-using GCTL.Service.Religions;
-
-using GCTL.Service.Shifts;
-using GCTL.Service.Specialities;
-
-//using GCTL.Service.ReferencePersons;
+﻿//using GCTL.Service.ReferencePersons;
 
 using GCTL.Service.AdmissionTypes;
-
-using GCTL.Service.Units;
-
-using GCTL.Service.DoctorWorkingPalace;
-using GCTL.Service.Relation;
-using GCTL.Service.HolidayTypes;
+using GCTL.Service.BloodGroups;
+using GCTL.Service.BranchesTypeInfo;
 using GCTL.Service.Companies;
-//using GCTL.Service.BankInformations;
-using GCTL.Core.Data;
-using GCTL.Data.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
-//using GCTL.Service.BankBranchInformations;
-using GCTL.Service.HrmDefDegrees;
-using GCTL.Service.HRMDefBoardCountryNames;
-using GCTL.Service.HRMDefExamTitles;
-using GCTL.Service.HrmDefInstitutes;
-//using GCTL.Service.HrmEmployeeEducations;
-using GCTL.Service.HrmDefExamGroupInfos;
+using GCTL.Service.Departments;
+using GCTL.Service.Designations;
 //using GCTL.Service.EmployeeOfficialInfo;
 using GCTL.Service.Districts;
-using GCTL.Service.BranchesTypeInfo;
-using GCTL.Service.Relationships;
-using GCTL.Service.HrmDefGradeTypes;
+using GCTL.Service.Doctors;
+using GCTL.Service.DoctorTypes;
+using GCTL.Service.DoctorWorkingPalace;
 using GCTL.Service.Grades;
+using GCTL.Service.HolidayTypes;
+using GCTL.Service.HRMDefBoardCountryNames;
+//using GCTL.Service.BankInformations;
+//using GCTL.Service.BankBranchInformations;
+using GCTL.Service.HrmDefDegrees;
+//using GCTL.Service.HrmEmployeeEducations;
+using GCTL.Service.HrmDefExamGroupInfos;
+using GCTL.Service.HRMDefExamTitles;
+using GCTL.Service.HrmDefGradeTypes;
+using GCTL.Service.HrmDefInstitutes;
 using GCTL.Service.HrmDefOccupations;
 using GCTL.Service.HrmDefSeparationTypes;
 using GCTL.Service.JobTitles;
+using GCTL.Service.PaymentModes;
+using GCTL.Service.Qualifications;
+using GCTL.Service.Relation;
+using GCTL.Service.Relationships;
+using GCTL.Service.Religions;
+using GCTL.Service.SALES_Def_Inv_MainItemGroupService;
+using GCTL.Service.Shifts;
+using GCTL.Service.Specialities;
+using GCTL.Service.Units;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace GCTL.UI.Core.Controllers
@@ -58,24 +49,24 @@ namespace GCTL.UI.Core.Controllers
         private readonly ISpecialityService specialityService;
         private readonly IQualificationService qualificationService;
         private readonly IShiftService shiftService;
-       
-       // private readonly IEmployeeService employeeService;
+
+        // private readonly IEmployeeService employeeService;
         //private readonly IReferencePersonService referencePersonService;
 
         private readonly IPaymentModeService paymentModeService;
         private readonly IDoctorService doctorService;
 
         private readonly IAdmissionTypeService admissionTypeService;
-  
+
         private readonly IUnitService unitService;
 
         private readonly IDoctorWorkingPlaceService DoctorWorkingPlaceService;
         private readonly IRelationService RelationService;
         private readonly ICompanyService companyService;
-        private readonly IHrmDefHolidayTypeService  hrmDefHolidayTypeService;
+        private readonly IHrmDefHolidayTypeService hrmDefHolidayTypeService;
         //private readonly IBankInformationsService bankInformationsService;
         //private readonly ISalesDefBankBranchInfosService salesDefBankBranchInfosService;
-        private readonly  IHrmDefDegreesService degree ;
+        private readonly IHrmDefDegreesService degree;
         private readonly IHRMDefBoardCountryNamesService boardCountry;
         private readonly IHRMDefExamTitlesService examTitle;
         private readonly IHrmDefInstitutesService institute;
@@ -89,6 +80,8 @@ namespace GCTL.UI.Core.Controllers
         private readonly IHrmDefOccupationsService hrmDefOccupationsService;
         private readonly IHrmDefSeparationTypeService hrmDefSeparationTypeService;
         private readonly IJobTitleService _jobTitleService;
+        private readonly ISALES_Def_Inv_MainItemGroup itemTypeInfoService;
+
 
 
         public CascadingController(IDoctorTypeService doctorTypeService,
@@ -126,7 +119,8 @@ namespace GCTL.UI.Core.Controllers
 ,
              IHrmDefSeparationTypeService hrmDefSeparationTypeService
 ,
-             IJobTitleService jobTitleService
+             IJobTitleService jobTitleService,
+            ISALES_Def_Inv_MainItemGroup _itemTypeInfoService
             )
         {
             this.doctorTypeService = doctorTypeService;
@@ -163,21 +157,22 @@ namespace GCTL.UI.Core.Controllers
             this.hrmDefOccupationsService = hrmDefOccupationsService;
             this.hrmDefSeparationTypeService = hrmDefSeparationTypeService;
             _jobTitleService = jobTitleService;
+            itemTypeInfoService = _itemTypeInfoService;
         }
 
         public async Task<IActionResult> GetGradeDD()
         {
             var data = await gradesService.SelectionGradesTypeAsync();
-          return  Json(data);
+            return Json(data);
         }
 
-        public async Task<IActionResult>GetGradeTypeId()
+        public async Task<IActionResult> GetGradeTypeId()
         {
             var data = await hrmDefGradeTypesService.SelectionHrmDefGradeTypeAsync();
             return Json(data);
         }
 
-        public async Task< IActionResult> GetDegree()
+        public async Task<IActionResult> GetDegree()
         {
             return Json(await degree.SelectionHrmDefDegreeTypeAsync());
         }
@@ -209,9 +204,9 @@ namespace GCTL.UI.Core.Controllers
         //{
         //    return Json( bankInformationsService.BankDropSelectionAsync());
         //}
-        
 
-        public async Task< IActionResult> GetCompany()
+
+        public async Task<IActionResult> GetCompany()
         {
             return Json(await companyService.GetCompanyDropDown());
         }
@@ -227,8 +222,8 @@ namespace GCTL.UI.Core.Controllers
         //}
         public async Task<IActionResult> GetHolidayTypes()
         {
-            
-             return Json(await hrmDefHolidayTypeService.SelectionHrmDefHolidayTypeAsync());
+
+            return Json(await hrmDefHolidayTypeService.SelectionHrmDefHolidayTypeAsync());
         }
 
         public IActionResult GetRelations()
@@ -271,7 +266,7 @@ namespace GCTL.UI.Core.Controllers
             return Json(qualificationService.QualificationSelection());
         }
 
-       
+
         public IActionResult GetPaymentModes()
         {
             return Json(paymentModeService.PaymentModeSelection());
@@ -307,12 +302,12 @@ namespace GCTL.UI.Core.Controllers
             return Json(doctorService.GetDoctorByCode(doctorCode));
         }
 
-       
 
-       
+
+
 
         [HttpPost]
-       
+
 
         public IActionResult GetDoctorsByDepartment(string departmentCode)
         {
@@ -324,14 +319,14 @@ namespace GCTL.UI.Core.Controllers
             return Json(admissionTypeService.AdmissionTypeSelection());
         }
 
-      
+
 
         public IActionResult GetUnits()
         {
             return Json(unitService.UnitSelection());
         }
 
-       
+
         public IActionResult GetDoctorWorkingPlace()
         {
             return Json(DoctorWorkingPlaceService.WorkingPlaceSelection());
@@ -343,7 +338,7 @@ namespace GCTL.UI.Core.Controllers
         //}
 
 
-        public async Task< IActionResult> GetCompanieBranchSelections()
+        public async Task<IActionResult> GetCompanieBranchSelections()
         {
             var data = await branchTypeInfoService.GetCompanieBranchSelections();
             return Json(data);
@@ -372,6 +367,10 @@ namespace GCTL.UI.Core.Controllers
         public async Task<IActionResult> GetJobs()
         {
             return Json(await _jobTitleService.SelectionHrmDefJobTitleAsync());
+        }
+        public async Task<IActionResult> GetItemType()
+        {
+            return Json(await itemTypeInfoService.SelectionGetItemTypeTitleAsync());
         }
     }
 }

@@ -7,16 +7,13 @@ namespace GCTL.Data.Models
 {
     public partial class InvDefSupplierType
     {
-        public decimal AutoId { get; set; }
+        public int SupplierTypeCode { get; set; }
         public string SupplierTypeId { get; set; }
-        public string SupplierType { get; set; }
-        public string ShortName { get; set; }
-        public string Luser { get; set; }
+        public string SupplierTypeName { get; set; }
         public DateTime? Ldate { get; set; }
+        public string Luser { get; set; }
         public string Lip { get; set; }
         public string Lmac { get; set; }
         public DateTime? ModifyDate { get; set; }
-        public string CompanyCode { get; set; }
-        public string UserInfoEmployeeId { get; set; }
     }
 }

@@ -76,10 +76,10 @@ namespace GCTL.Service.InvDefSupplierTypes
             {
                 return supplierTypeRepo.All().Select(c => new InvDefSupplierTypeSetupViewModel
                 {
-                    AutoId = c.AutoId,
+                    //AutoId = c.AutoId,
                     SupplierTypeId = c.SupplierTypeId,
-                    SupplierType = c.SupplierType,
-                    ShortName = c.ShortName
+                    //SupplierType = c.SupplierType,
+                    //ShortName = c.ShortName
                 }).ToList();
             }
             catch (Exception)
@@ -101,10 +101,10 @@ namespace GCTL.Service.InvDefSupplierTypes
 
                 return new InvDefSupplierTypeSetupViewModel
                 {
-                    AutoId = entity.AutoId,
+                    //AutoId = entity.AutoId,/
                     SupplierTypeId = entity.SupplierTypeId,
-                    SupplierType = entity.SupplierType,
-                    ShortName = entity.ShortName,
+                    //SupplierType = entity.SupplierType,
+                    //ShortName = entity.ShortName,
                     ShowCreateDate = entity.Ldate.HasValue ? entity.Ldate.Value.ToString("dd/MM/yyyy") : "",
                     ShowModifyDate = entity.ModifyDate.HasValue ? entity.ModifyDate.Value.ToString("dd/MM/yyyy") : "",
                     ModifyDate = entity.ModifyDate
@@ -127,14 +127,14 @@ namespace GCTL.Service.InvDefSupplierTypes
                     var entity = new InvDefSupplierType
                     {
                         SupplierTypeId = model.SupplierTypeId,
-                        SupplierType= model.SupplierType,
-                        ShortName = model.ShortName,
-                        CompanyCode = model.CompanyCode != null ? model.CompanyCode : "001",
+                        //SupplierType= model.SupplierType,
+                        //ShortName = model.ShortName,
+                        //CompanyCode = model.CompanyCode != null ? model.CompanyCode : "001",
                         Luser = model.Luser,
                         Lip = model.Lip,
                         Ldate = model.Ldate,
                         Lmac = model.Lmac,
-                        UserInfoEmployeeId = model.UserInfoEmployeeId,
+                        //UserInfoEmployeeId = model.UserInfoEmployeeId,
                     };
 
                     await supplierTypeRepo.AddAsync(entity);
@@ -146,9 +146,9 @@ namespace GCTL.Service.InvDefSupplierTypes
                 {
                     // Update existing data
                     exData.SupplierTypeId = model.SupplierTypeId;
-                    exData.SupplierType = model.SupplierType;
-                    exData.ShortName = model.ShortName;
-                    exData.CompanyCode = model.CompanyCode != null ? model.CompanyCode : "001";
+                    //exData.SupplierType = model.SupplierType;
+                    //exData.ShortName = model.ShortName;
+                    //exData.CompanyCode = model.CompanyCode != null ? model.CompanyCode : "001";
                     exData.ModifyDate = DateTime.Now;
                     await supplierTypeRepo.UpdateAsync(exData);
                     return (true, UpdateSuccess, exData);
@@ -194,7 +194,7 @@ namespace GCTL.Service.InvDefSupplierTypes
             if (SupplierTypeList != null && SupplierTypeList.Count > 0)
             {
                 var lastCatagoryId = SupplierTypeList
-                    .OrderByDescending(x => x.AutoId)
+                    .OrderByDescending(x => x.SupplierTypeId)
                     .Select(x => x.SupplierTypeId)
                     .FirstOrDefault();
 
@@ -212,7 +212,7 @@ namespace GCTL.Service.InvDefSupplierTypes
 
         public async Task<(bool isSuccess, string message, object data)> AlreadyExistAsync(string SupplierTypeValue)
         {
-            bool Exists = supplierTypeRepo.All().Any(x => x.SupplierType == SupplierTypeValue);
+            bool Exists = supplierTypeRepo.All().Any(x => x.SupplierTypeName == SupplierTypeValue);
             return (Exists, DataExists, null);
         }
     }

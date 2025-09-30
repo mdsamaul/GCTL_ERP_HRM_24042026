@@ -274,6 +274,28 @@
             : [];
     }
 
+    // SweetAlert toast message
+    function showToast(iconType, message) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: true,
+            showClass: {
+                popup: 'swal2-show swal2-fade-in'
+            },
+            hideClass: {
+                popup: 'swal2-hide swal2-fade-out'
+            }
+        });
+
+        Toast.fire({
+            icon: iconType,
+            title: message
+        });
+    }
+
     function populateDropdown(selector, items, defaultText = '-- Select --') {
         const $dropdown = $(selector);
 
@@ -336,6 +358,7 @@
     }
 
     function loadFilteredDropdowns(filterData, updateDropdowns = []) {
+        console.log(filterData);
         return $.ajax({
             url: "/TaxChallanEntry/GetFilterDropdownData",
             type: "POST",
@@ -373,7 +396,12 @@
             BranchCodes: getSelectedIds('#taxChallanBranchDropdown'),
             DesignationCodes: getSelectedIds('#taxChallanDesignationDropdown'),
             DepartmentCodes: getSelectedIds('#taxChallanDepartmentDropdown'),
+            ActiveStatus: getStatusValue('#taxChallanEmployeeStatusDropdown'),
         };
+    }
+
+    function getStatusValue(selector) {
+        return $(selector).val() || ""; 
     }
 
     function TaxChallanLoad() {
@@ -410,7 +438,19 @@
                 loadFilteredDropdowns(filterData, []);
             }
         });
-
+        //$('#taxChallanEmployeeStatusDropdown').TaxChallanEntry({
+        //    onSelect: function (values, texts) {
+        //        // Optional: You can load additional data or trigger other actions
+        //        const filterData = getCurrentFilterData();
+        //        loadFilteredDropdowns(filterData, []);
+        //    }
+        //});
+        $(document).on('change', "#taxChallanEmployeeStatusDropdown", function () {
+            console.log("click");
+            const filterData = getCurrentFilterData();
+            console.log(filterData);
+                    loadFilteredDropdowns(filterData, []);
+        })
         // Auto-select company "001" after all dropdowns are initialized
         setTimeout(() => {
             autoSelectCompany001();
@@ -533,21 +573,21 @@
                         }
                     },
                     {
-                        title: 'Gross Salary',
+                        title: 'Tax Amount (BDT)',
                         data: 'grossSalary',
                         width: "130px",
                         className: "text-right",
-                        render: function (data, type, row) {
-                            if (data) {
-                                return new Intl.NumberFormat('en-BD', {
-                                    style: 'currency',
-                                    currency: 'BDT',
-                                    minimumFractionDigits: 0,
-                                    maximumFractionDigits: 0
-                                }).format(data);
-                            }
-                            return '';
-                        }
+                        //render: function (data, type, row) {
+                        //    if (data) {
+                        //        return new Intl.NumberFormat('en-BD', {
+                        //            style: 'currency',
+                        //            currency: '',
+                        //            minimumFractionDigits: 0,
+                        //            maximumFractionDigits: 0
+                        //        }).format(data);
+                        //    }
+                        //    return '';
+                        //}
                     }
                 ],
                 responsive: true,
@@ -634,24 +674,131 @@
         });
         return selectedEmployees;
     };
+
+    // Remove is-invalid on change/typing
+    $(document).on('change keyup', 'input, select', function () {
+        $(this).removeClass('is-invalid');
+    });
+
+    // Bootstrap-Select change
+    $('.selectpicker').on('changed.bs.select', function () {
+        $(this).removeClass('is-invalid');
+    });
+
+    // Flatpickr change
+    if (typeof taxChallanDatePicker !== "undefined") {
+        taxChallanDatePicker.config.onChange.push(function (selectedDates, dateStr, instance) {
+            $("#Setup_TaxChallanDate").removeClass("is-invalid");
+        });
+    }
     //#region save & Edit
     $(document).on('click', ".js-tax-challan-entry-save", function () {
-        var fromData = getFormData();
+        var formData = getFormData();
+
+        if (formData.TaxDepositCode == 0) {
+            // EmployeeIds
+            if (!formData.EmployeeIds || formData.EmployeeIds.length === 0) {
+                showToast('error', "Please select at least one Employee.");
+                $("#taxChallanEmployeeDropdown").addClass("is-invalid").focus();
+                return;
+            }
+        }
+
+
+        //FinancialCodeNo
+
+        if (!formData.FinancialCodeNo || formData.FinancialCodeNo === "") {
+            showToast('error', "Please select a Bank.");
+            $("#Setup_BankId").addClass("is-invalid").focus();
+            return;
+        }
+       
+
+        // Salary Month
+        if (
+            !formData.SalaryMonth ||
+            formData.SalaryMonth === "" ||
+            isNaN(formData.SalaryMonth) ||
+            parseInt(formData.SalaryMonth) < 1 ||
+            parseInt(formData.SalaryMonth) > 12
+        ) {
+            showToast('error', "Please select Salary Month.");
+            $("#Setup_SalaryMonth").addClass("is-invalid").focus();
+            return;
+        }
+        // Salary Year
+        if (
+            !formData.SalaryYear ||
+            formData.SalaryYear === "" ||
+            isNaN(formData.SalaryYear) ||
+            parseInt(formData.SalaryYear) < 1900 ||
+            parseInt(formData.SalaryYear) > 2100
+        ) {
+            showToast('error', "Please select a valid Salary Year (1900 - 2100).");
+            $("#Setup_SalaryYear").addClass("is-invalid").focus();
+            return;
+        }
+
+       
+        // Tax Challan No
+        if (!formData.TaxChallanNo || formData.TaxChallanNo.trim() === "") {
+            showToast('error', "Please enter Tax Challan No.");
+            $("#Setup_TaxChallanNo").addClass("is-invalid").focus();
+            return;
+        }
+        // Tax Challan Date
+        if (!formData.TaxChallanDate) {
+            showToast('error', "Please select Tax Challan Date.");
+            $("#Setup_TaxChallanDate").addClass("is-invalid").focus();
+            if (typeof taxChallanDatePicker !== "undefined") {
+                taxChallanDatePicker.open();
+            }
+            return;
+        }
+
+        // Challan Amount
+        if (!formData.ChallanAmount || formData.ChallanAmount <= 0) {
+            showToast('error',"Please enter Challan Amount.");
+            $("#Setup_ChallanAmount").addClass("is-invalid").focus();
+            return;
+        }
+
+        
+        // Bank
+        if (!formData.BankId || formData.BankId === "") {
+            showToast('error', "Please select a Bank.");
+            $("#Setup_BankId").addClass("is-invalid").focus();
+
+            $("#Setup_BankId").selectpicker('show');
+            return;
+        }
+
+       
+
         $.ajax({
             url: "/TaxChallanEntry/TaxChallanSaveEdit",
             type: "POST",
             contentType: 'application/json',
-            data: JSON.stringify(fromData),
+            data: JSON.stringify(formData),
             success: function (res) {
                 console.log(res);
-                resetFormData();
-                taxDipositAutoId();
-                LoadChallanEntryGrid();
+                if (res.isSuccess) {
+                    showToast("success", res.message);
+                }
+                if (!res.isSuccess) {
+                    showToast("error", res.message);
+                }
+               
 
             },
             error: function (e) {
                 console.log(e);
-            }
+            },
+                complete: function() {
+                taxDipositAutoId();
+                LoadChallanEntryGrid();
+                resetFormData();
+                }
         });
     })
     //#endregion
@@ -679,9 +826,13 @@
             taxChallanDatePicker.clear(); 
         }
         initTaxChallanDatePicker();
-        // সব checkbox deselect
+
+        $(".employee-select").prop("checked", false);
+        $("#selectAll").prop("checked", false).prop("indeterminate", false);
+      
         $(".row-select").prop("checked", false);
         $("#selectTaxChallanAll").prop("checked", false).prop("indeterminate", false);
+
 
         // status reset
         $("#selectedEmployeesStatus").text("Selected: 0 employees");
@@ -689,6 +840,8 @@
         // Button disable
         $("#generateChallan").prop("disabled", true);
         FinancialYear();
+        $(".createDate").text("");
+        $(".updateDate").text("");
     }
 
     //#endregion 
@@ -696,7 +849,7 @@
     //#region get form data
     function getFormData() {
         var formData = {
-            TaxDepositCode: parseInt($("#Setup_TaxDepositCode").val()),
+            TaxDepositCode: parseInt($("#Setup_TaxDepositCode").val())||0,
             TaxDepositId: $("#Setup_TaxDepositId").val(),
             FinancialCodeNo: $("#Setup_FinancialCodeNo").val(),
             TaxDepositAmount: parseInt($("#Setup_ChallanAmount").val()),
@@ -727,25 +880,25 @@
     //#endregion
 
 
-    //#region financial year 2024-2025
-    function FinancialYear() {
-        const startYear = 2020;
-        const endYear = 2030
-        const $dropdown = $("#Setup_FinancialCodeNo");
-        $dropdown.empty();
-        for (let y = startYear; y < endYear; y++) {
-            $dropdown.append(
-                $("<option>", {
-                    value: `${y}-${y + 1}`,
-                    text: `${y}-${y + 1}`
-                })
-            );
-        }
-        const currentYear = new Date().getFullYear();
-        const defaultValue = `${currentYear}-${currentYear + 1}`;
-        $dropdown.val(defaultValue);
-    };
-    //#endregion
+    ////#region financial year 2024-2025
+    //function FinancialYear() {
+    //    const startYear = 2020;
+    //    const endYear = 2030
+    //    const $dropdown = $("#Setup_FinancialCodeNo");
+    //    $dropdown.empty();
+    //    for (let y = startYear; y < endYear; y++) {
+    //        $dropdown.append(
+    //            $("<option>", {
+    //                value: `${y}-${y + 1}`,
+    //                text: `${y}-${y + 1}`
+    //            })
+    //        );
+    //    }
+    //    const currentYear = new Date().getFullYear();
+    //    const defaultValue = `${currentYear}-${currentYear + 1}`;
+    //    $dropdown.val(defaultValue);
+    //};
+    ////#endregion
 
     //#region bank id get branch and address
     $(document).on('change', '#Setup_BankId', function () {
@@ -815,48 +968,100 @@
 
     //#endregion
     let selectedEmployees = [];
+ 
     function LoadChallanEntryGrid() {
-        var table = $('#TaxChallanEntryTable').DataTable({
-            //processing: true,
-            serverSide: false,
+        // Destroy existing table if it exists
+        if ($.fn.DataTable.isDataTable('#TaxChallanEntryTable')) {
+            $('#TaxChallanEntryTable').DataTable().destroy();
+        }
+
+        $('#TaxChallanEntryTable').DataTable({
+            serverSide: true,
+            processing: true,
             destroy: true,
             ajax: {
                 url: "/TaxChallanEntry/GetchallanEntryGrid",
-                type: "GET",
-                dataSrc: ""
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: function (d) {
+                    // Ensure all required properties are sent
+                    var requestData = {
+                        Draw: d.draw || 0,
+                        Start: d.start || 0,
+                        Length: d.length || 10,
+                        Search: {
+                            Value: (d.search && d.search.value) ? d.search.value : "",
+                            Regex: (d.search && d.search.regex) ? d.search.regex : false
+                        },
+                        Columns: d.columns || [],
+                        Order: d.order || []
+                    };
+
+                    console.log("Sending request data:", requestData); // Debug log
+                    return JSON.stringify(requestData);
+                },
+                error: function (xhr, error, code) {
+                    console.error("AJAX Error:", error);
+                    console.error("Response:", xhr.responseText);
+                    alert("Error loading data: " + error);
+                }
             },
             columns: [
                 {
                     data: "taxDepositCode",
                     className: "text-center",
-                    width: "80px",
+                    orderable: false,
                     render: function (data, type, row) {
                         return `<input type="checkbox" class="row-select" value="${data}" />`;
                     }
                 },
                 {
-                    data: "taxDepositId", className: "text-center", width: "120px",
+                    data: "taxDepositId",
+                    className: "text-center",
                     render: function (data, type, row) {
-                        return `<a href="#defaultScroll" class="view-tax-chalan-row" data-id="${row.taxDepositCode}">${data}</a>`;
+                        return `<a href="#defaultScroll" class="view-tax-chalan-row" data-id="${row.taxDepositCode}">${data || ''}</a>`;
                     }
                 },
                 { data: "employeeId", className: "text-center" },
                 { data: "empName" },
                 { data: "designationName" },
                 { data: "taxChallanNo", className: "text-center" },
+                {
+                    data: "taxDepositAmount",
+                    className: "text-center",
+                    render: function (data, type, row) {
+                        return data ? parseFloat(data).toFixed(2) : '0.00';
+                    }
+                },
                 { data: "showTaxChallanDate", className: "text-center" },
                 { data: "salaryMonthName", className: "text-center" },
                 { data: "salaryYear", className: "text-center" },
-                { data: "financialCodeNo", className: "text-center" },
+                { data: "showFinancialCodeNo", className: "text-center" },
                 { data: "remark" }
             ],
-            initComplete: function (settings, json) {
-                //console.log("Data from server:", json); 
-            },
-            columnDefs: [
-                { targets: "_all", defaultContent: "" }
-            ]
+            lengthMenu: [[5, 10, 25, 50, 100, 1000], [5, 10, 25, 50, 100, 1000]],
+            pageLength: 10,
+            order: [[0, 'desc']], 
+            language: {
+                processing: "Loading...",
+                emptyTable: "No data available",
+                info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                infoEmpty: "Showing 0 to 0 of 0 entries",
+                infoFiltered: "(filtered from _MAX_ total entries)",
+                lengthMenu: "Show _MENU_ entries",
+                search: "Search:",
+                paginate: {
+                    first: "First",
+                    last: "Last",
+                    next: "Next",
+                    previous: "Previous"
+                }
+            }
         });
+    }
+
+
+
         $(document).on('click', '.view-tax-chalan-row', function (e) {
             e.preventDefault();
 
@@ -865,20 +1070,20 @@
             if (target.length) {
                 $('html, body').animate({
                     scrollTop: target.offset().top - 60
-                }, 500);
+                }, 100);
             }
 
             var table = $('#TaxChallanEntryTable').DataTable();
             var rowData = table.row($(this).closest('tr')).data();
-            console.log(rowData);
-            //$("#Setup_TaxChallanDate").val(rowData.taxChallanDate);
+          
+          
 
 
             if (rowData && rowData.taxChallanDate) {
                 taxChallanDatePicker.setDate(rowData.taxChallanDate, true);
             }
 
-
+            console.log(rowData);
             $("#Setup_ChallanAmount").val(rowData.taxDepositAmount);
             $("#Setup_TaxDepositCode").val(rowData.taxDepositCode);
             $("#Setup_TaxDepositId").val(rowData.taxDepositId);
@@ -899,7 +1104,7 @@
             selectedEmployees.push(rowData.taxDepositCode + "");
 
         });
-    }
+
 
     // Button click e selected IDs console korte
     $('#js-tax-challan-delete-confirm').on('click', function () {
@@ -917,6 +1122,11 @@
             data: JSON.stringify(selectedIds),
             success: function (res) {
                 console.log(res);
+                if (res.isSuccess) {
+                    showToast('success', res.message);
+                } else {
+                    showToast('error', res.message);
+                }
                 selectedEmployees = [];
             }, error: function (e) {
                 console.log(e);
@@ -994,6 +1204,36 @@
     };
 
 
+    //#endregion
+
+    //#region financial year
+    function FinancialYear() {
+        $.ajax({
+            url: "/TaxChallanEntry/FinancialYearGet",
+            type: "GET",
+            success: function (res) {
+
+                if (res.length >0) {
+                    const $dropdown = $("#Setup_FinancialCodeNo");
+                    $dropdown.empty();
+                    $.each(res, function (index, item) {
+                        $dropdown.append(
+                            $("<option>", {
+                                value: item.financialCodeNo,
+                                text:item.name
+                            })
+                        )
+                    })
+                    const defaultValue = res[res.length - 1];
+
+                    $dropdown.val(defaultValue.financialCodeNo);
+                   
+                }
+            }, error: function (e) {
+                console.log(e);
+            }
+        })
+    }
     //#endregion
 
     //#region init

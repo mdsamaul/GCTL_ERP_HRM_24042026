@@ -3168,7 +3168,7 @@ namespace GCTL.Data.Models
             return _;
         }
 
-        public virtual async Task<List<ProcGetEmpTaxChallanEntryResult>> ProcGetEmpTaxChallanEntryAsync(string CompanyIds, string EmployeeIds, string BranchCodes, string DesignationCodes, string DepartmentCodes, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<ProcGetEmpTaxChallanEntryResult>> ProcGetEmpTaxChallanEntryAsync(string CompanyIds, string EmployeeIds, string BranchCodes, string DesignationCodes, string DepartmentCodes, string ActiveStatus, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -3214,9 +3214,16 @@ namespace GCTL.Data.Models
                     Value = DepartmentCodes ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
+                new SqlParameter
+                {
+                    ParameterName = "ActiveStatus",
+                    Size = -1,
+                    Value = ActiveStatus ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
                 parameterreturnValue,
             };
-            var _ = await _context.SqlQueryAsync<ProcGetEmpTaxChallanEntryResult>("EXEC @returnValue = [dbo].[ProcGetEmpTaxChallanEntry] @CompanyIds = @CompanyIds, @EmployeeIds = @EmployeeIds, @BranchCodes = @BranchCodes, @DesignationCodes = @DesignationCodes, @DepartmentCodes = @DepartmentCodes", sqlParameters, cancellationToken);
+            var _ = await _context.SqlQueryAsync<ProcGetEmpTaxChallanEntryResult>("EXEC @returnValue = [dbo].[ProcGetEmpTaxChallanEntry] @CompanyIds = @CompanyIds, @EmployeeIds = @EmployeeIds, @BranchCodes = @BranchCodes, @DesignationCodes = @DesignationCodes, @DepartmentCodes = @DepartmentCodes, @ActiveStatus = @ActiveStatus", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 

@@ -27,6 +27,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Acc_FinancialYear]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Acc_GeneralLedger]",
          "ObjectType": 0
       },
@@ -56,6 +60,10 @@
       },
       {
          "Name": "[dbo].[BillGeneration]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CA_Def_Country]",
          "ObjectType": 0
       },
       {
@@ -103,11 +111,19 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Core_Supplier]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Core_UserInfo]",
          "ObjectType": 0
       },
       {
          "Name": "[dbo].[CustomerTypes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Def_Inv_StockLevelManagement]",
          "ObjectType": 0
       },
       {
@@ -475,6 +491,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[HRM_Def_Line]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[HRM_Def_MaritalStatus]",
          "ObjectType": 0
       },
@@ -512,6 +532,10 @@
       },
       {
          "Name": "[dbo].[HRM_Def_SurName]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HRM_Def_Unit_Conversion]",
          "ObjectType": 0
       },
       {
@@ -683,11 +707,35 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Inv_Def_BuyerDepartment]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Inv_Def_Factory]",
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Inv_Def_Item]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Inv_Def_ItemType]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Inv_Def_Location]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Inv_Def_PackageType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Inv_Def_SupplierCategory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Inv_Def_SupplierOrigin]",
          "ObjectType": 0
       },
       {
@@ -696,6 +744,18 @@
       },
       {
          "Name": "[dbo].[Inv_Def_Warehouse]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Inv_Def_WarehouseType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Inv_ItemBrand]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Inv_ItemPhoto]",
          "ObjectType": 0
       },
       {
@@ -740,6 +800,82 @@
       },
       {
          "Name": "[dbo].[POS_TrType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Prod_Def_Buyer]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Prod_Def_Style]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Prod_Def_Unit]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Def_FinalDestination]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Def_LC_Type]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Def_Product_Type]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Def_Supplier]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Def_UDNo]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Prod_Def_Brand]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Prod_Def_Buyer]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Prod_Def_Buyer_Photo]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Prod_Def_Color]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Prod_Def_DeliveryAddress]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Prod_Def_DeliveryMethod]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Prod_Def_Inv_SubItem2]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Prod_Def_Package]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Prod_Def_ProductionType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Prod_Def_Season]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Prod_Def_Size]",
          "ObjectType": 0
       },
       {
@@ -788,6 +924,14 @@
       },
       {
          "Name": "[dbo].[Sales_Def_DriverInformation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SALES_Def_Inv_MainItem]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SALES_Def_Inv_SubItem]",
          "ObjectType": 0
       },
       {
@@ -840,6 +984,14 @@
       },
       {
          "Name": "[dbo].[Sales_Supplier]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Sales_SupplierBankAccount]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Sales_SupplierBankAccountTemp]",
          "ObjectType": 0
       },
       {
