@@ -1348,8 +1348,8 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
                             MainItemID = row.mainMainItemID,
                             MainItemName = row.mainMainItemName,
                             Description = row.mainDescription,
-                            showCreateDate = row.mainLdate != null
-                                            ? ((DateTime)row.mainLdate).ToString("dd/MM/yyyy")
+                            showCreateDate = row.mainLDate != null
+                                            ? ((DateTime)row.mainLDate).ToString("dd/MM/yyyy")
                                             : "",
                             showModifyDate = row.mainModifyDate != null
                                             ? ((DateTime)row.mainModifyDate).ToString("dd/MM/yyyy")
@@ -1370,8 +1370,8 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
                             SubItemID = row.subSubItemID,
                             SubItemName = row.subSubItemName,
                             Description = row.subDescription,
-                            showCreateDate = row.subLdate != null
-                                            ? ((DateTime)row.subLdate).ToString("dd/MM/yyyy")
+                            showCreateDate = row.subLDate != null
+                                            ? ((DateTime)row.subLDate).ToString("dd/MM/yyyy")
                                             : "",
                             showModifyDate = row.subModifyDate != null
                                             ? ((DateTime)row.subModifyDate).ToString("dd/MM/yyyy")
@@ -1396,8 +1396,8 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
                             SubItem2ID = row.sub2SubItem2ID,
                             SubItem2Name = row.sub2SubItem2Name,
                             Description = row.sub2Description,
-                            showCreateDate = row.sub2Ldate != null
-                                            ? ((DateTime)row.sub2Ldate).ToString("dd/MM/yyyy")
+                            showCreateDate = row.sub2LDate != null
+                                            ? ((DateTime)row.sub2LDate).ToString("dd/MM/yyyy")
                                             : "",
                             showModifyDate = row.sub2ModifyDate != null
                                             ? ((DateTime)row.sub2ModifyDate).ToString("dd/MM/yyyy")
@@ -1457,8 +1457,8 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
                             StyleName = row.itemStyleId != null && styles.ContainsKey(row.itemStyleId)
                                         ? styles[row.itemStyleId]
                                         : "",
-                            showCreateDate = row.itemLdate != null
-                                            ? ((DateTime)row.itemLdate).ToString("dd/MM/yyyy")
+                            showCreateDate = row.itemLDate != null
+                                            ? ((DateTime)row.itemLDate).ToString("dd/MM/yyyy")
                                             : "",
                             showModifyDate = row.itemModifyDate != null
                                             ? ((DateTime)row.itemModifyDate).ToString("dd/MM/yyyy")
@@ -1492,8 +1492,8 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
                             Lmac = row.stockLmac,
                             Lip = row.stockLip,
                             Luser = row.stockLuser,
-                            showCreateDate = row.stockLdate != null
-                                            ? ((DateTime)row.stockLdate).ToString("dd/MM/yyyy")
+                            showCreateDate = row.stockLDate != null
+                                            ? ((DateTime)row.stockLDate).ToString("dd/MM/yyyy")
                                             : "",
                             showModifyDate = row.stockModifyDate != null
                                             ? ((DateTime)row.stockModifyDate).ToString("dd/MM/yyyy")

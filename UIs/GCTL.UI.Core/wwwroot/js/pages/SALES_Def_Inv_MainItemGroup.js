@@ -178,7 +178,7 @@
             }
             else if (tabName == "Sub Group - 2") {
                 GetAutoAllI(tabName);
-                loadSub2Grid();
+                //loadSub2Grid();
             }
             else if (tabName == "Item Information") {
                 GetAutoAllI(tabName);
@@ -186,7 +186,7 @@
             }
             else if (tabName == "Stock Level Management") {
                 GetAutoAllI(tabName);
-                loadStockLevelManagementGrid();
+                //loadStockLevelManagementGrid();
             }
         });
 
@@ -743,14 +743,14 @@
                     } else if (tabName == "Sub Group - 2") {
                         ResetSubGroupTwoForm();
                         $(settings.SubItemTwo_SubItem2ID).val(autoId);
-                        loadSub2Grid();
+                        //loadSub2Grid();
                     } else if (tabName == "Item Information") {
                         ResetItemInfoGroupForm()
                         $(settings.MainItem_ItemID).val(autoId);
                         //loaditemInfoGrid();
                     } else if (tabName == "Stock Level Management") {
                         $(settings.StockLevelManagement_SLMID).val(autoId);
-                        loadStockLevelManagementGrid();
+                        //loadStockLevelManagementGrid();
                         ResetStockLevelForm();
                     }
                 }, error: function (e) {
@@ -779,11 +779,11 @@
                     } else if (tabName == "Sub Group") {
                         //loadSubGrid();
                     } else if (tabName == "Sub Group - 2") {
-                        loadSub2Grid();
+                        //loadSub2Grid();
                     } else if (tabName == "Item Information") {
                         //loaditemInfoGrid();
                     } else if (tabName == "Stock Level Management") {
-                        loadStockLevelManagementGrid();
+                        //loadStockLevelManagementGrid();
                     }
                     //loadMianGrid();                   
                 }, error: function (e) {
@@ -834,7 +834,7 @@
                         },
                         orderable: false,
                         searchable: false,
-                        width: "50px",
+                        width: "20px",
                         className: "text-center"
                     },
                     {
@@ -1008,94 +1008,104 @@
         //sub group 2 
 
 
-        function loadSub2Grid() {
+        //function //loadSub2Grid() {
 
-            if ($.fn.DataTable.isDataTable('#subGroup2Grid')) {
-                $('#subGroup2Grid').DataTable().destroy();
-            }
+        //    if ($.fn.DataTable.isDataTable('#subGroup2Grid')) {
+        //        $('#subGroup2Grid').DataTable().destroy();
+        //    }
 
-            $("#subGroup2Grid").DataTable({
-                processing: true,
-                serverSide: true,
-                searching: true,
-                paging: true,
-                info: true,
-                autoWidth: false,
-                responsive: true,
-                pageLength: 10,
-                lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
-                order: [[1, 'asc']],
-                ajax: {
-                    url: LoadSub2GroupDataUrl,
-                    type: "POST",
-                    dataType: "json",
-                    "dataSrc": function (json) {
-                        return json.data || [];
-                    },
-                    error: function (xhr, error, code) {
-                    }
-                },
-                columns: [
-                    {
-                        data: "tc",
-                        render: function (data, type, row) {
-                            if (type === 'display') {
-                                return `<input type="checkbox" class="sub2-group-row-check" value="${data}"/>`;
-                            }
-                            return data;
-                        },
-                        orderable: false,
-                        searchable: false,
-                        width: "50px",
-                        className: "text-center"
-                    },
-                    {
-                        data: "subItem2ID",
-                        render: function (data, type, row) {
-                            if (type === 'display') {
-                                return `<a href="#" class="sub2-group-item-link" data-id="${row.tc}">${data}</a>`;
-                            }
-                            return data;
-                        },
-                        width: "50px",
-                        className: "text-center"
-                    },
-                    {
-                        data: "subItem2Name",
-                        width: "200px"
-                    },
-                    {
-                        data: "description",
-                        width: "300px"
-                    },
-                    {
-                        data: "mainItemName",
-                        width: "150px"
-                    },
-                    {
-                        data: "subItemName",
-                        width: "150px"
-                    }
-                ]
-            });
-        }
+        //    $("#subGroup2Grid").DataTable({
+        //        processing: true,
+        //        serverSide: true,
+        //        searching: true,
+        //        paging: true,
+        //        info: true,
+        //        autoWidth: false,
+        //        responsive: true,
+        //        pageLength: 10,
+        //        lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
+        //        order: [[1, 'asc']],
+        //        ajax: {
+        //            url: LoadSub2GroupDataUrl,
+        //            type: "POST",
+        //            dataType: "json",
+        //            "dataSrc": function (json) {
+        //                return json.data || [];
+        //            },
+        //            error: function (xhr, error, code) {
+        //            }
+        //        },
+        //        columns: [
+        //            {
+        //                data: "tc",
+        //                render: function (data, type, row) {
+        //                    if (type === 'display') {
+        //                        return `<input type="checkbox" class="sub2-group-row-check" value="${data}"/>`;
+        //                    }
+        //                    return data;
+        //                },
+        //                orderable: false,
+        //                searchable: false,
+        //                width: "50px",
+        //                className: "text-center"
+        //            },
+        //            {
+        //                data: "subItem2ID",
+        //                render: function (data, type, row) {
+        //                    if (type === 'display') {
+        //                        return `<a href="#" class="sub2-group-item-link" data-id="${row.tc}">${data}</a>`;
+        //                    }
+        //                    return data;
+        //                },
+        //                width: "50px",
+        //                className: "text-center"
+        //            },
+        //            {
+        //                data: "subItem2Name",
+        //                width: "200px"
+        //            },
+        //            {
+        //                data: "description",
+        //                width: "300px"
+        //            },
+        //            {
+        //                data: "mainItemName",
+        //                width: "150px"
+        //            },
+        //            {
+        //                data: "subItemName",
+        //                width: "150px"
+        //            }
+        //        ]
+        //    });
+        //}
         // Event handlers
         $(document).on('click', '.sub2-group-item-link', function (e) {
             e.preventDefault();
+            //var table = $('#subGroup2Grid').DataTable();
+
+            //var row = table.row($(this).parents('tr')); 
+            //var rowValue = row.data();
+
             var table = $('#subGroup2Grid').DataTable();
             var row = table.row($(this).closest('tr'));
 
             var rowValue = row.data();
-            $(settings.SubItemTwo_TC).val(rowValue.tc);
-            $(settings.SubItemTwo_SubItem2ID).val(rowValue.subItem2ID);
-            $(settings.SubItemTwo_SubItem2Name).val(rowValue.subItem2Name);
-            $(settings.SubItemTwo_Description).val(rowValue.description);
-            $('#SubGroupTwoMainItemName').val(rowValue.mainItemID).trigger('change');
-            $('#SubGroupTwoSubGroupName').val(rowValue.subItemID).trigger('change');
-            $(settings.showCreateModifyDateContainer).show();
-            $(settings.showCreateDate).empty().text(rowValue.showCreateDate || "");
-            $(settings.showModifyDate).empty().text(rowValue.showModifyDate || "");
+            if (rowValue) {
 
+                $(settings.SubItemTwo_TC).val(rowValue.tc);
+                $(settings.SubItemTwo_SubItem2ID).val(rowValue.subItem2ID);
+                $(settings.SubItemTwo_SubItem2Name).val(rowValue.subItem2Name);
+                $(settings.SubItemTwo_Description).val(rowValue.description);
+                $('#SubGroupTwoMainItemName').val(rowValue.mainItemID).trigger('change');
+                setTimeout(() => {
+                    $('#SubGroupTwoSubGroupName').val(rowValue.subItemID).trigger('change');
+                }, 500);
+                
+                $(settings.showCreateModifyDateContainer).show();
+                $(settings.showCreateDate).empty().text(rowValue.showCreateDate || "");
+                $(settings.showModifyDate).empty().text(rowValue.showModifyDate || "");
+            }
         });
 
         $(document).on('change', '#sub2Group-check-all', function () {
@@ -1201,52 +1211,68 @@
         // Event handlers
         $(document).on('click', '.itemInfo-group-item-link', function (e) {
             e.preventDefault();
+
             var table = $('#itemInformationGrid').DataTable();
-            var row = table.row($(this).closest('tr'));
 
-            var rowValue = row.data();
-            if (rowValue) {
-
-
-                // Set form inputs
-                $("#MainItem_TC").val(rowValue.tc);
-                $(settings.MainItem_ItemID).val(rowValue.itemID);
-                $(settings.MainItem_BuyerId).val(rowValue.buyerId).trigger('change');
-                $('#ItemInfoMainItemName').val(rowValue.mainItemID).trigger('change');
-                $(settings.MainItem_StyleId).val(rowValue.styleId).trigger('change');
-                $(settings.MainItem_ItemName).val(rowValue.itemName);
-                $(settings.MainItem_PrintName).val(rowValue.printName);
-                $(settings.SubItem_TC).val(rowValue.technicalSpecification || "");
-                $(settings.MainItem_ItemCode).val(rowValue.itemCode);
-                $(settings.MainItem_Barcode).val(rowValue.barcode);
-                $(settings.MainItem_OriginId).val(rowValue.originId).trigger('change');
-                $(settings.MainItem_ManufactureId).val(rowValue.manufactureId).trigger('change');
-                $(settings.MainItem_PackageTypeId).val(rowValue.packageTypeId).trigger('change');
-                $(settings.MainItem_PackageQuantity).val(rowValue.packageQuantity);
-                $(settings.MainItem_ItemQuantity).val(rowValue.itemQuantity);
-                $(settings.MainItem_ItemUnit).val(rowValue.itemUnit).trigger('change');
-                $(settings.MainItem_ItemPrice).val(rowValue.itemPrice);
-                $(settings.MainItem_CurrencyId).val(rowValue.currencyId).trigger('change');
-                $(settings.MainItem_TotalAmount).val(rowValue.totalAmount);
-                $(settings.MainItem_CurrencyId2).val(rowValue.currencyId2).trigger('change');
-                $(settings.MainItem_Discount).val(rowValue.discount);
-                $(settings.MainItem_WarrantyStatus).prop('checked', rowValue.warrantyStatus);
-                $(settings.MainItem_WarrantyTime).val(rowValue.warrantyTime);
-                $(settings.MainItem_WarrantyType).val(rowValue.warrantyType).trigger('change');
-                $(settings.MainItem_BranchID).val(rowValue.branchID).trigger('change');
-                $(settings.MainItem_SupplierId).val(rowValue.supplierId).trigger('change');
-                $(settings.MainItem_ItemTypeID).val(rowValue.itemTypeID).trigger('change');
-                $("#ItemInfoSubItem2Name").val(rowValue.subItem2ID).trigger('change');
-                $("#ItemInfoSubItemName").val(rowValue.subItemID).trigger('change');
-
-                // Show creation and modification dates
-                $(settings.showCreateDate).empty().text(rowValue.showCreateDate || "");
-                $(settings.showModifyDate).empty().text(rowValue.showModifyDate || "");
-                $(settings.showCreateModifyDateContainer).show();
-
-                getImage(rowValue.itemID);
+            var $tr = $(this).closest('tr');
+            if ($tr.hasClass('child')) {
+                $tr = $tr.prev(); 
             }
+
+            var row = table.row($tr);
+            var rowValue = row.data();
+
+            if (!rowValue) {
+                return;
+            }
+
+            $("#MainItem_TC").val(rowValue.tc);
+            $(settings.MainItem_ItemID).val(rowValue.itemID);
+            $(settings.MainItem_BuyerId).val(rowValue.buyerId).trigger('change');
+            $(settings.MainItem_StyleId).val(rowValue.styleId).trigger('change');
+            $(settings.MainItem_ItemName).val(rowValue.itemName);
+            $(settings.MainItem_PrintName).val(rowValue.printName);
+            $(settings.SubItem_TC).val(rowValue.technicalSpecification || "");
+            $(settings.MainItem_ItemCode).val(rowValue.itemCode);
+            $(settings.MainItem_Barcode).val(rowValue.barcode);
+            $(settings.MainItem_OriginId).val(rowValue.originId).trigger('change');
+            $(settings.MainItem_ManufactureId).val(rowValue.manufactureId).trigger('change');
+            $(settings.MainItem_PackageTypeId).val(rowValue.packageTypeId).trigger('change');
+            $(settings.MainItem_PackageQuantity).val(rowValue.packageQuantity);
+            $(settings.MainItem_ItemQuantity).val(rowValue.itemQuantity);
+            $(settings.MainItem_ItemUnit).val(rowValue.itemUnit).trigger('change');
+            $(settings.MainItem_ItemPrice).val(rowValue.itemPrice);
+            $(settings.MainItem_CurrencyId).val(rowValue.currencyId).trigger('change');
+            $(settings.MainItem_TotalAmount).val(rowValue.totalAmount);
+            $(settings.MainItem_CurrencyId2).val(rowValue.currencyId2).trigger('change');
+            $(settings.MainItem_Discount).val(rowValue.discount);
+            $(settings.MainItem_WarrantyStatus).prop('checked', rowValue.warrantyStatus);
+            $(settings.MainItem_WarrantyTime).val(rowValue.warrantyTime);
+            $(settings.MainItem_WarrantyType).val(rowValue.warrantyType).trigger('change');
+            $(settings.MainItem_BranchID).val(rowValue.branchID).trigger('change');
+            $(settings.MainItem_SupplierId).val(rowValue.supplierId).trigger('change');
+            $(settings.MainItem_ItemTypeID).val(rowValue.itemTypeID).trigger('change');
+
+            $('#ItemInfoMainItemID').val(rowValue.mainItemID).trigger('change');
+            $('#ItemInfoSubItemID').val(rowValue.subItemID).trigger('change');
+            $('#ItemInfoSubItem2ID').val(rowValue.subItem2ID).trigger('change');
+
+            // Dropdown chaining set with delay
+         
+            $('#ItemInfoMainItemName').val(rowValue.mainItemID).trigger('change.select2');
+            $('#ItemInfoSubItemName').val(rowValue.subItemID).trigger('change.select2');
+            $('#ItemInfoSubItem2Name').val(rowValue.subItem2ID).trigger('change.select2');
+
+         
+
+            // Show creation and modification dates
+            $(settings.showCreateDate).empty().text(rowValue.showCreateDate || "");
+            $(settings.showModifyDate).empty().text(rowValue.showModifyDate || "");
+            $(settings.showCreateModifyDateContainer).show();
+
+            getImage(rowValue.itemID);
         });
+
         function getImage(itemId) {
             $.ajax({
                 url: '/SALES_Def_Inv_MainItemGroup/GetPhoto',
@@ -1283,92 +1309,92 @@
         //Stock Level Management group 
 
 
-        function loadStockLevelManagementGrid() {
+        //function //loadStockLevelManagementGrid() {
 
-            if ($.fn.DataTable.isDataTable('#StockLevelManagementGrid')) {
-                $('#StockLevelManagementGrid').DataTable().destroy();
-            }
+        //    if ($.fn.DataTable.isDataTable('#StockLevelManagementGrid')) {
+        //        $('#StockLevelManagementGrid').DataTable().destroy();
+        //    }
 
-            $("#StockLevelManagementGrid").DataTable({
-                processing: true,
-                serverSide: true,
-                searching: true,
-                paging: true,
-                info: true,
-                autoWidth: false,
-                responsive: true,
-                pageLength: 10,
-                lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
-                order: [[1, 'asc']],
-                ajax: {
-                    url: LoadStockLevelManagementDataUrl,
-                    type: "POST",
-                    dataType: "json",
-                    "dataSrc": function (json) {
-                        return json.data || [];
-                    },
-                    error: function (xhr, error, code) {
-                    }
-                },
-                columns: [
-                    {
-                        data: "tc",
-                        render: function (data, type, row) {
-                            if (type === 'display') {
-                                return `<input type="checkbox" class="StockLevelManagement-group-row-check" value="${data}"/>`;
-                            }
-                            return data;
-                        },
-                        orderable: false,
-                        searchable: false,
-                        width: "50px",
-                        className: "text-center"
-                    },
-                    {
-                        data: "slmid",
-                        render: function (data, type, row) {
-                            if (type === 'display') {
-                                return `<a href="#" class="StockLevelManagement-group-item-link" data-id="${row.tc}">${data}</a>`;
-                            }
-                            return data;
-                        },
-                        width: "50px",
-                        className: "text-center"
-                    },
-                    {
-                        data: "itemName",
-                        width: "300px"
-                    },
-                    {
-                        data: "warehouseName",
-                        width: "200px"
-                    },
-                    {
-                        data: "inStock",
-                        width: "150px"
-                    },
-                    {
-                        data: "stockValue",
-                        width: "150px"
-                    },
-                    {
-                        data: "reorderLevel",
-                        width: "150px"
-                    }, {
-                        data: "maxStock",
-                        width: "150px"
-                    },
-                    {
-                        data: "minStock",
-                        width: "150px"
-                    },
-                    {
-                        data: "description",
-                        width: "150px"
-                    }
-                ]
-            });
-        }
+        //    $("#StockLevelManagementGrid").DataTable({
+        //        processing: true,
+        //        serverSide: true,
+        //        searching: true,
+        //        paging: true,
+        //        info: true,
+        //        autoWidth: false,
+        //        responsive: true,
+        //        pageLength: 10,
+        //        lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
+        //        order: [[1, 'asc']],
+        //        ajax: {
+        //            url: LoadStockLevelManagementDataUrl,
+        //            type: "POST",
+        //            dataType: "json",
+        //            "dataSrc": function (json) {
+        //                return json.data || [];
+        //            },
+        //            error: function (xhr, error, code) {
+        //            }
+        //        },
+        //        columns: [
+        //            {
+        //                data: "tc",
+        //                render: function (data, type, row) {
+        //                    if (type === 'display') {
+        //                        return `<input type="checkbox" class="StockLevelManagement-group-row-check" value="${data}"/>`;
+        //                    }
+        //                    return data;
+        //                },
+        //                orderable: false,
+        //                searchable: false,
+        //                width: "50px",
+        //                className: "text-center"
+        //            },
+        //            {
+        //                data: "slmid",
+        //                render: function (data, type, row) {
+        //                    if (type === 'display') {
+        //                        return `<a href="#" class="StockLevelManagement-group-item-link" data-id="${row.tc}">${data}</a>`;
+        //                    }
+        //                    return data;
+        //                },
+        //                width: "50px",
+        //                className: "text-center"
+        //            },
+        //            {
+        //                data: "itemName",
+        //                width: "300px"
+        //            },
+        //            {
+        //                data: "warehouseName",
+        //                width: "200px"
+        //            },
+        //            {
+        //                data: "inStock",
+        //                width: "150px"
+        //            },
+        //            {
+        //                data: "stockValue",
+        //                width: "150px"
+        //            },
+        //            {
+        //                data: "reorderLevel",
+        //                width: "150px"
+        //            }, {
+        //                data: "maxStock",
+        //                width: "150px"
+        //            },
+        //            {
+        //                data: "minStock",
+        //                width: "150px"
+        //            },
+        //            {
+        //                data: "description",
+        //                width: "150px"
+        //            }
+        //        ]
+        //    });
+        //}
         // Event handlers
         $(document).on('click', '.StockLevelManagement-group-item-link', function (e) {
             e.preventDefault();
@@ -1674,7 +1700,6 @@
                 url: reloadUrl,
                 method: "GET",
                 success: function (response) {
-                    //console.log(response);
                     $.each(response, function (i, item) {
                         $(target).append($('<option>', {
                             value: item.code,
@@ -1683,7 +1708,6 @@
                     });
 
                     $(target).val(lastCode);
-                    console.log("Testttt", lastCode);
 
                 }
             });
@@ -1698,7 +1722,6 @@
 
 
         function loadChangeMainSubGrid(filterData) {
-            console.log(filterData);
             if ($.fn.DataTable.isDataTable('#subGroupGrid')) {
                 $('#subGroupGrid').DataTable().destroy();
             }
@@ -1720,11 +1743,10 @@
                         return JSON.stringify(filterData);
                     },
                     dataSrc: function (json) {
-                        console.log(json);
                         return json.data.subGroupList;
                     }
                 },
-                
+
                 columns: [
                     {
                         data: "tc",
@@ -1736,7 +1758,7 @@
                         },
                         orderable: false,
                         searchable: false,
-                        width: "50px",
+                        width: "20px",
                         className: "text-center"
                     },
                     {
@@ -1747,7 +1769,7 @@
                             }
                             return data;
                         },
-                        width: "50px",
+                        width: "40px",
                         className: "text-center"
                     },
                     {
@@ -1767,7 +1789,6 @@
         }
 
         $(document).on('change', "#SubGroupMainItemName", function () {
-            console.log("asdfasdfasdad", $(this).val());
             loadChangeMainSubGrid({
                 MainId: $(this).val() || "",
                 SubId: "",
@@ -1778,11 +1799,11 @@
 
         })
 
-        function loadChangeMainSub2Grid(filterData) {
-            console.log(filterData);
+        function loadChangeMainSub2Grid(filterData, dName) {
             if ($.fn.DataTable.isDataTable('#subGroup2Grid')) {
                 $('#subGroup2Grid').DataTable().destroy();
             }
+
 
             $("#subGroup2Grid").DataTable({
                 processing: true,
@@ -1801,7 +1822,19 @@
                         return JSON.stringify(filterData);
                     },
                     dataSrc: function (json) {
-                        console.log(json);
+                       
+                        let tabName = GetTabName();
+                        if (tabName == "Sub Group - 2") {
+                            
+                            if (dName == 'sub') {
+                                let $SubItem = $("#SubGroupTwoSubGroupName");
+                                $SubItem.empty();
+                                $SubItem.append('<option></option>');
+                                $.each(json.data.subGroupList, function (i, item) {
+                                    $SubItem.append(`<option value="${item.subItemID}">${item.subItemName}</option>`);
+                                });
+                            }
+                        }
                         return json.data.sub2GroupList;
                     }
                 },
@@ -1817,7 +1850,7 @@
                         },
                         orderable: false,
                         searchable: false,
-                        width: "50px",
+                        width: "20px",
                         className: "text-center"
                     },
                     {
@@ -1828,7 +1861,7 @@
                             }
                             return data;
                         },
-                        width: "50px",
+                        width: "40px",
                         className: "text-center"
                     },
                     {
@@ -1852,28 +1885,27 @@
         }
 
         $(document).on('change', "#SubGroupTwoMainItemName", function () {
-            console.log("asdfasdfasdad", $(this).val());
             loadChangeMainSub2Grid({
                 MainId: $(this).val() || "",
-                SubId: $("#SubGroupTwoSubGroupName").val()||"",
+                SubId: $("#SubGroupTwoSubGroupName").val() || "",
                 Sub2Id: "",
                 ItemId: "",
                 StockItemId: ""
-            });
+            }, 'sub');
         })
         $(document).on('change', "#SubGroupTwoSubGroupName", function () {
-            console.log("asdfasdfasdad", $(this).val());
             loadChangeMainSub2Grid({
                 MainId: $("#SubGroupTwoMainItemName").val() || "",
-                SubId: $("#SubGroupTwoSubGroupName").val()||"",
+                SubId: $("#SubGroupTwoSubGroupName").val() || "",
                 Sub2Id: "",
                 ItemId: "",
                 StockItemId: ""
-            });
+            }, '');
 
         })
-        function loadChangeMainItemGrid(filterData) {
-            console.log(filterData);
+        function loadChangeMainItemGrid(filterData, dName) {
+            
+
             if ($.fn.DataTable.isDataTable('#itemInformationGrid')) {
                 $('#itemInformationGrid').DataTable().destroy();
             }
@@ -1892,120 +1924,84 @@
                     type: "POST",
                     contentType: "application/json",
                     data: function () {
-                        return JSON.stringify(filterData);
+                        return JSON.stringify(filterData);  
                     },
                     dataSrc: function (json) {
                         let tabName = GetTabName();
-                        if (tabName == "Item Information") {
-                            let $sub2mainItem = $("#ItemInfoMainItemName");
-                            $sub2mainItem.empty();
-                            $sub2mainItem.append('<option></option>');
-                            $.each(res.mainGroup, function (i, item) {
-                                $sub2mainItem.append(`<option value="${item.mainItemId}">${item.mainItemName}</option>`);
+                        if (dName == 'main' && tabName == "Item Information") {
+                            let $SubItem = $("#ItemInfoSubItemName");
+                            $SubItem.empty().append('<option></option>');
+                            $.each(json.data.subGroupList, function (i, item) {
+                                $SubItem.append(`<option value="${item.subItemID}">${item.subItemName}</option>`);
                             });
-                            let $sub2SubItem = $("#ItemInfoSubItemName");
-                            $sub2SubItem.empty();
-                            $sub2SubItem.append('<option></option>');
-                            $.each(res.subGroup, function (i, item) {
-                                $sub2SubItem.append(`<option value="${item.subItemId}">${item.subItemName}</option>`);
-                            });
-                            let $sub2SubItem2 = $("#ItemInfoSubItem2Name");
-                            $sub2SubItem2.empty();
-                            $sub2SubItem2.append('<option></option>');
-                            $.each(res.subGroup2, function (i, item) {
-                                $sub2SubItem2.append(`<option value="${item.subItem2Id}">${item.subItem2Name}</option>`);
-                            });
-                        } 
 
-                        console.log(json);
-                        return json.data.itemList;
+                            let $Sub2Item = $("#ItemInfoSubItem2Name");
+                            $Sub2Item.empty().append('<option></option>');
+                            $.each(json.data.sub2GroupList, function (i, item) {
+                                $Sub2Item.append(`<option value="${item.subItem2ID}">${item.subItem2Name}</option>`);
+                            });
+                        }
+
+                        if (dName == 'sub' && tabName == "Item Information") {
+                            let $Sub2Item = $("#ItemInfoSubItem2Name");
+                            $Sub2Item.empty().append('<option></option>');
+                            $.each(json.data.sub2GroupList, function (i, item) {
+                                $Sub2Item.append(`<option value="${item.subItem2ID}">${item.subItem2Name}</option>`);
+                            });
+                        }
+
+                        return json.data.itemList || [];  
                     }
                 },
 
                 columns: [
-                    {
-                        data: "tc",
-                        render: function (data, type, row) {
-                            if (type === 'display') {
-                                return `<input type="checkbox" class="itemInfo-group-row-check" value="${data}"/>`;
-                            }
-                            return data;
-                        },
-                        orderable: false,
-                        searchable: false,
-                        width: "50px",
-                        className: "text-center"
-                    },
-                    {
-                        data: "itemID",
-                        render: function (data, type, row) {
-                            if (type === 'display') {
-                                return `<a href="#" class="itemInfo-group-item-link" data-id="${row.tc}">${data}</a>`;
-                            }
-                            return data;
-                        },
-                        width: "50px",
-                        className: "text-center"
-                    },
-                    {
-                        data: "itemName",
-                        width: "200px"
-                    },
-                    {
-                        data: "printName",
-                        width: "300px"
-                    },
-                    {
-                        data: "itemTypeName",
-                        width: "150px"
-                    },
-                    {
-                        data: "itemUnitName",
-                        width: "150px"
-                    },
-                    {
-                        data: "buyerName",
-                        width: "150px"
-                    }, {
-                        data: "styleName",
-                        width: "150px"
-                    }
+                    { data: "tc", render: d => `<input type="checkbox" class="itemInfo-group-row-check" value="${d}"/>`, orderable: false, searchable: false, width: "50px", className: "text-center" },
+                    { data: "itemID", render: (d, t, r) => `<a href="#" class="itemInfo-group-item-link" data-id="${r.tc}">${d}</a>`, width: "50px", className: "text-center" },
+                    { data: "itemName", width: "200px" },
+                    { data: "printName", width: "300px" },
+                    { data: "itemTypeName", width: "150px" },
+                    { data: "itemUnitName", width: "150px" },
+                    { data: "buyerName", width: "150px" },
+                    { data: "styleName", width: "150px" }
                 ]
             });
         }
-
+        // MainItem change
         $(document).on('change', "#ItemInfoMainItemName", function () {
-            console.log("asdfasdfasdad", $(this).val());
             loadChangeMainItemGrid({
-                MainId: $("#ItemInfoMainItemName").val() || "",
-                SubId:"",
+                MainId: $(this).val() || "",
+                SubId: "",
                 Sub2Id: "",
                 ItemId: "",
                 StockItemId: ""
-            });
-        })
+            }, 'main');
+        });
+
+        // SubItem change
         $(document).on('change', "#ItemInfoSubItemName", function () {
-            console.log("asdfasdfasdad", $(this).val());
             loadChangeMainItemGrid({
                 MainId: $("#ItemInfoMainItemName").val() || "",
-                SubId: $("#ItemInfoSubItemName").val()||"",
+                SubId: $(this).val() || "",
                 Sub2Id: "",
                 ItemId: "",
                 StockItemId: ""
-            });
+            }, 'sub');
+        });
 
-        })
+        // SubItem2 change
         $(document).on('change', "#ItemInfoSubItem2Name", function () {
-            console.log("asdfasdfasdad", $(this).val());
             loadChangeMainItemGrid({
-                MainId: $("#SubGroupTwoMainItemName").val() || "",
-                SubId: $("#ItemInfoSubItemName").val()||"",
-                Sub2Id: $("#ItemInfoSubItem2Name").val() || "",
+                MainId: $("#ItemInfoMainItemName").val() || "",
+                SubId: $("#ItemInfoSubItemName").val() || "",
+                Sub2Id: $(this).val() || "",
                 ItemId: "",
                 StockItemId: ""
-            });
+            }, '');
+        });
 
-        })
+
+       
+       
         //// Example Call
         //loadSubGrid({
         //    MainId: "M001",
@@ -2017,16 +2013,101 @@
 
 
 
+        function loadChangeStockLevelManagementGrid(filterData) {
+            if ($.fn.DataTable.isDataTable('#StockLevelManagementGrid')) {
+                $('#StockLevelManagementGrid').DataTable().destroy();
+            }
 
+            $("#StockLevelManagementGrid").DataTable({
+                processing: true,
+                serverSide: false,
+                searching: true,
+                paging: true,
+                info: true,
+                autoWidth: false,
+                responsive: true,
+                pageLength: 10,
+                ajax: {
+                    url: "/SALES_Def_Inv_MainItemGroup/GetItemHierarchy",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: function () {
+                        return JSON.stringify(filterData);
+                    },
+                    dataSrc: function (json) {
+                        return json.data.stockItemList;
+                    }
+                },
 
+                columns: [
+                    {
+                        data: "tc",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return `<input type="checkbox" class="StockLevelManagement-group-row-check" value="${data}"/>`;
+                            }
+                            return data;
+                        },
+                        orderable: false,
+                        searchable: false,
+                        width: "50px",
+                        className: "text-center"
+                    },
+                    {
+                        data: "slmid",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return `<a href="#" class="StockLevelManagement-group-item-link" data-id="${row.tc}">${data}</a>`;
+                            }
+                            return data;
+                        },
+                        width: "50px",
+                        className: "text-center"
+                    },
+                    {
+                        data: "itemName",
+                        width: "300px"
+                    },
+                    {
+                        data: "warehouseName",
+                        width: "200px"
+                    },
+                    {
+                        data: "inStock",
+                        width: "150px"
+                    },
+                    {
+                        data: "stockValue",
+                        width: "150px"
+                    },
+                    {
+                        data: "reorderLevel",
+                        width: "150px"
+                    }, {
+                        data: "maxStock",
+                        width: "150px"
+                    },
+                    {
+                        data: "minStock",
+                        width: "150px"
+                    },
+                    {
+                        data: "description",
+                        width: "150px"
+                    }
+                ]
+            });
+        }
 
-
-
-
-
-
-
-
+        $(document).on('change', "#StockLevelManagement_ItemID", function () {
+            loadChangeStockLevelManagementGrid({
+                MainId: "",
+                SubId: "",
+                Sub2Id: "",
+                ItemId: $(this).val()||"",
+                StockItemId: ""
+            }, 'main');
+        })
 
 
     }

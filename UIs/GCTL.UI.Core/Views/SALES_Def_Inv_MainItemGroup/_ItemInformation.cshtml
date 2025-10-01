@@ -33,6 +33,31 @@
         .input-group-container-input {
             width: 60% !important;
         }
+
+        .gridItemLeft {
+            width: 71vw !important;
+        }
+
+        .input-group-container-label-Print-Name-input-sub {
+            width: 52.5% !important;
+            margin-bottom: 0;
+            text-align: left !important;
+            margin-left: 5px;
+        }
+
+        .input-group-container-sub {
+            display: flex;
+        }
+
+        .input-group-container-label-Print-Name-input-main {
+            width: 28.5% !important;
+            margin-left: 5px;
+        }
+
+        .input-group-container-label-Print-Name-main {
+            width: 20% !important;
+            text-align: right !important;
+        }
     }
 
     @@media (max-width: 1499px) {
@@ -61,6 +86,28 @@
 
         .input-group-container-label-Print-Name-input {
             width: 100% !important;
+        }
+
+        .gridItemLeft {
+            width: 66vw !important;
+        }
+
+        .input-group-container-label-Print-Name-input-sub {
+            width: 65% !important;
+            margin-left: 5px;
+        }
+
+        .input-group-container-sub {
+            display: block;
+        }
+
+        .input-group-container-label-Print-Name-input-main {
+            width: 48% !important;
+            margin-left: 5px;
+        }
+
+        .input-group-container-label-Print-Name-main {
+            text-align: left !important;
         }
     }
 </style>
@@ -220,7 +267,7 @@
             <div class="mx-0 m-0 w-100">
                 <div class="d-flex align-items-center container-fluid mx-auto g-3" style="padding-left: 0px;">
                     <!-- Item Type -->
-                    <div style="width: 35vw;">
+                    <div style="width: 33.33vw;">
                         <div class="gap-1 d-flex jusify-content-center align-items-center input-group-container">
                             <div class="p-0 text-right input-group-container-label">Item Type</div>
                             <div class="p-0 input-group-container-input">
@@ -228,19 +275,20 @@
                                     <option value="">--Select Item Type--</option>
                                 </select>
                             </div>
-                           
-                            <button type="button"
-                                    class="btn btn-outline-secondary border-0 btn-sm js-quick-add"
-                                    data-url="@Url.Action("Index", "RMG_Prod_Def_UnitType")"
-                                    data-target="#MainItem_ItemTypeID"
-                                    data-reload-url="@Url.Action("GetItemType", "Cascading")"
-                                    data-title="Branch">
-                                <i class="fa fa-plus"></i>
-                            </button>
+
+                            @* <button type="button"
+                                        class="btn btn-outline-secondary border-0 btn-sm js-quick-add"
+                                        data-url="@Url.Action("Index", "RMG_Prod_Def_UnitType")"
+                                        data-target="#MainItem_ItemTypeID"
+                                        data-reload-url="@Url.Action("GetItemType", "Cascading")"
+                                        data-title="Branch">
+                                    <i class="fa fa-plus"></i>
+                                </button> *@
+
                         </div>
                     </div>
                     <!-- Empty spaces -->
-                    <div style="width: 30vw;"></div>
+                    <div style="width: 33.33vw;"></div>
                     <div style="width: 33.33vw;"></div>
                 </div>
             </div>
@@ -260,7 +308,7 @@
                     <!-- Item Name -->
                     <div style="width: 33.33vw;">
                         <div class="gap-1 d-flex jusify-content-center align-items-center input-group-container">
-                            <div class="p-0 text-right input-group-container-label">Name <span class="text-danger px-1">*</span></div>
+                            <div class="p-0 text-right input-group-container-label">Name <span class="text-danger ">*</span></div>
                             <div class="p-0 input-group-container-input">
                                 <input type="text" asp-for="MainItem.ItemName" class="form-control form-control-sm" placeholder="Enter Product Name" aria-label="MainItemName">
                             </div>
@@ -271,10 +319,10 @@
                     <div style="width: 33.33vw;">
                         <div class="form-floating d-flex justify-content-end align-items-center input-group-container" style="padding-right: 0px;">
                             <div class="text-right p-0 input-group-container-label">
-                                <label for="floatingTextarea">Description</label>
+                                <label for="floatingTextarea">Print Name</label>
                             </div>
                             <div class="input-group-container-input">
-                                <textarea id="ItemNameDescription" class="form-control form-control-sm" placeholder="Enter Description" rows="1"></textarea>
+                                <textarea asp-for="MainItem.PrintName" class="form-control form-control-sm" readonly placeholder="Enter Product Description" rows="1" style="height: 45px;"></textarea>
                             </div>
                         </div>
                     </div>
@@ -287,10 +335,11 @@
 
                     <div class="form-floating d-flex align-items-center input-group-container">
                         <div class="text-right p-0 input-group-container-label-Print-Name">
-                            <label for="floatingTextarea1">Print Name</label>
+                            <label for="floatingTextarea1">Description</label>
                         </div>
                         <div class="input-group-container-label-Print-Name-input printNameTextbox">
-                            <textarea asp-for="MainItem.PrintName" class="form-control form-control-sm" readonly placeholder="Enter Product Description" rows="1" style="height: 45px;"></textarea>
+
+                            <textarea id="ItemNameDescription" class="form-control form-control-sm" placeholder="Enter Description" rows="1"></textarea>
                         </div>
                     </div>
                 </div>
@@ -349,14 +398,6 @@
                         </div>
                     </div>
 
-                    <!-- Empty space -->
-                    <div style="width: 33.33vw;"></div>
-                </div>
-            </div>
-
-            <!-- Package Information Row -->
-            <div class="mx-0 mt-1 w-100">
-                <div class="d-flex align-items-center container-fluid mx-auto g-3" style="padding-left: 0px;">
                     <!-- Package Type -->
                     <div style="width: 33.33vw;">
                         <div class="d-flex jusify-content-center align-items-center gap-1 input-group-container">
@@ -368,6 +409,12 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Package Information Row -->
+            <div class="mx-0 mt-1 w-100">
+                <div class="d-flex align-items-center container-fluid mx-auto g-3" style="padding-left: 0px;">
 
                     <!-- Package Quantity -->
                     <div style="width: 33.33vw;">
@@ -385,7 +432,7 @@
                     <div style="width: 33.33vw;">
                         <div class="form-floating d-flex justify-content-end align-items-center input-group-container">
                             <div class="text-right p-0 input-group-container-label">
-                                <label for="MainItem_ItemQuantity" class="form-label">Item Quantity<span class="text-danger px-1">*</span></label>
+                                <label for="MainItem_ItemQuantity" class="form-label">Item Quantity<span class="text-danger ">*</span></label>
                             </div>
                             <div class="input-group-container-input">
                                 <div class="row g-1">
@@ -402,15 +449,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="mx-0 w-100 my-1">
-                <div class="d-flex align-items-center container-fluid mx-auto g-3" style="padding-left: 0px;">
                     <!-- Unit Price -->
                     <div style="width: 33.33vw;">
                         <div class="gap-1 d-flex jusify-content-center align-items-center input-group-container">
-                            <div class="p-0 text-right input-group-container-label">Unit Price<span class="text-danger px-1">*</span></div>
+                            <div class="p-0 text-right input-group-container-label">Unit Price<span class="text-danger ">*</span></div>
                             <div class="p-0 input-group-container-input">
                                 <div class="row g-1">
                                     <div class="col-6" style="padding-right: 2px;">
@@ -425,6 +467,11 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="mx-0 w-100 my-1">
+                <div class="d-flex align-items-center container-fluid mx-auto g-3" style="padding-left: 0px;">
 
                     <!-- Discount -->
                     <div style="width: 33.33vw;">
@@ -456,11 +503,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="mx-0 w-100 mt-0">
-                <div class="d-flex align-items-center container-fluid mx-auto g-3" style="padding-left: 0px;">
                     <!-- Warranty Status -->
                     <div style="width: 33.33vw;">
                         <div class="d-flex align-items-center ">
@@ -474,6 +516,11 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="mx-0 w-100 mt-0">
+                <div class="d-flex align-items-center container-fluid mx-auto g-3" style="padding-left: 0px;">
 
                     <!-- Warranty Period -->
                     <div style="width: 33.33vw;">
@@ -511,11 +558,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="mx-0 w-100 my-1">
-                <div class="d-flex align-items-center container-fluid mx-auto g-3" style="padding-left: 0px;">
                     <!-- Supplier -->
                     <div style="width: 33.33vw;">
                         <div class="gap-1 d-flex jusify-content-center align-items-center input-group-container">
@@ -527,16 +569,24 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <!-- Supplier Address -->
+            <div class="mx-0 w-100 my-1">
+                <div class="d-flex align-items-center container-fluid mx-auto g-3" style="padding-left: 0px;">
+                    @* <!-- Supplier -->
                     <div style="width: 33.33vw;">
                         <div class="gap-1 d-flex jusify-content-center align-items-center input-group-container">
-                            <div class="p-0 text-right input-group-container-label">Supplier Address</div>
+                            <div class="p-0 text-right input-group-container-label">Supplier</div>
                             <div class="p-0 input-group-container-input">
-                                <input type="text" id="MainItemSupplierAddress" readonly class="form-control form-control-sm" placeholder="Enter Supplier Address" aria-label="MainItemName">
+                                <select class="form-select form-select-sm searchable-select supplier-dropdown" asp-for="MainItem.SupplierId" asp-items="ViewBag.SuplierList as SelectList">
+                                    <option value="">--Select Supplier Name--</option>
+                                </select>
                             </div>
                         </div>
-                    </div>
+                    </div> *@
+
+
 
                     <!-- Branch -->
                     <div style="width: 33.33vw;">
@@ -551,6 +601,24 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Supplier Address -->
+                    <div style="width: 33.33vw;">
+                        <div class="gap-1 d-flex jusify-content-center align-items-center input-group-container">
+                            <div class="p-0 text-right input-group-container-label">Supplier Address</div>
+                            <div class="p-0 input-group-container-input">
+                                <input type="text" id="MainItemSupplierAddress" readonly class="form-control form-control-sm" placeholder="Enter Supplier Address" aria-label="MainItemName">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Supplier Address -->
+                    <div style="width: 33.33vw;">
+                        @* <div class="gap-1 d-flex jusify-content-center align-items-center input-group-container">
+                            <div class="p-0 text-right input-group-container-label">Supplier Address</div>
+                            <div class="p-0 input-group-container-input">
+                                <input type="text" id="MainItemSupplierAddress" readonly class="form-control form-control-sm" placeholder="Enter Supplier Address" aria-label="MainItemName">
+                            </div>
+                        </div> *@
+                    </div>
                 </div>
             </div>
         </div>
@@ -560,7 +628,7 @@
 
     <!-- Image Preview Section -->
     <div class="d-flex justify-center align-items-center" style="width:15vw">
-       
+
         <div class="d-flex justify-content-center align-items-center" style="width:15vw">
             <div id="previewContainer" class="shadow-sm mx-auto rounded p-2 d-flex justify-content-center align-items-center"
                  style="width:150px; height:150px; background-color:#f8f9fa; position:relative;">
@@ -576,6 +644,6 @@
     </div>
 </div>
 
-<div class="card mx-3 mb-2">
+<div class="card mx-3 mb-2 py-2 gridItemLeft">
     <partial name="_GridItemInformation"></partial>
 </div>
