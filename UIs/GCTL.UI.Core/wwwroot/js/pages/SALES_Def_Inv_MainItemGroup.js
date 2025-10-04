@@ -101,10 +101,10 @@
         var stockLGroupSaveEditUrl = settings.baseUrl + "/StockLevelManagementSetup";
 
         var LoadMainGroupDataUrl = settings.baseUrl + "/LoadMainGroupData";
-        var LoadSubGroupDataUrl = settings.baseUrl + "/LoadSubGroupData";//todo
-        var LoadSub2GroupDataUrl = settings.baseUrl + "/LoadSub2GroupData";//todo
-        var LoadItemInformationDataUrl = settings.baseUrl + "/LoadItemInformationData";//todo
-        var LoadStockLevelManagementDataUrl = settings.baseUrl + "/LoadStockLevelManagementData";//todo
+        //var LoadSubGroupDataUrl = settings.baseUrl + "/LoadSubGroupData";
+        //var LoadSub2GroupDataUrl = settings.baseUrl + "/LoadSub2GroupData";
+        //var LoadItemInformationDataUrl = settings.baseUrl + "/LoadItemInformationData";
+        //var LoadStockLevelManagementDataUrl = settings.baseUrl + "/LoadStockLevelManagementData";
 
         var GetAutoAllIdUrl = settings.baseUrl + "/GetAutoAllId";
         var DeleteItemUrl = settings.baseUrl + "/DeleteItemUrl";
@@ -113,20 +113,34 @@
 
         $('.searchable-select').select2({
             placeholder: 'Select an option',
-            allowClear: false,
-            width: '100%'
+            allowClear: true,
+            width: '100%', 
+            language: { noResults: () => 'No results found' },
+            escapeMarkup: markup => markup
         });
         // Sticky header on scroll
         function stHeader() {
             window.addEventListener('scroll', function () {
                 const header = document.getElementById('stickyHeader');
-                if (window.scrollY > 10) {
+
+                if (window.scrollY > 550) {
+                    header.classList.add('hide-header'); 
+                    header.classList.remove('sticky-top');
+                }
+                else if (window.scrollY > 10) {
+                    header.classList.add('sticky-top');
                     header.classList.add('sticky-scrolled');
-                } else {
+                    header.classList.remove('hide-header');
+                }
+                else {
+                    header.classList.add('sticky-top');
                     header.classList.remove('sticky-scrolled');
+                    header.classList.remove('hide-header');
                 }
             });
         }
+
+
 
         // SweetAlert toast message
         function showToast(iconType, message) {
@@ -164,29 +178,38 @@
             if (tabName == "Main Group") {
                 GetAutoAllI(tabName);
                 loadMianGrid();
+                $(".GroupTitle").fadeOut(200, function () {
+                    $(this).text("Product / Item Setup ( Main Group )").fadeIn(200);
+                });
+
             }
             else if (tabName == "Sub Group") {
-                GetAutoAllI(tabName);
-                //loadSubGrid();
-                //loadChangeMainSubGrid({
-                //    MainId: $(this).val() || "",
-                //    SubId: "",
-                //    Sub2Id: "",
-                //    ItemId: "",
-                //    StockItemId: ""
-                //});
+                GetAutoAllI(tabName);               
+                $(".GroupTitle").fadeOut(200, function () {
+                    $(this).text("Product / Item Setup ( Sub Group )").fadeIn(200);
+                });
+
             }
             else if (tabName == "Sub Group - 2") {
-                GetAutoAllI(tabName);
-                //loadSub2Grid();
+                GetAutoAllI(tabName);                
+                $(".GroupTitle").fadeOut(200, function () {
+                    $(this).text("Product Information").fadeIn(200);
+                });
+
             }
             else if (tabName == "Item Information") {
-                GetAutoAllI(tabName);
-                //loaditemInfoGrid();
+                GetAutoAllI(tabName);               
+                $(".GroupTitle").fadeOut(200, function () {
+                    $(this).text("Item Setup ( Item Information )").fadeIn(200);
+                });
+
             }
             else if (tabName == "Stock Level Management") {
                 GetAutoAllI(tabName);
-                //loadStockLevelManagementGrid();
+                $(".GroupTitle").fadeOut(200, function () {
+                    $(this).text("Stock Level Management").fadeIn(200);
+                });
+
             }
         });
 
@@ -310,9 +333,18 @@
 
         function MainGroup() {
             let mainFormData = GetMainForm();
+            if (!mainFormData.MainItemName) {
+                $('#MainSetup_MainItemName').addClass('border border-danger').focus();
+                $(settings.ItemSaveBtn).prop('disabled', true).html('<i class="fa fa-save">&nbsp;</i> Save');
+                return;
+            }
+
             AllPostFacth(mainGroupSaveEditUrl, mainFormData);
         }
-
+        $(document).on('input', $('#MainSetup_MainItemName'), function () {
+            $('#MainSetup_MainItemName').removeClass('border border-danger');
+            $(settings.ItemSaveBtn).prop('disabled', false).html('<i class="fa fa-save">&nbsp;</i> Save');
+        })
         //sub group
 
         function SubGroupForm() {
@@ -336,8 +368,27 @@
 
 
         function SubGroup() {
+            let subFormdata = SubGroupForm();
+            if (!subFormdata.MainItemID) {
+                $('#SubGroupMainItemName').select2('open');
+                $(settings.ItemSaveBtn).prop('disabled', true).html('<i class="fa fa-save">&nbsp;</i> Save');
+                return;
+            }
+            if (!subFormdata.SubItemName) {
+                $('#SubItem_SubItemName').addClass('border border-danger').focus();
+                $(settings.ItemSaveBtn).prop('disabled', true).html('<i class="fa fa-save">&nbsp;</i> Save');
+                return;
+            }
+
             AllPostFacth(subGroupSaveEditUrl, SubGroupForm());
         }
+        $(document).on('change', $('#SubGroupMainItemName'), function () {
+            $(settings.ItemSaveBtn).prop('disabled', false).html('<i class="fa fa-save">&nbsp;</i> Save');
+        })
+        $(document).on('input', $('#SubItem_SubItemName'), function () {
+            $('#SubItem_SubItemName').removeClass('border border-danger');
+            $(settings.ItemSaveBtn).prop('disabled', false).html('<i class="fa fa-save">&nbsp;</i> Save');
+        })
         function SubGroupTwoForm() {
             formValue = {
                 TC: $(settings.SubItemTwo_TC).val(),
@@ -366,9 +417,35 @@
 
 
         function SubGroupTwo() {
+            let subTowData = SubGroupTwoForm();
+            if (!subTowData.MainItemID) {
+                $('#SubGroupTwoMainItemName').select2('open');
+                $(settings.ItemSaveBtn).prop('disabled', true).html('<i class="fa fa-save">&nbsp;</i> Save');
+                return;
+            }
+            if (!subTowData.SubItemID) {
+                $('#SubGroupTwoSubGroupName').select2('open');
+                $(settings.ItemSaveBtn).prop('disabled', true).html('<i class="fa fa-save">&nbsp;</i> Save');
+                return;
+            }
+            if (!subTowData.SubItem2Name) {
+                $('#SubItemTwo_SubItem2Name').addClass('border border-danger').focus();
+                $(settings.ItemSaveBtn).prop('disabled', true).html('<i class="fa fa-save">&nbsp;</i> Save');
+                return;
+            }
             AllPostFacth(subGroupTwoSaveEditUrl, SubGroupTwoForm());
         }
 
+        $(document).on('change', $('#SubGroupTwoMainItemName'), function () {
+            $(settings.ItemSaveBtn).prop('disabled', false).html('<i class="fa fa-save">&nbsp;</i> Save');
+        })
+        $(document).on('change', $('#SubGroupTwoSubGroupName'), function () {
+            $(settings.ItemSaveBtn).prop('disabled', false).html('<i class="fa fa-save">&nbsp;</i> Save');
+        })
+        $(document).on('input', $('#SubItemTwo_SubItem2Name'), function () {
+            $('#SubItemTwo_SubItem2Name').removeClass('border border-danger');
+            $(settings.ItemSaveBtn).prop('disabled', false).html('<i class="fa fa-save">&nbsp;</i> Save');
+        })
         function ItemInfoGroupForm() {
             let formValue = {
                 TC: $(settings.MainItem_TC).val() || 0,
@@ -743,14 +820,14 @@
                     } else if (tabName == "Sub Group - 2") {
                         ResetSubGroupTwoForm();
                         $(settings.SubItemTwo_SubItem2ID).val(autoId);
-                        //loadSub2Grid();
+                        
                     } else if (tabName == "Item Information") {
                         ResetItemInfoGroupForm()
                         $(settings.MainItem_ItemID).val(autoId);
-                        //loaditemInfoGrid();
+                       
                     } else if (tabName == "Stock Level Management") {
                         $(settings.StockLevelManagement_SLMID).val(autoId);
-                        //loadStockLevelManagementGrid();
+                        
                         ResetStockLevelForm();
                     }
                 }, error: function (e) {
@@ -779,11 +856,11 @@
                     } else if (tabName == "Sub Group") {
                         //loadSubGrid();
                     } else if (tabName == "Sub Group - 2") {
-                        //loadSub2Grid();
+                        
                     } else if (tabName == "Item Information") {
-                        //loaditemInfoGrid();
+                       
                     } else if (tabName == "Stock Level Management") {
-                        //loadStockLevelManagementGrid();
+                        
                     }
                     //loadMianGrid();                   
                 }, error: function (e) {
@@ -901,73 +978,6 @@
 
         //sub group
 
-        //function loadSubGrid() {
-
-        //    if ($.fn.DataTable.isDataTable('#subGroupGrid')) {
-        //        $('#subGroupGrid').DataTable().destroy();
-        //    }
-
-        //    $("#subGroupGrid").DataTable({
-        //        processing: true,
-        //        serverSide: true,
-        //        searching: true,
-        //        paging: true,
-        //        info: true,
-        //        autoWidth: false,
-        //        responsive: true,
-        //        pageLength: 10,
-        //        lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
-        //        order: [[1, 'asc']],
-        //        ajax: {
-        //            url: LoadSubGroupDataUrl,
-        //            type: "POST",
-        //            dataType: "json",
-        //            "dataSrc": function (json) {
-        //                return json.data || [];
-        //            },
-        //            error: function (xhr, error, code) {
-        //            }
-        //        },
-        //        columns: [
-        //            {
-        //                data: "tc",
-        //                render: function (data, type, row) {
-        //                    if (type === 'display') {
-        //                        return `<input type="checkbox" class="sub-group-row-check" value="${data}"/>`;
-        //                    }
-        //                    return data;
-        //                },
-        //                orderable: false,
-        //                searchable: false,
-        //                width: "50px",
-        //                className: "text-center"
-        //            },
-        //            {
-        //                data: "subItemID",
-        //                render: function (data, type, row) {
-        //                    if (type === 'display') {
-        //                        return `<a href="#" class="sub-group-item-link" data-id="${row.tc}">${data}</a>`;
-        //                    }
-        //                    return data;
-        //                },
-        //                width: "50px",
-        //                className: "text-center"
-        //            },
-        //            {
-        //                data: "subItemName",
-        //                width: "200px"
-        //            },
-        //            {
-        //                data: "description",
-        //                width: "300px"
-        //            },
-        //            {
-        //                data: "mainItemName",
-        //                width: "150px"
-        //            }
-        //        ]
-        //    });
-        //}
         // Event handlers
         $(document).on('click', '.sub-group-item-link', function (e) {
             e.preventDefault();
@@ -1007,85 +1017,9 @@
 
         //sub group 2 
 
-
-        //function //loadSub2Grid() {
-
-        //    if ($.fn.DataTable.isDataTable('#subGroup2Grid')) {
-        //        $('#subGroup2Grid').DataTable().destroy();
-        //    }
-
-        //    $("#subGroup2Grid").DataTable({
-        //        processing: true,
-        //        serverSide: true,
-        //        searching: true,
-        //        paging: true,
-        //        info: true,
-        //        autoWidth: false,
-        //        responsive: true,
-        //        pageLength: 10,
-        //        lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
-        //        order: [[1, 'asc']],
-        //        ajax: {
-        //            url: LoadSub2GroupDataUrl,
-        //            type: "POST",
-        //            dataType: "json",
-        //            "dataSrc": function (json) {
-        //                return json.data || [];
-        //            },
-        //            error: function (xhr, error, code) {
-        //            }
-        //        },
-        //        columns: [
-        //            {
-        //                data: "tc",
-        //                render: function (data, type, row) {
-        //                    if (type === 'display') {
-        //                        return `<input type="checkbox" class="sub2-group-row-check" value="${data}"/>`;
-        //                    }
-        //                    return data;
-        //                },
-        //                orderable: false,
-        //                searchable: false,
-        //                width: "50px",
-        //                className: "text-center"
-        //            },
-        //            {
-        //                data: "subItem2ID",
-        //                render: function (data, type, row) {
-        //                    if (type === 'display') {
-        //                        return `<a href="#" class="sub2-group-item-link" data-id="${row.tc}">${data}</a>`;
-        //                    }
-        //                    return data;
-        //                },
-        //                width: "50px",
-        //                className: "text-center"
-        //            },
-        //            {
-        //                data: "subItem2Name",
-        //                width: "200px"
-        //            },
-        //            {
-        //                data: "description",
-        //                width: "300px"
-        //            },
-        //            {
-        //                data: "mainItemName",
-        //                width: "150px"
-        //            },
-        //            {
-        //                data: "subItemName",
-        //                width: "150px"
-        //            }
-        //        ]
-        //    });
-        //}
         // Event handlers
         $(document).on('click', '.sub2-group-item-link', function (e) {
-            e.preventDefault();
-            //var table = $('#subGroup2Grid').DataTable();
-
-            //var row = table.row($(this).parents('tr')); 
-            //var rowValue = row.data();
+            e.preventDefault();         
 
             var table = $('#subGroup2Grid').DataTable();
             var row = table.row($(this).closest('tr'));
@@ -1129,85 +1063,6 @@
 
         //item information group 2 
 
-
-        //function loaditemInfoGrid() {
-
-        //    if ($.fn.DataTable.isDataTable('#itemInformationGrid')) {
-        //        $('#itemInformationGrid').DataTable().destroy();
-        //    }
-
-        //    $("#itemInformationGrid").DataTable({
-        //        processing: true,
-        //        serverSide: true,
-        //        searching: true,
-        //        paging: true,
-        //        info: true,
-        //        autoWidth: false,
-        //        responsive: true,
-        //        pageLength: 10,
-        //        lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
-        //        order: [[1, 'asc']],
-        //        ajax: {
-        //            url: LoadItemInformationDataUrl,
-        //            type: "POST",
-        //            dataType: "json",
-        //            "dataSrc": function (json) {
-        //                return json.data || [];
-        //            },
-        //            error: function (xhr, error, code) {
-        //            }
-        //        },
-        //        columns: [
-        //            {
-        //                data: "tc",
-        //                render: function (data, type, row) {
-        //                    if (type === 'display') {
-        //                        return `<input type="checkbox" class="itemInfo-group-row-check" value="${data}"/>`;
-        //                    }
-        //                    return data;
-        //                },
-        //                orderable: false,
-        //                searchable: false,
-        //                width: "50px",
-        //                className: "text-center"
-        //            },
-        //            {
-        //                data: "itemID",
-        //                render: function (data, type, row) {
-        //                    if (type === 'display') {
-        //                        return `<a href="#" class="itemInfo-group-item-link" data-id="${row.tc}">${data}</a>`;
-        //                    }
-        //                    return data;
-        //                },
-        //                width: "50px",
-        //                className: "text-center"
-        //            },
-        //            {
-        //                data: "itemName",
-        //                width: "200px"
-        //            },
-        //            {
-        //                data: "printName",
-        //                width: "300px"
-        //            },
-        //            {
-        //                data: "itemTypeName",
-        //                width: "150px"
-        //            },
-        //            {
-        //                data: "itemUnitName",
-        //                width: "150px"
-        //            },
-        //            {
-        //                data: "buyerName",
-        //                width: "150px"
-        //            }, {
-        //                data: "styleName",
-        //                width: "150px"
-        //            }
-        //        ]
-        //    });
-        //}
         // Event handlers
         $(document).on('click', '.itemInfo-group-item-link', function (e) {
             e.preventDefault();
@@ -1279,8 +1134,8 @@
                 type: 'GET',
                 data: { itemId: itemId },
                 success: function (response) {
-                    // response as file stream, browser auto handles
                     $("#previewImg").removeClass("d-none").attr("src", "/SALES_Def_Inv_MainItemGroup/GetPhoto?itemId=" + itemId);
+                    $("#removeBtn").removeClass("d-none");
                 },
                 error: function () {
                     $("#previewImg").attr("src", "/images/no-image.png"); // fallback
@@ -1308,93 +1163,6 @@
 
         //Stock Level Management group 
 
-
-        //function //loadStockLevelManagementGrid() {
-
-        //    if ($.fn.DataTable.isDataTable('#StockLevelManagementGrid')) {
-        //        $('#StockLevelManagementGrid').DataTable().destroy();
-        //    }
-
-        //    $("#StockLevelManagementGrid").DataTable({
-        //        processing: true,
-        //        serverSide: true,
-        //        searching: true,
-        //        paging: true,
-        //        info: true,
-        //        autoWidth: false,
-        //        responsive: true,
-        //        pageLength: 10,
-        //        lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
-        //        order: [[1, 'asc']],
-        //        ajax: {
-        //            url: LoadStockLevelManagementDataUrl,
-        //            type: "POST",
-        //            dataType: "json",
-        //            "dataSrc": function (json) {
-        //                return json.data || [];
-        //            },
-        //            error: function (xhr, error, code) {
-        //            }
-        //        },
-        //        columns: [
-        //            {
-        //                data: "tc",
-        //                render: function (data, type, row) {
-        //                    if (type === 'display') {
-        //                        return `<input type="checkbox" class="StockLevelManagement-group-row-check" value="${data}"/>`;
-        //                    }
-        //                    return data;
-        //                },
-        //                orderable: false,
-        //                searchable: false,
-        //                width: "50px",
-        //                className: "text-center"
-        //            },
-        //            {
-        //                data: "slmid",
-        //                render: function (data, type, row) {
-        //                    if (type === 'display') {
-        //                        return `<a href="#" class="StockLevelManagement-group-item-link" data-id="${row.tc}">${data}</a>`;
-        //                    }
-        //                    return data;
-        //                },
-        //                width: "50px",
-        //                className: "text-center"
-        //            },
-        //            {
-        //                data: "itemName",
-        //                width: "300px"
-        //            },
-        //            {
-        //                data: "warehouseName",
-        //                width: "200px"
-        //            },
-        //            {
-        //                data: "inStock",
-        //                width: "150px"
-        //            },
-        //            {
-        //                data: "stockValue",
-        //                width: "150px"
-        //            },
-        //            {
-        //                data: "reorderLevel",
-        //                width: "150px"
-        //            }, {
-        //                data: "maxStock",
-        //                width: "150px"
-        //            },
-        //            {
-        //                data: "minStock",
-        //                width: "150px"
-        //            },
-        //            {
-        //                data: "description",
-        //                width: "150px"
-        //            }
-        //        ]
-        //    });
-        //}
         // Event handlers
         $(document).on('click', '.StockLevelManagement-group-item-link', function (e) {
             e.preventDefault();
@@ -1560,9 +1328,11 @@
                 $("#previewImg").attr("src", "").addClass("d-none");
                 $("#photoInput").val("");
 
-                $.post("/SALES_Def_Inv_MainItemGroup/Delete", { autoId: autoId }, function (res) {
+                let itemId = $("#MainItem_ItemID").val();
+                $.post("/SALES_Def_Inv_MainItemGroup/Delete", { itemId: itemId }, function (res) {
                     alert(res.message);
                 });
+                $("#removeBtn").addClass("d-none");
             });
 
             function compressAndUpload(file) {
@@ -1892,6 +1662,9 @@
                 ItemId: "",
                 StockItemId: ""
             }, 'sub');
+
+            $('#SubGroupTwoSubItemID').val('');
+            $('#SubGroupTwoDescription').val('');
         })
         $(document).on('change', "#SubGroupTwoSubGroupName", function () {
             loadChangeMainSub2Grid({
@@ -1975,6 +1748,10 @@
                 ItemId: "",
                 StockItemId: ""
             }, 'main');
+            $("#ItemInfoSub2Description").val('');
+            $("#ItemInfoSubItem2ID").val('');
+            $("#ItemInfoSubDescription").val('');
+            $("#ItemInfoSubItemID").val('');
         });
 
         // SubItem change
@@ -1986,6 +1763,8 @@
                 ItemId: "",
                 StockItemId: ""
             }, 'sub');
+            $("#ItemInfoSub2Description").val('');
+            $("#ItemInfoSubItem2ID").val('');
         });
 
         // SubItem2 change
@@ -2107,9 +1886,7 @@
                 ItemId: $(this).val()||"",
                 StockItemId: ""
             }, 'main');
-        })
-
-
+        })       
     }
 
 

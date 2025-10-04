@@ -16,15 +16,12 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
         Task<(bool isSuccess, string message)> StockLevelManagementSetupAsync(DefInvStockLevelManagementDto modelData, string companyCode);
         Task<string> GetAutoAllIdAsync(string tabName);
         Task<(List<SalesDefInvMainItemSetupDto> data, int totalRecords)> GetMainGroup(string sortColumn, string sortColumnDir, string searchValue, int skip, int pageSize);
-        Task<(List<SalesDefInvSubItemDto> data, int totalRecords)> GetSubGroup(string sortColumn, string sortColumnDir, string searchValue, int skip, int pageSize);
-        Task<(List<RmgProdDefInvSubItem2Dto> data, int totalRecords)> GetSub2Group(string sortColumn, string sortColumnDir, string searchValue, int skip, int pageSize);
-        Task<(List<InvDefItemDto> data, int totalRecords)> GetItemInformation(string sortColumn, string sortColumnDir, string searchValue, int skip, int pageSize);
-        Task<(List<DefInvStockLevelManagementDto> data, int totalRecords)> LoadStockLevelManagementDataAsync(string sortColumn, string sortColumnDir, string searchValue, int skip, int pageSize);
+        //Task<(List<DefInvStockLevelManagementDto> data, int totalRecords)> LoadStockLevelManagementDataAsync(string sortColumn, string sortColumnDir, string searchValue, int skip, int pageSize);
         Task<(bool isSuccess, string message)> DeleteAsync(DeleteItemRequest modelData);
         Task<SelectDropdownResultDto> ChangeAbleDropdownAsync(SelectDropdownFilterDto filterData);
 
         Task<bool> UploadPhotoAsync(ItemPhotoDto dto);
-        Task<bool> DeletePhotoAsync(int autoId);
+        Task<bool> DeletePhotoAsync(string itemId);
         Task<ItemPhotoDto> GetPhotoByItemIdAsync(string itemId);
         Task<IEnumerable<CommonSelectModel>> SelectionGetItemTypeTitleAsync();
 

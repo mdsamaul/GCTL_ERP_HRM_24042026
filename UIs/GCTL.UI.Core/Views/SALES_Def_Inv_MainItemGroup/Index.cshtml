@@ -33,7 +33,11 @@
         opacity: 95%;
     }
 
-    #itemInformationGrid_processing, 
+    #stickyHeader {
+        top: 0px;
+    }
+
+    #itemInformationGrid_processing,
     #subGroupGrid_processing,
     #subGroup2Grid_processing,
     #StockLevelManagementGrid_processing,
@@ -42,8 +46,21 @@
         border: none !important;
         box-shadow: none !important;
     }
-   
 
+    #stickyHeader {
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+        #stickyHeader.hide-header {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+
+    .select2-selection__clear {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
 </style>
 
 <div class="container-fluid">
@@ -54,32 +71,33 @@
         <div id="stickyHeader" class="card-header px-2 py-1 sticky-top" style="z-index:1020">
             <partial name="_Toolbars" model="new ToobarModel() { Title = Model.Breadcrumb, Code = Model.Code, Name = Model.MainSetup.MainItemID }"></partial>
         </div>
-    </div>
-    <div class="card">
-        <nav>
-            <div class="nav nav-tabs m-3" id="nav-tab" role="tablist">
-                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Main Group</button>
-                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Sub Group</button>
-                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Sub Group - 2</button>
-                <button class="nav-link" id="nav-item-information-tab" data-bs-toggle="tab" data-bs-target="#nav-item-information" type="button" role="tab" aria-controls="nav-item-information" aria-selected="false">Item Information</button>
-                <button class="nav-link" id="nav-Stock-Level-Management-tab" data-bs-toggle="tab" data-bs-target="#nav-Stock-Level-Management" type="button" role="tab" aria-controls="nav-Stock-Level-Management-tab" aria-selected="false">Stock Level Management</button>
-            </div>
-        </nav>
-        <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-                <partial name="_MainGroup" model="Model"></partial>
-            </div>
-            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-                <partial name="_SubGroupOne" model="Model"></partial>
-            </div>
-            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
-                <partial name="_SubGroupTwo" model="Model"></partial>
-            </div>
-            <div class="tab-pane fade" id="nav-item-information" role="tabpanel" aria-labelledby="nav-item-information-tab" tabindex="0">
-                <partial name="_ItemInformation" model="Model"></partial>
-            </div>
-            <div class="tab-pane fade" id="nav-Stock-Level-Management" role="tabpanel" aria-labelledby="nav-Stock-Level-Management-tab" tabindex="0">
-                <partial name="_StockLevelManagement" model="Model"></partial>
+
+        <div class="card mb-0 rounded-top-0">
+            <nav>
+                <div class="nav nav-tabs m-3" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Main Group</button>
+                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Sub Group</button>
+                    <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Sub Group - 2</button>
+                    <button class="nav-link" id="nav-item-information-tab" data-bs-toggle="tab" data-bs-target="#nav-item-information" type="button" role="tab" aria-controls="nav-item-information" aria-selected="false">Item Information</button>
+                    <button class="nav-link" id="nav-Stock-Level-Management-tab" data-bs-toggle="tab" data-bs-target="#nav-Stock-Level-Management" type="button" role="tab" aria-controls="nav-Stock-Level-Management-tab" aria-selected="false">Stock Level Management</button>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                    <partial name="_MainGroup" model="Model"></partial>
+                </div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                    <partial name="_SubGroupOne" model="Model"></partial>
+                </div>
+                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                    <partial name="_SubGroupTwo" model="Model"></partial>
+                </div>
+                <div class="tab-pane fade" id="nav-item-information" role="tabpanel" aria-labelledby="nav-item-information-tab" tabindex="0">
+                    <partial name="_ItemInformation" model="Model"></partial>
+                </div>
+                <div class="tab-pane fade" id="nav-Stock-Level-Management" role="tabpanel" aria-labelledby="nav-Stock-Level-Management-tab" tabindex="0">
+                    <partial name="_StockLevelManagement" model="Model"></partial>
+                </div>
             </div>
         </div>
     </div>

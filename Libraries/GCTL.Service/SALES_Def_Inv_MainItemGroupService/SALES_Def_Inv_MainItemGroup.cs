@@ -28,6 +28,7 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
         private readonly IRepository<RmgDefSupplier> suplierRepo;
         private readonly IRepository<CoreBranch> branchRepo;
         private readonly IRepository<CoreAccessCode> accessCodeRepository;
+        private readonly IRepository<InvItemPhoto> photoRepo;
         private readonly IRepository<RmgDefSupplier> supplierRepo;
         private readonly IRepository<InvDefWarehouse> wareHouseRepo;
         private readonly string _connectionString;
@@ -48,6 +49,7 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
             IRepository<RmgDefSupplier> suplierRepo,
             IRepository<CoreBranch> branchRepo,
             IRepository<CoreAccessCode> accessCodeRepository,
+            IRepository<InvItemPhoto> photoRepo,
             IConfiguration configuration,
             IRepository<RmgDefSupplier> supplierRepo,
             IRepository<InvDefWarehouse> wareHouseRepo) : base(itemRepo)
@@ -68,6 +70,7 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
             this.suplierRepo = suplierRepo;
             this.branchRepo = branchRepo;
             this.accessCodeRepository = accessCodeRepository;
+            this.photoRepo = photoRepo;
             this.supplierRepo = supplierRepo;
             this.wareHouseRepo = wareHouseRepo;
             _connectionString = configuration.GetConnectionString("ApplicationDbConnection");
@@ -611,419 +614,134 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
             return (data, totalRecords);
         }
         // Service Method
-        public async Task<(List<SalesDefInvSubItemDto> data, int totalRecords)> GetSubGroup(string sortColumn, string sortColumnDir, string searchValue, int skip, int pageSize)
-        {
-            var query = subRepo.All();
-
-            // Apply search filter first
-            if (!string.IsNullOrEmpty(searchValue))
-            {
-                query = query.Where(x => x.SubItemId.Contains(searchValue) ||
-                                         x.SubItemName.Contains(searchValue) ||
-                                         x.Description.Contains(searchValue) ||
-                                         x.MainItemId.Contains(searchValue));
-            }
-
-            // Get total count after filtering
-            int totalRecords = await query.CountAsync();
-
-            // Apply sorting using manual approach instead of EF.Property
-            if (!string.IsNullOrEmpty(sortColumn) && !string.IsNullOrEmpty(sortColumnDir))
-            {
-                switch (sortColumn.ToLower())
-                {
-                    case "mainitemid":
-                        query = sortColumnDir == "asc"
-                            ? query.OrderBy(x => x.MainItemId)
-                            : query.OrderByDescending(x => x.MainItemId);
-                        break;
-                    case "subitemid":
-                        query = sortColumnDir == "asc"
-                            ? query.OrderBy(x => x.SubItemId)
-                            : query.OrderByDescending(x => x.SubItemId);
-                        break;
-                    case "subitemname":
-                        query = sortColumnDir == "asc"
-                            ? query.OrderBy(x => x.SubItemName)
-                            : query.OrderByDescending(x => x.SubItemName);
-                        break;
-                    case "description":
-                        query = sortColumnDir == "asc"
-                            ? query.OrderBy(x => x.Description)
-                            : query.OrderByDescending(x => x.Description);
-                        break;
-                    default:
-                        query = query.OrderBy(x => x.SubItemId);
-                        break;
-                }
-            }
-            else
-            {
-                // Default sorting when no sort specified
-                query = query.OrderBy(x => x.SubItemId);
-            }
-
-            // Apply pagination and projection
-            var data = await query
-                .Skip(skip)
-                .Take(pageSize)
-                .Select(m => new SalesDefInvSubItemDto
-                {
-                    TC = m.Tc,
-                    MainItemID = m.MainItemId,
-                    MainItemName = mainRepo.All().Where(s => s.MainItemId == m.MainItemId).Select(x => x.MainItemName).FirstOrDefault(),
-                    SubItemID = m.SubItemId,
-                    SubItemName = m.SubItemName,
-                    Description = m.Description,
-                    showCreateDate = m.Ldate.HasValue ? m.Ldate.Value.ToString("dd/MM/yyyy") : "",
-                    showModifyDate = m.ModifyDate.HasValue ? m.ModifyDate.Value.ToString("dd/MM/yyyy") : "",
-                }).ToListAsync();
-
-            return (data, totalRecords);
-        }
-
-        //sub 2
-        public async Task<(List<RmgProdDefInvSubItem2Dto> data, int totalRecords)> GetSub2Group(string sortColumn, string sortColumnDir, string searchValue, int skip, int pageSize)
-        {
-            var query = subRepo2.All();
-
-            // Apply search filter first
-            if (!string.IsNullOrEmpty(searchValue))
-            {
-                query = query.Where(x => x.SubItem2Id.Contains(searchValue) ||
-                                         x.SubItem2Name.Contains(searchValue) ||
-                                         x.Description.Contains(searchValue) ||
-                                         x.SubItemId.Contains(searchValue) ||
-                                         x.MainItemId.Contains(searchValue));
-            }
-
-            // Get total count after filtering
-            int totalRecords = await query.CountAsync();
-
-            // Apply sorting using manual approach instead of EF.Property
-            if (!string.IsNullOrEmpty(sortColumn) && !string.IsNullOrEmpty(sortColumnDir))
-            {
-                switch (sortColumn)
-                {
-                    case "MainItemID":
-                        query = sortColumnDir == "asc"
-                            ? query.OrderBy(x => x.MainItemId)
-                            : query.OrderByDescending(x => x.MainItemId);
-                        break;
-                    case "SubItemID":
-                        query = sortColumnDir == "asc"
-                            ? query.OrderBy(x => x.SubItemId)
-                            : query.OrderByDescending(x => x.SubItemId);
-                        break;
-                    case "SubItem2Name":
-                        query = sortColumnDir == "asc"
-                            ? query.OrderBy(x => x.SubItem2Name)
-                            : query.OrderByDescending(x => x.SubItem2Name);
-                        break;
-                    case "Description":
-                        query = sortColumnDir == "asc"
-                            ? query.OrderBy(x => x.Description)
-                            : query.OrderByDescending(x => x.Description);
-                        break;
-                    case "SubItem2ID":
-                        query = sortColumnDir == "asc"
-                            ? query.OrderBy(x => x.SubItem2Id)
-                            : query.OrderByDescending(x => x.SubItem2Id);
-                        break;
-                    default:
-                        query = query.OrderBy(x => x.SubItem2Id);
-                        break;
-                }
-            }
-            else
-            {
-                // Default sorting when no sort specified
-                query = query.OrderBy(x => x.SubItem2Id);
-            }
-
-            // Apply pagination and projection
-            var data = await query
-                .Skip(skip)
-                .Take(pageSize)
-                .Select(m => new RmgProdDefInvSubItem2Dto
-                {
-                    TC = m.Tc,
-                    MainItemID = m.MainItemId,
-                    MainItemName = mainRepo.All().Where(s => s.MainItemId == m.MainItemId).Select(x => x.MainItemName).FirstOrDefault(),
-                    SubItemName = subRepo.All().Where(s => s.SubItemId == m.SubItemId).Select(x => x.SubItemName).FirstOrDefault(),
-                    SubItemID = m.SubItemId,
-                    SubItem2ID = m.SubItem2Id,
-                    SubItem2Name = m.SubItem2Name,
-                    Description = m.Description,
-                    showCreateDate = m.Ldate.HasValue ? m.Ldate.Value.ToString("dd/MM/yyyy") : "",
-                    showModifyDate = m.ModifyDate.HasValue ? m.ModifyDate.Value.ToString("dd/MM/yyyy") : "",
-                }).ToListAsync();
-
-            return (data, totalRecords);
-        }
-        public async Task<(List<InvDefItemDto> data, int totalRecords)> GetItemInformation(
-      string sortColumn, string sortColumnDir, string searchValue, int skip, int pageSize)
-        {
-
-            try
-            {
-                var query = itemRepo.All();
-
-                // Apply search filter first
-                if (!string.IsNullOrEmpty(searchValue))
-                {
-                    query = query.Where(x => x.SubItem2Id.Contains(searchValue) ||
-                                             x.ItemCode.Contains(searchValue) ||
-                                             x.ItemId.Contains(searchValue) ||
-                                             x.ItemName.Contains(searchValue) ||
-                                             x.PrintName.Contains(searchValue) ||
-                                             x.ItemUnit.Contains(searchValue) ||
-                                             x.BuyerId.Contains(searchValue) ||
-                                             x.StyleId.Contains(searchValue) ||
-                                             x.SubItemId.Contains(searchValue) ||
-                                             x.MainItemId.Contains(searchValue));
-                }
-
-                // Get total count after filtering
-                int totalRecords = await query.CountAsync();
-
-                // Sorting
-                if (!string.IsNullOrEmpty(sortColumn) && !string.IsNullOrEmpty(sortColumnDir))
-                {
-                    switch (sortColumn)
-                    {
-                        case "Style":
-                            query = sortColumnDir == "asc"
-                                ? query.OrderBy(x => x.StyleId)
-                                : query.OrderByDescending(x => x.StyleId);
-                            break;
-                        case "Buyer":
-                            query = sortColumnDir == "asc"
-                                ? query.OrderBy(x => x.BuyerId)
-                                : query.OrderByDescending(x => x.BuyerId);
-                            break;
-                        case "UnitType":
-                            query = sortColumnDir == "asc"
-                                ? query.OrderBy(x => x.ItemUnit)
-                                : query.OrderByDescending(x => x.ItemUnit);
-                            break;
-                        case "ItemType":
-                            query = sortColumnDir == "asc"
-                                ? query.OrderBy(x => x.ItemTypeId)
-                                : query.OrderByDescending(x => x.ItemTypeId);
-                            break;
-                        case "PrintName":
-                            query = sortColumnDir == "asc"
-                                ? query.OrderBy(x => x.PrintName)
-                                : query.OrderByDescending(x => x.PrintName);
-                            break;
-                        case "ItemName":
-                            query = sortColumnDir == "asc"
-                                ? query.OrderBy(x => x.ItemName)
-                                : query.OrderByDescending(x => x.ItemName);
-                            break;
-                        case "ItemId":
-                            query = sortColumnDir == "asc"
-                                ? query.OrderBy(x => x.ItemId)
-                                : query.OrderByDescending(x => x.ItemId);
-                            break;
-                        default:
-                            query = query.OrderBy(x => x.ItemId);
-                            break;
-                    }
-                }
-                else
-                {
-                    query = query.OrderBy(x => x.ItemId);
-                }
-
-                var data = await query
-                    .Skip(skip)
-                    .Take(pageSize)
-                    .Select(m => new InvDefItemDto
-                    {
-                        TC = m.Tc,
-                        BuyerId = m.BuyerId,
-                        StyleId = m.StyleId,
-                        MainItemID = m.MainItemId,
-                        SubItemID = m.SubItemId,
-                        SubItem2ID = m.SubItem2Id,
-                        ItemTypeID = m.ItemTypeId,
-                        ItemID = m.ItemId,
-                        ItemName = m.ItemName,
-                        PrintName = m.PrintName,
-                        ItemCode = m.ItemCode,
-                        Barcode = m.Barcode,
-                        OriginId = m.OriginId,
-                        ManufactureId = m.ManufactureId,
-                        PackageTypeId = m.PackageTypeId,
-                        PackageQuantity = m.PackageQuantity,
-                        ItemQuantity = m.ItemQuantity,
-                        ItemUnit = m.ItemUnit,
-                        ItemPrice = m.ItemPrice,
-                        CurrencyId = m.CurrencyId,
-                        CurrencyId2 = m.CurrencyId2,
-                        Discount = m.Discount,
-                        TotalAmount = m.TotalAmount,
-                        WarrantyStatus = m.WarrantyStatus,
-                        WarrantyTime = m.WarrantyTime,
-                        WarrantyType = m.WarrantyType,
-                        BranchID = m.BranchId,
-                        SupplierId = m.SupplierId,
-                        EmployeeID = m.EmployeeId,
-                        Ldate = m.Ldate,
-                        Lmac = m.Lmac,
-                        Lip = m.Lip,
-                        Luser = m.Luser,
-                        //CompanyCode = m.CompanyCode,
-                        //ModifyDate = m.ModifyDate,
-
-                        // Extra display fields from relations
-                        BuyerName = buyerRepo.All().Where(x => x.BuyerId == m.BuyerId).Select(s => s.BuyerName).FirstOrDefault(),
-                        ItemTypeName = itemTypeRepo.All().Where(x => x.ItemTypeId == m.ItemTypeId).Select(s => s.ItemName).FirstOrDefault(),
-                        ItemUnitName = unitRepo.All().Where(x => x.UnitTypId == m.ItemUnit).Select(s => s.UnitTypeName).FirstOrDefault(),
-                        StyleName = stypeRepo.All().Where(x => x.StyleId == m.StyleId).Select(s => s.Style).FirstOrDefault(),
-                        showCreateDate = m.Ldate.HasValue ? m.Ldate.Value.ToString("dd/MM/yyyy") : "",
-                        showModifyDate = m.ModifyDate.HasValue ? m.ModifyDate.Value.ToString("dd/MM/yyyy") : "",
-                    }).ToListAsync();
-
-                return (data, totalRecords);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-        }
 
 
-        public async Task<(List<DefInvStockLevelManagementDto> data, int totalRecords)> LoadStockLevelManagementDataAsync(
-      string sortColumn, string sortColumnDir, string searchValue, int skip, int pageSize)
-        {
+        //  public async Task<(List<DefInvStockLevelManagementDto> data, int totalRecords)> LoadStockLevelManagementDataAsync(
+        //string sortColumn, string sortColumnDir, string searchValue, int skip, int pageSize)
+        //  {
 
-            try
-            {
-                var query = stockManagementRepo.All();
+        //      try
+        //      {
+        //          var query = stockManagementRepo.All();
 
-                // Apply search filter first
-                if (!string.IsNullOrEmpty(searchValue))
-                {
-                    query = query.Where(x => x.Slmid.Contains(searchValue) ||
-                                             x.ItemId.Contains(searchValue) ||
-                                             x.WarehouseId.Contains(searchValue) ||
-                                             x.InStock.ToString().Contains(searchValue) ||
-                                             x.StockValue.ToString().Contains(searchValue) ||
-                                             x.ReorderLevel.ToString().Contains(searchValue) ||
-                                             x.MaxStock.ToString().Contains(searchValue) ||
-                                             x.MinStock.ToString().Contains(searchValue) ||
-                                             x.Description.Contains(searchValue)
-                                             );
-                }
+        //          // Apply search filter first
+        //          if (!string.IsNullOrEmpty(searchValue))
+        //          {
+        //              query = query.Where(x => x.Slmid.Contains(searchValue) ||
+        //                                       x.ItemId.Contains(searchValue) ||
+        //                                       x.WarehouseId.Contains(searchValue) ||
+        //                                       x.InStock.ToString().Contains(searchValue) ||
+        //                                       x.StockValue.ToString().Contains(searchValue) ||
+        //                                       x.ReorderLevel.ToString().Contains(searchValue) ||
+        //                                       x.MaxStock.ToString().Contains(searchValue) ||
+        //                                       x.MinStock.ToString().Contains(searchValue) ||
+        //                                       x.Description.Contains(searchValue)
+        //                                       );
+        //          }
 
-                // Get total count after filtering
-                int totalRecords = await query.CountAsync();
+        //          // Get total count after filtering
+        //          int totalRecords = await query.CountAsync();
 
-                // Sorting
-                if (!string.IsNullOrEmpty(sortColumn) && !string.IsNullOrEmpty(sortColumnDir))
-                {
-                    switch (sortColumn)
-                    {
-                        case "SLMIID":
-                            query = sortColumnDir == "asc"
-                                ? query.OrderBy(x => x.Slmid)
-                                : query.OrderByDescending(x => x.Slmid);
-                            break;
-                        case "ItemName":
-                            query = sortColumnDir == "asc"
-                                ? query.OrderBy(x => x.ItemId)
-                                : query.OrderByDescending(x => x.ItemId);
-                            break;
-                        case "WareHouseName":
-                            query = sortColumnDir == "asc"
-                                ? query.OrderBy(x => x.WarehouseId)
-                                : query.OrderByDescending(x => x.WarehouseId);
-                            break;
-                        case "InStock":
-                            query = sortColumnDir == "asc"
-                                ? query.OrderBy(x => x.InStock)
-                                : query.OrderByDescending(x => x.InStock);
-                            break;
-                        case "PrintName":
-                            query = sortColumnDir == "asc"
-                                ? query.OrderBy(x => x.StockValue)
-                                : query.OrderByDescending(x => x.StockValue);
-                            break;
-                        case "ReorderLevel":
-                            query = sortColumnDir == "asc"
-                                ? query.OrderBy(x => x.ReorderLevel)
-                                : query.OrderByDescending(x => x.ReorderLevel);
-                            break;
-                        case "MaxStock":
-                            query = sortColumnDir == "asc"
-                                ? query.OrderBy(x => x.MaxStock)
-                                : query.OrderByDescending(x => x.MaxStock);
-                            break;
-                        case "MinStock":
-                            query = sortColumnDir == "asc"
-                                ? query.OrderBy(x => x.MinStock)
-                                : query.OrderByDescending(x => x.MinStock);
-                            break;
-                        case "Desctiption":
-                            query = sortColumnDir == "asc"
-                                ? query.OrderBy(x => x.Description)
-                                : query.OrderByDescending(x => x.Description);
-                            break;
-                        default:
-                            query = query.OrderBy(x => x.ItemId);
-                            break;
-                    }
-                }
-                else
-                {
-                    query = query.OrderBy(x => x.ItemId);
-                }
+        //          // Sorting
+        //          if (!string.IsNullOrEmpty(sortColumn) && !string.IsNullOrEmpty(sortColumnDir))
+        //          {
+        //              switch (sortColumn)
+        //              {
+        //                  case "SLMIID":
+        //                      query = sortColumnDir == "asc"
+        //                          ? query.OrderBy(x => x.Slmid)
+        //                          : query.OrderByDescending(x => x.Slmid);
+        //                      break;
+        //                  case "ItemName":
+        //                      query = sortColumnDir == "asc"
+        //                          ? query.OrderBy(x => x.ItemId)
+        //                          : query.OrderByDescending(x => x.ItemId);
+        //                      break;
+        //                  case "WareHouseName":
+        //                      query = sortColumnDir == "asc"
+        //                          ? query.OrderBy(x => x.WarehouseId)
+        //                          : query.OrderByDescending(x => x.WarehouseId);
+        //                      break;
+        //                  case "InStock":
+        //                      query = sortColumnDir == "asc"
+        //                          ? query.OrderBy(x => x.InStock)
+        //                          : query.OrderByDescending(x => x.InStock);
+        //                      break;
+        //                  case "PrintName":
+        //                      query = sortColumnDir == "asc"
+        //                          ? query.OrderBy(x => x.StockValue)
+        //                          : query.OrderByDescending(x => x.StockValue);
+        //                      break;
+        //                  case "ReorderLevel":
+        //                      query = sortColumnDir == "asc"
+        //                          ? query.OrderBy(x => x.ReorderLevel)
+        //                          : query.OrderByDescending(x => x.ReorderLevel);
+        //                      break;
+        //                  case "MaxStock":
+        //                      query = sortColumnDir == "asc"
+        //                          ? query.OrderBy(x => x.MaxStock)
+        //                          : query.OrderByDescending(x => x.MaxStock);
+        //                      break;
+        //                  case "MinStock":
+        //                      query = sortColumnDir == "asc"
+        //                          ? query.OrderBy(x => x.MinStock)
+        //                          : query.OrderByDescending(x => x.MinStock);
+        //                      break;
+        //                  case "Desctiption":
+        //                      query = sortColumnDir == "asc"
+        //                          ? query.OrderBy(x => x.Description)
+        //                          : query.OrderByDescending(x => x.Description);
+        //                      break;
+        //                  default:
+        //                      query = query.OrderBy(x => x.ItemId);
+        //                      break;
+        //              }
+        //          }
+        //          else
+        //          {
+        //              query = query.OrderBy(x => x.ItemId);
+        //          }
 
-                var data = await query
-                    .Skip(skip)
-                    .Take(pageSize)
-                    .Select(m => new DefInvStockLevelManagementDto
-                    {
-                        TC = m.Tc,
-                        SLMID = m.Slmid,
-                        ItemID = m.ItemId,
-                        ItemName = itemRepo.All().Where(x => x.ItemId == m.ItemId).Select(m => m.ItemName).FirstOrDefault(),
-                        WarehouseID = m.WarehouseId,
-                        WarehouseName = wareHouseRepo.All().Where(x => x.WarehouseId == m.WarehouseId).Select(m => m.WarehouseName).FirstOrDefault(),
-                        InStock = m.InStock,
-                        StockValue = m.StockValue,
-                        ReorderLevel = m.ReorderLevel,
-                        MaxStock = m.MaxStock,
-                        MinStock = m.MinStock,
-                        Description = m.Description,
-                        EmployeeID = m.EmployeeId,
-                        Ldate = m.Ldate,
-                        Lmac = m.Lmac,
-                        Lip = m.Lip,
-                        Luser = m.Luser,
-                        //CompanyCode = m.CompanyCode,
-                        //ModifyDate = m.ModifyDate,
+        //          var data = await query
+        //              .Skip(skip)
+        //              .Take(pageSize)
+        //              .Select(m => new DefInvStockLevelManagementDto
+        //              {
+        //                  TC = m.Tc,
+        //                  SLMID = m.Slmid,
+        //                  ItemID = m.ItemId,
+        //                  ItemName = itemRepo.All().Where(x => x.ItemId == m.ItemId).Select(m => m.ItemName).FirstOrDefault(),
+        //                  WarehouseID = m.WarehouseId,
+        //                  WarehouseName = wareHouseRepo.All().Where(x => x.WarehouseId == m.WarehouseId).Select(m => m.WarehouseName).FirstOrDefault(),
+        //                  InStock = m.InStock,
+        //                  StockValue = m.StockValue,
+        //                  ReorderLevel = m.ReorderLevel,
+        //                  MaxStock = m.MaxStock,
+        //                  MinStock = m.MinStock,
+        //                  Description = m.Description,
+        //                  EmployeeID = m.EmployeeId,
+        //                  Ldate = m.Ldate,
+        //                  Lmac = m.Lmac,
+        //                  Lip = m.Lip,
+        //                  Luser = m.Luser,
+        //                  //CompanyCode = m.CompanyCode,
+        //                  //ModifyDate = m.ModifyDate,
 
-                        // Extra display fields from relations
+        //                  // Extra display fields from relations
 
-                        showCreateDate = m.Ldate.HasValue ? m.Ldate.Value.ToString("dd/MM/yyyy") : "",
-                        showModifyDate = m.ModifyDate.HasValue ? m.ModifyDate.Value.ToString("dd/MM/yyyy") : "",
-                    }).ToListAsync();
+        //                  showCreateDate = m.Ldate.HasValue ? m.Ldate.Value.ToString("dd/MM/yyyy") : "",
+        //                  showModifyDate = m.ModifyDate.HasValue ? m.ModifyDate.Value.ToString("dd/MM/yyyy") : "",
+        //              }).ToListAsync();
 
-                return (data, totalRecords);
-            }
-            catch (Exception)
-            {
+        //          return (data, totalRecords);
+        //      }
+        //      catch (Exception)
+        //      {
 
-                throw;
-            }
+        //          throw;
+        //      }
 
-        }
+        //  }
 
 
         public async Task<(bool isSuccess, string message)> DeleteAsync(DeleteItemRequest modelData)
@@ -1261,15 +979,33 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
             return null;
         }
 
-        public async Task<bool> DeletePhotoAsync(int autoId)
+        public async Task<bool> DeletePhotoAsync(string itemId)
         {
-            using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("DELETE FROM Inv_ItemPhoto WHERE autoId=@id", conn);
-            cmd.Parameters.AddWithValue("@id", autoId);
+            try
+            {
+                var itemPhoto = photoRepo.All().Where(x => x.ItemId == itemId).FirstOrDefault();
+                if (itemPhoto != null)
+                {
+                    await photoRepo.DeleteAsync(itemPhoto);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
 
-            await conn.OpenAsync();
-            int rows = await cmd.ExecuteNonQueryAsync();
-            return rows > 0;
+                throw;
+            }
+            //using var conn = new SqlConnection(_connectionString);
+            //using var cmd = new SqlCommand("DELETE FROM Inv_ItemPhoto WHERE autoId=@id", conn);
+            //cmd.Parameters.AddWithValue("@id", itemId);
+
+            //await conn.OpenAsync();
+            //int rows = await cmd.ExecuteNonQueryAsync();
+            //return rows > 0;
         }
 
         public async Task<IEnumerable<CommonSelectModel>> SelectionGetItemTypeTitleAsync()

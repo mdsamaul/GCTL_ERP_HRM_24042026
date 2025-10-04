@@ -372,275 +372,82 @@ namespace GCTL.UI.Core.Controllers
             }
         }
 
-        //sub group
-        [HttpPost]
-        public async Task<IActionResult> LoadSubGroupData()
-        {
-            try
-            {
-                Console.WriteLine("=== LoadMainGroupData method hit ===");
-
-                var draw = Request.Form["draw"].FirstOrDefault();
-                var start = Request.Form["start"].FirstOrDefault();
-                var length = Request.Form["length"].FirstOrDefault();
-                var sortColumnIndex = Request.Form["order[0][column]"].FirstOrDefault();
-                var sortColumnDir = Request.Form["order[0][dir]"].FirstOrDefault();
-                var searchValue = Request.Form["search[value]"].FirstOrDefault();
-
-                string sortColumn = "";
-                if (!string.IsNullOrEmpty(sortColumnIndex))
-                {
-                    switch (int.Parse(sortColumnIndex))
-                    {
-                        case 1:
-                            sortColumn = "SubItemID";
-                            break;
-                        case 2:
-                            sortColumn = "SubItemName";
-                            break;
-                        case 3:
-                            sortColumn = "Description";
-                            break;
-                        case 4:
-                            sortColumn = "MainItemID";
-                            break;
-                        default:
-                            sortColumn = "SubItemID";
-                            break;
-                    }
-                }
-
-
-                int pageSize = !string.IsNullOrEmpty(length) ? Convert.ToInt32(length) : 10;
-                int skip = !string.IsNullOrEmpty(start) ? Convert.ToInt32(start) : 0;
-
-                var (data, totalRecords) = await sALES_Def_Inv_MainItemGroup.GetSubGroup(sortColumn, sortColumnDir, searchValue, skip, pageSize);
-
-
-                var result = new
-                {
-                    draw = draw,
-                    recordsFiltered = totalRecords,
-                    recordsTotal = totalRecords,
-                    data = data
-                };
-
-                return Json(result);
-            }
-            catch (Exception ex)
-            {
-
-                return Json(new { error = ex.Message, draw = Request.Form["draw"].FirstOrDefault() });
-            }
-        }
-        //sub group
-        [HttpPost]
-        public async Task<IActionResult> LoadSub2GroupData()
-        {
-            try
-            {
-
-                var draw = Request.Form["draw"].FirstOrDefault();
-                var start = Request.Form["start"].FirstOrDefault();
-                var length = Request.Form["length"].FirstOrDefault();
-                var sortColumnIndex = Request.Form["order[0][column]"].FirstOrDefault();
-                var sortColumnDir = Request.Form["order[0][dir]"].FirstOrDefault();
-                var searchValue = Request.Form["search[value]"].FirstOrDefault();
-
-                string sortColumn = "";
-                if (!string.IsNullOrEmpty(sortColumnIndex))
-                {
-                    switch (int.Parse(sortColumnIndex))
-                    {
-                        case 1:
-                            sortColumn = "SubItem2ID";
-                            break;
-                        case 2:
-                            sortColumn = "SubItem2Name";
-                            break;
-                        case 3:
-                            sortColumn = "Description";
-                            break;
-                        case 4:
-                            sortColumn = "MainItemID";
-                            break;
-                        case 5:
-                            sortColumn = "SubItemID";
-                            break;
-                        default:
-                            sortColumn = "SubItem2ID";
-                            break;
-                    }
-                }
-
-
-                int pageSize = !string.IsNullOrEmpty(length) ? Convert.ToInt32(length) : 10;
-                int skip = !string.IsNullOrEmpty(start) ? Convert.ToInt32(start) : 0;
-
-                var (data, totalRecords) = await sALES_Def_Inv_MainItemGroup.GetSub2Group(sortColumn, sortColumnDir, searchValue, skip, pageSize);
-
-
-                var result = new
-                {
-                    draw = draw,
-                    recordsFiltered = totalRecords,
-                    recordsTotal = totalRecords,
-                    data = data
-                };
-
-                return Json(result);
-            }
-            catch (Exception ex)
-            {
-
-                return Json(new { error = ex.Message, draw = Request.Form["draw"].FirstOrDefault() });
-            }
-        }
 
         //item information group
-        [HttpPost]
-        public async Task<IActionResult> LoadItemInformationData()
-        {
-            try
-            {
+        //[HttpPost]
+        //public async Task<IActionResult> LoadStockLevelManagementData()
+        //{
+        //    try
+        //    {
 
-                var draw = Request.Form["draw"].FirstOrDefault();
-                var start = Request.Form["start"].FirstOrDefault();
-                var length = Request.Form["length"].FirstOrDefault();
-                var sortColumnIndex = Request.Form["order[0][column]"].FirstOrDefault();
-                var sortColumnDir = Request.Form["order[0][dir]"].FirstOrDefault();
-                var searchValue = Request.Form["search[value]"].FirstOrDefault();
+        //        var draw = Request.Form["draw"].FirstOrDefault();
+        //        var start = Request.Form["start"].FirstOrDefault();
+        //        var length = Request.Form["length"].FirstOrDefault();
+        //        var sortColumnIndex = Request.Form["order[0][column]"].FirstOrDefault();
+        //        var sortColumnDir = Request.Form["order[0][dir]"].FirstOrDefault();
+        //        var searchValue = Request.Form["search[value]"].FirstOrDefault();
 
-                string sortColumn = "";
-                if (!string.IsNullOrEmpty(sortColumnIndex))
-                {
-                    switch (int.Parse(sortColumnIndex))
-                    {
-                        case 1:
-                            sortColumn = "ItemId";
-                            break;
-                        case 2:
-                            sortColumn = "ItemName";
-                            break;
-                        case 3:
-                            sortColumn = "PrintName";
-                            break;
-                        case 4:
-                            sortColumn = "ItemType";
-                            break;
-                        case 5:
-                            sortColumn = "UnitType";
-                            break;
-                        case 6:
-                            sortColumn = "Buyer";
-                            break;
-                        case 7:
-                            sortColumn = "Style";
-                            break;
-                        default:
-                            sortColumn = "ItemId";
-                            break;
-                    }
-                }
-
-
-                int pageSize = !string.IsNullOrEmpty(length) ? Convert.ToInt32(length) : 10;
-                int skip = !string.IsNullOrEmpty(start) ? Convert.ToInt32(start) : 0;
-
-                var (data, totalRecords) = await sALES_Def_Inv_MainItemGroup.GetItemInformation(sortColumn, sortColumnDir, searchValue, skip, pageSize);
-
-
-                var result = new
-                {
-                    draw = draw,
-                    recordsFiltered = totalRecords,
-                    recordsTotal = totalRecords,
-                    data = data
-                };
-
-                return Json(result);
-            }
-            catch (Exception ex)
-            {
-
-                return Json(new { error = ex.Message, draw = Request.Form["draw"].FirstOrDefault() });
-            }
-        }
-        //item information group
-        [HttpPost]
-        public async Task<IActionResult> LoadStockLevelManagementData()
-        {
-            try
-            {
-
-                var draw = Request.Form["draw"].FirstOrDefault();
-                var start = Request.Form["start"].FirstOrDefault();
-                var length = Request.Form["length"].FirstOrDefault();
-                var sortColumnIndex = Request.Form["order[0][column]"].FirstOrDefault();
-                var sortColumnDir = Request.Form["order[0][dir]"].FirstOrDefault();
-                var searchValue = Request.Form["search[value]"].FirstOrDefault();
-
-                string sortColumn = "";
-                if (!string.IsNullOrEmpty(sortColumnIndex))
-                {
-                    switch (int.Parse(sortColumnIndex))
-                    {
-                        case 1:
-                            sortColumn = "SLMIID";
-                            break;
-                        case 2:
-                            sortColumn = "ItemName";
-                            break;
-                        case 3:
-                            sortColumn = "WareHouseName";
-                            break;
-                        case 4:
-                            sortColumn = "InStock";
-                            break;
-                        case 5:
-                            sortColumn = "StockValue";
-                            break;
-                        case 6:
-                            sortColumn = "ReorderLevel";
-                            break;
-                        case 7:
-                            sortColumn = "MaxStock";
-                            break;
-                        case 8:
-                            sortColumn = "MinStock";
-                            break;
-                        case 9:
-                            sortColumn = "Desctiption";
-                            break;
-                        default:
-                            sortColumn = "SLMIID";
-                            break;
-                    }
-                }
+        //        string sortColumn = "";
+        //        if (!string.IsNullOrEmpty(sortColumnIndex))
+        //        {
+        //            switch (int.Parse(sortColumnIndex))
+        //            {
+        //                case 1:
+        //                    sortColumn = "SLMIID";
+        //                    break;
+        //                case 2:
+        //                    sortColumn = "ItemName";
+        //                    break;
+        //                case 3:
+        //                    sortColumn = "WareHouseName";
+        //                    break;
+        //                case 4:
+        //                    sortColumn = "InStock";
+        //                    break;
+        //                case 5:
+        //                    sortColumn = "StockValue";
+        //                    break;
+        //                case 6:
+        //                    sortColumn = "ReorderLevel";
+        //                    break;
+        //                case 7:
+        //                    sortColumn = "MaxStock";
+        //                    break;
+        //                case 8:
+        //                    sortColumn = "MinStock";
+        //                    break;
+        //                case 9:
+        //                    sortColumn = "Desctiption";
+        //                    break;
+        //                default:
+        //                    sortColumn = "SLMIID";
+        //                    break;
+        //            }
+        //        }
 
 
-                int pageSize = !string.IsNullOrEmpty(length) ? Convert.ToInt32(length) : 10;
-                int skip = !string.IsNullOrEmpty(start) ? Convert.ToInt32(start) : 0;
+        //        int pageSize = !string.IsNullOrEmpty(length) ? Convert.ToInt32(length) : 10;
+        //        int skip = !string.IsNullOrEmpty(start) ? Convert.ToInt32(start) : 0;
 
-                var (data, totalRecords) = await sALES_Def_Inv_MainItemGroup.LoadStockLevelManagementDataAsync(sortColumn, sortColumnDir, searchValue, skip, pageSize);
+        //        var (data, totalRecords) = await sALES_Def_Inv_MainItemGroup.LoadStockLevelManagementDataAsync(sortColumn, sortColumnDir, searchValue, skip, pageSize);
 
 
-                var result = new
-                {
-                    draw = draw,
-                    recordsFiltered = totalRecords,
-                    recordsTotal = totalRecords,
-                    data = data
-                };
+        //        var result = new
+        //        {
+        //            draw = draw,
+        //            recordsFiltered = totalRecords,
+        //            recordsTotal = totalRecords,
+        //            data = data
+        //        };
 
-                return Json(result);
-            }
-            catch (Exception ex)
-            {
+        //        return Json(result);
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                return Json(new { error = ex.Message, draw = Request.Form["draw"].FirstOrDefault() });
-            }
-        }
+        //        return Json(new { error = ex.Message, draw = Request.Form["draw"].FirstOrDefault() });
+        //    }
+        //}
 
 
         //deleteItem
@@ -772,7 +579,7 @@ namespace GCTL.UI.Core.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(int autoId)
+        public async Task<IActionResult> Delete(string itemId)
         {
 
             try
@@ -780,7 +587,7 @@ namespace GCTL.UI.Core.Controllers
                 var hasUpdatePermission = await sALES_Def_Inv_MainItemGroup.DeletePermissionAsync(LoginInfo.AccessCode);
                 if (hasUpdatePermission)
                 {
-                    bool result = await sALES_Def_Inv_MainItemGroup.DeletePhotoAsync(autoId);
+                    bool result = await sALES_Def_Inv_MainItemGroup.DeletePhotoAsync(itemId);
                     if (result)
                         return Ok(new { success = true, message = "Photo deleted successfully!" });
                     else
