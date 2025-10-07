@@ -22,6 +22,7 @@
             SubItemTwo_SubItem2Name: "#SubItemTwo_SubItem2Name",
             SubItemTwo_Description: "#SubItemTwo_Description",
             MainItem_TC: "#MainItem_TC",
+            ItemNameDescription: "#ItemNameDescription",
 
 
             MainItem_BuyerId: "#MainItem_BuyerId",
@@ -193,7 +194,7 @@
             else if (tabName == "Sub Group - 2") {
                 GetAutoAllI(tabName);                
                 $(".GroupTitle").fadeOut(200, function () {
-                    $(this).text("Product Information").fadeIn(200);
+                    $(this).text("Product Information ( Sub Group - 2 )").fadeIn(200);
                 });
 
             }
@@ -455,7 +456,7 @@
                 StyleId: $(settings.MainItem_StyleId).val() || "",
                 ItemName: $(settings.MainItem_ItemName).val() || "",
                 PrintName: $(settings.MainItem_PrintName).val() || "",
-                TechnicalSpecification: $(settings.SubItem_TC).val() || "",
+                TechnicalSpecification: $(settings.ItemNameDescription).val() || "",
                 ItemCode: $(settings.MainItem_ItemCode).val() || "",
                 Barcode: $(settings.MainItem_Barcode).val() || "",
                 OriginId: $(settings.MainItem_OriginId).val() || "",
@@ -630,6 +631,11 @@
         function ItemInformationGroup() {
             var itemValue = ItemInfoGroupForm();
             //debugger
+            if (!itemValue.MainItemID) {
+                showToast('error', "Main Item required");
+                $('#ItemInfoMainItemName').select2('open');
+                return;
+            }
             if (!itemValue.ItemID) {
                 showToast('error', "Item Id required");
                 $(settings.MainItem_ItemID).addClass('border border-danger').focus();
@@ -837,8 +843,11 @@
         }
 
         $(document).on('click', settings.ItemDeleteBtn, function () {
-            DeleteItem(GetTabName());
-        })
+            if (confirm("Are you sure you want to delete this item?")) {
+                DeleteItem(GetTabName());
+            }
+        });
+
         var checkedIdGroups = [];
         function DeleteItem(tabName) {
             $.ajax({
@@ -868,6 +877,8 @@
                     checkedIdGroups = [];
                 }, complete: function () {
                     checkedIdGroups = [];
+                    $('#itemInfo-check-all').prop('checked', false);
+                    $('.itemInfo-group-row-check').prop('checked', false);
                 }
             });
         }
@@ -953,6 +964,13 @@
             $(settings.showCreateDate).empty().text(rowValue.showCreateDate || "");
             $(settings.showModifyDate).empty().text(rowValue.showModifyDate || "");
 
+
+            $('#mainGroup-check-all').prop('checked', false);
+            $('.main-group-row-check').prop('checked', false);
+
+
+            checkedIdGroups = [];
+            checkedIdGroups.push(rowValue.tc + '');
         });
 
         $(document).on('change', '#mainGroup-check-all', function () {
@@ -994,6 +1012,13 @@
             $(settings.showCreateDate).empty().text(rowValue.showCreateDate || "");
             $(settings.showModifyDate).empty().text(rowValue.showModifyDate || "");
 
+
+            $('#subGroup-check-all').prop('checked', false);
+            $('.sub-group-row-check').prop('checked', false);
+
+
+            checkedIdGroups = [];
+            checkedIdGroups.push(rowValue.tc + '');
         });
 
         $(document).on('change', '#subGroup-check-all', function () {
@@ -1039,6 +1064,13 @@
                 $(settings.showCreateModifyDateContainer).show();
                 $(settings.showCreateDate).empty().text(rowValue.showCreateDate || "");
                 $(settings.showModifyDate).empty().text(rowValue.showModifyDate || "");
+
+                $('#sub2Group-check-all').prop('checked', false);
+                $('.sub2-group-row-check').prop('checked', false);
+
+               
+                checkedIdGroups = [];
+                checkedIdGroups.push(rowValue.tc + '');
             }
         });
 
@@ -1087,7 +1119,7 @@
             $(settings.MainItem_StyleId).val(rowValue.styleId).trigger('change');
             $(settings.MainItem_ItemName).val(rowValue.itemName);
             $(settings.MainItem_PrintName).val(rowValue.printName);
-            $(settings.SubItem_TC).val(rowValue.technicalSpecification || "");
+            $(settings.ItemNameDescription).val(rowValue.technicalSpecification || "");
             $(settings.MainItem_ItemCode).val(rowValue.itemCode);
             $(settings.MainItem_Barcode).val(rowValue.barcode);
             $(settings.MainItem_OriginId).val(rowValue.originId).trigger('change');
@@ -1126,6 +1158,14 @@
             $(settings.showCreateModifyDateContainer).show();
 
             getImage(rowValue.itemID);
+            $('#itemInfo-check-all').prop('checked', false);
+            $('.itemInfo-group-row-check').prop('checked', false);
+
+
+            
+            var rowValue = row.data();
+            checkedIdGroups = [];
+            checkedIdGroups.push(rowValue.tc+'');
         });
 
         function getImage(itemId) {
@@ -1134,11 +1174,13 @@
                 type: 'GET',
                 data: { itemId: itemId },
                 success: function (response) {
-                    $("#previewImg").removeClass("d-none").attr("src", "/SALES_Def_Inv_MainItemGroup/GetPhoto?itemId=" + itemId);
-                    $("#removeBtn").removeClass("d-none");
+                    if (response) {
+                        $("#previewImg").removeClass("d-none").attr("src", "/SALES_Def_Inv_MainItemGroup/GetPhoto?itemId=" + itemId);
+                        $("#removeBtn").removeClass("d-none");
+                    }                
                 },
                 error: function () {
-                    $("#previewImg").attr("src", "/images/no-image.png"); // fallback
+                    //$("#previewImg").attr("src", "/images/no-image.png"); // fallback
                 }
             });
 
@@ -1168,8 +1210,11 @@
             e.preventDefault();
             var table = $('#StockLevelManagementGrid').DataTable();
             var row = table.row($(this).closest('tr'));
-
             var rowValue = row.data();
+            checkedIdGroups = [];
+            $('#StockLevelManagement-check-all').prop('checked',false);
+            $('#StockLevelManagement-group-row-check').prop('checked',false);
+            checkedIdGroups.push(rowValue.tc+'');
             // Populate form fields
             $(settings.StockLevelManagement_TC).val(rowValue.tc);
             $(settings.StockLevelManagement_SLMID).val(rowValue.slmid);
@@ -1505,6 +1550,7 @@
                 autoWidth: false,
                 responsive: true,
                 pageLength: 10,
+                order: [[1, 'asc']],
                 ajax: {
                     url: "/SALES_Def_Inv_MainItemGroup/GetItemHierarchy",
                     type: "POST",
@@ -1584,6 +1630,7 @@
                 autoWidth: false,
                 responsive: true,
                 pageLength: 10,
+                order: [[1, 'asc']],
                 ajax: {
                     url: "/SALES_Def_Inv_MainItemGroup/GetItemHierarchy",
                     type: "POST",
@@ -1692,6 +1739,7 @@
                 autoWidth: false,
                 responsive: true,
                 pageLength: 10,
+                order: [[1, 'asc']],
                 ajax: {
                     url: "/SALES_Def_Inv_MainItemGroup/GetItemHierarchy",
                     type: "POST",
@@ -1806,6 +1854,7 @@
                 autoWidth: false,
                 responsive: true,
                 pageLength: 10,
+                order: [[1, 'asc']],
                 ajax: {
                     url: "/SALES_Def_Inv_MainItemGroup/GetItemHierarchy",
                     type: "POST",

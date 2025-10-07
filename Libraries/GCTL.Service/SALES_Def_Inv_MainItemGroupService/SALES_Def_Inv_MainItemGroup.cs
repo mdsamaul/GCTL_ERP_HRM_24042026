@@ -138,14 +138,14 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
                     //create
                     var result = new SalesDefInvMainItem
                     {
-                        MainItemId = modelData.MainItemID,
-                        MainItemName = modelData.MainItemName,
-                        Description = modelData.Description,
+                        MainItemId = modelData.MainItemID ?? "",
+                        MainItemName = modelData.MainItemName ?? "",
+                        Description = modelData.Description ?? "",
                         Ldate = modelData.Ldate,
-                        Lmac = modelData.Lmac,
-                        Lip = modelData.Lip,
-                        Luser = modelData.Luser,
-                        CompanyCode = companyCode,
+                        Lmac = modelData.Lmac ?? "",
+                        Lip = modelData.Lip ?? "",
+                        Luser = modelData.Luser ?? "",
+                        CompanyCode = companyCode ?? "",
                     };
                     await mainRepo.AddAsync(result);
                     return (true, CreateSuccess);
@@ -158,9 +158,9 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
                     {
                         return (false, UpdateFailed);
                     }
-                    mainItem.MainItemId = modelData.MainItemID;
-                    mainItem.MainItemName = modelData.MainItemName;
-                    mainItem.Description = modelData.Description;
+                    mainItem.MainItemId = modelData.MainItemID ?? "";
+                    mainItem.MainItemName = modelData.MainItemName ?? "";
+                    mainItem.Description = modelData.Description ?? "";
                     mainItem.ModifyDate = DateTime.Now;
                     await mainRepo.UpdateAsync(mainItem);
                     return (true, UpdateSuccess);
@@ -192,15 +192,15 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
                     //create
                     var result = new SalesDefInvSubItem
                     {
-                        SubItemId = modelData.SubItemID,
-                        MainItemId = modelData.MainItemID,
-                        SubItemName = modelData.SubItemName,
-                        Description = modelData.Description,
+                        SubItemId = modelData.SubItemID ?? "",
+                        MainItemId = modelData.MainItemID ?? "",
+                        SubItemName = modelData.SubItemName ?? "",
+                        Description = modelData.Description ?? "",
                         Ldate = modelData.Ldate,
-                        Lmac = modelData.Lmac,
-                        Lip = modelData.Lip,
-                        Luser = modelData.Luser,
-                        CompanyCode = companyCode,
+                        Lmac = modelData.Lmac ?? "",
+                        Lip = modelData.Lip ?? "",
+                        Luser = modelData.Luser ?? "",
+                        CompanyCode = companyCode ?? "",
                     };
                     await subRepo.AddAsync(result);
                     return (true, CreateSuccess);
@@ -213,10 +213,10 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
                     {
                         return (false, UpdateFailed);
                     }
-                    item.SubItemId = modelData.SubItemID;
-                    item.MainItemId = modelData.MainItemID;
-                    item.SubItemName = modelData.SubItemName;
-                    item.Description = modelData.Description;
+                    item.SubItemId = modelData.SubItemID ?? "";
+                    item.MainItemId = modelData.MainItemID ?? "";
+                    item.SubItemName = modelData.SubItemName ?? "";
+                    item.Description = modelData.Description ?? "";
                     item.ModifyDate = DateTime.Now;
                     await subRepo.UpdateAsync(item);
                     return (true, UpdateSuccess);
@@ -248,16 +248,16 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
                     //create
                     var result = new RmgProdDefInvSubItem2
                     {
-                        SubItemId = modelData.SubItemID,
-                        MainItemId = modelData.MainItemID,
-                        SubItem2Id = modelData.SubItem2ID,
-                        SubItem2Name = modelData.SubItem2Name,
-                        Description = modelData.Description,
+                        SubItemId = modelData.SubItemID ?? "",
+                        MainItemId = modelData.MainItemID ?? "",
+                        SubItem2Id = modelData.SubItem2ID ?? "",
+                        SubItem2Name = modelData.SubItem2Name ?? "",
+                        Description = modelData.Description ?? "",
                         Ldate = modelData.Ldate,
-                        Lmac = modelData.Lmac,
-                        Lip = modelData.Lip,
-                        Luser = modelData.Luser,
-                        CompanyCode = companyCode,
+                        Lmac = modelData.Lmac ?? "",
+                        Lip = modelData.Lip ?? "",
+                        Luser = modelData.Luser ?? "",
+                        CompanyCode = companyCode ?? "",
                     };
                     await subRepo2.AddAsync(result);
                     return (true, CreateSuccess);
@@ -270,11 +270,11 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
                     {
                         return (false, UpdateFailed);
                     }
-                    item.SubItemId = modelData.SubItemID;
-                    item.MainItemId = modelData.MainItemID;
-                    item.SubItem2Id = modelData.SubItem2ID;
-                    item.SubItem2Name = modelData.SubItem2Name;
-                    item.Description = modelData.Description;
+                    item.SubItemId = modelData.SubItemID ?? "";
+                    item.MainItemId = modelData.MainItemID ?? "";
+                    item.SubItem2Id = modelData.SubItem2ID ?? "";
+                    item.SubItem2Name = modelData.SubItem2Name ?? "";
+                    item.Description = modelData.Description ?? "";
                     item.ModifyDate = DateTime.Now;
                     await subRepo2.UpdateAsync(item);
                     return (true, UpdateSuccess);
@@ -313,41 +313,42 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
                     //create
                     var result = new InvDefItem
                     {
-                        BuyerId = modelData.BuyerId,
-                        StyleId = modelData.StyleId,
-                        MainItemId = modelData.MainItemID,
-                        SubItemId = modelData.SubItemID,
-                        SubItem2Id = modelData.SubItem2ID,
-                        ItemTypeId = modelData.ItemTypeID,
-                        ItemId = modelData.ItemID,
-                        ItemName = modelData.ItemName,
-                        PrintName = modelData.PrintName,
-                        //discription= modelData.discription,
-                        ItemCode = modelData.ItemCode,
-                        Barcode = modelData.Barcode,
-                        OriginId = modelData.OriginId,
-                        ManufactureId = modelData.ManufactureId,
-                        PackageTypeId = modelData.PackageTypeId,
-                        PackageQuantity = modelData.PackageQuantity,
-                        ItemQuantity = modelData.ItemQuantity,
-                        ItemUnit = modelData.ItemUnit,
-                        ItemPrice = modelData.ItemPrice,
-                        CurrencyId = modelData.CurrencyId,
-                        Discount = modelData.Discount,
-                        TotalAmount = modelData.TotalAmount,
-                        CurrencyId2 = modelData.CurrencyId2,
-                        WarrantyStatus = modelData.WarrantyStatus,
-                        WarrantyTime = modelData.WarrantyTime,
-                        WarrantyType = modelData.WarrantyType,
-                        BranchId = modelData.BranchID,
-                        SupplierId = modelData.SupplierId,
-                        EmployeeId = modelData.UserInfoEmployeeId ?? "",
-                        //image
+                        BuyerId = modelData.BuyerId ?? "",
+                        StyleId = modelData.StyleId ?? "",
+                        MainItemId = modelData.MainItemID ?? "",
+                        SubItemId = modelData.SubItemID ?? "",
+                        SubItem2Id = modelData.SubItem2ID ?? "",
+                        ItemTypeId = modelData.ItemTypeID ?? "",
+                        ItemId = modelData.ItemID ?? "",
+                        ItemName = modelData.ItemName ?? "",
+                        PrintName = modelData.PrintName ?? "",
+                        TechnicalSpecification = modelData.TechnicalSpecification ?? "",
+                        //discription= modelData.discription??"",
+                        ItemCode = modelData.ItemCode ?? "",
+                        Barcode = modelData.Barcode ?? "",
+                        OriginId = modelData.OriginId ?? "",
+                        ManufactureId = modelData.ManufactureId ?? "",
+                        PackageTypeId = modelData.PackageTypeId ?? "",
+                        PackageQuantity = modelData.PackageQuantity ?? 0,
+                        ItemQuantity = modelData.ItemQuantity ?? 0,
+                        ItemUnit = modelData.ItemUnit ?? "",
+                        ItemPrice = modelData.ItemPrice ?? 0,
+                        CurrencyId = modelData.CurrencyId ?? "",
+                        Discount = modelData.Discount ?? 0,
+                        TotalAmount = modelData.TotalAmount ?? 0,
+                        CurrencyId2 = modelData.CurrencyId2 ?? "",
+                        WarrantyStatus = modelData.WarrantyStatus ?? "",
+                        WarrantyTime = modelData.WarrantyTime ?? 0,
+                        WarrantyType = modelData.WarrantyType ?? "",
+                        BranchId = modelData.BranchID ?? "",
+                        SupplierId = modelData.SupplierId ?? "",
+                        EmployeeId = modelData.UserInfoEmployeeId ?? "" ?? "",
+                        //imag??""e
                         Ldate = modelData.Ldate,
-                        Lmac = modelData.Lmac,
-                        Lip = modelData.Lip,
-                        Luser = modelData.Luser,
-                        CompanyCode = companyCode,
+                        Lmac = modelData.Lmac ?? "",
+                        Lip = modelData.Lip ?? "",
+                        Luser = modelData.Luser ?? "",
+                        CompanyCode = companyCode ?? "",
                     };
                     await itemRepo.AddAsync(result);
                     return (true, CreateSuccess);
@@ -361,35 +362,35 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
                         return (false, UpdateFailed);
                     }
 
-                    item.BuyerId = modelData.BuyerId;
-                    item.StyleId = modelData.StyleId;
-                    item.MainItemId = modelData.MainItemID;
-                    item.SubItemId = modelData.SubItemID;
-                    item.SubItem2Id = modelData.SubItem2ID;
-                    item.ItemTypeId = modelData.ItemTypeID;
-                    item.ItemId = modelData.ItemID;
-                    item.ItemName = modelData.ItemName;
-                    item.PrintName = modelData.PrintName;
-
-                    item.ItemCode = modelData.ItemCode;
-                    item.Barcode = modelData.Barcode;
-                    item.OriginId = modelData.OriginId;
-                    item.ManufactureId = modelData.ManufactureId;
-                    item.PackageTypeId = modelData.PackageTypeId;
-                    item.PackageQuantity = modelData.PackageQuantity;
-                    item.ItemQuantity = modelData.ItemQuantity;
-                    item.ItemUnit = modelData.ItemUnit;
-                    item.ItemPrice = modelData.ItemPrice;
-                    item.CurrencyId = modelData.CurrencyId;
-                    item.Discount = modelData.Discount;
-                    item.TotalAmount = modelData.TotalAmount;
-                    item.CurrencyId2 = modelData.CurrencyId2;
-                    item.WarrantyStatus = modelData.WarrantyStatus;
-                    item.WarrantyTime = modelData.WarrantyTime;
-                    item.WarrantyType = modelData.WarrantyType;
-                    item.BranchId = modelData.BranchID;
-                    item.SupplierId = modelData.SupplierId;
-                    item.EmployeeId = modelData.UserInfoEmployeeId;
+                    item.BuyerId = modelData.BuyerId ?? "";
+                    item.StyleId = modelData.StyleId ?? "";
+                    item.MainItemId = modelData.MainItemID ?? "";
+                    item.SubItemId = modelData.SubItemID ?? "";
+                    item.SubItem2Id = modelData.SubItem2ID ?? "";
+                    item.ItemTypeId = modelData.ItemTypeID ?? "";
+                    item.ItemId = modelData.ItemID ?? "";
+                    item.ItemName = modelData.ItemName ?? "";
+                    item.PrintName = modelData.PrintName ?? "";
+                    item.TechnicalSpecification = modelData.TechnicalSpecification ?? "";
+                    item.ItemCode = modelData.ItemCode ?? "";
+                    item.Barcode = modelData.Barcode ?? "";
+                    item.OriginId = modelData.OriginId ?? "";
+                    item.ManufactureId = modelData.ManufactureId ?? "";
+                    item.PackageTypeId = modelData.PackageTypeId ?? "";
+                    item.PackageQuantity = modelData.PackageQuantity ?? 0;
+                    item.ItemQuantity = modelData.ItemQuantity ?? 0;
+                    item.ItemUnit = modelData.ItemUnit ?? "";
+                    item.ItemPrice = modelData.ItemPrice ?? 0;
+                    item.CurrencyId = modelData.CurrencyId ?? "";
+                    item.Discount = modelData.Discount ?? 0;
+                    item.TotalAmount = modelData.TotalAmount ?? 0;
+                    item.CurrencyId2 = modelData.CurrencyId2 ?? "";
+                    item.WarrantyStatus = modelData.WarrantyStatus ?? "";
+                    item.WarrantyTime = modelData.WarrantyTime ?? 0;
+                    item.WarrantyType = modelData.WarrantyType ?? "";
+                    item.BranchId = modelData.BranchID ?? "";
+                    item.SupplierId = modelData.SupplierId ?? "";
+                    item.EmployeeId = modelData.UserInfoEmployeeId ?? "";
                     item.ModifyDate = DateTime.Now;
                     await itemRepo.UpdateAsync(item);
                     return (true, UpdateSuccess);
@@ -429,21 +430,21 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
                     //create
                     var result = new DefInvStockLevelManagement
                     {
-                        Slmid = modelData.SLMID,
-                        ItemId = modelData.ItemID,
-                        WarehouseId = modelData.WarehouseID,
-                        InStock = modelData.InStock,
-                        StockValue = modelData.StockValue,
-                        ReorderLevel = modelData.ReorderLevel,
-                        MaxStock = modelData.MaxStock,
-                        MinStock = modelData.MinStock,
-                        Description = modelData.Description,
-                        EmployeeId = modelData.UserInfoEmployeeId,
+                        Slmid = modelData.SLMID ?? "",
+                        ItemId = modelData.ItemID ?? "",
+                        WarehouseId = modelData.WarehouseID ?? "",
+                        InStock = modelData.InStock ?? 0,
+                        StockValue = modelData.StockValue ?? 0,
+                        ReorderLevel = modelData.ReorderLevel ?? 0,
+                        MaxStock = modelData.MaxStock ?? 0,
+                        MinStock = modelData.MinStock ?? 0,
+                        Description = modelData.Description ?? "",
+                        EmployeeId = modelData.UserInfoEmployeeId ?? "",
                         Ldate = modelData.Ldate,
-                        Lmac = modelData.Lmac,
-                        Lip = modelData.Lip,
-                        Luser = modelData.Luser,
-                        CompanyCode = companyCode,
+                        Lmac = modelData.Lmac ?? "",
+                        Lip = modelData.Lip ?? "",
+                        Luser = modelData.Luser ?? "",
+                        CompanyCode = companyCode ?? "",
                     };
                     await stockManagementRepo.AddAsync(result);
                     return (true, CreateSuccess);
@@ -457,16 +458,16 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
                         return (false, UpdateFailed);
                     }
 
-                    item.Slmid = modelData.SLMID;
-                    item.ItemId = modelData.ItemID;
-                    item.WarehouseId = modelData.WarehouseID;
-                    item.InStock = modelData.InStock;
-                    item.StockValue = modelData.StockValue;
-                    item.ReorderLevel = modelData.ReorderLevel;
-                    item.MaxStock = modelData.MaxStock;
-                    item.MinStock = modelData.MinStock;
-                    item.EmployeeId = modelData.UserInfoEmployeeId;
-                    item.Description = modelData.Description;
+                    item.Slmid = modelData.SLMID ?? "";
+                    item.ItemId = modelData.ItemID ?? "";
+                    item.WarehouseId = modelData.WarehouseID ?? "";
+                    item.InStock = modelData.InStock ?? 0;
+                    item.StockValue = modelData.StockValue ?? 0;
+                    item.ReorderLevel = modelData.ReorderLevel ?? 0;
+                    item.MaxStock = modelData.MaxStock ?? 0;
+                    item.MinStock = modelData.MinStock ?? 0;
+                    item.EmployeeId = modelData.UserInfoEmployeeId ?? "";
+                    item.Description = modelData.Description ?? "";
                     item.ModifyDate = DateTime.Now;
                     await stockManagementRepo.UpdateAsync(item);
                     return (true, UpdateSuccess);
@@ -1152,7 +1153,8 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
                             MainItemID = row.itemMainItemID,
                             SubItemID = row.itemSubItemID,
                             SubItem2ID = row.itemSubItem2ID,
-                            ItemTypeID = row.itemItemTypeId,
+                            ItemTypeID = row.itemItemTypeID,
+
                             ItemID = row.itemItemID,
                             ItemName = row.itemItemName,
                             PrintName = row.itemPrintName,
@@ -1172,20 +1174,20 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
                             WarrantyStatus = row.itemWarrantyStatus,
                             WarrantyTime = row.itemWarrantyTime,
                             WarrantyType = row.itemWarrantyType,
-                            BranchID = row.itemBranchId,
+                            BranchID = row.itemBranchID,
                             SupplierId = row.itemSupplierId,
                             EmployeeID = row.itemEmployeeId,
                             Ldate = row.itemLdate,
                             Lmac = row.itemLmac,
                             Lip = row.itemLip,
                             Luser = row.itemLuser,
-
+                            TechnicalSpecification = row.itemTechnicalSpecification,
                             // === Extra Display fields ===
                             BuyerName = row.itemBuyerId != null && buyers.ContainsKey(row.itemBuyerId)
                                         ? buyers[row.itemBuyerId]
                                         : "",
-                            ItemTypeName = row.itemItemTypeId != null && itemTypes.ContainsKey(row.itemItemTypeId)
-                                        ? itemTypes[row.itemItemTypeId]
+                            ItemTypeName = row.itemItemTypeID != null && itemTypes.ContainsKey(row.itemItemTypeID)
+                                        ? itemTypes[row.itemItemTypeID]
                                         : "",
                             ItemUnitName = row.itemItemUnit != null && units.ContainsKey(row.itemItemUnit)
                                         ? units[row.itemItemUnit]

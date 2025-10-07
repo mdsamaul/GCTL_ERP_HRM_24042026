@@ -612,7 +612,7 @@ namespace GCTL.UI.Core.Controllers
             var photo = await sALES_Def_Inv_MainItemGroup.GetPhotoByItemIdAsync(itemId);
             if (photo == null || photo.PhotoBytes == null)
             {
-                return File("/images/no-image.png", "image/png"); // fallback
+                return Json(false);
             }
 
             return File(photo.PhotoBytes, photo.ImgType);
