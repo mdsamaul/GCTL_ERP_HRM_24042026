@@ -883,6 +883,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[RMG_Prod_Order]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[RMG_PurchaseOrderReceive]",
          "ObjectType": 0
       },
@@ -1092,6 +1096,10 @@
       },
       {
          "Name": "[dbo].[EmployeeReferenceInformationReportSP]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Get_ItemHierarchyData]",
          "ObjectType": 1
       },
       {

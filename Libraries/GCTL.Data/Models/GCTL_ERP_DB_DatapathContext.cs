@@ -235,6 +235,7 @@ namespace GCTL.Data.Models
         public virtual DbSet<RmgProdDefSeason> RmgProdDefSeason { get; set; }
         public virtual DbSet<RmgProdDefSize> RmgProdDefSize { get; set; }
         public virtual DbSet<RmgProdDefUnitType> RmgProdDefUnitType { get; set; }
+        public virtual DbSet<RmgProdOrder> RmgProdOrder { get; set; }
         public virtual DbSet<RmgPurchaseOrderReceive> RmgPurchaseOrderReceive { get; set; }
         public virtual DbSet<RmgPurchaseOrderReceiveDetails> RmgPurchaseOrderReceiveDetails { get; set; }
         public virtual DbSet<SalesContactPerson> SalesContactPerson { get; set; }
@@ -11658,6 +11659,147 @@ namespace GCTL.Data.Models
                 entity.Property(e => e.UnitTypeName)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<RmgProdOrder>(entity =>
+            {
+                entity.HasKey(e => e.Tc)
+                    .HasName("PK__RMG_Prod__3214E408D95A9BBB");
+
+                entity.ToTable("RMG_Prod_Order");
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
+
+                entity.Property(e => e.BuContatPerson).HasMaxLength(100);
+
+                entity.Property(e => e.BuDesignation1).HasMaxLength(100);
+
+                entity.Property(e => e.BuEmail).HasMaxLength(100);
+
+                entity.Property(e => e.Buphone).HasMaxLength(50);
+
+                entity.Property(e => e.BuyerBankId).HasMaxLength(50);
+
+                entity.Property(e => e.BuyerBranchId).HasMaxLength(50);
+
+                entity.Property(e => e.BuyerBrand).HasMaxLength(50);
+
+                entity.Property(e => e.BuyerDeclaration).HasMaxLength(250);
+
+                entity.Property(e => e.BuyerId).HasMaxLength(50);
+
+                entity.Property(e => e.BuyerOrderDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BuyerOrderNo).HasMaxLength(50);
+
+                entity.Property(e => e.BuyerSwiftCode).HasMaxLength(50);
+
+                entity.Property(e => e.CompanyCode).HasMaxLength(50);
+
+                entity.Property(e => e.CompanyOwnBankId).HasMaxLength(50);
+
+                entity.Property(e => e.CompanyOwnBranchId).HasMaxLength(50);
+
+                entity.Property(e => e.CompanySwiftCode).HasMaxLength(50);
+
+                entity.Property(e => e.CurrencyId)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.CurrencyIdFob)
+                    .HasMaxLength(50)
+                    .HasColumnName("CurrencyId_FOB");
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.EmployeeId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.Fobamount)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("FOBAmount");
+
+                entity.Property(e => e.InspectionInfo).HasMaxLength(250);
+
+                entity.Property(e => e.IntegraJobno)
+                    .HasMaxLength(100)
+                    .HasColumnName("IntegraJOBNo");
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.MasterPurchaseOrder).HasMaxLength(100);
+
+                entity.Property(e => e.MerContatPerson).HasMaxLength(100);
+
+                entity.Property(e => e.MerDesignation1).HasMaxLength(100);
+
+                entity.Property(e => e.MerEmail).HasMaxLength(100);
+
+                entity.Property(e => e.MerchandiserContactId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Merphone).HasMaxLength(50);
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.MpoDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("MPO_Date");
+
+                entity.Property(e => e.OrderDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OrderId)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.PaymentTerm).HasMaxLength(50);
+
+                entity.Property(e => e.PostatusId)
+                    .HasMaxLength(100)
+                    .HasColumnName("POStatusId");
+
+                entity.Property(e => e.Remarks).HasMaxLength(500);
+
+                entity.Property(e => e.SeasonId).HasMaxLength(50);
+
+                entity.Property(e => e.SeasonYear).HasMaxLength(50);
+
+                entity.Property(e => e.StyleId).HasMaxLength(50);
+
+                entity.Property(e => e.StylePowise)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("StylePOWise");
+
+                entity.Property(e => e.SupplierId).HasMaxLength(50);
+
+                entity.Property(e => e.TotalOrderQuantity).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.UnitTypId)
+                    .HasMaxLength(50)
+                    .HasColumnName("UnitTypID");
             });
 
             modelBuilder.Entity<RmgPurchaseOrderReceive>(entity =>

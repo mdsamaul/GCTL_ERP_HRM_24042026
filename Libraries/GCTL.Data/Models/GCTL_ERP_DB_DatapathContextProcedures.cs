@@ -51,6 +51,7 @@ namespace GCTL.Data.Models
             modelBuilder.Entity<EmployeeGeneralInfoReportSPResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<EmployeeLoanInformationReportResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<EmployeeReferenceInformationReportSPResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<Get_ItemHierarchyDataResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetAdvancePayPagedWithFilterResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetCompanyNamesBySearchResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetDiscountDetailsResult>().HasNoKey().ToView(null);
@@ -1079,6 +1080,61 @@ namespace GCTL.Data.Models
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<EmployeeReferenceInformationReportSPResult>("EXEC @returnValue = [dbo].[EmployeeReferenceInformationReportSP] @DepartmentCodes = @DepartmentCodes, @DesignationCodes = @DesignationCodes, @EmployeeCodes = @EmployeeCodes, @BranchCodes = @BranchCodes, @CompanyCodes = @CompanyCodes, @NationalIDNO = @NationalIDNO", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<Get_ItemHierarchyDataResult>> Get_ItemHierarchyDataAsync(string MainId, string SubId, string Sub2Id, string ItemId, string StockItemId, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "MainId",
+                    Size = 100,
+                    Value = MainId ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "SubId",
+                    Size = 100,
+                    Value = SubId ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "Sub2Id",
+                    Size = 100,
+                    Value = Sub2Id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "ItemId",
+                    Size = 100,
+                    Value = ItemId ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "StockItemId",
+                    Size = 100,
+                    Value = StockItemId ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<Get_ItemHierarchyDataResult>("EXEC @returnValue = [dbo].[Get_ItemHierarchyData] @MainId = @MainId, @SubId = @SubId, @Sub2Id = @Sub2Id, @ItemId = @ItemId, @StockItemId = @StockItemId", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
