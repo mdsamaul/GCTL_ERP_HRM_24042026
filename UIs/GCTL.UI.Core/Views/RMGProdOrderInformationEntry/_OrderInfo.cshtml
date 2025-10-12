@@ -1,19 +1,21 @@
-﻿<div class="form-container">
+﻿@model GCTL.UI.Core.ViewModels.RMGProdOrderInformationEntry.RMGProdOrderInformationEntryViewModel
+<div class="form-container">
     <div class="left-panel">
         <div class="form-grid pt-2">
+            <input type="text" asp-for="OrderDto.TC" class="form-control">
             <!-- Row 1 -->
             <div class="form-row">
                 <label class="col-form-label">Entry ID <span class="text-danger">*</span></label>
                 <div class="input-group input-group-sm">
-                    <input type="text" class="form-control">
+                    <input type="text" asp-for="OrderDto.OrderId" class="form-control">
                 </div>
             </div>
 
             <div class="form-row">
                 <label class="col-form-label">Buyer<span class="text-danger">*</span></label>
                 <div class="input-group input-group-sm">
-                    <select class="form-select">
-                        <option value=""></option>
+                    <select class="form-select searchAbleSelectMulti" asp-items="ViewBag.buyerList as SelectList" asp-for="OrderDto.BuyerId">
+                        <option value="" disabled selected hidden>Select Buyer</option>
                     </select>
                     <button type="button" class="btn btn-light border">
                         <i class="fa fa-plus" style="color: #8d8d8d;"></i>
@@ -25,15 +27,15 @@
             <div class="form-row">
                 <label class="col-form-label">Buyer Order No</label>
                 <div class="input-group input-group-sm">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" asp-for="OrderDto.BuyerOrderNo">
                 </div>
             </div>
 
             <div class="form-row">
                 <label class="col-form-label">Brand</label>
                 <div class="input-group input-group-sm">
-                    <select class="form-select">
-                        <option value=""></option>
+                    <select class="form-select searchAbleSelectMulti" asp-items="ViewBag.buyerBrandList as SelectList" asp-for="OrderDto.BuyerBranchId">
+                        <option value="" disabled selected hidden>Select Brand</option>
                     </select>
                     <button type="button" class="btn btn-light border">
                         <i class="fa fa-plus" style="color: #8d8d8d;"></i>
@@ -45,47 +47,10 @@
             <div class="form-row">
                 <label class="col-form-label">Integra JOB No.<span class="text-danger">*</span></label>
                 <div class="input-group input-group-sm">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" asp-for="OrderDto.IntegraJOBNo">
                 </div>
             </div>
 
-            @* <div class="form-row">
-                <label class="col-form-label"></label>
-                <div class="input-group input-group-sm">
-                    <div class="radio-group gap-5">
-                        <div class="radio-item">
-                            <input type="radio" name="option" id="styleWise" class="me-2">
-                            <label for="styleWise" class="mb-0">Option A</label>
-                        </div>
-                        <div class="radio-item">
-                            <input type="radio" name="option" id="poWise" class="me-2">
-                            <label for="poWise" class="mb-0">Option B</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Row 4 -->
-            <div class="form-row">
-                <label class="col-form-label">Password</label>
-                <div class="input-group input-group-sm">
-                    <select class="form-select">
-                        <option value=""></option>
-                    </select>
-                    <button type="button" class="btn btn-light border">
-                        <i class="fa fa-plus" style="color: #8d8d8d;"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class="form-group row masterPoWise hidden">
-                <label for="masterPoWiseInput" class="col-sm-2 col-form-label">samaul</label>
-                <div class="col-sm-10">
-                    <div class="input-group input-group-sm">
-                        <input type="text" class="form-control" id="masterPoWiseInput">
-                    </div>
-                </div>
-            </div> *@
 
             <div class="form-row">
                 <label class="col-form-label"></label>
@@ -107,8 +72,8 @@
             <div class="form-row styleWiseRow">
                 <label class="col-form-label">Style</label>
                 <div class="input-group input-group-sm">
-                    <select class="form-select">
-                        <option value=""></option>
+                    <select class="form-select searchAbleSelectMulti" asp-for="OrderDto.StyleId" asp-items="ViewBag.styleList as SelectList">
+                        <option value="" disabled selected hidden>Select Style</option>
                     </select>
                     <button type="button" class="btn btn-light border">
                         <i class="fa fa-plus" style="color: #8d8d8d;"></i>
@@ -125,25 +90,27 @@
 
             <div class="form-row">
                 <label class="col-form-label">Season</label>
-                <div class="d-flex" style="padding-left: 5px;">
-                    <input type="text" class="form-control form-control-sm col-md-6">
-                    <div class="input-group col-md-6   input-group-sm" style="padding-right: 0px;">
-                        <select class="form-select">
-                            <option value=""></option>
+                <div class="d-flex" style="padding-left: 0px;">                    
+                    <div class="input-group col-md-6   input-group-sm" style="padding-right: 0px;margin-right: 8px;">
+                        <select class="form-select searchAbleSelectMulti" asp-items="ViewBag.seactionList" asp-for="OrderDto.SeasonId">
+                            <option value="" disabled selected hidden>Select Season</option>
                         </select>
                         <button type="button" class="btn btn-light border">
                             <i class="fa fa-plus" style="color: #8d8d8d;"></i>
                         </button>
                     </div>
+                    <input type="text" class="form-control form-control-sm" asp-for="OrderDto.SeasonYear">
                 </div>
             </div>
+
+           
 
             <!-- Row 5 -->
             <div class="form-row">
                 <label class="col-form-label">P.O Status</label>
                 <div class="input-group input-group-sm">
-                    <select class="form-select">
-                        <option value=""></option>
+                    <select class="form-select searchAbleSelectMulti" asp-for="OrderDto.POStatusId">
+                        <option value="" disabled selected hidden>Select P.O Status</option>
                     </select>
                 </div>
             </div>
@@ -158,12 +125,12 @@
             <button type="button" class="btn btn-light border">
                 <i class="fa fa-plus" style="color: #8d8d8d;"></i>
             </button>
-        </div>*@
+             </div>*@
                 <div class="d-flex" style="padding-left: 5px;">
-                    <input type="text" class="form-control form-control-sm col-md-6">
+                    <input type="text" class="form-control form-control-sm col-md-6" asp-for="OrderDto.TotalOrderQuantity">
                     <div class="input-group col-md-6   input-group-sm" style="padding-right: 0px;">
-                        <select class="form-select">
-                            <option value=""></option>
+                        <select class="form-select searchAbleSelectMulti" asp-items=" ViewBag.unitTypeList as SelectList" asp-for="OrderDto.UnitTypID">
+                            <option value="" disabled selected hidden>Select Quantity</option>
                         </select>
                         <button type="button" class="btn btn-light border">
                             <i class="fa fa-plus" style="color: #8d8d8d;"></i>
@@ -176,10 +143,10 @@
             <div class="form-row">
                 <label class="col-form-label">FOB Amount Per Unit</label>
                 <div class="d-flex" style="padding-left: 5px;">
-                    <input type="text" class="form-control form-control-sm col-md-6" />
+                    <input type="text" class="form-control form-control-sm col-md-6" asp-for="OrderDto.FOBAmount" />
                     <div class="input-group col-md-6   input-group-sm" style="padding-right: 0px;">
-                        <select class="form-select">
-                            <option value=""></option>
+                        <select class="form-select searchAbleSelectMulti" asp-items=" ViewBag.currentcyList as SelectList" asp-for="OrderDto.CurrencyId_FOB">
+                            <option value="" disabled selected hidden>Select Currency</option>
                         </select>
                         <button type="button" class="btn btn-light border">
                             <i class="fa fa-plus" style="color: #8d8d8d;"></i>
@@ -196,8 +163,8 @@
             <div class="form-row">
                 <label class="col-form-label">Buyer Bank</label>
                 <div class="input-group input-group-sm">
-                    <select class="form-select">
-                        <option value=""></option>
+                    <select class="form-select searchAbleSelectMulti" asp-items=" ViewBag.bankList as SelectList" asp-for="OrderDto.BuyerBankId">
+                        <option value="" disabled selected hidden>Select Buyer Bank</option>                       
                     </select>
                     <button type="button" class="btn btn-light border">
                         <i class="fa fa-plus" style="color: #8d8d8d;"></i>
@@ -208,8 +175,8 @@
             <div class="form-row">
                 <label class="col-form-label">Branch</label>
                 <div class="input-group input-group-sm">
-                    <select class="form-select">
-                        <option value=""></option>
+                    <select class="form-select searchAbleSelectMulti" asp-items="ViewBag.bankBranchList as SelectList" asp-for="OrderDto.BuyerBranchId">
+                        <option value="" disabled selected hidden>Select Branch</option>                       
                     </select>
                     <button type="button" class="btn btn-light border">
                         <i class="fa fa-plus" style="color: #8d8d8d;"></i>
@@ -221,23 +188,23 @@
             <div class="form-row">
                 <label class="col-form-label">Branch Address</label>
                 <div class="input-group input-group-sm">
-                    <textarea rows="1" class="form-control"></textarea>
+                    <textarea rows="1" class="form-control" id="buyerBranchAddress"></textarea>
                 </div>
             </div>
 
             <div class="form-row">
                 <label class="col-form-label">SWIFT Code</label>
                 <div class="input-group input-group-sm">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" asp-for="OrderDto.BuyerSwiftCode">
                 </div>
             </div>
 
-            <!-- Row 9 -->
-            <div class="form-row">
+            <!-- IABL Bank -->
+            <div class="form-row mb-2">
                 <label class="col-form-label">IABL Bank</label>
                 <div class="input-group input-group-sm">
-                    <select class="form-select">
-                        <option value=""></option>
+                    <select class="form-select searchAbleSelectMulti" asp-items=" ViewBag.bankList as SelectList" asp-for="OrderDto.CompanyOwnBankId">
+                        <option value="" disabled selected hidden>Select Bank</option>
                     </select>
                     <button type="button" class="btn btn-light border">
                         <i class="fa fa-plus" style="color: #8d8d8d;"></i>
@@ -245,125 +212,81 @@
                 </div>
             </div>
 
-            <div class="form-row">
+            <!-- Branch -->
+            <div class="form-row mb-2">
                 <label class="col-form-label">Branch</label>
                 <div class="input-group input-group-sm">
-                    <select class="form-select">
-                        <option value=""></option>
+                    <select class="form-select searchAbleSelectMulti" asp-items="ViewBag.bankBranchList as SelectList" asp-for="OrderDto.CompanyOwnBranchId">
+                        <option value="" disabled selected hidden>Select Branch</option>
                     </select>
                 </div>
             </div>
+
 
             <!-- Row 10 -->
             <div class="form-row">
                 <label class="col-form-label">IABL Bank Branch Add.</label>
                 <div class="input-group input-group-sm">
-                    <textarea rows="1" class="form-control"></textarea>
+                    <textarea rows="1" class="form-control" id="CompanyOwnBankAddress"></textarea>
                 </div>
             </div>
 
             <div class="form-row">
                 <label class="col-form-label">SWIFT Code</label>
                 <div class="input-group input-group-sm">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" asp-for="OrderDto.CompanySwiftCode">
                 </div>
             </div>
 
-            @* <!-- Row 11 -->
+           
+            <!-- Row 11  -->
             <div class="form-row">
                 <label class="col-form-label">Buyer Contact Person</label>
                 <div class="input-group input-group-sm">
-                   <select class="form-select">
-                        <option value=""></option>
-                    </select> 
-                    <button type="button" class="btn btn-light border">
-                        <i class="fa fa-plus" style="color: #8d8d8d;"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <label class="col-form-label  pl-md-0 pl-lg-3">Merchandiser Contact Person</label>
-                <div class="input-group input-group-sm">
-                    <select class="form-select">
-                        <option value=""></option>
-                    </select>
-                    <button type="button" class="btn btn-light border">
-                        <i class="fa fa-plus" style="color: #8d8d8d;"></i>
-                    </button>
-                </div>
-            </div> *@
-            <!-- Row 11 - এই পুরো section টি replace করুন -->
-            <div class="form-row">
-                <label class="col-form-label">Buyer Contact Person</label>
-                <div class="input-group input-group-sm">
-                    <select id="buyerContactPerson" class="form-select" multiple="multiple">
-                        <option value="person1">John Doe</option>
-                        <option value="person2">Jane Smith</option>
-                        <option value="person3">Michael Brown</option>
-                        <option value="person4">Sarah Wilson</option>
-                        <option value="person5">David Lee</option>
+                    <select class="form-select searchAbleSelectMulti" multiple="multiple" asp-items=" ViewBag.buyerContactList as SelectList" asp-for="OrderDto.BuContatPerson">
+                        <option value="" disabled selected hidden>Select Contact Person</option>
                     </select>
                     <button type="button" class="btn btn-light border" id="addBuyerContact">
                         <i class="fa fa-plus" style="color: #8d8d8d;"></i>
                     </button>
                 </div>
             </div>
-
-            @* <div class="form-row">
-                <label class="col-form-label pl-md-0 pl-lg-3">Merchandiser Contact Person</label>
-                <div class="input-group input-group-sm">
-                    <select id="merchandiserContactPerson" class="form-select" multiple="multiple">
-                        <option value="merch1">Alex Johnson</option>
-                        <option value="merch2">Emily Davis</option>
-                        <option value="merch3">Chris Martin</option>
-                        <option value="merch4">Lisa Anderson</option>
-                    </select>
-                    <button type="button" class="btn btn-light border" id="addMerchandiserContact">
-                        <i class="fa fa-plus" style="color: #8d8d8d;"></i>
-                    </button>
+            
+                <div class="form-row mb-3">
+                <label class="col-form-label pl-2">Merchandiser Contact Person</label>
+                    <div class="input-group input-group-sm">
+                        <select id="merchandiserContactPerson" class="form-select" asp-for="OrderDto.MerchandiserContactId">
+                        <option value="" disabled selected hidden>Select Merchandisers</option>
+                        </select>
+                        <button type="button" class="btn btn-light border" id="addMerchandiserContact" title="Add Contact">
+                            <i class="fa fa-plus" style="color: #8d8d8d;"></i>
+                        </button>
+                    </div>
                 </div>
-            </div> *@
 
-            <!-- ✅ Merchandiser Contact Person -->
-            <div class="form-row mb-3">
-                <label class="col-form-label">Merchandiser Contact Person</label>
-                <div class="input-group input-group-sm">
-                    <select id="merchandiserContactPerson" class="form-select" multiple="multiple">
-                        @* <option value="merch1">Alex Johnson</option>
-                        <option value="merch2">Emily Davis</option>
-                        <option value="merch3">Chris Martin</option>
-                        <option value="merch4">Lisa Anderson</option> *@
-                    </select>
-                    <button type="button" class="btn btn-light border" id="addMerchandiserContact">
-                        <i class="fa fa-plus" style="color: #8d8d8d;"></i>
-                    </button>
+            <div id="employeeContainer" class="border rounded border-dark p-2" style="display:none;">
+                <table id="employeeTable" class="table table-striped table-bordered align-middle" style="width:100%;">
+                    <thead style="background-color: #f8f9fa; color: #000;">
+                            <tr>
+                                <th style="width: 50px;"><input type="checkbox" id="selectAll"></th>
+                                <th>Employee Name</th>
+                                <th>Designation</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
-            </div>
+       
 
-            <!-- ✅ Employee Table (Initially Hidden) -->
-            <div id="employeeContainer">
-                <h3 class="mb-3 text-center">Employee List</h3>
-                <table id="employeeTable" class="table table-striped table-bordered align-middle">
-                    <thead class="table-dark">
-                        <tr>
-                            <th><input type="checkbox" id="selectAll"></th>
-                            <th>Employee Name</th>
-                            <th>Designation</th>
-                            <th>Phone</th>
-                            <th>Email</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
 
             <!-- Full width rows -->
             <div class="full-width">
                 <div class="form-row">
                     <label class="col-form-label">Buyer Declaration/Disclaimer</label>
                     <div class="input-group input-group-sm">
-                        <textarea rows="1" class="form-control"></textarea>
+                        <textarea rows="1" class="form-control" asp-for="OrderDto.BuyerDeclaration"></textarea>
                     </div>
                 </div>
             </div>
@@ -372,7 +295,7 @@
                 <div class="form-row">
                     <label class="col-form-label">Inspection Info</label>
                     <div class="input-group input-group-sm">
-                        <textarea rows="1" class="form-control"></textarea>
+                        <textarea rows="1" class="form-control" asp-for="OrderDto.InspectionInfo"></textarea>
                     </div>
                 </div>
             </div>
@@ -381,7 +304,7 @@
                 <div class="form-row">
                     <label class="col-form-label">Remarks</label>
                     <div class="input-group input-group-sm">
-                        <textarea rows="1" class="form-control"></textarea>
+                        <textarea rows="1" class="form-control" asp-for="OrderDto.Remarks"></textarea>
                     </div>
                 </div>
             </div>
@@ -395,19 +318,3 @@
 </div>
 
 
-
-@* <div class="container">
-    <h3 class="mb-3 text-center">Employee List</h3>
-    <table id="employeeTable" class="table table-striped table-bordered align-middle">
-        <thead class="table-dark">
-            <tr>
-                <th><input type="checkbox" id="selectAll"></th>
-                <th>Employee Name</th>
-                <th>Designation</th>
-                <th>Phone</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</div> *@
