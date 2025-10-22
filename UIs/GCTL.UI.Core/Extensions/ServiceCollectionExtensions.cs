@@ -104,6 +104,7 @@ using GCTL.Service.Religions;
 
 using GCTL.Service.Reports;
 using GCTL.Service.RMG_Prod_Def_UnitType;
+using GCTL.Service.RMGProdOrderInformationEntry;
 using GCTL.Service.RosterScheduleApproval;
 using GCTL.Service.RosterScheduleEntry;
 using GCTL.Service.RosterScheduleReport;
@@ -237,6 +238,7 @@ namespace GCTL.UI.Core.Extensions
 
             services.AddScoped<ITaxChallanEntryService, TaxChallanEntryServices>();
             services.AddScoped<ISALES_Def_Inv_MainItemGroup, SALES_Def_Inv_MainItemGroup>();
+            services.AddScoped<IRMGProdOrderInformationEntryService, RMGProdOrderInformationEntryService>();
 
 
 

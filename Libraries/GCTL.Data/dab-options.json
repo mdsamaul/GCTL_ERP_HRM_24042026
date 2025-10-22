@@ -1,18 +1,10 @@
 ﻿{
-   "CodeGenerationMode": 2,
-   "ContextClassName": "GCTL_ERP_DB_DatapathContext",
-   "ContextNamespace": null,
-   "FilterSchemas": false,
-   "IncludeConnectionString": false,
-   "ModelNamespace": null,
-   "OutputContextPath": null,
-   "OutputPath": "Models",
-   "PreserveCasingWithRegex": true,
-   "ProjectRootNamespace": "GCTL.Data",
-   "Schemas": null,
-   "SelectedHandlebarsLanguage": 0,
-   "SelectedToBeGenerated": 0,
-   "T4TemplatePath": null,
+   "ConnectionStringName": "dab-connection-string",
+   "Dacpac": null,
+   "DatabaseType": 3,
+   "MergeDacpacs": false,
+   "Optional": false,
+   "ProjectPath": "C:\\Users\\ThisUsers\\Downloads\\GCTL_ERP_HRM_24042026\\Libraries\\GCTL.Data",
    "Tables": [
       {
          "Name": "[dbo].[Acc_CashFlowType]",
@@ -711,14 +703,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Inv_Def_DeliveryMethod]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Inv_Def_FabricType]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[Inv_Def_Factory]",
          "ObjectType": 0
       },
@@ -740,10 +724,6 @@
       },
       {
          "Name": "[dbo].[Inv_Def_PackageType]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Inv_Def_PortInfo]",
          "ObjectType": 0
       },
       {
@@ -907,18 +887,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[RMG_Prod_OrderDetails]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[RMG_Prod_Temp_ColorSizeBreakup]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[RMG_Prod_Temp_List_ColorSizeBreakup]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[RMG_PurchaseOrderReceive]",
          "ObjectType": 0
       },
@@ -1032,10 +1000,6 @@
       },
       {
          "Name": "[dbo].[TB_Def_VendorInformation]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[tbl_DeliveryMethod]",
          "ObjectType": 0
       },
       {
@@ -1549,50 +1513,6 @@
       {
          "Name": "[dbo].[WorkingExperienceReportSP]",
          "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[fnNumberToWords]",
-         "ObjectType": 2
-      },
-      {
-         "Name": "[dbo].[SplitString]",
-         "ObjectType": 2
-      },
-      {
-         "Name": "[dbo].[SplitStrings]",
-         "ObjectType": 2
-      },
-      {
-         "Name": "[dbo].[STRING_AGG]",
-         "ObjectType": 2
-      },
-      {
-         "Name": "[dbo].[STRING_SPLIT]",
-         "ObjectType": 2
       }
-   ],
-   "UiHint": null,
-   "UncountableWords": null,
-   "UseAsyncStoredProcedureCalls": true,
-   "UseBoolPropertiesWithoutDefaultSql": false,
-   "UseDatabaseNames": false,
-   "UseDateOnlyTimeOnly": true,
-   "UseDbContextSplitting": false,
-   "UseDecimalDataAnnotationForSprocResult": true,
-   "UseFluentApiOnly": true,
-   "UseHandleBars": false,
-   "UseHierarchyId": false,
-   "UseInflector": false,
-   "UseLegacyPluralizer": false,
-   "UseManyToManyEntity": false,
-   "UseNoDefaultConstructor": false,
-   "UseNoNavigations": false,
-   "UseNoObjectFilter": false,
-   "UseNodaTime": false,
-   "UseNullableReferences": false,
-   "UsePrefixNavigationNaming": false,
-   "UseSchemaFolders": false,
-   "UseSchemaNamespaces": false,
-   "UseSpatial": false,
-   "UseT4": false
+   ]
 }
