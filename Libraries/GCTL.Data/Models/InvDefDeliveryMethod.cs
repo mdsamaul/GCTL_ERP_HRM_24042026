@@ -7,7 +7,7 @@ namespace GCTL.Data.Models
 {
     public partial class InvDefDeliveryMethod
     {
-        public decimal AutoId { get; set; }
+        public decimal Tc { get; set; }
         public string DeliveryMethodId { get; set; }
         public string DeliveryMethodName { get; set; }
         public DateTime? EntryDate { get; set; }

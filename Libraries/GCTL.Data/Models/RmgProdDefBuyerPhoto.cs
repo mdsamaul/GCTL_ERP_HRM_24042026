@@ -7,7 +7,7 @@ namespace GCTL.Data.Models
 {
     public partial class RmgProdDefBuyerPhoto
     {
-        public decimal AutoId { get; set; }
+        public decimal Tc { get; set; }
         public string BuyerId { get; set; }
         public byte[] Photo { get; set; }
         public string ImgType { get; set; }

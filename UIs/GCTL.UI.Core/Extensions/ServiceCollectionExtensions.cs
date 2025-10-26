@@ -2,22 +2,34 @@
 using GCTL.Core.Data;
 using GCTL.Data;
 using GCTL.Data.Models;
+using GCTL.Service.AccFinancialYears;
 using GCTL.Service.AdmissionTypes;
 using GCTL.Service.AdvanceLoanAdjustment;
 using GCTL.Service.AdvanceLoanAdjustmentReport;
+using GCTL.Service.BankBranchInformations;
+using GCTL.Service.BankInformations;
 using GCTL.Service.BloodGroups;
 //using GCTL.Service.HrmDefBankAndNomineeInfos;
 using GCTL.Service.Branches;
 //using GCTL.Service.EmployeeOfficialInfo;
 using GCTL.Service.BranchesTypeInfo;
+using GCTL.Service.BuyerBrandEntry;
+using GCTL.Service.BuyerDepartmentEntry;
+using GCTL.Service.BuyerDLAddressEntry;
+using GCTL.Service.BuyerInfos;
+using GCTL.Service.ColorInformation;
 using GCTL.Service.Common;
 using GCTL.Service.Companies;
+using GCTL.Service.CompanyInfo;
 //using GCTL.Service.HrmEmployeeFamilys;
 //using GCTL.Service.HrmEmployeeQualifications;
 //using GCTL.Service.HrmEmployeeDocumentInfos;
 using GCTL.Service.CompanyInfos;
+using GCTL.Service.ContactPersonInfo;
 using GCTL.Service.Core_Countrys;
+using GCTL.Service.CoreBankAccountInformations;
 using GCTL.Service.CoreBranches;
+using GCTL.Service.Country;
 using GCTL.Service.Currencies;
 using GCTL.Service.DeliveryPeriods;
 using GCTL.Service.Departments;
@@ -34,9 +46,12 @@ using GCTL.Service.EmployeeLoanInformationReport;
 using GCTL.Service.Employees;
 using GCTL.Service.EmployeeWeekendDeclaration;
 using GCTL.Service.EmployeeWeekendDeclarationReport;
+using GCTL.Service.ExcessTDSForLastIncomeYear;
 //using GCTL.Service.EmployeeReferenceInfos;
 using GCTL.Service.ExperianceInfos;
+using GCTL.Service.FebricTest;
 using GCTL.Service.FileHandle;
+using GCTL.Service.GarmentsTest;
 using GCTL.Service.Grades;
 using GCTL.Service.HolidayTypes;
 using GCTL.Service.HRM_Brand;
@@ -77,6 +92,7 @@ using GCTL.Service.INV_Catagory;
 using GCTL.Service.InvDefSupplierTypes;
 using GCTL.Service.ItemMasterInformation;
 using GCTL.Service.ItemModelService;
+using GCTL.Service.ItemType;
 using GCTL.Service.JobTitles;
 using GCTL.Service.LeaveTypes;
 using GCTL.Service.Loggers;
@@ -84,7 +100,11 @@ using GCTL.Service.LogsLoggers;
 using GCTL.Service.ManualEarnLeaveEntry;
 using GCTL.Service.MonthlyTransportExpenseDetailsReportService;
 using GCTL.Service.Nationalitys;
+using GCTL.Service.PackageType;
+using GCTL.Service.PackagingInformation;
 using GCTL.Service.PaymentModes;
+using GCTL.Service.PaymentTerms;
+using GCTL.Service.PaymentType;
 using GCTL.Service.People;
 using GCTL.Service.PerformancesType;
 using GCTL.Service.Periods;
@@ -113,6 +133,7 @@ using GCTL.Service.SalesDefTransportExpenseHeadService;
 using GCTL.Service.SalesDefVehicleService;
 using GCTL.Service.SalesDefVehicleTypeService;
 using GCTL.Service.SalesSupplierService;
+using GCTL.Service.SeasonInformation;
 using GCTL.Service.SeparationInfos;
 //using GCTL.Service.EmployeeReferenceInformationReport;
 //using GCTL.Service.WorkingExperienceReport;
@@ -120,7 +141,13 @@ using GCTL.Service.SeparationInfos;
 //using GCTL.Service.Reposition;
 using GCTL.Service.SeparationTypes;
 using GCTL.Service.Shifts;
+using GCTL.Service.SizeInformation;
 using GCTL.Service.Specialities;
+using GCTL.Service.StyleInformation;
+using GCTL.Service.SupplierCategory;
+using GCTL.Service.SupplierInformation;
+using GCTL.Service.SupplierOrigin;
+using GCTL.Service.SupplierType;
 using GCTL.Service.Surnames;
 using GCTL.Service.TaxChallanEntryService;
 using GCTL.Service.TransportExpenseStatementReportService;
@@ -242,7 +269,43 @@ namespace GCTL.UI.Core.Extensions
 
 
 
+            services.AddScoped<IBuyerInfoService, BuyerInfoService>();
+            services.AddScoped<IBuyerBrandService, BuyerBrandService>();
+            services.AddScoped<IBuyerDepEntryService, BuyerDepEntryService>();
+            services.AddScoped<IBuyerDLAddressService, BuyerDLAddressService>();
 
+
+
+
+
+            //hannan
+
+            services.AddScoped<IAccFinancialYearService, AccFinancialYearService>();
+            services.AddScoped<IStyleInformationService, StyleInformationService>();
+            services.AddScoped<IColorInformationService, ColorInformationService>();
+            services.AddScoped<IItemTypeService, ItemTypeService>();
+            services.AddScoped<IPaymentTypeService, PaymentTypeService>();
+            services.AddScoped<IPaymentTermsService, PaymentTermsService>();
+            services.AddScoped<ISizeInformationService, SizeInformationService>();
+            services.AddScoped<ISeasonInformationService, SeasonInformationService>();
+            services.AddScoped<IPackageTypeService, PackageTypeService>();
+            services.AddScoped<ISupplierCategoryService, SupplierCategoryService>();
+            services.AddScoped<ISupplierOriginService, SupplierOriginService>();
+            services.AddScoped<ISupplierTypeService, SupplierTypeService>();
+            services.AddScoped<ISupplierInformationService, SupplierInformationService>();
+            services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<ICompanyInfoSupService, CompanyInfoSupService>();
+            services.AddScoped<IContactPersonInfoService, ContactPersonInfoService>();
+            services.AddScoped<IPackagingInformationService, PackagingInformationService>();
+            services.AddScoped<IExcessTDSForLastIncomeYearService, ExcessTDSForLastIncomeYearService>();
+
+            services.AddScoped<IHrmEmployee2Service, HrmEmployee2Service>();
+            services.AddScoped<IBankInformationsService, BankInformationsService>();
+            services.AddScoped<ISalesDefBankBranchInfosService, SalesDefBankBranchInfosService>();
+            services.AddScoped<ICoreBankAccountInformationService, CoreBankAccountInformationService>();
+
+            services.AddScoped<IFebricTestService, FebricTestService>();
+            services.AddScoped<IGarmentsTestService, GarmentsTestService>();
 
 
 

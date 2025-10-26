@@ -212,7 +212,7 @@
                                 }
                             } else
                             {
-                                toastr.warning('No branches found for the selected bank.');
+                                /*toastr.warning('No branches found for the selected bank.');*/
                             }
                         },
                         error: function ()
@@ -401,20 +401,20 @@
         // Validation function
         function validation()
         {
-            
-            bankName = $("#BankId").val();
-            branchName = $("BranchId").val();
+
+            var bankName = $("#BankId").val();
+           var branchName = $("#BranchId").val();
             var acNo = $('#AccountNo').val();
             var acName = $('#AccountName').val();
 
             if (!bankName) {
-                toastr.warning('Enter Bank Name.');
+                toastr.warning('Select Bank Name.');
                  $('#BankId').select2('open')
                 return false;
             }
 
             if (!branchName) {
-                toastr.warning('Enter Branch Name.');
+                toastr.warning('Select Branch Name.');
               
                  $('#BranchId').select2('open')
                 return false;

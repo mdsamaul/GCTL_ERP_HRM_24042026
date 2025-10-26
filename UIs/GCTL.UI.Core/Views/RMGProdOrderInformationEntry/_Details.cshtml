@@ -32,7 +32,15 @@
                         <select class="form-select form-select-sm searchAbleSelectMulti" asp-for="OrderDetailsDto.ProductId" asp-items="ViewBag.itemRepoList as SelectList">
                             <option value="" disabled selected hidden>Select Item</option>
                         </select>
-                        <button type="button" class="btn btn-light border">
+                      @*   <button type="button" class="btn btn-light border">
+                            <i class="fa fa-plus" style="color: #8d8d8d;"></i>
+                        </button> *@  
+                        <button type="button"
+                                               class="btn btn-light border js-quick-add"
+                                               data-url="@Url.Action("Index", "SALES_Def_Inv_MainItemGroup")"
+                                               data-target="#OrderDetailsDto_ProductId"
+                                               data-reload-url="@Url.Action("GetBuyerCompany", "Cascading")"
+                                               data-title="Unit Type">
                             <i class="fa fa-plus" style="color: #8d8d8d;"></i>
                         </button>
                     </div>
@@ -125,7 +133,15 @@
                             <select class="form-select form-select-sm searchAbleSelectMulti" asp-for="OrderDetailsDto.CurrencyId" asp-items="ViewBag.currentcyList as SelectList">
                                 <option value="" disabled hidden selected>Select Currency</option>
                             </select>
-                            <button type="button" class="btn btn-light border">
+                            @* <button type="button" class="btn btn-light border">
+                                <i class="fa fa-plus" style="color: #8d8d8d;"></i>
+                            </button> *@
+                            <button type="button"
+                                    class="btn btn-light border js-quick-add"
+                                    data-url="@Url.Action("Index", "Currencies")"
+                                    data-target="#OrderDetailsDto_CurrencyId"
+                                    data-reload-url="@Url.Action("GetBuyerCompany", "Cascading")"
+                                    data-title="Currency">
                                 <i class="fa fa-plus" style="color: #8d8d8d;"></i>
                             </button>
                         </div>
@@ -151,7 +167,12 @@
                         <select class="form-select form-select-sm searchAbleSelectMulti" asp-for="OrderDetailsDto.PaymentTermsId" asp-items="ViewBag.paymentTermsRepoList as SelectList">
                             <option value="" disabled selected hidden>Select Payment Trem</option>
                         </select>
-                        <button type="button" class="btn btn-light border">
+                        <button type="button"
+                                class="btn btn-light border js-quick-add"
+                                data-url="@Url.Action("Index", "PaymentTerms")"
+                                data-target="#OrderDetailsDto_PaymentTermsId"
+                                data-reload-url="@Url.Action("GetBuyerCompany", "Cascading")"
+                                data-title="Payment Term">
                             <i class="fa fa-plus" style="color: #8d8d8d;"></i>
                         </button>
                     </div>
@@ -229,7 +250,15 @@
                             <select class="form-select form-control-sm searchAbleSelectMulti" asp-for="OrderDetailsDto.GarmentsTesting" asp-items="ViewBag.garmentsTesingRepoList as SelectList">
                                 <option value="" disabled hidden selected>Select Garments Tesing</option>
                             </select>
-                            <button type="button" class="btn btn-light border">
+                            @* <button type="button" class="btn btn-light border">
+                                <i class="fa fa-plus" style="color: #8d8d8d;"></i>
+                            </button> *@
+                            <button type="button"
+                                    class="btn btn-light border js-quick-add"
+                                    data-url="@Url.Action("Index", "GarmentsTest")"
+                                    data-target="#OrderDetailsDto_GarmentsTesting"
+                                    data-reload-url="@Url.Action("GetBuyerCompany", "Cascading")"
+                                    data-title="Garments Testing">
                                 <i class="fa fa-plus" style="color: #8d8d8d;"></i>
                             </button>
                         </div>
@@ -287,7 +316,16 @@
                             <select class="form-select form-select-sm searchAbleSelectMulti" asp-for="OrderDetailsDto.FebricTesting" asp-items="ViewBag.fabricTypeRepoList as SelectList">
                                 <option value="" selected disabled hidden>Select Febric</option>                               
                             </select>
-                            <button type="button" class="btn btn-light border">
+                            @* <button type="button" class="btn btn-light border">
+                                <i class="fa fa-plus" style="color: #8d8d8d;"></i>
+                            </button> *@
+
+                            <button type="button"
+                                    class="btn btn-light border js-quick-add"
+                                    data-url="@Url.Action("Index", "FebricTest")"
+                                    data-target="#OrderDetailsDto_FebricTesting"
+                                    data-reload-url="@Url.Action("GetBuyerCompany", "Cascading")"
+                                    data-title="Febric Testing">
                                 <i class="fa fa-plus" style="color: #8d8d8d;"></i>
                             </button>
                         </div>
@@ -423,7 +461,15 @@
                             <select class="form-select  searchAbleSelectMulti" asp-for="OrderDetailsDto.PortOfLoading" asp-items="ViewBag.portRepoList as SelectList">
                                 <option value="" disabled hidden selected></option>
                             </select>
-                            <button type="button" class="btn btn-light border">
+                            @* <button type="button" class="btn btn-light border">
+                                <i class="fa fa-plus" style="color: #8d8d8d;"></i>
+                            </button> *@
+                            <button type="button"
+                                    class="btn btn-light border js-quick-add"
+                                    data-url="@Url.Action("Index", "PaymentTerms")"
+                                    data-target="#OrderDetailsDto_PortOfLoading"
+                                    data-reload-url="@Url.Action("GetBuyerCompany", "Cascading")"
+                                    data-title="Port Of Loading">
                                 <i class="fa fa-plus" style="color: #8d8d8d;"></i>
                             </button>
                         </div>
@@ -435,7 +481,12 @@
                             <select class="form-select searchAbleSelectMulti" asp-for="OrderDetailsDto.PortOfDischarge" asp-items="ViewBag.portRepoList as SelectList">
                                 <option value="" disabled hidden selected></option>
                             </select>
-                            <button type="button" class="btn btn-light border">
+                            <button type="button"
+                                    class="btn btn-light border js-quick-add"
+                                    data-url="@Url.Action("Index", "PaymentTerms")"
+                                    data-target="#OrderDetailsDto_PortOfDischarge"
+                                    data-reload-url="@Url.Action("GetBuyerCompany", "Cascading")"
+                                    data-title="Port Of Loading">
                                 <i class="fa fa-plus" style="color: #8d8d8d;"></i>
                             </button>
                         </div>

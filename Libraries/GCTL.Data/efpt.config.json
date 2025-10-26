@@ -643,6 +643,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[HRM_PAY_ExcessTDSForLastIncomeYearEntry]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[HRM_PAY_LoanTypeEntry]",
          "ObjectType": 0
       },
@@ -711,6 +715,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Inv_Def_CompanyFor]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Inv_Def_CompanyInfo]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Inv_Def_DeliveryMethod]",
          "ObjectType": 0
       },
@@ -720,6 +732,10 @@
       },
       {
          "Name": "[dbo].[Inv_Def_Factory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Inv_Def_FebricTesting]",
          "ObjectType": 0
       },
       {
@@ -744,6 +760,10 @@
       },
       {
          "Name": "[dbo].[Inv_Def_PortInfo]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Inv_Def_SalesPerson]",
          "ObjectType": 0
       },
       {

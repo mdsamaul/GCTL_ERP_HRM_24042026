@@ -3,7 +3,9 @@
 using GCTL.Service.AdmissionTypes;
 using GCTL.Service.BloodGroups;
 using GCTL.Service.BranchesTypeInfo;
+using GCTL.Service.BuyerDepartmentEntry;
 using GCTL.Service.Companies;
+using GCTL.Service.CompanyInfo;
 using GCTL.Service.Departments;
 using GCTL.Service.Designations;
 //using GCTL.Service.EmployeeOfficialInfo;
@@ -33,6 +35,7 @@ using GCTL.Service.Religions;
 using GCTL.Service.SALES_Def_Inv_MainItemGroupService;
 using GCTL.Service.Shifts;
 using GCTL.Service.Specialities;
+using GCTL.Service.StyleInformation;
 using GCTL.Service.Units;
 using Microsoft.AspNetCore.Mvc;
 
@@ -81,7 +84,10 @@ namespace GCTL.UI.Core.Controllers
         private readonly IHrmDefSeparationTypeService hrmDefSeparationTypeService;
         private readonly IJobTitleService _jobTitleService;
         private readonly ISALES_Def_Inv_MainItemGroup itemTypeInfoService;
-
+        private readonly IStyleInformationService styleInformationService;
+        private readonly ICompanyInfoSupService companyInfoSupService;
+        //Nazmul 
+        private readonly IBuyerDepEntryService buyerDepEntryService;
 
 
         public CascadingController(IDoctorTypeService doctorTypeService,
@@ -120,7 +126,10 @@ namespace GCTL.UI.Core.Controllers
              IHrmDefSeparationTypeService hrmDefSeparationTypeService
 ,
              IJobTitleService jobTitleService,
-            ISALES_Def_Inv_MainItemGroup _itemTypeInfoService
+             IBuyerDepEntryService buyerDepEntryService,
+            ICompanyInfoSupService companyInfoSupService,
+            ISALES_Def_Inv_MainItemGroup _itemTypeInfoService,
+            IStyleInformationService styleInformationService
             )
         {
             this.doctorTypeService = doctorTypeService;
@@ -158,6 +167,9 @@ namespace GCTL.UI.Core.Controllers
             this.hrmDefSeparationTypeService = hrmDefSeparationTypeService;
             _jobTitleService = jobTitleService;
             itemTypeInfoService = _itemTypeInfoService;
+            this.styleInformationService = styleInformationService;
+            this.buyerDepEntryService = buyerDepEntryService;
+            this.companyInfoSupService = companyInfoSupService;
         }
 
         public async Task<IActionResult> GetGradeDD()
@@ -371,6 +383,20 @@ namespace GCTL.UI.Core.Controllers
         public async Task<IActionResult> GetItemType()
         {
             return Json(await itemTypeInfoService.SelectionGetItemTypeTitleAsync());
+        }
+
+        public async Task<IActionResult> GetBuyerDepartment()
+        {
+            return Json(await buyerDepEntryService.SelectionBuyerDepAsync());
+        }
+
+        public async Task<IActionResult> GetBuyerCompany()
+        {
+            return Json(await companyInfoSupService.SelectionBuyerCompanyInfoAsync());
+        }
+        public async Task<IActionResult> GetStyle()
+        {
+            return Json(await styleInformationService.SelectionStyleInformationAsync());
         }
     }
 }

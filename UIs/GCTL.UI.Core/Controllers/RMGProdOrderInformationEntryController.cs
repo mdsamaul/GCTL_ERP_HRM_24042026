@@ -27,7 +27,7 @@ namespace GCTL.UI.Core.Controllers
         private readonly IRepository<InvDefItem> itemRepo;
         private readonly IRepository<SalesDefPaymentTerms> paymentTermsRepo;
         private readonly IRepository<InvDefGarmentsTesing> garmentsTesingRepo;
-        private readonly IRepository<InvDefFabricType> fabricTypeRepo;
+        private readonly IRepository<InvDefFebricTesting> fabricTypeRepo;
         private readonly IRepository<RmgDefSupplier> supplierRepo;
         private readonly IRepository<TblDeliveryMethod> deliveryRepo;
         private readonly IRepository<InvDefPortInfo> portRepo;
@@ -55,7 +55,7 @@ namespace GCTL.UI.Core.Controllers
             IRepository<InvDefItem> itemRepo,
             IRepository<SalesDefPaymentTerms> paymentTermsRepo,
             IRepository<InvDefGarmentsTesing> garmentsTesingRepo,
-            IRepository<InvDefFabricType> fabricTypeRepo,
+            IRepository<InvDefFebricTesting> fabricTypeRepo,
             IRepository<RmgDefSupplier> supplierRepo,
             IRepository<TblDeliveryMethod> deliveryRepo,
             IRepository<InvDefPortInfo> portRepo,
@@ -110,7 +110,7 @@ namespace GCTL.UI.Core.Controllers
             ViewBag.itemRepoList = new SelectList(itemRepo.All().Select(x => new { id = x.ItemId, name = x.ItemName }), "id", "name");
             ViewBag.paymentTermsRepoList = new SelectList(paymentTermsRepo.All().Select(x => new { id = x.PaymentTermsId, name = x.PaymentTermsName }), "id", "name");
             ViewBag.garmentsTesingRepoList = new SelectList(garmentsTesingRepo.All().Select(x => new { id = x.GarmentsTestD, name = x.GarmentsTestName }), "id", "name");
-            ViewBag.fabricTypeRepoList = new SelectList(fabricTypeRepo.All().Select(x => new { id = x.FabricTypeId, name = x.FabricItemName }), "id", "name");
+            ViewBag.fabricTypeRepoList = new SelectList(fabricTypeRepo.All().Select(x => new { id = x.FebricTestD, name = x.FebricTestName }), "id", "name");
             ViewBag.supplierRepoList = new SelectList(supplierRepo.All().Select(x => new { id = x.SupplierId, name = x.SupplierName }), "id", "name");
             ViewBag.deliveryRepoList = new SelectList(deliveryRepo.All().Select(x => new { id = x.DeliveryMethodId, name = x.DeliveryMethodName }), "id", "name");
             ViewBag.portRepoList = new SelectList(portRepo.All().Select(x => new { id = x.PortId, name = x.PortName }), "id", "name");

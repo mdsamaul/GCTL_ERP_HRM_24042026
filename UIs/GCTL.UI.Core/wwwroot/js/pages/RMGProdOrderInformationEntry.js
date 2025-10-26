@@ -2,25 +2,9 @@
     $.RMGProdOrderInformationEntry = function (options) {
         // Default options
         var settings = $.extend({
-            baseUrl: "/",
-            MainSetup_MainItemID: "#MainSetup_MainItemID",
-
-
-            ItemSaveBtn: ".js-MainI-tem-Group-save",
-            ItemDeleteBtn: "#js-MainI-tem-Group-delete-confirm",
-            ClearBtn: "#js-MainI-tem-Group-clear",
+            baseUrl: "/",                   
 
         }, options);
-
-
-        var gridUrl = settings.baseUrl + "/grid";
-        var saveEditUrl = settings.baseUrl + "/AdddEditSetup";
-
-
-        var GetAutoAllIdUrl = settings.baseUrl + "/GetAutoAllId";
-        var DeleteItemUrl = settings.baseUrl + "/DeleteItemUrl";
-
-        var ChangeAbleDropdownUrl = settings.baseUrl + "/ChangeAbleDropdown";
 
         //$('.searchable-select').select2({
         //    placeholder: 'Select an option',
@@ -33,7 +17,6 @@
         function stHeader() {
             window.addEventListener('scroll', function () {
                 const header = document.getElementById('stickyHeader');
-
                 if (window.scrollY > 750) {
                     header.classList.add('hide-header');
                     header.classList.remove('sticky-top');
@@ -133,8 +116,10 @@
             });
         });
 
-
         $(document).ready(function () {
+            boostrapMultiselect();
+        });
+        function boostrapMultiselect() {
             // Initialize all multiselect dropdowns
             $('.searchAbleSelectMulti').multiselect({
                 includeSelectAllOption: true,
@@ -150,44 +135,21 @@
                 allSelectedText: 'All selected',
                 buttonClass: 'btn btn-sm form-select grid-input'
             });
-
-
-
-
-            //// Initialize Merchandiser Contact Person Multiselect
-            //$('#merchandiserContactPerson').multiselect({
-            //    includeSelectAllOption: true,
-            //    selectAllText: 'Select All',
-            //    enableFiltering: true,
-            //    enableCaseInsensitiveFiltering: true,
-            //    filterPlaceholder: 'Search merchandisers...',
-            //    buttonWidth: '100%',
-            //    maxHeight: 250,
-            //    numberDisplayed: 2,
-            //    nonSelectedText: 'Select merchandisers',
-            //    nSelectedText: 'selected',
-            //    allSelectedText: 'All selected',
-            //    buttonClass: 'btn btn-sm form-select'
-            //});           
-        });
+        };
 
 
         $(document).ready(function () {
             stHeader()
-
             const target = document.getElementById('merchandiserContactPerson');
             if (!target) return;
-
             // Remove multiple immediately
             $(target).removeAttr('multiple');
-
             // Watch for any DOM changes
             const observer = new MutationObserver(() => {
                 if ($(target).attr('multiple')) {
                     $(target).removeAttr('multiple');
                 }
             });
-
             observer.observe(target, { attributes: true, attributeFilter: ['multiple'] });
         });
 
@@ -228,9 +190,8 @@
         //        type: "GET",
         //        success: function (res) {
         //            if (res.isSuccess) {
-        //                console.log("✅ Employee List:", res.data);
-        //                // চাইলে টেবিলেও দেখাতে পারো
-                       
+        //                console.log("✅ Employee List:", res.data);           
+
         //            } else {
         //                console.error("❌ Error:", res.message);
         //            }
@@ -241,11 +202,7 @@
         //    });
         //}
 
-
-     
-
         let selectedIds = [];
-
         $(document).ready(function () {
 
             let employees = [];
@@ -267,21 +224,6 @@
             });
             let tableInitialized = false;
             let isOpen = false;
-
-            //const employees = [
-            //    { id: "1", name: "Alex Johnson", designation: "Manager", phone: "01711111111", email: "alex@mail.com" },
-            //    { id: "2", name: "Emily Davis", designation: "Officer", phone: "01722222222", email: "emily@mail.com" },
-            //    { id: "3", name: "Chris Martin", designation: "Executive", phone: "01733333333", email: "chris@mail.com" },
-            //    { id: "4", name: "Lisa Anderson", designation: "Coordinator", phone: "01744444444", email: "lisa@mail.com" },
-            //    { id: "5", name: "Alex3 Johnson", designation: "Manager", phone: "01711111111", email: "alex@mail.com" },
-            //    { id: "6", name: "Emily3 Davis", designation: "Officer", phone: "01722222222", email: "emily@mail.com" },
-            //    { id: "7", name: "Chris3 Martin", designation: "Executive", phone: "01733333333", email: "chris@mail.com" },
-            //    { id: "8", name: "Lisa3 Anderson", designation: "Coordinator", phone: "01744444444", email: "lisa@mail.com" },
-            //    { id: "9", name: "Alex2 Johnson", designation: "Manager", phone: "01711111111", email: "alex@mail.com" },
-            //    { id: "10", name: "Emily2 Davis", designation: "Officer", phone: "01722222222", email: "emily@mail.com" },
-            //    { id: "11", name: "Chris2 Martin", designation: "Executive", phone: "01733333333", email: "chris@mail.com" },
-            //    { id: "12", name: "Lisa2 Anderson", designation: "Coordinator", phone: "01744444444", email: "lisa@mail.com" }
-            //];
 
             // ✅ Initialize DataTable
             function initDataTable() {
@@ -351,7 +293,7 @@
 
             // ✅ Handle individual checkbox changes
             $(document).on('change', '.row-check', function () {
-                const empId = String($(this).val()); // always store as string
+                const empId = String($(this).val());
                 if ($(this).is(':checked')) {
                     if (!selectedIds.includes(empId)) selectedIds.push(empId);
                 } else {
@@ -359,7 +301,6 @@
                 }
 
                 updateSelectedDisplay();
-                console.log("Selected IDs:", selectedIds);
             });
 
             // ✅ Handle Select All checkbox
@@ -368,7 +309,6 @@
                 $('.row-check').prop('checked', isChecked);
                 selectedIds = isChecked ? employees.map(emp => String(emp.id)) : [];
                 updateSelectedDisplay();
-                console.log("Selected IDs:", selectedIds);
             });
 
             // ✅ Update dropdown display text
@@ -391,27 +331,9 @@
                     select.find('option[data-placeholder]').text(displayText);
                 }
 
-                select.val(""); // keep placeholder selected
+                select.val("");
             }
         });
-
-
-
-        //$(document).ready(function () {
-
-        //    // ✅ Dropdown open হলে
-        //    $(document).on('focus', '#merchandiserContactPerson', function () {
-        //        console.log("on");
-        //    });
-
-        //    // ✅ Dropdown বন্ধ হলে
-        //    $(document).on('blur', '#merchandiserContactPerson', function () {
-        //        console.log("off");
-        //    });
-
-        //});
-
-
 
 
         //order
@@ -421,10 +343,8 @@
             autoEntryId();
             IntegraJOBNoAuto();
             populateMerchandiser([]);
-            // Helper: null-safe setter for clearing
             const clearVal = (selector) => $(selector).val('').trigger('change');
 
-            // 🧩 Basic Fields
             $('#OrderDto_TC').val(0);
             //clearVal('#OrderDto_OrderId');
             clearVal('#OrderDto_Date');
@@ -454,7 +374,7 @@
             clearVal('#CompanyOwnBankAddress');
             clearVal('#buyerBranchAddress');
 
-            // 🟣 Multiselects
+            //  Multiselects
             const multiSelectors = [
                 '#OrderDto_BuyerId',
                 '#OrderDto_SeasonId',
@@ -472,25 +392,18 @@
                 '#OrderDto_BuContatPerson'
             ];
 
-            multiSelectors.forEach(sel => $(sel).val([]).multiselect('rebuild'));
-
-            // ✅ Clear merchandiser DataTable selection
+            multiSelectors.forEach(sel => $(sel).val([]).multiselect('rebuild'));          
             selectedIds = [];
             if ($.fn.DataTable.isDataTable('#employeeTable')) {
                 $('#employeeTable').DataTable().rows().every(function () {
                     $(this.node()).find('.row-check').prop('checked', false);
                 });
             }
-            //updateSelectedDisplay(); // Reset dropdown display
-
-            // 🔹 Clear StylePOWise radios
+            //updateSelectedDisplay(); 
             $('#styleWise').prop('checked', true);
             $('#poWise').prop('checked', false);
             $('.styleWiseRow,').show();
             $('.masterPoWise').hide();
-
-            console.log("🧹 Order Info Cleared Successfully");
-
 
         }
 
@@ -503,7 +416,6 @@
                 }
             });
         }
-
         function IntegraJOBNoAuto() {
             $.ajax({
                 url: '/RMGProdOrderInformationEntry/IntegraJOBNoAuto',
@@ -517,14 +429,12 @@
         //change buyer 
         $(document).on('change', "#OrderDto_BuyerId", function () {
             var buyerId = $(this).val();
-            console.log(buyerId);
             $.ajax({
                 url: '/RMGProdOrderInformationEntry/BuyerBrand',
                 type: "POST",
                 contentType: 'application/json',
                 data: JSON.stringify(buyerId),
                 success: function (res) {
-                    console.log(res);
                     var $branchSelect = $("#OrderDto_BuyerBrand");
                     $branchSelect.empty();
                     if (res && res.length > 0) {
@@ -543,14 +453,12 @@
         //change buyer bank
         $(document).on('change', "#OrderDto_BuyerBankId", function () {
             var buyerBankId = $(this).val();
-            console.log(buyerBankId);
             $.ajax({
                 url: '/RMGProdOrderInformationEntry/BuyerBankBranch',
                 type: "POST",
                 contentType: 'application/json',
                 data: JSON.stringify(buyerBankId),
                 success: function (res) {
-                    console.log(res);
                     var $branchSelect = $("#OrderDto_BuyerBranchId");
                     $branchSelect.empty();
                     $("#buyerBranchAddress").val('');
@@ -571,14 +479,12 @@
         //change buyer bank
         $(document).on('change', "#OrderDto_BuyerBranchId", function () {
             var buyerBankBranchId = $(this).val();
-            console.log(buyerBankBranchId);
             $.ajax({
                 url: '/RMGProdOrderInformationEntry/BuyerBankBranchAddressSwiftCode',
                 type: "POST",
                 contentType: 'application/json',
                 data: JSON.stringify(buyerBankBranchId),
                 success: function (res) {
-                    console.log(res);
                     if (res != null) {
                         if (res.swiftCode != null) {
                             $("#OrderDto_BuyerSwiftCode").empty().val(res.swiftCode);
@@ -594,14 +500,12 @@
         //change buyer bank
         $(document).on('change', "#OrderDto_CompanyOwnBankId", function () {
             var buyerBankId = $(this).val();
-            console.log(buyerBankId);
             $.ajax({
                 url: '/RMGProdOrderInformationEntry/BuyerBankBranch',
                 type: "POST",
                 contentType: 'application/json',
                 data: JSON.stringify(buyerBankId),
                 success: function (res) {
-                    console.log(res);
                     var $branchSelect = $("#OrderDto_CompanyOwnBranchId");
                     $branchSelect.empty();
                     $("#CompanyOwnBankAddress").val("");
@@ -622,14 +526,12 @@
         //change buyer bank
         $(document).on('change', "#OrderDto_CompanyOwnBranchId", function () {
             var buyerBankBranchId = $(this).val();
-            console.log(buyerBankBranchId);
             $.ajax({
                 url: '/RMGProdOrderInformationEntry/BuyerBankBranchAddressSwiftCode',
                 type: "POST",
                 contentType: 'application/json',
                 data: JSON.stringify(buyerBankBranchId),
                 success: function (res) {
-                    console.log(res);
                     if (res != null) {
                         if (res.swiftCode != null) {
                             $("#OrderDto_CompanySwiftCode").empty().val(res.swiftCode);
@@ -708,7 +610,6 @@
                 StylePOWise: stylePOOption
             };
 
-            console.log("RMGProdOrder Data:", orderInfo);
             return orderInfo;
         }
 
@@ -842,26 +743,21 @@
                 const rowData = JSON.parse(rawData);
                 const jobNo = rowData.integraJOBNo;
 
-                console.log("✅ Clicked JobNo:", jobNo);
-                console.log("✅ Row Data:", rowData);
-
                 populateOrderInfoData(rowData);
                 GridOrderInfo(jobNo);
 
-            } catch (err) {
-                console.error("❌ JSON parse error:", err, rawData);
+            } catch (err) {               
             }
         });
         //todo qty
-      
+
         $(document).on('input', "#OrderDetailsDto_OrderQuantity", function () {
             const id = $("#OrderDetailsDto_IntegraJobNO").val();
             const qty = parseFloat($("#OrderDetailsDto_OrderQuantity").val()) || 0;
-            const prevQty = parseFloat($("#OrderDetailsDto_PreviousQuantity").val()) || 0; 
+            const prevQty = parseFloat($("#OrderDetailsDto_PreviousQuantity").val()) || 0;
             const unitPrice = parseFloat($("#OrderDetailsDto_UnitPrice").val()) || 0;
 
             if (!id) {
-                console.warn("⚠️ Integra Job ID missing!");
                 return;
             }
 
@@ -871,8 +767,6 @@
                 contentType: 'application/json',
                 data: JSON.stringify(id),
                 success: function (res) {
-                    console.log("✅ Server Response:", res);
-
                     const totalUsed = parseFloat(res.totalQtyList) || 0;
                     const totalLimit = parseFloat(res.totalQty) || 0;
 
@@ -902,7 +796,7 @@
                     }
                 },
                 error: function (xhr, status, err) {
-                    console.error("❌ AJAX Error:", err);
+                  
                 }
             });
         });
@@ -910,9 +804,9 @@
 
         $(document).on('input', "#OrderDetailsDto_UnitPrice", () => {
             var Qty = $("#OrderDetailsDto_OrderQuantity").val();
-            var up = $("#OrderDetailsDto_UnitPrice").val();          
+            var up = $("#OrderDetailsDto_UnitPrice").val();
             if (Qty && up) {
-                var ta = Qty * up;               
+                var ta = Qty * up;
                 $("#OrderDetailsDto_TotalAmount").empty().val(ta).prop('disabled', true);
             } else {
                 $("#OrderDetailsDto_TotalAmount").val(0).prop('disabled', true);
@@ -923,14 +817,12 @@
         // 🔹 Row Checkbox Change
         // =====================
         $('#orderInfoGrid').on('change', '.order-select', function () {
-            const id = $(this).data('id');
-            console.log(id);
+            const id = $(this).data('id');         
             if ($(this).is(':checked')) {
                 if (!selectedOrderIds.includes(id)) selectedOrderIds.push(id);
             } else {
                 selectedOrderIds = selectedOrderIds.filter(x => x !== id);
-            }
-            console.log("🟢 Selected Order IDs:", selectedOrderIds);
+            }           
         });
 
         // =====================
@@ -946,10 +838,8 @@
         // =====================
         function orderInfoDelete() {
 
-            console.log(selectedOrderIds);
-
             if (selectedOrderIds.length === 0) {
-               
+
                 return;
             }
 
@@ -967,7 +857,6 @@
                     }
                 },
                 error: function (err) {
-                    console.error("❌ Delete failed:", err);
                 }
             });
         }
@@ -1077,17 +966,14 @@
                 $('.masterPoWise').show();
             }
 
-            console.log("✅ Order Info Populated Successfully:", data);
         }
 
         $(document).on('change', '#OrderDetailsDto_CurrencyId', function () {
             var id = $(this).val();
-            console.log(id);
             $("#totalAmountCurrency").val(id).multiselect('rebuild').multiselect('disable');
         })
         $(document).on('change', '#totalAmountCurrency', function () {
             var id = $(this).val();
-            console.log(id);
             $("#OrderDetailsDto_CurrencyId").val(id).multiselect('rebuild').multiselect('disable');
         })
 
@@ -1128,8 +1014,6 @@
             select.val(""); // keep placeholder selected
             //select.multiselect('rebuild');
 
-            // ✅ Optional: console log
-            console.log("Selected merchandisers:", selectedIds);
         }
 
         // ✅ Save button click
@@ -1139,8 +1023,6 @@
             if (isOrderInfo) {
 
                 const fromData = getOrderInfoData();
-                console.log("Sending to server:", fromData);
-
                 if (!fromData.BuyerId) {
                     // Just button e click trigger koro
                     $("#OrderDto_BuyerId").next('.btn-group').find('.multiselect').trigger('click');
@@ -1160,7 +1042,6 @@
                     contentType: 'application/json',
                     data: JSON.stringify(fromData),
                     success: function (res) {
-                        console.log("Server Response:", res);
                         showToast(`${res.isSuccess ? "success" : "error"}`, res.message);
                         if (res.isSuccess) {
                             //
@@ -1171,13 +1052,12 @@
 
                     },
                     error: function (xhr, status, error) {
-                        console.error("Error:", error);
                     }
                 });
             }
             else if (isDetails) {
                 orderDetailsFun();
-            } 
+            }
         });
 
 
@@ -1186,8 +1066,6 @@
                 url: '/RMGProdOrderInformationEntry/ReloadViewData',
                 type: "GET",
                 success: function (res) {
-                    console.log("Reload Data:", res);
-
                     const $select = $("#OrderDetailsDto_IntegraJobNO");
 
                     $select.empty().append('<option value="" disabled hidden>Select Intregra Job No</option>');
@@ -1199,7 +1077,6 @@
                     $select.multiselect('rebuild');
                 },
                 error: function (xhr, status, error) {
-                    console.error("Reload Error:", error);
                 }
             });
         }
@@ -1210,7 +1087,7 @@
 
             if (isOrderInfo) {
                 clearOrderInfoForm();
-                
+
             }
         })
 
@@ -1434,10 +1311,9 @@
                     url: '/RMGProdOrderInformationEntry/GetOrderDetailsList',
                     type: 'POST',
                     data: function (d) {
-                        d.integraJobNo = integraJobNo; // server-এ পাঠানো হচ্ছে
+                        d.integraJobNo = integraJobNo;
                     },
                     dataSrc: function (json) {
-                        console.log("✅ Filtered Order Details:", json);
                         return json.data;
                     }
                 },
@@ -1518,20 +1394,14 @@
                 const rowData = JSON.parse(rawData);
                 const jobNo = rowData.integraJobNO;
 
-                console.log("✅ JobNo:", jobNo);
-                console.log("✅ Populated Order Details:", rowData);
-                console.log(rowData.purchaseOrder);
-
-                // ✅ প্রথমে data populate করুন (এটা dropdown options load করবে)
                 populateOrderDetailsData(rowData);
 
-                // ✅ তারপর একটু delay দিয়ে multiselect set করুন
                 setTimeout(() => {
-                  
+
                     // PO Number
                     if ($("#TempColorSizeBreakupDtoPONo").length) {
                         $("#TempColorSizeBreakupDtoPONo")
-                            .multiselect('destroy')  // পুরনো instance destroy
+                            .multiselect('destroy')
                             .val(rowData.purchaseOrder)
                             .multiselect('rebuild')
                             .multiselect('refresh')
@@ -1558,14 +1428,12 @@
                             .multiselect('disable');
                     }
 
-                    console.log("✅ Multiselect values set করা হয়েছে");
-                }, 500); // 300ms থেকে 500ms বাড়ালাম
+                }, 500); 
 
                 // Color breakup load
                 getTempcolorBreakUp(rowData.purchaseOrder, rowData.integraJobNO);
 
             } catch (err) {
-                console.error("❌ JSON parse error:", err, rawData);
             }
         });
 
@@ -1602,10 +1470,8 @@
                 contentType: 'application/json',
                 data: JSON.stringify(tempData),
                 success: function (res) {
-                    console.log("✅ Response:", res);
 
                     if (res.isSuccess) {
-                        // ✅ প্রথমে dropdown ready কিনা নিশ্চিত হও
                         setTimeout(() => {
                             setMultiselectValues(
                                 '#TempColorSizeBreakupDto_ColorId',
@@ -1623,12 +1489,10 @@
                         gridColorSizeBreakup();
                         loadColorSizeTable();
                     } else {
-                        console.error("❌ Error:", res.message);
                         showToast("error", res.message);
                     }
                 },
                 error: function (xhr, status, error) {
-                    console.error("❌ AJAX Error:", error);
                     showToast("error", "Failed to load color/size data");
                 }
             });
@@ -1641,25 +1505,19 @@
             const $element = $(selector);
 
             if (!$element.length) {
-                console.warn(`⚠️ Element not found: ${selector}`);
                 return;
             }
 
             if (!values || values.length === 0) {
-                console.warn(`⚠️ No ${label} to select`);
                 return;
             }
 
             try {
-                // ✅ Values সেট করো
                 $element.val(values);
 
-                // ✅ Refresh করে UI তে checkbox select দেখাও
                 $element.multiselect('refresh');
 
-                console.log(`✅ Selected ${label}:`, values);
             } catch (error) {
-                console.error(`❌ Error setting ${label}:`, error);
             }
         }
 
@@ -1718,7 +1576,7 @@
 
         // 🔁 Dropdown change হলে table reload
         $(document).on('change', '#OrderDetailsDto_IntegraJobNO', function () {
-            var id = $(this).val();//toto style
+            var id = $(this).val();
 
             $.ajax({
                 url: '/RMGProdOrderInformationEntry/IntJobNoByStyle',
@@ -1726,20 +1584,19 @@
                 contentType: 'application/json',
                 data: JSON.stringify(id),
                 success: function (res) {
-                    console.log(res);//totojob
                     if (res) {
                         $("#OrderDetailsDto_Style").val(res.styleId).multiselect('rebuild').multiselect('disable');
                         $("#OrderDetailsDto_POUnitTypID").val(res.unitTypId).multiselect('rebuild').multiselect('disable');
                         $("#OrderDetailsDto_CurrencyId").val(res.currencyIdFob).multiselect('rebuild').multiselect('disable');
                         $("#totalAmountCurrency").val(res.currencyIdFob).multiselect('rebuild').multiselect('disable');
-                        $("#OrderDetailsDto_UnitPrice").empty().val(res.fobamount).prop('disabled', true);       
+                        $("#OrderDetailsDto_UnitPrice").empty().val(res.fobamount).prop('disabled', true);
                     }
-                               
+
                 }
             });
 
             GridOrderDetails(id);
-           
+
         });
 
 
@@ -1751,7 +1608,6 @@
             } else {
                 selectedDetailsIds = selectedDetailsIds.filter(x => x !== id);
             }
-            console.log("Selected IDs:", selectedDetailsIds);
         });
 
         // ✅ Select All Checkbox
@@ -1791,53 +1647,44 @@
         })
 
         function LoadPoStyleJob() {
-          
-                $.ajax({
-                    url: '/RMGProdOrderInformationEntry/LoadPoStyleJobLoad',
-                    type: 'GET',
-                    success: function (res) {
-                        console.log("✅ Loaded Data:", res);
 
-                        if (res.isSuccess) {
-                            // PO Number dropdown populate
-                            populateMultiselect('#TempColorSizeBreakupDtoPONo', res.poList);
+            $.ajax({
+                url: '/RMGProdOrderInformationEntry/LoadPoStyleJobLoad',
+                type: 'GET',
+                success: function (res) {
 
-                            // Style dropdown populate
-                            populateMultiselect('#TempColorSizeBreakupDtoStyle', res.styleList);
+                    if (res.isSuccess) {
+                        // PO Number dropdown populate
+                        populateMultiselect('#TempColorSizeBreakupDtoPONo', res.poList);
 
-                            // Integra Job No dropdown populate
-                            populateMultiselect('#TempColorSizeBreakupDto_IntegraJOBNo', res.integraJobNoList);
+                        // Style dropdown populate
+                        populateMultiselect('#TempColorSizeBreakupDtoStyle', res.styleList);
 
-                        } 
-                    },
-                    error: function (error) {
-                        console.error("❌ Load Error:", error);
-                        reject(error);
+                        // Integra Job No dropdown populate
+                        populateMultiselect('#TempColorSizeBreakupDto_IntegraJOBNo', res.integraJobNoList);
+
                     }
-                });
-           
+                },
+                error: function (error) {                  
+                    reject(error);
+                }
+            });
+
         }
 
-        // ✅ Multiselect populate করার helper function
         function populateMultiselect(selector, dataList) {
             const $element = $(selector);
 
             if (!$element.length) {
-                console.warn(`⚠️ Element not found: ${selector}`);
                 return;
             }
-
-            // Multiselect destroy করুন (যদি আগে থেকে থাকে)
             try {
                 $element.multiselect('destroy');
             } catch (e) {
-                // ignore if not initialized
             }
 
-            // Options clear করুন
             $element.empty();
 
-            // নতুন options add করুন
             if (dataList && dataList.length > 0) {
                 // Default option (optional)
                 $element.append('<option value="">-- Select --</option>');
@@ -1847,7 +1694,6 @@
                 });
             }
 
-            // Multiselect initialize করুন
             $element.multiselect({
                 includeSelectAllOption: false,
                 enableFiltering: true,
@@ -1856,10 +1702,8 @@
                 buttonWidth: '100%'
             });
 
-            console.log(`✅ Populated ${selector} with ${dataList?.length || 0} items`);
         }
 
-        // ✅ Populate Function (Row থেকে Form Fill করা)
         function populateOrderDetailsData(data) {
             const setVal = (selector, value) => $(selector).val(value ?? '').trigger('change');
             const setDate = (selector, value) => {
@@ -1956,7 +1800,6 @@
             // 🔹 X-Factory Date
             setDate('#OrderDetailsDto_XFactoryDate', data.xFactoryDate);
 
-            console.log("✅ Populated Order Details:", data);
             $('#Color-Size-Breckup-total').empty().val(data.orderQuantity).prop('disabled', true);
         }
 
@@ -1990,10 +1833,10 @@
             const clearDate = (selector) => {
                 const flatpickrInstance = $(selector)[0]?._flatpickr;
                 if (flatpickrInstance) {
-                    flatpickrInstance.clear();         // clear the existing date
-                    flatpickrInstance.setDate("today"); // reset to default date (today)
+                    flatpickrInstance.clear();         
+                    flatpickrInstance.setDate("today"); 
                 } else {
-                    $(selector).val('').trigger('change'); // fallback
+                    $(selector).val('').trigger('change');
                 }
             };
             const clearVal = (selector) => $(selector).val('').trigger('change');
@@ -2081,7 +1924,6 @@
             // 🔹 X-Factory Date
             //clearDate('#OrderDetailsDto_XFactoryDate');
 
-            console.log("🧹 Cleared all Order Details fields.");
         }
 
         $(document).on('change', "#OrderDetailsDto_ProductId", () => {
@@ -2097,14 +1939,13 @@
         })
         function orderDetailsFun() {
             const fromData = getOrderDetailsData();
-            console.log("Sending to server:", fromData);
 
             if (!fromData.IntegraJobNO) {
                 // Just button e click trigger koro
                 $("#OrderDetailsDto_IntegraJobNO").next('.btn-group').find('.multiselect').trigger('click');
                 return;
             }
-       
+
 
             if (!fromData.ProductId) {
                 $("#OrderDetailsDto_ProductId").next('.btn-group').find('.multiselect').trigger('click');
@@ -2130,7 +1971,6 @@
                 contentType: 'application/json',
                 data: JSON.stringify(fromData),
                 success: function (res) {
-                    console.log("Server Response:", res);
                     showToast(`${res.isSuccess ? "success" : "error"}`, res.message);
                     if (res.isSuccess) {
                         clearOrderDetailsData();
@@ -2139,7 +1979,6 @@
                     }
                 },
                 error: function (xhr, status, error) {
-                    console.error("Error:", error);
                 }
             });
         }
@@ -2159,7 +1998,6 @@
                 Remarks: $("#TempColorSizeBreakupDto_Remarks").val(),
                 IntegraJOBNo: $("#TempColorSizeBreakupDto_IntegraJOBNo").val()
             };
-            console.log("Sending to server:", dto);
             return dto;
         }
         //$(document).on('click', "#colorAndBreakupSaveBtn", function () {
@@ -2195,13 +2033,12 @@
 
         $(document).on('click', "#colorAndBreakupSaveBtn", function () {
             if (isColorAndBreakup) {
-            SaveEditColorAndBreakupList();
+                SaveEditColorAndBreakupList();
             }
         });
         function SaveEditColorAndBreakupList() {
 
             const fromData = colorAndBreakupFun();
-            console.log("Sending to server:", fromData);
 
             if (fromData.ColorIds.length === 0 || fromData.SizeIds.length === 0) {
                 alert("Please select at least one Color and one Size.");
@@ -2214,14 +2051,12 @@
                 contentType: 'application/json',
                 data: JSON.stringify(fromData),
                 success: function (res) {
-                    console.log("Server Response:", res);
                     if (res.isSuccess) {
                         loadColorSizeTable();
                     }
                     showToast(`${res.isSuccess ? "success" : "error"}`, res.message);
                 },
                 error: function (xhr, status, error) {
-                    console.error("Error:", error);
                 }
             });
         };
@@ -2244,7 +2079,7 @@
                         return;
                     }
 
-                    let tbody = $("#mainGroupGrid tbody");
+                    let tbody = $("#mainOrderGroupGrid tbody");
                     tbody.empty();
 
                     const colors = response.dropdowns.colors;
@@ -2327,7 +2162,6 @@
                 total += parseFloat($(this).val()) || 0;
             });
 
-            console.log("🔹 Total Quantity:", total);
 
             // Total quantity field update
             $("#Color-Size-Breckup-input")
@@ -2367,7 +2201,7 @@
         $(document).on('click', '.color-breakup-temp-btn', function () {
             let allData = [];
 
-            $("#mainGroupGrid tbody tr").each(function () {
+            $("#mainOrderGroupGrid tbody tr").each(function () {
                 let row = $(this);
                 console.log(row);
                 let dto = {
@@ -2381,7 +2215,6 @@
                 allData.push(dto);
             });
 
-            console.log(allData);
             if (allData.length === 0) {
                 alert("No data found to update!");
                 return;
@@ -2432,7 +2265,7 @@
         });
 
 
-        function gridColorSizeBreakup () {
+        function gridColorSizeBreakup() {
             if ($.fn.DataTable.isDataTable('#colorAndSizeBrekupGrid')) {
                 $('#colorAndSizeBrekupGrid').DataTable().destroy();
             }
@@ -2483,7 +2316,6 @@
                 success: function (res) {
                     console.log(res);
                 }, error: function (e) {
-                    console.log(e);
                 }
             });
         })
@@ -2495,34 +2327,7 @@
         $(".js-order-info-save").on("click", function () {
             if (isColorAndBreakup) {
 
-           
-            //const integraJobNo = $("#OrderDetailsDto_IntegraJobNO").val();
-            //if (!integraJobNo) {
-            //    alert("⚠️ Please select an Integra Job No first!");
-            //    return;
-            //}
-
-            //$.ajax({
-            //    url: '/RMGProdOrderInformationEntry/SaveFromTempToMain',
-            //    type: 'POST',
-            //    data: { integraJobNo: integraJobNo },
-            //    success: function (response) {
-            //        if (response.isSuccess) {
-            //            alert(response.message);
-            //            loadColorSizeTable(); 
-            //            gridColorSizeBreakup();
-            //        } else {
-            //            alert(response.message);
-            //        }
-            //    },
-            //    error: function () {
-            //        alert("❌ Error while saving data!");
-            //    }
-            //});
-
-
                 const fromData = colorAndBreakupFun();
-                console.log("Sending to server:", fromData);
 
                 if (fromData.ColorIds.length === 0 || fromData.SizeIds.length === 0) {
                     alert("Please select at least one Color and one Size.");
@@ -2535,17 +2340,15 @@
                     contentType: 'application/json',
                     data: JSON.stringify(fromData),
                     success: function (res) {
-                        console.log("Server Response:", res);
-                                if (res.isSuccess) {                                   
-                                    loadColorSizeTable();
-                                    gridColorSizeBreakup();
-                                    showToast('success',res.message);                              
-                                } else {
-                                    showToast('error',response.message);
-                                }
+                        if (res.isSuccess) {
+                            loadColorSizeTable();
+                            gridColorSizeBreakup();
+                            showToast('success', res.message);
+                        } else {
+                            showToast('error', response.message);
+                        }
                     },
                     error: function (xhr, status, error) {
-                        console.error("Error:", error);
                     }
                 });
 
@@ -2557,38 +2360,1380 @@
         // ✅ CLEAR TEMP DATA
         $("#js-order-info-clear").on("click", function () {
             if (isColorAndBreakup) {
-            const integraJobNo = $("#OrderDetailsDto_IntegraJobNO").val();
-            if (!integraJobNo) {
-                alert("⚠️ Please select an Integra Job No first!");
-                return;
-            }
-
-            if (!confirm("Are you sure to clear all temp data?")) return;
-
-            $.ajax({
-                url: '/RMGProdOrderInformationEntry/ClearTempData',
-                type: 'POST',
-                data: { integraJobNo: integraJobNo },
-                success: function (response) {
-                    if (response.isSuccess) {
-                        alert(response.message);
-                        loadColorSizeTable();
-                    } else {
-                        alert(response.message);
-                    }
-                },
-                error: function () {
-                    alert("❌ Error while clearing temp data!");
+                const integraJobNo = $("#OrderDetailsDto_IntegraJobNO").val();
+                if (!integraJobNo) {
+                    alert("⚠️ Please select an Integra Job No first!");
+                    return;
                 }
-            });
+
+                if (!confirm("Are you sure to clear all temp data?")) return;
+
+                $.ajax({
+                    url: '/RMGProdOrderInformationEntry/ClearTempData',
+                    type: 'POST',
+                    data: { integraJobNo: integraJobNo },
+                    success: function (response) {
+                        if (response.isSuccess) {
+                            alert(response.message);
+                            loadColorSizeTable();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function () {
+                        alert("❌ Error while clearing temp data!");
+                    }
+                });
             }
         });
 
+        //$(document).ready(function () {
+        //    initQuickAddModal();
+        //    // Initialize multiselect on page load
+        //    boostrapMultiselect1();
+        //});
 
+        //function initQuickAddModal() {
+
+        //    $("body").on("click", '.js-quick-add', function (e) {
+        //        e.stopPropagation();
+        //        e.preventDefault();
+        //        e.stopImmediatePropagation();
+
+        //        QuickAddModal.open({
+        //            loadUrl: $(this).data("url"),
+        //            target: $(this).data("target"),
+        //            reloadUrl: $(this).data("reload-url"),
+        //            title: $(this).data("title")
+        //        });
+        //    });
+
+        //    $("body").on("click", ".js-modal-dismiss", () => QuickAddModal.close());
+        //}
+
+        //function boostrapMultiselect1() {
+
+        //    // Destroy existing instances first
+        //    $('.searchAbleSelectMulti').each(function () {
+        //        const $elem = $(this);
+        //        if ($elem.data('multiselect')) {
+        //            try {
+        //                $elem.multiselect('destroy');
+        //            } catch (e) {
+        //            }
+        //        }
+        //    });
+
+        //    // Remove orphaned elements
+        //    $('.multiselect-container').remove();
+
+        //    // Small delay before reinitializing
+        //    setTimeout(() => {
+        //        // Initialize all multiselect dropdowns
+        //        $('.searchAbleSelectMulti').multiselect({
+        //            includeSelectAllOption: true,
+        //            selectAllText: 'Select All',
+        //            enableFiltering: true,
+        //            enableCaseInsensitiveFiltering: true,
+        //            filterPlaceholder: 'Search ...',
+        //            buttonWidth: '100%',
+        //            maxHeight: 250,
+        //            numberDisplayed: 2,
+        //            nonSelectedText: 'Select option',
+        //            nSelectedText: 'selected',
+        //            allSelectedText: 'All selected',
+        //            buttonClass: 'btn btn-sm form-select grid-input'
+        //        });
+        //    }, 50);
+        //}
+
+        //const QuickAddModal = (() => {
+        //    // Stack to track multiple modal instances
+        //    const modalStack = [];
+        //    let mutationObservers = new Map();
+        //    let processingFlags = new Map();
+        //    let isClosing = false;
+
+        //    /**
+        //     * Generate unique modal ID for each level
+        //     */
+        //    const getModalId = (level) => {
+        //        return level === 0 ? 'quickAddModal' : `quickAddModal_level${level}`;
+        //    };
+
+        //    /**
+        //     * Get or create modal element for specific level
+        //     */
+        //    const getOrCreateModal = (level) => {
+        //        const modalId = getModalId(level);
+        //        let $modal = $(`#${modalId}`);
+
+        //        if ($modal.length === 0 && level > 0) {
+        //            // Clone the base modal for nested levels
+        //            $modal = $('#quickAddModal').clone();
+        //            $modal.attr('id', modalId);
+        //            $modal.css('z-index', 1050 + (level * 10));
+
+        //            // Update backdrop z-index
+        //            $modal.on('shown.bs.modal', function () {
+        //                $(`.modal-backdrop`).eq(level).css('z-index', 1040 + (level * 10));
+        //            });
+
+        //            $('body').append($modal);
+        //        }
+
+        //        return $modal;
+        //    };
+
+        //    const open = (config) => {
+
+        //        const currentLevel = modalStack.length;
+        //        const modalId = getModalId(currentLevel);
+        //        const $modal = getOrCreateModal(currentLevel);
+
+        //        // Store config in stack
+        //        modalStack.push({
+        //            loadUrl: config.loadUrl,
+        //            target: config.target,
+        //            reloadUrl: config.reloadUrl,
+        //            title: config.title,
+        //            level: currentLevel,
+        //            modalId: modalId,
+        //            lastCode: null
+        //        });
+
+        //        $modal.find('.modal-title').html(config.title);
+        //        $modal.find('.modal-body').empty();
+
+        //        $modal.find('.modal-body').load(config.loadUrl, () => {
+        //            $modal.modal({
+        //                backdrop: 'static',
+        //                keyboard: false,
+        //                show: true
+        //            });
+        //            $modal.modal("show");
+
+        //            setTimeout(() => {
+        //                $modal.find('.select2-container').remove();
+
+        //                destroyAllModalSelect2(modalId);
+
+        //                $modal.find('select').removeData('select2');
+
+        //                initModalSelect2(modalId);
+        //            }, 500);
+
+        //            watchModalForSelect2(modalId);
+
+        //            if (currentLevel === 0) {
+        //                $("#header").hide();
+        //                $("#left_menu").hide();
+        //                $("#main-content").toggleClass("collapse-main");
+        //                $("body").removeClass("sidebar-mini");
+        //            }
+
+        //            $modal.find('#header').hide();
+        //            $modal.find('#left_menu').hide();
+        //            $modal.find('#main-content').toggleClass("collapse-main");
+        //        });
+        //    };
+
+        //    const close = () => {
+
+        //        if (modalStack.length === 0 || isClosing) {
+        //            return;
+        //        }
+
+        //        isClosing = true;
+
+        //        const currentModal = modalStack.pop();
+        //        const { modalId, target, reloadUrl, title, level } = currentModal;
+        //        const $modal = $(`#${modalId}`);
+
+        //        // Get the last saved code
+        //        let lastCode = $modal.find('#lastCode').val();
+        //        if (!lastCode || lastCode.trim() === '') {
+        //            lastCode = $(`#lastCode`).val();
+        //        }
+        //        currentModal.lastCode = lastCode;
+
+
+        //        // Select2 cleanup only inside modal
+        //        $modal.find('select').each(function () {
+        //            const $select = $(this);
+        //            if ($select.data('select2')) {
+        //                $select.select2('destroy');
+        //                $select.removeData('select2');
+        //                $select.next('.select2-container').remove();
+        //            }
+        //        });
+
+        //        disconnectObserver(modalId);
+        //        $modal.find('.modal-body').empty().off().removeData();
+        //        $modal.modal("hide");
+
+        //        if (level > 0) {
+        //            setTimeout(() => $modal.remove(), 300);
+        //        } else {
+        //            $("#header").show();
+        //            $("#left_menu").show();
+        //            $("#main-content").toggleClass("collapse-main");
+        //        }
+
+        //        // CRITICAL: Complete cleanup and reinitialization process
+        //        setTimeout(() => {
+
+        //            // Step 1: Destroy all multiselect instances
+        //            $('.searchAbleSelectMulti').each(function () {
+        //                const $elem = $(this);
+        //                if ($elem.data('multiselect')) {
+        //                    try {
+        //                        $elem.multiselect('destroy');
+        //                    } catch (e) {
+        //                    }
+        //                }
+        //                $elem.removeData('multiselect');
+        //            });
+
+        //            // Step 2: Remove all orphaned multiselect UI elements
+        //            $('.multiselect-container').remove();
+        //            $('.btn-group').each(function () {
+        //                if ($(this).find('.multiselect').length > 0) {
+        //                    $(this).remove();
+        //                }
+        //            });
+
+        //            // Step 3: If there's a target to reload, do it first
+        //            if (target && reloadUrl) {
+        //                reloadDropdown(target, reloadUrl, title, lastCode, () => {
+        //                    // Step 4: After target is reloaded, reinitialize all multiselects
+        //                    setTimeout(() => {
+        //                        boostrapMultiselect1();
+
+        //                        // Reset closing flag
+        //                        setTimeout(() => {
+        //                            isClosing = false;
+        //                        }, 200);
+        //                    }, 100);
+        //                });
+        //            } else {
+        //                // No target reload needed, just reinitialize
+        //                setTimeout(() => {
+        //                    boostrapMultiselect1();
+
+        //                    setTimeout(() => {
+        //                        isClosing = false;
+        //                    }, 200);
+        //                }, 100);
+        //            }
+        //        }, 400);
+        //    };
+
+
+        //    const closeAll = () => {
+        //        while (modalStack.length > 0) {
+        //            close();
+        //        }
+        //    };
+
+
+        //    const destroyAllModalSelect2 = (modalId) => {
+        //        $(`#${modalId} > .modal-dialog > .modal-content > .modal-body`).find('select').each(function () {
+        //            const $select = $(this);
+
+        //            if ($select.closest('.modal').attr('id') !== modalId) {
+        //                return;
+        //            }
+
+        //            if ($select.data('select2')) {
+        //                try {
+        //                    $select.select2('destroy');
+        //                } catch (error) {
+        //                }
+        //            }
+        //        });
+        //    };
+
+        //    /**
+        //     * Reloads the target dropdown with fresh data from server
+        //     * CRITICAL: Now with callback support and proper multiselect handling
+        //     */
+        //    const reloadDropdown = (target, reloadUrl, title, lastCode, callback) => {
+        //        if (!target) {
+        //            if (callback) callback();
+        //            return;
+        //        }
+
+        //        const $target = $(target);
+        //        const isMultiselect = $target.hasClass('searchAbleSelectMulti');
+
+
+        //        // If it's a multiselect, destroy it first
+        //        if (isMultiselect && $target.data('multiselect')) {
+        //            try {
+        //                $target.multiselect('destroy');
+        //            } catch (e) {
+
+        //            }
+        //            $target.removeData('multiselect');
+        //            $target.next('.btn-group').remove();
+        //        }
+
+        //        // Clear existing options
+        //        $target.empty();
+        //        $target.append($('<option>', {
+        //            value: '',
+        //            text: `--Select ${title}--`
+        //        }));
+
+        //        // Fetch new data from server
+        //        $.ajax({
+        //            url: reloadUrl,
+        //            method: "GET",
+        //            success: (response) => {
+        //                if (!response || response.length === 0) {
+
+        //                    if (callback) callback();
+        //                    return;
+        //                }
+
+        //                // Add all options
+        //                $.each(response, (i, item) => {
+        //                    $target.append($('<option>', {
+        //                        value: item.code,
+        //                        text: item.name
+        //                    }));
+        //                });
+
+        //                // Set the last selected value
+        //                if (lastCode) {
+
+        //                    $target.val(lastCode);
+        //                }
+
+        //                // If it's a multiselect, reinitialize it specifically
+        //                if (isMultiselect) {
+        //                    setTimeout(() => {
+
+        //                        $target.multiselect({
+        //                            includeSelectAllOption: true,
+        //                            selectAllText: 'Select All',
+        //                            enableFiltering: true,
+        //                            enableCaseInsensitiveFiltering: true,
+        //                            filterPlaceholder: 'Search ...',
+        //                            buttonWidth: '100%',
+        //                            maxHeight: 250,
+        //                            numberDisplayed: 2,
+        //                            nonSelectedText: 'Select option',
+        //                            nSelectedText: 'selected',
+        //                            allSelectedText: 'All selected',
+        //                            buttonClass: 'btn btn-sm form-select grid-input'
+        //                        });
+
+        //                        // Rebuild the dropdown
+        //                        $target.multiselect('rebuild');
+
+        //                        // Select the value if exists
+        //                        if (lastCode) {
+        //                            $target.multiselect('select', lastCode);
+        //                        }
+
+        //                        if (callback) callback();
+        //                    }, 150);
+        //                } else {
+        //                    if (callback) callback();
+        //                }
+        //            },
+        //            error: (error) => {
+        //                if (callback) callback();
+        //            }
+        //        });
+        //    };
+
+        //    const initModalSelect2 = (modalId) => {
+        //        const select2Classes = ['.selectpickers9', '.selectpickersCom', '.selectpickers', '.searchable-select'];
+
+        //        select2Classes.forEach(className => {
+        //            $(`#${modalId} > .modal-dialog > .modal-content > .modal-body`).find(className).each(function () {
+        //                const $select = $(this);
+
+        //                if ($select.data('select2')) {
+        //                    return;
+        //                }
+
+        //                if ($select.closest('.modal').attr('id') !== modalId) {
+        //                    return;
+        //                }
+
+        //                $select.select2({
+        //                    width: '98%',
+        //                    dropdownParent: $(`#${modalId}`),
+        //                    language: { noResults: () => "No results found" },
+        //                    escapeMarkup: markup => markup
+        //                });
+        //            });
+        //        });
+        //    };
+
+        //    const reinitializeSelect2 = (modalId) => {
+        //        const processingKey = modalId;
+        //        if (processingFlags.get(processingKey)) return;
+        //        processingFlags.set(processingKey, true);
+
+        //        destroyAllModalSelect2(modalId);
+
+        //        const select2Classes = ['.selectpickers9', '.selectpickersCom', '.selectpickers', '.searchable-select'];
+
+        //        select2Classes.forEach(className => {
+        //            $(`#${modalId} > .modal-dialog > .modal-content > .modal-body`).find(className).each(function () {
+        //                const $select = $(this);
+
+        //                if ($select.closest('.modal').attr('id') !== modalId) {
+        //                    return;
+        //                }
+
+        //                if ($select.data('select2')) {
+        //                    $select.select2('destroy');
+        //                }
+
+        //                $select.next('.select2-container').remove();
+        //                $select.siblings('.select2-container').remove();
+
+        //                $select.removeClass('select2-hidden-accessible');
+        //                $select.removeAttr('data-select2-id aria-hidden tabindex');
+
+        //                $select.select2({
+        //                    width: '98%',
+        //                    dropdownParent: $(`#${modalId}`),
+        //                    language: { noResults: () => 'No results found' },
+        //                    escapeMarkup: markup => markup
+        //                });
+        //            });
+        //        });
+
+        //        setTimeout(() => {
+        //            processingFlags.set(processingKey, false);
+        //        }, 1000);
+        //    };
+
+        //    const watchModalForSelect2 = (modalId) => {
+        //        const targetNode = document.querySelector(`#${modalId} > .modal-dialog > .modal-content > .modal-body`);
+
+        //        if (!targetNode) {
+        //            setTimeout(() => watchModalForSelect2(modalId), 500);
+        //            return;
+        //        }
+
+        //        disconnectObserver(modalId);
+
+        //        const config = { childList: true, subtree: true };
+        //        let debounceTimer;
+
+        //        const callback = function (mutationsList, observerInstance) {
+        //            clearTimeout(debounceTimer);
+        //            debounceTimer = setTimeout(() => {
+        //                const $modal = $(`#${modalId} > .modal-dialog > .modal-content > .modal-body`);
+
+        //                const $selectsCom = $modal.find('.selectpickersCom').filter(function () {
+        //                    return $(this).closest('.modal').attr('id') === modalId;
+        //                });
+        //                const $selects9 = $modal.find('.selectpickers9').filter(function () {
+        //                    return $(this).closest('.modal').attr('id') === modalId;
+        //                });
+        //                const $selects = $modal.find('.selectpickers').filter(function () {
+        //                    return $(this).closest('.modal').attr('id') === modalId;
+        //                });
+        //                const $select = $modal.find('.searchable-select').filter(function () {
+        //                    return $(this).closest('.modal').attr('id') === modalId;
+        //                });
+
+        //                if ($selectsCom.length > 0 || $selects9.length > 0 || $selects.length > 0 || $select.length > 0) {
+        //                    reinitializeSelect2(modalId);
+        //                }
+        //            }, 300);
+        //        };
+
+        //        const observer = new MutationObserver(callback);
+        //        observer.observe(targetNode, config);
+        //        mutationObservers.set(modalId, observer);
+        //    };
+
+        //    const disconnectObserver = (modalId) => {
+        //        const observer = mutationObservers.get(modalId);
+        //        if (observer) {
+        //            observer.disconnect();
+        //            mutationObservers.delete(modalId);
+        //        }
+        //    };
+
+        //    // Public API
+        //    return {
+        //        open,
+        //        close,
+        //        closeAll,
+        //        getStackDepth: () => modalStack.length,
+        //        isOpen: () => modalStack.length > 0
+        //    };
+        //})();
+
+        $(document).ready(function () {
+            console.log('📱 Document Ready - Initializing...');
+            initQuickAddModal();
+            boostrapMultiselect1();
+        });
+
+        function initQuickAddModal() {
+            console.log('🎯 initQuickAddModal: Setting up event listeners...');
+
+            $("body").on("click", '.js-quick-add', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                e.stopImmediatePropagation();
+
+                console.log('🔵 Quick Add button clicked');
+
+                QuickAddModal.open({
+                    loadUrl: $(this).data("url"),
+                    target: $(this).data("target"),
+                    reloadUrl: $(this).data("reload-url"),
+                    title: $(this).data("title")
+                });
+            });
+
+            $("body").on("click", ".js-modal-dismiss", () => {
+                console.log('🔴 Modal dismiss button clicked');
+                QuickAddModal.close();
+            });
+        }
+
+        function boostrapMultiselect1() {
+            console.log('═══════════════════════════════════════════════');
+            console.log('🔄 boostrapMultiselect1: START');
+            console.log('═══════════════════════════════════════════════');
+
+            // CRITICAL FIX: Complete DOM cleanup MULTIPLE times to catch ghost elements
+            console.log('🧹 PHASE 1: Aggressive multi-pass DOM cleanup...');
+
+            // Pass 1: Remove containers
+            let containers = $('.multiselect-container');
+            console.log(`   Pass 1: Found ${containers.length} containers`);
+            containers.remove();
+
+            // Pass 2: Remove again (catches dynamically created ones)
+            setTimeout(() => {
+                containers = $('.multiselect-container');
+                if (containers.length > 0) {
+                    console.log(`   Pass 2: Found ${containers.length} more containers (cleaning...)`);
+                    containers.remove();
+                }
+            }, 10);
+
+            // Step 2: Remove ALL button groups that contain multiselect buttons
+            $('.btn-group').each(function (idx) {
+                const $group = $(this);
+                // More aggressive check - remove if has multiselect button OR if empty
+                if ($group.find('.multiselect').length > 0 ||
+                    ($group.find('button.multiselect').length > 0 && $group.find('select').length === 0)) {
+                    console.log(`   Removing btn-group [${idx}]`);
+                    $group.remove();
+                }
+            });
+
+            // Step 3: Find and clean original select elements
+            const $allMultiselects = $('.searchAbleSelectMulti');
+            console.log(`📊 Found ${$allMultiselects.length} multiselect elements`);
+
+            // Step 4: Destroy plugin instances and unwrap if needed
+            let destroyCount = 0;
+            $allMultiselects.each(function (index) {
+                const $elem = $(this);
+                const elemId = $elem.attr('id') || $elem.attr('name') || `elem-${index}`;
+
+                console.log(`   [${index}] ${elemId}: Cleaning...`);
+
+                // Destroy multiselect instance
+                if ($elem.data('multiselect')) {
+                    try {
+                        $elem.multiselect('destroy');
+                        destroyCount++;
+                        console.log(`      ✅ Instance destroyed`);
+                    } catch (e) {
+                        console.error(`      ❌ Error destroying:`, e.message);
+                    }
+                }
+
+                // Remove ALL multiselect data
+                $elem.removeData('multiselect');
+                $elem.removeData('bootstrap-multiselect');
+
+                // Remove CSS classes
+                $elem.removeClass('multiselect-initialized');
+
+                // Unwrap if wrapped in btn-group
+                if ($elem.parent().hasClass('btn-group')) {
+                    console.log(`      🔓 Unwrapping from btn-group`);
+                    $elem.unwrap();
+                }
+
+                // Show the original select (might be hidden)
+                $elem.show();
+
+                console.log(`      ✅ Cleaned`);
+            });
+
+            console.log(`✅ Destroyed ${destroyCount} instances`);
+            console.log(`✅ DOM cleanup complete`);
+
+            // CRITICAL: Wait longer for DOM to fully stabilize before reinitializing
+            setTimeout(() => {
+                console.log('');
+                console.log('🔧 PHASE 2: Fresh initialization...');
+
+                // Final cleanup check before init
+                const remainingContainers = $('.multiselect-container');
+                const remainingGroups = $('.btn-group:has(.multiselect):not(:has(select))');
+
+                if (remainingContainers.length > 0) {
+                    console.log(`⚠️  WARNING: Still found ${remainingContainers.length} ghost containers, removing...`);
+                    remainingContainers.remove();
+                }
+
+                if (remainingGroups.length > 0) {
+                    console.log(`⚠️  WARNING: Still found ${remainingGroups.length} ghost btn-groups, removing...`);
+                    remainingGroups.remove();
+                }
+
+                let initCount = 0;
+                let skipCount = 0;
+
+                $('.searchAbleSelectMulti').each(function (index) {
+                    const $elem = $(this);
+                    const elemId = $elem.attr('id') || $elem.attr('name') || `elem-${index}`;
+
+                    // Triple-check: Skip if already has multiselect data
+                    if ($elem.data('multiselect') || $elem.data('bootstrap-multiselect')) {
+                        console.log(`   [${index}] ${elemId} - ⚠️ Already initialized, skipping`);
+                        skipCount++;
+                        return;
+                    }
+
+                    // Make sure element is visible and not wrapped
+                    $elem.show();
+
+                    // Unwrap if still wrapped
+                    if ($elem.parent().hasClass('btn-group')) {
+                        $elem.unwrap();
+                    }
+
+                    console.log(`   [${index}] ${elemId} - Initializing...`);
+
+                    try {
+                        $elem.multiselect({
+                            includeSelectAllOption: true,
+                            selectAllText: 'Select All',
+                            enableFiltering: true,
+                            enableCaseInsensitiveFiltering: true,
+                            filterPlaceholder: 'Search ...',
+                            buttonWidth: '100%',
+                            maxHeight: 250,
+                            numberDisplayed: 2,
+                            nonSelectedText: 'Select option',
+                            nSelectedText: 'selected',
+                            allSelectedText: 'All selected',
+                            buttonClass: 'btn btn-sm form-select grid-input',
+                            onChange: function (option, checked) {
+                                console.log(`      📝 Changed: ${option ? option.val() : 'unknown'} = ${checked}`);
+                            },
+                            onDropdownShow: function () {
+                                console.log(`      👁️ Dropdown shown: ${elemId}`);
+                            },
+                            onDropdownHide: function () {
+                                console.log(`      👁️ Dropdown hidden: ${elemId}`);
+                            }
+                        });
+
+                        // Mark as initialized
+                        $elem.addClass('multiselect-initialized');
+
+                        // Force rebuild to ensure proper state
+                        $elem.multiselect('rebuild');
+
+                        initCount++;
+                        console.log(`      ✅ Success`);
+                    } catch (e) {
+                        console.error(`      ❌ Error:`, e.message);
+                    }
+                });
+
+                console.log(`✅ Initialized ${initCount} multiselects (skipped ${skipCount})`);
+                console.log('═══════════════════════════════════════════════');
+                console.log('✅ boostrapMultiselect1: COMPLETE');
+                console.log('═══════════════════════════════════════════════');
+                console.log('');
+            }, 300); // Increased delay from 200ms to 300ms for better stability
+        }
+
+        const QuickAddModal = (() => {
+            const modalStack = [];
+            let mutationObservers = new Map();
+            let processingFlags = new Map();
+            let isClosing = false;
+            let closeCounter = 0; // Track close attempts
+
+            const getModalId = (level) => {
+                return level === 0 ? 'quickAddModal' : `quickAddModal_level${level}`;
+            };
+
+            const getOrCreateModal = (level) => {
+                const modalId = getModalId(level);
+                let $modal = $(`#${modalId}`);
+
+                console.log(`🔍 getOrCreateModal: level=${level}, modalId=${modalId}, exists=${$modal.length > 0}`);
+
+                if ($modal.length === 0 && level > 0) {
+                    console.log(`🆕 Creating new modal for level ${level}`);
+                    $modal = $('#quickAddModal').clone();
+                    $modal.attr('id', modalId);
+                    $modal.css('z-index', 1050 + (level * 10));
+
+                    $modal.on('shown.bs.modal', function () {
+                        $(`.modal-backdrop`).eq(level).css('z-index', 1040 + (level * 10));
+                    });
+
+                    $('body').append($modal);
+                }
+
+                return $modal;
+            };
+
+            const open = (config) => {
+                console.log('┌─────────────────────────────────────────────');
+                console.log('│ 🚀 MODAL OPEN START');
+                console.log('├─────────────────────────────────────────────');
+                console.log('│ Config:', config);
+
+                const currentLevel = modalStack.length;
+                const modalId = getModalId(currentLevel);
+                const $modal = getOrCreateModal(currentLevel);
+
+                console.log(`│ Level: ${currentLevel}, Modal ID: ${modalId}`);
+
+                modalStack.push({
+                    loadUrl: config.loadUrl,
+                    target: config.target,
+                    reloadUrl: config.reloadUrl,
+                    title: config.title,
+                    level: currentLevel,
+                    modalId: modalId,
+                    lastCode: null
+                });
+
+                console.log(`│ Modal stack size: ${modalStack.length}`);
+
+                $modal.find('.modal-title').html(config.title);
+                $modal.find('.modal-body').empty();
+
+                console.log(`│ Loading content from: ${config.loadUrl}`);
+                $modal.find('.modal-body').load(config.loadUrl, () => {
+                    console.log('│ ✅ Content loaded');
+
+                    $modal.modal({
+                        backdrop: 'static',
+                        keyboard: false,
+                        show: true
+                    });
+                    $modal.modal("show");
+
+                    console.log('│ Modal shown');
+
+                    setTimeout(() => {
+                        console.log('│ 🔧 Initializing Select2 in modal...');
+                        $modal.find('.select2-container').remove();
+                        destroyAllModalSelect2(modalId);
+                        $modal.find('select').removeData('select2');
+                        initModalSelect2(modalId);
+                        console.log('│ ✅ Select2 initialized');
+                    }, 500);
+
+                    watchModalForSelect2(modalId);
+
+                    if (currentLevel === 0) {
+                        console.log('│ Hiding header and menu (level 0)');
+                        $("#header").hide();
+                        $("#left_menu").hide();
+                        $("#main-content").toggleClass("collapse-main");
+                        $("body").removeClass("sidebar-mini");
+                    }
+
+                    $modal.find('#header').hide();
+                    $modal.find('#left_menu').hide();
+                    $modal.find('#main-content').toggleClass("collapse-main");
+
+                    console.log('└─────────────────────────────────────────────');
+                    console.log('  ✅ MODAL OPEN COMPLETE');
+                    console.log('');
+                });
+            };
+
+            const close = () => {
+                closeCounter++;
+
+                console.log('┌═════════════════════════════════════════════');
+                console.log(`║ 🔴 MODAL CLOSE START (Attempt #${closeCounter})`);
+                console.log(`║ Pattern: ${closeCounter % 2 === 1 ? 'ODD' : 'EVEN'} time`);
+                console.log('╞═════════════════════════════════════════════');
+
+                if (modalStack.length === 0) {
+                    console.log('║ ⚠️  Modal stack is empty, nothing to close');
+                    console.log('└═════════════════════════════════════════════');
+                    return;
+                }
+
+                if (isClosing) {
+                    console.log('║ ⚠️  Already closing, preventing duplicate close');
+                    console.log('└═════════════════════════════════════════════');
+                    return;
+                }
+
+                isClosing = true;
+                console.log('║ 🔒 isClosing = true');
+
+                const currentModal = modalStack.pop();
+                const { modalId, target, reloadUrl, title, level } = currentModal;
+                const $modal = $(`#${modalId}`);
+
+                console.log(`║ Closing modal: ${modalId} (level ${level})`);
+                console.log(`║ Stack size after pop: ${modalStack.length}`);
+                console.log(`║ Target: ${target || 'none'}`);
+                console.log(`║ Reload URL: ${reloadUrl || 'none'}`);
+
+                // Get last saved code
+                let lastCode = $modal.find('#lastCode').val();
+                if (!lastCode || lastCode.trim() === '') {
+                    lastCode = $(`#lastCode`).val();
+                }
+                currentModal.lastCode = lastCode;
+                console.log(`║ Last code saved: ${lastCode || 'none'}`);
+
+                console.log('║ 🧹 Cleaning up Select2...');
+                let select2Count = 0;
+                $modal.find('select').each(function () {
+                    const $select = $(this);
+                    if ($select.data('select2')) {
+                        try {
+                            $select.select2('destroy');
+                            select2Count++;
+                        } catch (e) {
+                            console.error('║    ❌ Error destroying select2:', e.message);
+                        }
+                        $select.removeData('select2');
+                        $select.next('.select2-container').remove();
+                    }
+                });
+                console.log(`║ ✅ Destroyed ${select2Count} Select2 instances`);
+
+                console.log('║ 🔌 Disconnecting mutation observer...');
+                disconnectObserver(modalId);
+
+                console.log('║ 🧹 Cleaning modal body...');
+                $modal.find('.modal-body').empty().off().removeData();
+
+                console.log('║ 🚪 Hiding modal...');
+                $modal.modal("hide");
+
+                if (level > 0) {
+                    console.log(`║ Removing nested modal after 300ms`);
+                    setTimeout(() => $modal.remove(), 300);
+                } else {
+                    console.log('║ Showing header and menu (level 0)');
+                    $("#header").show();
+                    $("#left_menu").show();
+                    $("#main-content").toggleClass("collapse-main");
+                }
+
+                // CRITICAL FIX: Extended delay for modal backdrop to fully clear
+                console.log('║ ⏳ Waiting 600ms for modal to fully close...');
+
+                setTimeout(() => {
+                    console.log('╞═════════════════════════════════════════════');
+                    console.log('║ 🧹 MULTISELECT CLEANUP PHASE');
+                    console.log('╞═════════════════════════════════════════════');
+
+                    // PHASE 1: SUPER AGGRESSIVE DOM cleanup (multiple passes)
+                    console.log('║ Phase 1: Super aggressive DOM cleanup...');
+
+                    // Pass 1: Remove ALL visible containers
+                    let containers = $('.multiselect-container');
+                    console.log(`║    Pass 1: Found ${containers.length} .multiselect-container elements`);
+                    containers.each(function (idx) {
+                        if (idx < 5 || idx > containers.length - 3) {
+                            console.log(`║       Removing container [${idx}]`);
+                        }
+                        $(this).remove();
+                    });
+                    if (containers.length > 8) {
+                        console.log(`║       ... and ${containers.length - 8} more`);
+                    }
+
+                    // Pass 2: Force remove using different selector
+                    $('[class*="multiselect-container"]').remove();
+
+                    // Pass 3: Remove button groups
+                    let groupCount = 0;
+                    $('.btn-group').each(function () {
+                        const $group = $(this);
+                        const hasMultiselect = $group.find('.multiselect').length > 0;
+                        const hasButton = $group.find('button.multiselect').length > 0;
+                        const hasSelect = $group.find('select').length > 0;
+
+                        // Remove if has multiselect button but no select, OR just has multiselect class
+                        if ((hasMultiselect || hasButton) && !hasSelect) {
+                            if (groupCount < 3) {
+                                console.log(`║       Removing btn-group [${groupCount}]`);
+                            }
+                            $group.remove();
+                            groupCount++;
+                        }
+                    });
+
+                    if (groupCount > 3) {
+                        console.log(`║       ... and ${groupCount - 3} more btn-groups`);
+                    }
+                    console.log(`║    Removed ${groupCount} btn-groups`);
+
+                    // PHASE 2: Destroy all multiselect instances
+                    console.log('║ Phase 2: Destroying multiselect instances...');
+                    let destroyCount = 0;
+
+                    $('.searchAbleSelectMulti').each(function (idx) {
+                        const $elem = $(this);
+                        const elemId = $elem.attr('id') || $elem.attr('name') || `elem-${idx}`;
+
+                        if (idx < 3 || idx > $('.searchAbleSelectMulti').length - 3) {
+                            console.log(`║    [${idx}] ${elemId}`);
+                        }
+
+                        if ($elem.data('multiselect') || $elem.data('bootstrap-multiselect')) {
+                            try {
+                                $elem.multiselect('destroy');
+                                destroyCount++;
+                                if (idx < 3 || idx > $('.searchAbleSelectMulti').length - 3) {
+                                    console.log(`║       ✅ Destroyed`);
+                                }
+                            } catch (e) {
+                                console.error(`║       ❌ Error:`, e.message);
+                            }
+                        }
+
+                        // Super complete data cleanup
+                        $elem.removeData('multiselect');
+                        $elem.removeData('bootstrap-multiselect');
+                        $elem.removeClass('multiselect-initialized');
+
+                        // Unwrap if needed (might be wrapped multiple times)
+                        while ($elem.parent().hasClass('btn-group') && $elem.parent().find('select').length === 1) {
+                            if (idx < 3) {
+                                console.log(`║       🔓 Unwrapping`);
+                            }
+                            $elem.unwrap();
+                        }
+
+                        // Make sure it's visible
+                        $elem.show();
+                        $elem.css('display', '');
+                    });
+
+                    const totalElements = $('.searchAbleSelectMulti').length;
+                    if (totalElements > 6) {
+                        console.log(`║    ... processed ${totalElements - 6} more elements ...`);
+                    }
+                    console.log(`║ ✅ Destroyed ${destroyCount} instances`);
+                    console.log(`║ ✅ All DOM elements cleaned`);
+
+                    // PHASE 3: Handle target reload or direct reinit
+                    if (target && reloadUrl) {
+                        console.log('║ Phase 3: Reloading target dropdown...');
+                        console.log(`║    Target: ${target}`);
+                        console.log(`║    URL: ${reloadUrl}`);
+
+                        reloadDropdown(target, reloadUrl, title, lastCode, () => {
+                            console.log('║ 📦 Dropdown reload complete');
+
+                            // CRITICAL: Extra delay + force cleanup before reinit
+                            setTimeout(() => {
+                                // One more aggressive cleanup pass
+                                $('.multiselect-container').remove();
+                                $('[class*="multiselect-container"]').remove();
+
+                                console.log('║ 🔄 Reinitializing ALL multiselects...');
+                                boostrapMultiselect1();
+
+                                // Reset closing flag
+                                setTimeout(() => {
+                                    isClosing = false;
+                                    console.log('║ 🔓 isClosing = false');
+                                    console.log('└═════════════════════════════════════════════');
+                                    console.log(`  ✅ MODAL CLOSE COMPLETE (Attempt #${closeCounter})`);
+                                    console.log('');
+                                }, 350);
+                            }, 300);
+                        });
+                    } else {
+                        console.log('║ Phase 3: No target reload needed');
+
+                        // CRITICAL: Extra cleanup before direct reinit
+                        setTimeout(() => {
+                            // One more aggressive cleanup pass
+                            $('.multiselect-container').remove();
+                            $('[class*="multiselect-container"]').remove();
+
+                            console.log('║ 🔄 Reinitializing ALL multiselects...');
+                            boostrapMultiselect1();
+
+                            setTimeout(() => {
+                                isClosing = false;
+                                console.log('║ 🔓 isClosing = false');
+                                console.log('└═════════════════════════════════════════════');
+                                console.log(`  ✅ MODAL CLOSE COMPLETE (Attempt #${closeCounter})`);
+                                console.log('');
+                            }, 350);
+                        }, 300);
+                    }
+                }, 700); // Increased from 600ms to 700ms for better stability
+            };
+
+            const closeAll = () => {
+                console.log('🔴 Closing all modals...');
+                while (modalStack.length > 0) {
+                    close();
+                }
+            };
+
+            const destroyAllModalSelect2 = (modalId) => {
+                console.log(`🔧 destroyAllModalSelect2: ${modalId}`);
+                let count = 0;
+
+                $(`#${modalId} > .modal-dialog > .modal-content > .modal-body`).find('select').each(function () {
+                    const $select = $(this);
+
+                    if ($select.closest('.modal').attr('id') !== modalId) {
+                        return;
+                    }
+
+                    if ($select.data('select2')) {
+                        try {
+                            $select.select2('destroy');
+                            count++;
+                        } catch (error) {
+                            console.error('   ❌ Error:', error.message);
+                        }
+                    }
+                });
+
+                console.log(`   ✅ Destroyed ${count} Select2 instances in modal`);
+            };
+
+            const reloadDropdown = (target, reloadUrl, title, lastCode, callback) => {
+                console.log('┌─────────────────────────────────────────────');
+                console.log('│ 🔄 RELOAD DROPDOWN START');
+                console.log('├─────────────────────────────────────────────');
+
+                if (!target) {
+                    console.log('│ ⚠️  No target specified');
+                    console.log('└─────────────────────────────────────────────');
+                    if (callback) callback();
+                    return;
+                }
+
+                console.log(`│ Target selector: ${target}`);
+                let $target = $(target);
+                console.log(`│ Target found: ${$target.length > 0}`);
+
+                // CRITICAL FIX: If target not found, try alternative selectors
+                if ($target.length === 0) {
+                    console.log('│ ⚠️  Primary target not found, trying alternatives...');
+
+                    // Try with name attribute
+                    const nameAttr = target.replace('#', '').replace('_', '.');
+                    $target = $(`[name="${nameAttr}"]`);
+                    console.log(`│    Trying name="${nameAttr}": found=${$target.length > 0}`);
+
+                    // Try case-insensitive ID search
+                    if ($target.length === 0) {
+                        const idPart = target.replace('#', '');
+                        $target = $(`[id*="${idPart}" i]`).first();
+                        console.log(`│    Trying case-insensitive search: found=${$target.length > 0}`);
+                    }
+
+                    // If still not found, skip reload but continue with callback
+                    if ($target.length === 0) {
+                        console.log('│ ❌ Target element not found in any variation!');
+                        console.log('│ ℹ️  Skipping reload but continuing with reinitialization...');
+                        console.log('└─────────────────────────────────────────────');
+                        if (callback) callback();
+                        return;
+                    }
+
+                    console.log(`│ ✅ Found target using alternative selector`);
+                }
+
+                const isMultiselect = $target.hasClass('searchAbleSelectMulti');
+                console.log(`│ Is multiselect: ${isMultiselect}`);
+
+                // CRITICAL: Complete cleanup of target before reload
+                if (isMultiselect) {
+                    console.log('│ 🧹 Cleaning target multiselect...');
+
+                    if ($target.data('multiselect') || $target.data('bootstrap-multiselect')) {
+                        try {
+                            $target.multiselect('destroy');
+                            console.log('│    ✅ Destroyed');
+                        } catch (e) {
+                            console.error('│    ❌ Error:', e.message);
+                        }
+                    }
+
+                    $target.removeData('multiselect');
+                    $target.removeData('bootstrap-multiselect');
+                    $target.removeClass('multiselect-initialized');
+
+                    // Remove wrapper and containers
+                    $target.next('.btn-group').remove();
+                    $target.siblings('.multiselect-container').remove();
+
+                    if ($target.parent().hasClass('btn-group')) {
+                        $target.unwrap();
+                    }
+
+                    $target.show();
+                    console.log('│    ✅ Target cleaned');
+                }
+
+                // Clear options
+                console.log('│ 🧹 Clearing options...');
+                $target.empty();
+                $target.append($('<option>', {
+                    value: '',
+                    text: `--Select ${title}--`
+                }));
+
+                // Fetch new data
+                console.log(`│ 📡 Fetching from: ${reloadUrl}`);
+                $.ajax({
+                    url: reloadUrl,
+                    method: "GET",
+                    success: (response) => {
+                        console.log('│ ✅ AJAX Success');
+                        console.log(`│ Received ${response ? response.length : 0} items`);
+
+                        if (!response || response.length === 0) {
+                            console.log('│ ⚠️  Empty response');
+                            console.log('└─────────────────────────────────────────────');
+                            if (callback) callback();
+                            return;
+                        }
+
+                        console.log(`│ 📝 Adding options...`);
+                        $.each(response, (i, item) => {
+                            $target.append($('<option>', {
+                                value: item.code,
+                                text: item.name
+                            }));
+                        });
+
+                        if (lastCode) {
+                            console.log(`│ 📌 Setting value: ${lastCode}`);
+                            $target.val(lastCode);
+                        }
+
+                        if (isMultiselect) {
+                            console.log('│ ⏳ Waiting 300ms before reinit...');
+                            setTimeout(() => {
+                                console.log('│ 🔧 Reinitializing target multiselect...');
+
+                                try {
+                                    $target.multiselect({
+                                        includeSelectAllOption: true,
+                                        selectAllText: 'Select All',
+                                        enableFiltering: true,
+                                        enableCaseInsensitiveFiltering: true,
+                                        filterPlaceholder: 'Search ...',
+                                        buttonWidth: '100%',
+                                        maxHeight: 250,
+                                        numberDisplayed: 2,
+                                        nonSelectedText: 'Select option',
+                                        nSelectedText: 'selected',
+                                        allSelectedText: 'All selected',
+                                        buttonClass: 'btn btn-sm form-select grid-input'
+                                    });
+
+                                    $target.addClass('multiselect-initialized');
+                                    $target.multiselect('rebuild');
+
+                                    if (lastCode) {
+                                        $target.multiselect('select', lastCode);
+                                    }
+
+                                    console.log('│ ✅ Target multiselect reinitialized');
+                                } catch (e) {
+                                    console.error('│ ❌ Reinit error:', e.message);
+                                }
+
+                                console.log('└─────────────────────────────────────────────');
+                                if (callback) callback();
+                            }, 300);
+                        } else {
+                            console.log('└─────────────────────────────────────────────');
+                            if (callback) callback();
+                        }
+                    },
+                    error: (xhr, status, error) => {
+                        console.error('│ ❌ AJAX Error:', error);
+                        console.log('└─────────────────────────────────────────────');
+                        if (callback) callback();
+                    }
+                });
+            };
+
+            const initModalSelect2 = (modalId) => {
+                console.log(`🔧 initModalSelect2: ${modalId}`);
+                const select2Classes = ['.selectpickers9', '.selectpickersCom', '.selectpickers', '.searchable-select'];
+                let initCount = 0;
+
+                select2Classes.forEach(className => {
+                    $(`#${modalId} > .modal-dialog > .modal-content > .modal-body`).find(className).each(function () {
+                        const $select = $(this);
+
+                        if ($select.data('select2')) {
+                            return;
+                        }
+
+                        if ($select.closest('.modal').attr('id') !== modalId) {
+                            return;
+                        }
+
+                        $select.select2({
+                            width: '98%',
+                            dropdownParent: $(`#${modalId}`),
+                            language: { noResults: () => "No results found" },
+                            escapeMarkup: markup => markup
+                        });
+
+                        initCount++;
+                    });
+                });
+
+                console.log(`   ✅ Initialized ${initCount} Select2 instances`);
+            };
+
+            const reinitializeSelect2 = (modalId) => {
+                const processingKey = modalId;
+                if (processingFlags.get(processingKey)) {
+                    return;
+                }
+
+                console.log(`🔄 reinitializeSelect2: ${modalId}`);
+                processingFlags.set(processingKey, true);
+
+                destroyAllModalSelect2(modalId);
+
+                const select2Classes = ['.selectpickers9', '.selectpickersCom', '.selectpickers', '.searchable-select'];
+                let reinitCount = 0;
+
+                select2Classes.forEach(className => {
+                    $(`#${modalId} > .modal-dialog > .modal-content > .modal-body`).find(className).each(function () {
+                        const $select = $(this);
+
+                        if ($select.closest('.modal').attr('id') !== modalId) {
+                            return;
+                        }
+
+                        if ($select.data('select2')) {
+                            $select.select2('destroy');
+                        }
+
+                        $select.next('.select2-container').remove();
+                        $select.siblings('.select2-container').remove();
+
+                        $select.removeClass('select2-hidden-accessible');
+                        $select.removeAttr('data-select2-id aria-hidden tabindex');
+
+                        $select.select2({
+                            width: '98%',
+                            dropdownParent: $(`#${modalId}`),
+                            language: { noResults: () => 'No results found' },
+                            escapeMarkup: markup => markup
+                        });
+
+                        reinitCount++;
+                    });
+                });
+
+                console.log(`   ✅ Reinitialized ${reinitCount} Select2 instances`);
+
+                setTimeout(() => {
+                    processingFlags.set(processingKey, false);
+                }, 1000);
+            };
+
+            const watchModalForSelect2 = (modalId) => {
+                console.log(`👀 watchModalForSelect2: ${modalId}`);
+                const targetNode = document.querySelector(`#${modalId} > .modal-dialog > .modal-content > .modal-body`);
+
+                if (!targetNode) {
+                    setTimeout(() => watchModalForSelect2(modalId), 500);
+                    return;
+                }
+
+                disconnectObserver(modalId);
+
+                const config = { childList: true, subtree: true };
+                let debounceTimer;
+
+                const callback = function (mutationsList, observerInstance) {
+                    clearTimeout(debounceTimer);
+                    debounceTimer = setTimeout(() => {
+                        const $modal = $(`#${modalId} > .modal-dialog > .modal-content > .modal-body`);
+
+                        const $selectsCom = $modal.find('.selectpickersCom').filter(function () {
+                            return $(this).closest('.modal').attr('id') === modalId;
+                        });
+                        const $selects9 = $modal.find('.selectpickers9').filter(function () {
+                            return $(this).closest('.modal').attr('id') === modalId;
+                        });
+                        const $selects = $modal.find('.selectpickers').filter(function () {
+                            return $(this).closest('.modal').attr('id') === modalId;
+                        });
+                        const $select = $modal.find('.searchable-select').filter(function () {
+                            return $(this).closest('.modal').attr('id') === modalId;
+                        });
+
+                        if ($selectsCom.length > 0 || $selects9.length > 0 || $selects.length > 0 || $select.length > 0) {
+                            reinitializeSelect2(modalId);
+                        }
+                    }, 300);
+                };
+
+                const observer = new MutationObserver(callback);
+                observer.observe(targetNode, config);
+                mutationObservers.set(modalId, observer);
+            };
+
+            const disconnectObserver = (modalId) => {
+                const observer = mutationObservers.get(modalId);
+                if (observer) {
+                    observer.disconnect();
+                    mutationObservers.delete(modalId);
+                }
+            };
+
+            return {
+                open,
+                close,
+                closeAll,
+                getStackDepth: () => modalStack.length,
+                isOpen: () => modalStack.length > 0
+            };
+        })();
     }
-
-
-
-
-
 }(jQuery));

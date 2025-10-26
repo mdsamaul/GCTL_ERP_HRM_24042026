@@ -169,9 +169,9 @@
         $("#MainItem_CurrencyId2").prop('disabled', true).trigger('change');
 
         function GetTabName() {
-            return $('button[data-bs-toggle="tab"].active').text().trim();
+            return $('#item-tab button[data-bs-toggle="tab"].active').text().trim();
         }
-        $(document).on('click', 'button[data-bs-toggle="tab"]', function () {
+        $(document).on('click', '#item-tab button[data-bs-toggle="tab"]', function () {
             $(settings.showCreateModifyDateContainer).hide();
             let tabName = $(this).text().trim();
             $(settings.ItemSaveBtn).prop('disabled', false).html('<i class="fa fa-save">&nbsp;</i> Save');
@@ -1438,95 +1438,6 @@
             }
         });
 
-
-
-        let loadUrl,
-            target,
-            reloadUrl,
-            title,
-            lastCode;
-        // Quick add
-        $("body").on("click", '.js-quick-add', function (e) {
-            e.stopPropagation();
-            e.preventDefault();
-            e.stopImmediatePropagation();
-
-            loadUrl = $(this).data("url");
-            target = $(this).data("target");
-            reloadUrl = $(this).data("reload-url");
-            title = $(this).data("title");
-
-            $("#quickAddModal .modal-title").html(title);
-            $("#quickAddModal .modal-body").empty();
-
-            $("#quickAddModal .modal-body").load(loadUrl, function () {
-                $('#quickAddModal').modal({
-                    backdrop: 'static',
-                    keyboard: false,
-                    show: true
-                });
-
-                $('#quickAddModal').modal("show");
-                $("#header").hide();
-                $("#quickAddModal .modal-body #header").hide()
-
-                $("#left_menu").hide();
-                $("#quickAddModal .modal-body #left_menu").hide()
-
-                $("#main-content").toggleClass("collapse-main");
-                $("#quickAddModal .modal-body #main-content").toggleClass("collapse-main")
-
-                $("body").removeClass("sidebar-mini");
-            })
-        });
-
-        $("body").on("click", ".js-modal-dismiss", function () {
-            $("body").removeClass("sidebar-mini").addClass("sidebar-mini");
-
-            $("#header").show();
-            $("#quickAddModal .modal-body #header").show()
-
-            $("#left_menu").show();
-
-            $("#quickAddModal .modal-body #left_menu").show()
-
-            $("#main-content").toggleClass("collapse-main");
-            $("#quickAddModal .modal-body #main-content").toggleClass("collapse-main");
-
-            lastCode = $("#quickAddModal #lastCode").val();
-
-            $("#quickAddModal .modal-body").empty();
-            $("#quickAddModal").modal("hide");
-
-            $(target).empty("");
-            $(target).append($('<option>', {
-                value: '',
-                text: `--Select ${title}--`
-            }));
-
-            if (title === "Contact Person") {
-                if (typeof loadCP === 'function') {
-                    loadCP();
-                }
-                return;
-            }
-
-            $.ajax({
-                url: reloadUrl,
-                method: "GET",
-                success: function (response) {
-                    $.each(response, function (i, item) {
-                        $(target).append($('<option>', {
-                            value: item.code,
-                            text: item.name
-                        }));
-                    });
-
-                    $(target).val(lastCode);
-
-                }
-            });
-        });
 
 
 

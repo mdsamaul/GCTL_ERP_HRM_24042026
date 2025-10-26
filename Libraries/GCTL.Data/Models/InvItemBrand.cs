@@ -7,7 +7,7 @@ namespace GCTL.Data.Models
 {
     public partial class InvItemBrand
     {
-        public int AutoId { get; set; }
+        public int Tc { get; set; }
         public string BrandId { get; set; }
         public byte[] BrandLogo { get; set; }
         public string ImgType { get; set; }
