@@ -56,7 +56,7 @@
                             data-url="@Url.Action("Index", "BuyerInfo")"
                                 data-target="#OrderDto_BuyerBrand"
                             data-reload-url="@Url.Action("GetBuyerCompany", "Cascading")"
-                                data-title="Unit Type">
+                                data-title="Buyer Brand">
                             <i class="fa fa-plus" style="color: #8d8d8d;"></i>
                         </button>
                 </div>
@@ -122,17 +122,24 @@
                     <div class="input-group col-md-6   input-group-sm" style="padding-right: 0px;margin-right: 8px;">
                         <select class="form-select searchAbleSelectMulti" asp-items="ViewBag.seactionList" asp-for="OrderDto.SeasonId">
                             <option value="" disabled selected hidden>Select Season</option>
-                        </select>                      
+                        </select>
+                        @* <button type="button" class="btn btn-light border">
+                            <i class="fa fa-plus" style="color: #8d8d8d;"></i>
+                        </button> *@
                         <button type="button"
                                 class="btn btn-light border js-quick-add"
                                 data-url="@Url.Action("Index", "SeasonInformation")"
-                                data-target="#OrderDto_SeasonId"
+                                data-target="#OrderDto_BuyerBrand"
                                 data-reload-url="@Url.Action("GetBuyerCompany", "Cascading")"
-                                data-title="Unit Type">
+                                data-title="Season">
                             <i class="fa fa-plus" style="color: #8d8d8d;"></i>
                         </button>
                     </div>
-                 <input type="number" class="form-control form-control-sm" asp-for="OrderDto.SeasonYear" value="@(Model?.OrderDto?.SeasonYear ?? DateTime.Now.Year.ToString())" />
+                 @* <input type="number" class="form-control form-control-sm" asp-for="OrderDto.SeasonYear" value="@(Model?.OrderDto?.SeasonYear ?? DateTime.Now.Year.ToString())" /> *@
+                    <input type="number" maxlength="4" min="1900" max="2099"
+                           id="OrderDto_SeasonYear" name="OrderDto.SeasonYear"
+                           class="form-control form-control-sm">
+
                 </div>
             </div>
 
@@ -245,7 +252,7 @@
                     <button type="button"
                             class="btn btn-light border js-quick-add"
                             data-url="@Url.Action("Index", "BankBranchInformations")"
-                            data-target="#OrderDto_BuyerBranchId"
+                            data-target="#OrderDto_bankBranchList"
                             data-reload-url="@Url.Action("GetBuyerCompany", "Cascading")"
                             data-title="Bank Branch Information">
                         <i class="fa fa-plus" style="color: #8d8d8d;"></i>
@@ -281,7 +288,7 @@
                     <button type="button"
                             class="btn btn-light border js-quick-add"
                             data-url="@Url.Action("Index", "BankInformations")"
-                            data-target="#OrderDto_CompanyOwnBankId"
+                            data-target="#OrderDto_BuyerBankId"
                             data-reload-url="@Url.Action("GetBuyerCompany", "Cascading")"
                             data-title="Bank Informtion">
                         <i class="fa fa-plus" style="color: #8d8d8d;"></i>
@@ -299,7 +306,7 @@
                     <button type="button"
                             class="btn btn-light border js-quick-add"
                             data-url="@Url.Action("Index", "BankBranchInformations")"
-                            data-target="#OrderDto_CompanyOwnBranchId"
+                            data-target="#OrderDto_bankBranchList"
                             data-reload-url="@Url.Action("GetBuyerCompany", "Cascading")"
                             data-title="Bank Branch Information">
                         <i class="fa fa-plus" style="color: #8d8d8d;"></i>
@@ -372,7 +379,7 @@
                     <thead style="background-color: #f8f9fa; color: #000;">
                             <tr>
                                 <th style="width: 50px;">
-                                    @* <input type="checkbox" id="selectAll"> *@
+                                    <input type="checkbox" id="selectAll">
                                     </th>
                                 <th>Employee Name</th>
                                 <th>Designation</th>
@@ -436,7 +443,7 @@
     <div class="right-panel">
         <div class="right-panel">
             <div class="card image-card">
-                <img src="https://dlh.kalteng.go.id/ppid/public/upload/gambar/1688945661_af46a31b900485b21bce.png" class="card-img-top" alt="No Image">
+                <img src="https://printiment.com/wp-content/uploads/2024/10/The-Emmanuel-Clase-that-showed-up-for-Cleveland-in-the-ALCS-MLB-t-shirt-1.jpg" class="card-img-top" id="buyerPhotoPreview" alt="No Image">
             </div>
         </div>
     </div>

@@ -467,15 +467,24 @@
         $("body").off(ns);
         $(CONFIG.gridSelector).off(ns);
 
-        $("body").on(`click${ns}`, CONFIG.saveSelector, handleFormSubmit);
-
-        $("body").on(`click${ns}`, CONFIG.clearSelector, function () {
-            clearForm();
-            clearAllSelections();
+        $("body").on(`click${ns}`, CONFIG.saveSelector, function () {
+            if (getActiveTab() === 'buyer')
+                handleFormSubmit();
         });
 
-        $("body").on(`click${ns}`, CONFIG.deleteSelector, handleBulkDelete);
+        $("body").on(`click${ns}`, CONFIG.clearSelector, function () {
+            console.log(getActiveTab());
+            if (getActiveTab() === 'buyer') {
+                clearForm();
+                clearAllSelections();
+            }
+        });
 
+        $("body").on(`click${ns}`, CONFIG.deleteSelector, function () {
+            
+            if (getActiveTab() === 'buyer')
+                handleBulkDelete();
+        });
         $(document).on(`click${ns}`, `.${CONFIG.idLinkClass}`, function (e) {
             e.preventDefault();
             const id = $(this).data("id");
@@ -505,6 +514,15 @@
             if (id) debouncedSearch(id);
             else loadTableData();
         });
+    }
+
+    function getActiveTab() {
+        const tabMap = {
+            'nav-buyer-tab': 'buyer',
+            'nav-brand-tab': 'brand',
+            'nav-dladdress-tab': 'dladdress'
+        };
+        return tabMap[$('.nav-link.active').attr('id')] || null;
     }
 
     function setupLoadingOverlay() {

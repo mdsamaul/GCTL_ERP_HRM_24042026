@@ -16,6 +16,14 @@ namespace GCTL.Service.RMGProdOrderInformationEntry
         private readonly IRepository<HrmEmployeeOfficialInfo> offiRepo;
         private readonly IRepository<HrmEmployee> empRepo;
         private readonly IRepository<HrmDefDesignation> desRepo;
+        private readonly IRepository<InvDefItem> itemRepo;
+        private readonly IRepository<RmgProdDefUnitType> unitTypeRepo;
+        private readonly IRepository<InvDefPortInfo> portRepo;
+        private readonly IRepository<RmgProdDefBuyer> buyerRepo;
+        private readonly IRepository<RmgProdDefBrand> buyerBrandRepo;
+        private readonly IRepository<ProdDefStyle> styleRepo;
+        private readonly IRepository<RmgProdDefSeason> seasonRepo;
+        private readonly IRepository<CaDefCurrency> currencyRepo;
 
         //private readonly string _connectionString;
 
@@ -26,8 +34,16 @@ namespace GCTL.Service.RMGProdOrderInformationEntry
             IRepository<RmgProdTempColorSizeBreakup> TempColorSizeBreakupRepo,
             IRepository<RmgProdTempListColorSizeBreakup> TempListColorSizeBreakupRepo,
             IRepository<HrmEmployeeOfficialInfo> offiRepo,
-        IRepository<HrmEmployee> empRepo,
-        IRepository<HrmDefDesignation> desRepo
+            IRepository<HrmEmployee> empRepo,
+            IRepository<HrmDefDesignation> desRepo,
+            IRepository<InvDefItem> itemRepo,
+            IRepository<RmgProdDefUnitType> unitTypeRepo,
+             IRepository<InvDefPortInfo> portRepo,
+             IRepository<RmgProdDefBuyer> buyerRepo,
+            IRepository<RmgProdDefBrand> buyerBrandRepo,
+            IRepository<ProdDefStyle> styleRepo,
+            IRepository<RmgProdDefSeason> seasonRepo,
+             IRepository<CaDefCurrency> currencyRepo
             //IConfiguration configuration
             ) : base(orderRepo)
         {
@@ -39,6 +55,14 @@ namespace GCTL.Service.RMGProdOrderInformationEntry
             this.offiRepo = offiRepo;
             this.empRepo = empRepo;
             this.desRepo = desRepo;
+            this.itemRepo = itemRepo;
+            this.unitTypeRepo = unitTypeRepo;
+            this.portRepo = portRepo;
+            this.buyerRepo = buyerRepo;
+            this.buyerBrandRepo = buyerBrandRepo;
+            this.styleRepo = styleRepo;
+            this.seasonRepo = seasonRepo;
+            this.currencyRepo = currencyRepo;
             //this.configuration = configuration;
             //_connectionString = configuration.GetConnectionString("ApplicationDbConnection");
         }
@@ -125,98 +149,15 @@ namespace GCTL.Service.RMGProdOrderInformationEntry
                 throw;
             }
         }
-        //public async Task<PagedResult<RMG_Prod_OrderDto>> GetPagedOrdersAsync(DataTableFilter filter)
-        //{
-        //    var query = orderRepo.All();
-
-        //    // 🔍 Search Filter
-        //    if (!string.IsNullOrEmpty(filter.SearchValue))
-        //    {
-        //        query = query.Where(x =>
-        //            x.OrderId.Contains(filter.SearchValue) ||
-        //            x.BuyerId.Contains(filter.SearchValue) ||
-        //            x.StyleId.Contains(filter.SearchValue) ||
-        //            x.BuyerBrand.Contains(filter.SearchValue));
-        //    }
-
-        //    var totalRecords = await query.CountAsync();
-
-        //    var rawData = await query
-        //        .Skip(filter.Start)
-        //        .Take(filter.Length)
-        //        .ToListAsync();
-
-
-        //    var data = rawData.Select(o => new RMG_Prod_OrderDto
-        //    {
-        //        TC = o.Tc,
-        //        OrderId = o.OrderId,
-        //        Date = o.Date,
-        //        BuyerId = o.BuyerId,
-        //        BuyerOrderNo = o.BuyerOrderNo,
-        //        BuyerOrderDate = o.BuyerOrderDate,
-        //        MasterPurchaseOrder = o.MasterPurchaseOrder,
-        //        MPO_Date = o.MpoDate,
-        //        SeasonId = o.SeasonId,
-        //        SeasonYear = o.SeasonYear,
-        //        SupplierId = o.SupplierId,
-        //        TotalOrderQuantity = o.TotalOrderQuantity,
-        //        UnitTypID = o.UnitTypId,
-        //        TotalPrice = o.TotalPrice,
-        //        CurrencyId = o.CurrencyId,
-        //        PaymentTerm = o.PaymentTerm,
-        //        BuyerBankId = o.BuyerBankId,
-        //        BuyerBranchId = o.BuyerBranchId,
-        //        CompanyOwnBankId = o.CompanyOwnBankId,
-        //        CompanyOwnBranchId = o.CompanyOwnBranchId,
-        //        BuContatPerson = !string.IsNullOrEmpty(o.BuContatPerson)
-        //            ? o.BuContatPerson.Split(',').ToList()
-        //            : new List<string>(),
-        //        BuDesignation1 = o.BuDesignation1,
-        //        Buphone = o.Buphone,
-        //        BuEmail = o.BuEmail,
-        //        MerContatPerson = o.MerContatPerson,
-        //        MerDesignation1 = o.MerDesignation1,
-        //        Merphone = o.Merphone,
-        //        MerEmail = o.MerEmail,
-        //        BuyerDeclaration = o.BuyerDeclaration,
-        //        InspectionInfo = o.InspectionInfo,
-        //        Remarks = o.Remarks,
-        //        EmployeeID = o.EmployeeId,
-        //        IntegraJOBNo = o.IntegraJobno,
-        //        POStatusId = o.PostatusId,
-        //        BuyerBrand = o.BuyerBrand,
-        //        StyleId = o.StyleId,
-        //        OrderDate = o.OrderDate,
-        //        BuyerSwiftCode = o.BuyerSwiftCode,
-        //        CompanySwiftCode = o.CompanySwiftCode,
-        //        MerchandiserContactId = !string.IsNullOrEmpty(o.MerchandiserContactId)
-        //            ? o.MerchandiserContactId.Split(',').ToList()
-        //            : new List<string>(),
-        //        StylePOWise = o.StylePowise,
-        //        FOBAmount = o.Fobamount,
-        //        CurrencyId_FOB = o.CurrencyIdFob,
-        //        ShowCreateDate = o.Ldate.HasValue ? o.Ldate.Value.ToString("dd/MM/yyyy") : "",
-        //        ShowModifyDate = o.ModifyDate.HasValue ? o.ModifyDate.Value.ToString("dd/MM/yyyy") : ""
-        //    }).ToList();
-
-        //    return new PagedResult<RMG_Prod_OrderDto>
-        //    {
-        //        Draw = filter.Draw,
-        //        RecordsTotal = totalRecords,
-        //        RecordsFiltered = totalRecords,
-        //        Data = data
-        //    };
-        //}
 
         public async Task<PagedResult<RMG_Prod_OrderDto>> GetPagedOrdersAsync(DataTableFilter filter)
         {
             var query = orderRepo.All();
 
             // 🔹 Filter by IntegraJOBNo if provided
-            if (!string.IsNullOrEmpty(filter.IntegraJobNo))
+            if (!string.IsNullOrEmpty(filter.buyerId))
             {
-                query = query.Where(x => x.IntegraJobno == filter.IntegraJobNo);
+                query = query.Where(x => x.BuyerId == filter.buyerId);
             }
 
             // 🔍 Search Filter
@@ -242,14 +183,17 @@ namespace GCTL.Service.RMGProdOrderInformationEntry
                 OrderId = o.OrderId,
                 Date = o.Date,
                 BuyerId = o.BuyerId,
+                BuyerName = buyerRepo.All().Where(x => x.BuyerId == o.BuyerId).Select(s => s.BuyerName).FirstOrDefault() ?? "",
                 BuyerOrderNo = o.BuyerOrderNo,
                 BuyerOrderDate = o.BuyerOrderDate,
                 MasterPurchaseOrder = o.MasterPurchaseOrder,
                 MPO_Date = o.MpoDate,
                 SeasonId = o.SeasonId,
+                SeasonName = seasonRepo.All().Where(x => x.SeasonId == o.SeasonId).Select(s => s.Season).FirstOrDefault() ?? "",
                 SeasonYear = o.SeasonYear,
                 SupplierId = o.SupplierId,
                 TotalOrderQuantity = o.TotalOrderQuantity,
+                TotalOrderQuantityDis = (o.TotalOrderQuantity != null) ? Convert.ToInt32(o.TotalOrderQuantity) + " " + unitTypeRepo.All().Where(x => x.UnitTypId == o.UnitTypId).Select(s => s.UnitTypeName).FirstOrDefault() : "",
                 UnitTypID = o.UnitTypId,
                 TotalPrice = o.TotalPrice,
                 CurrencyId = o.CurrencyId,
@@ -275,7 +219,9 @@ namespace GCTL.Service.RMGProdOrderInformationEntry
                 IntegraJOBNo = o.IntegraJobno,
                 POStatusId = o.PostatusId,
                 BuyerBrand = o.BuyerBrand,
+                BuyerBrandName = buyerBrandRepo.All().Where(x => x.BrandId == o.BuyerBrand).Select(s => s.Name).FirstOrDefault() ?? "",
                 StyleId = o.StyleId,
+                StyleName = styleRepo.All().Where(x => x.StyleId == o.StyleId).Select(s => s.Style).FirstOrDefault() ?? "",
                 OrderDate = o.OrderDate,
                 BuyerSwiftCode = o.BuyerSwiftCode,
                 CompanySwiftCode = o.CompanySwiftCode,
@@ -284,7 +230,10 @@ namespace GCTL.Service.RMGProdOrderInformationEntry
                            : new List<string>(),
                 StylePOWise = o.StylePowise,
                 FOBAmount = o.Fobamount,
+                FOBAmountDis = (o.Fobamount != null) ? Convert.ToInt32(o.Fobamount) + " " + currencyRepo.All().Where(x => x.CurrencyId == o.CurrencyIdFob).Select(s => s.ShortName).FirstOrDefault() : "",
                 CurrencyId_FOB = o.CurrencyIdFob,
+                //CurrencyId_FOBDis = (o.CurrencyIdFob != null) ? o.CurrencyIdFob + " " + currencyRepo.All().Where(x => x.CurrencyId == o.CurrencyId).Select(s => s.CurrencyName).FirstOrDefault() : "",
+                //UnitTyp = (o.CurrencyIdFob != null) ? o.CurrencyIdFob + " " + unitTypeRepo.All().Where(x => x.UnitTypId == o.UnitTypId).Select(s => s.UnitTypeName).FirstOrDefault() : "",
                 ShowCreateDate = o.Ldate.HasValue ? o.Ldate.Value.ToString("dd/MM/yyyy") : "",
                 ShowModifyDate = o.ModifyDate.HasValue ? o.ModifyDate.Value.ToString("dd/MM/yyyy") : ""
             }).ToList();
@@ -464,6 +413,7 @@ namespace GCTL.Service.RMGProdOrderInformationEntry
                     OrderId = o.OrderId,
                     Date = o.Date,
                     ProductId = o.ProductId,
+                    ProductName = itemRepo.All().Where(x => x.ItemId == o.ProductId).Select(d => d.ItemName).FirstOrDefault(),
                     Description = o.Description,
                     BrandId = o.BrandId,
                     Style = o.Style,
@@ -473,6 +423,7 @@ namespace GCTL.Service.RMGProdOrderInformationEntry
                     PODate = o.Podate,
                     OrderQuantity = o.OrderQuantity,
                     POUnitTypID = o.PounitTypId,
+                    POUnitTyp = unitTypeRepo.All().Where(x => x.UnitTypId == o.PounitTypId).Select(c => c.UnitTypeName).FirstOrDefault(),
                     UnitPrice = o.UnitPrice,
                     CurrencyId = o.CurrencyId,
                     TotalAmount = o.TotalAmount,
@@ -487,7 +438,9 @@ namespace GCTL.Service.RMGProdOrderInformationEntry
                     DeliveryTerm = o.DeliveryTerm,
                     DeliveryMethod = o.DeliveryMethod,
                     PortOfLoading = o.PortOfLoading,
+                    PortOfLoadingName = portRepo.All().Where(x => x.PortId == o.PortOfLoading).Select(s => s.PortName).FirstOrDefault(),
                     PortOfDischarge = o.PortOfDischarge,
+                    PortOfDischargeName = portRepo.All().Where(x => x.PortId == o.PortOfDischarge).Select(s => s.PortName).FirstOrDefault(),
                     SupplierId = o.SupplierId,
                     PaymentTermsId = o.PaymentTermsId,
                     GarmentsTesting = o.GarmentsTesting,

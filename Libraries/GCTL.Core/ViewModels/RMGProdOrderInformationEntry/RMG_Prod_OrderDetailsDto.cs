@@ -7,6 +7,7 @@
         public string? OrderId { get; set; }
         public DateTime? Date { get; set; }
         public string? ProductId { get; set; }
+        public string? ProductName { get; set; }
         public string? Description { get; set; }
         public string? BrandId { get; set; }
         public string? Style { get; set; }
@@ -16,6 +17,7 @@
         public DateTime? PODate { get; set; }
         public int? OrderQuantity { get; set; }
         public string? POUnitTypID { get; set; }
+        public string? POUnitTyp { get; set; }
         public decimal? UnitPrice { get; set; }
         public string? CurrencyId { get; set; }
         public decimal? TotalAmount { get; set; }
@@ -30,7 +32,9 @@
         public string? DeliveryTerm { get; set; }
         public string? DeliveryMethod { get; set; }
         public string? PortOfLoading { get; set; }
+        public string? PortOfLoadingName { get; set; }
         public string? PortOfDischarge { get; set; }
+        public string? PortOfDischargeName { get; set; }
         //public string? LUser { get; set; }
         //public DateTime? LDate { get; set; }
         //public string? LIP { get; set; }

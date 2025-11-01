@@ -290,23 +290,17 @@
 
     <!-- Initialize with proper checking -->
     <script type="text/javascript">
-        $(document).ready(function() {
-            console.log('jQuery version:', $.fn.jquery);
-            console.log('Multiselect available:', typeof $.fn.multiselect);
-
+        $(document).ready(function() {           
             // Wait a bit for all scripts to load
             setTimeout(function() {
                 if (typeof $.fn.multiselect !== 'undefined') {
-                    console.log('Multiselect plugin loaded successfully');
+                 
                     $.HRMTransportAssignEntryJs({
                         baseUrl: '@Url.Action("Index", "HRMTransportAssignEntry")',
                         load: function () {
-                            console.log("Custom load logic called from Razor view");
+                         
                         }
                     });
-                } else {
-                    console.error('Bootstrap Multiselect plugin failed to load!');
-                    alert('Error: Bootstrap Multiselect plugin failed to load. Please refresh the page.');
                 }
             }, 500);
         });

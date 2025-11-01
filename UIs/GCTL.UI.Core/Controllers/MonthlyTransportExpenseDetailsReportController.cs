@@ -1,15 +1,13 @@
-﻿using GCTL.Core.ViewModels.MonthlyTransportExpenseDetailsReport;
-using GCTL.Core.ViewModels.TransportExpenseStatementReport;
-using GCTL.Service.TransportExpenseStatementReportService;
+﻿using GCTL.Core.Data;
+using GCTL.Core.ViewModels.MonthlyTransportExpenseDetailsReport;
+using GCTL.Data.Models;
+using GCTL.Service.MonthlyTransportExpenseDetailsReportService;
 using GCTL.UI.Core.ViewModels.MonthlyTransportExpenseDetailsReport;
 using Microsoft.AspNetCore.Mvc;
-using OfficeOpenXml.Style;
-using OfficeOpenXml;
-using GCTL.Service.MonthlyTransportExpenseDetailsReportService;
-using System.Drawing;
-using GCTL.Core.Data;
-using GCTL.Data.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System.Drawing;
 
 namespace GCTL.UI.Core.Controllers
 {
@@ -222,19 +220,19 @@ namespace GCTL.UI.Core.Controllers
                         }
 
                         // Subtotals (using actual numeric values for calculation)
-                        subCNG += item.CNGGasBill ;
-                        subRM += item.RMBill ;
-                        subFuel += item.FuelOctaneBill ;
-                        subPolice += item.PoliceDonation ;
-                        subToll += item.TollOthersBill ;
-                        subTax += item.TaxFitnessAndRoutePermit ;
-                        subSalary += item.SalaryDriverHelper ;
-                        subMechanic += item.MechanicSalary ;
-                        subMonthlyPolice += item.MonthlyPoliceDonation ;
-                        subEngOil += item.MonthlyEngineOilPurchase ;
-                        subAkesh += item.AkeshTechnology ;
-                        subGarage += item.GarageRent ;
-                        subTotal += item.TotalExpense ;
+                        subCNG += item.CNGGasBill;
+                        subRM += item.RMBill;
+                        subFuel += item.FuelOctaneBill;
+                        subPolice += item.PoliceDonation;
+                        subToll += item.TollOthersBill;
+                        subTax += item.TaxFitnessAndRoutePermit;
+                        subSalary += item.SalaryDriverHelper;
+                        subMechanic += item.MechanicSalary;
+                        subMonthlyPolice += item.MonthlyPoliceDonation;
+                        subEngOil += item.MonthlyEngineOilPurchase;
+                        subAkesh += item.AkeshTechnology;
+                        subGarage += item.GarageRent;
+                        subTotal += item.TotalExpense;
 
                         row++;
                     }

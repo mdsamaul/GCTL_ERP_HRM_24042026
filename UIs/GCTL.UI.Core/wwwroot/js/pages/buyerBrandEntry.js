@@ -189,6 +189,7 @@
         });
 
         $("body").on(`click${ns}`, CONFIG.clearSelector, function () {
+            console.log(getActiveTab());
             if (getActiveTab() === 'brand') {
                 clearForm();
                 clearAllSelections();
@@ -240,12 +241,13 @@
 
     function getActiveTab() {
         const tabMap = {
-            'nav-home-tab': 'buyer',
-            'nav-profile-tab': 'brand',
-            'nav-contact-tab': 'dladdress'
+            'nav-buyer-tab': 'buyer',
+            'nav-brand-tab': 'brand',
+            'nav-dladdress-tab': 'dladdress'
         };
         return tabMap[$('.nav-link.active').attr('id')] || null;
     }
+
 
     function setupLoadingOverlay() {
         if ($("#loadingOverlay").length === 0) {

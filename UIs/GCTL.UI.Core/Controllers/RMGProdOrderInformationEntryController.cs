@@ -15,8 +15,10 @@ namespace GCTL.UI.Core.Controllers
     public class RMGProdOrderInformationEntryController : BaseController
     {
         private readonly IRMGProdOrderInformationEntryService rMGProdOrderInformationEntryService;
+        private readonly IRepository<RmgProdDefBuyerPhoto> buyerPhotoRepo;
         private readonly IRepository<RmgProdDefBuyer> buyerRepo;
         private readonly IRepository<RmgProdDefBrand> buyerBrandRepo;
+        private readonly IRepository<InvItemBrand> buyerBrandPhotoRepo;
         private readonly IRepository<ProdDefStyle> styleRepo;
         private readonly IRepository<RmgProdDefUnitType> unitTypeRepo;
         private readonly IRepository<CaDefCurrency> currencyRepo;
@@ -29,8 +31,9 @@ namespace GCTL.UI.Core.Controllers
         private readonly IRepository<InvDefGarmentsTesing> garmentsTesingRepo;
         private readonly IRepository<InvDefFebricTesting> fabricTypeRepo;
         private readonly IRepository<RmgDefSupplier> supplierRepo;
-        private readonly IRepository<TblDeliveryMethod> deliveryRepo;
+        private readonly IRepository<InvDefDeliveryMethod> deliveryRepo;
         private readonly IRepository<InvDefPortInfo> portRepo;
+        private readonly IRepository<CaDefCountry> countryRepo;
         private readonly IRepository<RmgProdDefColor> colorRepo;
         private readonly IRepository<RmgProdDefSize> sizeRepo;
         private readonly IRepository<RmgProdOrderDetails> prodOrderDetailsRepo;
@@ -38,12 +41,15 @@ namespace GCTL.UI.Core.Controllers
         private readonly IRepository<HrmEmployeeOfficialInfo> offiRepo;
         private readonly IRepository<HrmEmployee> empRepo;
         private readonly IRepository<HrmDefDesignation> desRepo;
+        private readonly IRepository<InvItemPhoto> itemImageRepo;
         private readonly IRepository<RmgProdDefSeason> seasonRepo;
 
         public RMGProdOrderInformationEntryController(
             IRMGProdOrderInformationEntryService rMGProdOrderInformationEntryService,
+            IRepository<RmgProdDefBuyerPhoto> buyerPhotoRepo,
             IRepository<RmgProdDefBuyer> buyerRepo,
             IRepository<RmgProdDefBrand> buyerBrandRepo,
+            IRepository<InvItemBrand> buyerBrandPhotoRepo,
             IRepository<ProdDefStyle> styleRepo,
             IRepository<RmgProdDefSeason> seasonRepo,
             IRepository<RmgProdDefUnitType> unitTypeRepo,
@@ -57,20 +63,25 @@ namespace GCTL.UI.Core.Controllers
             IRepository<InvDefGarmentsTesing> garmentsTesingRepo,
             IRepository<InvDefFebricTesting> fabricTypeRepo,
             IRepository<RmgDefSupplier> supplierRepo,
-            IRepository<TblDeliveryMethod> deliveryRepo,
+            IRepository<InvDefDeliveryMethod> deliveryRepo,
             IRepository<InvDefPortInfo> portRepo,
+            IRepository<CaDefCountry> countryRepo,
             IRepository<RmgProdDefColor> colorRepo,
             IRepository<RmgProdDefSize> sizeRepo,
                IRepository<RmgProdOrderDetails> ProdOrderDetailsRepo,
                IRepository<RmgProdTempColorSizeBreakup> colorSizeRepo,
                IRepository<HrmEmployeeOfficialInfo> offiRepo,
                IRepository<HrmEmployee> empRepo,
-               IRepository<HrmDefDesignation> desRepo
+               IRepository<HrmDefDesignation> desRepo,
+               IRepository<InvItemPhoto> itemImageRepo
+
             )
         {
             this.rMGProdOrderInformationEntryService = rMGProdOrderInformationEntryService;
             this.buyerRepo = buyerRepo;
+            this.buyerPhotoRepo = buyerPhotoRepo;
             this.buyerBrandRepo = buyerBrandRepo;
+            this.buyerBrandPhotoRepo = buyerBrandPhotoRepo;
             this.styleRepo = styleRepo;
             this.unitTypeRepo = unitTypeRepo;
             this.currencyRepo = currencyRepo;
@@ -85,6 +96,7 @@ namespace GCTL.UI.Core.Controllers
             this.supplierRepo = supplierRepo;
             this.deliveryRepo = deliveryRepo;
             this.portRepo = portRepo;
+            this.countryRepo = countryRepo;
             this.colorRepo = colorRepo;
             this.sizeRepo = sizeRepo;
             this.prodOrderDetailsRepo = ProdOrderDetailsRepo;
@@ -92,6 +104,7 @@ namespace GCTL.UI.Core.Controllers
             this.offiRepo = offiRepo;
             this.empRepo = empRepo;
             this.desRepo = desRepo;
+            this.itemImageRepo = itemImageRepo;
             this.seasonRepo = seasonRepo;
         }
         public IActionResult Index()
@@ -204,8 +217,24 @@ namespace GCTL.UI.Core.Controllers
         {
             try
             {
+                var BuyerImage = buyerPhotoRepo.All().Where(x => x.BuyerId == buyerId);
                 var BrandList = buyerBrandRepo.All().Where(x => x.BuyerId == buyerId).Select(c => new { id = c.BrandId, name = c.Name }).ToList();
-                return Json(BrandList);
+                return Json(new { buyerImage = BuyerImage, brandList = BrandList });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> BuyerBrandPhoto([FromBody] string buyerBrandId)
+        {
+            try
+            {
+                var BuyerImage = buyerBrandPhotoRepo.All().Where(x => x.BrandId == buyerBrandId);
+
+                return Json(BuyerImage);
             }
             catch (Exception)
             {
@@ -243,20 +272,21 @@ namespace GCTL.UI.Core.Controllers
             }
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> itemAddress([FromBody] string productId)
-        //{
-        //    try
-        //    {
-        //        var BrandList = itemRepo.All().Where(x => x.ItemId == productId).Select(c => new { id = c.ItemId, name = c.ItemName, address = c.TechnicalSpecification }).ToList();
-        //        return Json(BrandList);
-        //    }
-        //    catch (Exception)
-        //    {
+        [HttpPost]
+        public async Task<IActionResult> itemAddress([FromBody] string productId)
+        {
+            try
+            {
+                var itemImage = itemImageRepo.All().Where(x => x.ItemId == productId);
+                var BrandList = itemRepo.All().Where(x => x.ItemId == productId).Select(c => new { id = c.ItemId, name = c.ItemName, address = c.TechnicalSpecification }).ToList();
+                return Json(new { itemImage = itemImage, brnadList = BrandList });
+            }
+            catch (Exception)
+            {
 
-        //        throw;
-        //    }
-        //}
+                throw;
+            }
+        }
         [HttpPost]
         public async Task<IActionResult> BuyerBankBranchAddressSwiftCode([FromBody] string buyerBankBranchId)
         {
@@ -339,7 +369,7 @@ namespace GCTL.UI.Core.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetOrderList(string integraJobNo = null)
+        public async Task<IActionResult> GetOrderList(string buyerId = null)
         {
             var draw = Convert.ToInt32(Request.Form["draw"]);
             var start = Convert.ToInt32(Request.Form["start"]);
@@ -352,7 +382,7 @@ namespace GCTL.UI.Core.Controllers
                 Start = start,
                 Length = length,
                 SearchValue = searchValue,
-                IntegraJobNo = integraJobNo
+                buyerId = buyerId
             };
 
             var result = await rMGProdOrderInformationEntryService.GetPagedOrdersAsync(filter);
@@ -800,6 +830,21 @@ namespace GCTL.UI.Core.Controllers
                     message = "❌ " + ex.Message
                 });
             }
+        }
+
+        public IActionResult GetPortList()
+        {
+            var data = portRepo.GetAll()
+                .Select(x => new
+                {
+                    id = x.PortId,
+                    portName = x.PortName,
+                    portType = deliveryRepo.All().Where(s => s.DeliveryMethodId == x.DeliveryMethodId).Select(d => d.DeliveryMethodName).FirstOrDefault() ?? "",
+                    address = x.PortAddress ?? "",
+                    country = countryRepo.All().Where(s => s.CountryId == x.CountryId).Select(d => d.CountryName).FirstOrDefault() ?? ""
+                }).ToList();
+
+            return Json(data);
         }
 
 

@@ -99,6 +99,7 @@ using GCTL.Service.Loggers;
 using GCTL.Service.LogsLoggers;
 using GCTL.Service.ManualEarnLeaveEntry;
 using GCTL.Service.MonthlyTransportExpenseDetailsReportService;
+using GCTL.Service.MonthWiseOrderBookingReport;
 using GCTL.Service.Nationalitys;
 using GCTL.Service.PackageType;
 using GCTL.Service.PackagingInformation;
@@ -273,6 +274,7 @@ namespace GCTL.UI.Core.Extensions
             services.AddScoped<IBuyerBrandService, BuyerBrandService>();
             services.AddScoped<IBuyerDepEntryService, BuyerDepEntryService>();
             services.AddScoped<IBuyerDLAddressService, BuyerDLAddressService>();
+            services.AddScoped<IOrderReportService, OrderReportService>();
 
 
 

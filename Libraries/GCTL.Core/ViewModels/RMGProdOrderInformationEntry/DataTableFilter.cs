@@ -7,6 +7,7 @@
         public int Length { get; set; }
         public string? SearchValue { get; set; }
         public string IntegraJobNo { get; set; }
+        public string buyerId { get; set; }
     }
 
     public class PagedResult<T>
