@@ -1,4 +1,5 @@
 ﻿using GCTL.Core.Data;
+using GCTL.Core.Helpers;
 using GCTL.Core.ViewModels.MonthWiseOrderBookingReport;
 using GCTL.Data.Models;
 using GCTL.Service.MonthWiseOrderBookingReport;
@@ -75,7 +76,8 @@ namespace GCTL.UI.Core.Controllers
         {
             try
             {
-                var reportData = await _orderReportService.GetOrderReportAllStyleAsync(request);
+                request.ToAudit(LoginInfo);
+                var reportData = await _orderReportService.GetOrderReportAllStyleAsync(request, LoginInfo.CompanyCode);
                 var excelFile = GenerateExcel(reportData);
 
                 return File(excelFile,
@@ -87,99 +89,6 @@ namespace GCTL.UI.Core.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
-
-        //private byte[] GenerateExcel(OrderReportAllStyleResponse reportData)
-        //{
-        //    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-
-        //    using var package = new ExcelPackage();
-        //    var worksheet = package.Workbook.Worksheets.Add("Order Report");
-
-        //    // Header Section
-        //    worksheet.Cells[1, 1].Value = reportData.CompanyName;
-        //    worksheet.Cells[1, 1].Style.Font.Bold = true;
-        //    worksheet.Cells[1, 1].Style.Font.Size = 14;
-        //    worksheet.Cells[1, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-
-        //    worksheet.Cells[2, 1].Value = reportData.ReportTitle + " " + reportData.ReportYear;
-        //    worksheet.Cells[2, 1].Style.Font.Bold = true;
-        //    worksheet.Cells[2, 1].Style.Font.Size = 12;
-        //    worksheet.Cells[2, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-
-        //    // Get dynamic month columns
-        //    var monthColumns = reportData.Data.FirstOrDefault()?.MonthlyQuantities.Keys.ToList() ?? new List<string>();
-        //    int totalColumns = 5 + monthColumns.Count;
-
-        //    // Merge header cells
-        //    worksheet.Cells[1, 1, 1, totalColumns].Merge = true;
-        //    worksheet.Cells[2, 1, 2, totalColumns].Merge = true;
-
-        //    // Column Headers (Row 4)
-        //    int row = 4;
-        //    int col = 1;
-
-        //    worksheet.Cells[row, col++].Value = "Sl No.";
-        //    worksheet.Cells[row, col++].Value = "Buyer Name";
-        //    worksheet.Cells[row, col++].Value = "Style";
-        //    worksheet.Cells[row, col++].Value = "Item";
-        //    worksheet.Cells[row, col++].Value = "Total Order Quantity";
-
-        //    foreach (var month in monthColumns)
-        //    {
-        //        worksheet.Cells[row, col++].Value = month;
-        //    }
-
-        //    // Style header row
-        //    using (var range = worksheet.Cells[row, 1, row, totalColumns])
-        //    {
-        //        range.Style.Font.Bold = true;
-        //        range.Style.Fill.PatternType = ExcelFillStyle.Solid;
-        //        range.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
-        //        range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-        //        range.Style.Border.BorderAround(ExcelBorderStyle.Thin);
-        //    }
-
-        //    // Data Rows
-        //    row = 5;
-        //    foreach (var item in reportData.Data)
-        //    {
-        //        col = 1;
-        //        worksheet.Cells[row, col++].Value = item.SlNo;
-        //        worksheet.Cells[row, col++].Value = item.BuyerName;
-        //        worksheet.Cells[row, col++].Value = item.Style;
-        //        worksheet.Cells[row, col++].Value = item.Item;
-        //        worksheet.Cells[row, col++].Value = item.TotalOrderQuantity;
-
-        //        foreach (var month in monthColumns)
-        //        {
-        //            if (item.MonthlyQuantities.TryGetValue(month, out string value))
-        //            {
-        //                worksheet.Cells[row, col++].Value = value;
-        //            }
-        //            else
-        //            {
-        //                worksheet.Cells[row, col++].Value = "0";
-        //            }
-        //        }
-
-        //        row++;
-        //    }
-
-        //    // Auto-fit columns
-        //    worksheet.Cells.AutoFitColumns();
-
-        //    // Add borders to all data
-        //    using (var range = worksheet.Cells[4, 1, row - 1, totalColumns])
-        //    {
-        //        range.Style.Border.Top.Style = ExcelBorderStyle.Thin;
-        //        range.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-        //        range.Style.Border.Left.Style = ExcelBorderStyle.Thin;
-        //        range.Style.Border.Right.Style = ExcelBorderStyle.Thin;
-        //    }
-
-        //    return package.GetAsByteArray();
-        //}
-
 
         private byte[] GenerateExcel(OrderReportAllStyleResponse reportData)
         {
@@ -254,7 +163,7 @@ namespace GCTL.UI.Core.Controllers
                 {
                     worksheet.Cells[row, col].Value = totalQty;
                     worksheet.Cells[row, col].Style.Numberformat.Format = "#,##0";
-                    worksheet.Cells[row, col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    worksheet.Cells[row, col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 }
                 col++;
 
@@ -267,14 +176,14 @@ namespace GCTL.UI.Core.Controllers
                         {
                             worksheet.Cells[row, col].Value = monthQty;
                             worksheet.Cells[row, col].Style.Numberformat.Format = "#,##0";
-                            worksheet.Cells[row, col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                            worksheet.Cells[row, col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                         }
                     }
                     else
                     {
-                        worksheet.Cells[row, col].Value = 0;
+                        worksheet.Cells[row, col].Value = "";
                         worksheet.Cells[row, col].Style.Numberformat.Format = "#,##0";
-                        worksheet.Cells[row, col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                        worksheet.Cells[row, col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     }
                     col++;
                 }
@@ -296,6 +205,329 @@ namespace GCTL.UI.Core.Controllers
 
             return package.GetAsByteArray();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DownloadOrderStyleReport([FromBody] OrderReportRequest request)
+        {
+            try
+            {
+                request.ToAudit(LoginInfo);
+                var reportData = await _orderReportService.GetOrderReportStyleAsync(request, LoginInfo.CompanyCode);
+                var excelFile = GenerateStyleExcel(reportData);
+                return File(excelFile,
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    $"MonthWiseOrderReport_{DateTime.Now:yyyyMMddHHmmss}.xlsx");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
+        private byte[] GenerateStyleExcel(OrderReportStyleResponse reportData)
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using var package = new ExcelPackage();
+            var worksheet = package.Workbook.Worksheets.Add("Order Report");
+
+            // Header Section
+            worksheet.Cells[1, 1].Value = reportData.CompanyName;
+            worksheet.Cells[1, 1].Style.Font.Bold = true;
+            worksheet.Cells[1, 1].Style.Font.Size = 14;
+            worksheet.Cells[1, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            worksheet.Cells[2, 1].Value = reportData.ReportTitle + " " + reportData.ReportYear;
+            worksheet.Cells[2, 1].Style.Font.Bold = true;
+            worksheet.Cells[2, 1].Style.Font.Size = 12;
+            worksheet.Cells[2, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            // Get month columns
+            var monthColumns = reportData.MonthColumns ?? new List<string>();
+            int totalColumns = 4 + monthColumns.Count;
+
+            // Merge header cells
+            worksheet.Cells[1, 1, 1, totalColumns].Merge = true;
+            worksheet.Cells[2, 1, 2, totalColumns].Merge = true;
+
+            // Column Headers (Row 4)
+            int row = 4;
+            int col = 1;
+
+            //worksheet.Cells[row, col++].Value = "Sl No.";
+            worksheet.Cells[row, col++].Value = "Buyer Name";
+            worksheet.Cells[row, col++].Value = "Style";
+            worksheet.Cells[row, col++].Value = "Item";
+            worksheet.Cells[row, col++].Value = "Total Order Quantity";
+
+            foreach (var month in monthColumns)
+            {
+                worksheet.Cells[row, col++].Value = month;
+            }
+
+            // Style header row
+            using (var range = worksheet.Cells[row, 1, row, totalColumns])
+            {
+                range.Style.Font.Bold = true;
+                range.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                range.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+                range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                range.Style.Border.BorderAround(ExcelBorderStyle.Thin);
+            }
+
+            // Data Rows
+            row = 5;
+            foreach (var item in reportData.Data)
+            {
+                col = 1;
+
+                // Sl No
+                //if (decimal.TryParse(item.SlNo, out decimal sln))
+                //{
+                //    worksheet.Cells[row, col].Value = sln;
+                //    worksheet.Cells[row, col].Style.Numberformat.Format = "0";
+                //    worksheet.Cells[row, col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                //}
+                //col++;
+
+                // Buyer Name
+                worksheet.Cells[row, col].Value = item.BuyerName;
+                worksheet.Cells[row, col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                col++;
+
+                // Style
+                worksheet.Cells[row, col].Value = item.Style;
+                worksheet.Cells[row, col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[row, col].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                col++;
+
+                // Item
+                worksheet.Cells[row, col].Value = item.Item;
+                worksheet.Cells[row, col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                col++;
+
+                // Total Order Quantity
+                if (decimal.TryParse(item.TotalOrderQuantity, out decimal totalQty))
+                {
+                    worksheet.Cells[row, col].Value = totalQty;
+                    worksheet.Cells[row, col].Style.Numberformat.Format = "#,##0";
+                    worksheet.Cells[row, col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[row, col].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                }
+                col++;
+
+                // Monthly Quantities
+                foreach (var month in monthColumns)
+                {
+                    if (item.MonthlyQuantities.TryGetValue(month, out string value) &&
+                        !string.IsNullOrEmpty(value) &&
+                        decimal.TryParse(value, out decimal monthQty))
+                    {
+                        worksheet.Cells[row, col].Value = monthQty;
+                        worksheet.Cells[row, col].Style.Numberformat.Format = "#,##0";
+                        worksheet.Cells[row, col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        worksheet.Cells[row, col].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    }
+                    else
+                    {
+                        worksheet.Cells[row, col].Value = "";
+                    }
+                    col++;
+                }
+
+                row++;
+            }
+
+            // Auto-fit columns
+            worksheet.Cells[1, 1, row - 1, totalColumns].AutoFitColumns();
+
+            // Add borders to all data
+            using (var range = worksheet.Cells[4, 1, row - 1, totalColumns])
+            {
+                range.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                range.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                range.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                range.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+            }
+
+            return package.GetAsByteArray();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DownloadOrderStylePoReport([FromBody] OrderReportRequest request)
+        {
+            try
+            {
+                request.ToAudit(LoginInfo);
+                var reportData = await _orderReportService.GetOrderReportStylePoAsync(request, LoginInfo.CompanyCode);
+                var excelFile = GenerateStylePoExcel(reportData);
+                return File(excelFile,
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    $"MonthWiseOrderReport_{DateTime.Now:yyyyMMddHHmmss}.xlsx");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
+        private byte[] GenerateStylePoExcel(OrderReportStylePoResponse reportData)
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using var package = new ExcelPackage();
+            var worksheet = package.Workbook.Worksheets.Add("Order Report");
+            worksheet.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            worksheet.Cells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+            // Header Section
+            worksheet.Cells[1, 1].Value = reportData.CompanyName;
+            worksheet.Cells[1, 1].Style.Font.Bold = true;
+            worksheet.Cells[1, 1].Style.Font.Size = 14;
+            worksheet.Cells[1, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            worksheet.Cells[1, 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+            worksheet.Cells[2, 1].Value = reportData.ReportTitle + " " + reportData.ReportYear;
+            worksheet.Cells[2, 1].Style.Font.Bold = true;
+            worksheet.Cells[2, 1].Style.Font.Size = 12;
+            worksheet.Cells[2, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            worksheet.Cells[2, 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+            var monthColumns = reportData.MonthColumns ?? new List<string>();
+            int totalColumns = 5 + monthColumns.Count;
+
+            worksheet.Cells[1, 1, 1, totalColumns].Merge = true;
+            worksheet.Cells[2, 1, 2, totalColumns].Merge = true;
+
+            // Column Headers (Row 4)
+            int row = 4;
+            int col = 1;
+
+            worksheet.Cells[row, col++].Value = "Buyer Name";
+            worksheet.Cells[row, col++].Value = "Style";
+            worksheet.Cells[row, col++].Value = "Item";
+            worksheet.Cells[row, col++].Value = "P.O";
+            worksheet.Cells[row, col++].Value = "Order Quantity";
+
+            foreach (var month in monthColumns)
+                worksheet.Cells[row, col++].Value = month;
+
+            using (var range = worksheet.Cells[row, 1, row, totalColumns])
+            {
+                range.Style.Font.Bold = true;
+                range.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                range.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+                range.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            }
+
+            // Data Rows
+            row = 5;
+            string currentBuyer = "";
+            string currentStyle = "";
+            int buyerStartRow = row;
+            int styleStartRow = row;
+
+            foreach (var item in reportData.Data)
+            {
+                col = 1;
+
+                // Buyer Name
+                if (currentBuyer != item.BuyerName)
+                {
+                    if (currentBuyer != "" && buyerStartRow < row)
+                        worksheet.Cells[buyerStartRow, 1, row - 1, 1].Merge = true;
+
+                    currentBuyer = item.BuyerName;
+                    buyerStartRow = row;
+                }
+                worksheet.Cells[row, col++].Value = item.BuyerName;
+
+                // Style
+                if (currentStyle != item.Style || currentBuyer != item.BuyerName)
+                {
+                    if (currentStyle != "" && styleStartRow < row)
+                        worksheet.Cells[styleStartRow, 2, row - 1, 2].Merge = true;
+
+                    currentStyle = item.Style;
+                    styleStartRow = row;
+                }
+                worksheet.Cells[row, col++].Value = item.Style;
+
+                worksheet.Cells[row, col++].Value = item.Item;
+                worksheet.Cells[row, col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[row, col].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                worksheet.Cells[row, col++].Value = item.PurchaseOrder;
+
+                // Order Qty
+                if (decimal.TryParse(item.OrderQuantity, out decimal orderQty))
+                {
+                    worksheet.Cells[row, col].Value = orderQty;
+                    worksheet.Cells[row, col].Style.Numberformat.Format = "#,##0";
+                }
+                col++;
+
+                // Month Values (text allowed)
+                foreach (var monthKey in monthColumns)
+                {
+                    worksheet.Cells[row, col].Value = item.MonthlyQuantities.ContainsKey(monthKey)
+                        ? item.MonthlyQuantities[monthKey]
+                        : "";
+
+                    worksheet.Cells[row, col].Style.WrapText = true;
+                    worksheet.Cells[row, col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[row, col].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    col++;
+                }
+
+                row++;
+            }
+
+            // Merge last buyer & style blocks
+            if (buyerStartRow < row)
+                worksheet.Cells[buyerStartRow, 1, row - 1, 1].Merge = true;
+
+            if (styleStartRow < row)
+                worksheet.Cells[styleStartRow, 2, row - 1, 2].Merge = true;
+
+            worksheet.Cells.Style.WrapText = false;
+            worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+            for (int c = 1; c <= totalColumns; c++)
+                worksheet.Column(c).Width += 2;
+            for (int c = 1; c <= totalColumns; c++)
+                worksheet.Column(c).Style.WrapText = true;
+
+            for (int r = 4; r < row; r++)
+                for (int c = 1; c <= totalColumns; c++)
+                    worksheet.Cells[r, c].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+            return package.GetAsByteArray();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // GET: Buyers Dropdown
         //[HttpGet]
