@@ -48,6 +48,33 @@
         public List<string> MonthColumns { get; set; }
     }
 
+    public class OrderReportDataStylePoCS
+    {
+        public string SlNo { get; set; }
+        public string BuyerName { get; set; }
+        public string Style { get; set; }
+        public string Item { get; set; }
+        public string PurchaseOrder { get; set; }
+        public string OrderQuantity { get; set; }
+        public Dictionary<string, List<ColorSizeDetail>> MonthlyData { get; set; } = new Dictionary<string, List<ColorSizeDetail>>();
 
+
+    }
+
+    public class ColorSizeDetail
+    {
+        public string Color { get; set; }
+        public string Size { get; set; }
+        public string Quantity { get; set; }
+    }
+
+    public class OrderReportStylePoCSResponse
+    {
+        public string CompanyName { get; set; }
+        public string ReportTitle { get; set; }
+        public string ReportYear { get; set; }
+        public List<OrderReportDataStylePoCS> Data { get; set; }
+        public List<string> MonthColumns { get; set; }
+    }
 
 }

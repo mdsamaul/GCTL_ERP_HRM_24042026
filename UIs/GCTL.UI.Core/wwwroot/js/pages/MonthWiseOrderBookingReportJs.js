@@ -75,145 +75,6 @@
             });
         };
 
-        // -------------------- Flatpickr Initialization --------------------
-        //var GetFlatDate = function () {
-        //    flatpickr($('.flatDate'), {
-        //        dateFormat: "Y-m-d",
-        //        altInput: true,
-        //        altFormat: "d/m/Y",
-        //        allowInput: true,
-        //        defaultDate: "today",
-        //        onReady: function (selectedDates, dateStr, instance) {
-        //            instance.input.placeholder = "dd/mm/yyyy";
-        //        }
-        //    });
-        //};
-
-        //// -------------------- Document Ready --------------------
-        //$(document).ready(function () {
-        //    GetFlatDate();
-
-        //    // Toggle inputs based on selection
-        //    function toggleInputs() {
-        //        if ($('#Date').is(':checked')) {
-        //            $('#FromDateSelect, #ToDateSelect')
-        //                .prop('disabled', false)
-        //                .closest('.col-12').show();
-
-        //            $('#YearFrom, #YearTo')
-        //                .prop('disabled', true)
-        //                .closest('.col-12').hide();
-        //        } else if ($('#Year').is(':checked')) {
-        //            $('#FromDateSelect, #ToDateSelect')
-        //                .prop('disabled', true)
-        //                .closest('.col-12').hide();
-
-        //            $('#YearFrom, #YearTo')
-        //                .prop('disabled', false)
-        //                .closest('.col-12').show();
-        //        }
-        //    }
-
-        //    toggleInputs();
-        //    $('input[name="durationType"]').change(toggleInputs);
-        //});
-
-        //// -------------------- Get Report Function --------------------
-        ////function GetOrderReportFun() {
-        ////    let request = {};
-
-        ////    if ($('#Date').is(':checked')) {
-        ////        request.FromDate = $('#FromDateSelect').val();
-        ////        request.ToDate = $('#ToDateSelect').val();
-        ////    } else {
-        ////        request.FromYear = parseInt($('#YearFrom').val());
-        ////        request.ToYear = parseInt($('#YearTo').val());
-        ////    }
-
-        ////    console.log(request);
-
-        ////    $.ajax({
-        ////        url: '/MonthWiseOrderBookingReport/GetOrderReport',
-        ////        type: 'POST',
-        ////        contentType: 'application/json',
-        ////        data: JSON.stringify(request),
-        ////        success: function (res) {
-        ////            console.log('Report result:', res);
-        ////        }
-        ////    });
-        ////}
-
-        //// =======================
-        //// Get selected filter values
-        //// =======================
-        //function getFilteredValues() {
-        //    function getMultiSelectValues(selector) {
-        //        let val = $(selector).val();
-        //        return val && val.length > 0 ? val : [];
-        //    }
-
-        //    return {
-        //        FromDate: null,
-        //        ToDate: null,
-        //        FromYear: null,
-        //        ToYear: null,
-        //        BuyerIds: getMultiSelectValues("#buyerIdSelect"),
-        //        StyleIds: getMultiSelectValues("#styleSelect"),
-        //        PurchaseOrders: getMultiSelectValues("#purchaseOrderSelect"),
-        //        ColorIds: getMultiSelectValues("#colorSelect"),
-        //        SizeIds: getMultiSelectValues("#sizeSelect")
-        //    };
-        //}
-
-        //// =======================
-        //// Format date to yyyy-MM-dd
-        //// =======================
-        //function formatDateForBackend(dateStr) {
-        //    if (!dateStr) return null;
-        //    let date = new Date(dateStr);
-        //    let month = (date.getMonth() + 1).toString().padStart(2, '0');
-        //    let day = date.getDate().toString().padStart(2, '0');
-        //    return `${date.getFullYear()}-${month}-${day}`;
-        //}
-
-        //// =======================
-        //// Download Month Wise Order All Style Excel
-        //// =======================
-        //function GetOrderReportAllStyleDownloadExcelReport() {
-        //    var request = getFilteredValues();
-
-        //    // Date or Year filter
-        //    if ($('#Date').is(':checked')) {
-        //        request.FromDate = formatDateForBackend($('#FromDateSelect').val());
-        //        request.ToDate = formatDateForBackend($('#ToDateSelect').val());
-        //    } else if ($('#Year').is(':checked')) {
-        //        request.FromYear = parseInt($('#YearFrom').val()) || null;
-        //        request.ToYear = parseInt($('#YearTo').val()) || null;
-        //    }
-
-        //    $.ajax({
-        //        url: '/MonthWiseOrderBookingReport/DownloadOrderAllStyleReport',
-        //        type: 'POST',
-        //        contentType: 'application/json',
-        //        data: JSON.stringify(request),
-        //        xhrFields: { responseType: 'blob' },
-        //        beforeSend: showLoading,
-        //        success: function (blob) {
-        //            var link = document.createElement('a');
-        //            link.href = window.URL.createObjectURL(blob);
-        //            link.download = 'MonthWiseOrderReport_AllStyle_' + new Date().getTime() + '.xlsx';
-        //            link.click();
-        //            window.URL.revokeObjectURL(link.href);
-        //        },
-        //        error: function (xhr, status, error) {
-        //            console.error("Error downloading report:", error);
-        //            alert("Failed to download report");
-        //        },
-        //        complete: hideLoading
-        //    });
-        //}
-
-
         // =======================
         // Initialize Flatpickr for date inputs
         // =======================
@@ -461,6 +322,44 @@
         }
 
 
+        // =======================
+        // Download Month Wise Order Style Excel
+        // =======================
+        function GetOrderReportStylePoCSDownloadExcelReport() {
+            var request = getFilteredValues();
+
+            if ($('#Date').is(':checked')) {
+                request.FromDate = formatDateForBackend($('#FromDateSelect').val());
+                request.ToDate = formatDateForBackend($('#ToDateSelect').val());
+            } else if ($('#Year').is(':checked')) {
+                request.FromYear = parseInt($('#YearFrom').val()) || null;
+                request.ToYear = parseInt($('#YearTo').val()) || null;
+            }
+            console.log(request);
+            debugger
+            $.ajax({
+                url: '/MonthWiseOrderBookingReport/DownloadOrderStylePoCSReport',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(request),
+                xhrFields: { responseType: 'blob' },
+                beforeSend: showLoading,
+                success: function (blob) {
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = 'MonthWiseOrderReport_Style_' + new Date().getTime() + '.xlsx';
+                    link.click();
+                    window.URL.revokeObjectURL(link.href);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error downloading report:", error);
+                    alert("Failed to download report");
+                },
+                complete: hideLoading
+            });
+        }
+
+
 
 
 
@@ -523,7 +422,7 @@
         $(document).on('click', '#downloadReport', function () {
             console.log("click");
             var reportValue = $("#reportText").val();
-            //debugger
+            debugger
 
             if (reportValue === "downloadPdf") {
                 PdfDownload();
@@ -537,6 +436,8 @@
                     GetOrderReportStyleDownloadExcelReport();
                 } else if (styleId != null && styleId == '003') {
                     GetOrderReportStylePoDownloadExcelReport();
+                }else if (styleId != null && styleId == '004') {
+                    GetOrderReportStylePoCSDownloadExcelReport();
                 } else {
                     showToast("warning", "Please Select Style for Excel Report");
                 }

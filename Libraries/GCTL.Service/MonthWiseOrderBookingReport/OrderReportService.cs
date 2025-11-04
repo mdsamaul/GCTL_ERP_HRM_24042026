@@ -17,6 +17,8 @@ namespace GCTL.Service.MonthWiseOrderBookingReport
         private readonly IRepository<ProdDefStyle> styleRepo;
         private readonly IRepository<InvDefItem> itemRepo;
         private readonly IRepository<CoreCompany> comRepo;
+        private readonly IRepository<RmgProdDefColor> colorRepo;
+        private readonly IRepository<RmgProdDefSize> sizeRepo;
 
         public OrderReportService(
             IRepository<OrderReportData> orderReportDataRepo,
@@ -24,6 +26,8 @@ namespace GCTL.Service.MonthWiseOrderBookingReport
             IRepository<ProdDefStyle> styleRepo,
             IRepository<InvDefItem> itemRepo,
             IRepository<CoreCompany> comRepo,
+            IRepository<RmgProdDefColor> colorRepo,
+            IRepository<RmgProdDefSize> sizeRepo,
             IConfiguration configuration
 
             ) : base(orderReportDataRepo)
@@ -35,6 +39,8 @@ namespace GCTL.Service.MonthWiseOrderBookingReport
             this.styleRepo = styleRepo;
             this.itemRepo = itemRepo;
             this.comRepo = comRepo;
+            this.colorRepo = colorRepo;
+            this.sizeRepo = sizeRepo;
         }
 
 
@@ -346,33 +352,6 @@ namespace GCTL.Service.MonthWiseOrderBookingReport
                         }
                     }
 
-                    // Extract and sum monthly quantities
-                    //var rowDict = (IDictionary<string, object>)row;
-                    //foreach (var kvp in rowDict)
-                    //{
-                    //    if (kvp.Key.Contains("-") && kvp.Key.Length >= 6)
-                    //    {
-                    //        allMonthKeys.Add(kvp.Key);
-
-                    //        decimal currentValue = 0;
-                    //        if (dto.MonthlyQuantities.TryGetValue(kvp.Key, out var existingValue) &&
-                    //            !string.IsNullOrEmpty(existingValue) &&
-                    //            decimal.TryParse(existingValue, out var parsedExisting))
-                    //        {
-                    //            currentValue = parsedExisting;
-                    //        }
-
-                    //        if (kvp.Value != null &&
-                    //            !string.IsNullOrEmpty(kvp.Value.ToString()) &&
-                    //            decimal.TryParse(kvp.Value.ToString(), out var incomingValue))
-                    //        {
-                    //            currentValue += incomingValue;
-                    //        }
-
-                    //        dto.MonthlyQuantities[kvp.Key] = currentValue == 0 ? "" : currentValue.ToString();
-                    //    }
-                    //}
-
                     var rowDict = (IDictionary<string, object>)row;
 
                     foreach (var kvp in rowDict)
@@ -470,7 +449,122 @@ namespace GCTL.Service.MonthWiseOrderBookingReport
 
 
 
+        // ============ SERVICE METHOD ============
+        public async Task<OrderReportStylePoCSResponse> GetOrderReportStylePoCSAsync(OrderReportRequest request, string companyCode)
+        {
+            using var connection = new SqlConnection(_connectionString);
 
+            var parameters = new DynamicParameters();
+            parameters.Add("@FromDate", request.FromDate, DbType.Date);
+            parameters.Add("@ToDate", request.ToDate, DbType.Date);
+            parameters.Add("@FromYear", request.FromYear, DbType.Int32);
+            parameters.Add("@ToYear", request.ToYear, DbType.Int32);
+            parameters.Add("@BuyerIds", request.BuyerIds?.Any() == true ? string.Join(",", request.BuyerIds) : null, DbType.String);
+
+            var result = await connection.QueryAsync<dynamic>("sp_GetOrderReport", parameters, commandType: CommandType.StoredProcedure);
+
+            var groupedData = new Dictionary<string, OrderReportDataStylePoCS>();
+            var allMonthKeys = new SortedSet<string>();
+
+            foreach (var row in result)
+            {
+                string buyerId = row.BuyerId?.ToString() ?? "";
+                string styleId = row.Style?.ToString() ?? "";
+                string purchaseOrder = row.PurchaseOrder?.ToString() ?? "";
+                string detailOrderId = row.DetailOrderId?.ToString() ?? "";
+
+                string key = $"{buyerId}_{styleId}_{purchaseOrder}_{detailOrderId}";
+
+                string buyerName = buyerRepo.All().Where(x => x.BuyerId == buyerId).Select(x => x.BuyerName).FirstOrDefault() ?? "";
+                string styleName = styleRepo.All().Where(x => x.StyleId == styleId).Select(e => e.Style).FirstOrDefault() ?? "";
+
+                if (!groupedData.ContainsKey(key))
+                {
+                    groupedData[key] = new OrderReportDataStylePoCS
+                    {
+                        BuyerName = buyerName,
+                        Style = styleName,
+                        Item = "",
+                        PurchaseOrder = purchaseOrder,
+                        OrderQuantity = row.DetailsQuantity?.ToString() ?? "",
+                        MonthlyData = new Dictionary<string, List<ColorSizeDetail>>()
+                    };
+                }
+
+                var dto = groupedData[key];
+
+                // Collect items
+                string currentItemId = row.ProductId?.ToString() ?? "";
+                string currentItem = itemRepo.All().Where(x => x.ItemId == currentItemId).Select(s => s.ItemName).FirstOrDefault() ?? "";
+                if (!string.IsNullOrEmpty(currentItem) && !dto.Item.Contains(currentItem))
+                {
+                    dto.Item = string.IsNullOrEmpty(dto.Item) ? currentItem : dto.Item + ", " + currentItem;
+                }
+
+                // Extract color, size, quantity
+                string colorId = row.ColorId?.ToString() ?? "";
+                string sizeId = row.SizeId?.ToString() ?? "";
+                string colorSizeQty = row.ColorSizeBreakupQuantity?.ToString() ?? "";
+
+                string colorName = colorRepo.All().Where(x => x.ColorId == colorId).Select(c => c.Color).FirstOrDefault() ?? "";
+                string sizeName = sizeRepo.All().Where(x => x.SizeId == sizeId).Select(s => s.Size).FirstOrDefault() ?? "";
+
+                // Process monthly data
+                var rowDict = (IDictionary<string, object>)row;
+                foreach (var kvp in rowDict)
+                {
+                    if (kvp.Key.Contains("-") && kvp.Key.Length >= 6)
+                    {
+                        allMonthKeys.Add(kvp.Key);
+
+                        if (kvp.Value != null &&
+                            !string.IsNullOrEmpty(kvp.Value.ToString()) &&
+                            decimal.TryParse(kvp.Value.ToString(), out var monthValue) &&
+                            monthValue > 0 &&
+                            !string.IsNullOrEmpty(colorSizeQty) &&
+                            decimal.TryParse(colorSizeQty, out var csQty) &&
+                            csQty > 0)
+                        {
+                            if (!dto.MonthlyData.ContainsKey(kvp.Key))
+                            {
+                                dto.MonthlyData[kvp.Key] = new List<ColorSizeDetail>();
+                            }
+
+                            dto.MonthlyData[kvp.Key].Add(new ColorSizeDetail
+                            {
+                                Color = colorName,
+                                Size = sizeName,
+                                Quantity = csQty.ToString()
+                            });
+                        }
+                    }
+                }
+            }
+
+            // Determine report year
+            string reportYear = "";
+            if (request.FromYear.HasValue && request.ToYear.HasValue)
+            {
+                reportYear = request.FromYear == request.ToYear ? $"({request.FromYear})" : $"({request.FromYear} - {request.ToYear})";
+            }
+            else if (request.FromDate.HasValue && request.ToDate.HasValue)
+            {
+                int startYear = request.FromDate.Value.Year;
+                int endYear = request.ToDate.Value.Year;
+                reportYear = startYear == endYear ? $"({startYear})" : $"({startYear} - {endYear})";
+            }
+
+            var sortedData = groupedData.Values.OrderBy(x => x.BuyerName).ThenBy(x => x.Style).ThenBy(x => x.PurchaseOrder).ToList();
+
+            return new OrderReportStylePoCSResponse
+            {
+                CompanyName = comRepo.All().Where(x => x.CompanyCode == companyCode).Select(s => s.CompanyName).FirstOrDefault() ?? "Integra Apparels (Bangladesh) Limited",
+                ReportTitle = "Month Wise Order Booking Status",
+                ReportYear = reportYear,
+                Data = sortedData,
+                MonthColumns = allMonthKeys.ToList()
+            };
+        }
 
 
 
