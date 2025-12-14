@@ -711,6 +711,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Inv_Def_BookingItemType]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Inv_Def_BuyerDepartment]",
          "ObjectType": 0
       },
@@ -855,6 +859,26 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[RMG_BookingOrderDetails]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_BookingOrderReceive]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_CostingDetails]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_CostingDetailsTemp]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_CostingInfo]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[RMG_Def_FinalDestination]",
          "ObjectType": 0
       },
@@ -872,6 +896,54 @@
       },
       {
          "Name": "[dbo].[RMG_Def_UDNo]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Inv_BookingReceivedDetails_Button]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Inv_BookingReceivedDetails_ButtonTemp]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Inv_BookingReceivedDetails_Carton]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Inv_BookingReceivedDetails_CartonTemp]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Inv_BookingReceivedDetails_Extra]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Inv_BookingReceivedDetails_ExtraTemp]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Inv_BookingReceivedDetails_Febric]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Inv_BookingReceivedDetails_FebricTemp]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Inv_BookingReceivedDetails_Poly]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Inv_BookingReceivedDetails_PolyTemp]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Inv_BookingReceivedDetails_Thread]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Inv_BookingReceivedDetails_ThreadTemp]",
          "ObjectType": 0
       },
       {
@@ -899,6 +971,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[RMG_Prod_Def_Instruction]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[RMG_Prod_Def_Inv_SubItem2]",
          "ObjectType": 0
       },
@@ -916,6 +992,10 @@
       },
       {
          "Name": "[dbo].[RMG_Prod_Def_Size]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RMG_Prod_Def_ThreadCount]",
          "ObjectType": 0
       },
       {
@@ -1167,6 +1247,14 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[GetCostingReportByCostingId]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetCostingReportFilters]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[GetDiscountDetails]",
          "ObjectType": 1
       },
@@ -1179,11 +1267,19 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[GetFilteredCostingReports]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[GetLeaveReport100]",
          "ObjectType": 1
       },
       {
          "Name": "[dbo].[GetOfficialInfo]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetProdOrderReport]",
          "ObjectType": 1
       },
       {
@@ -1540,6 +1636,10 @@
       },
       {
          "Name": "[dbo].[SP_GetEmployeesByEmployeeIDs]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_GetOrderReport]",
          "ObjectType": 1
       },
       {

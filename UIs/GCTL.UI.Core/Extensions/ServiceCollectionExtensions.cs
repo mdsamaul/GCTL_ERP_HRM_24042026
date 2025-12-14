@@ -124,7 +124,10 @@ using GCTL.Service.Religions;
 //using GCTL.Service.ReferencePersons;
 
 using GCTL.Service.Reports;
+using GCTL.Service.RMG_CostingInfo;
+using GCTL.Service.RMG_CostingInfoReport;
 using GCTL.Service.RMG_Prod_Def_UnitType;
+using GCTL.Service.RMGBookingOrderEntryBukl;
 using GCTL.Service.RMGProdOrderInformationEntry;
 using GCTL.Service.RosterScheduleApproval;
 using GCTL.Service.RosterScheduleEntry;
@@ -275,6 +278,9 @@ namespace GCTL.UI.Core.Extensions
             services.AddScoped<IBuyerDepEntryService, BuyerDepEntryService>();
             services.AddScoped<IBuyerDLAddressService, BuyerDLAddressService>();
             services.AddScoped<IOrderReportService, OrderReportService>();
+            services.AddScoped<IRMG_CostingInfoService, RMG_CostingInfoService>();
+            services.AddScoped<IRMG_CostingInfoReportService, RMG_CostingInfoReportService>();
+            services.AddScoped<IRMGBookingOrderEntryBuklService, RMGBookingOrderEntryBuklService>();
 
 
 

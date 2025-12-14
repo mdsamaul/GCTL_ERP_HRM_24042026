@@ -20,6 +20,7 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
         private readonly IRepository<InvDefItem> itemRepo;
         private readonly IRepository<DefInvStockLevelManagement> stockManagementRepo;
         private readonly IRepository<InvDefItemType> itemTypeRepo;
+        private readonly IRepository<InvDefBookingItemType> itemBookingTypeRepo;
         private readonly IRepository<InvDefSupplierOrigin> originRepo;
         private readonly IRepository<CaDefCountry> countryRepo;
         private readonly IRepository<CaDefCurrency> currencyRepo;
@@ -52,7 +53,8 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
             IRepository<InvItemPhoto> photoRepo,
             IConfiguration configuration,
             IRepository<RmgDefSupplier> supplierRepo,
-            IRepository<InvDefWarehouse> wareHouseRepo) : base(itemRepo)
+            IRepository<InvDefWarehouse> wareHouseRepo,
+            IRepository<InvDefBookingItemType> itemBookingTypeRepo) : base(itemRepo)
         {
             this.buyerRepo = buyerRepo;
             this.stypeRepo = stypeRepo;
@@ -74,6 +76,7 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
             this.supplierRepo = supplierRepo;
             this.wareHouseRepo = wareHouseRepo;
             _connectionString = configuration.GetConnectionString("ApplicationDbConnection");
+            this.itemBookingTypeRepo = itemBookingTypeRepo;
         }
         private readonly string CreateSuccess = "Data saved successfully.";
         private readonly string CreateFailed = "Data insertion failed.";
@@ -1058,8 +1061,8 @@ namespace GCTL.Service.SALES_Def_Inv_MainItemGroupService
                 var buyers = buyerRepo.All()
                     .ToDictionary(x => x.BuyerId, x => x.BuyerName);
 
-                var itemTypes = itemTypeRepo.All()
-                    .ToDictionary(x => x.ItemTypeId, x => x.ItemName);
+                var itemTypes = itemBookingTypeRepo.All()
+                    .ToDictionary(x => x.BookingItemTypeId, x => x.BookingItemType);
 
                 var units = unitRepo.All()
                     .ToDictionary(x => x.UnitTypId, x => x.UnitTypeName);

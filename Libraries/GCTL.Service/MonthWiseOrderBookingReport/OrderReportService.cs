@@ -562,7 +562,13 @@ namespace GCTL.Service.MonthWiseOrderBookingReport
                 ReportTitle = "Month Wise Order Booking Status",
                 ReportYear = reportYear,
                 Data = sortedData,
-                MonthColumns = allMonthKeys.ToList()
+                //MonthColumns = allMonthKeys.ToList()
+                MonthColumns = allMonthKeys.Select(m =>
+                {
+                    var formats = new[] { "MMM-yy", "MMM-yyyy" };
+                    DateTime.TryParseExact(m, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsed);
+                    return new { Key = m, Date = parsed };
+                }).OrderBy(x => x.Date).Select(x => x.Key).ToList()
             };
         }
 

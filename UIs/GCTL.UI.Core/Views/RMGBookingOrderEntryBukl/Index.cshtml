@@ -1,0 +1,425 @@
+﻿@model GCTL.UI.Core.ViewModels.RMGBookingOrderEntryBukl.RMGBookingOrderEntryBuklViewModel
+@{
+    Model.Breadcrumb = "RMGBookingOrderEntryBukl";
+    Model.PageTitle = "RMG Booking Order Entry Bukl";
+}
+
+<style>
+    .custom-fieldset {
+        position: relative;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        padding: 30px 20px 20px 20px;
+        margin: 20px 0;
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.2);
+    }
+
+        .custom-fieldset legend {
+            position: absolute;
+            top: -14px;
+            left: 20px;
+            background-color: white;
+            padding: 0 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #727272;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: auto;
+        }
+
+        .custom-fieldset label {
+            display: block;
+            margin-top: 10px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .custom-fieldset input[type="text"],
+        .custom-fieldset input[type="email"],
+        .custom-fieldset input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            color: #000;
+        }
+
+        .custom-fieldset input[type="submit"] {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #fff;
+            border: 2px solid #333;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+            .custom-fieldset input[type="submit"]:hover {
+                background-color: #45a049;
+                border-color: #45a049;
+            }
+
+    #stickyHeader {
+        position: sticky;
+        top: 0;
+        z-index: 1050;
+        background: white;
+        padding: 10px 20px;
+        transition: all 0.3s ease-in-out;
+        box-shadow: none;
+    }
+
+        #stickyHeader.scrolled {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+
+    /* input[type="text"], */
+    input[type="email"],
+    input[type="date"],
+    input[type="number"],
+    input[type="password"],
+    select,
+    textarea {
+        border: 1px solid #ccc !important;
+        border-radius: 4px;
+        padding: 6px 10px;
+        box-sizing: border-box;
+        outline: none;
+    }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #999 !important;
+            box-shadow: none;
+        }
+
+
+
+    .flatpickr-calendar.inline {
+        font-size: 12px !important;
+        max-width: 9.9vw !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        background: transparent !important;
+    }
+
+
+    .dataTables_wrapper .dataTables_filter input {
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: 0px;
+    }
+    /* Remove padding, margin, border, background, and hover effects */
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        background: transparent !important;
+        color: inherit !important;
+        box-shadow: none !important;
+    }
+
+        /* Remove selected page button styling */
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background: transparent !important;
+            color: inherit !important;
+            font-weight: normal !important;
+            border: none !important;
+        }
+
+        /* Remove hover effect */
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: transparent !important;
+            color: inherit !important;
+        }
+
+
+    .loading-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+        .loading-overlay.active {
+            display: flex !important;
+        }
+
+  /*   #bookingTable th {
+        border-right: 2px solid #dee2e6 !important;
+        border-bottom: 2px solid #dee2e6 !important;
+        background-color: #f8f9fa;
+        font-weight: 600;
+        padding: 8px 4px !important;
+        white-space: nowrap;
+    }
+
+    #bookingTable td {
+        border-right: 1px solid #dee2e6 !important;
+        padding: 4px !important;
+        vertical-align: middle;
+    }
+
+    #bookingTable .border-end {
+        border-right: 2px solid #dee2e6 !important;
+    }
+
+    #bookingTable .bg-info-subtle {
+        background-color: #cfe2ff !important;
+    } */
+
+    /* Center to Left-Right Fade Animation */
+    /* .animate-col {
+        border-right: 3px solid #0d6efd !important;
+        animation: expandFromCenter 0.6s ease-out;
+    }
+
+    @@keyframes expandFromCenter {
+        0% {
+            opacity: 0;
+            transform: scaleX(0);
+            transform-origin: center;
+        }
+
+        50% {
+            opacity: 0.5;
+        }
+
+        100% {
+            opacity: 1;
+            transform: scaleX(1);
+        }
+    } */
+    /* ===== FIXED HEADER + BODY SYNC + MIN WIDTH ===== */
+    /* Header কে tbody-র width অনুযায়ী ফিট করবে */
+    /* Perfect Header-Body Sync for DataTables + scrollX */
+    /* ==== PERFECT HEADER-BODY ALIGNMENT FOR DATATABLES + scrollX ==== */
+    /* ==== পারফেক্ট অ্যালাইনমেন্ট + 200px কলাম + প্যাডিং + বর্ডার ==== */
+    /* দ্বিতীয় লুকানো thead পুরোপুরি লুকিয়ে দাও – alignment কখনো ভাঙবে না */
+    /* দ্বিতীয় thead পুরোপুরি বন্ধ */
+    .dataTables_scrollHead {
+        display: none !important;
+    }
+
+    .dataTables_scrollBody {
+        overflow: visible !important;
+    }
+
+    #bookingTable {
+        width: 100% !important;
+    }
+    #bookingTable input{
+        text-align:center;
+    }
+    .dataTables_sizing{
+        height: auto !important;
+        text-align: center !important;
+    }
+
+  
+
+    .select2-container--bootstrap-5 .select2-results {
+        max-height: 250px !important;
+        overflow-y: auto !important;
+    }
+    /* Focus state border */
+    .select2-container--bootstrap-5.select2-container--focus .select2-selection--single {
+        border-color: #86b7fe;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+
+    /* Text container */
+    .select2-container--bootstrap-5 .select2-selection--single .select2-selection__rendered {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding-right: 30px;
+        line-height: 38px;
+    }
+
+    /* Clear icon - right side */
+    .select2-container--bootstrap-5 .select2-selection--single .select2-selection__clear {
+        position: absolute !important;
+        right: 35px !important; /* arrow থেকে left এ */
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        margin: 0 !important;
+        cursor: pointer;
+        color: #999;
+        font-size: 18px;
+        z-index: 3;
+    }
+
+    /* Dropdown arrow - সবচেয়ে right এ */
+    .select2-container--bootstrap-5 .select2-selection--single .select2-selection__arrow {
+        position: absolute !important;
+        top: 50% !important;
+        right: 10px !important;
+        height: 20px !important;
+        width: 20px !important;
+        margin-top: -10px !important;
+        pointer-events: none;
+        z-index: 2;
+    }
+
+        /* Arrow shape */
+        .select2-container--bootstrap-5 .select2-selection--single .select2-selection__arrow b {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -4px;
+            margin-top: -2px;
+            border-style: solid !important;
+            border-color: #333 transparent transparent transparent !important;
+            border-width: 5px 4px 0 4px !important;
+        }
+
+    div.dataTables_wrapper div.dataTables_filter input {
+        width: 85% !important;
+    }
+
+    div.dataTables_wrapper div.dataTables_scrollBody {
+        overflow-y: auto !important;
+    }
+
+    .custom-tooltip .tooltip-inner {
+        max-width: 300px; /* অথবা পছন্দমতো বড়ো করো */
+        white-space: normal; /* line break allow করবে */
+        background-color: #fff479;
+        color: #000;
+        border: 2px solid #000;
+        font-size: 14px;
+    }
+
+    .select2-container--bootstrap-5 .select2-selection--single {
+        /* margin-top: 5px; */
+        min-height: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        position: relative;
+        border: 1px solid #ced4da;
+        border-radius: 0.375rem;
+    }
+
+    .flatpickr-current-month .flatpickr-monthDropdown-months, .flatpickr-current-month .cur-year {
+        border: none !important;
+    }
+
+</style>
+<!-- Content Header (Page header) -->
+<div class="container-fluid">
+    <partial name="_PageHeader" model="Model"></partial>
+</div>
+
+<div class="container-fluid">
+    <div id="stickyHeader" class="px-2 sticky-top rounded">
+        <partial name="_Toolbars" model="new ToobarModel() { Title = Model.Breadcrumb, Code = Model.Code, Name = Model.BookingOrderEntryBuklSetup.BookinOrderNo }" />
+    </div>
+    <div>
+        <partial name="_Setup" model="Model" />
+    </div>
+    <div class="card">
+        <partial name="_Grid" />
+    </div>
+    
+</div>
+@* <!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- FontAwesome (For icons like plus icon) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<!-- Bootstrap 5 JS (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables CSS (Bootstrap 5 compatible) -->
+<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+<!-- DataTables JS (Bootstrap 5 compatible) -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!-- Flatpickr (Date picker, if used) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Page-specific JS -->
+    <script src="~/js/pages/RMGBookingOrderEntryBukl.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $.RMGBookingOrderEntryBukl({
+                baseUrl: '@Url.Action("Index", "RMGBookingOrderEntryBukl")',
+                load: function () {
+                    console.log("Custom load logic called from Razor view");
+                }
+            });
+        });
+        if (typeof pdfjsLib !== 'undefined') {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+        }
+    </script>
+} *@
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- FontAwesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables CSS -->
+<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!-- Flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    @* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css"> *@
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Toastr for notifications -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <!-- Page-specific JS -->
+    <script src="~/js/pages/RMGBookingOrderEntryBukl.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var bookingInstance = $.RMGBookingOrderEntryBukl({
+                baseUrl: '@Url.Action("Index", "RMGBookingOrderEntryBukl")',
+                load: function () {
+                    console.log("Custom load logic called from Razor view");
+                }
+            });          
+        });
+
+        // PDF.js configuration (if needed)
+        if (typeof pdfjsLib !== 'undefined') {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+        }
+    </script>
+}

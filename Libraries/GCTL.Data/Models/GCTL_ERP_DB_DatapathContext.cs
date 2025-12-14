@@ -192,6 +192,7 @@ namespace GCTL.Data.Models
         public virtual DbSet<HrmTransportExpenseDetailsTemp> HrmTransportExpenseDetailsTemp { get; set; }
         public virtual DbSet<HrmTransportExpenseEntry> HrmTransportExpenseEntry { get; set; }
         public virtual DbSet<InvCatagory> InvCatagory { get; set; }
+        public virtual DbSet<InvDefBookingItemType> InvDefBookingItemType { get; set; }
         public virtual DbSet<InvDefBuyerDepartment> InvDefBuyerDepartment { get; set; }
         public virtual DbSet<InvDefCompanyFor> InvDefCompanyFor { get; set; }
         public virtual DbSet<InvDefCompanyInfo> InvDefCompanyInfo { get; set; }
@@ -228,22 +229,41 @@ namespace GCTL.Data.Models
         public virtual DbSet<ProdDefStyle> ProdDefStyle { get; set; }
         public virtual DbSet<ProdDefUnit> ProdDefUnit { get; set; }
         public virtual DbSet<RmgBookingOrder> RmgBookingOrder { get; set; }
+        public virtual DbSet<RmgBookingOrderDetails> RmgBookingOrderDetails { get; set; }
+        public virtual DbSet<RmgBookingOrderReceive> RmgBookingOrderReceive { get; set; }
+        public virtual DbSet<RmgCostingDetails> RmgCostingDetails { get; set; }
+        public virtual DbSet<RmgCostingDetailsTemp> RmgCostingDetailsTemp { get; set; }
+        public virtual DbSet<RmgCostingInfo> RmgCostingInfo { get; set; }
         public virtual DbSet<RmgDefFinalDestination> RmgDefFinalDestination { get; set; }
         public virtual DbSet<RmgDefLcType> RmgDefLcType { get; set; }
         public virtual DbSet<RmgDefProductType> RmgDefProductType { get; set; }
         public virtual DbSet<RmgDefSupplier> RmgDefSupplier { get; set; }
         public virtual DbSet<RmgDefUdno> RmgDefUdno { get; set; }
+        public virtual DbSet<RmgInvBookingReceivedDetailsButton> RmgInvBookingReceivedDetailsButton { get; set; }
+        public virtual DbSet<RmgInvBookingReceivedDetailsButtonTemp> RmgInvBookingReceivedDetailsButtonTemp { get; set; }
+        public virtual DbSet<RmgInvBookingReceivedDetailsCarton> RmgInvBookingReceivedDetailsCarton { get; set; }
+        public virtual DbSet<RmgInvBookingReceivedDetailsCartonTemp> RmgInvBookingReceivedDetailsCartonTemp { get; set; }
+        public virtual DbSet<RmgInvBookingReceivedDetailsExtra> RmgInvBookingReceivedDetailsExtra { get; set; }
+        public virtual DbSet<RmgInvBookingReceivedDetailsExtraTemp> RmgInvBookingReceivedDetailsExtraTemp { get; set; }
+        public virtual DbSet<RmgInvBookingReceivedDetailsFebric> RmgInvBookingReceivedDetailsFebric { get; set; }
+        public virtual DbSet<RmgInvBookingReceivedDetailsFebricTemp> RmgInvBookingReceivedDetailsFebricTemp { get; set; }
+        public virtual DbSet<RmgInvBookingReceivedDetailsPoly> RmgInvBookingReceivedDetailsPoly { get; set; }
+        public virtual DbSet<RmgInvBookingReceivedDetailsPolyTemp> RmgInvBookingReceivedDetailsPolyTemp { get; set; }
+        public virtual DbSet<RmgInvBookingReceivedDetailsThread> RmgInvBookingReceivedDetailsThread { get; set; }
+        public virtual DbSet<RmgInvBookingReceivedDetailsThreadTemp> RmgInvBookingReceivedDetailsThreadTemp { get; set; }
         public virtual DbSet<RmgProdDefBrand> RmgProdDefBrand { get; set; }
         public virtual DbSet<RmgProdDefBuyer> RmgProdDefBuyer { get; set; }
         public virtual DbSet<RmgProdDefBuyerPhoto> RmgProdDefBuyerPhoto { get; set; }
         public virtual DbSet<RmgProdDefColor> RmgProdDefColor { get; set; }
         public virtual DbSet<RmgProdDefDeliveryAddress> RmgProdDefDeliveryAddress { get; set; }
         public virtual DbSet<RmgProdDefDeliveryMethod> RmgProdDefDeliveryMethod { get; set; }
+        public virtual DbSet<RmgProdDefInstruction> RmgProdDefInstruction { get; set; }
         public virtual DbSet<RmgProdDefInvSubItem2> RmgProdDefInvSubItem2 { get; set; }
         public virtual DbSet<RmgProdDefPackage> RmgProdDefPackage { get; set; }
         public virtual DbSet<RmgProdDefProductionType> RmgProdDefProductionType { get; set; }
         public virtual DbSet<RmgProdDefSeason> RmgProdDefSeason { get; set; }
         public virtual DbSet<RmgProdDefSize> RmgProdDefSize { get; set; }
+        public virtual DbSet<RmgProdDefThreadCount> RmgProdDefThreadCount { get; set; }
         public virtual DbSet<RmgProdDefUnitType> RmgProdDefUnitType { get; set; }
         public virtual DbSet<RmgProdOrder> RmgProdOrder { get; set; }
         public virtual DbSet<RmgProdOrderDetails> RmgProdOrderDetails { get; set; }
@@ -9471,6 +9491,53 @@ namespace GCTL.Data.Models
                     .HasColumnName("UserInfoEmployeeID");
             });
 
+            modelBuilder.Entity<InvDefBookingItemType>(entity =>
+            {
+                entity.HasKey(e => e.AutoId)
+                    .HasName("PK__Inv_Def___6B2329055AB6457D");
+
+                entity.ToTable("Inv_Def_BookingItemType");
+
+                entity.Property(e => e.AutoId)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.BookingItemType)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.BookingItemTypeId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("BookingItemTypeID");
+
+                entity.Property(e => e.CompanyId)
+                    .HasMaxLength(50)
+                    .HasColumnName("CompanyID");
+
+                entity.Property(e => e.EmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<InvDefBuyerDepartment>(entity =>
             {
                 entity.HasKey(e => e.Tc)
@@ -11203,9 +11270,209 @@ namespace GCTL.Data.Models
             modelBuilder.Entity<RmgBookingOrder>(entity =>
             {
                 entity.HasKey(e => e.Tc)
-                    .HasName("PK__RMG_Book__3214E4081C0CB78A");
+                    .HasName("PK__RMG_Book__3214E40840476479");
 
                 entity.ToTable("RMG_BookingOrder");
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
+
+                entity.Property(e => e.BookinDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BookinOrderNo)
+                    .HasMaxLength(50)
+                    .HasColumnName("BookinOrderNO");
+
+                entity.Property(e => e.BookingEntryType).HasMaxLength(50);
+
+                entity.Property(e => e.BookingType).HasMaxLength(100);
+
+                entity.Property(e => e.BuyerId)
+                    .HasMaxLength(100)
+                    .HasColumnName("BuyerID");
+
+                entity.Property(e => e.CompanyId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("CompanyID");
+
+                entity.Property(e => e.DeliveryDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DeliveryMethod).HasMaxLength(200);
+
+                entity.Property(e => e.EmployeId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeID");
+
+                entity.Property(e => e.EnterFromPageName).HasMaxLength(50);
+
+                entity.Property(e => e.IntegraJobNo).HasColumnName("IntegraJobNO");
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.MasterPurchaseOrder).HasMaxLength(50);
+
+                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Mrbpid)
+                    .HasMaxLength(50)
+                    .HasColumnName("MRBPID");
+
+                entity.Property(e => e.PaymentTerms).HasMaxLength(50);
+
+                entity.Property(e => e.PicurrencyId)
+                    .HasMaxLength(50)
+                    .HasColumnName("PICurrencyId");
+
+                entity.Property(e => e.Pidate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("PIDate");
+
+                entity.Property(e => e.PifilePath).HasColumnName("PIFilePath");
+
+                entity.Property(e => e.Pino)
+                    .HasMaxLength(50)
+                    .HasColumnName("PINo");
+
+                entity.Property(e => e.Pivalue)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("PIValue");
+
+                entity.Property(e => e.PoNo).HasMaxLength(50);
+
+                entity.Property(e => e.PurchasedOfficer).HasMaxLength(50);
+
+                entity.Property(e => e.StyleId)
+                    .HasMaxLength(50)
+                    .HasColumnName("StyleID");
+
+                entity.Property(e => e.SupplierId).HasMaxLength(50);
+
+                entity.Property(e => e.TermsCondition).HasMaxLength(50);
+
+                entity.Property(e => e.WarehouseId)
+                    .HasMaxLength(50)
+                    .HasColumnName("WarehouseID");
+            });
+
+            modelBuilder.Entity<RmgBookingOrderDetails>(entity =>
+            {
+                entity.ToTable("RMG_BookingOrderDetails");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.AmountCurrency)
+                    .HasMaxLength(10)
+                    .HasColumnName("amountCurrency");
+
+                entity.Property(e => e.BookinOrderNo)
+                    .HasMaxLength(50)
+                    .HasColumnName("BookinOrderNO");
+
+                entity.Property(e => e.Color)
+                    .HasMaxLength(50)
+                    .HasColumnName("color");
+
+                entity.Property(e => e.CompanyId)
+                    .HasMaxLength(50)
+                    .HasColumnName("companyID");
+
+                entity.Property(e => e.Discount)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("discount");
+
+                entity.Property(e => e.EmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("employeeID");
+
+                entity.Property(e => e.EntryDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("entryDate");
+
+                entity.Property(e => e.Item)
+                    .HasMaxLength(100)
+                    .HasColumnName("item");
+
+                entity.Property(e => e.ItemDiscription)
+                    .HasMaxLength(200)
+                    .HasColumnName("itemDiscription");
+
+                entity.Property(e => e.ItemOrderId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ItemOrderID");
+
+                entity.Property(e => e.ItemQuantity)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("itemQuantity");
+
+                entity.Property(e => e.ItemType)
+                    .HasMaxLength(50)
+                    .HasColumnName("itemType");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.ModifyDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("modifyDate");
+
+                entity.Property(e => e.PriceCurrency)
+                    .HasMaxLength(100)
+                    .HasColumnName("priceCurrency");
+
+                entity.Property(e => e.QuantityUnit)
+                    .HasMaxLength(20)
+                    .HasColumnName("quantityUnit");
+
+                entity.Property(e => e.Remarks)
+                    .HasMaxLength(200)
+                    .HasColumnName("remarks");
+
+                entity.Property(e => e.SampleImage)
+                    .HasColumnType("image")
+                    .HasColumnName("sampleImage");
+
+                entity.Property(e => e.Size).HasMaxLength(50);
+
+                entity.Property(e => e.TotalAmount)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("totalAmount");
+
+                entity.Property(e => e.UnitPrice)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("unitPrice");
+            });
+
+            modelBuilder.Entity<RmgBookingOrderReceive>(entity =>
+            {
+                entity.HasKey(e => e.Tc)
+                    .HasName("PK__RMG_Book__3214E408FB39EEC4");
+
+                entity.ToTable("RMG_BookingOrderReceive");
 
                 entity.Property(e => e.Tc)
                     .HasColumnType("numeric(18, 0)")
@@ -11266,22 +11533,6 @@ namespace GCTL.Data.Models
 
                 entity.Property(e => e.PaymentTerms).HasMaxLength(50);
 
-                entity.Property(e => e.PicurrencyId)
-                    .HasMaxLength(50)
-                    .HasColumnName("PICurrencyId");
-
-                entity.Property(e => e.Pidate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("PIDate");
-
-                entity.Property(e => e.Pino)
-                    .HasMaxLength(50)
-                    .HasColumnName("PINo");
-
-                entity.Property(e => e.Pivalue)
-                    .HasColumnType("decimal(18, 2)")
-                    .HasColumnName("PIValue");
-
                 entity.Property(e => e.PoNo).HasMaxLength(50);
 
                 entity.Property(e => e.PurchasedOfficer).HasMaxLength(50);
@@ -11291,10 +11542,318 @@ namespace GCTL.Data.Models
                     .HasColumnName("StyleID");
 
                 entity.Property(e => e.TermsCondition).HasMaxLength(50);
+            });
 
-                entity.Property(e => e.WarehouseId)
+            modelBuilder.Entity<RmgCostingDetails>(entity =>
+            {
+                entity.ToTable("RMG_CostingDetails");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.BookinOrderNo).HasColumnName("BookinOrderNO");
+
+                entity.Property(e => e.BookingItemTypeId)
+                    .HasMaxLength(100)
+                    .HasColumnName("BookingItemTypeID");
+
+                entity.Property(e => e.ColorId)
+                    .HasMaxLength(100)
+                    .HasColumnName("ColorID");
+
+                entity.Property(e => e.Consumption).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.CostingDetailsId)
                     .HasMaxLength(50)
-                    .HasColumnName("WarehouseID");
+                    .HasColumnName("CostingDetailsID");
+
+                entity.Property(e => e.CostingId)
+                    .HasMaxLength(50)
+                    .HasColumnName("CostingID");
+
+                entity.Property(e => e.Extra).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ItemId)
+                    .HasMaxLength(100)
+                    .HasColumnName("ItemID");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.Quantity).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ResponsibleBy).HasMaxLength(50);
+
+                entity.Property(e => e.Slno)
+                    .HasMaxLength(50)
+                    .HasColumnName("SLNO");
+
+                entity.Property(e => e.SupplierId)
+                    .HasMaxLength(100)
+                    .HasColumnName("SupplierID");
+
+                entity.Property(e => e.TotalAmountBdt)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("TotalAmountBDT");
+
+                entity.Property(e => e.TotalAmountShhkg)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("TotalAmountSHHKG");
+
+                entity.Property(e => e.TotalAmountThb)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("TotalAmountTHB");
+
+                entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalPriceCurrencyId).HasMaxLength(50);
+
+                entity.Property(e => e.TotalQuantity).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalQuantityUnit).HasMaxLength(10);
+
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.Width).HasMaxLength(200);
+            });
+
+            modelBuilder.Entity<RmgCostingDetailsTemp>(entity =>
+            {
+                entity.ToTable("RMG_CostingDetailsTemp");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.BookingItemTypeId)
+                    .HasMaxLength(100)
+                    .HasColumnName("BookingItemTypeID");
+
+                entity.Property(e => e.ColorId)
+                    .HasMaxLength(100)
+                    .HasColumnName("ColorID");
+
+                entity.Property(e => e.Consumption).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.CostingDetailsId)
+                    .HasMaxLength(50)
+                    .HasColumnName("CostingDetailsID");
+
+                entity.Property(e => e.CostingId)
+                    .HasMaxLength(50)
+                    .HasColumnName("CostingID");
+
+                entity.Property(e => e.Extra).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ItemId)
+                    .HasMaxLength(100)
+                    .HasColumnName("ItemID");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.Quantity).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ResponsibleBy).HasMaxLength(50);
+
+                entity.Property(e => e.Slno)
+                    .HasMaxLength(50)
+                    .HasColumnName("SLNO");
+
+                entity.Property(e => e.SupplierId)
+                    .HasMaxLength(100)
+                    .HasColumnName("SupplierID");
+
+                entity.Property(e => e.TotalAmountBdt)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("TotalAmountBDT");
+
+                entity.Property(e => e.TotalAmountShhkg)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("TotalAmountSHHKG");
+
+                entity.Property(e => e.TotalAmountThb)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("TotalAmountTHB");
+
+                entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalPriceCurrencyId).HasMaxLength(50);
+
+                entity.Property(e => e.TotalQuantity).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalQuantityUnit).HasMaxLength(10);
+
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.Width).HasMaxLength(200);
+            });
+
+            modelBuilder.Entity<RmgCostingInfo>(entity =>
+            {
+                entity.HasKey(e => e.AutoId)
+                    .HasName("PK__RMG_Cost__6B232965A3A5C79D");
+
+                entity.ToTable("RMG_CostingInfo");
+
+                entity.Property(e => e.AutoId).HasColumnName("AutoID");
+
+                entity.Property(e => e.BuyerId)
+                    .HasMaxLength(50)
+                    .HasColumnName("BuyerID");
+
+                entity.Property(e => e.CheckedBy).HasMaxLength(50);
+
+                entity.Property(e => e.CmandProfit)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("CMAndProfit");
+
+                entity.Property(e => e.CmprofitUperUnit)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("CMProfitUPerUnit");
+
+                entity.Property(e => e.CompanyCode).HasMaxLength(50);
+
+                entity.Property(e => e.CostingId)
+                    .HasMaxLength(50)
+                    .HasColumnName("CostingID");
+
+                entity.Property(e => e.DamageAmountBdt)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("DamageAmountBDT");
+
+                entity.Property(e => e.DamageAmountShhkg)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("DamageAmountSHHKG");
+
+                entity.Property(e => e.DamageAmountThb)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("DamageAmountTHB");
+
+                entity.Property(e => e.DamagePercentage).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.EmployeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeID");
+
+                entity.Property(e => e.EntryDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ExportLcnoSc)
+                    .HasMaxLength(50)
+                    .HasColumnName("ExportLCNoSC");
+
+                entity.Property(e => e.FactorySuplier).HasMaxLength(50);
+
+                entity.Property(e => e.Ffprice)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("FFPrice");
+
+                entity.Property(e => e.GrandTotal).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.HandlingCharge).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.HandlingChargePerUnit).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.IntegraJobNo)
+                    .HasMaxLength(50)
+                    .HasColumnName("IntegraJobNO");
+
+                entity.Property(e => e.InterestOverheadBdt)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("InterestOverheadBDT");
+
+                entity.Property(e => e.InterestOverheadPercentage).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.InterestOverheadShhkg)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("InterestOverheadSHHKG");
+
+                entity.Property(e => e.InterestOverheadThb)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("InterestOverheadTHB");
+
+                entity.Property(e => e.IssuedBy).HasMaxLength(50);
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.MasterPurchaseOrder).HasMaxLength(50);
+
+                entity.Property(e => e.MaterialCostPerUnit).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PoNo).HasMaxLength(50);
+
+                entity.Property(e => e.ProductionUpCharge).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ShipmentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.StyleId)
+                    .HasMaxLength(50)
+                    .HasColumnName("StyleID");
+
+                entity.Property(e => e.SubTotalAmountBdt)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("SubTotalAmountBDT");
+
+                entity.Property(e => e.SubTotalAmountShhkg)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("SubTotalAmountSHHKG");
+
+                entity.Property(e => e.SubTotalAmountThb)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("SubTotalAmountTHB");
+
+                entity.Property(e => e.SubTotalByPerPcsBdt)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("SubTotalByPerPcsBDT");
+
+                entity.Property(e => e.SubTotalByPerPcsShhkg)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("SubTotalByPerPcsSHHKG");
+
+                entity.Property(e => e.SubTotalByPerPcsThb)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("SubTotalByPerPcsTHB");
+
+                entity.Property(e => e.TotalAmountBdt)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("TotalAmountBDT");
+
+                entity.Property(e => e.TotalAmountShhkg)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("TotalAmountSHHKG");
+
+                entity.Property(e => e.TotalAmountThb)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("TotalAmountTHB");
+
+                entity.Property(e => e.TotalMaterialCostBdt)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("TotalMaterialCostBDT");
+
+                entity.Property(e => e.TotalMaterialCostBkk)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("TotalMaterialCostBKK");
+
+                entity.Property(e => e.TotalMaterialCostOverseas).HasColumnType("decimal(18, 2)");
             });
 
             modelBuilder.Entity<RmgDefFinalDestination>(entity =>
@@ -11625,6 +12184,1100 @@ namespace GCTL.Data.Models
                 entity.Property(e => e.UserInfoEmployeeId)
                     .HasMaxLength(50)
                     .HasColumnName("UserInfoEmployeeID");
+            });
+
+            modelBuilder.Entity<RmgInvBookingReceivedDetailsButton>(entity =>
+            {
+                entity.ToTable("RMG_Inv_BookingReceivedDetails_Button");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Brdid)
+                    .HasMaxLength(50)
+                    .HasColumnName("BRDID");
+
+                entity.Property(e => e.ColorId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ColorID");
+
+                entity.Property(e => e.Consumption).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ConsumptionUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ConsumptionUnitID");
+
+                entity.Property(e => e.CurrencyId)
+                    .HasMaxLength(50)
+                    .HasColumnName("CurrencyID");
+
+                entity.Property(e => e.CurrentReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.EmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.FabricColorId)
+                    .HasMaxLength(50)
+                    .HasColumnName("FabricColorID");
+
+                entity.Property(e => e.GermentQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.GermentsQtyUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("GermentsQtyUnitID");
+
+                entity.Property(e => e.Idno)
+                    .HasMaxLength(50)
+                    .HasColumnName("IDNo");
+
+                entity.Property(e => e.IntegraJobNo)
+                    .HasMaxLength(100)
+                    .HasColumnName("IntegraJobNO");
+
+                entity.Property(e => e.ItemId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ItemID");
+
+                entity.Property(e => e.OrderQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.OrderQtyUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("OrderQtyUnitID");
+
+                entity.Property(e => e.PendingReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PendingReceiveQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.Percentage).HasMaxLength(50);
+
+                entity.Property(e => e.PoNo).HasMaxLength(100);
+
+                entity.Property(e => e.PurchaseReceiveNo)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.ReceivedUnitPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.ReceivedUnitType).HasMaxLength(50);
+
+                entity.Property(e => e.SizeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("SizeID");
+
+                entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.TotalQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalQtyUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("TotalQtyUnitID");
+
+                entity.Property(e => e.TotalReceivedQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalReceivedQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 5)");
+            });
+
+            modelBuilder.Entity<RmgInvBookingReceivedDetailsButtonTemp>(entity =>
+            {
+                entity.ToTable("RMG_Inv_BookingReceivedDetails_ButtonTemp");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Brdid)
+                    .HasMaxLength(50)
+                    .HasColumnName("BRDID");
+
+                entity.Property(e => e.ColorId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ColorID");
+
+                entity.Property(e => e.Consumption).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ConsumptionUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ConsumptionUnitID");
+
+                entity.Property(e => e.CurrencyId)
+                    .HasMaxLength(50)
+                    .HasColumnName("CurrencyID");
+
+                entity.Property(e => e.CurrentReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.EmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.FabricColorId)
+                    .HasMaxLength(50)
+                    .HasColumnName("FabricColorID");
+
+                entity.Property(e => e.GermentQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.GermentsQtyUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("GermentsQtyUnitID");
+
+                entity.Property(e => e.Idno)
+                    .HasMaxLength(50)
+                    .HasColumnName("IDNo");
+
+                entity.Property(e => e.IntegraJobNo)
+                    .HasMaxLength(100)
+                    .HasColumnName("IntegraJobNO");
+
+                entity.Property(e => e.ItemId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ItemID");
+
+                entity.Property(e => e.OrderQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.OrderQtyUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("OrderQtyUnitID");
+
+                entity.Property(e => e.PendingReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PendingReceiveQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.Percentage).HasMaxLength(50);
+
+                entity.Property(e => e.PoNo).HasMaxLength(100);
+
+                entity.Property(e => e.PurchaseReceiveNo)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.ReceivedUnitPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.ReceivedUnitType).HasMaxLength(50);
+
+                entity.Property(e => e.SizeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("SizeID");
+
+                entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.TotalQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalQtyUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("TotalQtyUnitID");
+
+                entity.Property(e => e.TotalReceivedQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalReceivedQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 5)");
+            });
+
+            modelBuilder.Entity<RmgInvBookingReceivedDetailsCarton>(entity =>
+            {
+                entity.ToTable("RMG_Inv_BookingReceivedDetails_Carton");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Brdid)
+                    .HasMaxLength(50)
+                    .HasColumnName("BRDID");
+
+                entity.Property(e => e.CartonLeangth).HasMaxLength(50);
+
+                entity.Property(e => e.CartonPercent).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.CartonWidth).HasMaxLength(50);
+
+                entity.Property(e => e.CatonHeight).HasMaxLength(50);
+
+                entity.Property(e => e.ColorId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ColorID");
+
+                entity.Property(e => e.Consumption).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ConsumptionUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ConsumptionUnitID");
+
+                entity.Property(e => e.CurrencyId)
+                    .HasMaxLength(50)
+                    .HasColumnName("CurrencyID");
+
+                entity.Property(e => e.CurrentReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.EmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.HeightUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("HeightUnitID");
+
+                entity.Property(e => e.IntegraJobNo)
+                    .HasMaxLength(100)
+                    .HasColumnName("IntegraJobNO");
+
+                entity.Property(e => e.ItemId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ItemID");
+
+                entity.Property(e => e.LeangthUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("LeangthUnitID");
+
+                entity.Property(e => e.OrderQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.OrderUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("OrderUnitID");
+
+                entity.Property(e => e.PendingReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PendingReceiveQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PoNo).HasMaxLength(100);
+
+                entity.Property(e => e.PurchaseReceiveNo)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.ReceivedUnitPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.ReceivedUnitType).HasMaxLength(50);
+
+                entity.Property(e => e.Refcode).HasMaxLength(50);
+
+                entity.Property(e => e.RequiredQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.RequiredQtyUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("RequiredQtyUnitID");
+
+                entity.Property(e => e.SizeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("SizeID");
+
+                entity.Property(e => e.Slno).HasColumnName("SLNO");
+
+                entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.TotalReceivedQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalReceivedQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.WidthUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("WidthUnitID");
+            });
+
+            modelBuilder.Entity<RmgInvBookingReceivedDetailsCartonTemp>(entity =>
+            {
+                entity.ToTable("RMG_Inv_BookingReceivedDetails_CartonTemp");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Brdid)
+                    .HasMaxLength(50)
+                    .HasColumnName("BRDID");
+
+                entity.Property(e => e.CartonLeangth).HasMaxLength(50);
+
+                entity.Property(e => e.CartonPercent).HasMaxLength(50);
+
+                entity.Property(e => e.CartonWidth).HasMaxLength(50);
+
+                entity.Property(e => e.CatonHeight).HasMaxLength(50);
+
+                entity.Property(e => e.ColorId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ColorID");
+
+                entity.Property(e => e.Consumption).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ConsumptionUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ConsumptionUnitID");
+
+                entity.Property(e => e.CurrencyId)
+                    .HasMaxLength(50)
+                    .HasColumnName("CurrencyID");
+
+                entity.Property(e => e.CurrentReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.EmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.HeightUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("HeightUnitID");
+
+                entity.Property(e => e.IntegraJobNo)
+                    .HasMaxLength(100)
+                    .HasColumnName("IntegraJobNO");
+
+                entity.Property(e => e.ItemId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ItemID");
+
+                entity.Property(e => e.LeangthUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("LeangthUnitID");
+
+                entity.Property(e => e.OrderQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.OrderUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("OrderUnitID");
+
+                entity.Property(e => e.PendingReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PendingReceiveQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PoNo).HasMaxLength(100);
+
+                entity.Property(e => e.PurchaseReceiveNo)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.ReceivedUnitPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.ReceivedUnitType).HasMaxLength(50);
+
+                entity.Property(e => e.Refcode).HasMaxLength(50);
+
+                entity.Property(e => e.RequiredQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.RequiredQtyUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("RequiredQtyUnitID");
+
+                entity.Property(e => e.SizeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("SizeID");
+
+                entity.Property(e => e.Slno).HasColumnName("SLNO");
+
+                entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.TotalReceivedQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalReceivedQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.WidthUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("WidthUnitID");
+            });
+
+            modelBuilder.Entity<RmgInvBookingReceivedDetailsExtra>(entity =>
+            {
+                entity.ToTable("RMG_Inv_BookingReceivedDetails_Extra");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Brdid)
+                    .HasMaxLength(50)
+                    .HasColumnName("BRDID");
+
+                entity.Property(e => e.ColorId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ColorID");
+
+                entity.Property(e => e.Consumption).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ConsumptionUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ConsumptionUnitID");
+
+                entity.Property(e => e.CurrencyId)
+                    .HasMaxLength(50)
+                    .HasColumnName("CurrencyID");
+
+                entity.Property(e => e.CurrentReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.EmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.FabricColorId)
+                    .HasMaxLength(50)
+                    .HasColumnName("FabricColorID");
+
+                entity.Property(e => e.IntegraJobNo)
+                    .HasMaxLength(100)
+                    .HasColumnName("IntegraJobNO");
+
+                entity.Property(e => e.ItemId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ItemID");
+
+                entity.Property(e => e.OrderQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.OrderQtyIunitD)
+                    .HasMaxLength(50)
+                    .HasColumnName("OrderQtyIUnitD");
+
+                entity.Property(e => e.PendingReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PendingReceiveQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.Percentage).HasMaxLength(50);
+
+                entity.Property(e => e.PoNo).HasMaxLength(100);
+
+                entity.Property(e => e.PurchaseReceiveNo)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.ReceivedUnitPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.ReceivedUnitType).HasMaxLength(50);
+
+                entity.Property(e => e.ReqQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ReqQtyUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ReqQtyUnitID");
+
+                entity.Property(e => e.Slno).HasColumnName("SLNO");
+
+                entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.TotalQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalQtyUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("TotalQtyUnitID");
+
+                entity.Property(e => e.TotalReceivedQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalReceivedQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 5)");
+            });
+
+            modelBuilder.Entity<RmgInvBookingReceivedDetailsExtraTemp>(entity =>
+            {
+                entity.ToTable("RMG_Inv_BookingReceivedDetails_ExtraTemp");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Brdid)
+                    .HasMaxLength(50)
+                    .HasColumnName("BRDID");
+
+                entity.Property(e => e.ColorId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ColorID");
+
+                entity.Property(e => e.Consumption).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ConsumptionUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ConsumptionUnitID");
+
+                entity.Property(e => e.CurrencyId)
+                    .HasMaxLength(50)
+                    .HasColumnName("CurrencyID");
+
+                entity.Property(e => e.CurrentReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.EmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.FabricColorId)
+                    .HasMaxLength(50)
+                    .HasColumnName("FabricColorID");
+
+                entity.Property(e => e.IntegraJobNo)
+                    .HasMaxLength(100)
+                    .HasColumnName("IntegraJobNO");
+
+                entity.Property(e => e.ItemId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ItemID");
+
+                entity.Property(e => e.OrderQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.OrderQtyIunitD)
+                    .HasMaxLength(50)
+                    .HasColumnName("OrderQtyIUnitD");
+
+                entity.Property(e => e.PendingReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PendingReceiveQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.Percentage).HasMaxLength(50);
+
+                entity.Property(e => e.PoNo).HasMaxLength(100);
+
+                entity.Property(e => e.PurchaseReceiveNo)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.ReceivedUnitPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.ReceivedUnitType).HasMaxLength(50);
+
+                entity.Property(e => e.ReqQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ReqQtyUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ReqQtyUnitID");
+
+                entity.Property(e => e.Slno).HasColumnName("SLNO");
+
+                entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.TotalQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalQtyUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("TotalQtyUnitID");
+
+                entity.Property(e => e.TotalReceivedQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalReceivedQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 5)");
+            });
+
+            modelBuilder.Entity<RmgInvBookingReceivedDetailsFebric>(entity =>
+            {
+                entity.ToTable("RMG_Inv_BookingReceivedDetails_Febric");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Brdid)
+                    .HasMaxLength(50)
+                    .HasColumnName("BRDID");
+
+                entity.Property(e => e.ColorId).HasMaxLength(50);
+
+                entity.Property(e => e.Consumption).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ConsumtionUnit).HasMaxLength(50);
+
+                entity.Property(e => e.CurrencyId)
+                    .HasMaxLength(50)
+                    .HasColumnName("CurrencyID");
+
+                entity.Property(e => e.CurrentReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.EmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.FabricItemId).HasMaxLength(50);
+
+                entity.Property(e => e.IntegraJobNo)
+                    .HasMaxLength(100)
+                    .HasColumnName("IntegraJobNO");
+
+                entity.Property(e => e.ItemId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ItemID");
+
+                entity.Property(e => e.OrderQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PendingReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PendingReceiveQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.Percentage)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("percentage");
+
+                entity.Property(e => e.PoNo).HasMaxLength(100);
+
+                entity.Property(e => e.PurchaseReceiveNo)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.QtyUnit).HasMaxLength(50);
+
+                entity.Property(e => e.ReceivedUnitPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.ReceivedUnitType).HasMaxLength(50);
+
+                entity.Property(e => e.Refcode).HasMaxLength(50);
+
+                entity.Property(e => e.Slno).HasColumnName("SLNO");
+
+                entity.Property(e => e.TotalFebricQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.TotalReceivedQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalReceivedQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.UnitPrice)
+                    .HasColumnType("decimal(18, 5)")
+                    .HasColumnName("unitPrice");
+            });
+
+            modelBuilder.Entity<RmgInvBookingReceivedDetailsFebricTemp>(entity =>
+            {
+                entity.ToTable("RMG_Inv_BookingReceivedDetails_FebricTemp");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Brdid)
+                    .HasMaxLength(50)
+                    .HasColumnName("BRDID");
+
+                entity.Property(e => e.ColorId).HasMaxLength(50);
+
+                entity.Property(e => e.Consumption).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ConsumtionUnit).HasMaxLength(50);
+
+                entity.Property(e => e.CurrencyId)
+                    .HasMaxLength(50)
+                    .HasColumnName("CurrencyID");
+
+                entity.Property(e => e.CurrentReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.EmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.FabricItemId).HasMaxLength(50);
+
+                entity.Property(e => e.IntegraJobNo)
+                    .HasMaxLength(100)
+                    .HasColumnName("IntegraJobNO");
+
+                entity.Property(e => e.ItemId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ItemID");
+
+                entity.Property(e => e.OrderQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PendingReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PendingReceiveQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.Percentage)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("percentage");
+
+                entity.Property(e => e.PoNo).HasMaxLength(100);
+
+                entity.Property(e => e.PurchaseReceiveNo)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.QtyUnit).HasMaxLength(50);
+
+                entity.Property(e => e.ReceivedUnitPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.ReceivedUnitType).HasMaxLength(50);
+
+                entity.Property(e => e.Refcode).HasMaxLength(50);
+
+                entity.Property(e => e.Slno).HasColumnName("SLNO");
+
+                entity.Property(e => e.TotalFebricQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.TotalReceivedQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalReceivedQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.UnitPrice)
+                    .HasColumnType("decimal(18, 5)")
+                    .HasColumnName("unitPrice");
+            });
+
+            modelBuilder.Entity<RmgInvBookingReceivedDetailsPoly>(entity =>
+            {
+                entity.ToTable("RMG_Inv_BookingReceivedDetails_Poly");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Brdid)
+                    .HasMaxLength(50)
+                    .HasColumnName("BRDID");
+
+                entity.Property(e => e.ColorId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ColorID");
+
+                entity.Property(e => e.Consumption).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ConsumptionUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ConsumptionUnitID");
+
+                entity.Property(e => e.CurrencyId)
+                    .HasMaxLength(50)
+                    .HasColumnName("CurrencyID");
+
+                entity.Property(e => e.CurrentReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.EmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.Flap).HasMaxLength(50);
+
+                entity.Property(e => e.FlapUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("FlapUnitID");
+
+                entity.Property(e => e.GarmentQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.GarmentQtyUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("GarmentQtyUnitID");
+
+                entity.Property(e => e.Guest).HasMaxLength(50);
+
+                entity.Property(e => e.GuestUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("GuestUnitID");
+
+                entity.Property(e => e.IntegraJobNo)
+                    .HasMaxLength(100)
+                    .HasColumnName("IntegraJobNO");
+
+                entity.Property(e => e.ItemId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ItemID");
+
+                entity.Property(e => e.Length).HasMaxLength(50);
+
+                entity.Property(e => e.LengthUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("LengthUnitID");
+
+                entity.Property(e => e.PendingReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PendingReceiveQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.Percentage).HasMaxLength(50);
+
+                entity.Property(e => e.PoNo).HasMaxLength(100);
+
+                entity.Property(e => e.PurchaseReceiveNo)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.ReceivedUnitPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.ReceivedUnitType).HasMaxLength(50);
+
+                entity.Property(e => e.RefernceCode).HasMaxLength(50);
+
+                entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.TotalQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalQtyUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("TotalQtyUnitID");
+
+                entity.Property(e => e.TotalReceivedQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalReceivedQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.Width).HasMaxLength(50);
+
+                entity.Property(e => e.WidthUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("WidthUnitID");
+            });
+
+            modelBuilder.Entity<RmgInvBookingReceivedDetailsPolyTemp>(entity =>
+            {
+                entity.ToTable("RMG_Inv_BookingReceivedDetails_PolyTemp");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Brdid)
+                    .HasMaxLength(50)
+                    .HasColumnName("BRDID");
+
+                entity.Property(e => e.ColorId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ColorID");
+
+                entity.Property(e => e.Consumption).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ConsumptionUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ConsumptionUnitID");
+
+                entity.Property(e => e.CurrencyId)
+                    .HasMaxLength(50)
+                    .HasColumnName("CurrencyID");
+
+                entity.Property(e => e.CurrentReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.EmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.Flap).HasMaxLength(50);
+
+                entity.Property(e => e.FlapUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("FlapUnitID");
+
+                entity.Property(e => e.GarmentQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.GarmentQtyUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("GarmentQtyUnitID");
+
+                entity.Property(e => e.Guest).HasMaxLength(50);
+
+                entity.Property(e => e.GuestUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("GuestUnitID");
+
+                entity.Property(e => e.IntegraJobNo)
+                    .HasMaxLength(100)
+                    .HasColumnName("IntegraJobNO");
+
+                entity.Property(e => e.ItemId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ItemID");
+
+                entity.Property(e => e.Length).HasMaxLength(50);
+
+                entity.Property(e => e.LengthUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("LengthUnitID");
+
+                entity.Property(e => e.PendingReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PendingReceiveQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.Percentage).HasMaxLength(50);
+
+                entity.Property(e => e.PoNo).HasMaxLength(100);
+
+                entity.Property(e => e.PurchaseReceiveNo)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.ReceivedUnitPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.ReceivedUnitType).HasMaxLength(50);
+
+                entity.Property(e => e.RefernceCode).HasMaxLength(50);
+
+                entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.TotalQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalQtyUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("TotalQtyUnitID");
+
+                entity.Property(e => e.TotalReceivedQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalReceivedQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.Width).HasMaxLength(50);
+
+                entity.Property(e => e.WidthUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("WidthUnitID");
+            });
+
+            modelBuilder.Entity<RmgInvBookingReceivedDetailsThread>(entity =>
+            {
+                entity.ToTable("RMG_Inv_BookingReceivedDetails_Thread");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Brdid)
+                    .HasMaxLength(50)
+                    .HasColumnName("BRDID");
+
+                entity.Property(e => e.ColorId).HasMaxLength(50);
+
+                entity.Property(e => e.Consumption).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ConsumtionUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ConsumtionUnitID");
+
+                entity.Property(e => e.CurrencyId)
+                    .HasMaxLength(50)
+                    .HasColumnName("CurrencyID");
+
+                entity.Property(e => e.CurrentReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.EmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.IntegraJobNo)
+                    .HasMaxLength(100)
+                    .HasColumnName("IntegraJobNO");
+
+                entity.Property(e => e.ItemId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ItemID");
+
+                entity.Property(e => e.OrderQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PendingReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PendingReceiveQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PoNo).HasMaxLength(100);
+
+                entity.Property(e => e.PurchaseReceiveNo)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.QtyUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("QtyUnitID");
+
+                entity.Property(e => e.ReceivedUnitPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.ReceivedUnitType).HasMaxLength(50);
+
+                entity.Property(e => e.Refcodepantone).HasColumnName("REFCODEPANTONE");
+
+                entity.Property(e => e.ReqQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.Slno).HasColumnName("SLNO");
+
+                entity.Property(e => e.ThreadColorId).HasMaxLength(50);
+
+                entity.Property(e => e.ThreadCountId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ThreadCountID");
+
+                entity.Property(e => e.ThreadReqUnit).HasMaxLength(50);
+
+                entity.Property(e => e.Threadpercent).HasMaxLength(50);
+
+                entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.TotalQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalQtyUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("TotalQtyUnitID");
+
+                entity.Property(e => e.TotalReceivedQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalReceivedQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.UnitPrice)
+                    .HasColumnType("decimal(18, 5)")
+                    .HasColumnName("unitPrice");
+            });
+
+            modelBuilder.Entity<RmgInvBookingReceivedDetailsThreadTemp>(entity =>
+            {
+                entity.ToTable("RMG_Inv_BookingReceivedDetails_ThreadTemp");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Brdid)
+                    .HasMaxLength(50)
+                    .HasColumnName("BRDID");
+
+                entity.Property(e => e.ColorId).HasMaxLength(50);
+
+                entity.Property(e => e.Consumption).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ConsumtionUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ConsumtionUnitID");
+
+                entity.Property(e => e.CurrencyId)
+                    .HasMaxLength(50)
+                    .HasColumnName("CurrencyID");
+
+                entity.Property(e => e.CurrentReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.EmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.IntegraJobNo)
+                    .HasMaxLength(100)
+                    .HasColumnName("IntegraJobNO");
+
+                entity.Property(e => e.ItemId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ItemID");
+
+                entity.Property(e => e.OrderQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PendingReceiveQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PendingReceiveQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.PoNo).HasMaxLength(100);
+
+                entity.Property(e => e.PurchaseReceiveNo)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.QtyUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("QtyUnitID");
+
+                entity.Property(e => e.ReceivedUnitPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.ReceivedUnitType).HasMaxLength(50);
+
+                entity.Property(e => e.Refcodepantone).HasColumnName("REFCODEPANTONE");
+
+                entity.Property(e => e.ReqQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.Slno).HasColumnName("SLNO");
+
+                entity.Property(e => e.ThreadColorId).HasMaxLength(50);
+
+                entity.Property(e => e.ThreadCountId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ThreadCountID");
+
+                entity.Property(e => e.ThreadReqUnit).HasMaxLength(50);
+
+                entity.Property(e => e.Threadpercent).HasMaxLength(50);
+
+                entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 5)");
+
+                entity.Property(e => e.TotalQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalQtyUnitId)
+                    .HasMaxLength(50)
+                    .HasColumnName("TotalQtyUnitID");
+
+                entity.Property(e => e.TotalReceivedQty).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalReceivedQtyPre).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.UnitPrice)
+                    .HasColumnType("decimal(18, 5)")
+                    .HasColumnName("unitPrice");
             });
 
             modelBuilder.Entity<RmgProdDefBrand>(entity =>
@@ -11960,6 +13613,49 @@ namespace GCTL.Data.Models
                 entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
             });
 
+            modelBuilder.Entity<RmgProdDefInstruction>(entity =>
+            {
+                entity.HasKey(e => e.Tc)
+                    .HasName("PK__RMG_Prod__3214E40878C07C76");
+
+                entity.ToTable("RMG_Prod_Def_Instruction");
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
+
+                entity.Property(e => e.CompanyCode).HasMaxLength(50);
+
+                entity.Property(e => e.Instruction).HasMaxLength(100);
+
+                entity.Property(e => e.InstructionId)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.UserInfoEmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("UserInfoEmployeeID");
+            });
+
             modelBuilder.Entity<RmgProdDefInvSubItem2>(entity =>
             {
                 entity.HasKey(e => e.Tc)
@@ -12187,6 +13883,49 @@ namespace GCTL.Data.Models
                     .HasColumnType("numeric(18, 0)")
                     .ValueGeneratedOnAdd()
                     .HasColumnName("TC");
+            });
+
+            modelBuilder.Entity<RmgProdDefThreadCount>(entity =>
+            {
+                entity.HasKey(e => e.ThreadCountId)
+                    .HasName("PK__RMG_Prod__D4BCA396DC6C5457");
+
+                entity.ToTable("RMG_Prod_Def_ThreadCount");
+
+                entity.Property(e => e.ThreadCountId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ThreadCountID");
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.ShortName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Tc)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
+
+                entity.Property(e => e.ThreadCountName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<RmgProdDefUnitType>(entity =>

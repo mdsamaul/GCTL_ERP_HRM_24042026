@@ -689,135 +689,7 @@ namespace GCTL.Service.RMGProdOrderInformationEntry
             }
         }
 
-        //public async Task<(bool isSuccess, string message, object data)> SaveEditColorSizeBreakupAsync(RMG_Prod_Temp_ColorSizeBreakupDto dto, string companyCode)
-        //{
-        //    try
-        //    {
-        //        if (dto.ColorIds == null || dto.ColorIds.Count == 0)
-        //            return (false, "No colors selected.", null);
-        //        if (dto.SizeIds == null || dto.SizeIds.Count == 0)
-        //            return (false, "No sizes selected.", null);
 
-
-        //        var orderDetailsNo = prodOrderDetailsRepo.All().Where(x => x.IntegraJobNo == dto.IntegraJOBNo).Select(s => s.DetailOrderId).FirstOrDefault();
-
-        //        if (orderDetailsNo == null)
-        //        {
-        //            return (false, CreateFailed, null);
-        //        }
-        //        // ✅ Find last BreakNo for this DetailOrderId
-        //        var lastBreakNo = await tempColorSizeBreakupRepo.All()
-        //            .Where(x => x.DetailOrderId == orderDetailsNo)
-        //            .OrderByDescending(x => x.BreakNo)
-        //            .Select(x => x.BreakNo)
-        //            .FirstOrDefaultAsync();
-
-        //        int lastNumber = 0;
-        //        if (!string.IsNullOrEmpty(lastBreakNo) && lastBreakNo.Contains('_'))
-        //        {
-        //            var parts = lastBreakNo.Split('_');
-        //            int.TryParse(parts.Last(), out lastNumber);
-        //        }
-
-        //        var newEntities = new List<RmgProdTempColorSizeBreakup>();
-        //        int counter = lastNumber + 1;
-
-        //        // ✅ Generate color × size combinations
-        //        foreach (var colorId in dto.ColorIds)
-        //        {
-        //            foreach (var sizeId in dto.SizeIds)
-        //            {
-        //                string newBreakNo = $"{orderDetailsNo}_{counter.ToString("D5")}";
-
-        //                newEntities.Add(new RmgProdTempColorSizeBreakup
-        //                {
-        //                    DetailOrderId = orderDetailsNo,
-        //                    BreakNo = newBreakNo,
-        //                    ColorId = colorId,
-        //                    SizeId = sizeId,
-        //                    Quantity = 0,
-        //                    UnitTypeId = dto.UnitTypeId,
-        //                    Remarks = dto.Remarks,
-        //                    IntegraJobno = dto.IntegraJOBNo,
-        //                    CompanyCode = companyCode,
-        //                    Luser = dto.Luser,
-        //                    Ldate = dto.Ldate,
-        //                    Lip = dto.Lip,
-        //                    Lmac = dto.Lmac
-        //                });
-
-        //                counter++;
-        //            }
-        //        }
-
-        //        await tempColorSizeBreakupRepo.AddRangeAsync(newEntities);
-
-        //        return (true, "Color-size breakup saved successfully.", newEntities);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return (false, $"Error saving breakup: {ex.Message}", null);
-        //    }
-        //}
-        //public async Task<(bool isSuccess, string message, object data)> TransferTempToMainColorSizeBreakupAsync(string detailOrderId, string companyCode, string userId)
-        //public async Task<(bool isSuccess, string message, object data)> SaveEditColorSizeBreakupAsync(RMG_Prod_Temp_ColorSizeBreakupDto dto, string companyCode)
-        //{
-        //    //using var transaction = await tempColorSizeBreakupRepo.BeginTransactionAsync();
-        //    try
-        //    {
-        //        var detailOrderId = await prodOrderDetailsRepo.All().Where(x => x.PurchaseOrder == dto.PONo).Select(c => c.DetailOrderId).FirstOrDefaultAsync();
-        //        // ✅ Step 1: Get all temp data for this DetailOrderId
-        //        var tempData = await tempColorSizeBreakupRepo.All()
-        //            .Where(x => x.DetailOrderId == detailOrderId)
-        //            .ToListAsync();
-
-        //        if (tempData == null || tempData.Count == 0)
-        //            return (false, "No temp data found for this order.", null);
-
-        //        // ✅ Step 2: Delete existing main table data for this DetailOrderId
-        //        var existingMainData = await tempListColorSizeBreakupRepo.All()
-        //            .Where(x => x.DetailOrderId == detailOrderId)
-        //            .ToListAsync();
-
-        //        if (existingMainData.Count > 0)
-        //        {
-        //            await tempListColorSizeBreakupRepo.DeleteRangeAsync(existingMainData);
-        //            Console.WriteLine($"✅ Deleted {existingMainData.Count} existing records from main table");
-        //        }
-
-        //        // ✅ Step 3: Insert temp data into main table
-        //        var mainEntities = tempData.Select(temp => new RmgProdTempListColorSizeBreakup
-        //        {
-        //            DetailOrderId = temp.DetailOrderId,
-        //            BreakNo = temp.BreakNo,
-        //            ColorId = temp.ColorId,
-        //            SizeId = temp.SizeId,
-        //            Quantity = temp.Quantity,
-        //            UnitTypeId = temp.UnitTypeId,
-        //            Remarks = temp.Remarks,
-        //            IntegraJobno = temp.IntegraJobno,
-        //            CompanyCode = companyCode,
-        //            Luser = temp.Luser,
-        //            Ldate = temp.Ldate,
-        //            Lip = temp.Lip,
-        //            Lmac = temp.Lmac
-        //        }).ToList();
-
-        //        await tempListColorSizeBreakupRepo.AddRangeAsync(mainEntities);
-
-        //        // ✅ Step 4: Optionally delete temp data after successful transfer
-        //        // await tempColorSizeBreakupRepo.DeleteRangeAsync(tempData);
-
-        //        //await transaction.CommitAsync();
-
-        //        return (true, $"Successfully transferred {mainEntities.Count} records to main table.", mainEntities);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //await transaction.RollbackAsync();
-        //        return (false, $"Error transferring data: {ex.Message}", null);
-        //    }
-        //}
         public async Task<(bool isSuccess, string message, object data)> SaveEditColorSizeBreakupAsync(RMG_Prod_Temp_ColorSizeBreakupDto dto, string companyCode) //tt
         {
             try
@@ -906,77 +778,6 @@ namespace GCTL.Service.RMGProdOrderInformationEntry
                 return (false, $"Error saving breakup: {ex.Message}", null);
             }
         }
-
-        //public async Task<(bool isSuccess, string message, object data)> SaveEditColorSizeBreakupListAsync(RMG_Prod_Temp_ColorSizeBreakupDto dto, string companyCode)
-        //{
-        //    try
-        //    {
-        //        if (dto.ColorIds == null || dto.ColorIds.Count == 0)
-        //            return (false, "No colors selected.", null);
-        //        if (dto.SizeIds == null || dto.SizeIds.Count == 0)
-        //            return (false, "No sizes selected.", null);
-
-
-        //        var orderDetailsNo = prodOrderDetailsRepo.All().Where(x => x.IntegraJobNo == dto.IntegraJOBNo && x.PurchaseOrder == dto.PONo).Select(s => s.DetailOrderId).FirstOrDefault();
-
-        //        if (orderDetailsNo == null)
-        //        {
-        //            return (false, CreateFailed, null);
-        //        }
-        //        // ✅ Find last BreakNo for this DetailOrderId
-        //        var lastBreakNo = await tempColorSizeBreakupRepo.All()
-        //            .Where(x => x.DetailOrderId == orderDetailsNo)
-        //            .OrderByDescending(x => x.BreakNo)
-        //            .Select(x => x.BreakNo)
-        //            .FirstOrDefaultAsync();
-
-        //        int lastNumber = 0;
-        //        if (!string.IsNullOrEmpty(lastBreakNo) && lastBreakNo.Contains('_'))
-        //        {
-        //            var parts = lastBreakNo.Split('_');
-        //            int.TryParse(parts.Last(), out lastNumber);
-        //        }
-
-        //        var newEntities = new List<RmgProdTempColorSizeBreakup>();
-        //        int counter = lastNumber + 1;
-
-        //        // ✅ Generate color × size combinations
-        //        foreach (var colorId in dto.ColorIds)
-        //        {
-        //            foreach (var sizeId in dto.SizeIds)
-        //            {
-        //                string newBreakNo = $"{orderDetailsNo}_{counter.ToString("D5")}";
-
-        //                newEntities.Add(new RmgProdTempColorSizeBreakup
-        //                {
-        //                    DetailOrderId = orderDetailsNo,
-        //                    BreakNo = newBreakNo,
-        //                    ColorId = colorId,
-        //                    SizeId = sizeId,
-        //                    Quantity = 0,
-        //                    UnitTypeId = dto.UnitTypeId,
-        //                    Remarks = dto.Remarks,
-        //                    IntegraJobno = dto.IntegraJOBNo,
-        //                    CompanyCode = companyCode,
-        //                    Luser = dto.Luser,
-        //                    Ldate = dto.Ldate,
-        //                    Lip = dto.Lip,
-        //                    Lmac = dto.Lmac
-        //                });
-
-        //                counter++;
-        //            }
-        //        }
-
-        //        await tempColorSizeBreakupRepo.AddRangeAsync(newEntities);
-
-        //        return (true, "Color-size breakup saved successfully.", newEntities);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return (false, $"Error saving breakup: {ex.Message}", null);
-        //    }
-        //}
 
 
         public async Task<(bool isSuccess, string message, object data)> SaveEditColorSizeBreakupListAsync(
@@ -1239,7 +1040,7 @@ namespace GCTL.Service.RMGProdOrderInformationEntry
                     await tempColorSizeBreakupRepo.DeleteAsync(item);
                 }
 
-                await tempColorSizeBreakupRepo.AllAsync(); // সব delete শেষ হওয়ার পর একবারেই commit করবে
+                await tempColorSizeBreakupRepo.AllAsync();
             }
             catch (Exception ex)
             {
@@ -1247,75 +1048,6 @@ namespace GCTL.Service.RMGProdOrderInformationEntry
             }
         }
 
-        //public async Task PoIjobNoGetTempAsync(OrderJobDto orderJobDto)
-        //{
-        //    try
-        //    {
-
-        //        var exTempData = tempColorSizeBreakupRepo.All().ToList();
-        //        if (exTempData != null)
-        //        {
-        //            await tempColorSizeBreakupRepo.DeleteRangeAsync(exTempData);
-        //        }
-
-        //        // 🔹 Database থেকে order fetch
-        //        var data = await prodOrderDetailsRepo.All()
-        //            .Where(x => x.PurchaseOrder == orderJobDto.PoId.ToString() // যদি PurchaseOrder string হয়
-        //                        && x.IntegraJobNo == orderJobDto.IJobNo)
-        //            .Select(x => new
-        //            {
-        //                x.OrderId,
-        //                x.PurchaseOrder,
-        //                x.ProductId,
-        //                x.IntegraJobNo,
-        //                x.DetailOrderId
-        //            })
-        //            .FirstOrDefaultAsync();
-
-        //        if (data == null)
-        //        {
-
-        //            return;
-        //        }
-
-        //        // 🔹 Temp data fetch
-        //        var tempData = await tempListColorSizeBreakupRepo.All()
-        //            .Where(x => x.DetailOrderId == data.DetailOrderId && x.IntegraJobno == data.IntegraJobNo)
-        //            .ToListAsync();
-
-        //        if (tempData.Any())
-        //        {
-        //            var tempDataToAdd = tempData.Select(x => new RmgProdTempColorSizeBreakup
-        //            {
-        //                BreakNo = x.BreakNo,
-        //                DetailOrderId = x.DetailOrderId,
-        //                IntegraJobno = x.IntegraJobno,
-        //                ColorId = x.ColorId,
-        //                SizeId = x.SizeId,
-        //                Quantity = x.Quantity,
-        //                CompanyCode = x.CompanyCode,
-        //                Ldate = x.Ldate,
-        //                Lip = x.Lip,
-        //                Lmac = x.Lmac,
-        //                Luser = x.Luser,
-        //                Remarks = x.Remarks,
-        //                UnitTypeId = x.UnitTypeId,
-        //            }).ToList();
-
-        //            // এবার AddRangeAsync কল করো
-        //            await tempColorSizeBreakupRepo.AddRangeAsync(tempDataToAdd);
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("⚠️ No temp color/size breakup data found");
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine("❌ Error in PoIjobNoGetTempAsync: " + ex.Message);
-        //        throw;
-        //    }
-        //}
         public async Task<(List<string> colorIds, List<string> sizeIds)> PoIjobNoGetTempAsync(OrderJobDto orderJobDto)
         {
             try
@@ -1326,7 +1058,7 @@ namespace GCTL.Service.RMGProdOrderInformationEntry
                     await tempColorSizeBreakupRepo.DeleteRangeAsync(exTempData);
                 }
 
-                // 🔹 Database থেকে order fetch
+                // 🔹 Database order fetch
                 var data = await prodOrderDetailsRepo.All()
                     .Where(x => x.PurchaseOrder == orderJobDto.PoId.ToString()
                                 && x.IntegraJobNo == orderJobDto.IJobNo)

@@ -54,11 +54,15 @@ namespace GCTL.Data.Models
             modelBuilder.Entity<Get_ItemHierarchyDataResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetAdvancePayPagedWithFilterResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetCompanyNamesBySearchResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetCostingReportByCostingIdResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetCostingReportFiltersResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetDiscountDetailsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetEmployeesByCompanyAdvanceLoanAdjustmentResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetEmployeesByCompanyLoanAdjustmentResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetFilteredCostingReportsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetLeaveReport100Result>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetOfficialInfoResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetProdOrderReportResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetTBDetailsDataResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetTestRoomNoResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<INV_ProductIssueReport_FilterResult>().HasNoKey().ToView(null);
@@ -130,6 +134,7 @@ namespace GCTL.Data.Models
             modelBuilder.Entity<SalesReportResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<SalesReportForUserResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<SP_GetEmployeesByEmployeeIDsResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<sp_GetOrderReportResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<SP_HRM_AdvancePayFilterDataResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<SP_HRM_AdvancePayReportResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<USP_TransportExpenseReportResult>().HasNoKey().ToView(null);
@@ -1228,6 +1233,88 @@ namespace GCTL.Data.Models
             return _;
         }
 
+        public virtual async Task<List<GetCostingReportByCostingIdResult>> GetCostingReportByCostingIdAsync(string CostingId, string IntegraJOBNo, string PurchaseOrder, string ProductId, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "CostingId",
+                    Size = 100,
+                    Value = CostingId ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "IntegraJOBNo",
+                    Size = 100,
+                    Value = IntegraJOBNo ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "PurchaseOrder",
+                    Size = 100,
+                    Value = PurchaseOrder ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "ProductId",
+                    Size = 100,
+                    Value = ProductId ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<GetCostingReportByCostingIdResult>("EXEC @returnValue = [dbo].[GetCostingReportByCostingId] @CostingId = @CostingId, @IntegraJOBNo = @IntegraJOBNo, @PurchaseOrder = @PurchaseOrder, @ProductId = @ProductId", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<GetCostingReportFiltersResult>> GetCostingReportFiltersAsync(string CostingIds, string BuyerIds, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "CostingIds",
+                    Size = -1,
+                    Value = CostingIds ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "BuyerIds",
+                    Size = -1,
+                    Value = BuyerIds ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<GetCostingReportFiltersResult>("EXEC @returnValue = [dbo].[GetCostingReportFilters] @CostingIds = @CostingIds, @BuyerIds = @BuyerIds", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
         public virtual async Task<List<GetDiscountDetailsResult>> GetDiscountDetailsAsync(string TestChargeId, DateTime? FromDate, DateTime? ToDate, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
@@ -1343,6 +1430,40 @@ namespace GCTL.Data.Models
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<GetEmployeesByCompanyLoanAdjustmentResult>("EXEC @returnValue = [dbo].[GetEmployeesByCompanyLoanAdjustment] @EmployeeStatusId = @EmployeeStatusId, @CompanyCode = @CompanyCode, @EmployeeName = @EmployeeName", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<GetFilteredCostingReportsResult>> GetFilteredCostingReportsAsync(string CostingIds, string BuyerIds, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "CostingIds",
+                    Size = -1,
+                    Value = CostingIds ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "BuyerIds",
+                    Size = -1,
+                    Value = BuyerIds ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<GetFilteredCostingReportsResult>("EXEC @returnValue = [dbo].[GetFilteredCostingReports] @CostingIds = @CostingIds, @BuyerIds = @BuyerIds", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
@@ -1632,6 +1753,61 @@ namespace GCTL.Data.Models
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<GetOfficialInfoResult>("EXEC @returnValue = [dbo].[GetOfficialInfo] @DepartmentCodes = @DepartmentCodes, @DesignationCodes = @DesignationCodes, @EmployeeCodes = @EmployeeCodes, @BranchCodes = @BranchCodes, @CompanyCodes = @CompanyCodes, @EmployeeTypeCode = @EmployeeTypeCode, @EmploymentNatureId = @EmploymentNatureId, @NationalId = @NationalId, @TinNo = @TinNo, @PassportNo = @PassportNo, @DrivingLicense = @DrivingLicense, @IsExpatriate = @IsExpatriate, @ImmediateSup = @ImmediateSup, @HOD = @HOD, @ShiftCode = @ShiftCode, @EmployeeStatus = @EmployeeStatus, @SalaryFrom = @SalaryFrom, @SalaryTo = @SalaryTo, @AppointmentDateFrom = @AppointmentDateFrom, @AppointmentDateTo = @AppointmentDateTo, @JoiningDatefrom = @JoiningDatefrom, @JoiningDateTo = @JoiningDateTo, @TerminationDateFrom = @TerminationDateFrom, @TerminationDateTo = @TerminationDateTo, @ProbationDateFrom = @ProbationDateFrom, @ProbationDateTo = @ProbationDateTo, @ConfirmationDateFrom = @ConfirmationDateFrom, @ConfirmationDateTo = @ConfirmationDateTo", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<GetProdOrderReportResult>> GetProdOrderReportAsync(string BuyerId, string JobNo, string StyleId, string MPO, string PurchaseOrder, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "BuyerId",
+                    Size = 200,
+                    Value = BuyerId ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "JobNo",
+                    Size = 200,
+                    Value = JobNo ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "StyleId",
+                    Size = 200,
+                    Value = StyleId ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "MPO",
+                    Size = 200,
+                    Value = MPO ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "PurchaseOrder",
+                    Size = 200,
+                    Value = PurchaseOrder ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<GetProdOrderReportResult>("EXEC @returnValue = [dbo].[GetProdOrderReport] @BuyerId = @BuyerId, @JobNo = @JobNo, @StyleId = @StyleId, @MPO = @MPO, @PurchaseOrder = @PurchaseOrder", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
@@ -4996,6 +5172,57 @@ namespace GCTL.Data.Models
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<SP_GetEmployeesByEmployeeIDsResult>("EXEC @returnValue = [dbo].[SP_GetEmployeesByEmployeeIDs] @EmployeeIDs = @EmployeeIDs", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<sp_GetOrderReportResult>> sp_GetOrderReportAsync(DateOnly? FromDate, DateOnly? ToDate, int? FromYear, int? ToYear, string BuyerIds, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "FromDate",
+                    Value = FromDate ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Date,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "ToDate",
+                    Value = ToDate ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Date,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "FromYear",
+                    Value = FromYear ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "ToYear",
+                    Value = ToYear ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "BuyerIds",
+                    Size = -1,
+                    Value = BuyerIds ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<sp_GetOrderReportResult>("EXEC @returnValue = [dbo].[sp_GetOrderReport] @FromDate = @FromDate, @ToDate = @ToDate, @FromYear = @FromYear, @ToYear = @ToYear, @BuyerIds = @BuyerIds", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 

@@ -19,6 +19,7 @@ namespace GCTL.UI.Core.Controllers
         private readonly IRepository<RmgProdDefInvSubItem2> subRepo2;
         private readonly IRepository<InvDefItem> itemRepo;
         private readonly IRepository<InvDefItemType> itemTypeRepo;
+        private readonly IRepository<InvDefBookingItemType> itemBookingTypeRepo;
         private readonly IRepository<InvDefSupplierOrigin> originRepo;
         private readonly IRepository<CaDefCountry> countryRepo;
         private readonly IRepository<CaDefCurrency> currencyRepo;
@@ -39,6 +40,7 @@ namespace GCTL.UI.Core.Controllers
             IRepository<RmgProdDefInvSubItem2> subRepo2,
             IRepository<InvDefItem> itemRepo,
             IRepository<InvDefItemType> itemTypeRepo,
+            IRepository<InvDefBookingItemType> itemBookingTypeRepo,
             IRepository<InvDefSupplierOrigin> originRepo,
             IRepository<CaDefCountry> countryRepo,
             IRepository<CaDefCurrency> currencyRepo,
@@ -58,6 +60,7 @@ namespace GCTL.UI.Core.Controllers
             this.subRepo2 = subRepo2;
             this.itemRepo = itemRepo;
             this.itemTypeRepo = itemTypeRepo;
+            this.itemBookingTypeRepo = itemBookingTypeRepo;
             this.originRepo = originRepo;
             this.countryRepo = countryRepo;
             this.currencyRepo = currencyRepo;
@@ -78,7 +81,7 @@ namespace GCTL.UI.Core.Controllers
                 ViewBag.SubGroup = new SelectList(subRepo.All().Select(x => new { x.SubItemId, x.SubItemName }), "SubItemId", "SubItemName");
                 ViewBag.SubGroup2List = new SelectList(subRepo2.All().Select(x => new { x.SubItem2Id, x.SubItem2Name }), "SubItem2Id", "SubItem2Name");
                 ViewBag.ItemList = new SelectList(itemRepo.All().Select(x => new { x.ItemId, x.ItemName }), "ItemId", "ItemName");
-                ViewBag.ItemTypeList = new SelectList(itemTypeRepo.All().Select(x => new { x.ItemTypeId, x.ItemName }), "ItemTypeId", "ItemName");
+                ViewBag.ItemTypeList = new SelectList(itemBookingTypeRepo.All().Select(x => new { x.BookingItemTypeId, x.BookingItemType }), "BookingItemTypeId", "BookingItemType");
                 ViewBag.OriginList = new SelectList(originRepo.All().Select(x => new { x.SupplierOriginId, x.SupplierOrigin }), "SupplierOriginId", "SupplierOrigin");
                 ViewBag.CountryList = new SelectList(countryRepo.All().Select(x => new { x.CountryId, x.CountryName }), "CountryId", "CountryName");
                 ViewBag.CurrencyList = new SelectList(currencyRepo.All().Select(x => new { x.CurrencyId, x.ShortName }), "CurrencyId", "ShortName");
@@ -92,6 +95,7 @@ namespace GCTL.UI.Core.Controllers
                 {
                     PageUrl = Url.Action(nameof(Index)),
                 };
+
                 return View(model);
             }
             catch (Exception)
@@ -311,8 +315,6 @@ namespace GCTL.UI.Core.Controllers
         {
             try
             {
-                Console.WriteLine("=== LoadMainGroupData method hit ===");
-
                 var draw = Request.Form["draw"].FirstOrDefault();
                 var start = Request.Form["start"].FirstOrDefault();
                 var length = Request.Form["length"].FirstOrDefault();
@@ -343,15 +345,10 @@ namespace GCTL.UI.Core.Controllers
                     }
                 }
 
-                Console.WriteLine($"Draw: {draw}, Start: {start}, Length: {length}");
-                Console.WriteLine($"Sort Column Index: {sortColumnIndex}, Mapped Column: {sortColumn}, Direction: {sortColumnDir}, Search: {searchValue}");
-
                 int pageSize = !string.IsNullOrEmpty(length) ? Convert.ToInt32(length) : 10;
                 int skip = !string.IsNullOrEmpty(start) ? Convert.ToInt32(start) : 0;
 
                 var (data, totalRecords) = await sALES_Def_Inv_MainItemGroup.GetMainGroup(sortColumn, sortColumnDir, searchValue, skip, pageSize);
-
-                Console.WriteLine($"Retrieved {data?.Count()} records out of {totalRecords} total");
 
                 var result = new
                 {
@@ -361,13 +358,10 @@ namespace GCTL.UI.Core.Controllers
                     data = data
                 };
 
-                Console.WriteLine("=== Returning JSON response ===");
                 return Json(result);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in LoadMainGroupData: {ex.Message}");
-                Console.WriteLine($"Stack Trace: {ex.StackTrace}");
                 return Json(new { error = ex.Message, draw = Request.Form["draw"].FirstOrDefault() });
             }
         }

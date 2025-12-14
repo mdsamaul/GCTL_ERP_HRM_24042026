@@ -36,5 +36,9 @@ namespace GCTL.Data.Models
         public DateTime? Pidate { get; set; }
         public decimal? Pivalue { get; set; }
         public string PicurrencyId { get; set; }
+        public string SupplierId { get; set; }
+        public string Mrbpid { get; set; }
+        public string EnterFromPageName { get; set; }
+        public string PifilePath { get; set; }
     }
 }

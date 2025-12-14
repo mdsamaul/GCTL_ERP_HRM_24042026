@@ -26,5 +26,6 @@ namespace GCTL.Service.RMGProdOrderInformationEntry
         //Task PoIjobNoGetTempAsync(OrderJobDto orderJobDto);
         Task<(List<string> colorIds, List<string> sizeIds)> PoIjobNoGetTempAsync(OrderJobDto orderJobDto);
         Task<List<MerchandiserContactPersonDto>> GetMerchandiserContactPersonListAsync();
+
     }
 }

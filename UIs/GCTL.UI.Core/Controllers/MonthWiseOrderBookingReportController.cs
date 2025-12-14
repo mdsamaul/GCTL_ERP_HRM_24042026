@@ -38,39 +38,6 @@ namespace GCTL.UI.Core.Controllers
         }
 
         // POST: Get Order Report Data
-        //[HttpPost]
-        //public async Task<IActionResult> GetOrderReport([FromBody] OrderReportRequest request)
-        //{
-        //    var result = await _orderReportService.GetOrderReportAsync(request);
-        //    return Json(result);
-        //}
-
-        //public async Task<IActionResult> GetOrderReport([FromBody] OrderReportRequest request)
-        //{
-        //    try
-        //    {
-        //        var result = await _orderReportService.GetOrderReportAsync(request);
-        //        return Ok(new { success = true, data = result });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(new { success = false, message = ex.Message });
-        //    }
-        //}
-
-
-        //public async Task<IActionResult> GetOrderAllStyleReport([FromBody] OrderReportRequest request)
-        //{
-        //    try
-        //    {
-        //        var result = await _orderReportService.GetOrderReportAllStyleAsync(request);
-        //        return Ok(result);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(new { success = false, message = ex.Message });
-        //    }
-        //}
 
         public async Task<IActionResult> DownloadOrderAllStyleReport([FromBody] OrderReportRequest request)
         {
@@ -82,7 +49,7 @@ namespace GCTL.UI.Core.Controllers
 
                 return File(excelFile,
                     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    $"MonthWiseOrderReport_{DateTime.Now:yyyyMMddHHmmss}.xlsx");
+                    $"MonthWiseOrderBookingAllStyleReport.xlsx");
             }
             catch (Exception ex)
             {
@@ -95,7 +62,7 @@ namespace GCTL.UI.Core.Controllers
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             using var package = new ExcelPackage();
-            var worksheet = package.Workbook.Worksheets.Add("Order Report");
+            var worksheet = package.Workbook.Worksheets.Add("All Style Report");
 
             // Header Section
             worksheet.Cells[1, 1].Value = reportData.CompanyName;
@@ -192,7 +159,19 @@ namespace GCTL.UI.Core.Controllers
             }
 
             // Auto-fit columns
-            worksheet.Cells.AutoFitColumns();
+            //worksheet.Cells.AutoFitColumns();
+            worksheet.Column(1).Width = 8;   // Sl No.
+            worksheet.Column(2).Width = 20;  // Buyer Name
+            worksheet.Column(3).Width = 20;  // Style
+            worksheet.Column(4).Width = 20;  // Item
+            worksheet.Column(5).Width = 18;  // Total Order Quantity
+
+            int startMonthColumn = 6;
+            foreach (var month in monthColumns)
+            {
+                worksheet.Column(startMonthColumn).Width = 12;
+                startMonthColumn++;
+            }
 
             // Add borders to all data
             using (var range = worksheet.Cells[4, 1, row - 1, totalColumns])
@@ -216,7 +195,7 @@ namespace GCTL.UI.Core.Controllers
                 var excelFile = GenerateStyleExcel(reportData);
                 return File(excelFile,
                     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    $"MonthWiseOrderReport_{DateTime.Now:yyyyMMddHHmmss}.xlsx");
+                    $"MonthWiseOrderBookingStyleReport.xlsx");
             }
             catch (Exception ex)
             {
@@ -229,7 +208,7 @@ namespace GCTL.UI.Core.Controllers
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             using var package = new ExcelPackage();
-            var worksheet = package.Workbook.Worksheets.Add("Order Report");
+            var worksheet = package.Workbook.Worksheets.Add("Style Report");
 
             // Header Section
             worksheet.Cells[1, 1].Value = reportData.CompanyName;
@@ -339,7 +318,19 @@ namespace GCTL.UI.Core.Controllers
             }
 
             // Auto-fit columns
-            worksheet.Cells[1, 1, row - 1, totalColumns].AutoFitColumns();
+            //worksheet.Cells[1, 1, row - 1, totalColumns].AutoFitColumns();           
+            worksheet.Column(1).Width = 20;   // Buyer Name
+            worksheet.Column(2).Width = 20;   // Style
+            worksheet.Column(3).Width = 25;   // Item
+            worksheet.Column(4).Width = 18;   // Total Order Quantity
+
+            int startMonthColumn = 5;
+            foreach (var month in monthColumns)
+            {
+                worksheet.Column(startMonthColumn).Width = 12; // Each Month Column
+                startMonthColumn++;
+            }
+
 
             // Add borders to all data
             using (var range = worksheet.Cells[4, 1, row - 1, totalColumns])
@@ -363,7 +354,7 @@ namespace GCTL.UI.Core.Controllers
                 var excelFile = GenerateStylePoExcel(reportData);
                 return File(excelFile,
                     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    $"MonthWiseOrderReport_{DateTime.Now:yyyyMMddHHmmss}.xlsx");
+                    $"MonthWiseOrderBookingStylePoReport.xlsx");
             }
             catch (Exception ex)
             {
@@ -376,7 +367,7 @@ namespace GCTL.UI.Core.Controllers
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             using var package = new ExcelPackage();
-            var worksheet = package.Workbook.Worksheets.Add("Order Report");
+            var worksheet = package.Workbook.Worksheets.Add("Style PO Report");
             worksheet.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             worksheet.Cells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
@@ -492,7 +483,22 @@ namespace GCTL.UI.Core.Controllers
                 worksheet.Cells[styleStartRow, 2, row - 1, 2].Merge = true;
 
             worksheet.Cells.Style.WrapText = false;
-            worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+            // worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
+            // 🔥 Fixed Width Columns
+            worksheet.Column(1).Width = 18;   // Buyer Name
+            worksheet.Column(2).Width = 18;   // Style
+            worksheet.Column(3).Width = 25;   // Item
+            worksheet.Column(4).Width = 14;   // P.O
+            worksheet.Column(5).Width = 16;   // Order Quantity
+
+            int startCol = 6;
+            foreach (var month in monthColumns)
+            {
+                worksheet.Column(startCol).Width = 12; // Dynamic Month Column Width
+                startCol++;
+            }
+
             for (int c = 1; c <= totalColumns; c++)
                 worksheet.Column(c).Width += 2;
             for (int c = 1; c <= totalColumns; c++)
@@ -517,7 +523,7 @@ namespace GCTL.UI.Core.Controllers
                 var excelFile = GenerateStylePoCSExcel(reportData);
                 return File(excelFile,
                     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    $"MonthWiseOrderReport_{DateTime.Now:yyyyMMddHHmmss}.xlsx");
+                    $"MonthWiseOrderBookingStylePOColorSizeReport.xlsx");
             }
             catch (Exception ex)
             {
@@ -531,22 +537,24 @@ namespace GCTL.UI.Core.Controllers
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             using var package = new ExcelPackage();
-            var worksheet = package.Workbook.Worksheets.Add("Order Report");
+            var worksheet = package.Workbook.Worksheets.Add("Style PO Color Size Report");
 
             var monthColumns = reportData.MonthColumns ?? new List<string>();
-            int totalColumns = 6 + (monthColumns.Count * 3);
+            int totalColumns = 5 + (monthColumns.Count * 3);
 
             // Headers
             worksheet.Cells[1, 1].Value = reportData.CompanyName;
             worksheet.Cells[1, 1].Style.Font.Bold = true;
             worksheet.Cells[1, 1].Style.Font.Size = 14;
             worksheet.Cells[1, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            worksheet.Cells[1, 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             worksheet.Cells[1, 1, 1, totalColumns].Merge = true;
 
             worksheet.Cells[2, 1].Value = reportData.ReportTitle + " " + reportData.ReportYear;
             worksheet.Cells[2, 1].Style.Font.Bold = true;
             worksheet.Cells[2, 1].Style.Font.Size = 12;
             worksheet.Cells[2, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            worksheet.Cells[2, 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             worksheet.Cells[2, 1, 2, totalColumns].Merge = true;
 
             // Row 4: Main headers
@@ -564,6 +572,7 @@ namespace GCTL.UI.Core.Controllers
                 worksheet.Cells[row, col, row, col + 2].Merge = true;
                 worksheet.Cells[row, col].Value = month;
                 worksheet.Cells[row, col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[row, col].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                 col += 3;
             }
 
@@ -573,6 +582,7 @@ namespace GCTL.UI.Core.Controllers
                 range.Style.Fill.PatternType = ExcelFillStyle.Solid;
                 range.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
                 range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                range.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             }
 
             // Row 5: Sub-headers
@@ -597,6 +607,7 @@ namespace GCTL.UI.Core.Controllers
                 range.Style.Fill.PatternType = ExcelFillStyle.Solid;
                 range.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
                 range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                range.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             }
 
             // Data rows
@@ -739,7 +750,23 @@ namespace GCTL.UI.Core.Controllers
                 worksheet.Cells[styleStartRow, 2].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             }
 
-            worksheet.Cells[1, 1, row - 1, totalColumns].AutoFitColumns();
+            //worksheet.Cells[1, 1, row - 1, totalColumns].AutoFitColumns();
+            // Set Fixed Column Widths
+            worksheet.Column(1).Width = 20;   // Buyer Name
+            worksheet.Column(2).Width = 20;   // Style
+            worksheet.Column(3).Width = 25;   // Item
+            worksheet.Column(4).Width = 12;   // P.O
+            worksheet.Column(5).Width = 18;   // Order Quantity
+
+            int startCol = 6;
+            foreach (var month in monthColumns)
+            {
+                worksheet.Column(startCol).Width = 10;   // Color
+                worksheet.Column(startCol + 1).Width = 10; // Size
+                worksheet.Column(startCol + 2).Width = 12; // Qty
+                startCol += 3;
+            }
+
 
             // Borders
             for (int r = 4; r < row; r++)
@@ -765,33 +792,69 @@ namespace GCTL.UI.Core.Controllers
 
 
 
+        [HttpPost]
+        public async Task<IActionResult> DownloadOrderAllStylePdfReport([FromBody] OrderReportRequest request)
+        {
+            try
+            {
+                request.ToAudit(LoginInfo);
+                var reportData = await _orderReportService.GetOrderReportAllStyleAsync(request, LoginInfo.CompanyCode);
+
+                // Return the full report data as JSON
+                return Json(reportData);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> DownloadOrderStylePdfReport([FromBody] OrderReportRequest request)
+        {
+            try
+            {
+                request.ToAudit(LoginInfo);
+                var reportData = await _orderReportService.GetOrderReportStyleAsync(request, LoginInfo.CompanyCode);
+                return Json(reportData);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
 
 
 
+        [HttpPost]
+        public async Task<IActionResult> DownloadOrderStylePoPdfReport([FromBody] OrderReportRequest request)
+        {
+            try
+            {
+                request.ToAudit(LoginInfo);
+                var reportData = await _orderReportService.GetOrderReportStylePoAsync(request, LoginInfo.CompanyCode);
+                return Json(reportData);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
 
 
-
-
-
-
-
-        // GET: Buyers Dropdown
-        //[HttpGet]
-        //public async Task<IActionResult> GetBuyers()
-        //{
-        //    try
-        //    {
-        //        ViewBag.buyersList = new SelectList(buyerRepo.All().Select(x => new { 'id' = x.BuyerId, 'name' = x.BuyerName }), 'id', 'name');
-        //        //ViewBag.ProductList = new SelectList(productRepo.All().Select(x => new { x.ProductCode, x.ProductName }), "ProductCode", "ProductName");
-        //        return Ok();
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        throw;
-        //    }
-
-        //}
+        [HttpPost]
+        public async Task<IActionResult> DownloadOrderStylePoCSPdfReport([FromBody] OrderReportRequest request)
+        {
+            try
+            {
+                request.ToAudit(LoginInfo);
+                var reportData = await _orderReportService.GetOrderReportStylePoCSAsync(request, LoginInfo.CompanyCode);
+                return Json(reportData);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
 
         // GET: Styles Dropdown
         [HttpGet]

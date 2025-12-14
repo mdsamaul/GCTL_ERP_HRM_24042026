@@ -112,7 +112,7 @@
 
         var ChangeAbleDropdownUrl = settings.baseUrl + "/ChangeAbleDropdown";
 
-        $('.searchable-select').select2({
+        $('.searchable-select').select2({        
             placeholder: 'Select an option',
             allowClear: true,
             width: '100%', 
@@ -1265,7 +1265,7 @@
 
 
 
-        $(document).ready(() => {
+        $(document).ready(() => {           
             GetAutoAllI("Main Group");
             stHeader();
             loadMianGrid()
