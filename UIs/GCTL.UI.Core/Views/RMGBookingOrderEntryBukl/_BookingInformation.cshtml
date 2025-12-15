@@ -51,12 +51,45 @@
                             </div>
                             <!-- Third Row -->
                             <div class="d-flex gap-1">
-                                <div class="mb-1 p-0 d-flex col col-md-6">
+                                @* <div class="mb-1 p-0 d-flex col col-md-6">
                                     <label asp-for="BookingOrderEntryBuklSetup.SupplierId" class="form-label text-right p-0 pe-1 col-4"></label>
                                     <select asp-for="BookingOrderEntryBuklSetup.SupplierId" class="form-select form-select-sm col-8 select2" asp-items="ViewBag.SupplierList as SelectList">
                                         <option value="">--Select Supplier--</option>                                        
-                                    </select>
+                                    </select> 
+                                    <div class="input-group input-group-sm">
+                                        <select class="form-select form-select-sm select2" asp-items="ViewBag.SupplierList as SelectList" asp-for="BookingOrderEntryBuklSetup.SupplierId">
+                                            <option value="">--Select Supplier--</option>
+                                        </select>
+                                        <button type="button"
+                                                class="btn btn-light border js-quick-add"
+                                                data-url="@Url.Action("Index", "BuyerInfo")"
+                                                data-target="#OrderDto_BuyerId"
+                                                data-reload-url="@Url.Action("GetBuyerCompany", "Cascading")"
+                                                data-title="Buyer">
+                                            <i class="fa fa-plus" style="color: #8d8d8d;"></i>
+                                        </button>                                       
+                                    </div>
+                                </div> *@
+                                <div class="mb-1 p-0 d-flex col col-md-6">
+                                    <label asp-for="BookingOrderEntryBuklSetup.SupplierId" class="form-label text-right p-0 pe-1 col-4"></label>
 
+                                    <div class="input-group input-group-sm col-8 p-0">
+
+                                        <select class="form-select select2" asp-items="ViewBag.SupplierList as SelectList" asp-for="BookingOrderEntryBuklSetup.SupplierId">
+                                            <option value="">--Select Supplier--</option>
+                                        </select>
+
+                                        <button type="button"
+                                                class="btn btn-outline-secondary js-quick-add"
+                                                title="Quick Add Supplier"
+                                                style="padding: 0.25rem 0.5rem;"
+                                                data-url="@Url.Action("Index", "BuyerInfo")"
+                                                data-target="#OrderDto_BuyerId"
+                                                data-reload-url="@Url.Action("GetBuyerCompany", "Cascading")"
+                                                data-title="Supplier">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
                                 </div>
                                 <div class="mb-1 p-0 d-flex col col-md-6">
                                     <label name="SupplierAddress" class="form-label text-right p-0 pe-1 col-4">Address</label>
@@ -69,7 +102,7 @@
                                 <div class="mb-1 p-0 d-flex col col-md-6">
                                     <label class="form-label text-right p-0 pe-1 col-4">Country</label>
                                     @* <input id="Country" class="form-control form-control-sm col-8" readonly /> *@
-                                    <select id="Country" class="form-select form-select-sm col-8 select2" asp-items="ViewBag.CountryList as SelectList">
+                                    <select id="SupplierCountry" class="form-select form-select-sm col-8 select2" asp-items="ViewBag.CountryList as SelectList">
                                         <option value="">--Select Country--</option>
                                     </select>
                                 </div>
@@ -157,27 +190,91 @@
                     </div>
                     <div class="mb-1 p-0 d-flex col col-md-6">
                         <label asp-for="BookingOrderEntryBuklSetup.DeliveryAddress" class="form-label text-right p-0 pe-1 col-4"></label>
-                        <input asp-for="BookingOrderEntryBuklSetup.DeliveryAddress" type="text" class="form-control form-control-sm col-8" />
+                        
+                        <div class="input-group input-group-sm p-0">
+                            <input asp-for="BookingOrderEntryBuklSetup.DeliveryAddress" type="text" class="form-control form-control-sm col-8" />
+                            <button type="button"
+                                    class="btn btn-outline-secondary js-quick-add"
+                                    title="Quick Add Supplier"
+                                    style="padding: 0.25rem 0.5rem;"
+                                    data-url="@Url.Action("Index", "BuyerInfo")"
+                                    data-target="#OrderDto_BuyerId"
+                                    data-reload-url="@Url.Action("GetBuyerCompany", "Cascading")"
+                                    data-title="Supplier">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="d-flex gap-1">
                     <div class="mb-1 p-0 d-flex col col-md-6">
                         <label asp-for="BookingOrderEntryBuklSetup.DeliveryMethod" class="form-label text-right p-0 pe-1 col-4"></label>
-                        <select  class="form-select form-select-sm select2" asp-for="BookingOrderEntryBuklSetup.DeliveryAddress" asp-items="ViewBag.deliveryList as SelectList">
+                        @* <select  class="form-select form-select-sm select2" asp-for="BookingOrderEntryBuklSetup.DeliveryAddress" asp-items="ViewBag.deliveryList as SelectList">
                             <option value="">--Select Method--</option>                           
-                        </select>
+                        </select> *@
+                        <div class="input-group input-group-sm p-0">
+
+                            <select class="form-select form-select-sm select2" asp-for="BookingOrderEntryBuklSetup.DeliveryAddress" asp-items="ViewBag.deliveryList as SelectList">
+                                <option value="">--Select Method--</option>
+                            </select>
+
+                            <button type="button"
+                                    class="btn btn-outline-secondary js-quick-add"
+                                    title="Quick Add Supplier"
+                                    style="padding: 0.25rem 0.5rem;"
+                                    data-url="@Url.Action("Index", "BuyerInfo")"
+                                    data-target="#OrderDto_BuyerId"
+                                    data-reload-url="@Url.Action("GetBuyerCompany", "Cascading")"
+                                    data-title="Supplier">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="mb-1 p-0 d-flex col col-md-6">
                         <label asp-for="BookingOrderEntryBuklSetup.PaymentTerms" class="form-label text-right p-0 pe-1 col-4"></label>
-                        <select asp-for="BookingOrderEntryBuklSetup.PaymentTerms" class="form-select form-select-sm select2" asp-items="ViewBag.pTermList as SelectList">
-                            <option value="">--Select Method--</option>                           
-                        </select>
+                        
+                        <div class="input-group input-group-sm col-8 p-0">
+
+                            <select asp-for="BookingOrderEntryBuklSetup.PaymentTerms" class="form-select form-select-sm select2" asp-items="ViewBag.pTermList as SelectList">
+                                <option value="">--Select Method--</option>
+                            </select>
+
+                            <button type="button"
+                                    class="btn btn-outline-secondary js-quick-add"
+                                    title="Quick Add Supplier"
+                                    style="padding: 0.25rem 0.5rem;"
+                                    data-url="@Url.Action("Index", "BuyerInfo")"
+                                    data-target="#OrderDto_BuyerId"
+                                    data-reload-url="@Url.Action("GetBuyerCompany", "Cascading")"
+                                    data-title="Supplier">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="d-flex gap-1">
                     <div class="mb-1 p-0 d-flex col col-md-12">
                         <label asp-for="BookingOrderEntryBuklSetup.TermsCondition" class="form-label text-right p-0 pe-1 col-2"></label>
-                        <textarea rows="2" class="form-control form-control-sm col-10" asp-for="BookingOrderEntryBuklSetup.TermsCondition"></textarea>
+                        @* <textarea rows="2" class="form-control form-control-sm col-10" asp-for="BookingOrderEntryBuklSetup.TermsCondition"></textarea> *@
+                       
+
+                        <div class="input-group input-group-sm p-0">
+
+                            <select asp-for="BookingOrderEntryBuklSetup.TermsCondition" class="form-select form-select-sm select2 col-10" asp-items="ViewBag.termConditionList as SelectList">
+                                <option value="">--Select Method--</option>
+                            </select>
+
+                            <button type="button"
+                                    class="btn btn-outline-secondary js-quick-add"
+                                    title="Quick Add Supplier"
+                                    style="padding: 0.25rem 0.5rem;"
+                                    data-url="@Url.Action("Index", "BuyerInfo")"
+                                    data-target="#OrderDto_BuyerId"
+                                    data-reload-url="@Url.Action("GetBuyerCompany", "Cascading")"
+                                    data-title="Supplier">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

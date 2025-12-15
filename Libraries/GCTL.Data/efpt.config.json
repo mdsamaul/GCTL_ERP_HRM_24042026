@@ -1027,6 +1027,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[RMG_TermsCondition]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Sales_ContactPerson]",
          "ObjectType": 0
       },

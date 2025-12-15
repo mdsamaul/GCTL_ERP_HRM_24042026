@@ -40,8 +40,48 @@
             });
         }
 
+        //$(document).on('change', "#BookingOrderEntryBuklSetup_SupplierId", function () {
+        //    var id = $(this).val();
+        //    console.log("Selected SupplierId:", id);
+        //    $("#SelectedSupplierHidden").val(id);
+
+        //    $.ajax({
+        //        url: settings.baseUrl + "/GetSupplierDetails",
+        //        type: "GET",
+        //        data: { supplierId: id },
+        //        success: function (res) {
+        //            console.log("Supplier details:", res);
+        //            $("#SupplierAddress").val(res.address);
+        //            $("#SupplierCountry").val(res.countryId).select2('change');
+
+        //        },
+        //        error: function (e) {
+        //            console.error("Error loading supplier details:", e);
+        //        }
+        //    });
+        //});
+
+
         $(document).on('change', "#BookingOrderEntryBuklSetup_SupplierId", function () {
             var id = $(this).val();
+
+            // 🔴 SupplierId validation
+            if (!id) {
+                console.warn("SupplierId not selected");
+
+                $("#SelectedSupplierHidden").val("");
+                $("#SupplierAddress").val("");
+
+                if ($("#SupplierCountry").data('select2')) {
+                    $("#SupplierCountry")
+                        .val(null)
+                        .prop("disabled", false)
+                        .trigger('change');
+                }
+
+                return; // stop execution
+            }
+
             console.log("Selected SupplierId:", id);
             $("#SelectedSupplierHidden").val(id);
 
@@ -50,14 +90,41 @@
                 type: "GET",
                 data: { supplierId: id },
                 success: function (res) {
+
+                    if (!res || res.success !== true) {
+                        console.warn("Invalid response:", res);
+                        return;
+                    }
+
                     console.log("Supplier details:", res);
-                    $("#SupplierAddress").val(res.address);
+
+                    // Address safe set
+                    $("#SupplierAddress").val(res.address ?? "");                    
+                    // CountryId validation
+                    
+                        // 🔴 Checks if Select2 is initialized
+                        if ($("#SupplierCountry").data('select2')) {
+                            $("#SupplierCountry")
+                                // 1. Sets the value
+                                .val(res.countryId)
+                                // 2. Disables the element
+                                .prop("disabled", true)
+                                // 3. Triggers change for Select2 to update its display
+                                .trigger('change');
+                        } else {
+                            // fallback (non-select2)
+                            $("#SupplierCountry")
+                                .val(res.countryId)
+                                .prop("disabled", true);
+                        }
+                    
                 },
                 error: function (e) {
                     console.error("Error loading supplier details:", e);
                 }
             });
         });
+
 
         function bindEvents() {
             $('#BookingOrderEntryBuklSetup_BookingType').on('change', handleBookingTypeChange);
@@ -225,8 +292,135 @@
             });
         });
 
+        //function buildHeaders(type) {
+        //    let html = '<tr>';
+        //    html += '<th class="border-end" style="min-width:70px">PO No.</th>';
+        //    html += '<th class="border-end" style="min-width:90px">Item</th>';
+        //    html += '<th class="border-end" style="min-width:100px">Description</th>';
+        //    html += '<th class="border-end" style="min-width:80px">Color</th>';
+
+        //    if (type === '04') {
+        //        html += '<th class="border-end " style="min-width:80px">Size</th>';
+        //        html += '<th class="border-end " style="min-width:80px">Length</th>';
+        //        html += '<th class="border-end " style="min-width:80px">Unit</th>';
+        //        html += '<th class="border-end " style="min-width:80px">Width</th>';
+        //        html += '<th class="border-end " style="min-width:80px">Unit</th>';
+        //        html += '<th class="border-end " style="min-width:80px">Height</th>';
+        //        html += '<th class="border-end " style="min-width:80px">Unit</th>';
+        //    } else if (type === '07') {
+        //        html += `
+        //        <th class="border-end " style="min-width:90px">
+        //            <div class="d-flex justify-content-between align-items-center">
+        //                <i class="fa-solid fa-plus text-dark" style="cursor:pointer;"></i>
+        //                <span>Thread Count</span>
+        //            </div>
+        //        </th>
+        //        `;
+        //    } else if (type === '03') {
+        //        html += '<th class="border-end " style="min-width:80px">Length</th>';
+        //        html += '<th class="border-end " style="min-width:80px">Unit</th>';
+        //        html += '<th class="border-end " style="min-width:80px">Width</th>';
+        //        html += '<th class="border-end " style="min-width:80px">Unit</th>';
+        //        html += '<th class="border-end " style="min-width:80px">Flap</th>';
+        //        html += '<th class="border-end " style="min-width:80px">Unit</th>';
+        //        html += '<th class="border-end " style="min-width:80px">Guest</th>';
+        //        html += '<th class="border-end " style="min-width:80px">Unit</th>';
+        //    }
+
+        //    html += '<th class="border-end text-center" style="min-width:50px">Gar. Qty</th>';
+        //    html += '<th class="border-end text-center" style="min-width:50px">Unit</th>';
+        //    html += '<th class="border-end text-center" style="min-width:50px">Cons/mtr</th>';
+        //    html += '<th class="border-end text-center" style="min-width:60px">Unit</th>';
+        //    html += '<th class="border-end text-center" style="min-width:80px">Total Qty</th>';
+        //    html += '<th class="border-end text-center" style="min-width:60px">Unit</th>';
+        //    html += '<th class="border-end text-center" style="min-width:50px">Order Qty</th>';
+        //    html += '<th class="border-end text-center" style="min-width:60px">Unit</th>';
+        //    html += '<th class="border-end text-center" style="min-width:40px">Per (%)</th>';
+        //    html += '<th class="border-end text-center" style="min-width:60px">Unit Price</th>';
+        //    html += '<th class="border-end text-center" style="min-width:70px">Total Price</th>';
+        //    html += '<th class="border-end text-center" style="min-width:50px">Curr.</th>';
+        //    html += '<th class="border-end text-center" style="min-width:80px">Remarks</th>';
+        //    html += '<th class="text-center" style="min-width:40px">Action</th>';
+        //    html += '</tr>';
+        //    return html;
+        //}
+
+        //function buildRow(item, type, dd) {
+        //    //debugger
+        //    console.log(item)
+        //    let row = '<tr>';
+        //    row += `<td class="border-end"><input type="text" class="form-control form-control-sm" value="${type || ''}"></td>`;
+        //    row += `<td class="border-end"><input type="text" class="form-control form-control-sm" value="${item.integraJobNO || ''}"></td>`;
+        //    row += `<td class="border-end"><input type="text" class="form-control form-control-sm" value="${item.poNo || ''}"></td>`;
+        //    row += `<td class="border-end"><select class="form-select form-select-sm"><option value="">Select</option>${dd.items.map(i => `<option value="${i.id}" ${i.id === item.itemID ? 'selected' : ''}>${i.name}</option>`).join('')}</select></td>`;
+
+        //    const description = (item.description || '').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        //    row += `
+        //    <td class="border-end">
+        //       <input type="text"
+        //           class="form-control form-control-sm description-input"
+        //           data-bs-toggle="tooltip"
+        //           data-bs-placement="top"
+        //           data-bs-custom-class="custom-tooltip"
+        //           data-bs-html="true"
+        //           title="${description}"
+        //           value="${description.replace(/&quot;/g, '"').replace(/&#39;/g, "'")}">
+        //    </td>`;
+
+        //    row += `<td class="border-end"><select class="form-select form-select-sm"><option value="">Select</option>${dd.colors.map(c => `<option value="${c.id}" ${c.id === item.colorID ? 'selected' : ''}>${c.name}</option>`).join('')}</select></td>`;
+
+        //    if (type === '04') {
+        //        row += `<td class="border-end "><select class="form-select form-select-sm"><option>Select</option>${dd.sizes.map(s => `<option value="${s.id}" ${s.id === item.sizeID ? 'selected' : ''}>${s.name}</option>`).join('')}</select></td>`;
+        //        row += `<td class="border-end "><input type="number" class="form-control form-control-sm" value="${item.cartonLength || ''}"></td>`;
+        //        row += `<td class="border-end "><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.leangthUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+        //        row += `<td class="border-end "><input type="number" class="form-control form-control-sm" value="${item.cartonWidth || ''}"></td>`;
+        //        row += `<td class="border-end "><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.widthUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+        //        row += `<td class="border-end "><input type="number" class="form-control form-control-sm" value="${item.catonHeight || ''}"></td>`;
+        //        row += `<td class="border-end "><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.heightUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+        //    } else if (type === '07') {
+        //        row += `<td class="border-end "><select class="form-select form-select-sm"><option value="">Select</option>${dd.threadCounts.map(t => `<option value="${t.id}" ${t.id === item.threadCountID ? 'selected' : ''}>${t.name}</option>`).join('')}</select></td>`;
+        //    } else if (type === '03') {
+        //        row += `<td class="border-end "><input type="number" class="form-control form-control-sm" value="${item.length || ''}"></td>`;
+        //        row += `<td class="border-end "><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.lengthUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+        //        row += `<td class="border-end "><input type="number" class="form-control form-control-sm" value="${item.width || ''}"></td>`;
+        //        row += `<td class="border-end "><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.widthUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+        //        row += `<td class="border-end "><input type="number" class="form-control form-control-sm" value="${item.flap || ''}"></td>`;
+        //        row += `<td class="border-end "><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.flapUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+        //        row += `<td class="border-end "><input type="number" class="form-control form-control-sm" value="${item.guest || ''}"></td>`;
+        //        row += `<td class="border-end "><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.guestUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+        //    }
+
+        //    row += `<td class="border-end"><input type="number" class="form-control form-control-sm" value="${item.garmentQty || ''}"></td>`;
+        //    row += `<td class="border-end"><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.garmentQtyUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+        //    row += `<td class="border-end"><input type="number" class="form-control form-control-sm" value="${item.consumption || ''}"></td>`;
+        //    row += `<td class="border-end"><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.consumptionUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+        //    row += `<td class="border-end"><input type="number" class="form-control form-control-sm" value="${item.totalQty || ''}"></td>`;
+        //    row += `<td class="border-end"><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.totalQtyUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+        //    row += `<td class="border-end"><input type="number" class="form-control form-control-sm" value="${item.orderQty || ''}"></td>`;
+        //    row += `<td class="border-end"><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.orderQtyUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+        //    row += `<td class="border-end"><input type="number" class="form-control form-control-sm" value="${item.percentage || 0}"></td>`;
+        //    row += `<td class="border-end"><input type="number" step="0.01" class="form-control form-control-sm" value="${item.unitPrice || ''}"></td>`;
+        //    row += `<td class="border-end"><input type="number" step="0.01" class="form-control form-control-sm" value="${item.totalPrice || ''}"></td>`;
+        //    row += `<td class="border-end"><select class="form-select form-select-sm">${dd.currencies.map(c => `<option value="${c.id}" ${c.id === item.currencyID ? 'selected' : ''}>${c.name}</option>`).join('')}</select></td>`;
+        //    row += `<td class="border-end"><input type="text" class="form-control form-control-sm" value="${item.remarks || ''}"></td>`;
+        //    row += `<td class="text-center"><button class="btn btn-sm btn-danger btn-delete-row"><i class="fas fa-trash"></i></button></td>`;
+        //    row += '</tr>';
+        //    return row;
+        //}
+
+
+        // ====================================================================
+        // A. HEADER BUILDER FUNCTION
+        // (Hidden headers: Type, Id, Integra Job No. are correctly included)
+        // ====================================================================
         function buildHeaders(type) {
             let html = '<tr>';
+            // Hidden headers (will be hidden via CSS/Class: header-hidden)
+            html += '<th class="border-end header-hidden" style="min-width:70px">Type</th>';
+            html += '<th class="border-end header-hidden" style="min-width:70px">Id</th>';
+            html += '<th class="border-end header-hidden" style="min-width:70px">Integra Job No.</th>';
+
+            // Original Visible Headers
             html += '<th class="border-end" style="min-width:70px">PO No.</th>';
             html += '<th class="border-end" style="min-width:90px">Item</th>';
             html += '<th class="border-end" style="min-width:100px">Description</th>';
@@ -242,13 +436,13 @@
                 html += '<th class="border-end " style="min-width:80px">Unit</th>';
             } else if (type === '07') {
                 html += `
-                <th class="border-end " style="min-width:90px">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <i class="fa-solid fa-plus text-dark" style="cursor:pointer;"></i>
-                        <span>Thread Count</span>
-                    </div>
-                </th>
-                `;
+        <th class="border-end " style="min-width:90px">
+            <div class="d-flex justify-content-between align-items-center">
+                <i class="fa-solid fa-plus text-dark" style="cursor:pointer;"></i>
+                <span>Thread Count</span>
+            </div>
+        </th>
+        `;
             } else if (type === '03') {
                 html += '<th class="border-end " style="min-width:80px">Length</th>';
                 html += '<th class="border-end " style="min-width:80px">Unit</th>';
@@ -278,65 +472,167 @@
             return html;
         }
 
+        // ====================================================================
+        // B. ROW BUILDER FUNCTION
+        // (Uses data-field="Id" and row-hidden class correctly)
+        // ====================================================================
         function buildRow(item, type, dd) {
-         
+            //debugger
+            console.log(item)
             let row = '<tr>';
-            row += `<td class="border-end"><input type="text" class="form-control form-control-sm" value="${item.poNo || ''}"></td>`;
-            row += `<td class="border-end"><select class="form-select form-select-sm"><option value="">Select</option>${dd.items.map(i => `<option value="${i.id}" ${i.id === item.itemID ? 'selected' : ''}>${i.name}</option>`).join('')}</select></td>`;
 
+            // 1. Booking Type (Hidden)
+            row += `<td class="border-end row-hidden"><input type="hidden" class="form-control form-control-sm" data-field="BookingType" value="${type || ''}"></td>`;
+
+            // 2. ID (Hidden, data-field="Id" for DTO mapping)
+            row += `<td class="border-end row-hidden"><input type="hidden" class="form-control form-control-sm" data-field="Id" value="${item.id || ''}"></td>`;
+
+            // 3. Integra Job No. (Hidden)
+            row += `<td class="border-end row-hidden"><input type="hidden" class="form-control form-control-sm" data-field="IntegraJobNo" value="${item.integraJobNo || ''}"></td>`;
+
+            // 4. PO No. (Visible)
+            row += `<td class="border-end"><input type="text" class="form-control form-control-sm" data-field="PoNo" value="${item.poNo || ''}"></td>`;
+
+            // 5. Item ID (Dropdown)
+            row += `<td class="border-end"><select class="form-select form-select-sm" data-field="ItemId"><option value="">Select</option>${dd.items.map(i => `<option value="${i.id}" ${i.id === item.itemID ? 'selected' : ''}>${i.name}</option>`).join('')}</select></td>`;
+
+            // 6. Description
             const description = (item.description || '').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
             row += `
-            <td class="border-end">
-               <input type="text"
-                   class="form-control form-control-sm description-input"
-                   data-bs-toggle="tooltip"
-                   data-bs-placement="top"
-                   data-bs-custom-class="custom-tooltip"
-                   data-bs-html="true"
-                   title="${description}"
-                   value="${description.replace(/&quot;/g, '"').replace(/&#39;/g, "'")}">
-            </td>`;
+<td class="border-end">
+    <input type="text"
+        class="form-control form-control-sm description-input"
+        data-field="Description"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        data-bs-custom-class="custom-tooltip"
+        data-bs-html="true"
+        title="${description}"
+        value="${description.replace(/&quot;/g, '"').replace(/&#39;/g, "'")}">
+</td>`;
 
-            row += `<td class="border-end"><select class="form-select form-select-sm"><option value="">Select</option>${dd.colors.map(c => `<option value="${c.id}" ${c.id === item.colorID ? 'selected' : ''}>${c.name}</option>`).join('')}</select></td>`;
+            // 7. Color
+            row += `<td class="border-end"><select class="form-select form-select-sm" data-field="ColorId"><option value="">Select</option>${dd.colors.map(c => `<option value="${c.id}" ${c.id === item.colorID ? 'selected' : ''}>${c.name}</option>`).join('')}</select></td>`;
 
+            // --- Type Specific Fields ---
             if (type === '04') {
-                row += `<td class="border-end "><select class="form-select form-select-sm"><option>Select</option>${dd.sizes.map(s => `<option value="${s.id}" ${s.id === item.sizeID ? 'selected' : ''}>${s.name}</option>`).join('')}</select></td>`;
-                row += `<td class="border-end "><input type="number" class="form-control form-control-sm" value="${item.cartonLength || ''}"></td>`;
-                row += `<td class="border-end "><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.leangthUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
-                row += `<td class="border-end "><input type="number" class="form-control form-control-sm" value="${item.cartonWidth || ''}"></td>`;
-                row += `<td class="border-end "><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.widthUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
-                row += `<td class="border-end "><input type="number" class="form-control form-control-sm" value="${item.catonHeight || ''}"></td>`;
-                row += `<td class="border-end "><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.heightUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+                row += `<td class="border-end "><select class="form-select form-select-sm" data-field="SizeId"><option>Select</option>${dd.sizes.map(s => `<option value="${s.id}" ${s.id === item.sizeID ? 'selected' : ''}>${s.name}</option>`).join('')}</select></td>`;
+                row += `<td class="border-end "><input type="number" class="form-control form-control-sm" data-field="CartonLength" value="${item.cartonLength || ''}"></td>`;
+                row += `<td class="border-end "><select class="form-select form-select-sm" data-field="LeangthUnitID">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.leangthUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+                row += `<td class="border-end "><input type="number" class="form-control form-control-sm" data-field="CartonWidth" value="${item.cartonWidth || ''}"></td>`;
+                row += `<td class="border-end "><select class="form-select form-select-sm" data-field="WidthUnitID">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.widthUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+                row += `<td class="border-end "><input type="number" class="form-control form-control-sm" data-field="CatonHeight" value="${item.catonHeight || ''}"></td>`;
+                row += `<td class="border-end "><select class="form-select form-select-sm" data-field="HeightUnitID">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.heightUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
             } else if (type === '07') {
-                row += `<td class="border-end "><select class="form-select form-select-sm"><option value="">Select</option>${dd.threadCounts.map(t => `<option value="${t.id}" ${t.id === item.threadCountID ? 'selected' : ''}>${t.name}</option>`).join('')}</select></td>`;
+                row += `<td class="border-end "><select class="form-select form-select-sm" data-field="ThreadCountID"><option value="">Select</option>${dd.threadCounts.map(t => `<option value="${t.id}" ${t.id === item.threadCountID ? 'selected' : ''}>${t.name}</option>`).join('')}</select></td>`;
             } else if (type === '03') {
-                row += `<td class="border-end "><input type="number" class="form-control form-control-sm" value="${item.length || ''}"></td>`;
-                row += `<td class="border-end "><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.lengthUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
-                row += `<td class="border-end "><input type="number" class="form-control form-control-sm" value="${item.width || ''}"></td>`;
-                row += `<td class="border-end "><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.widthUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
-                row += `<td class="border-end "><input type="number" class="form-control form-control-sm" value="${item.flap || ''}"></td>`;
-                row += `<td class="border-end "><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.flapUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
-                row += `<td class="border-end "><input type="number" class="form-control form-control-sm" value="${item.guest || ''}"></td>`;
-                row += `<td class="border-end "><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.guestUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+                row += `<td class="border-end "><input type="number" class="form-control form-control-sm" data-field="Length" value="${item.length || ''}"></td>`;
+                row += `<td class="border-end "><select class="form-select form-select-sm" data-field="LengthUnitID">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.lengthUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+                row += `<td class="border-end "><input type="number" class="form-control form-control-sm" data-field="Width" value="${item.width || ''}"></td>`;
+                row += `<td class="border-end "><select class="form-select form-select-sm" data-field="WidthUnitID">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.widthUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+                row += `<td class="border-end "><input type="number" class="form-control form-control-sm" data-field="Flap" value="${item.flap || ''}"></td>`;
+                row += `<td class="border-end "><select class="form-select form-select-sm" data-field="FlapUnitID">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.flapUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+                row += `<td class="border-end "><input type="number" class="form-control form-control-sm" data-field="Guest" value="${item.guest || ''}"></td>`;
+                row += `<td class="border-end "><select class="form-select form-select-sm" data-field="GuestUnitID">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.guestUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
             }
 
-            row += `<td class="border-end"><input type="number" class="form-control form-control-sm" value="${item.garmentQty || ''}"></td>`;
-            row += `<td class="border-end"><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.garmentQtyUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
-            row += `<td class="border-end"><input type="number" class="form-control form-control-sm" value="${item.consumption || ''}"></td>`;
-            row += `<td class="border-end"><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.consumptionUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
-            row += `<td class="border-end"><input type="number" class="form-control form-control-sm" value="${item.totalQty || ''}"></td>`;
-            row += `<td class="border-end"><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.totalQtyUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
-            row += `<td class="border-end"><input type="number" class="form-control form-control-sm" value="${item.orderQty || ''}"></td>`;
-            row += `<td class="border-end"><select class="form-select form-select-sm">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.orderQtyUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
-            row += `<td class="border-end"><input type="number" class="form-control form-control-sm" value="${item.percentage || 0}"></td>`;
-            row += `<td class="border-end"><input type="number" step="0.01" class="form-control form-control-sm" value="${item.unitPrice || ''}"></td>`;
-            row += `<td class="border-end"><input type="number" step="0.01" class="form-control form-control-sm" value="${item.totalPrice || ''}"></td>`;
-            row += `<td class="border-end"><select class="form-select form-select-sm">${dd.currencies.map(c => `<option value="${c.id}" ${c.id === item.currencyID ? 'selected' : ''}>${c.name}</option>`).join('')}</select></td>`;
-            row += `<td class="border-end"><input type="text" class="form-control form-control-sm" value="${item.remarks || ''}"></td>`;
+            // --- Common Fields ---
+            row += `<td class="border-end"><input type="number" class="form-control form-control-sm" data-field="GarmentQty" value="${item.garmentQty || ''}"></td>`;
+            row += `<td class="border-end"><select class="form-select form-select-sm" data-field="GarmentQtyUnitID">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.garmentQtyUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+            row += `<td class="border-end"><input type="number" class="form-control form-control-sm" data-field="Consumption" value="${item.consumption || ''}"></td>`;
+            row += `<td class="border-end"><select class="form-select form-select-sm" data-field="ConsumptionUnitID">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.consumptionUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+            row += `<td class="border-end"><input type="number" class="form-control form-control-sm" data-field="TotalQty" value="${item.totalQty || ''}"></td>`;
+            row += `<td class="border-end"><select class="form-select form-select-sm" data-field="TotalQtyUnitID">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.totalQtyUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+            row += `<td class="border-end"><input type="number" class="form-control form-control-sm" data-field="OrderQty" value="${item.orderQty || ''}"></td>`;
+            row += `<td class="border-end"><select class="form-select form-select-sm" data-field="OrderQtyUnitID">${dd.units.map(u => `<option value="${u.id}" ${u.id === item.orderQtyUnitID ? 'selected' : ''}>${u.name}</option>`).join('')}</select></td>`;
+            row += `<td class="border-end"><input type="number" class="form-control form-control-sm" data-field="Percentage" value="${item.percentage || 0}"></td>`;
+            row += `<td class="border-end"><input type="number" step="0.01" class="form-control form-control-sm" data-field="UnitPrice" value="${item.unitPrice || ''}"></td>`;
+            row += `<td class="border-end"><input type="number" step="0.01" class="form-control form-control-sm" data-field="TotalPrice" value="${item.totalPrice || ''}"></td>`;
+            row += `<td class="border-end"><select class="form-select form-select-sm" data-field="CurrencyID">${dd.currencies.map(c => `<option value="${c.id}" ${c.id === item.currencyID ? 'selected' : ''}>${c.name}</option>`).join('')}</select></td>`;
+            row += `<td class="border-end"><input type="text" class="form-control form-control-sm" data-field="Remarks" value="${item.remarks || ''}"></td>`;
             row += `<td class="text-center"><button class="btn btn-sm btn-danger btn-delete-row"><i class="fas fa-trash"></i></button></td>`;
             row += '</tr>';
             return row;
         }
+
+
+        // ====================================================================
+        // C. DATA COLLECTION LOGIC
+        // (Ensures Id is collected and converted to integer)
+        // ====================================================================
+        function collectRowData($row) {
+            const data = {};
+
+            // Collect all fields with data-field attribute
+            $row.find('[data-field]').each(function () {
+                const fieldName = $(this).attr('data-field');
+                let value = $(this).val();
+
+                // Convert common numbers back to number type for DTO
+                if (['Id', 'GarmentQty', 'Consumption', 'TotalQty', 'OrderQty', 'Percentage', 'UnitPrice', 'TotalPrice', 'CartonLength', 'CartonWidth', 'CatonHeight', 'Length', 'Width', 'Flap', 'Guest'].includes(fieldName)) {
+
+                    // Special handling for ID (must be integer 0 or greater)
+                    if (fieldName === 'Id') {
+                        value = parseInt(value) || 0;
+                    } else {
+                        // Otherwise, convert to float/decimal
+                        value = parseFloat(value) || null;
+                    }
+                }
+
+                data[fieldName] = value;
+            });
+
+            // Check if ID is successfully collected
+            if (!data.Id || data.Id === 0) {
+                console.error("Error: Row ID is missing or zero. Cannot update.");
+                return null;
+            }
+
+            return data;
+        }
+
+        // ====================================================================
+        // D. AJAX UPDATE AND EVENT HANDLER
+        // ====================================================================
+        function sendUpdateToServer(data) {
+            // Check if settings.baseUrl is defined and accessible
+            const url = (typeof settings !== 'undefined' && settings.baseUrl) ? settings.baseUrl + '/UpdateBookingItem' : '/YourController/UpdateBookingItem';
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function (response) {
+                    if (response.success) {
+                        console.log("Success:", response.message);
+                        // Optionally show a toast/success message here
+                    } else {
+                        console.error("Server Error:", response.message);
+                        // Optionally show an error alert here
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("Failed to update booking item. AJAX Status:", textStatus, "Error:", errorThrown);
+                    // Show generic error message
+                }
+            });
+        }
+
+        // Event handler for all input/select changes in the table
+        $(document).on('change', '#bookingTable input, #bookingTable select', function () {
+            if ($(this).attr('data-field')) {
+                const $row = $(this).closest('tr');
+                const updateData = collectRowData($row);
+
+                if (updateData) {
+                    console.log("Sending Data:", updateData);
+                    sendUpdateToServer(updateData);
+                }
+            }
+        });
+
 
         function handleBookingTypeChange() {
             var type = $(this).val();
@@ -678,9 +974,73 @@
             $("#SupplierId").val(data.supplierId).trigger("change");
         }
 
- 
 
 
+
+
+        //function collectRowData($row) {
+        //    const data = {};
+
+        //    // Collect all fields with data-field attribute
+        //    $row.find('[data-field]').each(function () {
+        //        const fieldName = $(this).attr('data-field');
+        //        let value = $(this).val();
+
+        //        // Convert common numbers back to number type for DTO
+        //        if (['Id', 'GarmentQty', 'Consumption', 'TotalQty', 'OrderQty', 'UnitPrice', 'TotalPrice'].includes(fieldName)) {
+        //            // If it's the Id, ensure it's converted to an integer
+        //            if (fieldName === 'Id') {
+        //                value = parseInt(value) || 0;
+        //            } else {
+        //                // Otherwise, convert to float/decimal
+        //                value = parseFloat(value) || null;
+        //            }
+        //        }
+
+        //        data[fieldName] = value;
+        //    });
+
+        //    // Check if ID is successfully collected
+        //    if (!data.Id || data.Id === 0) {
+        //        console.error("Error: Row ID is missing or zero. Cannot update.");
+        //        return null;
+        //    }
+
+        //    return data;
+        //}
+
+        //// Event handler remains the same (assuming you added the necessary CSS for .row-hidden)
+        //$(document).on('change', '#bookingTable input, #bookingTable select', function () {
+        //    if ($(this).attr('data-field')) {
+        //        const $row = $(this).closest('tr');
+        //        const updateData = collectRowData($row);
+
+        //        if (updateData) {
+        //            console.log(updateData);
+        //            sendUpdateToServer(updateData);
+        //        }
+        //    }
+        //});
+        //function sendUpdateToServer(data) {
+        //    $.ajax({
+        //        url: settings.baseUrl+ '/UpdateBookingItem', // Replace YourControllerName
+        //        type: 'POST',
+        //        contentType: 'application/json',
+        //        data: JSON.stringify(data),
+        //        success: function (response) {
+        //            if (response.success) {
+        //                // Show success notification
+        //                console.log(response.message);
+        //            } else {
+        //                // Show error notification
+        //                console.error(response.message);
+        //            }
+        //        },
+        //        error: function () {
+        //            console.error("Failed to update booking item.");
+        //        }
+        //    });
+        //}
 
         return {
             getTableData: function () {

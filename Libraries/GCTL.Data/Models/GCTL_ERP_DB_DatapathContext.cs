@@ -271,6 +271,7 @@ namespace GCTL.Data.Models
         public virtual DbSet<RmgProdTempListColorSizeBreakup> RmgProdTempListColorSizeBreakup { get; set; }
         public virtual DbSet<RmgPurchaseOrderReceive> RmgPurchaseOrderReceive { get; set; }
         public virtual DbSet<RmgPurchaseOrderReceiveDetails> RmgPurchaseOrderReceiveDetails { get; set; }
+        public virtual DbSet<RmgTermsCondition> RmgTermsCondition { get; set; }
         public virtual DbSet<SalesContactPerson> SalesContactPerson { get; set; }
         public virtual DbSet<SalesCustomer> SalesCustomer { get; set; }
         public virtual DbSet<SalesDefBankBranchInfo> SalesDefBankBranchInfo { get; set; }
@@ -14511,6 +14512,51 @@ namespace GCTL.Data.Models
                 entity.Property(e => e.WarrentyTypeId)
                     .HasMaxLength(10)
                     .HasColumnName("WarrentyTypeID");
+            });
+
+            modelBuilder.Entity<RmgTermsCondition>(entity =>
+            {
+                entity.HasKey(e => e.Tc)
+                    .HasName("PK__RMG_Term__3214E40835A85F6B");
+
+                entity.ToTable("RMG_TermsCondition");
+
+                entity.Property(e => e.Tc)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("TC");
+
+                entity.Property(e => e.CompanyId)
+                    .HasMaxLength(50)
+                    .HasColumnName("CompanyID");
+
+                entity.Property(e => e.EmployeeId)
+                    .HasMaxLength(50)
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.Ldate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("LDate");
+
+                entity.Property(e => e.Lip)
+                    .HasMaxLength(50)
+                    .HasColumnName("LIP");
+
+                entity.Property(e => e.Lmac)
+                    .HasMaxLength(50)
+                    .HasColumnName("LMAC");
+
+                entity.Property(e => e.Luser)
+                    .HasMaxLength(50)
+                    .HasColumnName("LUser");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.TermsConditionId)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.TermsConditionName).HasMaxLength(1000);
             });
 
             modelBuilder.Entity<SalesContactPerson>(entity =>

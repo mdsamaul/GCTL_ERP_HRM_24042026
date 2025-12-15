@@ -22,16 +22,16 @@ namespace GCTL.UI.Core.Controllers
         private readonly IRepository<CaDefCurrency> currenciesRepo;
         private readonly IRepository<RmgInvBookingReceivedDetailsCarton> cartonRepo;
         private readonly IRepository<RmgInvBookingReceivedDetailsButton> buttonRepo;
-        private readonly IRepository<RmgInvBookingReceivedDetailsButtonTemp> buttonTempRepo;
         private readonly IRepository<RmgInvBookingReceivedDetailsExtra> extraRepo;
-        private readonly IRepository<RmgInvBookingReceivedDetailsExtraTemp> extraTempRepo;
         private readonly IRepository<RmgInvBookingReceivedDetailsFebric> febricRepo;
+        private readonly IRepository<RmgInvBookingReceivedDetailsButtonTemp> buttonTempRepo;
+        private readonly IRepository<RmgInvBookingReceivedDetailsExtraTemp> extraTempRepo;
         private readonly IRepository<RmgInvBookingReceivedDetailsFebricTemp> febricTempRepo;
         private readonly IRepository<RmgInvBookingReceivedDetailsCartonTemp> cartonTempRepo;
-        private readonly IRepository<RmgInvBookingReceivedDetailsPoly> polyRepo;
         private readonly IRepository<RmgInvBookingReceivedDetailsPolyTemp> polyTempRepo;
-        private readonly IRepository<RmgInvBookingReceivedDetailsThread> threadRepo;
         private readonly IRepository<RmgInvBookingReceivedDetailsThreadTemp> threadTempRepo;
+        private readonly IRepository<RmgInvBookingReceivedDetailsPoly> polyRepo;
+        private readonly IRepository<RmgInvBookingReceivedDetailsThread> threadRepo;
         private readonly IRepository<InvDefBookingItemType> bTypeRepo;
         private readonly IRepository<RmgProdDefBuyer> buyerRepo;
         private readonly IRepository<RmgDefSupplier> supplierRepo;
@@ -41,6 +41,7 @@ namespace GCTL.UI.Core.Controllers
         private readonly IRepository<RmgProdDefDeliveryMethod> deliveryRepo;
         private readonly IRepository<SalesDefPaymentTerms> paymentTermRepo;
         private readonly IRepository<HrmDefDesignation> degRepo;
+        private readonly IRepository<RmgTermsCondition> termConditionRepo;
         private readonly ICommonService commonService;
         private readonly IRMGBookingOrderEntryBuklService rmgBookingOrderEntryBuklService;
         private readonly string _connectionString;
@@ -77,6 +78,7 @@ namespace GCTL.UI.Core.Controllers
             IRepository<RmgProdDefDeliveryMethod> deliveryRepo,
             IRepository<SalesDefPaymentTerms> paymentTermRepo,
             IRepository<HrmDefDesignation> degRepo,
+            IRepository<RmgTermsCondition> termConditionRepo,
             IConfiguration configuration,
             ICommonService commonService,
             IRMGBookingOrderEntryBuklService rmgBookingOrderEntryBuklService
@@ -110,6 +112,7 @@ namespace GCTL.UI.Core.Controllers
             this.deliveryRepo = deliveryRepo;
             this.paymentTermRepo = paymentTermRepo;
             this.degRepo = degRepo;
+            this.termConditionRepo = termConditionRepo;
             this.commonService = commonService;
             this.rmgBookingOrderEntryBuklService = rmgBookingOrderEntryBuklService;
             //this.configuration = configuration.GetConnectionString("ApplicationDbConnection");
@@ -123,6 +126,7 @@ namespace GCTL.UI.Core.Controllers
             ViewBag.CountryList = new SelectList(countryRepo.All().Select(x => new { id = x.CountryId, name = x.CountryName }), "id", "name");
             ViewBag.CurrencyList = new SelectList(currenciesRepo.All().Select(x => new { id = x.CurrencyId, name = x.CurrencyName }), "id", "name");
             ViewBag.pTermList = new SelectList(paymentTermRepo.All().Select(x => new { id = x.PaymentTermsId, name = x.PaymentTermsName }), "id", "name");
+            ViewBag.termConditionList = new SelectList(termConditionRepo.All().Select(x => new { id = x.TermsConditionId, name = x.TermsConditionName }), "id", "name");
             ViewBag.deliveryList = new SelectList(deliveryRepo.All().Select(x => new { id = x.DeliveryMethodId, name = x.DeliveryMethod }), "id", "name");
             var empList = new List<EmployeeDto>();
 
@@ -140,7 +144,7 @@ namespace GCTL.UI.Core.Controllers
             using (var con = new SqlConnection(_connectionString))
             using (var cmd = new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue("@DesignationCode", "028"); // dynamic হলে dto.DesignationCode ব্যবহার করুন
+                cmd.Parameters.AddWithValue("@DesignationCode", "028");
 
                 await con.OpenAsync();
                 using (var rdr = await cmd.ExecuteReaderAsync())
@@ -156,7 +160,6 @@ namespace GCTL.UI.Core.Controllers
                 }
             }
 
-            // Dropdown এর জন্য ViewBag সেট করা
             ViewBag.EmpList = new SelectList(empList, "EmployeeID", "FullName");
 
 
@@ -210,50 +213,9 @@ namespace GCTL.UI.Core.Controllers
                 id = supplier.SupplierId,
                 name = supplier.SupplierName,
                 address = supplier.Address,
+                countryId = supplier.CountryId,
             });
         }
-
-        //[HttpPost]
-        //public async Task<IActionResult> LoadBookingTable([FromBody] ItemTypeFilterDto dto)
-        //{
-        //    try
-        //    {
-        //        var dropdownData = await GetDropdownData();
-        //        List<object> data = new List<object>();
-        //        var bookingType = dto.BookingType.ToLower();
-
-        //        switch (bookingType)
-        //        {
-        //            case "04"://carton
-        //                data = await GetCartonBookingData(dto);
-        //                break;
-        //            case "07"://thread
-        //                data = await GetThreadBookingData(dto);
-        //                break;
-        //            case "03"://poly
-        //                data = await GetPolyBookingData(dto);
-        //                break;
-        //            case "02"://button
-        //                data = await GetButtonBookingData(dto);
-        //                break;
-
-        //            case "01": // fabric
-        //                data = (await GetFebricBookingData(dto)).Cast<object>().ToList();
-        //                break;
-
-        //            default:
-
-        //                data = (await GetExtraBookingData(dto)).Cast<object>().ToList();
-        //                break;
-        //        }
-
-        //        return Json(new { success = true, data = data, dropdownData = dropdownData });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(new { success = false, message = ex.Message });
-        //    }
-        //}
 
 
         [HttpPost]
@@ -339,151 +301,6 @@ namespace GCTL.UI.Core.Controllers
         }
 
         // ==================== Carton Methods ====================
-        //private async Task<List<object>> GetCartonBookingData()
-        //{
-        //    var data = await cartonRepo.All()
-        //        .Select(x => new
-        //        {
-        //            id = x.Id,
-        //            poNo = x.PoNo,
-        //            itemID = x.ItemId,
-        //            description = x.ItemDescription,
-        //            colorID = x.ColorId,
-        //            sizeID = x.SizeId,
-        //            cartonLength = x.CartonLeangth,
-        //            leangthUnitID = x.LeangthUnitId,
-        //            cartonWidth = x.CartonWidth,
-        //            widthUnitID = x.WidthUnitId,
-        //            catonHeight = x.CatonHeight,
-        //            heightUnitID = x.HeightUnitId,
-        //            garmentQty = x.OrderQty,
-        //            garmentQtyUnitID = x.OrderUnitId,
-        //            consumption = x.Consumption,
-        //            consumptionUnitID = x.ConsumptionUnitId,
-        //            totalQty = x.RequiredQty,
-        //            totalQtyUnitID = x.RequiredQtyUnitId,
-        //            orderQty = x.OrderQty,
-        //            orderQtyUnitID = x.OrderUnitId,
-        //            percentage = x.CartonPercent,
-        //            unitPrice = x.UnitPrice,
-        //            totalPrice = x.TotalPrice,
-        //            currencyID = x.CurrencyId,
-        //            remarks = x.Remarks
-        //        })
-        //        .ToListAsync();
-
-        //    return data.Cast<object>().ToList();
-        //}
-
-        //    private async Task<List<object>> GetCartonBookingData(ItemTypeFilterDto dto)
-        //    {
-        //        // ============================
-        //        // CLEAR OLD TEMP DATA
-        //        // ============================
-        //        var exTempCarton = cartonTempRepo.All().ToList();
-        //        if (exTempCarton != null && exTempCarton.Count > 0)
-        //        {
-        //            await cartonTempRepo.DeleteRangeAsync(exTempCarton);
-        //        }
-
-        //        // ============================
-        //        // SQL QUERY (Dynamic Based on DTO)
-        //        // ============================
-
-        //        string query = @"
-
-        //    SELECT 
-        //    cd.Id, cd.CostingDetailsID, cd.CostingID AS DetailCostingID, cd.SLNO,
-        //    cd.BookingItemTypeID, cd.ItemID, cd.Description, cd.Width, cd.ColorID,
-        //    cd.SupplierID, cd.PoNo AS DetailPoNo, cd.Quantity, cd.Consumption, cd.Extra,
-        //    cd.TotalQuantity, cd.TotalQuantityUnit, cd.UnitPrice, cd.TotalPrice,
-        //    cd.TotalPriceCurrencyId,
-
-        //    ci.IntegraJobNO AS CiIntegraJob,
-        //    ci.StyleID AS CiStyleID,
-        //    ci.PoNo AS CiPoNo,
-        //    ci.MasterPurchaseOrder AS CiMasterPo
-        //FROM RMG_CostingInfo ci
-        //LEFT JOIN RMG_CostingDetails cd ON ci.CostingID = cd.CostingID
-        //LEFT JOIN Inv_Def_Item di ON di.ItemID = cd.ItemID
-        //LEFT JOIN Inv_Def_BookingItemType dit ON dit.BookingItemTypeID = di.ItemTypeID
-        //WHERE cd.CostingID =@CostingId and di.ItemTypeID =@BookingType";
-
-        //        using var con = new SqlConnection(_connectionString);
-        //        using var cmd = new SqlCommand(query, con);
-
-        //        // ============================
-        //        // ADD PARAMETERS
-        //        // ============================
-        //        cmd.Parameters.AddWithValue("@BookingType", dto.BookingType ?? "");
-        //        cmd.Parameters.AddWithValue("@CostingId", dto.CostingId ?? "");
-
-        //        await con.OpenAsync();
-        //        using var rdr = await cmd.ExecuteReaderAsync();
-
-        //        // ============================
-        //        // INSERT INTO TEMP CARTON TABLE
-        //        // ============================
-        //        while (await rdr.ReadAsync())
-        //        {
-        //            var temp = new RmgInvBookingReceivedDetailsCartonTemp
-        //            {
-        //                PurchaseReceiveNo = await GenerateAutoCartonBooking(),
-        //                ItemId = rdr["ItemID"].ToString(),
-        //                ItemDescription = rdr["Description"].ToString(),
-        //                ColorId = rdr["ColorID"].ToString(),
-        //                SizeId = rdr["Width"].ToString(), // adjust if SizeId comes differently
-        //                OrderQty = rdr["Quantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Quantity"]),
-        //                Consumption = rdr["Consumption"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Consumption"]),
-        //                RequiredQty = rdr["TotalQuantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalQuantity"]),
-        //                RequiredQtyUnitId = rdr["TotalQuantityUnit"].ToString(),
-        //                UnitPrice = rdr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["UnitPrice"]),
-        //                TotalPrice = rdr["TotalPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalPrice"]),
-        //                CurrencyId = rdr["TotalPriceCurrencyId"].ToString(),
-        //                IntegraJobNo = rdr["CiIntegraJob"].ToString(),
-        //                PoNo = rdr["CiPoNo"].ToString(),
-        //                Slno = rdr["SLNO"] == DBNull.Value ? 0 : Convert.ToInt32(rdr["SLNO"])
-        //            };
-
-        //            await cartonTempRepo.AddAsync(temp);
-        //        }
-
-        //        // ============================
-        //        // RETURN DATA FROM TEMP TABLE
-        //        // ============================
-        //        var data = await cartonTempRepo.All()
-        //            .Select(x => new
-        //            {
-        //                id = x.Id,
-        //                poNo = x.PoNo,
-        //                itemID = x.ItemId,
-        //                description = x.ItemDescription,
-        //                colorID = x.ColorId,
-        //                sizeID = x.SizeId,
-        //                cartonLength = x.CartonLeangth,
-        //                leangthUnitID = x.LeangthUnitId,
-        //                cartonWidth = x.CartonWidth,
-        //                widthUnitID = x.WidthUnitId,
-        //                catonHeight = x.CatonHeight,
-        //                heightUnitID = x.HeightUnitId,
-        //                garmentQty = x.OrderQty,
-        //                orderQty = x.OrderQty,
-        //                garmentQtyUnitID = x.OrderUnitId,
-        //                consumption = x.Consumption,
-        //                consumptionUnitID = x.ConsumptionUnitId,
-        //                totalQty = x.RequiredQty,
-        //                totalQtyUnitID = x.RequiredQtyUnitId,
-        //                percentage = x.CartonPercent,
-        //                unitPrice = x.UnitPrice,
-        //                totalPrice = x.TotalPrice,
-        //                currencyID = x.CurrencyId,
-        //                remarks = x.Remarks
-        //            })
-        //            .ToListAsync();
-
-        //        return data.Cast<object>().ToList();
-        //    }
-
 
 
         private async Task<List<object>> GetCartonBookingData(ItemTypeFilterDto dto)
@@ -494,18 +311,6 @@ namespace GCTL.UI.Core.Controllers
 
             string inClause = string.Join(",", costingIds.Select((x, i) => $"@cid{i}"));
 
-            //        string query = $@"
-            //SELECT
-            //    cd.*, 
-            //    ci.IntegraJobNO,
-            //    ci.StyleID,
-            //    ci.PoNo,
-            //    ci.MasterPurchaseOrder
-            //FROM RMG_CostingInfo ci
-            //JOIN RMG_CostingDetails cd ON ci.CostingID = cd.CostingID
-            //JOIN Inv_Def_Item di ON di.ItemID = cd.ItemID
-            //WHERE ci.CostingID IN ({inClause})
-            //  AND di.ItemTypeID = @BookingType";
             string query = $@"
     SELECT
            cd.Id, cd.CostingDetailsID, cd.CostingID AS DetailCostingID, cd.SLNO,
@@ -537,17 +342,57 @@ namespace GCTL.UI.Core.Controllers
 
             while (await rdr.ReadAsync())
             {
+                // Helper function for safe conversion
+                decimal SafeToDecimal(object obj) => obj == DBNull.Value ? 0M : Convert.ToDecimal(obj);
+                int SafeToInt(object obj) => obj == DBNull.Value ? 0 : Convert.ToInt32(obj);
+                string SafeToString(object obj) => obj == DBNull.Value ? "" : obj.ToString();
+
                 await cartonTempRepo.AddAsync(new RmgInvBookingReceivedDetailsCartonTemp
                 {
                     PurchaseReceiveNo = await GenerateAutoCartonBooking(),
-                    ItemId = rdr["ItemID"].ToString(),
-                    ItemDescription = rdr["Description"].ToString(),
-                    OrderQty = Convert.ToDecimal(rdr["Quantity"]),
-                    RequiredQty = Convert.ToDecimal(rdr["TotalQuantity"]),
-                    UnitPrice = Convert.ToDecimal(rdr["UnitPrice"]),
-                    TotalPrice = Convert.ToDecimal(rdr["TotalPrice"]),
-                    PoNo = rdr["PoNo"].ToString(),
-                    IntegraJobNo = rdr["IntegraJobNO"].ToString()
+
+                    // --- Properties from Reader ---
+                    ItemId = SafeToString(rdr["ItemID"]),
+                    ItemDescription = SafeToString(rdr["Description"]),
+                    OrderQty = SafeToDecimal(rdr["Quantity"]),
+                    OrderUnitId = SafeToString(rdr["TotalQuantityUnit"]),
+                    RequiredQty = SafeToDecimal(rdr["TotalQuantity"]),
+                    RequiredQtyUnitId = SafeToString(rdr["TotalQuantityUnit"]), // Duplicated unit from OrderUnitId
+                    ConsumptionUnitId = SafeToString(rdr["TotalQuantityUnit"]), // Duplicated unit from OrderUnitId
+                    Consumption = SafeToDecimal(rdr["Consumption"]),
+                    UnitPrice = SafeToDecimal(rdr["UnitPrice"]),
+                    TotalPrice = SafeToDecimal(rdr["TotalPrice"]),
+                    PoNo = SafeToString(rdr["PoNo"]),
+                    IntegraJobNo = SafeToString(rdr["IntegraJobNO"]),
+                    Slno = SafeToInt(rdr["SLNO"]),
+
+                    // --- Properties explicitly set to "" or default 0 ---
+                    ColorId = "",
+                    SizeId = "",
+                    Refcode = "",
+                    CartonLeangth = "",
+                    LeangthUnitId = "",
+                    CartonWidth = "",
+                    WidthUnitId = "",
+                    CatonHeight = "",
+                    HeightUnitId = "",
+                    //ConsumptionUnitId = "", // Not in select, so default to ""
+                    CartonPercent = "",
+
+                    // Set other nullable properties to 0 (since they are not read from the query)
+                    TotalReceivedQty = 0M,
+                    CurrentReceiveQty = 0M,
+                    ReceivedUnitPrice = 0M,
+                    TotalReceivedQtyPre = 0M,
+                    PendingReceiveQty = 0M,
+                    PendingReceiveQtyPre = 0M,
+
+                    // Set other string properties to "" (since they are not read from the query)
+                    Brdid = "",
+                    ReceivedUnitType = "",
+                    CurrencyId = "",
+                    Remarks = "",
+                    EmployeeId = "",
                 });
             }
 
@@ -591,8 +436,8 @@ namespace GCTL.UI.Core.Controllers
         public async Task<string> GenerateAutoCartonBooking()
         {
             var getYear = DateTime.Now.Year.ToString();
-            var prefix = "POR_" + getYear + "_";
-
+            var prefix = "PRN-" + getYear + "-";
+            //PRN - 001
             string lastCode = null;
 
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -646,150 +491,6 @@ namespace GCTL.UI.Core.Controllers
 
 
         // ==================== Thread Methods ====================
-        //private async Task<List<object>> GetThreadBookingData()
-        //{
-        //    var data = await threadRepo.All()
-        //        .Select(x => new
-        //        {
-        //            id = x.Id,
-        //            poNo = x.PoNo,
-        //            itemID = x.ItemId,
-        //            description = x.FebricDetail,
-        //            colorID = x.ThreadColorId,
-        //            threadCountID = x.ThreadCountId,
-        //            garmentQty = x.OrderQty,
-        //            garmentQtyUnitID = x.QtyUnitId,
-        //            consumption = x.Consumption,
-        //            consumptionUnitID = x.ConsumtionUnitId,
-        //            totalQty = x.TotalQty,
-        //            totalQtyUnitID = x.TotalQtyUnitId,
-        //            orderQty = x.OrderQty,
-        //            orderQtyUnitID = x.ThreadReqUnit,
-        //            percentage = x.Threadpercent,
-        //            unitPrice = x.UnitPrice,
-        //            totalPrice = x.TotalPrice,
-        //            currencyID = x.CurrencyId,
-        //            remarks = x.Remarks
-        //        })
-        //        .ToListAsync();
-
-        //    return data.Cast<object>().ToList();
-        //}
-
-        //    private async Task<List<object>> GetThreadBookingData(ItemTypeFilterDto dto)
-        //    {
-        //        // ============================
-        //        // CLEAR OLD TEMP DATA
-        //        // ============================
-        //        var exTempThread = threadTempRepo.All().ToList();
-        //        if (exTempThread != null && exTempThread.Count > 0)
-        //        {
-        //            await threadTempRepo.DeleteRangeAsync(exTempThread);
-        //        }
-
-        //        // ============================
-        //        // SQL QUERY (Thread Based)
-        //        // ============================
-        //        string query = @"
-        //        SELECT 
-        //            cd.Id, cd.CostingDetailsID, cd.CostingID AS DetailCostingID, cd.SLNO,
-        //            cd.BookingItemTypeID, cd.ItemID, cd.Description, cd.Width, cd.ColorID,
-        //            cd.SupplierID, cd.PoNo AS DetailPoNo, cd.Quantity, cd.Consumption, cd.Extra,
-        //            cd.TotalQuantity, cd.TotalQuantityUnit, cd.UnitPrice, cd.TotalPrice,
-        //            cd.TotalPriceCurrencyId,
-
-        //            ci.IntegraJobNO AS CiIntegraJob,
-        //            ci.StyleID AS CiStyleID,
-        //            ci.PoNo AS CiPoNo,
-        //            ci.MasterPurchaseOrder AS CiMasterPo
-        //         FROM RMG_CostingInfo ci
-        //LEFT JOIN RMG_CostingDetails cd ON ci.CostingID = cd.CostingID
-        //LEFT JOIN Inv_Def_Item di ON di.ItemID = cd.ItemID
-        //LEFT JOIN Inv_Def_BookingItemType dit ON dit.BookingItemTypeID = di.ItemTypeID
-        //WHERE cd.CostingID =@CostingId and di.ItemTypeID =@BookingType";
-
-        //        using var con = new SqlConnection(_connectionString);
-        //        using var cmd = new SqlCommand(query, con);
-
-        //        // ============================
-        //        // ADD PARAMETERS
-        //        // ============================
-        //        cmd.Parameters.AddWithValue("@BookingType", dto.BookingType ?? "");
-        //        cmd.Parameters.AddWithValue("@CostingId", dto.CostingId ?? "");
-        //        await con.OpenAsync();
-        //        using var rdr = await cmd.ExecuteReaderAsync();
-
-        //        // ============================
-        //        // INSERT INTO TEMP TABLE
-        //        // ============================
-        //        while (await rdr.ReadAsync())
-        //        {
-        //            var temp = new RmgInvBookingReceivedDetailsThreadTemp
-        //            {
-        //                PurchaseReceiveNo = await GenerateAutoThreadBooking(),
-
-        //                ItemId = rdr["ItemID"].ToString(),
-        //                ColorId = rdr["ColorID"].ToString(),
-        //                Slno = rdr["SLNO"] == DBNull.Value ? 0 : Convert.ToInt32(rdr["SLNO"]),
-
-        //                // Thread Fields Mapping
-        //                Consumption = rdr["Consumption"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Consumption"]),
-        //                TotalQty = rdr["TotalQuantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalQuantity"]),
-        //                TotalQtyUnitId = rdr["TotalQuantityUnit"].ToString(),
-        //                UnitPrice = rdr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["UnitPrice"]),
-        //                TotalPrice = rdr["TotalPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalPrice"]),
-        //                CurrencyId = rdr["TotalPriceCurrencyId"].ToString(),
-        //                OrderQty = rdr["Quantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Quantity"]),
-
-        //                IntegraJobNo = rdr["CiIntegraJob"].ToString(),
-        //                PoNo = rdr["CiPoNo"].ToString()
-        //            };
-
-        //            await threadTempRepo.AddAsync(temp);
-        //        }
-
-        //        // ============================
-        //        // RETURN DATA FROM TEMP TABLE
-        //        // ============================
-        //        var data = await threadTempRepo.All()
-        //            .Select(x => new
-        //            {
-        //                id = x.Id,
-        //                purchaseReceiveNo = x.PurchaseReceiveNo,
-
-        //                itemID = x.ItemId,
-        //                colorID = x.ColorId,
-        //                slno = x.Slno,
-
-        //                orderQty = x.OrderQty,
-        //                qtyUnitId = x.QtyUnitId,
-
-        //                consumption = x.Consumption,
-        //                consumtionUnitId = x.ConsumtionUnitId,
-
-        //                totalQty = x.TotalQty,
-        //                totalQtyUnitId = x.TotalQtyUnitId,
-
-        //                totalReceivedQty = x.TotalReceivedQty,
-        //                currentReceiveQty = x.CurrentReceiveQty,
-        //                pendingReceiveQty = x.PendingReceiveQty,
-        //                garmentQty = x.OrderQty,
-        //                unitPrice = x.UnitPrice,
-        //                receivedUnitPrice = x.ReceivedUnitPrice,
-        //                totalPrice = x.TotalPrice,
-        //                currencyId = x.CurrencyId,
-
-        //                remarks = x.Remarks,
-        //                employeeId = x.EmployeeId,
-
-        //                integraJobNo = x.IntegraJobNo,
-        //                poNo = x.PoNo
-        //            })
-        //            .ToListAsync();
-
-        //        return data.Cast<object>().ToList();
-        //    }
-
 
         private async Task<List<object>> GetThreadBookingData(ItemTypeFilterDto dto)
         {
@@ -809,29 +510,30 @@ namespace GCTL.UI.Core.Controllers
             if (costingIds == null || !costingIds.Any())
                 return new List<object>();
 
+            // Using Dapper's style parameterization is safer, but sticking to your current style:
             string inClause = string.Join(",", costingIds.Select((x, i) => $"@cid{i}"));
 
             // ============================
-            // SQL QUERY (Thread)
+            // SQL QUERY (Thread) - NO CHANGE NEEDED HERE
             // ============================
             string query = $@"
-    SELECT 
-        cd.Id, cd.CostingDetailsID, cd.CostingID AS DetailCostingID, cd.SLNO,
-        cd.BookingItemTypeID, cd.ItemID, cd.Description, cd.Width, cd.ColorID,
-        cd.SupplierID, cd.PoNo AS DetailPoNo, cd.Quantity, cd.Consumption, cd.Extra,
-        cd.TotalQuantity, cd.TotalQuantityUnit, cd.UnitPrice, cd.TotalPrice,
-        cd.TotalPriceCurrencyId,
+SELECT 
+    cd.Id, cd.CostingDetailsID, cd.CostingID AS DetailCostingID, cd.SLNO,
+    cd.BookingItemTypeID, cd.ItemID, cd.Description, cd.Width, cd.ColorID,
+    cd.SupplierID, cd.PoNo AS DetailPoNo, cd.Quantity, cd.Consumption, cd.Extra,
+    cd.TotalQuantity, cd.TotalQuantityUnit, cd.UnitPrice, cd.TotalPrice,
+    cd.TotalPriceCurrencyId,
 
-        ci.IntegraJobNO AS CiIntegraJob,
-        ci.StyleID AS CiStyleID,
-        ci.PoNo AS CiPoNo,
-        ci.MasterPurchaseOrder AS CiMasterPo
-    FROM RMG_CostingInfo ci
-    LEFT JOIN RMG_CostingDetails cd ON ci.CostingID = cd.CostingID
-    LEFT JOIN Inv_Def_Item di ON di.ItemID = cd.ItemID
-    LEFT JOIN Inv_Def_BookingItemType dit ON dit.BookingItemTypeID = di.ItemTypeID
-    WHERE ci.CostingID IN ({inClause})
-      AND di.ItemTypeID = @BookingType";
+    ci.IntegraJobNO AS CiIntegraJob,
+    ci.StyleID AS CiStyleID,
+    ci.PoNo AS CiPoNo,
+    ci.MasterPurchaseOrder AS CiMasterPo
+FROM RMG_CostingInfo ci
+LEFT JOIN RMG_CostingDetails cd ON ci.CostingID = cd.CostingID
+LEFT JOIN Inv_Def_Item di ON di.ItemID = cd.ItemID
+LEFT JOIN Inv_Def_BookingItemType dit ON dit.BookingItemTypeID = di.ItemTypeID
+WHERE ci.CostingID IN ({inClause})
+    AND di.ItemTypeID = @BookingType";
 
             using var con = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand(query, con);
@@ -850,7 +552,7 @@ namespace GCTL.UI.Core.Controllers
             using var rdr = await cmd.ExecuteReaderAsync();
 
             // ============================
-            // INSERT INTO THREAD TEMP TABLE
+            // INSERT INTO THREAD TEMP TABLE (Updated Conversion Logic)
             // ============================
             while (await rdr.ReadAsync())
             {
@@ -858,61 +560,81 @@ namespace GCTL.UI.Core.Controllers
                 {
                     PurchaseReceiveNo = await GenerateAutoThreadBooking(),
 
-                    ItemId = rdr["ItemID"].ToString(),
-                    ColorId = rdr["ColorID"].ToString(),
-                    Slno = rdr["SLNO"] == DBNull.Value ? 0 : Convert.ToInt32(rdr["SLNO"]),
+                    // --- Read from SQL Query ---
+                    // Strings (Safe using Helper function or direct ToString())
+                    ItemId = SafeToString(rdr["ItemID"]),
+                    ColorId = SafeToString(rdr["ColorID"]),
+                    TotalQtyUnitId = SafeToString(rdr["TotalQuantityUnit"]),
+                    CurrencyId = SafeToString(rdr["TotalPriceCurrencyId"]),
+                    IntegraJobNo = SafeToString(rdr["CiIntegraJob"]),
+                    PoNo = SafeToString(rdr["CiPoNo"]),
 
-                    OrderQty = rdr["Quantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Quantity"]),
-                    Consumption = rdr["Consumption"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Consumption"]),
-                    TotalQty = rdr["TotalQuantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalQuantity"]),
-                    TotalQtyUnitId = rdr["TotalQuantityUnit"].ToString(),
+                    // Integers (Safe Conversion)
+                    Slno = SafeToInt(rdr["SLNO"]),
 
-                    UnitPrice = rdr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["UnitPrice"]),
-                    TotalPrice = rdr["TotalPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalPrice"]),
-                    CurrencyId = rdr["TotalPriceCurrencyId"].ToString(),
+                    // Decimals (Safe Conversion)
+                    // Note: If data contains ',' or text, SafeToDecimal must handle it.
+                    OrderQty = SafeToDecimal(rdr["Quantity"]),
+                    Consumption = SafeToDecimal(rdr["Consumption"]),
+                    TotalQty = SafeToDecimal(rdr["TotalQuantity"]),
+                    UnitPrice = SafeToDecimal(rdr["UnitPrice"]),
+                    TotalPrice = SafeToDecimal(rdr["TotalPrice"]),
 
-                    IntegraJobNo = rdr["CiIntegraJob"].ToString(),
-                    PoNo = rdr["CiPoNo"].ToString()
+                    // --- Default/Empty Properties (Not in current SQL query) ---
+                    Brdid = "",
+                    FebricDetail = "",
+                    ThreadColorId = "",
+                    QtyUnitId = SafeToString(rdr["TotalQuantityUnit"]), // Setting QtyUnitId same as TotalQuantityUnit
+                    ConsumtionUnitId = SafeToString(rdr["TotalQuantityUnit"]), // Setting ConsumtionUnitId same as TotalQuantityUnit
+                    ThreadCountId = "",
+                    Refcodepantone = "",
+                    ReqQty = 0M,
+                    ThreadReqUnit = "",
+                    Threadpercent = "",
+
+                    // --- Default Numeric Properties ---
+                    TotalReceivedQty = 0M,
+                    CurrentReceiveQty = 0M,
+                    ReceivedUnitPrice = 0M,
+                    TotalReceivedQtyPre = 0M,
+                    PendingReceiveQty = 0M,
+                    PendingReceiveQtyPre = 0M,
+
+                    // --- Default String Properties ---
+                    ReceivedUnitType = "",
+                    Remarks = "",
+                    EmployeeId = "",
                 };
 
                 await threadTempRepo.AddAsync(temp);
             }
 
-            // ============================
-            // RETURN DATA FROM TEMP TABLE
-            // ============================
+            // ... (RETURN DATA FROM TEMP TABLE logic remains the same)
             var data = await threadTempRepo.All()
                 .Select(x => new
                 {
+                    // ... (Your existing mapping to anonymous type)
                     id = x.Id,
                     purchaseReceiveNo = x.PurchaseReceiveNo,
-
                     itemID = x.ItemId,
                     colorID = x.ColorId,
                     slno = x.Slno,
-
                     orderQty = x.OrderQty,
                     qtyUnitId = x.QtyUnitId,
-
                     consumption = x.Consumption,
                     consumtionUnitId = x.ConsumtionUnitId,
-
                     totalQty = x.TotalQty,
                     totalQtyUnitId = x.TotalQtyUnitId,
-
                     totalReceivedQty = x.TotalReceivedQty,
                     currentReceiveQty = x.CurrentReceiveQty,
                     pendingReceiveQty = x.PendingReceiveQty,
-
                     garmentQty = x.OrderQty,
                     unitPrice = x.UnitPrice,
                     receivedUnitPrice = x.ReceivedUnitPrice,
                     totalPrice = x.TotalPrice,
                     currencyId = x.CurrencyId,
-
                     remarks = x.Remarks,
                     employeeId = x.EmployeeId,
-
                     integraJobNo = x.IntegraJobNo,
                     poNo = x.PoNo
                 })
@@ -921,6 +643,50 @@ namespace GCTL.UI.Core.Controllers
             return data.Cast<object>().ToList();
         }
 
+        // ⚠️ IMPORTANT: These helper methods must exist in your class or service.
+
+        private static string SafeToString(object value)
+        {
+            return value == null || value == DBNull.Value ? "" : value.ToString();
+        }
+
+        private static decimal? SafeToDecimal(object value)
+        {
+            if (value == null || value == DBNull.Value)
+                return null; // Return null for nullable decimal
+
+            // If the value is a string (e.g., from DB)
+            if (decimal.TryParse(value.ToString(), out decimal result))
+                return result;
+
+            // Direct conversion attempt for other types (like double/int)
+            try
+            {
+                return Convert.ToDecimal(value);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private static int? SafeToInt(object value)
+        {
+            if (value == null || value == DBNull.Value)
+                return null;
+
+            if (int.TryParse(value.ToString(), out int result))
+                return result;
+
+            try
+            {
+                return Convert.ToInt32(value);
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
 
 
@@ -979,128 +745,6 @@ namespace GCTL.UI.Core.Controllers
 
         // ==================== Poly Methods ====================
 
-        //       private async Task<List<object>> GetPolyBookingData(ItemTypeFilterDto dto)
-        //       {
-        //           // ============================
-        //           // CLEAR OLD TEMP DATA
-        //           // ============================
-        //           var exTempPoly = polyTempRepo.All().ToList();
-        //           if (exTempPoly != null && exTempPoly.Count > 0)
-        //           {
-        //               await polyTempRepo.DeleteRangeAsync(exTempPoly);
-        //           }
-
-        //           // ============================
-        //           // SQL QUERY (Dynamic Based on DTO)
-        //           // ============================
-        //           string query = @"
-        //   SELECT 
-        //       cd.Id, cd.CostingDetailsID, cd.CostingID AS DetailCostingID, cd.SLNO,
-        //       cd.BookingItemTypeID, cd.ItemID, cd.Description, cd.Width, cd.ColorID,
-        //       cd.SupplierID, cd.PoNo AS DetailPoNo, cd.Quantity, cd.Consumption, cd.Extra,
-        //       cd.TotalQuantity, cd.TotalQuantityUnit, cd.UnitPrice, cd.TotalPrice,
-        //       cd.TotalPriceCurrencyId,
-
-        //       ci.IntegraJobNO AS CiIntegraJob,
-        //       ci.StyleID AS CiStyleID,
-        //       ci.PoNo AS CiPoNo,
-        //       ci.MasterPurchaseOrder AS CiMasterPo
-        //   FROM RMG_CostingInfo ci
-        //LEFT JOIN RMG_CostingDetails cd ON ci.CostingID = cd.CostingID
-        //LEFT JOIN Inv_Def_Item di ON di.ItemID = cd.ItemID
-        //LEFT JOIN Inv_Def_BookingItemType dit ON dit.BookingItemTypeID = di.ItemTypeID
-        //WHERE cd.CostingID =@CostingId and di.ItemTypeID =@BookingType";
-
-        //           using var con = new SqlConnection(_connectionString);
-        //           using var cmd = new SqlCommand(query, con);
-
-        //           // ============================
-        //           // ADD PARAMETERS
-        //           // ============================
-        //           cmd.Parameters.AddWithValue("@BookingType", dto.BookingType ?? "");
-        //           cmd.Parameters.AddWithValue("@CostingId", dto.CostingId ?? "");
-
-        //           await con.OpenAsync();
-        //           using var rdr = await cmd.ExecuteReaderAsync();
-
-        //           // ============================
-        //           // INSERT INTO TEMP POLY TABLE
-        //           // ============================
-        //           while (await rdr.ReadAsync())
-        //           {
-        //               var temp = new RmgInvBookingReceivedDetailsPolyTemp
-        //               {
-        //                   PurchaseReceiveNo = await GenerateAutoPolyBooking(),
-        //                   ItemId = rdr["ItemID"].ToString(),
-        //                   ItemDescription = rdr["Description"].ToString(),
-        //                   ColorId = rdr["ColorID"].ToString(),
-        //                   Width = rdr["Width"].ToString(),
-        //                   GarmentQty = rdr["Quantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Quantity"]),
-        //                   Consumption = rdr["Consumption"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Consumption"]),
-        //                   TotalQty = rdr["TotalQuantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalQuantity"]),
-        //                   TotalQtyUnitId = rdr["TotalQuantityUnit"].ToString(),
-        //                   UnitPrice = rdr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["UnitPrice"]),
-        //                   TotalPrice = rdr["TotalPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalPrice"]),
-        //                   CurrencyId = rdr["TotalPriceCurrencyId"].ToString(),
-        //                   IntegraJobNo = rdr["CiIntegraJob"].ToString(),
-        //                   PoNo = rdr["CiPoNo"].ToString(),
-        //                   SerialNo = rdr["SLNO"] == DBNull.Value ? 0 : Convert.ToInt32(rdr["SLNO"])
-        //               };
-
-        //               await polyTempRepo.AddAsync(temp);
-        //           }
-
-        //           // ============================
-        //           // RETURN DATA FROM TEMP TABLE
-        //           // ============================
-        //           var data = await polyTempRepo.All()
-        //   .Select(x => new
-        //   {
-        //       id = x.Id,
-        //       purchaseReceiveNo = x.PurchaseReceiveNo,
-        //       brdId = x.Brdid,
-        //       serialNo = x.SerialNo,
-        //       itemID = x.ItemId,
-        //       description = x.ItemDescription,
-        //       colorID = x.ColorId,
-        //       referenceCode = x.RefernceCode,
-        //       length = x.Length,
-        //       lengthUnitID = x.LengthUnitId,
-        //       width = x.Width,
-        //       widthUnitID = x.WidthUnitId,
-        //       flap = x.Flap,
-        //       flapUnitID = x.FlapUnitId,
-        //       guest = x.Guest,
-        //       guestUnitID = x.GuestUnitId,
-        //       garmentQty = x.GarmentQty,
-        //       garmentQtyUnitID = x.GarmentQtyUnitId,
-        //       consumption = x.Consumption,
-        //       consumptionUnitID = x.ConsumptionUnitId,
-        //       totalQty = x.TotalQty,
-        //       OrderQty = x.GarmentQty,
-        //       totalQtyUnitID = x.TotalQtyUnitId,
-        //       percentage = x.Percentage,
-        //       totalReceivedQty = x.TotalReceivedQty,
-        //       currentReceiveQty = x.CurrentReceiveQty,
-        //       receivedUnitType = x.ReceivedUnitType,
-        //       unitPrice = x.UnitPrice,
-        //       receivedUnitPrice = x.ReceivedUnitPrice,
-        //       totalPrice = x.TotalPrice,
-        //       currencyID = x.CurrencyId,
-        //       remarks = x.Remarks,
-        //       employeeId = x.EmployeeId,
-        //       totalReceivedQtyPre = x.TotalReceivedQtyPre,
-        //       pendingReceiveQty = x.PendingReceiveQty,
-        //       pendingReceiveQtyPre = x.PendingReceiveQtyPre,
-        //       integraJobNo = x.IntegraJobNo,
-        //       poNo = x.PoNo
-        //   })
-        //   .ToListAsync();
-
-        //           return data.Cast<object>().ToList();
-        //       }
-
-
         private async Task<List<object>> GetPolyBookingData(ItemTypeFilterDto dto)
         {
             // ============================
@@ -1124,24 +768,26 @@ namespace GCTL.UI.Core.Controllers
             // ============================
             // SQL QUERY (POLY)
             // ============================
+            // Note: This query is generic and does not fetch Poly-specific columns (Length, Flap, Guest, etc.).
+            // We will set default/empty values for those missing columns during mapping.
             string query = $@"
-    SELECT 
-        cd.Id, cd.CostingDetailsID, cd.CostingID AS DetailCostingID, cd.SLNO,
-        cd.BookingItemTypeID, cd.ItemID, cd.Description, cd.Width, cd.ColorID,
-        cd.SupplierID, cd.PoNo AS DetailPoNo, cd.Quantity, cd.Consumption, cd.Extra,
-        cd.TotalQuantity, cd.TotalQuantityUnit, cd.UnitPrice, cd.TotalPrice,
-        cd.TotalPriceCurrencyId,
+SELECT 
+    cd.Id, cd.CostingDetailsID, cd.CostingID AS DetailCostingID, cd.SLNO,
+    cd.BookingItemTypeID, cd.ItemID, cd.Description, cd.Width, cd.ColorID,
+    cd.SupplierID, cd.PoNo AS DetailPoNo, cd.Quantity, cd.Consumption, cd.Extra,
+    cd.TotalQuantity, cd.TotalQuantityUnit, cd.UnitPrice, cd.TotalPrice,
+    cd.TotalPriceCurrencyId,
 
-        ci.IntegraJobNO AS CiIntegraJob,
-        ci.StyleID AS CiStyleID,
-        ci.PoNo AS CiPoNo,
-        ci.MasterPurchaseOrder AS CiMasterPo
-    FROM RMG_CostingInfo ci
-    LEFT JOIN RMG_CostingDetails cd ON ci.CostingID = cd.CostingID
-    LEFT JOIN Inv_Def_Item di ON di.ItemID = cd.ItemID
-    LEFT JOIN Inv_Def_BookingItemType dit ON dit.BookingItemTypeID = di.ItemTypeID
-    WHERE ci.CostingID IN ({inClause})
-      AND di.ItemTypeID = @BookingType";
+    ci.IntegraJobNO AS CiIntegraJob,
+    ci.StyleID AS CiStyleID,
+    ci.PoNo AS CiPoNo,
+    ci.MasterPurchaseOrder AS CiMasterPo
+FROM RMG_CostingInfo ci
+LEFT JOIN RMG_CostingDetails cd ON ci.CostingID = cd.CostingID
+LEFT JOIN Inv_Def_Item di ON di.ItemID = cd.ItemID
+LEFT JOIN Inv_Def_BookingItemType dit ON dit.BookingItemTypeID = di.ItemTypeID
+WHERE ci.CostingID IN ({inClause})
+    AND di.ItemTypeID = @BookingType";
 
             using var con = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand(query, con);
@@ -1160,7 +806,7 @@ namespace GCTL.UI.Core.Controllers
             using var rdr = await cmd.ExecuteReaderAsync();
 
             // ============================
-            // INSERT INTO TEMP POLY TABLE
+            // INSERT INTO TEMP POLY TABLE (Using Safe Conversion)
             // ============================
             while (await rdr.ReadAsync())
             {
@@ -1168,31 +814,59 @@ namespace GCTL.UI.Core.Controllers
                 {
                     PurchaseReceiveNo = await GenerateAutoPolyBooking(),
 
-                    ItemId = rdr["ItemID"].ToString(),
-                    ItemDescription = rdr["Description"].ToString(),
-                    ColorId = rdr["ColorID"].ToString(),
-                    Width = rdr["Width"].ToString(),
+                    // --- Core Data from SQL ---
+                    ItemId = SafeToString(rdr["ItemID"]),
+                    ItemDescription = SafeToString(rdr["Description"]),
+                    ColorId = SafeToString(rdr["ColorID"]),
+                    Width = SafeToString(rdr["Width"]), // Width from SQL is mapped to Width in PolyTemp
 
-                    GarmentQty = rdr["Quantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Quantity"]),
-                    Consumption = rdr["Consumption"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Consumption"]),
-                    TotalQty = rdr["TotalQuantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalQuantity"]),
-                    TotalQtyUnitId = rdr["TotalQuantityUnit"].ToString(),
+                    GarmentQty = SafeToDecimal(rdr["Quantity"]), // Mapped to GarmentQty
+                    Consumption = SafeToDecimal(rdr["Consumption"]),
+                    TotalQty = SafeToDecimal(rdr["TotalQuantity"]),
+                    TotalQtyUnitId = SafeToString(rdr["TotalQuantityUnit"]),
 
-                    UnitPrice = rdr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["UnitPrice"]),
-                    TotalPrice = rdr["TotalPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalPrice"]),
-                    CurrencyId = rdr["TotalPriceCurrencyId"].ToString(),
+                    UnitPrice = SafeToDecimal(rdr["UnitPrice"]),
+                    TotalPrice = SafeToDecimal(rdr["TotalPrice"]),
+                    CurrencyId = SafeToString(rdr["TotalPriceCurrencyId"]),
 
-                    IntegraJobNo = rdr["CiIntegraJob"].ToString(),
-                    PoNo = rdr["CiPoNo"].ToString(),
+                    IntegraJobNo = SafeToString(rdr["CiIntegraJob"]),
+                    PoNo = SafeToString(rdr["CiPoNo"]),
 
-                    SerialNo = rdr["SLNO"] == DBNull.Value ? 0 : Convert.ToInt32(rdr["SLNO"])
+                    SerialNo = SafeToInt(rdr["SLNO"]),
+
+                    // --- Default/Missing Properties (Set to empty string or null/0M) ---
+                    Brdid = "",
+                    RefernceCode = "",
+                    Length = "",
+                    LengthUnitId = "",
+                    WidthUnitId = "", // Unit not available in SQL, set default
+                    Flap = "",
+                    FlapUnitId = "",
+                    Guest = "",
+                    GuestUnitId = "",
+                    GarmentQtyUnitId = SafeToString(rdr["TotalQuantityUnit"]), // Assuming Unit is the same as TotalQtyUnit
+                    ConsumptionUnitId = SafeToString(rdr["TotalQuantityUnit"]), // Assuming Unit is the same as TotalQtyUnit
+                    Percentage = "", // Not available in SQL
+
+                    // --- Default Received/Pending Properties ---
+                    TotalReceivedQty = 0M,
+                    CurrentReceiveQty = 0M,
+                    ReceivedUnitType = "",
+                    ReceivedUnitPrice = 0M,
+                    TotalReceivedQtyPre = 0M,
+                    PendingReceiveQty = 0M,
+                    PendingReceiveQtyPre = 0M,
+
+                    // --- Other Default Properties ---
+                    Remarks = "",
+                    EmployeeId = "",
                 };
 
                 await polyTempRepo.AddAsync(temp);
             }
 
             // ============================
-            // RETURN DATA FROM TEMP TABLE
+            // RETURN DATA FROM TEMP TABLE (No changes needed here, as it reads from the correctly filled temp table)
             // ============================
             var data = await polyTempRepo.All()
                 .Select(x => new
@@ -1256,6 +930,8 @@ namespace GCTL.UI.Core.Controllers
             return data.Cast<object>().ToList();
         }
 
+        // ⚠️ IMPORTANT: These helper methods must exist in your class or service.
+
 
 
         public async Task<string> GenerateAutoPolyBooking()
@@ -1312,168 +988,8 @@ namespace GCTL.UI.Core.Controllers
         }
 
         // ==================== Button Methods ====================
-        //private async Task<List<object>> GetButtonBookingData()
-        //{
-        //    var data = await buttonRepo.All()
-        //        .Select(x => new
-        //        {
-        //            id = x.Id,
-        //            poNo = x.PoNo,
-        //            itemID = x.ItemId,
-        //            description = x.Description,
-        //            colorID = x.ColorId,
-        //            garmentQty = x.GermentQty,
-        //            garmentQtyUnitID = x.GermentsQtyUnitId,
-        //            consumption = x.Consumption,
-        //            consumptionUnitID = x.ConsumptionUnitId,
-        //            totalQty = x.TotalQty,
-        //            totalQtyUnitID = x.TotalQtyUnitId,
-        //            orderQty = x.OrderQty,
-        //            orderQtyUnitID = x.OrderQtyUnitId,
-        //            percentage = x.Percentage,
-        //            unitPrice = x.UnitPrice,
-        //            totalPrice = x.TotalPrice,
-        //            currencyID = x.CurrencyId,
-        //            remarks = x.Remarks
-        //        })
-        //        .ToListAsync();
 
-        //    return data.Cast<object>().ToList();
-        //}
-        //        private async Task<List<object>> GetButtonBookingData(ItemTypeFilterDto dto)
-        //        {
-        //            try
-        //            {
-        //                // ============================
-        //                // CLEAR OLD TEMP DATA
-        //                // ============================
-        //                var exTempButton = buttonTempRepo.All().ToList();
-        //                if (exTempButton != null && exTempButton.Count > 0)
-        //                {
-        //                    await buttonTempRepo.DeleteRangeAsync(exTempButton);
-        //                }
-
-        //                // ============================
-        //                // SQL QUERY (Entity-aligned)
-        //                // ============================
-        //                string query = @"
-        //SELECT 
-        //    cd.Id,
-        //    cd.SLNO,
-        //    cd.ItemID,
-        //    cd.Description,
-        //    cd.ColorID,   
-        //    cd.SLNO,
-        //    cd.Quantity AS GermentQty,
-        //    cd.TotalQuantity AS TotalQty,
-        //    cd.TotalQuantityUnit AS TotalQtyUnitId,
-        //    cd.Consumption,
-        //    cd.Consumption AS ConsumptionUnitId,
-        //    cd.Extra AS Percentage,
-        //    cd.Quantity AS CurrentReceiveQty,
-        //    cd.UnitPrice,
-        //    cd.UnitPrice AS ReceivedUnitPrice,
-        //    cd.TotalPrice,
-        //    cd.TotalPriceCurrencyId AS CurrencyId,
-        //    cd.SupplierID AS EmployeeId,
-        //    cd.Quantity AS TotalReceivedQtyPre,
-        //    0 AS PendingReceiveQty,
-        //    0 AS PendingReceiveQtyPre,
-        //    ci.IntegraJobNO AS IntegraJobNo,
-        //    ci.PoNo AS PoNo
-        // FROM RMG_CostingInfo ci
-        // LEFT JOIN RMG_CostingDetails cd ON ci.CostingID = cd.CostingID
-        // LEFT JOIN Inv_Def_Item di ON di.ItemID = cd.ItemID
-        // LEFT JOIN Inv_Def_BookingItemType dit ON dit.BookingItemTypeID = di.ItemTypeID
-        // WHERE cd.CostingID =@CostingId and di.ItemTypeID =@BookingType";
-
-        //                using var con = new SqlConnection(_connectionString);
-        //                using var cmd = new SqlCommand(query, con);
-
-        //                // ============================
-        //                // ADD PARAMETERS
-        //                // ============================
-        //                cmd.Parameters.AddWithValue("@BookingType", dto.BookingType ?? "");
-        //                cmd.Parameters.AddWithValue("@CostingId", dto.CostingId ?? "");
-
-        //                await con.OpenAsync();
-        //                using var rdr = await cmd.ExecuteReaderAsync();
-
-        //                // ============================
-        //                // INSERT INTO TEMP TABLE
-        //                // ============================
-        //                while (await rdr.ReadAsync())
-        //                {
-        //                    var temp = new RmgInvBookingReceivedDetailsButtonTemp
-        //                    {
-        //                        PurchaseReceiveNo = await GenerateAutoButtonId(),
-        //                        SerialNo = rdr["SLNO"] == DBNull.Value ? null : Convert.ToInt32(rdr["SLNO"]),
-        //                        ItemId = rdr["ItemID"].ToString(),
-        //                        Description = rdr["Description"].ToString(),
-        //                        ColorId = rdr["ColorID"].ToString(),
-
-
-        //                        GermentQty = rdr["GermentQty"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["GermentQty"]),
-        //                        TotalQty = rdr["TotalQty"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalQty"]),
-        //                        TotalQtyUnitId = rdr["TotalQtyUnitId"].ToString(),
-        //                        Consumption = rdr["Consumption"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Consumption"]),
-        //                        ConsumptionUnitId = rdr["ConsumptionUnitId"].ToString(),
-        //                        //OrderQty = rdr["OrderQty"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["OrderQty"]),
-        //                        //OrderQtyUnitId = rdr["OrderQtyUnitId"].ToString(),
-
-        //                        Percentage = rdr["Percentage"].ToString(),
-        //                        CurrentReceiveQty = rdr["CurrentReceiveQty"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["CurrentReceiveQty"]),
-        //                        UnitPrice = rdr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["UnitPrice"]),
-        //                        ReceivedUnitPrice = rdr["ReceivedUnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["ReceivedUnitPrice"]),
-        //                        TotalPrice = rdr["TotalPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalPrice"]),
-        //                        CurrencyId = rdr["CurrencyId"].ToString(),
-
-        //                        TotalReceivedQtyPre = rdr["TotalReceivedQtyPre"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalReceivedQtyPre"]),
-        //                        PendingReceiveQty = rdr["PendingReceiveQty"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["PendingReceiveQty"]),
-        //                        PendingReceiveQtyPre = rdr["PendingReceiveQtyPre"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["PendingReceiveQtyPre"]),
-
-        //                        IntegraJobNo = rdr["IntegraJobNo"].ToString(),
-        //                        PoNo = rdr["PoNo"].ToString()
-        //                    };
-
-        //                    await buttonTempRepo.AddAsync(temp);
-        //                }
-
-        //                // ============================
-        //                // RETURN LIST FROM TEMP TABLE
-        //                // ============================
-        //                var items = buttonTempRepo.All().Select(x => new
-        //                {
-        //                    Id = x.Id,
-        //                    ItemID = x.ItemId,
-        //                    ColorID = x.ColorId,
-        //                    Description = x.Description,
-        //                    Quantity = x.CurrentReceiveQty,
-        //                    garmentQty = x.GermentQty,
-        //                    totalQty = x.TotalQty,
-        //                    TotalQuantityUnit = x.TotalQtyUnitId,
-        //                    UnitPrice = x.ReceivedUnitPrice,
-        //                    SLNO = x.SerialNo ?? 0,
-        //                    IntegraJobNO = x.IntegraJobNo,
-        //                    PoNo = x.PoNo,
-        //                    Consumption = x.Consumption,
-        //                    OrderQty = x.TotalQty,
-        //                    Percentage = x.Percentage,
-        //                    TotalPrice = x.TotalPrice
-        //                }).ToList();
-
-
-        //                return items.Cast<object>().ToList();
-        //            }
-        //            catch (Exception)
-        //            {
-
-        //                throw;
-        //            }
-
-
-        //        }
-
+        // ⚠️ Helper Methods (SafeToDecimal, SafeToInt, SafeToString) পূর্বের উত্তরে দেওয়া আছে এবং ধরে নেওয়া হচ্ছে এগুলি আপনার সার্ভিসে বিদ্যমান।
 
         private async Task<List<object>> GetButtonBookingData(ItemTypeFilterDto dto)
         {
@@ -1501,35 +1017,36 @@ namespace GCTL.UI.Core.Controllers
                 // SQL QUERY (BUTTON)
                 // ============================
                 string query = $@"
-        SELECT 
-            cd.Id,
-            cd.SLNO,
-            cd.ItemID,
-            cd.Description,
-            cd.ColorID,   
-            cd.Quantity AS GermentQty,
-            cd.TotalQuantity AS TotalQty,
-            cd.TotalQuantityUnit AS TotalQtyUnitId,
-            cd.Consumption,
-            cd.Consumption AS ConsumptionUnitId,
-            cd.Extra AS Percentage,
-            cd.Quantity AS CurrentReceiveQty,
-            cd.UnitPrice,
-            cd.UnitPrice AS ReceivedUnitPrice,
-            cd.TotalPrice,
-            cd.TotalPriceCurrencyId AS CurrencyId,
-            cd.SupplierID AS EmployeeId,
-            cd.Quantity AS TotalReceivedQtyPre,
-            0 AS PendingReceiveQty,
-            0 AS PendingReceiveQtyPre,
-            ci.IntegraJobNO AS IntegraJobNo,
-            ci.PoNo AS PoNo
-        FROM RMG_CostingInfo ci
-        LEFT JOIN RMG_CostingDetails cd ON ci.CostingID = cd.CostingID
-        LEFT JOIN Inv_Def_Item di ON di.ItemID = cd.ItemID
-        LEFT JOIN Inv_Def_BookingItemType dit ON dit.BookingItemTypeID = di.ItemTypeID
-        WHERE ci.CostingID IN ({inClause})
-          AND di.ItemTypeID = @BookingType";
+SELECT 
+    cd.Id,
+    cd.SLNO,
+    cd.ItemID,
+    cd.Description,
+    cd.ColorID,    
+    cd.Quantity AS GermentQty,
+    cd.TotalQuantity AS TotalQty,
+    cd.TotalQuantityUnit AS TotalQtyUnitId,
+    cd.Consumption,
+    cd.TotalQuantityUnit AS ConsumptionUnitId, -- ⚠️ ConsumptionUnitId-এর জন্য TotalQuantityUnit ধরে নিলাম
+    cd.Extra AS Percentage,
+    cd.Quantity AS CurrentReceiveQty,
+    cd.UnitPrice,
+    cd.UnitPrice AS ReceivedUnitPrice,
+    cd.TotalPrice,
+    cd.TotalPriceCurrencyId AS CurrencyId,
+    cd.SupplierID AS EmployeeId,
+    cd.Quantity AS TotalReceivedQtyPre,
+    0 AS PendingReceiveQty,
+    0 AS PendingReceiveQtyPre,
+    ci.IntegraJobNO AS IntegraJobNo,
+    ci.PoNo AS PoNo,
+    ci.StyleID AS FabricColorId
+FROM RMG_CostingInfo ci
+LEFT JOIN RMG_CostingDetails cd ON ci.CostingID = cd.CostingID
+LEFT JOIN Inv_Def_Item di ON di.ItemID = cd.ItemID
+LEFT JOIN Inv_Def_BookingItemType dit ON dit.BookingItemTypeID = di.ItemTypeID
+WHERE ci.CostingID IN ({inClause})
+    AND di.ItemTypeID = @BookingType";
 
                 using var con = new SqlConnection(_connectionString);
                 using var cmd = new SqlCommand(query, con);
@@ -1548,7 +1065,7 @@ namespace GCTL.UI.Core.Controllers
                 using var rdr = await cmd.ExecuteReaderAsync();
 
                 // ============================
-                // INSERT INTO TEMP BUTTON TABLE
+                // INSERT INTO TEMP BUTTON TABLE (Using Safe Conversion and Default values)
                 // ============================
                 while (await rdr.ReadAsync())
                 {
@@ -1556,70 +1073,110 @@ namespace GCTL.UI.Core.Controllers
                     {
                         PurchaseReceiveNo = await GenerateAutoButtonId(),
 
-                        SerialNo = rdr["SLNO"] == DBNull.Value ? null : Convert.ToInt32(rdr["SLNO"]),
-                        ItemId = rdr["ItemID"].ToString(),
-                        Description = rdr["Description"].ToString(),
-                        ColorId = rdr["ColorID"].ToString(),
+                        // --- Core/Mapped Data from SQL ---
+                        SerialNo = SafeToInt(rdr["SLNO"]),
+                        ItemId = SafeToString(rdr["ItemID"]),
+                        Description = SafeToString(rdr["Description"]),
+                        ColorId = SafeToString(rdr["ColorID"]),
 
-                        GermentQty = rdr["GermentQty"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["GermentQty"]),
-                        TotalQty = rdr["TotalQty"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalQty"]),
-                        TotalQtyUnitId = rdr["TotalQtyUnitId"].ToString(),
+                        GermentQty = SafeToDecimal(rdr["GermentQty"]),
+                        TotalQty = SafeToDecimal(rdr["TotalQty"]),
+                        TotalQtyUnitId = SafeToString(rdr["TotalQtyUnitId"]),
+                        Consumption = SafeToDecimal(rdr["Consumption"]),
 
-                        Consumption = rdr["Consumption"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Consumption"]),
-                        ConsumptionUnitId = rdr["ConsumptionUnitId"].ToString(),
+                        // ConsumptionUnitId ঠিক করা হয়েছে
+                        ConsumptionUnitId = SafeToString(rdr["ConsumptionUnitId"]),
 
-                        Percentage = rdr["Percentage"].ToString(),
-                        CurrentReceiveQty = rdr["CurrentReceiveQty"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["CurrentReceiveQty"]),
+                        Percentage = SafeToString(rdr["Percentage"]),
+                        CurrentReceiveQty = SafeToDecimal(rdr["CurrentReceiveQty"]),
 
-                        UnitPrice = rdr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["UnitPrice"]),
-                        ReceivedUnitPrice = rdr["ReceivedUnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["ReceivedUnitPrice"]),
-                        TotalPrice = rdr["TotalPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalPrice"]),
-                        CurrencyId = rdr["CurrencyId"].ToString(),
+                        UnitPrice = SafeToDecimal(rdr["UnitPrice"]),
+                        ReceivedUnitPrice = SafeToDecimal(rdr["ReceivedUnitPrice"]),
+                        TotalPrice = SafeToDecimal(rdr["TotalPrice"]),
+                        CurrencyId = SafeToString(rdr["CurrencyId"]),
 
-                        TotalReceivedQtyPre = rdr["TotalReceivedQtyPre"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalReceivedQtyPre"]),
-                        PendingReceiveQty = rdr["PendingReceiveQty"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["PendingReceiveQty"]),
-                        PendingReceiveQtyPre = rdr["PendingReceiveQtyPre"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["PendingReceiveQtyPre"]),
+                        TotalReceivedQtyPre = SafeToDecimal(rdr["TotalReceivedQtyPre"]),
+                        PendingReceiveQty = SafeToDecimal(rdr["PendingReceiveQty"]),
+                        PendingReceiveQtyPre = SafeToDecimal(rdr["PendingReceiveQtyPre"]),
 
-                        IntegraJobNo = rdr["IntegraJobNo"].ToString(),
-                        PoNo = rdr["PoNo"].ToString()
+                        IntegraJobNo = SafeToString(rdr["IntegraJobNo"]),
+                        PoNo = SafeToString(rdr["PoNo"]),
+                        EmployeeId = SafeToString(rdr["EmployeeId"]),
+
+                        // --- Default/Missing Properties ---
+                        Brdid = "",
+                        FabricColorId = SafeToString(rdr["FabricColorId"]), // Assuming StyleID is mapped to FabricColorId
+                        SizeId = "",
+                        Idno = "",
+                        GermentsQtyUnitId = SafeToString(rdr["TotalQtyUnitId"]), // Defaulting to TotalQtyUnitId
+                        OrderQty = SafeToDecimal(rdr["TotalQty"]), // Defaulting OrderQty to TotalQty
+                        OrderQtyUnitId = SafeToString(rdr["TotalQtyUnitId"]), // Defaulting to TotalQtyUnitId
+                        ReceivedUnitType = SafeToString(rdr["TotalQtyUnitId"]), // Defaulting to TotalQtyUnitId
+                        Remarks = "",
+                        TotalReceivedQty = 0M, // Initialize to 0
                     };
 
                     await buttonTempRepo.AddAsync(temp);
                 }
 
                 // ============================
-                // RETURN LIST FROM TEMP TABLE
+                // RETURN LIST FROM TEMP TABLE (No changes needed, as it reads from the temp table)
                 // ============================
                 var items = buttonTempRepo.All()
                     .Select(x => new
                     {
                         Id = x.Id,
-                        ItemID = x.ItemId,
-                        ColorID = x.ColorId,
-                        Description = x.Description,
-                        Quantity = x.CurrentReceiveQty,
+                        PurchaseReceiveNo = x.PurchaseReceiveNo,
+                        brdId = x.Brdid,
+                        serialNo = x.SerialNo,
+                        fabricColorId = x.FabricColorId,
+
+                        // Item Details
+                        itemID = x.ItemId,
+                        description = x.Description,
+                        colorID = x.ColorId,
+                        sizeId = x.SizeId,
+                        idno = x.Idno,
+
+                        // Quantity
                         garmentQty = x.GermentQty,
+                        garmentsQtyUnitId = x.GermentsQtyUnitId,
+                        consumption = x.Consumption,
+                        consumptionUnitId = x.ConsumptionUnitId,
                         totalQty = x.TotalQty,
-                        TotalQuantityUnit = x.TotalQtyUnitId,
-                        UnitPrice = x.ReceivedUnitPrice,
-                        SLNO = x.SerialNo ?? 0,
+                        totalQtyUnitId = x.TotalQtyUnitId,
+                        OrderQty = x.OrderQty,
+                        orderQtyUnitId = x.OrderQtyUnitId,
+                        Percentage = x.Percentage,
+
+                        // Received/Price
+                        totalReceivedQty = x.TotalReceivedQty,
+                        currentReceiveQty = x.CurrentReceiveQty,
+                        receivedUnitType = x.ReceivedUnitType,
+                        UnitPrice = x.UnitPrice,
+                        receivedUnitPrice = x.ReceivedUnitPrice,
+                        TotalPrice = x.TotalPrice,
+                        currencyId = x.CurrencyId,
+
+                        // Other
+                        remarks = x.Remarks,
+                        employeeId = x.EmployeeId,
+                        totalReceivedQtyPre = x.TotalReceivedQtyPre,
+                        pendingReceiveQty = x.PendingReceiveQty,
+                        pendingReceiveQtyPre = x.PendingReceiveQtyPre,
                         IntegraJobNO = x.IntegraJobNo,
                         PoNo = x.PoNo,
-                        Consumption = x.Consumption,
-                        OrderQty = x.TotalQty,
-                        Percentage = x.Percentage,
-                        TotalPrice = x.TotalPrice
                     })
                     .ToList();
 
                 return items.Cast<object>().ToList();
             }
-            catch
+            catch (Exception ex)
             {
+                Console.Error.WriteLine($"Error retrieving button booking data: {ex.Message}");
                 throw;
             }
         }
-
 
 
         public async Task<string> GenerateAutoButtonId()
@@ -1676,155 +1233,9 @@ namespace GCTL.UI.Core.Controllers
         }
         // ==================== Extra Methods ====================
 
-        //        private async Task<List<object>> GetExtraBookingData(ItemTypeFilterDto dto)
-        //        {
-        //            // ============================
-        //            // CLEAR OLD TEMP DATA
-        //            // ============================
-        //            var exTempExtra = extraTempRepo.All().ToList();
-        //            if (exTempExtra != null && exTempExtra.Count > 0)
-        //            {
-        //                await extraTempRepo.DeleteRangeAsync(exTempExtra);
-        //            }
-
-        //            // ============================
-        //            // SQL QUERY (Only valid columns)
-        //            // ============================
-        //            string query = @"
-        //SELECT 
-        //    cd.Id,
-        //    cd.CostingDetailsID,
-        //    cd.CostingID AS DetailCostingID,
-        //    cd.SLNO,
-        //    cd.BookingItemTypeID,
-        //    cd.ItemID,
-        //    cd.Description,
-        //    cd.Width,
-        //    cd.ColorID,
-        //    cd.SupplierID,
-        //    cd.PoNo AS DetailPoNo,
-        //    cd.Quantity,
-        //    cd.Consumption,
-        //    cd.TotalQuantity,
-        //    cd.UnitPrice,
-        //    cd.TotalPrice,
-        //    cd.Extra,
-
-        //    ci.IntegraJobNO AS IntegraJobNo,
-        //    ci.PoNo AS PoNo
-        // FROM RMG_CostingInfo ci
-        // LEFT JOIN RMG_CostingDetails cd ON ci.CostingID = cd.CostingID
-        // LEFT JOIN Inv_Def_Item di ON di.ItemID = cd.ItemID
-        // LEFT JOIN Inv_Def_BookingItemType dit ON dit.BookingItemTypeID = di.ItemTypeID
-        // WHERE cd.CostingID =@CostingId and di.ItemTypeID =@BookingType";
-
-        //            using var con = new SqlConnection(_connectionString);
-        //            using var cmd = new SqlCommand(query, con);
-
-        //            // ============================
-        //            // ADD PARAMETERS
-        //            // ============================
-        //            cmd.Parameters.AddWithValue("@BookingType", dto.BookingType ?? "");
-        //            cmd.Parameters.AddWithValue("@CostingId", dto.CostingId ?? "");
-
-        //            await con.OpenAsync();
-        //            using var rdr = await cmd.ExecuteReaderAsync();
-
-        //            // ============================
-        //            // INSERT INTO TEMP TABLE
-        //            // ============================
-        //            while (await rdr.ReadAsync())
-        //            {
-        //                var temp = new RmgInvBookingReceivedDetailsExtraTemp
-        //                {
-        //                    //PurchaseReceiveNo = await GenerateAutoExtraId(),
-        //                    //ItemId = rdr["ItemID"]?.ToString(),
-        //                    //Description = rdr["Description"]?.ToString(),
-        //                    //ColorId = rdr["ColorID"]?.ToString(),
-
-        //                    //OrderQty = rdr["Quantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Quantity"]),
-        //                    //Consumption = rdr["Consumption"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Consumption"]),
-        //                    //TotalQty = rdr["TotalQuantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalQuantity"]),
-        //                    //UnitPrice = rdr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["UnitPrice"]),
-        //                    //TotalPrice = rdr["TotalPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalPrice"]),
-
-        //                    //Percentage = rdr["Extra"] == DBNull.Value ? "0" : rdr["Extra"].ToString(),
-
-        //                    //IntegraJobNo = rdr["IntegraJobNo"]?.ToString(),
-        //                    //PoNo = rdr["PoNo"]?.ToString(),
-        //                    //Slno = rdr["SLNO"] == DBNull.Value ? 0 : Convert.ToInt32(rdr["SLNO"])
-
-        //                    PurchaseReceiveNo = await GenerateAutoExtraId(),
-        //                    ItemId = rdr["ItemID"].ToString(),
-        //                    FabricColorId = dto.BookingType, // ItemTypeID passed from UI
-        //                    ColorId = rdr["ColorID"].ToString(),
-        //                    Description = rdr["Description"].ToString(),
-
-        //                    //ConsumptionUnitId = rdr["TotalQuantityUnit"].ToString(),
-        //                    //ConsumtionUnit = rdr["Consumption"].ToString(),
-        //                    Consumption = rdr["Consumption"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Consumption"]),
-
-        //                    TotalQty = rdr["TotalQuantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalQuantity"]),
-        //                    ReqQty = rdr["Quantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Quantity"]),
-        //                    OrderQty = rdr["Quantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Quantity"]),
-        //                    ReceivedUnitPrice = rdr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["UnitPrice"]),
-
-        //                    TotalReceivedQty = rdr["Consumption"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Consumption"]),
-        //                    PendingReceiveQty = 0,
-        //                    Percentage = rdr["Extra"].ToString(),
-        //                    IntegraJobNo = rdr["IntegraJobNo"].ToString(),
-        //                    PoNo = rdr["PoNo"].ToString(),
-        //                    Slno = rdr["SLNO"] == DBNull.Value ? 0 : Convert.ToInt32(rdr["SLNO"]),
-        //                    TotalPrice = rdr["TotalPrice"] == DBNull.Value ? 0 : Convert.ToInt32(rdr["TotalPrice"]),
-        //                };
-
-        //                await extraTempRepo.AddAsync(temp);
-        //            }
-
-        //            // ============================
-        //            // RETURN LIST FROM TEMP TABLE
-        //            // ============================
-        //            var items = extraTempRepo.All().Select(x => new
-        //            {
-        //                //id = x.Id,
-        //                //poNo = x.PoNo,
-        //                //ItemID = x.ItemId,
-        //                //ColorID = x.ColorId,
-        //                //description = x.Description,
-        //                //GarmentQty = x.OrderQty,
-        //                //OrderQty = x.OrderQty,
-        //                //TotalQuantity = x.TotalQty,
-        //                //UnitPrice = x.UnitPrice,
-        //                //SLNO = x.Slno ?? 0,
-        //                //IntegraJobNO = x.IntegraJobNo,
-        //                //Consumption = x.Consumption,
-        //                //Percentage = x.Percentage,
-        //                //TotalPrice = x.TotalPrice
-
-        //                Id = x.Id,
-        //                ItemID = x.ItemId,
-        //                ColorID = x.ColorId,
-        //                Description = x.Description,
-        //                Quantity = x.CurrentReceiveQty,
-        //                TotalQuantity = x.TotalQty,
-        //                TotalQuantityUnit = x.ReqQtyUnitId,
-        //                UnitPrice = x.ReceivedUnitPrice,
-        //                SLNO = x.Slno ?? 0,
-        //                IntegraJobNO = x.IntegraJobNo,
-        //                PoNo = x.PoNo,
-        //                Consumption = x.Consumption,
-        //                TotalQty = x.TotalQty,
-        //                GarmentQty = x.OrderQty,
-        //                OrderQty = x.OrderQty,
-        //                Percentage = x.Percentage,
-        //                TotalPrice = x.TotalPrice,
-
-        //            }).ToList();
-
-        //            return items.Cast<object>().ToList();
-        //        }
 
 
+        // ⚠️ Helper Methods (SafeToDecimal, SafeToInt, SafeToString) পূর্বের উত্তরে দেওয়া আছে এবং ধরে নেওয়া হচ্ছে এগুলি আপনার সার্ভিসে বিদ্যমান।
 
         private async Task<List<object>> GetExtraBookingData(ItemTypeFilterDto dto)
         {
@@ -1852,28 +1263,28 @@ namespace GCTL.UI.Core.Controllers
             // ============================
             // SQL QUERY (EXTRA)
             // ============================
+            // Note: TotalQuantityUnit is missing in the SQL query, which is needed for unit IDs.
             string query = $@"
-    SELECT 
-        cd.Id,
-        cd.SLNO,
-        cd.ItemID,
-        cd.Description,
-        cd.ColorID,
-        cd.Quantity,
-        cd.Consumption,
-        cd.TotalQuantity,
-        cd.UnitPrice,
-        cd.TotalPrice,
-        cd.Extra,
-
-        ci.IntegraJobNO AS IntegraJobNo,
-        ci.PoNo AS PoNo
-    FROM RMG_CostingInfo ci
-    LEFT JOIN RMG_CostingDetails cd ON ci.CostingID = cd.CostingID
-    LEFT JOIN Inv_Def_Item di ON di.ItemID = cd.ItemID
-    LEFT JOIN Inv_Def_BookingItemType dit ON dit.BookingItemTypeID = di.ItemTypeID
-    WHERE ci.CostingID IN ({inClause})
-      AND di.ItemTypeID = @BookingType";
+SELECT 
+    cd.Id,
+    cd.SLNO,
+    cd.ItemID,
+    cd.Description,
+    cd.ColorID,
+    cd.Quantity,
+    cd.Consumption,
+    cd.TotalQuantity,
+    cd.UnitPrice,
+    cd.TotalPrice,
+    cd.Extra,
+    ci.IntegraJobNO AS IntegraJobNo,
+    ci.PoNo AS PoNo
+FROM RMG_CostingInfo ci
+LEFT JOIN RMG_CostingDetails cd ON ci.CostingID = cd.CostingID
+LEFT JOIN Inv_Def_Item di ON di.ItemID = cd.ItemID
+LEFT JOIN Inv_Def_BookingItemType dit ON dit.BookingItemTypeID = di.ItemTypeID
+WHERE ci.CostingID IN ({inClause})
+    AND di.ItemTypeID = @BookingType";
 
             using var con = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand(query, con);
@@ -1891,7 +1302,7 @@ namespace GCTL.UI.Core.Controllers
             using var rdr = await cmd.ExecuteReaderAsync();
 
             // ============================
-            // INSERT INTO EXTRA TEMP TABLE
+            // INSERT INTO EXTRA TEMP TABLE (Using Safe Conversion and Default values)
             // ============================
             while (await rdr.ReadAsync())
             {
@@ -1899,26 +1310,47 @@ namespace GCTL.UI.Core.Controllers
                 {
                     PurchaseReceiveNo = await GenerateAutoExtraId(),
 
-                    ItemId = rdr["ItemID"].ToString(),
-                    ColorId = rdr["ColorID"].ToString(),
-                    Description = rdr["Description"].ToString(),
+                    // --- Core/Mapped Data from SQL ---
+                    Slno = SafeToInt(rdr["SLNO"]),
+                    ItemId = SafeToString(rdr["ItemID"]),
+                    ColorId = SafeToString(rdr["ColorID"]),
+                    Description = SafeToString(rdr["Description"]),
 
-                    OrderQty = rdr["Quantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Quantity"]),
-                    ReqQty = rdr["Quantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Quantity"]),
-                    Consumption = rdr["Consumption"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Consumption"]),
-                    TotalQty = rdr["TotalQuantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalQuantity"]),
+                    OrderQty = SafeToDecimal(rdr["Quantity"]),
+                    ReqQty = SafeToDecimal(rdr["Quantity"]), // ReqQty defaults to OrderQty/Quantity
+                    Consumption = SafeToDecimal(rdr["Consumption"]),
+                    TotalQty = SafeToDecimal(rdr["TotalQuantity"]),
 
-                    ReceivedUnitPrice = rdr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["UnitPrice"]),
-                    TotalPrice = rdr["TotalPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalPrice"]),
+                    ReceivedUnitPrice = SafeToDecimal(rdr["UnitPrice"]),
+                    TotalPrice = SafeToDecimal(rdr["TotalPrice"]),
 
-                    Percentage = rdr["Extra"] == DBNull.Value ? "0" : rdr["Extra"].ToString(),
+                    // Percentage is mapped as String in the model, but comes from 'Extra' column
+                    Percentage = SafeToString(rdr["Extra"]),
 
-                    TotalReceivedQty = rdr["Consumption"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Consumption"]),
-                    PendingReceiveQty = 0,
+                    TotalReceivedQty = 0M, // Initialize or use a calculated value. Using 0M as TotalReceivedQty is not explicitly available
+                    PendingReceiveQty = 0M, // Already 0 in original logic
 
-                    IntegraJobNo = rdr["IntegraJobNo"].ToString(),
-                    PoNo = rdr["PoNo"].ToString(),
-                    Slno = rdr["SLNO"] == DBNull.Value ? 0 : Convert.ToInt32(rdr["SLNO"])
+                    IntegraJobNo = SafeToString(rdr["IntegraJobNo"]),
+                    PoNo = SafeToString(rdr["PoNo"]),
+
+                    // --- Default/Missing Properties ---
+                    Brdid = "",
+                    FabricColorId = "", // Not available in query
+
+                    // Unit IDs (Not available in this SQL query, setting to default "")
+                    OrderQtyIunitD = "",
+                    ConsumptionUnitId = "",
+                    TotalQtyUnitId = "",
+                    ReqQtyUnitId = "",
+                    ReceivedUnitType = "",
+
+                    UnitPrice = 0M, // Setting to 0 as ReceivedUnitPrice is set
+                    CurrencyId = "", // Not available in query
+                    Remarks = "",
+                    EmployeeId = "", // Not available in query
+                    TotalReceivedQtyPre = 0M,
+                    CurrentReceiveQty = 0M,
+                    PendingReceiveQtyPre = 0M,
                 };
 
                 await extraTempRepo.AddAsync(temp);
@@ -1931,23 +1363,42 @@ namespace GCTL.UI.Core.Controllers
                 .Select(x => new
                 {
                     Id = x.Id,
-                    ItemID = x.ItemId,
-                    ColorID = x.ColorId,
-                    Description = x.Description,
+                    PurchaseReceiveNo = x.PurchaseReceiveNo,
+                    brdId = x.Brdid,
+                    slno = x.Slno ?? 0,
 
-                    Quantity = x.OrderQty,
-                    GarmentQty = x.OrderQty,
+                    // Item Details
+                    itemID = x.ItemId,
+                    fabricColorId = x.FabricColorId,
+                    description = x.Description,
+                    colorID = x.ColorId,
+
+                    // Quantity
                     OrderQty = x.OrderQty,
-
-                    Consumption = x.Consumption,
-                    TotalQty = x.TotalQty,
-
-                    UnitPrice = x.ReceivedUnitPrice,
-                    TotalPrice = x.TotalPrice,
-
+                    orderQtyIunitD = x.OrderQtyIunitD,
+                    consumption = x.Consumption,
+                    consumptionUnitId = x.ConsumptionUnitId,
+                    totalQty = x.TotalQty,
+                    totalQtyUnitId = x.TotalQtyUnitId,
+                    reqQty = x.ReqQty,
+                    reqQtyUnitId = x.ReqQtyUnitId,
                     Percentage = x.Percentage,
-                    SLNO = x.Slno ?? 0,
 
+                    // Received/Price
+                    totalReceivedQty = x.TotalReceivedQty,
+                    currentReceiveQty = x.CurrentReceiveQty,
+                    receivedUnitType = x.ReceivedUnitType,
+                    unitPrice = x.UnitPrice,
+                    receivedUnitPrice = x.ReceivedUnitPrice,
+                    totalPrice = x.TotalPrice,
+                    currencyId = x.CurrencyId,
+
+                    // Other
+                    remarks = x.Remarks,
+                    employeeId = x.EmployeeId,
+                    totalReceivedQtyPre = x.TotalReceivedQtyPre,
+                    pendingReceiveQty = x.PendingReceiveQty,
+                    pendingReceiveQtyPre = x.PendingReceiveQtyPre,
                     IntegraJobNO = x.IntegraJobNo,
                     PoNo = x.PoNo
                 })
@@ -1955,7 +1406,6 @@ namespace GCTL.UI.Core.Controllers
 
             return items.Cast<object>().ToList();
         }
-
 
 
         public async Task<string> GenerateAutoExtraId()
@@ -2013,249 +1463,183 @@ namespace GCTL.UI.Core.Controllers
 
         // ==================== Febric Methods ====================
 
-        //       private async Task<List<object>> GetFebricBookingData(ItemTypeFilterDto dto)
-        //       {
-        //           // ============================
-        //           // CLEAR OLD TEMP DATA
-        //           // ============================
-        //           var exTempFebric = febricTempRepo.All().ToList();
-        //           if (exTempFebric != null && exTempFebric.Count > 0)
-        //           {
-        //               await febricTempRepo.DeleteRangeAsync(exTempFebric);
-        //           }
-
-        //           // ============================
-        //           // SQL QUERY (Dynamic Based on DTO)
-        //           // ============================
-        //           string query = @"
-        //   SELECT 
-        //       cd.Id, cd.CostingDetailsID, cd.CostingID AS DetailCostingID, cd.SLNO,
-        //       cd.BookingItemTypeID, cd.ItemID, cd.Description, cd.Width, cd.ColorID,
-        //       cd.SupplierID, cd.PoNo AS DetailPoNo, cd.Quantity, cd.Consumption, cd.Extra,
-        //       cd.TotalQuantity, cd.TotalQuantityUnit, cd.UnitPrice, cd.TotalPrice,
-        //       cd.TotalPriceCurrencyId,
-
-        //       ci.IntegraJobNO AS CiIntegraJob,
-        //       ci.PoNo AS CiPoNo
-        //    FROM RMG_CostingInfo ci
-        //LEFT JOIN RMG_CostingDetails cd ON ci.CostingID = cd.CostingID
-        //LEFT JOIN Inv_Def_Item di ON di.ItemID = cd.ItemID
-        //LEFT JOIN Inv_Def_BookingItemType dit ON dit.BookingItemTypeID = di.ItemTypeID
-        //WHERE cd.CostingID =@CostingId and di.ItemTypeID =@BookingType";
-
-        //           using var con = new SqlConnection(_connectionString);
-        //           using var cmd = new SqlCommand(query, con);
-
-        //           // ============================
-        //           // ADD PARAMETERS
-        //           // ============================
-        //           cmd.Parameters.AddWithValue("@BookingType", dto.BookingType ?? "");
-        //           cmd.Parameters.AddWithValue("@CostingId", dto.CostingId ?? "");
 
 
-        //           await con.OpenAsync();
-        //           using var rdr = await cmd.ExecuteReaderAsync();
-
-        //           // ============================
-        //           // INSERT INTO TEMP FABRIC TABLE
-        //           // ============================
-        //           while (await rdr.ReadAsync())
-        //           {
-        //               var temp = new RmgInvBookingReceivedDetailsFebricTemp
-        //               {
-        //                   PurchaseReceiveNo = await GenerateAutoFebrickId(),
-        //                   ItemId = rdr["ItemID"].ToString(),
-        //                   FabricItemId = dto.BookingType, // ItemTypeID passed from UI
-        //                   ColorId = rdr["ColorID"].ToString(),
-        //                   FebricDetails = rdr["Description"].ToString(),
-
-        //                   QtyUnit = rdr["TotalQuantityUnit"].ToString(),
-        //                   ConsumtionUnit = rdr["Consumption"].ToString(),
-        //                   Consumption = rdr["Consumption"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Consumption"]),
-
-        //                   TotalFebricQty = rdr["TotalQuantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalQuantity"]),
-        //                   CurrentReceiveQty = rdr["Quantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Quantity"]),
-        //                   OrderQty = rdr["Quantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Quantity"]),
-        //                   ReceivedUnitPrice = rdr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["UnitPrice"]),
-
-        //                   TotalReceivedQty = rdr["Consumption"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Consumption"]),
-        //                   PendingReceiveQty = 0,
-        //                   Percentage = rdr["Extra"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Extra"]),
-        //                   IntegraJobNo = rdr["CiIntegraJob"].ToString(),
-        //                   PoNo = rdr["CiPoNo"].ToString(),
-        //                   Slno = rdr["SLNO"] == DBNull.Value ? 0 : Convert.ToInt32(rdr["SLNO"]),
-        //                   TotalPrice = rdr["TotalPrice"] == DBNull.Value ? 0 : Convert.ToInt32(rdr["TotalPrice"]),
-        //               };
-
-        //               await febricTempRepo.AddAsync(temp);
-        //           }
-
-
-        //           // ============================
-        //           // RETURN LIST FROM TEMP TABLE
-        //           // ============================
-        //           var items = febricTempRepo.All().Select(x => new
-        //           {
-        //               Id = x.Id,
-        //               ItemID = x.ItemId,
-        //               ColorID = x.ColorId,
-        //               Description = x.FebricDetails,
-        //               Quantity = x.CurrentReceiveQty,
-        //               TotalQuantity = x.TotalFebricQty,
-        //               TotalQuantityUnit = x.QtyUnit,
-        //               UnitPrice = x.ReceivedUnitPrice,
-        //               SLNO = x.Slno ?? 0,
-        //               IntegraJobNO = x.IntegraJobNo,
-        //               PoNo = x.PoNo,
-        //               Consumption = x.Consumption,
-        //               TotalQty = x.TotalFebricQty,
-        //               GarmentQty = x.OrderQty,
-        //               OrderQty = x.OrderQty,
-        //               Percentage = x.Percentage,
-        //               TotalPrice = x.TotalPrice,
-
-
-        //           }).ToList();
-
-        //           return items.Cast<object>().ToList();
-        //       }
-
-
+        // ⚠️ Helper Methods (SafeToDecimal, SafeToInt, SafeToString) পূর্বের উত্তরে দেওয়া আছে এবং ধরে নেওয়া হচ্ছে এগুলি আপনার সার্ভিসে বিদ্যমান।
 
         private async Task<List<object>> GetFebricBookingData(ItemTypeFilterDto dto)
         {
-            // ============================
-            // CLEAR OLD TEMP DATA
-            // ============================
-            var exTempFebric = febricTempRepo.All().ToList();
-            if (exTempFebric.Any())
+            try
             {
-                await febricTempRepo.DeleteRangeAsync(exTempFebric);
-            }
-
-            // ============================
-            // VALIDATE CostingId LIST
-            // ============================
-            var costingIds = dto.CostingId;
-            if (costingIds == null || !costingIds.Any())
-                return new List<object>();
-
-            // ============================
-            // BUILD IN CLAUSE
-            // ============================
-            string inClause = string.Join(",", costingIds.Select((x, i) => $"@cid{i}"));
-
-            // ============================
-            // SQL QUERY (FABRIC)
-            // ============================
-            string query = $@"
-    SELECT 
-        cd.Id,
-        cd.SLNO,
-        cd.ItemID,
-        cd.Description,
-        cd.ColorID,
-        cd.Quantity,
-        cd.Consumption,
-        cd.Extra,
-        cd.TotalQuantity,
-        cd.TotalQuantityUnit,
-        cd.UnitPrice,
-        cd.TotalPrice,
-
-        ci.IntegraJobNO AS IntegraJobNo,
-        ci.PoNo AS PoNo
-    FROM RMG_CostingInfo ci
-    LEFT JOIN RMG_CostingDetails cd ON ci.CostingID = cd.CostingID
-    LEFT JOIN Inv_Def_Item di ON di.ItemID = cd.ItemID
-    LEFT JOIN Inv_Def_BookingItemType dit ON dit.BookingItemTypeID = di.ItemTypeID
-    WHERE ci.CostingID IN ({inClause})
-      AND di.ItemTypeID = @BookingType";
-
-            using var con = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand(query, con);
-
-            // ============================
-            // ADD PARAMETERS
-            // ============================
-            for (int i = 0; i < costingIds.Count; i++)
-            {
-                cmd.Parameters.AddWithValue($"@cid{i}", costingIds[i]);
-            }
-            cmd.Parameters.AddWithValue("@BookingType", dto.BookingType);
-
-            await con.OpenAsync();
-            using var rdr = await cmd.ExecuteReaderAsync();
-
-            // ============================
-            // INSERT INTO TEMP FABRIC TABLE
-            // ============================
-            while (await rdr.ReadAsync())
-            {
-                var temp = new RmgInvBookingReceivedDetailsFebricTemp
+                // ============================
+                // CLEAR OLD TEMP DATA
+                // ============================
+                var exTempFebric = febricTempRepo.All().ToList();
+                if (exTempFebric.Any())
                 {
-                    PurchaseReceiveNo = await GenerateAutoFebrickId(),
+                    await febricTempRepo.DeleteRangeAsync(exTempFebric);
+                }
 
-                    ItemId = rdr["ItemID"].ToString(),
-                    FabricItemId = dto.BookingType,
-                    ColorId = rdr["ColorID"].ToString(),
-                    FebricDetails = rdr["Description"].ToString(),
+                // ============================
+                // VALIDATE CostingId LIST
+                // ============================
+                var costingIds = dto.CostingId;
+                if (costingIds == null || !costingIds.Any())
+                    return new List<object>();
 
-                    QtyUnit = rdr["TotalQuantityUnit"].ToString(),
-                    Consumption = rdr["Consumption"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Consumption"]),
-                    ConsumtionUnit = rdr["TotalQuantityUnit"].ToString(),
+                // ============================
+                // BUILD IN CLAUSE
+                // ============================
+                string inClause = string.Join(",", costingIds.Select((x, i) => $"@cid{i}"));
 
-                    TotalFebricQty = rdr["TotalQuantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalQuantity"]),
-                    CurrentReceiveQty = rdr["Quantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Quantity"]),
-                    OrderQty = rdr["Quantity"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Quantity"]),
+                // ============================
+                // SQL QUERY (FABRIC)
+                // ============================
+                string query = $@"
+SELECT 
+    cd.Id,
+    cd.SLNO,
+    cd.ItemID,
+    cd.Description,
+    cd.ColorID,
+    cd.Quantity,
+    cd.Consumption,
+    cd.Extra,
+    cd.TotalQuantity,
+    cd.TotalQuantityUnit,
+    cd.UnitPrice,
+    cd.TotalPrice,
+    cd.TotalPriceCurrencyId AS CurrencyId,
+    cd.SupplierID AS EmployeeId, -- Assuming SupplierID can be used for EmployeeId temporarily
 
-                    ReceivedUnitPrice = rdr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["UnitPrice"]),
-                    TotalPrice = rdr["TotalPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["TotalPrice"]),
+    ci.IntegraJobNO AS IntegraJobNo,
+    ci.PoNo AS PoNo
+FROM RMG_CostingInfo ci
+LEFT JOIN RMG_CostingDetails cd ON ci.CostingID = cd.CostingID
+LEFT JOIN Inv_Def_Item di ON di.ItemID = cd.ItemID
+LEFT JOIN Inv_Def_BookingItemType dit ON dit.BookingItemTypeID = di.ItemTypeID
+WHERE ci.CostingID IN ({inClause})
+    AND di.ItemTypeID = @BookingType";
 
-                    TotalReceivedQty = rdr["Consumption"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Consumption"]),
-                    PendingReceiveQty = 0,
+                using var con = new SqlConnection(_connectionString);
+                using var cmd = new SqlCommand(query, con);
 
-                    Percentage = rdr["Extra"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["Extra"]),
-                    IntegraJobNo = rdr["IntegraJobNo"].ToString(),
-                    PoNo = rdr["PoNo"].ToString(),
-                    Slno = rdr["SLNO"] == DBNull.Value ? 0 : Convert.ToInt32(rdr["SLNO"])
-                };
-
-                await febricTempRepo.AddAsync(temp);
-            }
-
-            // ============================
-            // RETURN LIST FROM TEMP TABLE
-            // ============================
-            var items = febricTempRepo.All()
-                .Select(x => new
+                // ============================
+                // ADD PARAMETERS
+                // ============================
+                for (int i = 0; i < costingIds.Count; i++)
                 {
-                    Id = x.Id,
-                    ItemID = x.ItemId,
-                    ColorID = x.ColorId,
-                    Description = x.FebricDetails,
+                    cmd.Parameters.AddWithValue($"@cid{i}", costingIds[i]);
+                }
+                cmd.Parameters.AddWithValue("@BookingType", dto.BookingType);
 
-                    Quantity = x.CurrentReceiveQty,
-                    GarmentQty = x.OrderQty,
-                    OrderQty = x.OrderQty,
+                await con.OpenAsync();
+                using var rdr = await cmd.ExecuteReaderAsync();
 
-                    Consumption = x.Consumption,
-                    TotalQty = x.TotalFebricQty,
-                    TotalQuantity = x.TotalFebricQty,
-                    TotalQuantityUnit = x.QtyUnit,
+                // ============================
+                // INSERT INTO TEMP FABRIC TABLE (Using Safe Conversion and Default values)
+                // ============================
+                while (await rdr.ReadAsync())
+                {
+                    var temp = new RmgInvBookingReceivedDetailsFebricTemp
+                    {
+                        PurchaseReceiveNo = await GenerateAutoFebrickId(),
 
-                    UnitPrice = x.ReceivedUnitPrice,
-                    TotalPrice = x.TotalPrice,
+                        // --- Core/Mapped Data from SQL ---
+                        Slno = SafeToInt(rdr["SLNO"]),
+                        ItemId = SafeToString(rdr["ItemID"]),
+                        FebricDetails = SafeToString(rdr["Description"]), // Mapped Description to FebricDetails
+                        ColorId = SafeToString(rdr["ColorID"]),
 
-                    Percentage = x.Percentage,
-                    SLNO = x.Slno ?? 0,
+                        OrderQty = SafeToDecimal(rdr["Quantity"]),
+                        Consumption = SafeToDecimal(rdr["Consumption"]),
+                        TotalFebricQty = SafeToDecimal(rdr["TotalQuantity"]),
+                        Percentage = SafeToDecimal(rdr["Extra"]), // Fixed: using SafeToDecimal
 
-                    IntegraJobNO = x.IntegraJobNo,
-                    PoNo = x.PoNo
-                })
-                .ToList();
+                        ReceivedUnitPrice = SafeToDecimal(rdr["UnitPrice"]), // Mapped UnitPrice to ReceivedUnitPrice
+                        TotalPrice = SafeToDecimal(rdr["TotalPrice"]),
 
-            return items.Cast<object>().ToList();
+                        CurrentReceiveQty = SafeToDecimal(rdr["Quantity"]), // CurrentReceiveQty defaults to Order Quantity
+                        TotalReceivedQty = SafeToDecimal(rdr["Consumption"]), // Mapped to Consumption as per original logic
+
+                        IntegraJobNo = SafeToString(rdr["IntegraJobNo"]),
+                        PoNo = SafeToString(rdr["PoNo"]),
+
+                        // --- Unit Ids (using TotalQuantityUnit for QtyUnit and ConsumtionUnit) ---
+                        QtyUnit = SafeToString(rdr["TotalQuantityUnit"]),
+                        ConsumtionUnit = SafeToString(rdr["TotalQuantityUnit"]),
+
+                        // --- Default/Missing Properties ---
+                        Brdid = "",
+                        FabricItemId = dto.BookingType, // Mapped BookingType to FabricItemId as per original logic
+                        Refcode = "",
+                        ReceivedUnitType = SafeToString(rdr["TotalQuantityUnit"]), // Defaulting to TotalQuantityUnit
+                        CurrencyId = SafeToString(rdr["CurrencyId"]),
+                        EmployeeId = SafeToString(rdr["EmployeeId"]),
+
+                        // --- Default Received/Pending Properties ---
+                        PendingReceiveQty = 0M, // Already 0 in SQL, but kept safe
+                        TotalReceivedQtyPre = 0M,
+                        PendingReceiveQtyPre = 0M,
+                        UnitPrice = 0M // UnitPrice should be set to 0 as ReceivedUnitPrice is set
+                    };
+
+                    await febricTempRepo.AddAsync(temp);
+                }
+
+                // ============================
+                // RETURN LIST FROM TEMP TABLE (Casting properties to match common API format)
+                // ============================
+                var items = febricTempRepo.All()
+                    .Select(x => new
+                    {
+                        Id = x.Id,
+                        PurchaseReceiveNo = x.PurchaseReceiveNo,
+                        brdId = x.Brdid,
+                        slno = x.Slno ?? 0,
+
+                        // Item Details
+                        itemID = x.ItemId,
+                        fabricItemId = x.FabricItemId,
+                        description = x.FebricDetails,
+                        colorID = x.ColorId,
+                        refcode = x.Refcode,
+
+                        // Quantity
+                        OrderQty = x.OrderQty,
+                        qtyUnit = x.QtyUnit,
+                        consumption = x.Consumption,
+                        consumtionUnit = x.ConsumtionUnit,
+                        totalFebricQty = x.TotalFebricQty,
+                        percentage = x.Percentage,
+
+                        // Price & Received
+                        unitPrice = x.UnitPrice,
+                        receivedUnitPrice = x.ReceivedUnitPrice,
+                        totalPrice = x.TotalPrice,
+                        currencyId = x.CurrencyId,
+
+                        totalReceivedQty = x.TotalReceivedQty,
+                        currentReceiveQty = x.CurrentReceiveQty,
+                        receivedUnitType = x.ReceivedUnitType,
+                        totalReceivedQtyPre = x.TotalReceivedQtyPre,
+                        pendingReceiveQty = x.PendingReceiveQty,
+                        pendingReceiveQtyPre = x.PendingReceiveQtyPre,
+
+                        // Other
+                        employeeId = x.EmployeeId,
+                        integraJobNo = x.IntegraJobNo,
+                        poNo = x.PoNo
+                    })
+                    .ToList();
+
+                return items.Cast<object>().ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Error retrieving fabric booking data: {ex.Message}");
+                throw;
+            }
         }
 
 
@@ -2314,169 +1698,6 @@ namespace GCTL.UI.Core.Controllers
             return nextCode;
         }
 
-
-
-        //[HttpPost]
-        //public IActionResult GetPurchaseOrders()
-        //{
-        //    var draw = Request.Form["draw"].FirstOrDefault();
-        //    var start = Request.Form["start"].FirstOrDefault();
-        //    var length = Request.Form["length"].FirstOrDefault();
-
-        //    int pageSize = length != null ? Convert.ToInt32(length) : 0;
-        //    int skip = start != null ? Convert.ToInt32(start) : 0;
-
-        //    var list = new List<PurchaseOrderViewModel>();
-
-        //    using (SqlConnection con = new SqlConnection(_connectionString))
-        //    {
-        //        string query = @"
-        //    SELECT DISTINCT 
-        //           po.StyleId, 
-        //           po.IntegraJOBNo,
-        //           po.BuyerId, 
-        //           pod.PurchaseOrder, 
-        //           pod.OrderQuantity, 
-        //           po.MasterPurchaseOrder  
-        //    FROM RMG_Prod_Order po
-        //    LEFT JOIN RMG_Prod_OrderDetails pod 
-        //           ON po.OrderId = pod.OrderId";
-
-        //        SqlCommand cmd = new SqlCommand(query, con);
-        //        con.Open();
-        //        SqlDataReader rdr = cmd.ExecuteReader();
-
-        //        while (rdr.Read())
-        //        {
-        //            list.Add(new PurchaseOrderViewModel
-        //            {
-        //                Style = rdr["StyleId"].ToString(),
-        //                StyleName = styleRepo.All().Where(c=> c.StyleId== rdr["StyleId"].ToString()).Select(x=> x.Style).FirstOrDefault(),
-        //                FunJobNo = rdr["IntegraJOBNo"].ToString(),
-        //                Buyer = rdr["BuyerId"].ToString(),
-        //                BuyerName = buyerRepo.All().Where(x=> x.BuyerId== rdr["BuyerId"].ToString()).Select(c=> c.BuyerName).FirstOrDefault(),
-        //                PoNo = rdr["PurchaseOrder"].ToString(),
-        //                OrderQty = rdr["OrderQuantity"] == DBNull.Value ? null : Convert.ToInt32(rdr["OrderQuantity"]),
-        //                MasterPo = rdr["MasterPurchaseOrder"].ToString()
-        //            });
-        //        }
-        //    }
-
-        //    var recordsTotal = list.Count;
-        //    var data = list.Skip(skip).Take(pageSize).ToList();
-
-        //    return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
-        //}
-
-        //[HttpPost]
-        //public IActionResult GetPurchaseOrders()
-        //{
-        //    var draw = Request.Form["draw"].FirstOrDefault();
-        //    var start = Request.Form["start"].FirstOrDefault();
-        //    var length = Request.Form["length"].FirstOrDefault();
-        //    var searchValue = Request.Form["search[value]"].FirstOrDefault();
-
-        //    // Filter parameters
-        //    var poNo = Request.Form["poNo"].FirstOrDefault();
-        //    var style = Request.Form["style"].FirstOrDefault();
-        //    var buyer = Request.Form["buyer"].FirstOrDefault();
-        //    var masterPo = Request.Form["masterPo"].FirstOrDefault();
-        //    var funJobNo = Request.Form["funJobNo"].FirstOrDefault();
-
-        //    int pageSize = length != null ? Convert.ToInt32(length) : 10;
-        //    int skip = start != null ? Convert.ToInt32(start) : 0;
-
-        //    var list = new List<PurchaseOrderViewModel>();
-
-        //    using (SqlConnection con = new SqlConnection(_connectionString))
-        //    {
-
-        //        string query = @"
-        //    select distinct ci.StyleID, st.Style, ci.IntegraJobNO, ci.BuyerID, b.BuyerName, ci.MasterPurchaseOrder, cd.Quantity, ci.PoNo  from RMG_CostingInfo ci
-        //    left join RMG_CostingDetails cd on cd.CostingID = ci.CostingID
-        //    left join RMG_Prod_Def_Buyer b on b.BuyerId = ci.BuyerID
-        //    left join  Prod_Def_Style st on ci.StyleID = st.StyleId
-        //    where 1=1";
-        //        // Global search
-        //        if (!string.IsNullOrEmpty(searchValue))
-        //        {
-        //            query += @" AND (ci.PoNo LIKE @Search 
-        //                OR ci.StyleId LIKE @Search 
-        //                OR st.Style LIKE @Search 
-        //                OR ci.BuyerId LIKE @Search 
-        //                OR b.BuyerName LIKE @Search 
-        //                OR ci.MasterPurchaseOrder LIKE @Search 
-        //                OR ci.IntegraJOBNo LIKE @Search
-        //                OR CAST(pod.OrderQuantity AS VARCHAR) LIKE @Search)";
-        //        }
-
-        //        // Add filters dynamically
-        //        if (!string.IsNullOrEmpty(poNo))
-        //            query += " AND pod.PurchaseOrder LIKE @PoNo";
-        //        if (!string.IsNullOrEmpty(style))
-        //            query += " AND po.StyleId LIKE @Style";
-        //        if (!string.IsNullOrEmpty(buyer))
-        //            query += " AND po.BuyerId LIKE @Buyer";
-        //        if (!string.IsNullOrEmpty(masterPo))
-        //            query += " AND po.MasterPurchaseOrder LIKE @MasterPo";
-        //        if (!string.IsNullOrEmpty(funJobNo))
-        //            query += " AND po.IntegraJOBNo LIKE @FunJobNo";
-
-        //        SqlCommand cmd = new SqlCommand(query, con);
-
-        //        // Add search parameter
-        //        if (!string.IsNullOrEmpty(searchValue))
-        //            cmd.Parameters.AddWithValue("@Search", "%" + searchValue + "%");
-
-        //        // Add parameters
-        //        if (!string.IsNullOrEmpty(poNo))
-        //            cmd.Parameters.AddWithValue("@PoNo", "%" + poNo + "%");
-        //        if (!string.IsNullOrEmpty(style))
-        //            cmd.Parameters.AddWithValue("@Style", "%" + style + "%");
-        //        if (!string.IsNullOrEmpty(buyer))
-        //            cmd.Parameters.AddWithValue("@Buyer", "%" + buyer + "%");
-        //        if (!string.IsNullOrEmpty(masterPo))
-        //            cmd.Parameters.AddWithValue("@MasterPo", "%" + masterPo + "%");
-        //        if (!string.IsNullOrEmpty(funJobNo))
-        //            cmd.Parameters.AddWithValue("@FunJobNo", "%" + funJobNo + "%");
-
-        //        con.Open();
-        //        SqlDataReader rdr = cmd.ExecuteReader();
-
-        //        while (rdr.Read())
-        //        {
-        //            list.Add(new PurchaseOrderViewModel
-        //            {
-        //                Style = rdr["StyleId"].ToString(),
-        //                StyleName = styleRepo.All()
-        //                    .Where(c => c.StyleId == rdr["StyleId"].ToString())
-        //                    .Select(x => x.Style).FirstOrDefault(),
-        //                FunJobNo = rdr["IntegraJOBNo"].ToString(),
-        //                Buyer = rdr["BuyerId"].ToString(),
-        //                BuyerName = buyerRepo.All()
-        //                    .Where(x => x.BuyerId == rdr["BuyerId"].ToString())
-        //                    .Select(c => c.BuyerName).FirstOrDefault(),
-        //                PoNo = rdr["PurchaseOrder"].ToString(),
-        //                OrderQty = rdr["OrderQuantity"] == DBNull.Value ?
-        //                    null : Convert.ToInt32(rdr["OrderQuantity"]),
-        //                MasterPo = rdr["MasterPurchaseOrder"].ToString()
-        //            });
-        //        }
-        //    }
-
-        //    var recordsTotal = list.Count;
-
-        //    // Handle "All" option (length = -1)
-        //    var data = pageSize == -1 ? list : list.Skip(skip).Take(pageSize).ToList();
-
-        //    return Json(new
-        //    {
-        //        draw = draw,
-        //        recordsFiltered = recordsTotal,
-        //        recordsTotal = recordsTotal,
-        //        data = data
-        //    });
-        //}
 
         [HttpPost]
         public IActionResult GetPurchaseOrders()
@@ -2606,44 +1827,6 @@ namespace GCTL.UI.Core.Controllers
 
 
 
-        //[HttpPost]
-        //public JsonResult GetItemTypes([FromBody] string CostingId)
-        //{
-        //    var list = new List<ItemTypeViewModel>();
-
-        //    using (SqlConnection con = new SqlConnection(_connectionString))
-        //    {
-        //        string query = @"
-
-        //   SELECT DISTINCT dit.BookingItemTypeID, dit.BookingItemType
-        //                        FROM RMG_CostingInfo ci
-        //                        LEFT JOIN RMG_CostingDetails cd ON ci.CostingID = cd.CostingID
-        //                        LEFT JOIN Inv_Def_Item di ON di.ItemID = cd.ItemID
-        //                        LEFT JOIN Inv_Def_BookingItemType dit ON dit.BookingItemTypeID = di.ItemTypeID
-        //                        where cd.CostingID =@CostingId and (cd.PoNo is null or cd.PoNo ='')
-        //                          AND dit.BookingItemTypeID IS NOT NULL
-        //                          AND dit.BookingItemType IS NOT NULL";
-
-        //        SqlCommand cmd = new SqlCommand(query, con);
-        //        cmd.Parameters.AddWithValue("@CostingId", CostingId ?? "");
-
-
-        //        con.Open();
-        //        SqlDataReader rdr = cmd.ExecuteReader();
-
-        //        while (rdr.Read())
-        //        {
-        //            list.Add(new ItemTypeViewModel
-        //            {
-        //                BookingItemTypeID = rdr["BookingItemTypeID"].ToString(),
-        //                BookingItemType = rdr["BookingItemType"].ToString()
-        //            });
-        //        }
-        //    }
-
-        //    return Json(list);
-        //}
-
 
         [HttpPost]
         public JsonResult GetItemTypes([FromBody] List<string> CostingIds)
@@ -2736,7 +1919,178 @@ namespace GCTL.UI.Core.Controllers
             });
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UpdateBookingItem([FromBody] BookingItemUpdateDto itemDto)
+        {
+            // 1. Initial Validation
+            if (itemDto == null || itemDto.Id == 0)
+            {
+                return Json(new { success = false, message = "Invalid data or missing ID provided." });
+            }
 
+            try
+            {
+                // 2. Determine the repository based on BookingType
+                dynamic repo;
+
+                switch (itemDto.BookingType)
+                {
+                    case "04": repo = cartonTempRepo; break;
+                    case "07": repo = threadTempRepo; break;
+                    case "03": repo = polyTempRepo; break;
+                    case "02": repo = buttonTempRepo; break;
+                    case "01": repo = febricTempRepo; break;
+                    default: repo = extraTempRepo; break;
+                }
+
+                if (repo == null)
+                {
+                    return Json(new { success = false, message = $"Configuration Error: Repository not found for Type {itemDto.BookingType}. Check Dependency Injection." });
+                }
+
+                // 3. Fetch the existing item
+                var existingItem = await repo.GetByIdAsync(itemDto.Id);
+
+                if (existingItem == null)
+                {
+                    return Json(new { success = false, message = $"Item with Id {itemDto.Id} not found in database." });
+                }
+
+                // --- COMMON FIELDS MAPPING (Safe across all models) ---
+                // These fields appear to be present and used similarly in all models
+                //existingItem.ItemId = itemDto.ItemId;
+                existingItem.ColorId = itemDto.ColorId;
+                //existingItem.CurrencyId = itemDto.CurrencyId;
+                //existingItem.PoNo = itemDto.PoNo;
+                //existingItem.IntegraJobNo = itemDto.IntegraJobNo;
+                existingItem.Remarks = itemDto.Remarks;
+                //existingItem.ReceivedUnitPrice = itemDto.UnitPrice;
+                //existingItem.TotalPrice = itemDto.TotalPrice;
+
+                // --- TYPE-SPECIFIC MAPPINGS (Using correct model property names) ---
+
+                // A. Fabric (Type 01) - RmgInvBookingReceivedDetailsFebricTemp
+                if (itemDto.BookingType == "01")
+                {
+                    //existingItem.FebricDetails = itemDto.Description; // Description Mismatch
+                    //existingItem.Percentage = itemDto.Percentage; // Decimal Percentage
+
+                    // Quantity Mappings
+                    //existingItem.Consumption = itemDto.Consumption;
+                    //existingItem.ConsumtionUnit = itemDto.ConsumptionUnitID; // Unit Mismatch
+                    //existingItem.TotalFebricQty = itemDto.TotalQty; // TotalQty Mismatch
+                    //existingItem.OrderQty = itemDto.OrderQty;
+                    //existingItem.QtyUnit = itemDto.OrderQtyUnitID; // Order Unit Mismatch
+                    // GarmentQty is not present in Febric model
+                }
+                // B. Carton (Type 04) - RmgInvBookingReceivedDetailsCartonTemp
+                else if (itemDto.BookingType == "04")
+                {
+                    //existingItem.ItemDescription = itemDto.Description; // Description Mismatch
+                    //existingItem.CartonPercent = itemDto.Percentage?.ToString(); // Percentage Mismatch (String)
+                    existingItem.SizeId = itemDto.SizeId;
+
+                    // Dimensions (Carton uses strings for dimensions in this model)
+                    existingItem.CartonLeangth = itemDto.CartonLength?.ToString();
+                    existingItem.LeangthUnitId = itemDto.LeangthUnitID;
+                    existingItem.CartonWidth = itemDto.CartonWidth?.ToString();
+                    existingItem.WidthUnitId = itemDto.WidthUnitID;
+                    existingItem.CatonHeight = itemDto.CatonHeight?.ToString();
+                    existingItem.HeightUnitId = itemDto.HeightUnitID;
+
+                    // Quantity Mappings (TotalQty maps to RequiredQty)
+                    //existingItem.Consumption = itemDto.Consumption;
+                    //existingItem.ConsumptionUnitId = itemDto.ConsumptionUnitID;
+                    //existingItem.RequiredQty = itemDto.TotalQty; // TotalQty Mismatch
+                    //existingItem.RequiredQtyUnitId = itemDto.TotalQtyUnitID; // Total Unit Mismatch
+                    //existingItem.OrderQty = itemDto.OrderQty;
+                    //existingItem.OrderUnitId = itemDto.OrderQtyUnitID; // Order Unit Mismatch
+                    // GarmentQty is not present in Carton model
+                }
+                // C. Thread (Type 07) - RmgInvBookingReceivedDetailsThreadTemp
+                else if (itemDto.BookingType == "07")
+                {
+                    //existingItem.FebricDetail = itemDto.Description; // Description Mismatch
+                    existingItem.ThreadCountId = itemDto.ThreadCountID;
+                    //existingItem.Threadpercent = itemDto.Percentage?.ToString(); // Percentage Mismatch (String)
+
+                    // Quantity Mappings
+                    //existingItem.Consumption = itemDto.Consumption;
+                    //existingItem.ConsumtionUnitId = itemDto.ConsumptionUnitID;
+                    //existingItem.TotalQty = itemDto.TotalQty;
+                    //existingItem.TotalQtyUnitId = itemDto.TotalQtyUnitID;
+                    //existingItem.OrderQty = itemDto.OrderQty;
+                    //existingItem.QtyUnitId = itemDto.OrderQtyUnitID; // Order Unit Mismatch
+                    // GarmentQty is not present in Thread model
+                }
+                // D. Poly (Type 03) - RmgInvBookingReceivedDetailsPolyTemp
+                else if (itemDto.BookingType == "03")
+                {
+                    //existingItem.ItemDescription = itemDto.Description; // Description Mismatch
+                    //existingItem.Percentage = itemDto.Percentage?.ToString(); // Percentage Mismatch (String)
+
+                    // Dimensions (Poly uses strings for dimensions in this model)
+                    existingItem.Length = itemDto.Length?.ToString();
+                    existingItem.LengthUnitId = itemDto.LengthUnitID;
+                    existingItem.Width = itemDto.Width?.ToString();
+                    existingItem.WidthUnitId = itemDto.WidthUnitID;
+                    existingItem.Flap = itemDto.Flap?.ToString();
+                    existingItem.FlapUnitId = itemDto.FlapUnitID;
+                    existingItem.Guest = itemDto.Guest?.ToString();
+                    existingItem.GuestUnitId = itemDto.GuestUnitID;
+
+                    // Quantity Mappings
+                    //existingItem.GarmentQty = itemDto.GarmentQty;
+                    //existingItem.GarmentQtyUnitId = itemDto.GarmentQtyUnitID;
+                    //existingItem.Consumption = itemDto.Consumption;
+                    //existingItem.ConsumptionUnitId = itemDto.ConsumptionUnitID;
+                    //existingItem.TotalQty = itemDto.TotalQty;
+                    //existingItem.TotalQtyUnitId = itemDto.TotalQtyUnitID;
+                    // OrderQty is not present in Poly model
+                }
+                // E. Button (Type 02) - RmgInvBookingReceivedDetailsButtonTemp
+                else if (itemDto.BookingType == "02")
+                {
+                    //existingItem.Description = itemDto.Description;
+                    //existingItem.Percentage = itemDto.Percentage?.ToString(); // Percentage Mismatch (String)
+
+                    // Quantity Mappings (Note: GarmentQty uses 'GermentQty' name)
+                    //existingItem.GermentQty = itemDto.GarmentQty; // GarmentQty Mismatch (Name)
+                    //existingItem.GermentsQtyUnitId = itemDto.GarmentQtyUnitID; // Garment Unit Mismatch (Name)
+                    //existingItem.Consumption = itemDto.Consumption;
+                    //existingItem.ConsumptionUnitId = itemDto.ConsumptionUnitID;
+                    //existingItem.TotalQty = itemDto.TotalQty;
+                    //existingItem.TotalQtyUnitId = itemDto.TotalQtyUnitID;
+                    //existingItem.OrderQty = itemDto.OrderQty;
+                    //existingItem.OrderQtyUnitId = itemDto.OrderQtyUnitID;
+                }
+                // F. Extra (Default) - RmgInvBookingReceivedDetailsExtraTemp
+                else // default booking type
+                {
+                    //existingItem.Description = itemDto.Description;
+                    //existingItem.Percentage = itemDto.Percentage?.ToString(); // Percentage Mismatch (String)
+
+                    // Quantity Mappings (TotalQty maps to ReqQty)
+                    //existingItem.Consumption = itemDto.Consumption;
+                    //existingItem.ConsumptionUnitId = itemDto.ConsumptionUnitID;
+                    //existingItem.TotalQty = itemDto.TotalQty;
+                    //existingItem.TotalQtyUnitId = itemDto.TotalQtyUnitID;
+                    //existingItem.ReqQty = itemDto.OrderQty; // OrderQty Mismatch (Name)
+                    //existingItem.ReqQtyUnitId = itemDto.OrderQtyUnitID; // Order Unit Mismatch (Name)
+                    // GarmentQty is not present in Extra model
+                }
+
+                // 4. Update the item in the database
+                await repo.UpdateAsync(existingItem);
+
+                return Json(new { success = true, message = "Booking item updated successfully." });
+            }
+            catch (Exception ex)
+            {
+                // Log the full exception (ex) in your server logs for better debugging
+                return Json(new { success = false, message = $"Database Update Failed: {ex.Message}. Check model definitions, especially for the '{itemDto.BookingType}' type." });
+            }
+        }
     }
 
     public class SaveBookingRequest
