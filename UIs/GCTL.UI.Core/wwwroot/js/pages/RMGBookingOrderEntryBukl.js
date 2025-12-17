@@ -4,6 +4,8 @@
         var table = null;
         var currentBookingType = '';
         window.selectedIds = window.selectedIds || new Set();
+        window.selectedBookingOrderId = window.selectedBookingOrderId || new Set();
+        var purchaseTable;
 
         function init() {
             injectTooltipStyles();
@@ -167,6 +169,9 @@
         });
        
         function purchaseOrderLoad() {
+            if ($.fn.DataTable.isDataTable('#purchaseOrderTable')) {
+                purchaseTable.clear().destroy();
+            }
             var purchaseTable = $('#purchaseOrderTable').DataTable({
                 "processing": true,
                 "serverSide": true,
@@ -180,7 +185,7 @@
                 },
                 "pageLength": 3,
                 "lengthMenu": [[3, 5, 10, -1], [3, 5, 10, "All"]],
-                "scrollY": "300px",
+                "scrollY": "221px",
                 "scrollCollapse": true,
                 "paging": true,
                 "columns": [
@@ -414,6 +419,8 @@
         // (Hidden headers: Type, Id, Integra Job No. are correctly included)
         // ====================================================================
         function buildHeaders(type) {
+  
+
             let html = '<tr>';
             // Hidden headers (will be hidden via CSS/Class: header-hidden)
             html += '<th class="border-end header-hidden" style="min-width:70px">Type</th>';
@@ -597,7 +604,7 @@
         // ====================================================================
         function sendUpdateToServer(data) {
             // Check if settings.baseUrl is defined and accessible
-            const url = (typeof settings !== 'undefined' && settings.baseUrl) ? settings.baseUrl + '/UpdateBookingItem' : '/YourController/UpdateBookingItem';
+            const url = (typeof settings !== 'undefined' && settings.baseUrl) ? settings.baseUrl + '/UpdateBookingItem' : '/RMGBookingOrderEntryBukl/UpdateBookingItem';
 
             $.ajax({
                 url: url,
@@ -638,11 +645,18 @@
             var type = $(this).val();
             if (!type || type === '--Select Booking Type--') return;
 
-            let costingIds = getSelectedCostingIds();
+            let costingIds = getSelectedCostingIds() || [];
+            let bookingOrderIds = getselectedBookingOrderId();
+
+            if (bookingOrderIds.length == 0) {
+                if (costingIds.length === 0) {
+                    toastr.warning("Please select at least one booking order");
+                    return;
+                }
+            }
 
             if (costingIds.length === 0) {
-                toastr.warning("Please select at least one booking order");
-                return;
+                costingIds.push("edit");
             }
 
             console.log("Sending Costing IDs:", costingIds);
@@ -651,6 +665,10 @@
                 BookingType: type,
                 CostingId: costingIds
             };
+
+
+
+
 
             showLoader();
 
@@ -677,7 +695,9 @@
                     tableHtml += '</tbody>';
 
                     $('#bookingTable').html(tableHtml);
-
+                    if ($.fn.DataTable.isDataTable('#bookingTable')) {
+                        $('#bookingTable').DataTable().destroy();
+                    }
                     table = $('#bookingTable').DataTable({
                         scrollX: true,
                         scrollY: '500px',
@@ -791,42 +811,37 @@
             return new Date(`${year}-${month}-${day}T00:00:00`).toISOString();
         }
 
+
         function getBookingDataAndSend() {
-            var getData = {
+            return {
                 Tc: parseFloat($("#BookingOrderEntryBuklSetup_Tc").val()) || 0,
                 BookinOrderNo: $("#BookingOrderEntryBuklSetup_BookinOrderNo").val(),
                 BookinDate: getIsoDate($("#BookingOrderEntryBuklSetup_BookinDate").val()),
-                BuyerId: $("#BuyerId").val(),
-                StyleId: $("#StyleId").val(),
-                MasterPurchaseOrder: $("#MasterPurchaseOrder").val(),
-                PoNo: $("#PoNo").val(),
                 PurchasedOfficer: $("#BookingOrderEntryBuklSetup_PurchasedOfficer").val(),
                 Remarks: $("#BookingOrderEntryBuklSetup_Remarks").val(),
-                EmployeId: $("#EmployeId").val(),
-                CompanyId: $("#CompanyId").val(),
                 DeliveryDate: getIsoDate($("#BookingOrderEntryBuklSetup_DeliveryDate").val()),
                 DeliveryAddress: $("#BookingOrderEntryBuklSetup_DeliveryAddress").val(),
                 DeliveryMethod: $("#BookingOrderEntryBuklSetup_DeliveryMethod").val(),
                 PaymentTerms: $("#BookingOrderEntryBuklSetup_PaymentTerms").val(),
                 TermsCondition: $("#BookingOrderEntryBuklSetup_TermsCondition").val(),
                 BookingType: $("#BookingOrderEntryBuklSetup_BookingType").val(),
-                BookingEntryType: $("#BookingEntryType").val(),
-                WarehouseId: $("#WarehouseId").val(),
                 Pino: $("#BookingOrderEntryBuklSetup_Pino").val(),
                 Pidate: getIsoDate($("#BookingOrderEntryBuklSetup_Pidate").val()),
                 Pivalue: parseFloat($("#BookingOrderEntryBuklSetup_Pivalue").val()) || null,
                 PicurrencyId: $("#BookingOrderEntryBuklSetup_PicurrencyId").val(),
                 SupplierId: $("#BookingOrderEntryBuklSetup_SupplierId").val(),
-                Mrbpid: $("#Mrbpid").val(),
-                EnterFromPageName: $("#EnterFromPageName").val(),
-                PifilePath: $("#PifilePath").val()
-            };
-            return getData;
-        }
 
-        $(document).on('click', '.js-booking-order-info-save', function () {
+                SelectedCostingIds: Array.from(selectedIds)
+            };
+        }
+        $(document).on('click', '.js-booking-order-info-save', function () {            
+            if (selectedIds.size === 0) {
+                toastr.warning("Please select at least one purchase order");
+                return;
+            }
+
             var dto = getBookingDataAndSend();
-            console.log("Booking DTO:", dto);
+            console.log("Final DTO:", dto);
 
             $.ajax({
                 url: settings.baseUrl + '/SaveBooking',
@@ -834,17 +849,113 @@
                 contentType: 'application/json',
                 data: JSON.stringify(dto),
                 success: function (response) {
-                    console.log("Server response:", response);
                     toastr.success(response.message || "Saved successfully");
+
+                    selectedIds.clear();
+                    bookingOrderIds.clear();
+                    if (purchaseTable) {
+                        purchaseTable.ajax.reload(null, false);
+                    }
+
+                    BookingOrderGrid();
+                    RMG_BookingOrderAutoId();
                 },
                 error: function (xhr) {
-                    console.error("Error:", xhr.responseText);
+                    console.error(xhr.responseText);
                     toastr.error("Failed to save booking");
                 }
             });
         });
 
+
+        function resetBookingForm() {
+            // Reset plain text/number/date inputs
+            $("#BookingOrderEntryBuklSetup_Tc").val("");
+            $("#BookingOrderEntryBuklSetup_BookinOrderNo").val("");
+            $("#BookingOrderEntryBuklSetup_BookinDate").val("");
+            $("#BookingOrderEntryBuklSetup_PurchasedOfficer").val("");
+            $("#BookingOrderEntryBuklSetup_Remarks").val("");
+            $("#BookingOrderEntryBuklSetup_DeliveryDate").val("");
+            $("#BookingOrderEntryBuklSetup_DeliveryAddress").val("");
+            $("#BookingOrderEntryBuklSetup_DeliveryMethod").val("");
+            $("#BookingOrderEntryBuklSetup_PaymentTerms").val("");
+            $("#BookingOrderEntryBuklSetup_TermsCondition").val("");
+            $("#BookingOrderEntryBuklSetup_BookingType").val("");
+            $("#BookingOrderEntryBuklSetup_Pino").val("");
+            $("#BookingOrderEntryBuklSetup_Pidate").val("");
+            $("#BookingOrderEntryBuklSetup_Pivalue").val("");
+            $("#BookingOrderEntryBuklSetup_PicurrencyId").val("");
+            $("#BookingOrderEntryBuklSetup_SupplierId").val("");
+
+            // Reset Select2 dropdowns properly
+            $(".select2").each(function () {
+                $(this).val(null).trigger("change.select2");
+            });
+
+            // Clear selected IDs
+            window.selectedIds.clear();
+            window.selectedBookingOrderId.clear();
+
+            // Reset DataTable silently if present
+            if ($.fn.DataTable && $('#BookingOrderGrid').length) {
+                $('#BookingOrderGrid').DataTable().clear().draw();
+            }
+
+            // Reset date pickers if you have a helper
+            setDate();
+        }
+        $(document).on('click', '.js-costing-info-clear', function () {
+            debugger;
+            resetBookingForm(); 
+        })
+     
+        $(document).on('click', '#js-costing-info-delete-confirm', function () {
+            let bookingOrderIds = getselectedBookingOrderId();
+
+            if (bookingOrderIds.length === 0) {
+                toastr.warning("Please select at least one booking order to delete.");
+                return;
+            }
+
+            // প্রথমে confirm alert দেখানো হবে
+            if (confirm("Are you sure you want to delete the selected booking orders?")) {
+                console.log("Delete confirmed for IDs:", bookingOrderIds);
+
+                $.ajax({
+                    url: settings.baseUrl + "/DeleteBookingOrder",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(bookingOrderIds),
+                    success: function (res) {
+                        console.log(res);
+
+                        if (res.success) {
+                            // Success toaster
+                            toastr.success(res.message || "Booking orders deleted successfully!");
+
+                            // Grid refresh
+                            BookingOrderGrid();
+                            window.selectedIds.clear();
+                            window.selectedBookingOrderId.clear();
+                        } else {
+                            toastr.error(res.message || "Failed to delete booking orders.");
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        toastr.error("An error occurred while deleting booking orders.");
+                    }
+                });
+            } else {
+                toastr.info("Delete action cancelled.");
+            }
+        });
+
+
         function BookingOrderGrid() {
+            if ($.fn.DataTable.isDataTable('#bookingOrderGridTable')) {
+                $('#bookingOrderGridTable').DataTable().destroy();
+            }
             var bookingGridTable = $("#bookingOrderGridTable").DataTable({
                 processing: true,
                 serverSide: true,
@@ -854,22 +965,22 @@
                     url: settings.baseUrl + "/GetBookingList",
                     type: "POST",
                     dataSrc: function (data) {
+                        console.log(data);
                         return data.data;
                     }
                 },
                 columns: [
                     {
                         data: "tc",
-                        orderable: false,
                         render: function (data) {
-                            let checked = selectedIds.has(data) ? "checked" : "";
-                            return `<input type="checkbox" class="row-check" data-id="${data}" ${checked} />`;
+                            let checked = selectedBookingOrderId.has(data) ? "checked" : "";
+                            return `<input type="checkbox" class="row-check-master-check" data-id="${data}" ${checked} />`;
                         }
                     },
                     {
                         data: "bookingOrderNo",
                         render: function (data) {
-                            return `<a href="#" class="text-primary fw-bold booking-link">${data}</a>`;
+                            return `<button type="button" class="btn btn-link row-check-master" data-id="${data}">${data}</button>`;
                         }
                     },
                     { data: "bookingDate" },
@@ -887,38 +998,133 @@
                     }
                 ],
                 drawCallback: function () {
-                    let total = $(".row-check").length;
-                    let checked = $(".row-check:checked").length;
-                    $("#selectAll").prop("checked", total > 0 && total === checked);
+                    let total = $(".row-check-master-check").length;
+                    let checked = $(".row-check-master-check:checked").length;
+                    $("#selectMasterAll").prop("checked", total > 0 && total === checked);
                 }
             });
 
-            $("#bookingOrderGridTable").on("click", ".booking-link", function (e) {
-                e.preventDefault();
-                var rowData = bookingGridTable.row($(this).closest("tr")).data();
-                console.log("Full Row Data:", rowData);
+            
+
+            $("#bookingOrderGridTable").on("click", ".row-check-master", function () {
+                let id = $(this).data("id");
+                let rowData = bookingGridTable.row($(this).closest("tr")).data();
+
+                selectedBookingOrderId.add(id);
+
+                if (rowData == undefined) {
+                    return;
+                }
                 populateBookingForm(rowData);
+
+                $.ajax({
+                    url: settings.baseUrl + "/GetBookingItemTypes",
+                    type: "POST",
+                    data: { id },
+                    success: function (resp) {
+                        console.log("Filtered Booking Item Types:", resp);
+
+                        if (resp.success && resp.data) {
+                            // Build headers based on first item
+                            if (resp.data.length > 0) {
+                                buildHeaders(resp.data[0]);
+                            }
+
+                            // Destroy old table if exists
+                            if ($.fn.DataTable.isDataTable('#bookingTable')) {
+                                $('#bookingTable').DataTable().clear().destroy();
+                            }
+
+                            // Build table HTML
+                            let tableHtml = '<thead class="table-light sticky-top">' + buildHeaders(rowData.bookingType) + '</thead>';
+                            tableHtml += '<tbody>';
+                            $.each(resp.data || [], function (i, item) {
+                                tableHtml += buildRow(item, rowData.bookingType, resp.dropdownData);
+                            });
+                            tableHtml += '</tbody>';
+
+                            $('#bookingTable').html(tableHtml);
+
+                            // Re-initialize DataTable
+                            let table = $('#bookingTable').DataTable({
+                                scrollX: true,
+                                scrollY: '500px',
+                                scrollCollapse: true,
+                                paging: false,
+                                info: false,
+                                ordering: false,
+                                autoWidth: false,
+                                searching: false,
+                                dom: 'ft',
+                                initComplete: function () {
+                                    $('.dataTables_scrollHead').css({
+                                        'position': 'sticky',
+                                        'top': '0',
+                                        'z-index': '10',
+                                        'background': 'white'
+                                    });
+                                    applySelect2();
+                                    initializeTooltips();
+                                }
+                            });
+
+                            setTimeout(() => table.columns.adjust().draw(false), 150);
+                        } else {
+                            alert(resp.message);
+                        }
+                    },
+                    error: function (xhr) {
+                        console.error("Error fetching booking item types", xhr);
+                    }
+                });
+
+                console.log("Selected IDs:", [...selectedBookingOrderId]);
             });
+
+
         }
 
-        $(document).on("change", "#selectAll", function () {
+        // click handler for the bookingOrderNo button
+        $(document).on("change", ".row-check-master-check", function () {
+            let id = $(this).data("id");
+            if (this.checked) {
+                selectedBookingOrderId.add(id);
+            } else {
+                selectedBookingOrderId.delete(id);
+            }
+            console.log("Selected IDs:", [...selectedBookingOrderId]);
+        });
+
+        $(document).on("change", "#selectMasterAll", function () {
             let checked = this.checked;
 
-            $(".row-check").each(function () {
+            $(".row-check-master-check").each(function () {
                 let id = $(this).data("id");
                 $(this).prop("checked", checked);
 
                 if (checked) {
-                    selectedIds.add(id);
+                    selectedBookingOrderId.add(id);
                 } else {
-                    selectedIds.delete(id);
+                    selectedBookingOrderId.delete(id);
                 }
             });
 
-            console.log("Selected IDs:", [...selectedIds]);
+            console.log("Selected IDs:", [...selectedBookingOrderId]);
         });
 
-        
+        function getselectedBookingOrderId() {
+            if (!window.selectedBookingOrderId) {
+                console.warn("selectedIds not initialized");
+                return [];
+            }
+            window.selectedIds.clear();
+            
+            let arr = Array.from(window.selectedBookingOrderId);
+
+            console.log("Final Costing ID Array:", arr);
+
+            return arr;
+        }
 
 
         function getSelectedCostingIds() {
@@ -927,12 +1133,14 @@
                 return [];
             }
 
+            window.selectedBookingOrderId.clear();
             let arr = Array.from(window.selectedIds);
 
             console.log("Final Costing ID Array:", arr);
 
             return arr;
         }
+        
 
 
        
@@ -945,19 +1153,12 @@
             $("#IntegraJobNo").val(data.integraJobNo);
             $("#BookingOrderEntryBuklSetup_PurchasedOfficer").val(data.purchasedOfficer).trigger("change");
             $("#BookingOrderEntryBuklSetup_Remarks").val(data.remarks);
-            $("#BookingOrderEntryBuklSetup_Luser").val(data.luser);
-            $("#BookingOrderEntryBuklSetup_Ldate").val(data.ldate);
-            $("#BookingOrderEntryBuklSetup_Lip").val(data.lip);
-            $("#BookingOrderEntryBuklSetup_Lmac").val(data.lmac);
-            $("#BookingOrderEntryBuklSetup_ModifyDate").val(data.modifyDate);
-            $("#EmployeId").val(data.employeId);
-            $("#CompanyId").val(data.companyId);
             $("#BookingOrderEntryBuklSetup_DeliveryDate").val(data.deliveryDate);
             $("#BookingOrderEntryBuklSetup_DeliveryAddress").val(data.deliveryAddress);
             $("#BookingOrderEntryBuklSetup_DeliveryMethod").val(data.deliveryMethod).trigger("change");
             $("#BookingOrderEntryBuklSetup_PaymentTerms").val(data.paymentTerms).trigger("change");
             $("#BookingOrderEntryBuklSetup_TermsCondition").val(data.termsCondition).trigger("change");
-            $("#BookingOrderEntryBuklSetup_BookingType").val(data.bookingType).trigger("change");
+            $("#BookingOrderEntryBuklSetup_BookingType").val(data.bookingType).trigger("change"); // Select2 safe
             $("#BookingEntryType").val(data.bookingEntryType);
             $("#WarehouseId").val(data.warehouseId);
             $("#BookingOrderEntryBuklSetup_Pino").val(data.pino);
@@ -974,73 +1175,6 @@
             $("#SupplierId").val(data.supplierId).trigger("change");
         }
 
-
-
-
-
-        //function collectRowData($row) {
-        //    const data = {};
-
-        //    // Collect all fields with data-field attribute
-        //    $row.find('[data-field]').each(function () {
-        //        const fieldName = $(this).attr('data-field');
-        //        let value = $(this).val();
-
-        //        // Convert common numbers back to number type for DTO
-        //        if (['Id', 'GarmentQty', 'Consumption', 'TotalQty', 'OrderQty', 'UnitPrice', 'TotalPrice'].includes(fieldName)) {
-        //            // If it's the Id, ensure it's converted to an integer
-        //            if (fieldName === 'Id') {
-        //                value = parseInt(value) || 0;
-        //            } else {
-        //                // Otherwise, convert to float/decimal
-        //                value = parseFloat(value) || null;
-        //            }
-        //        }
-
-        //        data[fieldName] = value;
-        //    });
-
-        //    // Check if ID is successfully collected
-        //    if (!data.Id || data.Id === 0) {
-        //        console.error("Error: Row ID is missing or zero. Cannot update.");
-        //        return null;
-        //    }
-
-        //    return data;
-        //}
-
-        //// Event handler remains the same (assuming you added the necessary CSS for .row-hidden)
-        //$(document).on('change', '#bookingTable input, #bookingTable select', function () {
-        //    if ($(this).attr('data-field')) {
-        //        const $row = $(this).closest('tr');
-        //        const updateData = collectRowData($row);
-
-        //        if (updateData) {
-        //            console.log(updateData);
-        //            sendUpdateToServer(updateData);
-        //        }
-        //    }
-        //});
-        //function sendUpdateToServer(data) {
-        //    $.ajax({
-        //        url: settings.baseUrl+ '/UpdateBookingItem', // Replace YourControllerName
-        //        type: 'POST',
-        //        contentType: 'application/json',
-        //        data: JSON.stringify(data),
-        //        success: function (response) {
-        //            if (response.success) {
-        //                // Show success notification
-        //                console.log(response.message);
-        //            } else {
-        //                // Show error notification
-        //                console.error(response.message);
-        //            }
-        //        },
-        //        error: function () {
-        //            console.error("Failed to update booking item.");
-        //        }
-        //    });
-        //}
 
         return {
             getTableData: function () {

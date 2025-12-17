@@ -1,4 +1,5 @@
 ﻿using GCTL.Core.Data;
+using GCTL.Core.Helpers;
 using GCTL.Core.ViewModels.RMGBookingOrderEntryBukl;
 using GCTL.Data.Models;
 using GCTL.Service.Common;
@@ -124,7 +125,7 @@ namespace GCTL.UI.Core.Controllers
             ViewBag.BookingTypeList = new SelectList(bTypeRepo.All().Select(x => new { id = x.BookingItemTypeId, name = x.BookingItemType }), "id", "name");
             ViewBag.SupplierList = new SelectList(supplierRepo.All().Select(x => new { id = x.SupplierId, name = x.SupplierName }), "id", "name");
             ViewBag.CountryList = new SelectList(countryRepo.All().Select(x => new { id = x.CountryId, name = x.CountryName }), "id", "name");
-            ViewBag.CurrencyList = new SelectList(currenciesRepo.All().Select(x => new { id = x.CurrencyId, name = x.CurrencyName }), "id", "name");
+            ViewBag.CurrencyList = new SelectList(currenciesRepo.All().Select(x => new { id = x.CurrencyId, name = x.ShortName }), "id", "name");
             ViewBag.pTermList = new SelectList(paymentTermRepo.All().Select(x => new { id = x.PaymentTermsId, name = x.PaymentTermsName }), "id", "name");
             ViewBag.termConditionList = new SelectList(termConditionRepo.All().Select(x => new { id = x.TermsConditionId, name = x.TermsConditionName }), "id", "name");
             ViewBag.deliveryList = new SelectList(deliveryRepo.All().Select(x => new { id = x.DeliveryMethodId, name = x.DeliveryMethod }), "id", "name");
@@ -223,8 +224,14 @@ namespace GCTL.UI.Core.Controllers
         {
             try
             {
-                if (dto.CostingId == null || !dto.CostingId.Any())
+                if (dto.CostingId[0] == "edit")
+                {
+                    return Json(new { success = true, MessagePack = "" });
+                }
+                if (dto.CostingId != null && dto.CostingId.Any())
+                {
                     return Json(new { success = false, message = "No costing selected" });
+                }
 
                 var dropdownData = await GetDropdownData();
                 List<object> data;
@@ -1882,19 +1889,57 @@ WHERE ci.CostingID IN ({inClause})
 
 
 
+        //[HttpPost]
+        //public async Task<IActionResult> SaveBooking([FromBody] RMGBookingOrderEntryBuklDto dto)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest(ModelState);
+
+        //    var (isSuccess, message) = await rmgBookingOrderEntryBuklService.SaveBookingAsync(dto);
+
+        //    if (isSuccess)
+        //        return Ok(new { success = true, message = message });
+
+        //    return BadRequest(new { success = false, message = message });
+        //}
+
         [HttpPost]
         public async Task<IActionResult> SaveBooking([FromBody] RMGBookingOrderEntryBuklDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var (isSuccess, message) = await rmgBookingOrderEntryBuklService.SaveBookingAsync(dto);
+
+            dto.ToAudit(LoginInfo);
+            var (isSuccess, message) =
+                await rmgBookingOrderEntryBuklService.SaveBookingAsync(dto, LoginInfo.CompanyCode);
 
             if (isSuccess)
-                return Ok(new { success = true, message = message });
+                return Ok(new { success = true, message });
 
-            return BadRequest(new { success = false, message = message });
+            return BadRequest(new { success = false, message });
         }
+
+
+        public async Task<IActionResult> GetBookingItemTypes(string id)
+        {
+            try
+            {
+                var dropdownData = await GetDropdownData();
+                var result = await rmgBookingOrderEntryBuklService.GetBookingItemTypesAsync(id);
+                return Json(new { success = result.isSuccess, message = result.message, data = result.data, dropdownData });
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+
+
 
         [HttpPost]
         public async Task<IActionResult> GetBookingList()
@@ -2089,6 +2134,21 @@ WHERE ci.CostingID IN ({inClause})
             {
                 // Log the full exception (ex) in your server logs for better debugging
                 return Json(new { success = false, message = $"Database Update Failed: {ex.Message}. Check model definitions, especially for the '{itemDto.BookingType}' type." });
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteBookingOrder([FromBody] List<decimal> DeleteBookingIds)
+        {
+            try
+            {
+                var result = await rmgBookingOrderEntryBuklService.DeleteBookingOrderAsync(DeleteBookingIds);
+                return Json(new { success = result.success, message = result.message });
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }

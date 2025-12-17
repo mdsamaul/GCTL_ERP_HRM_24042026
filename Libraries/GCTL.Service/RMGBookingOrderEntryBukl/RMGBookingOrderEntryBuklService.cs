@@ -40,6 +40,7 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
         private readonly IRepository<RmgProdDefDeliveryMethod> deliveryRepo;
         private readonly IRepository<SalesDefPaymentTerms> paymentTermRepo;
         private readonly IRepository<HrmDefDesignation> degRepo;
+        private readonly IRepository<RmgCostingInfo> costingRepo;
         private readonly ICommonService commonService;
         private readonly string _connectionString;
 
@@ -74,6 +75,7 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
             IRepository<RmgProdDefDeliveryMethod> deliveryRepo,
             IRepository<SalesDefPaymentTerms> paymentTermRepo,
             IRepository<HrmDefDesignation> degRepo,
+            IRepository<RmgCostingInfo> costingRepo,
             IConfiguration configuration,
             ICommonService commonService
 
@@ -109,6 +111,7 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
             this.deliveryRepo = deliveryRepo;
             this.paymentTermRepo = paymentTermRepo;
             this.degRepo = degRepo;
+            this.costingRepo = costingRepo;
             this.commonService = commonService;
             //this.configuration = configuration.GetConnectionString("ApplicationDbConnection");
             _connectionString = configuration.GetConnectionString("ApplicationDbConnection");
@@ -171,7 +174,7 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
         #endregion
 
 
-        public async Task<(bool isSuccess, string message)> SaveBookingAsync(RMGBookingOrderEntryBuklDto dto)
+        public async Task<(bool isSuccess, string message)> SaveBookingAsync(RMGBookingOrderEntryBuklDto dto, string companyCode)
         {
 
             try
@@ -225,42 +228,57 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
                     if (exists)
                         return (false, "This Booking Order No already exists!");
 
-                    // Create object mapping
-                    var entity = new RmgBookingOrder
+
+
+
+
+                    foreach (var costingId in dto.SelectedCostingIds)
                     {
+                        var y = DateTime.Now.ToString("yyyy");
+                        var CItem = costingRepo.All().Where(x => x.CostingId == costingId).FirstOrDefault();
+                        if (CItem != null)
+                        {
+                            var entity = new RmgBookingOrder
+                            {
 
-                        Tc = dto.Tc,
-                        BookinOrderNo = dto.BookinOrderNo ?? "",
-                        BookinDate = dto.BookinDate,
-                        BuyerId = dto.BuyerId ?? "",
-                        StyleId = dto.StyleId ?? "",
-                        MasterPurchaseOrder = dto.MasterPurchaseOrder ?? "",
-                        PoNo = dto.PoNo ?? "",
-                        IntegraJobNo = dto.IntegraJobNo ?? "",
-                        PurchasedOfficer = dto.PurchasedOfficer ?? "",
-                        Remarks = dto.Remarks ?? "",
-                        EmployeId = dto.EmployeId ?? "",
-                        CompanyId = dto.CompanyId ?? "",
-                        DeliveryDate = dto.DeliveryDate,
-                        DeliveryAddress = dto.DeliveryAddress ?? "",
-                        DeliveryMethod = dto.DeliveryMethod ?? "",
-                        PaymentTerms = dto.PaymentTerms ?? "",
-                        TermsCondition = dto.TermsCondition ?? "",
-                        BookingType = dto.BookingType ?? "",
-                        BookingEntryType = dto.BookingEntryType ?? "",
-                        WarehouseId = dto.WarehouseId ?? "",
-                        Pino = dto.Pino ?? "",
-                        Pidate = dto.Pidate,
-                        Pivalue = dto.Pivalue,
-                        PicurrencyId = dto.PicurrencyId ?? "",
-                        SupplierId = dto.SupplierId ?? "",
-                        Mrbpid = dto.Mrbpid ?? "",
-                        EnterFromPageName = dto.EnterFromPageName ?? "",
-                        PifilePath = dto.PifilePath ?? "",
-                        Ldate = DateTime.Now
-                    };
+                                BookinOrderNo = commonService.GenerateNextCode("BookinOrderNO", "RMG_BookingOrder", 3, "FAWI-" + y + "-") ?? "",
+                                BookinDate = (DateTime)dto.BookinDate,
+                                BuyerId = CItem.BuyerId ?? "",
+                                StyleId = CItem.StyleId ?? "",
+                                MasterPurchaseOrder = CItem.MasterPurchaseOrder ?? "",
+                                PoNo = CItem.PoNo ?? "",
+                                IntegraJobNo = CItem.IntegraJobNo ?? "",
+                                PurchasedOfficer = dto.PurchasedOfficer ?? "",
+                                Remarks = dto.Remarks ?? "",
+                                EmployeId = dto.UserInfoEmployeeId ?? "",
+                                CompanyId = companyCode ?? "",
+                                DeliveryDate = dto.DeliveryDate,
+                                DeliveryAddress = dto.DeliveryAddress ?? "",
+                                DeliveryMethod = dto.DeliveryMethod ?? "",
+                                PaymentTerms = dto.PaymentTerms ?? "",
+                                TermsCondition = dto.TermsCondition ?? "",
+                                BookingType = dto.BookingType ?? "",
+                                BookingEntryType = dto.BookingEntryType ?? "",
+                                WarehouseId = dto.WarehouseId ?? "",
+                                Pino = dto.Pino ?? "",
+                                Pidate = dto.Pidate,
+                                Pivalue = dto.Pivalue,
+                                PicurrencyId = dto.PicurrencyId ?? "",
+                                SupplierId = dto.SupplierId ?? "",
+                                Mrbpid = dto.Mrbpid ?? "",
+                                EnterFromPageName = dto.EnterFromPageName ?? "",
+                                PifilePath = dto.PifilePath ?? "",
+                                Ldate = dto.Ldate ?? null,
+                                Lmac = dto.Lmac ?? "",
+                                Lip = dto.Lip ?? "",
+                                Luser = dto.Luser ?? "",
 
-                    await boRepo.AddAsync(entity);
+                            };
+
+                            await boRepo.AddAsync(entity);
+                        }
+                    }
+
 
                     //await transaction.CommitAsync();
                     return (true, CreateSuccess);
@@ -275,27 +293,21 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
                     // Update full mapping
                     var entity = new RmgBookingOrder
                     {
-                        Tc = dto.Tc,
-                        BookinOrderNo = dto.BookinOrderNo ?? "",
-                        BookinDate = dto.BookinDate,
-                        BuyerId = dto.BuyerId ?? "",
-                        StyleId = dto.StyleId ?? "",
-                        MasterPurchaseOrder = dto.MasterPurchaseOrder ?? "",
-                        PoNo = dto.PoNo ?? "",
-                        IntegraJobNo = dto.IntegraJobNo ?? "",
+
+                        BookinDate = (DateTime)dto.BookinDate,
+
                         PurchasedOfficer = dto.PurchasedOfficer ?? "",
                         Remarks = dto.Remarks ?? "",
-                        EmployeId = dto.EmployeId ?? "",
-                        CompanyId = dto.CompanyId ?? "",
+
                         DeliveryDate = dto.DeliveryDate,
                         DeliveryAddress = dto.DeliveryAddress ?? "",
                         DeliveryMethod = dto.DeliveryMethod ?? "",
                         PaymentTerms = dto.PaymentTerms ?? "",
                         TermsCondition = dto.TermsCondition ?? "",
-                        BookingType = dto.BookingType ?? "",
+                        //BookingType = dto.BookingType ?? "",
                         BookingEntryType = dto.BookingEntryType ?? "",
                         WarehouseId = dto.WarehouseId ?? "",
-                        Pino = dto.Pino ?? "",
+                        //Pino = dto.Pino ?? "",
                         Pidate = dto.Pidate,
                         Pivalue = dto.Pivalue,
                         PicurrencyId = dto.PicurrencyId ?? "",
@@ -323,24 +335,42 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
 
         // --- 1. Carton Booking Data (Provided by User, Minor Fix) ---
 
+
+
         private async Task<List<RmgInvBookingReceivedDetailsCarton>> CartonBookingData()
         {
             List<RmgInvBookingReceivedDetailsCarton> newCartonBookings = new List<RmgInvBookingReceivedDetailsCarton>();
 
             try
             {
-                var CartonBookingTempData = cartonTempRepo.All().ToList();
+                // 1. Get all temp data
+                var cartonBookingTempData = cartonTempRepo.All().ToList();
 
-                if (CartonBookingTempData == null || CartonBookingTempData.Count == 0)
+                if (cartonBookingTempData == null || cartonBookingTempData.Count == 0)
                 {
                     return newCartonBookings;
                 }
 
+                // 2. Get current max Slno from main table
                 var maxSlno = cartonRepo.All().Count();
                 var sNo = maxSlno + 1;
 
-                foreach (var tempItem in CartonBookingTempData)
+                foreach (var tempItem in cartonBookingTempData)
                 {
+                    // 3. Check if record already exists in main table (by PoNo + IntegraJobNo + ItemId)
+                    var existing = cartonRepo.All()
+                        .Where(x => x.PoNo == tempItem.PoNo
+                                 && x.IntegraJobNo == tempItem.IntegraJobNo
+                                 && x.ItemId == tempItem.ItemId)
+                        .ToList();
+
+                    if (existing.Any())
+                    {
+                        // 4. Delete old records before inserting new
+                        await cartonRepo.DeleteRangeAsync(existing);
+                    }
+
+                    // 5. Create new main record from temp
                     var mainItem = new RmgInvBookingReceivedDetailsCarton
                     {
                         PurchaseReceiveNo = tempItem.PurchaseReceiveNo,
@@ -367,12 +397,9 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
                         WidthUnitId = tempItem.WidthUnitId,
                         CatonHeight = tempItem.CatonHeight,
                         HeightUnitId = tempItem.HeightUnitId,
-                        // Assuming CartonPercent needs to be stored as a string or int in the main table
-                        // I am correcting the mapping to string if the property type allows, or safe conversion
-                        //CartonPercent = tempItem.CartonPercent, // Reverting to string/original type
                         CartonPercent = int.TryParse(tempItem.CartonPercent, out int cartonPercent)
-                    ? cartonPercent
-                    : 0,
+                            ? cartonPercent
+                            : 0,
                         TotalReceivedQty = tempItem.TotalReceivedQty,
                         CurrentReceiveQty = tempItem.CurrentReceiveQty,
                         ReceivedUnitPrice = tempItem.ReceivedUnitPrice,
@@ -386,11 +413,15 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
                         Remarks = tempItem.Remarks,
                         EmployeeId = tempItem.EmployeeId,
                     };
+
                     newCartonBookings.Add(mainItem);
                 }
 
+                // 6. Save new records to main table
                 await cartonRepo.AddRangeAsync(newCartonBookings);
-                await cartonTempRepo.DeleteRangeAsync(CartonBookingTempData);
+
+                // 7. Clear temp table after migration
+                await cartonTempRepo.DeleteRangeAsync(cartonBookingTempData);
 
                 return newCartonBookings;
             }
@@ -402,16 +433,15 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
         }
 
         // --- 2. Thread Booking Data (Provided by User, Complete) ---
-
         private async Task<List<RmgInvBookingReceivedDetailsThread>> ThreadBookingData()
         {
             List<RmgInvBookingReceivedDetailsThread> newThreadBookings = new List<RmgInvBookingReceivedDetailsThread>();
-            // ... (This function is already complete and correct as per the last response)
+
             try
             {
-                var ThreadBookingTempData = threadTempRepo.All().ToList();
+                var threadBookingTempData = threadTempRepo.All().ToList();
 
-                if (ThreadBookingTempData == null || ThreadBookingTempData.Count == 0)
+                if (threadBookingTempData == null || threadBookingTempData.Count == 0)
                 {
                     return newThreadBookings;
                 }
@@ -419,8 +449,21 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
                 var maxSlno = threadRepo.All().Count();
                 var sNo = maxSlno + 1;
 
-                foreach (var tempItem in ThreadBookingTempData)
+                foreach (var tempItem in threadBookingTempData)
                 {
+                    // 🔹 Check if record already exists in main table
+                    var existing = threadRepo.All()
+                        .Where(x => x.PoNo == tempItem.PoNo
+                                 && x.IntegraJobNo == tempItem.IntegraJobNo
+                                 && x.ItemId == tempItem.ItemId)
+                        .ToList();
+
+                    if (existing.Any())
+                    {
+                        // 🔹 Delete old records before inserting new
+                        await threadRepo.DeleteRangeAsync(existing);
+                    }
+
                     var mainItem = new RmgInvBookingReceivedDetailsThread
                     {
                         PurchaseReceiveNo = tempItem.PurchaseReceiveNo,
@@ -461,11 +504,15 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
                         Remarks = tempItem.Remarks,
                         EmployeeId = tempItem.EmployeeId,
                     };
+
                     newThreadBookings.Add(mainItem);
                 }
 
+                // 🔹 Save new records to main table
                 await threadRepo.AddRangeAsync(newThreadBookings);
-                await threadTempRepo.DeleteRangeAsync(ThreadBookingTempData);
+
+                // 🔹 Clear temp table after migration
+                await threadTempRepo.DeleteRangeAsync(threadBookingTempData);
 
                 return newThreadBookings;
             }
@@ -475,7 +522,6 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
                 throw;
             }
         }
-
         // --- 3. Poly Booking Data (Case "03") ---
 
         private async Task<List<RmgInvBookingReceivedDetailsPoly>> PolyBookingData()
@@ -484,9 +530,9 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
 
             try
             {
-                var PolyBookingTempData = polyTempRepo.All().ToList();
+                var polyBookingTempData = polyTempRepo.All().ToList();
 
-                if (PolyBookingTempData == null || PolyBookingTempData.Count == 0)
+                if (polyBookingTempData == null || polyBookingTempData.Count == 0)
                 {
                     return newPolyBookings;
                 }
@@ -495,8 +541,21 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
                 var maxSlno = polyRepo.All().Count();
                 var sNo = maxSlno + 1;
 
-                foreach (var tempItem in PolyBookingTempData)
+                foreach (var tempItem in polyBookingTempData)
                 {
+                    // 🔹 Check if record already exists in main table
+                    var existing = polyRepo.All()
+                        .Where(x => x.PoNo == tempItem.PoNo
+                                 && x.IntegraJobNo == tempItem.IntegraJobNo
+                                 && x.ItemId == tempItem.ItemId)
+                        .ToList();
+
+                    if (existing.Any())
+                    {
+                        // 🔹 Delete old records before inserting new
+                        await polyRepo.DeleteRangeAsync(existing);
+                    }
+
                     var mainItem = new RmgInvBookingReceivedDetailsPoly
                     {
                         // Core Data
@@ -547,11 +606,15 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
                         Remarks = tempItem.Remarks,
                         EmployeeId = tempItem.EmployeeId,
                     };
+
                     newPolyBookings.Add(mainItem);
                 }
 
+                // 🔹 Save new records to main table
                 await polyRepo.AddRangeAsync(newPolyBookings);
-                await polyTempRepo.DeleteRangeAsync(PolyBookingTempData);
+
+                // 🔹 Clear temp table after migration
+                await polyTempRepo.DeleteRangeAsync(polyBookingTempData);
 
                 return newPolyBookings;
             }
@@ -652,9 +715,9 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
 
             try
             {
-                var FebricBookingTempData = febricTempRepo.All().ToList();
+                var febricBookingTempData = febricTempRepo.All().ToList();
 
-                if (FebricBookingTempData == null || FebricBookingTempData.Count == 0)
+                if (febricBookingTempData == null || febricBookingTempData.Count == 0)
                 {
                     return newFebricBookings;
                 }
@@ -663,8 +726,21 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
                 var maxSlno = febricRepo.All().Count();
                 var sNo = maxSlno + 1;
 
-                foreach (var tempItem in FebricBookingTempData)
+                foreach (var tempItem in febricBookingTempData)
                 {
+                    // 🔹 Check if record already exists in main table
+                    var existing = febricRepo.All()
+                        .Where(x => x.PoNo == tempItem.PoNo
+                                 && x.IntegraJobNo == tempItem.IntegraJobNo
+                                 && x.ItemId == tempItem.ItemId)
+                        .ToList();
+
+                    if (existing.Any())
+                    {
+                        // 🔹 Delete old records before inserting new
+                        await febricRepo.DeleteRangeAsync(existing);
+                    }
+
                     var mainItem = new RmgInvBookingReceivedDetailsFebric
                     {
                         // Core Data
@@ -704,11 +780,15 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
                         // Other
                         EmployeeId = tempItem.EmployeeId,
                     };
+
                     newFebricBookings.Add(mainItem);
                 }
 
+                // 🔹 Save new records to main table
                 await febricRepo.AddRangeAsync(newFebricBookings);
-                await febricTempRepo.DeleteRangeAsync(FebricBookingTempData);
+
+                // 🔹 Clear temp table after migration
+                await febricTempRepo.DeleteRangeAsync(febricBookingTempData);
 
                 return newFebricBookings;
             }
@@ -718,7 +798,6 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
                 throw;
             }
         }
-
         // --- 6. Extra Booking Data (Default) ---
 
         private async Task<List<RmgInvBookingReceivedDetailsExtra>> ExtraBookingData()
@@ -727,9 +806,9 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
 
             try
             {
-                var ExtraBookingTempData = extraTempRepo.All().ToList();
+                var extraBookingTempData = extraTempRepo.All().ToList();
 
-                if (ExtraBookingTempData == null || ExtraBookingTempData.Count == 0)
+                if (extraBookingTempData == null || extraBookingTempData.Count == 0)
                 {
                     return newExtraBookings;
                 }
@@ -738,8 +817,21 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
                 var maxSlno = extraRepo.All().Count();
                 var sNo = maxSlno + 1;
 
-                foreach (var tempItem in ExtraBookingTempData)
+                foreach (var tempItem in extraBookingTempData)
                 {
+                    // 🔹 Check if record already exists in main table
+                    var existing = extraRepo.All()
+                        .Where(x => x.PoNo == tempItem.PoNo
+                                 && x.IntegraJobNo == tempItem.IntegraJobNo
+                                 && x.ItemId == tempItem.ItemId)
+                        .ToList();
+
+                    if (existing.Any())
+                    {
+                        // 🔹 Delete old records before inserting new
+                        await extraRepo.DeleteRangeAsync(existing);
+                    }
+
                     var mainItem = new RmgInvBookingReceivedDetailsExtra
                     {
                         // Core Data
@@ -782,11 +874,15 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
                         Remarks = tempItem.Remarks,
                         EmployeeId = tempItem.EmployeeId,
                     };
+
                     newExtraBookings.Add(mainItem);
                 }
 
+                // 🔹 Save new records to main table
                 await extraRepo.AddRangeAsync(newExtraBookings);
-                await extraTempRepo.DeleteRangeAsync(ExtraBookingTempData);
+
+                // 🔹 Clear temp table after migration
+                await extraTempRepo.DeleteRangeAsync(extraBookingTempData);
 
                 return newExtraBookings;
             }
@@ -885,5 +981,550 @@ namespace GCTL.Service.RMGBookingOrderEntryBukl
 
             return (data, totalData, filteredData);
         }
+
+
+        //public async Task<(bool isSuccess, string message)> GetBookingItemTypesAsync(string id)
+        //{
+        //    try
+        //    {
+        //        var bookingData = boRepo.All().Where(x => x.BookinOrderNo == id).FirstOrDefault();
+
+        //        if (bookingData == null)
+        //            return (false, "Booking data not found.");
+
+        //        try
+        //        {
+        //            if (bookingData.BookingType == null || !bookingData.BookingType.Any())
+        //                return (false, CreateFailed);
+
+        //            switch (bookingData.BookingType)
+        //            {
+        //                case "04":
+        //                    await GetCartonBookingDataList(bookingData);
+        //                    break;
+        //                case "07":
+        //                    await GetThreadBookingDataList(bookingData);
+        //                    break;
+        //                case "03":
+        //                    await GetPolyBookingDataList(bookingData);
+        //                    break;
+        //                case "02":
+        //                    await GetButtonBookingDataList(bookingData);
+        //                    break;
+        //                case "01":
+        //                    await GetFebricBookingDataList(bookingData);
+        //                    break;
+        //                default:
+        //                    await GetExtraBookingDataList(bookingData);
+        //                    break;
+        //            }
+
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            // Ensure CreateFailed is defined, otherwise use a string
+        //            return (false, $"Details Save Failed. Error: {ex.Message}");
+        //        }
+        //        return (true, "");
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
+
+
+        public async Task<(bool isSuccess, string message, object data)> GetBookingItemTypesAsync(string id)
+        {
+            try
+            {
+                var bookingData = boRepo.All().FirstOrDefault(x => x.BookinOrderNo == id);
+
+                if (bookingData == null)
+                    return (false, "Booking data not found.", null);
+
+                try
+                {
+                    if (string.IsNullOrEmpty(bookingData.BookingType))
+                        return (false, CreateFailed, null);
+
+                    object data = null;
+
+                    switch (bookingData.BookingType)
+                    {
+                        case "04":
+                            data = await GetCartonBookingDataList(bookingData);
+                            break;
+                        case "07":
+                            data = await GetThreadBookingDataList(bookingData);
+                            break;
+                        case "03":
+                            data = await GetPolyBookingDataList(bookingData);
+                            break;
+                        case "02":
+                            data = await GetButtonBookingDataList(bookingData);
+                            break;
+                        case "01":
+                            data = await GetFebricBookingDataList(bookingData);
+                            break;
+                        default:
+                            data = await GetExtraBookingDataList(bookingData);
+                            break;
+                    }
+
+                    return (true, "Booking items copied to temp successfully.", data);
+                }
+                catch (Exception ex)
+                {
+                    return (false, $"Details Save Failed. Error: {ex.Message}", null);
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, $"Unexpected error: {ex.Message}", null);
+            }
+        }
+
+        public async Task<List<object>> GetCartonBookingDataList(RmgBookingOrder bookingData)
+        {
+            try
+            {
+                // 1. Get main records
+                var mainRecords = cartonRepo.All()
+                    .Where(x => x.PoNo == bookingData.PoNo && x.IntegraJobNo == bookingData.IntegraJobNo)
+                    .ToList();
+
+                if (!mainRecords.Any()) return new List<object>();
+
+                // 2. Clear temp table first
+                var existingTemp = cartonTempRepo.All().ToList();
+                if (existingTemp.Any())
+                    await cartonTempRepo.DeleteRangeAsync(existingTemp);
+
+                // 3. Copy main → temp
+                var newCartonTempData = mainRecords.Select(mainItem => new RmgInvBookingReceivedDetailsCartonTemp
+                {
+                    PurchaseReceiveNo = mainItem.PurchaseReceiveNo,
+                    ItemId = mainItem.ItemId,
+                    ItemDescription = mainItem.ItemDescription,
+                    OrderQty = mainItem.OrderQty,
+                    OrderUnitId = mainItem.OrderUnitId,
+                    RequiredQty = mainItem.RequiredQty,
+                    RequiredQtyUnitId = mainItem.RequiredQtyUnitId,
+                    ConsumptionUnitId = mainItem.ConsumptionUnitId,
+                    Consumption = mainItem.Consumption,
+                    UnitPrice = mainItem.UnitPrice,
+                    TotalPrice = mainItem.TotalPrice,
+                    PoNo = mainItem.PoNo,
+                    IntegraJobNo = mainItem.IntegraJobNo,
+                    Slno = mainItem.Slno,
+                    ColorId = mainItem.ColorId,
+                    SizeId = mainItem.SizeId,
+                    Refcode = mainItem.Refcode,
+                    CartonLeangth = mainItem.CartonLeangth,
+                    LeangthUnitId = mainItem.LeangthUnitId,
+                    CartonWidth = mainItem.CartonWidth,
+                    WidthUnitId = mainItem.WidthUnitId,
+                    CatonHeight = mainItem.CatonHeight,
+                    HeightUnitId = mainItem.HeightUnitId,
+                    CartonPercent = mainItem.CartonPercent.ToString() ?? "",
+                    TotalReceivedQty = mainItem.TotalReceivedQty,
+                    CurrentReceiveQty = mainItem.CurrentReceiveQty,
+                    ReceivedUnitPrice = mainItem.ReceivedUnitPrice,
+                    TotalReceivedQtyPre = mainItem.TotalReceivedQtyPre,
+                    PendingReceiveQty = mainItem.PendingReceiveQty,
+                    PendingReceiveQtyPre = mainItem.PendingReceiveQtyPre,
+                    Brdid = mainItem.Brdid,
+                    ReceivedUnitType = mainItem.ReceivedUnitType,
+                    CurrencyId = mainItem.CurrencyId,
+                    Remarks = mainItem.Remarks,
+                    EmployeeId = mainItem.EmployeeId,
+                }).ToList();
+
+                await cartonTempRepo.AddRangeAsync(newCartonTempData);
+
+                // 4. Return shaped projection for AJAX
+                var result = cartonTempRepo.All()
+                    .Select(x => new
+                    {
+                        id = x.Id,
+                        poNo = x.PoNo,
+                        itemID = x.ItemId,
+                        description = x.ItemDescription,
+                        colorID = x.ColorId,
+                        sizeID = x.SizeId,
+                        cartonLength = x.CartonLeangth,
+                        leangthUnitID = x.LeangthUnitId,
+                        cartonWidth = x.CartonWidth,
+                        widthUnitID = x.WidthUnitId,
+                        catonHeight = x.CatonHeight,
+                        heightUnitID = x.HeightUnitId,
+                        garmentQty = x.OrderQty,
+                        orderQty = x.OrderQty,
+                        garmentQtyUnitID = x.OrderUnitId,
+                        consumption = x.Consumption,
+                        consumptionUnitID = x.ConsumptionUnitId,
+                        totalQty = x.RequiredQty,
+                        totalQtyUnitID = x.RequiredQtyUnitId,
+                        percentage = x.CartonPercent,
+                        unitPrice = x.UnitPrice,
+                        totalPrice = x.TotalPrice,
+                        currencyID = x.CurrencyId,
+                        remarks = x.Remarks
+                    })
+                    .Cast<object>()
+                    .ToList();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Error copying carton booking data to temp: {ex.Message}");
+                throw;
+            }
+        }
+        public async Task<List<RmgInvBookingReceivedDetailsThreadTemp>> GetThreadBookingDataList(RmgBookingOrder bookingData)
+        {
+            var newThreadTempData = new List<RmgInvBookingReceivedDetailsThreadTemp>();
+
+            try
+            {
+                var mainRecords = threadRepo.All()
+                    .Where(x => x.PoNo == bookingData.PoNo && x.IntegraJobNo == bookingData.IntegraJobNo)
+                    .ToList();
+
+                if (!mainRecords.Any()) return newThreadTempData;
+
+                var existingTemp = threadTempRepo.All().ToList();
+                if (existingTemp.Any())
+                    await threadTempRepo.DeleteRangeAsync(existingTemp);
+
+                foreach (var mainItem in mainRecords)
+                {
+                    var tempItem = new RmgInvBookingReceivedDetailsThreadTemp
+                    {
+                        PurchaseReceiveNo = mainItem.PurchaseReceiveNo,
+                        PoNo = mainItem.PoNo,
+                        IntegraJobNo = mainItem.IntegraJobNo,
+                        Slno = mainItem.Slno,
+                        Brdid = mainItem.Brdid,
+                        ItemId = mainItem.ItemId,
+                        ColorId = mainItem.ColorId,
+                        FebricDetail = mainItem.FebricDetail,
+                        ThreadColorId = mainItem.ThreadColorId,
+                        ThreadCountId = mainItem.ThreadCountId,
+                        Refcodepantone = mainItem.Refcodepantone,
+                        ThreadReqUnit = mainItem.ThreadReqUnit,
+                        Threadpercent = mainItem.Threadpercent,
+                        OrderQty = mainItem.OrderQty,
+                        QtyUnitId = mainItem.QtyUnitId,
+                        Consumption = mainItem.Consumption,
+                        ConsumtionUnitId = mainItem.ConsumtionUnitId,
+                        TotalQty = mainItem.TotalQty,
+                        TotalQtyUnitId = mainItem.TotalQtyUnitId,
+                        ReqQty = mainItem.ReqQty,
+                        UnitPrice = mainItem.UnitPrice,
+                        TotalPrice = mainItem.TotalPrice,
+                        CurrencyId = mainItem.CurrencyId,
+                        TotalReceivedQty = mainItem.TotalReceivedQty,
+                        CurrentReceiveQty = mainItem.CurrentReceiveQty,
+                        ReceivedUnitType = mainItem.ReceivedUnitType,
+                        ReceivedUnitPrice = mainItem.ReceivedUnitPrice,
+                        TotalReceivedQtyPre = mainItem.TotalReceivedQtyPre,
+                        PendingReceiveQty = mainItem.PendingReceiveQty,
+                        PendingReceiveQtyPre = mainItem.PendingReceiveQtyPre,
+                        Remarks = mainItem.Remarks,
+                        EmployeeId = mainItem.EmployeeId,
+                    };
+                    newThreadTempData.Add(tempItem);
+                }
+
+                await threadTempRepo.AddRangeAsync(newThreadTempData);
+                return newThreadTempData;
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Error copying thread booking data to temp: {ex.Message}");
+                throw;
+            }
+        }
+        public async Task<List<RmgInvBookingReceivedDetailsPolyTemp>> GetPolyBookingDataList(RmgBookingOrder bookingData)
+        {
+            var newPolyTempData = new List<RmgInvBookingReceivedDetailsPolyTemp>();
+
+            try
+            {
+                var mainRecords = polyRepo.All()
+                    .Where(x => x.PoNo == bookingData.PoNo && x.IntegraJobNo == bookingData.IntegraJobNo)
+                    .ToList();
+
+                if (!mainRecords.Any()) return newPolyTempData;
+
+                var existingTemp = polyTempRepo.All().ToList();
+                if (existingTemp.Any())
+                    await polyTempRepo.DeleteRangeAsync(existingTemp);
+
+                foreach (var mainItem in mainRecords)
+                {
+                    var tempItem = new RmgInvBookingReceivedDetailsPolyTemp
+                    {
+                        PurchaseReceiveNo = mainItem.PurchaseReceiveNo,
+                        PoNo = mainItem.PoNo,
+                        IntegraJobNo = mainItem.IntegraJobNo,
+                        SerialNo = mainItem.SerialNo,
+                        Brdid = mainItem.Brdid,
+                        ItemId = mainItem.ItemId,
+                        ItemDescription = mainItem.ItemDescription,
+                        ColorId = mainItem.ColorId,
+                        RefernceCode = mainItem.RefernceCode,
+                        Length = mainItem.Length,
+                        LengthUnitId = mainItem.LengthUnitId,
+                        Width = mainItem.Width,
+                        WidthUnitId = mainItem.WidthUnitId,
+                        Flap = mainItem.Flap,
+                        FlapUnitId = mainItem.FlapUnitId,
+                        Guest = mainItem.Guest,
+                        GuestUnitId = mainItem.GuestUnitId,
+                        GarmentQty = mainItem.GarmentQty,
+                        GarmentQtyUnitId = mainItem.GarmentQtyUnitId,
+                        Consumption = mainItem.Consumption,
+                        ConsumptionUnitId = mainItem.ConsumptionUnitId,
+                        TotalQty = mainItem.TotalQty,
+                        TotalQtyUnitId = mainItem.TotalQtyUnitId,
+                        Percentage = mainItem.Percentage,
+                        TotalReceivedQty = mainItem.TotalReceivedQty,
+                        CurrentReceiveQty = mainItem.CurrentReceiveQty,
+                        ReceivedUnitType = mainItem.ReceivedUnitType,
+                        UnitPrice = mainItem.UnitPrice,
+                        ReceivedUnitPrice = mainItem.ReceivedUnitPrice,
+                        TotalPrice = mainItem.TotalPrice,
+                        CurrencyId = mainItem.CurrencyId,
+                        TotalReceivedQtyPre = mainItem.TotalReceivedQtyPre,
+                        PendingReceiveQty = mainItem.PendingReceiveQty,
+                        PendingReceiveQtyPre = mainItem.PendingReceiveQtyPre,
+                        Remarks = mainItem.Remarks,
+                        EmployeeId = mainItem.EmployeeId,
+                    };
+                    newPolyTempData.Add(tempItem);
+                }
+
+                await polyTempRepo.AddRangeAsync(newPolyTempData);
+                return newPolyTempData;
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Error copying poly booking data to temp: {ex.Message}");
+                throw;
+            }
+        }
+        public async Task<List<RmgInvBookingReceivedDetailsButtonTemp>> GetButtonBookingDataList(RmgBookingOrder bookingData)
+        {
+            var newButtonTempData = new List<RmgInvBookingReceivedDetailsButtonTemp>();
+
+            try
+            {
+                var mainRecords = buttonRepo.All()
+                    .Where(x => x.PoNo == bookingData.PoNo && x.IntegraJobNo == bookingData.IntegraJobNo)
+                    .ToList();
+
+                if (!mainRecords.Any()) return newButtonTempData;
+
+                var existingTemp = buttonTempRepo.All().ToList();
+                if (existingTemp.Any())
+                    await buttonTempRepo.DeleteRangeAsync(existingTemp);
+
+                foreach (var mainItem in mainRecords)
+                {
+                    var tempItem = new RmgInvBookingReceivedDetailsButtonTemp
+                    {
+                        PurchaseReceiveNo = mainItem.PurchaseReceiveNo,
+                        PoNo = mainItem.PoNo,
+                        IntegraJobNo = mainItem.IntegraJobNo,
+                        SerialNo = mainItem.SerialNo,
+                        Brdid = mainItem.Brdid,
+                        ItemId = mainItem.ItemId,
+                        Description = mainItem.Description,
+                        FabricColorId = mainItem.FabricColorId,
+                        ColorId = mainItem.ColorId,
+                        SizeId = mainItem.SizeId,
+                        Idno = mainItem.Idno,
+                        GermentQty = mainItem.GermentQty,
+                        GermentsQtyUnitId = mainItem.GermentsQtyUnitId,
+                        Consumption = mainItem.Consumption,
+                        ConsumptionUnitId = mainItem.ConsumptionUnitId,
+                        TotalQty = mainItem.TotalQty,
+                        TotalQtyUnitId = mainItem.TotalQtyUnitId,
+                        OrderQty = mainItem.OrderQty,
+                        OrderQtyUnitId = mainItem.OrderQtyUnitId,
+                        Percentage = mainItem.Percentage,
+                        TotalReceivedQty = mainItem.TotalReceivedQty,
+                        CurrentReceiveQty = mainItem.CurrentReceiveQty,
+                        ReceivedUnitType = mainItem.ReceivedUnitType,
+                        UnitPrice = mainItem.UnitPrice,
+                        ReceivedUnitPrice = mainItem.ReceivedUnitPrice,
+                        TotalPrice = mainItem.TotalPrice,
+                        CurrencyId = mainItem.CurrencyId,
+                        TotalReceivedQtyPre = mainItem.TotalReceivedQtyPre,
+                        PendingReceiveQty = mainItem.PendingReceiveQty,
+                        PendingReceiveQtyPre = mainItem.PendingReceiveQtyPre,
+                        Remarks = mainItem.Remarks,
+                        EmployeeId = mainItem.EmployeeId,
+                    };
+                    newButtonTempData.Add(tempItem);
+                }
+
+                await buttonTempRepo.AddRangeAsync(newButtonTempData);
+                return newButtonTempData;
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Error copying button booking data to temp: {ex.Message}");
+                throw;
+            }
+        }
+        public async Task<List<RmgInvBookingReceivedDetailsFebricTemp>> GetFebricBookingDataList(RmgBookingOrder bookingData)
+        {
+            var newFebricTempData = new List<RmgInvBookingReceivedDetailsFebricTemp>();
+
+            try
+            {
+                var mainRecords = febricRepo.All()
+                    .Where(x => x.PoNo == bookingData.PoNo && x.IntegraJobNo == bookingData.IntegraJobNo)
+                    .ToList();
+
+                if (!mainRecords.Any()) return newFebricTempData;
+
+                var existingTemp = febricTempRepo.All().ToList();
+                if (existingTemp.Any())
+                    await febricTempRepo.DeleteRangeAsync(existingTemp);
+
+                foreach (var mainItem in mainRecords)
+                {
+                    var tempItem = new RmgInvBookingReceivedDetailsFebricTemp
+                    {
+                        PurchaseReceiveNo = mainItem.PurchaseReceiveNo,
+                        PoNo = mainItem.PoNo,
+                        IntegraJobNo = mainItem.IntegraJobNo,
+                        Slno = mainItem.Slno,
+                        Brdid = mainItem.Brdid,
+                        ColorId = mainItem.ColorId,
+                        FabricItemId = mainItem.FabricItemId,
+                        ItemId = mainItem.ItemId,
+                        FebricDetails = mainItem.FebricDetails,
+                        Refcode = mainItem.Refcode,
+                        OrderQty = mainItem.OrderQty,
+                        QtyUnit = mainItem.QtyUnit,
+                        Consumption = mainItem.Consumption,
+                        ConsumtionUnit = mainItem.ConsumtionUnit,
+                        TotalFebricQty = mainItem.TotalFebricQty,
+                        Percentage = mainItem.Percentage,
+                        TotalReceivedQty = mainItem.TotalReceivedQty,
+                        CurrentReceiveQty = mainItem.CurrentReceiveQty,
+                        ReceivedUnitType = mainItem.ReceivedUnitType,
+                        UnitPrice = mainItem.UnitPrice,
+                        ReceivedUnitPrice = mainItem.ReceivedUnitPrice,
+                        TotalPrice = mainItem.TotalPrice,
+                        CurrencyId = mainItem.CurrencyId,
+                        TotalReceivedQtyPre = mainItem.TotalReceivedQtyPre,
+                        PendingReceiveQty = mainItem.PendingReceiveQty,
+                        PendingReceiveQtyPre = mainItem.PendingReceiveQtyPre,
+                        EmployeeId = mainItem.EmployeeId,
+                    };
+                    newFebricTempData.Add(tempItem);
+                }
+
+                await febricTempRepo.AddRangeAsync(newFebricTempData);
+                return newFebricTempData;
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Error copying fabric booking data to temp: {ex.Message}");
+                throw;
+            }
+        }
+
+        public async Task<List<RmgInvBookingReceivedDetailsExtraTemp>> GetExtraBookingDataList(RmgBookingOrder bookingData)
+        {
+            var newExtraTempData = new List<RmgInvBookingReceivedDetailsExtraTemp>();
+
+            try
+            {
+                var mainRecords = extraRepo.All()
+                    .Where(x => x.PoNo == bookingData.PoNo && x.IntegraJobNo == bookingData.IntegraJobNo)
+                    .ToList();
+
+                if (!mainRecords.Any()) return newExtraTempData;
+
+                var existingTemp = extraTempRepo.All().ToList();
+                if (existingTemp.Any())
+                    await extraTempRepo.DeleteRangeAsync(existingTemp);
+
+                foreach (var mainItem in mainRecords)
+                {
+                    var tempItem = new RmgInvBookingReceivedDetailsExtraTemp
+                    {
+                        PurchaseReceiveNo = mainItem.PurchaseReceiveNo,
+                        PoNo = mainItem.PoNo,
+                        IntegraJobNo = mainItem.IntegraJobNo,
+                        Slno = mainItem.Slno,
+                        Brdid = mainItem.Brdid,
+                        FabricColorId = mainItem.FabricColorId,
+                        ItemId = mainItem.ItemId,
+                        Description = mainItem.Description,
+                        ColorId = mainItem.ColorId,
+                        OrderQty = mainItem.OrderQty,
+                        OrderQtyIunitD = mainItem.OrderQtyIunitD,
+                        Consumption = mainItem.Consumption,
+                        ConsumptionUnitId = mainItem.ConsumptionUnitId,
+                        TotalQty = mainItem.TotalQty,
+                        TotalQtyUnitId = mainItem.TotalQtyUnitId,
+                        ReqQty = mainItem.ReqQty,
+                        ReqQtyUnitId = mainItem.ReqQtyUnitId,
+                        Percentage = mainItem.Percentage,
+                        TotalReceivedQty = mainItem.TotalReceivedQty,
+                        CurrentReceiveQty = mainItem.CurrentReceiveQty,
+                        ReceivedUnitType = mainItem.ReceivedUnitType,
+                        UnitPrice = mainItem.UnitPrice,
+                        ReceivedUnitPrice = mainItem.ReceivedUnitPrice,
+                        TotalPrice = mainItem.TotalPrice,
+                        CurrencyId = mainItem.CurrencyId,
+                        TotalReceivedQtyPre = mainItem.TotalReceivedQtyPre,
+                        PendingReceiveQty = mainItem.PendingReceiveQty,
+                        PendingReceiveQtyPre = mainItem.PendingReceiveQtyPre,
+                        Remarks = mainItem.Remarks,
+                        EmployeeId = mainItem.EmployeeId,
+                    };
+                    newExtraTempData.Add(tempItem);
+                }
+
+                await extraTempRepo.AddRangeAsync(newExtraTempData);
+                return newExtraTempData;
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Error copying extra booking data to temp: {ex.Message}");
+                throw;
+            }
+        }
+
+        public async Task<(bool success, string message)> DeleteBookingOrderAsync(List<decimal> deleteBookingIds)
+        {
+            try
+            {
+                var orders = boRepo.All().Where(o => deleteBookingIds.Contains(o.Tc)).ToList();
+
+                if (!orders.Any())
+                    return (false, DeleteFailed);
+
+                await boRepo.DeleteRangeAsync(orders);
+
+                return (true, DeleteSuccess);
+            }
+            catch (Exception ex)
+            {
+                return (false, $"Error occurred: {ex.Message}");
+            }
+        }
+
     }
 }

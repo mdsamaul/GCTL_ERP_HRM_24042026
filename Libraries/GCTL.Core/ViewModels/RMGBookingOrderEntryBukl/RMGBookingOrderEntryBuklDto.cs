@@ -11,7 +11,7 @@ namespace GCTL.Core.ViewModels.RMGBookingOrderEntryBukl
         public string BookinOrderNo { get; set; }
 
         [Display(Name = "Booking Date")]
-        public DateTime BookinDate { get; set; }
+        public DateTime? BookinDate { get; set; }   // ✅ nullable
 
         [Display(Name = "Buyer")]
         public string BuyerId { get; set; }
@@ -33,6 +33,7 @@ namespace GCTL.Core.ViewModels.RMGBookingOrderEntryBukl
 
         [Display(Name = "Remarks")]
         public string Remarks { get; set; }
+
         [Display(Name = "Employee")]
         public string EmployeId { get; set; }
 
@@ -86,5 +87,8 @@ namespace GCTL.Core.ViewModels.RMGBookingOrderEntryBukl
 
         [Display(Name = "PI File Path")]
         public string PifilePath { get; set; }
+
+        [Display(Name = "Selected Costing IDs")]
+        public List<string> SelectedCostingIds { get; set; } = new();
     }
 }

@@ -20,7 +20,7 @@
                                     <input asp-for="BookingOrderEntryBuklSetup.BookinOrderNo" class="form-control form-control-sm col-8" readonly />
                                 </div>
                                 <div class="mb-1 p-0 d-flex col col-md-6">
-                                    <label asp-for="BookingOrderEntryBuklSetup.BookinDate" class="form-label text-right p-0 pe-1 col-4"></label>
+                                    <label asp-for="BookingOrderEntryBuklSetup.BookinDate" class="form-label text-right p-0 pe-1 col-4">Booking Date <sapn class="text-danger">*</sapn></label>
                                     <input asp-for="BookingOrderEntryBuklSetup.BookinDate" type="date" class="form-control form-control-sm col-8 flatDatePicker" />
                                 </div>
                             </div>
@@ -40,7 +40,7 @@
                             <div class="d-flex gap-1">
 
                                 <div class="mb-1 p-0 d-flex col col-md-6">
-                                    <label asp-for="BookingOrderEntryBuklSetup.BookingType" class="form-label text-right p-0 pe-1 col-4"></label>
+                                    <label asp-for="BookingOrderEntryBuklSetup.BookingType" class="form-label text-right p-0 pe-1 col-4">Booking Item Type <sapn class="text-danger">*</sapn></label>
                                     <select asp-for="BookingOrderEntryBuklSetup.BookingType" class="form-select form-select-sm col-8 select2" asp-items="ViewBag.BookingTypeList as SelectList">
                                         <option value="">--Select Booking Type--</option>                                      
                                     </select>
@@ -71,7 +71,7 @@
                                     </div>
                                 </div> *@
                                 <div class="mb-1 p-0 d-flex col col-md-6">
-                                    <label asp-for="BookingOrderEntryBuklSetup.SupplierId" class="form-label text-right p-0 pe-1 col-4"></label>
+                                    <label asp-for="BookingOrderEntryBuklSetup.SupplierId" class="form-label text-right p-0 pe-1 col-4">Supplier <sapn class="text-danger">*</sapn></label>
 
                                     <div class="input-group input-group-sm col-8 p-0">
 
@@ -185,18 +185,18 @@
                 </div> *@
                 <div class="d-flex gap-1">
                     <div class="mb-1 p-0 d-flex col col-md-6">
-                        <label asp-for="BookingOrderEntryBuklSetup.DeliveryDate" class="form-label text-right p-0 pe-1 col-4"></label>
+                        <label asp-for="BookingOrderEntryBuklSetup.DeliveryDate" class="form-label text-right p-0 pe-1 col-4">Delivery Date <sapn class="text-danger">*</sapn></label>
                         <input asp-for="BookingOrderEntryBuklSetup.DeliveryDate" type="text" class="form-control form-control-sm col-8 flatDatePicker" />
                     </div>
                     <div class="mb-1 p-0 d-flex col col-md-6">
                         <label asp-for="BookingOrderEntryBuklSetup.DeliveryAddress" class="form-label text-right p-0 pe-1 col-4"></label>
                         
                         <div class="input-group input-group-sm p-0">
-                            <input asp-for="BookingOrderEntryBuklSetup.DeliveryAddress" type="text" class="form-control form-control-sm col-8" />
+                            <input asp-for="BookingOrderEntryBuklSetup.DeliveryAddress" type="text" class="form-control form-control-sm" />
                             <button type="button"
                                     class="btn btn-outline-secondary js-quick-add"
                                     title="Quick Add Supplier"
-                                    style="padding: 0.25rem 0.5rem;"
+                                    style="padding: 0rem 0.5rem;margin-top: 5px;"
                                     data-url="@Url.Action("Index", "BuyerInfo")"
                                     data-target="#OrderDto_BuyerId"
                                     data-reload-url="@Url.Action("GetBuyerCompany", "Cascading")"
@@ -208,13 +208,9 @@
                 </div>
                 <div class="d-flex gap-1">
                     <div class="mb-1 p-0 d-flex col col-md-6">
-                        <label asp-for="BookingOrderEntryBuklSetup.DeliveryMethod" class="form-label text-right p-0 pe-1 col-4"></label>
-                        @* <select  class="form-select form-select-sm select2" asp-for="BookingOrderEntryBuklSetup.DeliveryAddress" asp-items="ViewBag.deliveryList as SelectList">
-                            <option value="">--Select Method--</option>                           
-                        </select> *@
+                        <label asp-for="BookingOrderEntryBuklSetup.DeliveryMethod" class="form-label text-right p-0 pe-1 col-4"></label>                       
                         <div class="input-group input-group-sm p-0">
-
-                            <select class="form-select form-select-sm select2" asp-for="BookingOrderEntryBuklSetup.DeliveryAddress" asp-items="ViewBag.deliveryList as SelectList">
+                            <select class="form-select form-select-sm select2" asp-for="BookingOrderEntryBuklSetup.DeliveryMethod" asp-items="ViewBag.deliveryList as SelectList">
                                 <option value="">--Select Method--</option>
                             </select>
 
